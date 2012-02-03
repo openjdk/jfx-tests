@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JemmyJC" default="default" basedir=".">
+    <description>Builds, tests, and runs the project JemmyJC.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+    <target name="jar-full" depends="jar">
+        <property name="jar.name" location="${basedir}/dist/JemmyJCFull.jar"/>
+        <jar destfile="${jar.name}" filesetmanifest="merge">
+            <zipgroupfileset file="${reference.JemmyCore.jar}"/>
+            <zipgroupfileset file="${reference.JemmyAWTInput.jar}"/>
+            <zipgroupfileset file="${dist.jar}"/>
+        </jar>
+    </target>
+    <target name="jemmy-javadoc" depends="init">
+        <path id="javadoc.source.path.ref">
+            <pathelement path="${src.dir}"/>
+            <pathelement path="${project.JemmyCore}/src"/>
+            <pathelement path="${project.JemmyAWTInput}/src"/>
+        </path>
+        <property name="javadoc.src.path" refid="javadoc.source.path.ref"/>
+        <property name="javadoc.destdir" location="../www/javadoc"/>
+        <mkdir dir="${javadoc.destdir}"/>
+        <ant antfile="../../core/JemmyDoc/javadoc.xml" target="jemmy-javadoc"
+            inheritall="true"/>
+    </target>
+    <target name="-post-clean">
+        <delete dir="${basedir}/docks" failonerror="false"/>
+    </target>
+    <target name="-pre-compile" depends="copy-libs">
+        <delete file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" failonerror="false"/>
+        <!--delete dir="${basedir}/docks" failonerror="false"/-->
+        <mkdir dir="${basedir}/docks"/>
+    </target>
+    <target name="-post-compile">
+        <javac srcdir="${basedir}/docks" destdir="${build.classes.dir}" classpath="${javac.classpath}"/>
+        <echo message="Copying prop file"/>
+        <copy file="src/org/jemmy/fx/jemmy.properties" tofile="${basedir}/build/classes/org/jemmy/fx/jemmy.properties"/>
+        <tstamp/>
+        <echo message="build=${DSTAMP}${TSTAMP}" file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" append="true"/>
+    </target>
+    <target name="set-javafx-home" if="javafx.home">
+        <echo file="build.properties" message="javafx.home=${javafx.home}"/>
+    </target>
+    <target name="read-javafx-home" unless="javafx.home">
+        <property file="build.properties"/>
+    </target>
+    <target name="copy-libs" depends="set-javafx-home,read-javafx-home">
+        <fail unless="javafx.home" message="No javafx.home set and no build.properties file"/>
+        <echo message="javafx.home=${javafx.home}"/>
+        <copy todir="lib/lib">
+            <fileset dir="${javafx.home}/rt/lib"/>
+        </copy>
+        <copy todir="lib/bin">
+            <fileset dir="${javafx.home}/rt/bin"/>
+        </copy>
+        <property file="fxclasspath.properties"/>
+    </target>
+</project>
