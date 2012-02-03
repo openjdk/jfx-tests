@@ -1,8 +1,34 @@
+<!--
+Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+
+This code is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License version 2 only, as
+published by the Free Software Foundation. Oracle designates this
+particular file as subject to the "Classpath" exception as provided
+by Oracle in the LICENSE file that accompanied this code.
+
+This code is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+version 2 for more details (a copy is included in the LICENSE file that
+accompanied this code).
+
+You should have received a copy of the GNU General Public License version
+2 along with this work; if not, write to the Free Software Foundation,
+Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+
+Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+or visit www.oracle.com if you need additional information or have any
+questions.
+-->
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="JemmyJC" default="default" basedir=".">
     <description>Builds, tests, and runs the project JemmyJC.</description>
     <import file="nbproject/build-impl.xml"/>
 
+    <property name="jemmy.lib.dir" location="lib/jemmy"/>
+    <property name="javafx.lib.dir" location="lib/javafx"/>
     <target name="jar-full" depends="jar">
         <property name="jar.name" location="${basedir}/dist/JemmyJCFull.jar"/>
         <jar destfile="${jar.name}" filesetmanifest="merge">
@@ -21,12 +47,16 @@
         <property name="javadoc.destdir" location="../www/javadoc"/>
         <mkdir dir="${javadoc.destdir}"/>
         <ant antfile="../../core/JemmyDoc/javadoc.xml" target="jemmy-javadoc"
-            inheritall="true"/>
+             inheritall="true"/>
+    </target>
+    <target name="real-clean" depends="clean">
+        <delete dir="${jemmy.lib.dir}" failonerror="false"/>
+        <delete dir="${javafx.lib.dir}" failonerror="false"/>
     </target>
     <target name="-post-clean">
         <delete dir="${basedir}/docks" failonerror="false"/>
     </target>
-    <target name="-pre-compile" depends="copy-libs">
+    <target name="-pre-compile" depends="copy-javafx-libs,copy-jemmy-libs">
         <delete file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" failonerror="false"/>
         <!--delete dir="${basedir}/docks" failonerror="false"/-->
         <mkdir dir="${basedir}/docks"/>
@@ -38,19 +68,36 @@
         <tstamp/>
         <echo message="build=${DSTAMP}${TSTAMP}" file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" append="true"/>
     </target>
+    <target name="read-jemmy-core-version" unless="jemmy.core.version">
+        <property file="depend.properties"/>
+    </target>
+    <target name="check-jemmy-libs">
+        <available file="${jemmy.lib.dir}/JemmyCore.jar" property="no.need.to.copy.jemmy.libs"/>
+    </target>
+    <target name="copy-jemmy-libs" depends="check-jemmy-libs,read-jemmy-core-version"
+            unless="no.need.to.copy.jemmy.libs">
+        <mkdir dir="${jemmy.lib.dir}"/>
+        <property name="jemmy.download.url" value="http://java.net/projects/jemmy/downloads/download"/>
+        <get src="${jemmy.download.url}/jemmy.jar" dest="${jemmy.lib.dir}"/>
+        <property name="dist.url" value="${jemmy.download.url}/dist/${jemmy.core.version}"/>
+        <get src="${dist.url}/JemmyAWT.jar" dest="${jemmy.lib.dir}"/>
+        <get src="${dist.url}/JemmyCore.jar" dest="${jemmy.lib.dir}"/>
+        <get src="${dist.url}/JemmyAWTInput.jar" dest="${jemmy.lib.dir}"/>
+        <get src="${dist.url}/JemmyBrowser.jar" dest="${jemmy.lib.dir}"/>
+    </target>
     <target name="set-javafx-home" if="javafx.home">
         <echo file="build.properties" message="javafx.home=${javafx.home}"/>
     </target>
     <target name="read-javafx-home" unless="javafx.home">
         <property file="build.properties"/>
     </target>
-    <target name="copy-libs" depends="set-javafx-home,read-javafx-home">
+    <target name="copy-javafx-libs" depends="set-javafx-home,read-javafx-home">
         <fail unless="javafx.home" message="No javafx.home set and no build.properties file"/>
         <echo message="javafx.home=${javafx.home}"/>
-        <copy todir="lib/lib">
+        <copy todir="${javafx.lib.dir}/lib">
             <fileset dir="${javafx.home}/rt/lib"/>
         </copy>
-        <copy todir="lib/bin">
+        <copy todir="${javafx.lib.dir}/bin">
             <fileset dir="${javafx.home}/rt/bin"/>
         </copy>
         <property file="fxclasspath.properties"/>
