@@ -1,0 +1,11 @@
+\.orig$
+\.orig\..*$
+\.chg\..*$
+\.rej$
+\.conflict\~$
+.*/dist/.*$
+.*/build/.*$
+.*/nbproject/private/.*
+tools/Jemmy/JemmyFX.*/lib/.*
+tools/Jemmy/JemmyFX/docks/.*
+
