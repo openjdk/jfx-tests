@@ -233,6 +233,9 @@ public class ListItemWrap<ITEM extends Object> extends ItemWrap<ITEM> implements
         if(WindowElement.class.equals(interfaceClass) && Scene.class.equals(type)) {
             return true;
         }
+        if(Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
+            return cellWrap().is(interfaceClass, type);
+        }
         return super.is(interfaceClass, type);
     }
 
@@ -250,6 +253,9 @@ public class ListItemWrap<ITEM extends Object> extends ItemWrap<ITEM> implements
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
         if(WindowElement.class.equals(interfaceClass) && Scene.class.equals(type)) {
             return (INTERFACE) listViewWrap.as(interfaceClass, type);
+        }
+        if(Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
+            return cellWrap().as(interfaceClass, type);
         }
         return super.as(interfaceClass, type);
     }

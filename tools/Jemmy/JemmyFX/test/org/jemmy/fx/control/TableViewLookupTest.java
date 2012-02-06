@@ -30,13 +30,12 @@ import org.jemmy.Point;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
-import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Table;
 import org.jemmy.lookup.EqualsLookup;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
-import static org.junit.Assert.*;
 import org.junit.*;
+import static org.junit.Assert.*;
 
 
 /**
@@ -75,28 +74,28 @@ public class TableViewLookupTest /*extends TableViewTestBase*/ {
     public void cellLookup() {
         System.out.println("testLookup");
         
-        final String B = "B";
-        /*
+        final String D = "D";
+
         Wrap<? extends TableCell> tableCellWrap = tableDock.asParent().
                 lookup(TableCell.class, new LookupCriteria<TableCell>() {
 
             public boolean check(TableCell control) {
                 String item = (String) control.getItem();
-                return item != null && item.contains(B);
+                return item != null && item.contains(D);
             }
         }).wrap();
         assertTrue("tableViewCellsParent.lookup().wrap() returns "
                 + "TableCellWrap", 
                 tableCellWrap instanceof TableCellWrap);
         
-        assertTrue(tableCellWrap.getProperty(String.class, "getItem").contains(B));
+        assertTrue(tableCellWrap.getProperty(String.class, "getItem").contains(D));
         
         tableCellWrap.mouse().click();
-*/
+
         tableDock.wrap().waitState(new State() {
 
             public Object reached() {
-                return tableDock.getSelection().contains(new Point(0, 2)) ? true : null;
+                return tableDock.getSelection().contains(new Point(0, 4)) ? true : null;
             }
         });
     }
@@ -122,6 +121,6 @@ public class TableViewLookupTest /*extends TableViewTestBase*/ {
     @Test
     public void edit() {
         table.setEditor(new TextFieldCellEditor());
-        //new TableCellItemDock(table, new EqualsLookup("B")).asCell().edit("Aleksander");
+        new TableCellItemDock(table, new EqualsLookup("B")).asCell().edit("Aleksander");
     }
 }

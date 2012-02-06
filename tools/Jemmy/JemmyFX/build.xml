@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
 DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -22,7 +23,6 @@ Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
 or visit www.oracle.com if you need additional information or have any
 questions.
 -->
-<?xml version="1.0" encoding="UTF-8"?>
 <project name="JemmyJC" default="default" basedir=".">
     <description>Builds, tests, and runs the project JemmyJC.</description>
     <import file="nbproject/build-impl.xml"/>

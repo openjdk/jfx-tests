@@ -49,8 +49,8 @@ public class TextFieldCellEditor<ITEM> implements CellEditor<ITEM> {
 
     public void edit(Wrap<? extends ITEM> item, ITEM newValue) {
         if(!item.is(Parent.class, Node.class)) {
-            throw new IllegalStateException("Only " + ItemWrap.class + " supported. Got " + 
-                    item.getClass().getName());
+            throw new IllegalStateException(item.getClass().getName() + 
+                    " would need to be a parent for editing");
         }
         item.as(Showable.class).shower().show();
         Parent<Node> parent = item.as(Parent.class, Node.class);

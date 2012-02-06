@@ -4,7 +4,6 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>JemmyFX</name>
-            <explicit-platform explicit-source-supported="true"/>
             <source-roots>
                 <root id="src.docks.dir" name="Generated"/>
                 <root id="src.dir"/>

@@ -24,7 +24,6 @@
  */
 package org.jemmy.fx.control;
 
-
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -37,25 +36,26 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
 
 /**
  *
  * @author Alexander Kouznetsov
  */
 public class TableViewApp extends Application {
-    
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        
+
         final TableView<Person> tableView = new TableView<Person>();
         tableView.setEditable(true);
         ObservableList<Person> teamMembers = FXCollections.observableArrayList(
@@ -81,8 +81,7 @@ public class TableViewApp extends Application {
                 new Person("S", "19"),
                 new Person("T", "20"),
                 new Person("U", "21"),
-                new Person("Victor", "Johnson")
-                );
+                new Person("Victor", "Johnson"));
         tableView.setItems(teamMembers);
 
         TableColumn<Person, String> firstNameCol = new TableColumn<Person, String>("First Name");
@@ -90,12 +89,20 @@ public class TableViewApp extends Application {
         TableColumn<Person, String> lastNameCol = new TableColumn<Person, String>("Last Name");
         lastNameCol.setEditable(true);
         
+        Callback<TableColumn<Person, String>, TableCell<Person, String>> cellFactory =
+           new Callback<TableColumn<Person, String>, TableCell<Person, String>>() {
+                public TableCell call(TableColumn p) {
+                    return new EditingCell();
+                }
+        };
+
         lastNameCol.setCellValueFactory(new Callback<CellDataFeatures<Person, String>, ObservableValue<String>>() {
 
             public ObservableValue<String> call(CellDataFeatures<Person, String> p) {
                 return ((Person) p.getValue()).lastNameProperty();
             }
         });
+        lastNameCol.setCellFactory(cellFactory);
 
         firstNameCol.setCellValueFactory(new Callback<CellDataFeatures<Person, String>, ObservableValue<String>>() {
 
@@ -103,20 +110,19 @@ public class TableViewApp extends Application {
                 return ((Person) p.getValue()).firstNameProperty();
             }
         });
+        firstNameCol.setCellFactory(cellFactory);
 
         tableView.getColumns().setAll(firstNameCol, lastNameCol);
-        
-//        tableView.getSelectionModel().setCellSelectionEnabled(true);
+
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.getSelectionModel().setCellSelectionEnabled(true);
-        
+
         final Label label = new Label("selected");
         //label.textProperty().bind(tableView.getSelectionModel().getSelectedCells());
-        
+
         tableView.getSelectionModel().getSelectedCells().addListener(new ListChangeListener() {
 
             public void onChanged(Change change) {
-//                System.out.println("change = " + change);
                 final ObservableList list = change.getList();
                 if (list.isEmpty()) {
                     label.setText("selected = nothing");
@@ -126,9 +132,9 @@ public class TableViewApp extends Application {
                 }
             }
         });
-        
+
         tableView.setEditable(true);
-        
+
         Button removeButton = new Button("Remove scrollbars");
         removeButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -137,19 +143,79 @@ public class TableViewApp extends Application {
                         tableView.getItems().subList(0, 8)));
             }
         });
-        
+
         VBox vBox = new VBox();
         vBox.getChildren().setAll(tableView, label, removeButton);
-        
+
         Scene scene = new Scene(vBox);
-        
+
         stage.setScene(scene);
         stage.show();
-        
-        
-        
+
+
+
     }
-    
+
+    class EditingCell extends TableCell<Person, String> {
+
+        private TextField textBox;
+
+        public EditingCell() {
+        }
+
+        @Override
+        public void startEdit() {
+            super.startEdit();
+            if (isEmpty()) {
+                return;
+            }
+
+            if (textBox == null) {
+                createTextBox();
+            } else {
+                textBox.setText(getItem());
+            }
+
+            setGraphic(textBox);
+            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+
+            textBox.requestFocus();
+            textBox.selectAll();
+        }
+
+        @Override
+        public void cancelEdit() {
+            super.cancelEdit();
+            setContentDisplay(ContentDisplay.TEXT_ONLY);
+        }
+
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (!isEmpty()) {
+                if (textBox != null) {
+                    textBox.setText(item);
+                }
+                setText(item);
+            }
+        }
+
+        private void createTextBox() {
+            textBox = new TextField(getItem());
+            textBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+            textBox.setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+                @Override
+                public void handle(KeyEvent t) {
+                    if (t.getCode() == KeyCode.ENTER) {
+                        commitEdit(textBox.getText());
+                    } else if (t.getCode() == KeyCode.ESCAPE) {
+                        cancelEdit();
+                    }
+                }
+            });
+        }
+    }
 
     public static final class Person {
 
