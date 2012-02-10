@@ -29,6 +29,7 @@ import javafx.scene.control.Tooltip;
 import org.jemmy.fx.NodeWrap;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.MethodProperties;
+import org.jemmy.dock.DockInfo;
 import org.jemmy.env.Environment;
 
 /**
@@ -38,6 +39,7 @@ import org.jemmy.env.Environment;
  */
 @ControlType(javafx.scene.control.Control.class)
 @MethodProperties(value = "getTooltip", types = Tooltip.class)
+@DockInfo(generateSubtypeLookups = true)
 public class ControlWrap<T extends javafx.scene.control.Control> extends NodeWrap<T> {
 
     /**

@@ -31,6 +31,7 @@ import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.Wrap;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
+import org.jemmy.dock.DockInfo;
 import org.jemmy.dock.ObjectLookup;
 import org.jemmy.env.Environment;
 import org.jemmy.lookup.LookupCriteria;
@@ -43,6 +44,7 @@ import org.jemmy.resources.StringComparePolicy;
  */
 @ControlType({Labeled.class})
 @ControlInterfaces({org.jemmy.interfaces.Text.class})
+@DockInfo(generateSubtypeLookups = true)
 public class TextControlWrap<T extends javafx.scene.control.Control> extends ControlWrap<T> implements org.jemmy.interfaces.Text {
 
     @ObjectLookup("text and comparison policy")
