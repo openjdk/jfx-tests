@@ -1,0 +1,3 @@
+To build:
+ - copy Ensemble.jar into lib
+ - call "ant test"

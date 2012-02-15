@@ -1,0 +1,8 @@
+To build Jemmy:
+$cd JemmyFX
+$ant -Djavafx.home=<Java FX SDK location>
+
+To build JemmyFXBrowser:
+$cd JemmyFXBrowser
+$ant
+
