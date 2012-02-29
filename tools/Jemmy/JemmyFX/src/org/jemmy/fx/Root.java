@@ -40,6 +40,19 @@ import org.jemmy.lookup.PlainLookup;
  */
 public class Root extends AbstractParent<Scene> {
 
+    static {
+        //Mac workaround - first things first
+        try {
+            if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+                AWTRobotInputFactory.runInOtherJVM(true);
+            } else {
+                java.awt.GraphicsEnvironment.isHeadless();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public static final Root ROOT = new Root();
     public static final String LOOKUP_STRING_COMPARISON = Root.class.getName() +
             ".lookup.string.compare";
