@@ -49,7 +49,8 @@ public class NodeWrapper extends DefaultWrapper {
         MenuBarWrap.class, MenuButtonWrap.class,
         ToolBarWrap.class, ChoiceBoxWrap.class, ComboBoxWrap.class,
         TreeViewWrap.class, TabPaneWrap.class, TableViewWrap.class,
-        TableCellWrap.class, SplitPaneWrap.class, SeparatorWrap.class
+        TableCellWrap.class, SplitPaneWrap.class, SeparatorWrap.class,
+        TitledPaneWrap.class
     };
 
     /**
