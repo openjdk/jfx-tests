@@ -30,12 +30,14 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.AppExecutor;
+import org.jemmy.fx.ByText;
 import org.jemmy.fx.Controls;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.input.StringMenuOwner;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Tree;
+import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -107,6 +109,12 @@ public class MenuTest {
 
         button_menu_owner.push("menu1", "sub-menu1", "sub-sub-menu1", "item1");
 
+        button_menu_owner.push("item0");
+
+        button_menu_owner.menu().push(new MenuTextLookupCriteria("menu1"), new MenuTextLookupCriteria("sub-menu1"), new MenuTextLookupCriteria("sub-sub-menu1"), new MenuTextLookupCriteria("item1"));
+
+        button_menu_owner.menu().push(new MenuTextLookupCriteria("item0"));
+
 //        MenuBarDock bar = new MenuBarDock(new SceneDock().asParent());
 ////        bar.asStringMenuOwner().push("menu2");
 ////        new LabeledDock(new SceneDock().asParent(), "menu2 pushed", StringComparePolicy.SUBSTRING);
@@ -116,4 +124,13 @@ public class MenuTest {
 //        new LabeledDock(new SceneDock().asParent(), "item1 pushed", StringComparePolicy.SUBSTRING);
     }
 
+    class MenuTextLookupCriteria implements LookupCriteria<MenuItem> {
+        String str;
+        public MenuTextLookupCriteria(String str) {
+            this.str = str;
+        }
+        public boolean check(MenuItem cntrl) {
+            return cntrl.getText().contentEquals(str);
+        }
+    }
 }

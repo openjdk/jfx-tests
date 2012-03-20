@@ -62,6 +62,9 @@ public class Controls extends Application {
 
         MenuButton menu_button = new MenuButton("MenuButton");
         addMenus(menu_button.getItems());
+        menu_button.getItems().addAll(new MenuItem("item0"),
+                    new MenuItem("item1"),
+                    new MenuItem("item2"));
         root.getChildren().add(menu_button);
 
         MenuBar bar = new MenuBar();
