@@ -27,6 +27,8 @@ package org.jemmy.fx;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Labeled;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.text.Text;
 import org.jemmy.action.GetAction;
@@ -39,7 +41,7 @@ import org.jemmy.resources.StringComparePolicy;
  * @param <T>
  * @author Shura
  */
-public class ByText<T extends Node> extends ByStringLookup<T> {
+public class ByText<T> extends ByStringLookup<T> {
 
     /**
      *
@@ -60,7 +62,7 @@ public class ByText<T extends Node> extends ByStringLookup<T> {
 
     @Override
     public String getText(T arg0) {
-        return getNodeText(arg0);
+        return getObjectText(arg0);
     }
 
     /**
@@ -73,7 +75,7 @@ public class ByText<T extends Node> extends ByStringLookup<T> {
 
             @Override
             public void run(Object... parameters) {
-                if(nd instanceof Text) {
+                if (nd instanceof Text) {
                     setResult(Text.class.cast(nd).getText());
                 } else if(nd instanceof Labeled) {
                     setResult(Labeled.class.cast(nd).getText());
@@ -104,5 +106,31 @@ public class ByText<T extends Node> extends ByStringLookup<T> {
             }
 
         }.dispatch(Environment.getEnvironment());
+    }
+
+    public static String getObjectText(final Object obj) {
+        if (obj instanceof Node) {
+            return getNodeText(Node.class.cast(obj));
+        } else {
+            return new GetAction<String>() {
+
+                @Override
+                public void run(Object... parameters) {
+                    if(obj instanceof MenuItem) {
+                        setResult(Text.class.cast(obj).getText());
+                    } else if(obj instanceof Tab) {
+                        setResult(Tab.class.cast(obj).getText());
+                    } else {
+                        setResult("");
+                    }
+                }
+
+                @Override
+                public String toString() {
+                    return "Getting text of " + obj;
+                }
+
+            }.dispatch(Environment.getEnvironment());
+        }
     }
 }

@@ -113,7 +113,7 @@ public class MenuTest {
 
         button_menu_owner.menu().push(new MenuTextLookupCriteria("menu1"), new MenuTextLookupCriteria("sub-menu1"), new MenuTextLookupCriteria("sub-sub-menu1"), new MenuTextLookupCriteria("item1"));
 
-        button_menu_owner.menu().push(new MenuTextLookupCriteria("item0"));
+        button_menu_owner.menu().push(new ByText("item0"));
 
 //        MenuBarDock bar = new MenuBarDock(new SceneDock().asParent());
 ////        bar.asStringMenuOwner().push("menu2");

@@ -25,6 +25,8 @@
 package org.jemmy.fx;
 
 import javafx.scene.Node;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
 import org.jemmy.action.GetAction;
 import org.jemmy.env.Environment;
 import org.jemmy.lookup.ByStringLookup;
@@ -35,7 +37,7 @@ import org.jemmy.resources.StringComparePolicy;
  * @param <T>
  * @author Shura
  */
-public class ByID<T extends Node> extends ByStringLookup <T> {
+public class ByID<T> extends ByStringLookup <T> {
 
     /**
      *
@@ -51,7 +53,15 @@ public class ByID<T extends Node> extends ByStringLookup <T> {
 
             @Override
             public void run(Object... parameters) {
-                setResult(arg0.getId());
+                if (arg0 instanceof Node) {
+                    setResult(Node.class.cast(arg0).getId());
+                } else if(arg0 instanceof Tab) {
+                    setResult(Tab.class.cast(arg0).getId());
+                } else if(arg0 instanceof MenuItem) {
+                    setResult(MenuItem.class.cast(arg0).getId());
+                } else {
+                    setResult("");
+                }
             }
 
             @Override
@@ -61,5 +71,4 @@ public class ByID<T extends Node> extends ByStringLookup <T> {
 
         }.dispatch(Environment.getEnvironment());
     }
-
 }
