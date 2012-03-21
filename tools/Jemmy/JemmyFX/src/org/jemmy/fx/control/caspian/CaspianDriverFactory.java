@@ -32,7 +32,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Slider;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.Action;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.NodeWrap;
@@ -134,12 +134,13 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
                 @Override
                 protected void activate() {
                     // temporary solution due to bug in MacOS implementation of MenuBar
-                    new GetAction() {
+                    Action requestFocus = new Action() {
                         @Override
                         public void run(Object... parameters) throws Exception {
                             menuBarWrap.getControl().requestFocus();
                         }
-                    }.dispatch(menuBarWrap.getEnvironment());
+                    };
+                    menuBarWrap.getEnvironment().getExecutor().execute(menuBarWrap.getEnvironment(), true, requestFocus);
                 }
             };
         } else {
