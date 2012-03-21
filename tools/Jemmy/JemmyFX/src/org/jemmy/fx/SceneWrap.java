@@ -24,15 +24,12 @@
  */
 package org.jemmy.fx;
 
-import java.awt.Point;
-import javafx.embed.swing.JFXPanel;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Window;
+import org.jemmy.JemmyException;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
-import org.jemmy.awt.AWT;
-import org.jemmy.awt.Showing;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Wrap;
@@ -93,35 +90,13 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
         GetAction<Rectangle> bounds = new GetAction<Rectangle>() {
 
             @Override
-            public void run(Object... parameters) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+            public void run(Object... parameters) {
                 Rectangle sceneBounds = getSceneBounds(env, scene);
-                Point stageCoordinates = null;
-                // TODO: stub
-                String prop = System.getProperty("javafx.swinginteroperability");
-                if (prop != null && prop.compareToIgnoreCase("true") == 0) {
-                    JFXPanel panel = AWT.getAWT().lookup(JFXPanel.class, new Showing<JFXPanel>() {
-
-                        @Override
-                        public boolean check(JFXPanel control) {
-                            return super.check(control) && (control.getScene() == scene);
-                        }
-                    }).wrap().getControl();
-                    sceneBounds.translate((int) panel.getLocationOnScreen().getX(), (int) panel.getLocationOnScreen().getY());
-                } else {
-                    Window window = scene.getWindow();
-                    /*
-                     * Field host_field =
-                     * window.getClass().getDeclaredField("host");
-                     * host_field.setAccessible(true); Object host =
-                     * host_field.get(window); Field panel_field =
-                     * host.getClass().getDeclaredField("this$0");
-                     * panel_field.setAccessible(true); JFXPanel panel =
-                     * (JFXPanel)panel_field.get(host);
-                     * sceneBounds.translate((int)panel.getLocationOnScreen().getX(), (int)panel.getLocationOnScreen().getY());
-                     */
-                    // TODO: RT-12793
-                    sceneBounds.translate((int) window.getX(), (int) window.getY());
+                Window window = scene.getWindow();
+                if (Double.isNaN(window.getX())) {
+                    throw new JemmyException("Unable to obtain containers's window coordinates in " + this.getClass().getName());
                 }
+                sceneBounds.translate((int) window.getX(), (int) window.getY());
                 setResult(sceneBounds);
             }
         };

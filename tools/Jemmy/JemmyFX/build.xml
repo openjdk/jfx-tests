@@ -68,7 +68,6 @@ questions.
         <property name="jemmy.download.url" value="http://java.net/projects/jemmy/downloads/download"/>
         <get src="${jemmy.download.url}/jemmy.jar" dest="${jemmy.lib.dir}"/>
         <property name="dist.url" value="${jemmy.download.url}/dist/${jemmy.core.version}"/>
-        <get src="${dist.url}/JemmyAWT.jar" dest="${jemmy.lib.dir}"/>
         <get src="${dist.url}/JemmyCore.jar" dest="${jemmy.lib.dir}"/>
         <get src="${dist.url}/JemmyAWTInput.jar" dest="${jemmy.lib.dir}"/>
         <get src="${dist.url}/JemmyBrowser.jar" dest="${jemmy.lib.dir}"/>
