@@ -46,12 +46,13 @@ import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
 import org.jemmy.lookup.Lookup;
-import org.jemmy.timing.State;
 
 @ControlType(ComboBox.class)
 @ControlInterfaces(value=Selectable.class)
 public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T>
         implements Selectable<Object> {
+
+    private Focus focus = Root.ROOT.getThemeFactory().comboBoxFocuser(this);
 
     public ComboBoxWrap(Environment env, T node) {
         super(env, node);
@@ -86,26 +87,6 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T>
         }
         return super.as(interfaceClass);
     }
-
-    @Override
-    public Focus focuser() {
-        return focus;
-    }
-
-    private Focus focus = new Focus() {
-        public void focus() {
-            if (!isFocused()) {
-                ComboBoxWrap.this.as(Parent.class, Node.class).lookup(new ByStyleClass<Node>("arrow-button")).wrap().mouse().click(isShowing() ? 1 : 2);
-            }
-            waitState(focusedState, true);
-        }
-    };
-
-    private State<Boolean> focusedState = new State<Boolean>() {
-        public Boolean reached() {
-            return isFocused();
-        }
-    };
 
     protected Wrap<? extends TextField> getTextField() {
         Lookup lookup = as(Parent.class, Node.class).lookup(TextField.class);
@@ -167,5 +148,10 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T>
             Wrap<? extends ListView> list = popupContainer.lookup(ListView.class).wrap();
             list.as(Selectable.class).selector().select(state);
         }
+    }
+
+    @Override
+    public Focus focuser() {
+        return focus;
     }
 }

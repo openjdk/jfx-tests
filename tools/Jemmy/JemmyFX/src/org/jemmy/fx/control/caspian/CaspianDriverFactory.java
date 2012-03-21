@@ -26,16 +26,27 @@ package org.jemmy.fx.control.caspian;
 
 import com.sun.javafx.scene.control.skin.ScrollBarSkin;
 import com.sun.javafx.scene.control.skin.SliderSkin;
+import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Slider;
+import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
+import org.jemmy.fx.ByStyleClass;
+import org.jemmy.fx.NodeWrap;
+import org.jemmy.fx.control.ComboBoxWrap;
+import org.jemmy.fx.control.MenuBarWrap;
 import org.jemmy.fx.control.ThemeDriverFactory;
-import org.jemmy.fx.control.TreeItemWrap;
 import org.jemmy.fx.control.TreeNodeWrap;
+import org.jemmy.interfaces.Focus;
+import org.jemmy.interfaces.Keyboard.KeyboardButtons;
+import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Scroll;
 import org.jemmy.interfaces.Scroller;
 import org.jemmy.interfaces.Shifter;
+import org.jemmy.timing.State;
 
 /**
  * Defines control behaviour for Caspian theme.
@@ -114,5 +125,69 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
             return new org.jemmy.fx.control.caspian.TreeItem(itemWrap);
         }
         return null;
+    }
+
+    @Override
+    public Focus menuBarFocuser(final MenuBarWrap<? extends MenuBar> menuBarWrap) {
+        if (isMacOS()) {
+            return new NodeFocus(menuBarWrap) {
+                @Override
+                protected void activate() {
+                    // temporary solution due to bug in MacOS implementation of MenuBar
+                    new GetAction() {
+                        @Override
+                        public void run(Object... parameters) throws Exception {
+                            menuBarWrap.getControl().requestFocus();
+                        }
+                    }.dispatch(menuBarWrap.getEnvironment());
+                }
+            };
+        } else {
+            return new NodeFocus(menuBarWrap) {
+                @Override
+                protected void activate() {
+                    // pressKey()/releaseKey() are used to prevent an attempt to get focus in pushKey()
+                    menuBarWrap.keyboard().pressKey(KeyboardButtons.F10);
+                    menuBarWrap.getEnvironment().getTimeout(menuBarWrap.keyboard().PUSH.getName());
+                    menuBarWrap.keyboard().releaseKey(KeyboardButtons.F10);
+                }
+            };
+        }
+    }
+
+    @Override
+    public Focus comboBoxFocuser(final ComboBoxWrap<? extends ComboBox> comboBoxWrap) {
+        return new NodeFocus(comboBoxWrap) {
+            @Override
+            protected void activate() {
+                comboBoxWrap.as(Parent.class, Node.class).lookup(new ByStyleClass<Node>("arrow-button")).wrap().mouse().click(comboBoxWrap.isShowing() ? 1 : 2);
+            }
+        };
+    }
+
+    abstract class NodeFocus implements Focus {
+        NodeWrap nodeWrap;
+        public NodeFocus(NodeWrap nodeWrap) {
+            this.nodeWrap = nodeWrap;
+        }
+        public void focus() {
+            if (!nodeWrap.isFocused()) {
+                activate();
+            }
+            nodeWrap.waitState(new State<Boolean>() {
+                public Boolean reached() {
+                    return nodeWrap.isFocused();
+                }
+            }, true);
+        }
+        abstract protected void activate();
+    }
+
+    private static boolean isMacOS() {
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.indexOf("mac") >= 0) {
+            return true;
+        }
+        return false;
     }
 }

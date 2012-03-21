@@ -236,7 +236,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
         }.dispatch(node.getEnvironment());
     }
 
-    protected boolean isFocused() {
+    public boolean isFocused() {
         return new GetAction<Boolean>() {
                     @Override
                     public void run(Object... parameters) {
