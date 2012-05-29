@@ -132,35 +132,10 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
         if (Parent.class.isAssignableFrom(interfaceClass) && Node.class.equals(type)) {
             if (parent == null) {
-                parent = new SceneParentNode();
+                parent = new NodeParentImpl(new SceneNodeHierarchy(getControl(), getEnvironment()), getEnvironment());
             }
             return (INTERFACE) parent;
         }
         return super.as(interfaceClass, type);
-    }
-
-    private class SceneParentNode extends AbstractParent<Node> {
-
-        @Override
-        public <ST extends Node> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {
-            javafx.scene.Parent parent = new GetAction<javafx.scene.Parent>() {
-
-                public void run(Object... parameters) throws Exception {
-                    setResult(getControl().getRoot());
-                }
-            }.dispatch(getEnvironment());
-            return new HierarchyLookup<ST>(getEnvironment(), new NodeHierarchy(getControl(), getEnvironment()),
-                    new NodeWrapper(getEnvironment()), controlClass, criteria);
-        }
-
-        @Override
-        public Lookup<Node> lookup(LookupCriteria<Node> criteria) {
-            return lookup(Node.class, criteria);
-        }
-
-        @Override
-        public Class<Node> getType() {
-            return Node.class;
-        }
     }
 }

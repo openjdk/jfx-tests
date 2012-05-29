@@ -22,34 +22,28 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package org.jemmy.fx;
+package org.jemmy.fx.control;
 
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Tab;
 import org.jemmy.env.Environment;
+import org.jemmy.fx.AbstractNodeHierarchy;
 
 /**
  *
  * @author andrey
  */
-public class NodeHierarchy extends AbstractNodeHierarchy {
+public class TabNodeHierarchy extends AbstractNodeHierarchy {
 
-    private Scene scene;
+    protected Tab tab;
 
-    public NodeHierarchy(Parent root, Environment env) {
-        super(root, env);
-    }
-
-    @Deprecated
-    public NodeHierarchy(Scene scene, Environment env) {
+    public TabNodeHierarchy(Tab tab, Environment env) {
         super(null, env);
-        this.scene = scene;
-
+        this.tab = tab;
     }
 
     @Override
     protected Node getRoot() {
-        return root;
+        return tab.getContent();
     }
 }

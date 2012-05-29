@@ -39,20 +39,24 @@ import org.jemmy.lookup.LookupCriteria;
 public class NodeParentImpl extends AbstractParent<Node> {
 
     private Environment env;
-    private Parent parent;
+    private AbstractNodeHierarchy nodeHierarchy;
 
     public NodeParentImpl(NodeWrap<? extends Node> wrap) {
         this((javafx.scene.Parent) wrap.getControl(), wrap.getEnvironment());
     }
 
-    public NodeParentImpl(Parent parent, Environment env) {
+    public NodeParentImpl(AbstractNodeHierarchy nodeHierarchy, Environment env) {
+        this.nodeHierarchy = nodeHierarchy;
         this.env = env;
-        this.parent = parent;
+    }
+
+    public NodeParentImpl(Parent parent, Environment env) {
+        this(new NodeHierarchy(parent, env), env);
     }
 
     @Override
     public <ST extends Node> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {
-        return new HierarchyLookup<ST>(env, new NodeHierarchy(parent, env), new NodeWrapper(env), controlClass, criteria);
+        return new HierarchyLookup<ST>(env, nodeHierarchy, new NodeWrapper(env), controlClass, criteria);
     }
 
     @Override

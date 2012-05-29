@@ -25,7 +25,6 @@
 package org.jemmy.fx;
 
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import org.jemmy.env.Environment;
 
@@ -33,23 +32,17 @@ import org.jemmy.env.Environment;
  *
  * @author andrey
  */
-public class NodeHierarchy extends AbstractNodeHierarchy {
+public class SceneNodeHierarchy extends AbstractNodeHierarchy {
 
-    private Scene scene;
+    protected Scene scene;
 
-    public NodeHierarchy(Parent root, Environment env) {
-        super(root, env);
-    }
-
-    @Deprecated
-    public NodeHierarchy(Scene scene, Environment env) {
+    public SceneNodeHierarchy(Scene scene, Environment env) {
         super(null, env);
         this.scene = scene;
-
     }
 
     @Override
     protected Node getRoot() {
-        return root;
+        return scene.getRoot();
     }
 }
