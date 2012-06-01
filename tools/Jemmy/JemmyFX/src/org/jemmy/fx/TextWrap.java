@@ -66,7 +66,7 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
     }
 
     public static TextWrap<Text> find(NodeParent parent, String text) {
-        return find(parent, new ByText<Text>(text, parent.getEnvironment().
+        return find(parent, new ByText<Text>(text, (StringComparePolicy)parent.getEnvironment().
                 getProperty(Root.LOOKUP_STRING_COMPARISON, StringComparePolicy.EXACT)));
     }
 

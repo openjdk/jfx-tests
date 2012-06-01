@@ -24,23 +24,19 @@
  */
 package org.jemmy.fx;
 
-import org.jemmy.fx.ByID;
-import org.jemmy.fx.AppExecutor;
-import org.jemmy.fx.ByText;
-import org.jemmy.fx.Root;
-import org.jemmy.fx.ByTitleSceneLookup;
-import javafx.scene.text.Text;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import org.jemmy.control.Wrap;
 import org.jemmy.interfaces.Parent;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

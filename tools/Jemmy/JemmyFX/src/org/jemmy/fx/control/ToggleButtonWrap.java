@@ -74,7 +74,7 @@ public class ToggleButtonWrap<T extends ToggleButton> extends TextControlWrap<T>
     }
 
     public static ToggleButtonWrap<ToggleButton> find(NodeParent parent, String text) {
-        return find(parent, new ByText<ToggleButton>(text, parent.getEnvironment().
+        return find(parent, new ByText<ToggleButton>(text, (StringComparePolicy)parent.getEnvironment().
                 getProperty(Root.LOOKUP_STRING_COMPARISON, StringComparePolicy.EXACT)));
     }
 

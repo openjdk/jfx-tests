@@ -32,6 +32,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.stage.PopupWindow;
+import javafx.stage.Window;
 import org.jemmy.action.GetAction;
 import org.jemmy.fx.ByText;
 import org.jemmy.fx.ByWindowType;
@@ -125,8 +126,7 @@ public class ChoiceBoxWrap<T extends ChoiceBox> extends ControlWrap<T>
                 mouse().click();
             }
             Parent<Node> popupContainer =
-                    Root.ROOT.lookup(new ByWindowType(PopupWindow.class)).
-                    as(Parent.class, Node.class);
+                    Root.ROOT.lookup(new ByWindowType<Scene>(PopupWindow.class)).as(Parent.class, Node.class);
 
             // TODO: figure out what to do with duplicate strings
             popupContainer.lookup(Node.class, new LookupCriteria<Node>() {

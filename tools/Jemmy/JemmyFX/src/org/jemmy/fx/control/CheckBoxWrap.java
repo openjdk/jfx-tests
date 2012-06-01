@@ -166,7 +166,7 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
     }
 
     public static CheckBoxWrap<CheckBox> find(NodeParent parent, String text) {
-        return find(parent, new ByText<CheckBox>(text, parent.getEnvironment().
+        return find(parent, new ByText<CheckBox>(text, (StringComparePolicy)parent.getEnvironment().
                 getProperty(Root.LOOKUP_STRING_COMPARISON, StringComparePolicy.EXACT)));
     }
     /**

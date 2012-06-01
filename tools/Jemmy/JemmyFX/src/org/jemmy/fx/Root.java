@@ -24,11 +24,15 @@
  */
 package org.jemmy.fx;
 
+import java.io.File;
 import javafx.scene.Scene;
+import org.jemmy.action.ActionExecutor;
 import org.jemmy.control.Wrapper;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.control.ThemeDriverFactory;
-import org.jemmy.input.AWTRobotInputFactory;
+import org.jemmy.image.*;
+import org.jemmy.input.glass.GlassInputFactory;
+import org.jemmy.interfaces.ControlInterfaceFactory;
 import org.jemmy.lookup.AbstractParent;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
@@ -40,38 +44,26 @@ import org.jemmy.lookup.PlainLookup;
  */
 public class Root extends AbstractParent<Scene> {
 
-    static {
-        //Mac workaround - first things first
-        try {
-            if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-                AWTRobotInputFactory.runInOtherJVM(true);
-            } else {
-                java.awt.GraphicsEnvironment.isHeadless();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    
     public static final Root ROOT = new Root();
-    public static final String LOOKUP_STRING_COMPARISON = Root.class.getName() +
-            ".lookup.string.compare";
+    public static final String LOOKUP_STRING_COMPARISON = Root.class.getName()
+            + ".lookup.string.compare";
     public static final String THEME_FACTORY = "fx.theme.factory";
     public static final String INPUT_SOURCE = Root.class.getName() + ".input.method";
-
     private Environment env;
     private SceneWrapper wrapper;
     private SceneList scenes;
 
     private Root() {
         this.env = new Environment(Environment.getEnvironment());
-        this.env.setExecutor(QueueExecutor.EXECUTOR);
-        if (Environment.getEnvironment().getInputFactory() == null) {
-            Environment.getEnvironment().setInputFactory(new AWTRobotInputFactory());
-        }
-        Environment.getEnvironment().setProperty(THEME_FACTORY, ThemeDriverFactory.newInstance());
-        Environment.getEnvironment().initTimeout(QueueExecutor.QUEUE_THROUGH_TIME);
-        Environment.getEnvironment().initTimeout(QueueExecutor.QUEUE_IDENTIFYING_TIMEOUT);
+        this.env.setPropertyIfNotSet(ActionExecutor.class, QueueExecutor.EXECUTOR);
+        this.env.setPropertyIfNotSet(ControlInterfaceFactory.class, new GlassInputFactory());
+        this.env.setPropertyIfNotSet(ImageCapturer.class, new GlassImageCapturer());
+        this.env.setPropertyIfNotSet(ImageComparator.class, new GlassPixelImageComparator(this.env));
+        this.env.setPropertyIfNotSet(ImageLoader.class, new FileGlassImageLoader(new File(System.getProperty("user.dir"))));
+        this.env.setProperty(THEME_FACTORY, ThemeDriverFactory.newInstance());
+        this.env.initTimeout(QueueExecutor.QUEUE_THROUGH_TIME);
+        this.env.initTimeout(QueueExecutor.QUEUE_IDENTIFYING_TIMEOUT);
+
         wrapper = new SceneWrapper(env);
         scenes = new SceneList();
     }
@@ -81,8 +73,10 @@ public class Root extends AbstractParent<Scene> {
     }
 
     /**
-     * This is the environment to be used for all test code for client.
-     * All wraps and other objects are assinged a child of this environment, ultimately.
+     * This is the environment to be used for all test code for client. All
+     * wraps and other objects are assinged a child of this environment,
+     * ultimately.
+     *
      * @return the client testing environment
      */
     public Environment getEnvironment() {
@@ -117,7 +111,6 @@ public class Root extends AbstractParent<Scene> {
     public Class<Scene> getType() {
         return Scene.class;
     }
-
     public static final String USE_NATIVE_COORDINATES = "use.native.sg.coordinates";
 
     //TODO: shouldn't this be in utility class used by all root impls?
