@@ -34,9 +34,11 @@ import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.dock.ObjectLookup;
+import org.jemmy.fx.AbstractNodeHierarchy;
+import org.jemmy.fx.NodeHierarchy;
 import org.jemmy.fx.NodeParentImpl;
-import org.jemmy.interfaces.*;
 import org.jemmy.interfaces.CellOwner.Cell;
+import org.jemmy.interfaces.*;
 import org.jemmy.lookup.ByStringLookup;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
@@ -52,7 +54,7 @@ public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
         if (Parent.class.equals(interfaceClass)
                 && Node.class.isAssignableFrom(type)) {
-            return (INTERFACE) new NodeParentImpl((javafx.scene.Parent) getContent(), this.getEnvironment());
+            return (INTERFACE) new NodeParentImpl(new TabNodeHierarchy(getControl(), getEnvironment()), getEnvironment());
         }
         return super.as(interfaceClass, type);
     }

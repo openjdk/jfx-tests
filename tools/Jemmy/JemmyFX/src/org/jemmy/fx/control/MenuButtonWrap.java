@@ -44,7 +44,7 @@ import org.jemmy.interfaces.TypeControlInterface;
 
 public class MenuButtonWrap<CONTROL extends MenuButton> extends TextControlWrap<CONTROL> {
 
-    private StringMenuOwnerImpl menuOwner = new StringMenuOwnerImpl(this, this.as(Parent.class, Menu.class));
+    private StringMenuOwnerImpl menuOwner = new StringMenuOwnerImpl(this, this.as(Parent.class, MenuItem.class));
 
     /**
      *

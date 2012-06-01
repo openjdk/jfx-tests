@@ -25,22 +25,18 @@
 package org.jemmy.fx.control;
 
 import java.util.List;
-import javafx.scene.Node;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.NodeWrap;
+import org.jemmy.fx.Root;
 import org.jemmy.interfaces.Focus;
-import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.MenuOwner;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.TypeControlInterface;
-import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.timing.State;
 
 @ControlType({MenuBar.class})
 @ControlInterfaces(value = {Parent.class, MenuOwner.class},
@@ -50,23 +46,7 @@ public class MenuBarWrap<CONTROL extends MenuBar> extends NodeWrap<CONTROL> {
 
     private StringMenuOwnerImpl menuOwner = new StringMenuOwnerImpl(this, this.as(Parent.class, Menu.class));
     
-    private Focus focus = new Focus() {
-        public void focus() {
-            if (!isFocused()) {
-                // pressKey()/releaseKey() are used to prevent an attempt to get focus in pushKey()
-                keyboard().pressKey(KeyboardButtons.F10);
-                getEnvironment().getTimeout(keyboard().PUSH.getName());
-                keyboard().releaseKey(KeyboardButtons.F10);
-            }
-            waitState(focusedState, true);
-        }
-    };
-
-    private State<Boolean> focusedState = new State<Boolean>() {
-        public Boolean reached() {
-            return isFocused();
-        }
-    };
+    private Focus focus = Root.ROOT.getThemeFactory().menuBarFocuser(this);
 
     /**
      *
@@ -114,5 +94,10 @@ public class MenuBarWrap<CONTROL extends MenuBar> extends NodeWrap<CONTROL> {
     @Override
     public Focus focuser() {
         return focus;
+    }
+
+    @Override
+    public boolean isFocused() {
+        return true; // stab: currently no way to detemine pseudo-focused state
     }
 }

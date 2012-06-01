@@ -22,53 +22,28 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package org.jemmy.fx;
+package org.jemmy.fx.control;
 
 import javafx.scene.Node;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
-import org.jemmy.action.GetAction;
 import org.jemmy.env.Environment;
-import org.jemmy.lookup.ByStringLookup;
-import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.fx.AbstractNodeHierarchy;
 
 /**
  *
- * @param <T>
- * @author Shura
+ * @author andrey
  */
-public class ByID<T> extends ByStringLookup <T> {
+public class TabNodeHierarchy extends AbstractNodeHierarchy {
 
-    /**
-     *
-     * @param text
-     */
-    public ByID(String text) {
-        super(text, StringComparePolicy.EXACT);
+    protected Tab tab;
+
+    public TabNodeHierarchy(Tab tab, Environment env) {
+        super(null, env);
+        this.tab = tab;
     }
 
     @Override
-    public String getText(final T arg0) {
-        return new GetAction<String>() {
-
-            @Override
-            public void run(Object... parameters) {
-                if (arg0 instanceof Node) {
-                    setResult(Node.class.cast(arg0).getId());
-                } else if(arg0 instanceof Tab) {
-                    setResult(Tab.class.cast(arg0).getId());
-                } else if(arg0 instanceof MenuItem) {
-                    setResult(MenuItem.class.cast(arg0).getId());
-                } else {
-                    setResult("");
-                }
-            }
-
-            @Override
-            public String toString() {
-                return null;
-            }
-
-        }.dispatch(Environment.getEnvironment());
+    protected Node getRoot() {
+        return tab.getContent();
     }
 }
