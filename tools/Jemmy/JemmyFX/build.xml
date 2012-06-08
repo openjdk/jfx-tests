@@ -44,6 +44,7 @@ questions.
     <target name="-post-clean">
         <delete dir="${basedir}/docks" failonerror="false"/>
     </target>
+    <target name="-post-init" depends="copy-javafx,copy-jemmy-libs"/>
     <target name="-pre-compile" depends="copy-javafx,copy-jemmy-libs">
         <delete file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" failonerror="false"/>
         <!--delete dir="${basedir}/docks" failonerror="false"/-->
