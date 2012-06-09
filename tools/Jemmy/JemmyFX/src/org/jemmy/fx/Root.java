@@ -25,18 +25,23 @@
 package org.jemmy.fx;
 
 import java.io.File;
+import java.util.Locale;
 import javafx.scene.Scene;
 import org.jemmy.action.ActionExecutor;
 import org.jemmy.control.Wrapper;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.control.ThemeDriverFactory;
 import org.jemmy.image.*;
+import org.jemmy.image.pixel.PixelEqualityRasterComparator;
+import org.jemmy.image.pixel.RasterComparator;
+import org.jemmy.input.AWTRobotInputFactory;
 import org.jemmy.input.glass.GlassInputFactory;
 import org.jemmy.interfaces.ControlInterfaceFactory;
 import org.jemmy.lookup.AbstractParent;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.lookup.PlainLookup;
+import org.netbeans.jemmy.image.PNGImageLoader;
 
 /**
  *
@@ -52,14 +57,32 @@ public class Root extends AbstractParent<Scene> {
     private Environment env;
     private SceneWrapper wrapper;
     private SceneList scenes;
+    
+    public static void useGlassRobot(Environment env) {
+        env.setProperty(ControlInterfaceFactory.class, new GlassInputFactory());
+        env.setProperty(ImageCapturer.class, new GlassImageCapturer());
+        env.setProperty(ImageComparator.class, new GlassPixelImageComparator(env));
+        env.setProperty(ImageLoader.class, new FileGlassImageLoader());
+    }
 
+    public static void useAWTRobot(Environment env) {
+        env.setProperty(ControlInterfaceFactory.class, new AWTRobotInputFactory());
+        env.setProperty(ImageCapturer.class, new AWTRobotCapturer());
+        env.setProperty(ImageComparator.class, new BufferedImageComparator(env));
+        env.setProperty(ImageLoader.class, new FileGlassImageLoader());
+    }
+    
     private Root() {
         this.env = new Environment(Environment.getEnvironment());
+        this.env.setPropertyIfNotSet(RasterComparator.class, new PixelEqualityRasterComparator(0));
+        String osName = System.getProperty("os.name").toLowerCase();
+        if(osName.contains("nux") || osName.contains("nix") || osName.contains("sunos")) {
+            //until glassrobot works reliably
+            useAWTRobot(this.env);
+        } else {
+            useGlassRobot(this.env);
+        }
         this.env.setPropertyIfNotSet(ActionExecutor.class, QueueExecutor.EXECUTOR);
-        this.env.setPropertyIfNotSet(ControlInterfaceFactory.class, new GlassInputFactory());
-        this.env.setPropertyIfNotSet(ImageCapturer.class, new GlassImageCapturer());
-        this.env.setPropertyIfNotSet(ImageComparator.class, new GlassPixelImageComparator(this.env));
-        this.env.setPropertyIfNotSet(ImageLoader.class, new FileGlassImageLoader(new File(System.getProperty("user.dir"))));
         this.env.setProperty(THEME_FACTORY, ThemeDriverFactory.newInstance());
         this.env.initTimeout(QueueExecutor.QUEUE_THROUGH_TIME);
         this.env.initTimeout(QueueExecutor.QUEUE_IDENTIFYING_TIMEOUT);
@@ -118,4 +141,5 @@ public class Root extends AbstractParent<Scene> {
         Object propValue = env.getProperty(property);
         return propValue != null && (propValue.equals(true) || propValue.equals("true"));
     }
+
 }

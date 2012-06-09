@@ -27,6 +27,7 @@ package org.jemmy.image;
 import com.sun.glass.ui.Application;
 import com.sun.glass.ui.Robot;
 import org.jemmy.Rectangle;
+import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
 import org.jemmy.env.Timeout;
@@ -50,9 +51,17 @@ public class GlassImageCapturer implements ImageCapturer{
     }
 
     @Override
-    public GlassImage capture(Wrap<?> wrap, Rectangle rctngl) {
-        Rectangle rect = wrap.getScreenBounds();
-        return new GlassImage(wrap.getEnvironment(), getRobot().getScreenCapture(rect.x + rctngl.x, rect.y + rctngl.y, rctngl.width, rctngl.height));
+    public GlassImage capture(final Wrap<?> wrap, final Rectangle rctngl) {
+        final Rectangle rect = wrap.getScreenBounds();
+        return new GetAction<GlassImage>() {
+
+            @Override
+            public void run(Object... os) throws Exception {
+                setResult(new GlassImage(wrap.getEnvironment(), 
+                        getRobot().
+                        getScreenCapture(rect.x + rctngl.x, rect.y + rctngl.y, rctngl.width, rctngl.height)));
+            }
+        }.dispatch(wrap.getEnvironment());
     }
 
     public static Robot getRobot() {
