@@ -8,7 +8,6 @@ import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.image.Image;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.timing.State;
-import static org.junit.Assert.assertNotNull;
 import org.junit.*;
 
 /**
