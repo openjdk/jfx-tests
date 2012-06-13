@@ -26,6 +26,11 @@ package org.jemmy.fx;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import org.jemmy.control.DefaultWrapper;
@@ -35,39 +40,63 @@ import org.jemmy.env.Environment;
 import org.jemmy.fx.control.*;
 
 /**
- * Wraps <code>javafx.scene.Node</code> into an appropriate Wrap.
+ * Wraps
+ * <code>javafx.scene.Node</code> into an appropriate Wrap.
+ *
  * @author shura
  */
 public class NodeWrapper extends DefaultWrapper {
 
-    private static final Class<? extends Wrap>[] OPERATORS = new Class[] {
-        NodeWrap.class, TextWrap.class,
-        ControlWrap.class, TextControlWrap.class,
-        CheckBoxWrap.class, ToggleButtonWrap.class,
-        SliderWrap.class, ScrollBarWrap.class,
-	TextInputControlWrap.class, ListViewWrap.class,
-        MenuBarWrap.class, MenuButtonWrap.class,
-        ToolBarWrap.class, ChoiceBoxWrap.class, ComboBoxWrap.class,
-        TreeViewWrap.class, TabPaneWrap.class, TableViewWrap.class,
-        TableCellWrap.class, SplitPaneWrap.class, SeparatorWrap.class,
-        TitledPaneWrap.class
-    };
+    private static final List<Class<? extends Wrap>> OPERATORS = new ArrayList<Class<? extends Wrap>>();
+    
+    static {
+        OPERATORS.add(NodeWrap.class);
+        OPERATORS.add(TextWrap.class);
+        OPERATORS.add(ControlWrap.class);
+        OPERATORS.add(TextControlWrap.class);
+        OPERATORS.add(CheckBoxWrap.class);
+        OPERATORS.add(ToggleButtonWrap.class);
+        OPERATORS.add(SliderWrap.class);
+        OPERATORS.add(ScrollBarWrap.class);
+        OPERATORS.add(TextInputControlWrap.class);
+        OPERATORS.add(ListViewWrap.class);
+        OPERATORS.add(MenuBarWrap.class);
+        OPERATORS.add(MenuButtonWrap.class);
+        OPERATORS.add(ToolBarWrap.class);
+        OPERATORS.add(ChoiceBoxWrap.class);
+        OPERATORS.add(ComboBoxWrap.class);
+        OPERATORS.add(TreeViewWrap.class);
+        OPERATORS.add(TabPaneWrap.class);
+        OPERATORS.add(TableViewWrap.class);
+        OPERATORS.add(TableCellWrap.class);
+        OPERATORS.add(SplitPaneWrap.class);
+        OPERATORS.add(SeparatorWrap.class);
+        OPERATORS.add(TitledPaneWrap.class);
+    }
 
     /**
-     * 
-     * @param scene A scene where the Nodes are assumed to be within. The scene 
+     * Make sure to modify the supported wrap list up-front.
+     */
+    public static List<Class<? extends Wrap>> wraps() {
+        return OPERATORS;
+    }
+
+    /**
+     *
+     * @param scene A scene where the Nodes are assumed to be within. The scene
      * is later passed to all newly created NodeWrap's
-     * @param env - an environment instance. Typically, a clone of the container 
+     * @param env - an environment instance. Typically, a clone of the container
      * environment is used.
-     * @deprecated use <code>#NodeWrapper(org.jemmy.env.Environment)</code>
-     * @see #NodeWrapper(org.jemmy.env.Environment) 
+     * @deprecated use
+     * <code>#NodeWrapper(org.jemmy.env.Environment)</code>
+     * @see #NodeWrapper(org.jemmy.env.Environment)
      */
     public NodeWrapper(Scene scene, Environment env) {
-        super(env, OPERATORS);
+        super(env, OPERATORS.toArray(new Class[0]));
     }
 
     public NodeWrapper(Environment env) {
-        super(env, OPERATORS);
+        super(env, OPERATORS.toArray(new Class[0]));
     }
 
     /**
