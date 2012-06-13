@@ -117,7 +117,7 @@ public class ByText<T> extends ByStringLookup<T> {
                 @Override
                 public void run(Object... parameters) {
                     if(obj instanceof MenuItem) {
-                        setResult(Text.class.cast(obj).getText());
+                        setResult(MenuItem.class.cast(obj).getText());
                     } else if(obj instanceof Tab) {
                         setResult(Tab.class.cast(obj).getText());
                     } else {

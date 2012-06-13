@@ -78,8 +78,9 @@ public class TreeTest {
     //@Test
     public void lookup() {
         new ScrollBarDock(tree.wrap().as(Parent.class, Node.class)).asScroll().caret().to(0);
-        assertTrue(3
-                < tree.asItemParent().
+        new TreeItemDock(tree.asItemParent(), new EqualsLookup("01")).asTreeItem().expand();
+        assertTrue(2
+                <= tree.asItemParent().
                 lookup(new ByToStringLookup<Object>("01", StringComparePolicy.SUBSTRING)).size());
         assertEquals(1,
                 tree.asItemParent().
@@ -125,7 +126,7 @@ public class TreeTest {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
     }
 
-    //@Test
+    @Test
     public void edit() {
         tree.asItemParent().setEditor(new TextFieldCellEditor());
         tree.asTree().selector().select(new ByToStringLookup("00"), new ByToStringLookup("00c"));
@@ -134,7 +135,7 @@ public class TreeTest {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("00")).asTreeItem().collapse();
     }
 
-    //@Test
+    ////@Test
     public void multiple() {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("0")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
@@ -152,7 +153,7 @@ public class TreeTest {
         p.lookup(new EqualsLookup("02")).as(TreeItem.class).expand();
     }
     
-    @Test
+    //@Test
     public void itemWrap() {
         EditableCellOwner<javafx.scene.control.TreeItem> p = tree.wrap().as(EditableCellOwner.class, javafx.scene.control.TreeItem.class);
         p.lookup().size();
