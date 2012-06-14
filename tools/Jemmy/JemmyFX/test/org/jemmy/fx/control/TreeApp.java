@@ -46,7 +46,7 @@ import javafx.util.Callback;
  */
 public class TreeApp  extends Application {
     public static void main(String[] args) throws AWTException {
-//        org.jemmy.client.Browser.runBrowser();
+//        org.jemmy.fx.Browser.runBrowser();
         launch(args);
     }
 

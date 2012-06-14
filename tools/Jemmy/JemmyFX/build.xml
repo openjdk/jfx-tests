@@ -29,6 +29,8 @@ questions.
 
     <property name="jemmy.lib.dir" location="lib/jemmy"/>
     <property name="javafx.lib.dir" location="lib/javafx"/>
+    <property name="test.includes" value="**/*Sample.java"/>
+    <property name="javac.includes" value="${test.includes}"/>
     <target name="jar-full" depends="jar">
         <property name="jar.name" location="${basedir}/dist/JemmyJCFull.jar"/>
         <jar destfile="${jar.name}" filesetmanifest="merge">
@@ -98,4 +100,5 @@ questions.
             <fileset dir="${javafx.home}/rt/bin"/>
         </copy>
     </target>
+    <target depends="test-single" name="test"/>
 </project>
