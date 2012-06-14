@@ -75,7 +75,7 @@ public class TreeTest {
     public void tearDown() {
     }
 
-    //@Test
+    @Test
     public void lookup() {
         new ScrollBarDock(tree.wrap().as(Parent.class, Node.class)).asScroll().caret().to(0);
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("01")).asTreeItem().expand();
@@ -99,7 +99,7 @@ public class TreeTest {
         }
     }
 
-    //@Test
+    @Test
     public void tree() {
         tree.asTree().selector().select(new ByToStringLookup("0"));
         assertEquals("000", tree.asTree().selector().select(new ByToStringLookup("00"), new ByToStringLookup("000")).getControl());
@@ -110,7 +110,7 @@ public class TreeTest {
         assertEquals("023", tree.asTree().selector().select(new ByToStringLookup("02"), new ByToStringLookup("023")).getControl());
     }
 
-    //@Test
+    @Test
     public void collapseAll() {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("0")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
@@ -135,7 +135,7 @@ public class TreeTest {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("00")).asTreeItem().collapse();
     }
 
-    ////@Test
+    //@Test
     public void multiple() {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("0")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
@@ -145,7 +145,7 @@ public class TreeTest {
         assertEquals(3, tree.wrap().getControl().getSelectionModel().getSelectedItems().size());
     }
 
-    //@Test
+    @Test
     public void wrap() {
         Parent<String> p = tree.wrap().as(Parent.class, String.class);
         p.lookup().size();
@@ -153,7 +153,7 @@ public class TreeTest {
         p.lookup(new EqualsLookup("02")).as(TreeItem.class).expand();
     }
     
-    //@Test
+    @Test
     public void itemWrap() {
         EditableCellOwner<javafx.scene.control.TreeItem> p = tree.wrap().as(EditableCellOwner.class, javafx.scene.control.TreeItem.class);
         p.lookup().size();
