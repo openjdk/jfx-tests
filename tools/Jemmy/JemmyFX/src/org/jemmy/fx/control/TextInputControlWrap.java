@@ -55,8 +55,8 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
     }
 
     public static final String IS_FOCUSED_PROP_NAME = "isFocused";
-    SelectionText inputter;
-    TextInputFocus focus = null;
+    private SelectionText inputter;
+    private TextInputFocus focus = null;
 
     /**
      *
@@ -232,6 +232,7 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
         return inputter.selection();
     }
 
+    @Override
     public Focus focuser() {
         if(focus == null) {
             focus = new TextInputFocus();

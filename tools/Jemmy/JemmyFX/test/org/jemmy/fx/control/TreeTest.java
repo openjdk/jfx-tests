@@ -75,11 +75,12 @@ public class TreeTest {
     public void tearDown() {
     }
 
-    //@Test
+    @Test
     public void lookup() {
         new ScrollBarDock(tree.wrap().as(Parent.class, Node.class)).asScroll().caret().to(0);
-        assertTrue(3
-                < tree.asItemParent().
+        new TreeItemDock(tree.asItemParent(), new EqualsLookup("01")).asTreeItem().expand();
+        assertTrue(2
+                <= tree.asItemParent().
                 lookup(new ByToStringLookup<Object>("01", StringComparePolicy.SUBSTRING)).size());
         assertEquals(1,
                 tree.asItemParent().
@@ -98,7 +99,7 @@ public class TreeTest {
         }
     }
 
-    //@Test
+    @Test
     public void tree() {
         tree.asTree().selector().select(new ByToStringLookup("0"));
         assertEquals("000", tree.asTree().selector().select(new ByToStringLookup("00"), new ByToStringLookup("000")).getControl());
@@ -109,7 +110,7 @@ public class TreeTest {
         assertEquals("023", tree.asTree().selector().select(new ByToStringLookup("02"), new ByToStringLookup("023")).getControl());
     }
 
-    //@Test
+    @Test
     public void collapseAll() {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("0")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
@@ -125,7 +126,7 @@ public class TreeTest {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
     }
 
-    //@Test
+    @Test
     public void edit() {
         tree.asItemParent().setEditor(new TextFieldCellEditor());
         tree.asTree().selector().select(new ByToStringLookup("00"), new ByToStringLookup("00c"));
@@ -144,7 +145,7 @@ public class TreeTest {
         assertEquals(3, tree.wrap().getControl().getSelectionModel().getSelectedItems().size());
     }
 
-    //@Test
+    @Test
     public void wrap() {
         Parent<String> p = tree.wrap().as(Parent.class, String.class);
         p.lookup().size();
