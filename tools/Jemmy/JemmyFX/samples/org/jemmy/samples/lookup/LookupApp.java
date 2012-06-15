@@ -35,7 +35,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * This small FX app is used in lookup JemmyFX demos. It displays a few labels
+ * This small FX app is used in lookup JemmyFX samples. It displays a few labels
  * with different text and, should the mouse be place over a label, displays the 
  * label's text at the bottom of the stage.
  * @author shura
