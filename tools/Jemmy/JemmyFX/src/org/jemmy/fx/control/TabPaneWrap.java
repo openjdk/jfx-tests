@@ -27,19 +27,15 @@ package org.jemmy.fx.control;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.jemmy.JemmyException;
-import org.jemmy.Point;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.fx.NodeWrap;
-import org.jemmy.control.MethodProperties;
 import org.jemmy.env.Environment;
-import org.jemmy.fx.FXClickFocus;
 import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.ControlInterface;
 import org.jemmy.interfaces.Focus;
@@ -113,7 +109,7 @@ public class TabPaneWrap<CONTROL extends TabPane> extends NodeWrap<CONTROL> {
             return (INTERFACE) new TabParent(this, type);
         }
         if (Selectable.class.equals(interfaceClass)) {
-            return (INTERFACE) new TabPaneSelectable();
+            return (INTERFACE) objectSelectable;
         }
         return super.as(interfaceClass, type);
     }
@@ -155,7 +151,6 @@ public class TabPaneWrap<CONTROL extends TabPane> extends NodeWrap<CONTROL> {
         }
 
         @Override
-        @Property(Selectable.STATE_PROP_NAME)
         public Tab getState() {
             return getSelectedItem();
         }

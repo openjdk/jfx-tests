@@ -72,6 +72,7 @@ public class NodeWrapper extends DefaultWrapper {
         OPERATORS.add(SplitPaneWrap.class);
         OPERATORS.add(SeparatorWrap.class);
         OPERATORS.add(TitledPaneWrap.class);
+        OPERATORS.add(AccordionWrap.class);
     }
 
     /**
