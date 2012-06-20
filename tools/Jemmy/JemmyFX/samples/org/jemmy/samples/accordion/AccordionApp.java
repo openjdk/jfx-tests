@@ -20,6 +20,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class AccordionApp extends Application {
+    Accordion accordion = new Accordion();
+
     public static void main(String[] args) throws AWTException {
         launch(args);
     }
@@ -29,7 +31,6 @@ public class AccordionApp extends Application {
         VBox box = new VBox();
         Scene scene = new Scene(box);
 
-        final Accordion accordion = new Accordion();
 
         accordion.getPanes().add(new TitledPane("First pane", new Label("First pane's content")));
         accordion.getPanes().add(new TitledPane("Second pane", new Label("Second pane's content")));
@@ -39,10 +40,7 @@ public class AccordionApp extends Application {
         Button reset = new Button("Reset");
         reset.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                TitledPane pane = accordion.getExpandedPane();
-                if (pane != null) {
-                    accordion.getExpandedPane().setExpanded(false);
-                }
+                reset();
             }
         });
         box.getChildren().add(reset);
@@ -53,5 +51,15 @@ public class AccordionApp extends Application {
         stage.setHeight(300);
 
         stage.show();
+
+        reset();
+    }
+
+    private void reset() {
+        TitledPane pane = accordion.getExpandedPane();
+        if (pane != null) {
+            pane.setExpanded(false);
+        }
+        accordion.getPanes().get(1).setExpanded(true);
     }
 }

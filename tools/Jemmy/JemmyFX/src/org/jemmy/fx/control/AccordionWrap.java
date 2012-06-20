@@ -24,6 +24,7 @@ import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
 import org.jemmy.interfaces.TypeControlInterface;
 import org.jemmy.lookup.LookupCriteria;
+import org.jemmy.timing.State;
 
 @ControlType(Accordion.class)
 @ControlInterfaces(value = {Selectable.class, Selectable.class},
@@ -35,6 +36,7 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
     public static final String SELECTED_TITLED_PANE_PROP = "selectedTitledPane";
     public static final String SELECTED_TITLE = "selectedTitle";
     public static final String ITEMS_PROP = "titledPanes";
+    public static final String TITLES_PROP = "titles";
 
     private Selectable<TitledPane> titledPaneSelectable = new TitledPaneSelectable();
     private Selectable<String> stringSelectable = new StringSelectable();
@@ -89,11 +91,25 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
     }
 
     @Property(ITEMS_PROP)
-    public ObservableList<TitledPane> getItems() {
+    public List<TitledPane> getItems() {
         return new GetAction<ObservableList<TitledPane>>() {
             @Override
             public void run(Object... os) throws Exception {
                 setResult(getControl().getPanes());
+            }
+        }.dispatch(getEnvironment());
+    }
+
+    @Property(TITLES_PROP)
+    public List<String> getTitles() {
+        return new GetAction<List<String>>() {
+            @Override
+            public void run(Object... os) throws Exception {
+                ArrayList<String> list = new ArrayList<String>();
+                for (TitledPane pane : getItems()) {
+                    list.add(pane.getText());
+                }
+                setResult(list);
             }
         }.dispatch(getEnvironment());
     }
@@ -127,17 +143,7 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
 
         @Override
         public List<TitledPane> getStates() {
-            return new GetAction<ArrayList<TitledPane>>() {
-                @Override
-                public void run(Object... parameters) {
-                    setResult(new ArrayList<TitledPane>(getItems()));
-                }
-
-                @Override
-                public String toString() {
-                    return "Fetching all data items from " + TitledPaneSelectable.this;
-                }
-            }.dispatch(getEnvironment());
+            return getItems();
         }
 
         @Override
@@ -153,12 +159,18 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
             return TitledPane.class;
         }
 
-        public void select(TitledPane state) {
+        public void select(final TitledPane state) {
             if (getSelectedItem() != state) {
                 if (state == null) {
-                    state = getSelectedItem();
+                    AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap().mouse().click();
+                } else {
+                    AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(state)).wrap().mouse().click();
                 }
-                AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(state)).wrap().mouse().click();
+                AccordionWrap.this.waitState(new State<Boolean>() {
+                    public Boolean reached() {
+                        return getState() == state;
+                    }
+                }, Boolean.TRUE);
             }
         }
     }
@@ -167,22 +179,7 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
 
         @Override
         public List<String> getStates() {
-            return new GetAction<ArrayList<String>>() {
-
-                @Override
-                public void run(Object... parameters) {
-                     ArrayList<String> list = new ArrayList<String>();
-                     for (TitledPane pane : getItems()) {
-                         list.add(pane.getText());
-                     }
-                    setResult(list);
-                }
-
-                @Override
-                public String toString() {
-                    return "Fetching all data items from " + StringSelectable.this;
-                }
-            }.dispatch(getEnvironment());
+            return getTitles();
         }
 
         @Override
@@ -199,7 +196,7 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
         }
 
         public void select(final String state) {
-            if (getState() != state) {
+            if (getState() == null ? state != null : !getState().equals(state)) {
                 if (state == null) {
                     AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap().mouse().click();
                 } else {
@@ -208,6 +205,11 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
                             return cntrl.getText().equals(state);
                         }
                     }).wrap().mouse().click();
+                    AccordionWrap.this.waitState(new State<Boolean>() {
+                        public Boolean reached() {
+                            return (getState() == null ? state == null : getState().equals(state));
+                        }
+                    }, Boolean.TRUE);
                 }
             }
         }

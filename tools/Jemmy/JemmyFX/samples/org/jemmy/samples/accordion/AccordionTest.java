@@ -9,11 +9,10 @@ import javafx.scene.control.Accordion;
 import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.AccordionDock;
-import org.jemmy.fx.control.AccordionWrap;
 import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.fx.control.TitledPaneDock;
 import org.jemmy.resources.StringComparePolicy;
-import org.jemmy.timing.State;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,31 +32,12 @@ public class AccordionTest {
     }
 
     /**
-     * How to expandand collapse TitledPane of Accordion control using Expandable interface.
-     */
-    @Test
-    public void expandAandCollapse() {
-        TitledPaneDock first_pane = new TitledPaneDock(scene.asParent(), "First pane", StringComparePolicy.EXACT);
-        first_pane.asExpandable().expand();
-        first_pane.asCollapsible().collapse();
-
-        TitledPaneDock second_pane = new TitledPaneDock(scene.asParent(), "Second pane", StringComparePolicy.EXACT);
-        second_pane.asExpandable().expand();
-        second_pane.asCollapsible().collapse();
-    }
-
-    /**
      * How to expand TitledPane of Accordion control by title of TitledPane using Selectable interface.
      */
     @Test
     public void selectByTitle() {
-        AccordionDock accordion = new AccordionDock(scene.asParent(), Accordion.class);
-
-        accordion.asTitleSelectable().selector().select("First pane");
-        accordion.wrap().waitProperty(AccordionWrap.SELECTED_TITLE, "First pane");
-
-        accordion.asTitleSelectable().selector().select("Second pane");
-        accordion.wrap().waitProperty(AccordionWrap.SELECTED_TITLE, "Second pane");
+        new AccordionDock(scene.asParent(), Accordion.class).
+                asTitleSelectable().selector().select("First pane");
     }
 
     /**
@@ -66,25 +46,42 @@ public class AccordionTest {
     @Test
     public void selectByTitlePane() {
         AccordionDock accordion = new AccordionDock(scene.asParent(), Accordion.class);
-
+        // first you need find a titled pane you are going to select
         TitledPaneDock first_pane = new TitledPaneDock(scene.asParent(), "First pane", StringComparePolicy.EXACT);
+        // then select it through selectable interface
         accordion.asTitledPaneSelectable().selector().select(first_pane.wrap().getControl());
-
-        TitledPaneDock second_pane = new TitledPaneDock(scene.asParent(), "Second pane", StringComparePolicy.EXACT);
-        accordion.asTitledPaneSelectable().selector().select(second_pane.wrap().getControl());
     }
 
     /**
-     * How to collapse TitledPane in an Accordion control using Selectable interface.
+     * How to expand or collapse a single TitledPane.
+     */
+    @Test
+    public void expandAndCollapse() {
+        // you could manually collapse the expanded titled pane
+        new TitledPaneDock(new AccordionDock(scene.asParent(), Accordion.class).asParent(), "Second pane", StringComparePolicy.EXACT).
+                asCollapsible().collapse();
+        // similarly, you can expand
+        // note that titled pane is just another node an so you can find it within any container
+        new TitledPaneDock(scene.asParent(), "First pane", StringComparePolicy.EXACT).asExpandable().expand();
+    }
+
+    /**
+     * How to collapse everything.
      */
     @Test
     public void collapseTitlePane() {
-        final AccordionDock accordion = new AccordionDock(scene.asParent(), Accordion.class);
-        accordion.asTitleSelectable().selector().select(null);
-        accordion.wrap().waitState(new State<Boolean>() {
-            public Boolean reached() {
-                return accordion.wrap().getProperty(AccordionWrap.SELECTED_TITLED_PANE_PROP) == null ? Boolean.TRUE : Boolean.FALSE;
-            }
-        }, Boolean.TRUE);
+        // you can collapse everything by selecting null
+        new AccordionDock(scene.asParent(), Accordion.class).asTitleSelectable().selector().select(null);
+    }
+
+    /**
+     * How to use properties.
+     */
+    @Test
+    public void properties() {
+        AccordionDock accordion = new AccordionDock(scene.asParent(), Accordion.class);
+        // you can use following properties: SelectedTitle, Titles, SelectedTitledPane, TitledPanes
+        Assert.assertEquals(accordion.getSelectedTitle(), accordion.getTitles().get(1));
+        Assert.assertEquals(accordion.getSelectedTitledPane(), accordion.getTitledPanes().get(1));
     }
 }
