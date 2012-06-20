@@ -47,7 +47,6 @@ public class MouseDNDSample extends InputSampleBase {
         redTarget.drag().dnd(new Point(10, 10));
 
         checkMouseEvent(RED, MouseEvent.MOUSE_PRESSED, MouseButton.PRIMARY, 50, 50, 1);
-        checkMouseEvent(RED, MouseEvent.MOUSE_DRAGGED, MouseButton.PRIMARY, 50, 50, 1);
         checkMouseEvent(RED, MouseEvent.MOUSE_DRAGGED, MouseButton.PRIMARY, 10, 10, 1);
         checkMouseEvent(RED, MouseEvent.MOUSE_RELEASED, MouseButton.PRIMARY, 10, 10, 1);
     }
@@ -60,7 +59,6 @@ public class MouseDNDSample extends InputSampleBase {
         redTarget.drag().dnd(blueTarget.wrap(), new Point(10, 10));
 
         checkMouseEvent(RED, MouseEvent.MOUSE_PRESSED, MouseButton.PRIMARY, 50, 50, 1);
-        checkMouseEvent(RED, MouseEvent.MOUSE_DRAGGED, MouseButton.PRIMARY, 50, 50, 1);
         checkMouseEvent(RED, MouseEvent.MOUSE_DRAGGED, MouseButton.PRIMARY, -90, 10, 1);
         checkMouseEvent(RED, MouseEvent.MOUSE_RELEASED, MouseButton.PRIMARY, -90, 10, 1);
     }
@@ -74,9 +72,7 @@ public class MouseDNDSample extends InputSampleBase {
                 Mouse.MouseButtons.BUTTON3, Keyboard.KeyboardModifiers.SHIFT_DOWN_MASK);
 
         checkMouseEvent(RED, MouseEvent.MOUSE_PRESSED, MouseButton.SECONDARY, 20, 20, 1);
-        checkMouseEvent(RED, MouseEvent.MOUSE_DRAGGED, MouseButton.SECONDARY, 20, 20, 1);
         checkMouseEvent(RED, MouseEvent.MOUSE_DRAGGED, MouseButton.SECONDARY, -90, 10, 1);
         checkMouseEvent(RED, MouseEvent.MOUSE_RELEASED, MouseButton.SECONDARY, -90, 10, 1);
     }
-
 }

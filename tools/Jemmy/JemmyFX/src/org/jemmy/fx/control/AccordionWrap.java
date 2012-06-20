@@ -26,6 +26,10 @@ import org.jemmy.interfaces.TypeControlInterface;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
 
+/**
+ * Wrapper for Accordion control. It implements Selectable to be able to select specific titled pane
+ * via Selectable.selector().select(STATE state).
+ */
 @ControlType(Accordion.class)
 @ControlInterfaces(value = {Selectable.class, Selectable.class},
                    encapsulates = {TitledPane.class, String.class},
