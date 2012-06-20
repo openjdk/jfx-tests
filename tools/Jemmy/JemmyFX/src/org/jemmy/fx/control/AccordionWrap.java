@@ -34,7 +34,7 @@ import org.jemmy.timing.State;
 public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> {
     
     public static final String SELECTED_TITLED_PANE_PROP = "selectedTitledPane";
-    public static final String SELECTED_TITLE = "selectedTitle";
+    public static final String SELECTED_TITLE_PROP = "selectedTitle";
     public static final String ITEMS_PROP = "titledPanes";
     public static final String TITLES_PROP = "titles";
 
@@ -42,9 +42,8 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
     private Selectable<String> stringSelectable = new StringSelectable();
 
     /**
-     *
+     * 
      * @param env
-     * @param scene
      * @param nd
      */
     @SuppressWarnings("unchecked")
@@ -52,23 +51,45 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
         super(env, nd);
     }
 
+    /**
+     *
+     * @param <INTERFACE>
+     * @param interfaceClass
+     * @return
+     */
     @Override
     public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
-        // Default Parent is Parent<Node> which is super
         if (Selectable.class.equals(interfaceClass)) {
             return true;
         }
         return super.is(interfaceClass);
     }
 
+    /**
+     *
+     * @param <TYPE>
+     * @param <INTERFACE>
+     * @param interfaceClass
+     * @param type
+     * @return
+     */
     @Override
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Selectable.class.equals(interfaceClass)) {
+        if (Selectable.class.equals(interfaceClass) && TitledPane.class.equals(type)) {
+            return true;
+        }
+        if (Selectable.class.equals(interfaceClass) && String.class.equals(type)) {
             return true;
         }
         return super.is(interfaceClass, type);
     }
 
+    /**
+     *
+     * @param <INTERFACE>
+     * @param interfaceClass
+     * @return
+     */
     @Override
     @SuppressWarnings("unchecked")
     public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
@@ -78,6 +99,14 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
         return super.as(interfaceClass);
     }
 
+    /**
+     *
+     * @param <TYPE>
+     * @param <INTERFACE>
+     * @param interfaceClass
+     * @param type
+     * @return
+     */
     @Override
     @SuppressWarnings("unchecked")
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
@@ -90,6 +119,10 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
         return super.as(interfaceClass, type);
     }
 
+    /**
+     *
+     * @return
+     */
     @Property(ITEMS_PROP)
     public List<TitledPane> getItems() {
         return new GetAction<ObservableList<TitledPane>>() {
@@ -100,6 +133,10 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
         }.dispatch(getEnvironment());
     }
 
+    /**
+     *
+     * @return
+     */
     @Property(TITLES_PROP)
     public List<String> getTitles() {
         return new GetAction<List<String>>() {
@@ -114,6 +151,10 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
         }.dispatch(getEnvironment());
     }
 
+    /**
+     *
+     * @return
+     */
     @Property(SELECTED_TITLED_PANE_PROP)
     public TitledPane getSelectedItem() {
         return new GetAction<TitledPane>() {
@@ -124,7 +165,11 @@ public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> 
         }.dispatch(getEnvironment());
     }
 
-    @Property(SELECTED_TITLE)
+    /**
+     *
+     * @return
+     */
+    @Property(SELECTED_TITLE_PROP)
     public String getSelectedTitle() {
         return new GetAction<String>() {
             @Override
