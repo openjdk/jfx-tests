@@ -35,7 +35,7 @@ import org.jemmy.timing.State;
                    encapsulates = {TitledPane.class, String.class},
                    name= {"asTitledPaneSelectable", "asTitleSelectable"})
 
-public class AccordionWrap<CONTROL extends Accordion> extends NodeWrap<CONTROL> {
+public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTROL> {
     
     public static final String SELECTED_TITLED_PANE_PROP = "selectedTitledPane";
     public static final String SELECTED_TITLE_PROP = "selectedTitle";
