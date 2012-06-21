@@ -128,7 +128,7 @@ public class KnobTrackScrollerImpl extends KnobDragScrollerImpl {
     }
 
     private void visibilityCheck() {
-        if (!wrap.getControl().isVisible()) {
+        if (!wrap.getProperty(Boolean.class, "isVisible")) {
             throw new JemmyException("Attempt to scroll invisible scroll bar");
         }
     }

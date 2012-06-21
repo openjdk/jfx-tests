@@ -104,12 +104,11 @@ public class TableCellItemWrap<ITEM extends Object> extends ItemWrap<ITEM> imple
 
         final long desiredIndex = items.indexOf(row);
 
-        final Lookup scrollBarLookup = tableViewWrap.as(Parent.class, Node.class).lookup(ScrollBar.class);
-        final Wrap<? extends ScrollBar> scrollBarWrap = scrollBarLookup.wrap();
-        if (!scrollBarWrap.getControl().isVisible()) {
+        final Wrap<? extends ScrollBar> scrollBarWrap = tableViewWrap.as(Parent.class, Node.class).lookup(ScrollBar.class).wrap();
+        if (!scrollBarWrap.getProperty(Boolean.class, "isVisible")) {
             return;
         }
-        CaretOwner scroller = (CaretOwner) scrollBarLookup.as(CaretOwner.class);
+        CaretOwner scroller = scrollBarWrap.as(CaretOwner.class);
         Caret c = scroller.caret();
 
         Direction direction = new Direction() {
