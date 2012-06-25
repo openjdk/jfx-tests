@@ -26,25 +26,25 @@ package org.jemmy.fx;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.jemmy.JemmyException;
 import org.jemmy.Rectangle;
+import org.jemmy.action.Action;
 import org.jemmy.action.GetAction;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.Wrap;
+import org.jemmy.control.*;
 import org.jemmy.dock.DefaultParent;
 import org.jemmy.dock.DefaultWrapper;
 import org.jemmy.dock.ObjectLookup;
 import org.jemmy.env.Environment;
 import org.jemmy.interfaces.Parent;
+import org.jemmy.interfaces.Show;
+import org.jemmy.interfaces.Showable;
 import org.jemmy.interfaces.TypeControlInterface;
-import org.jemmy.lookup.AbstractParent;
 import org.jemmy.lookup.Any;
-import org.jemmy.lookup.HierarchyLookup;
-import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.timing.State;
 
 /**
  *
@@ -76,6 +76,7 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
         return Root.ROOT;
     }
     private Parent parent = null;
+    private Showable showable = null;
 
     public SceneWrap(Environment env, Scene node) {
         super(env, node);
@@ -120,6 +121,22 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
                 window.getWidth(), window.getHeight());
     }
 
+    @Property("isFocused")
+    public boolean isFocused() {
+        return isFocused(getControl(), getEnvironment());
+    }
+
+    @Property("isShowing")
+    public boolean isShowing() {
+        return new GetAction<Boolean>() {
+
+            @Override
+            public void run(Object... os) throws Exception {
+                getControl().getWindow().isShowing();
+            }
+        }.dispatch(getEnvironment());
+    }
+
     @Override
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
         if (Parent.class.isAssignableFrom(interfaceClass) && Node.class.equals(type)) {
@@ -137,5 +154,55 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
             return (INTERFACE) parent;
         }
         return super.as(interfaceClass, type);
+    }
+
+    @As
+    public Showable asShowable() {
+        if (showable == null) {
+            showable = new SceneShowable();
+        }
+        return showable;
+    }
+
+    static void show(final Environment env, final Scene scene) {
+        env.getExecutor().execute(env, true, new Action() {
+
+            @Override
+            public void run(Object... os) throws Exception {
+                Window stage = scene.getWindow();
+                if (stage instanceof Stage) {
+                    if (!((Stage) stage).isFocused()) {
+                        ((Stage) stage).toFront();
+                    }
+                }
+            }
+        });
+        env.getWaiter(WAIT_STATE_TIMEOUT).ensureValue(true, new State<Boolean>() {
+
+            public Boolean reached() {
+                return isFocused(scene, env);
+            }
+        });
+    }
+
+    private static boolean isFocused(final Scene scene, Environment env) {
+        return new GetAction<Boolean>() {
+
+            @Override
+            public void run(Object... os) throws Exception {
+                setResult(scene.getWindow().isFocused());
+            }
+        }.dispatch(env);
+    }
+
+    private class SceneShowable implements Showable, Show {
+
+        public Show shower() {
+            return this;
+        }
+
+        public void show() {
+            SceneWrap.show(getEnvironment(), getControl());
+        }
     }
 }

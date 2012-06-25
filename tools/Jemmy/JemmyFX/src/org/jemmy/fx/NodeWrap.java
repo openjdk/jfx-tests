@@ -31,21 +31,12 @@ import javafx.scene.Scene;
 import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.MethodProperties;
-import org.jemmy.control.Property;
-import org.jemmy.control.Wrap;
-import org.jemmy.control.Wrapper;
+import org.jemmy.control.*;
 import org.jemmy.dock.DefaultWrapper;
 import org.jemmy.dock.DockInfo;
 import org.jemmy.dock.ObjectLookup;
 import org.jemmy.env.Environment;
-import org.jemmy.interfaces.Focus;
-import org.jemmy.interfaces.Focusable;
-import org.jemmy.interfaces.Mouse;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.TypeControlInterface;
+import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
@@ -71,6 +62,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     private Parent parent = null;
     private Mouse mouse = null;
     private Focus focus;
+    private Showable show = null;
     private static Wrapper wrapper = new NodeWrapper(Root.ROOT.getEnvironment());
 
     @DefaultWrapper
@@ -248,5 +240,24 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
                             }).size() > 0));
                     }
                 }.dispatch(getEnvironment());
+    }
+    
+    @As
+    public Showable asShowable() {
+        if(show == null) {
+            show = new NodeShowable();
+        }
+        return show;
+    }
+    
+    private class NodeShowable implements Showable, Show {
+
+        public Show shower() {
+            return this;
+        }
+
+        public void show() {
+            SceneWrap.show(getEnvironment(), getScene());
+        }
     }
 }

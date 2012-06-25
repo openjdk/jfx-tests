@@ -76,6 +76,8 @@ public class TreeApp  extends Application {
 
             textBox.setText(getItem());
             textBox.selectAll();
+            
+            textBox.requestFocus();
 
             setText(null);
             setGraphic(textBox);

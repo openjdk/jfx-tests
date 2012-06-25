@@ -130,7 +130,10 @@ public class TreeTest {
     public void edit() {
         tree.asItemParent().setEditor(new TextFieldCellEditor());
         tree.asTree().selector().select(new ByToStringLookup("00"), new ByToStringLookup("00c"));
-        EditableCell c00c = new TreeItemDock(tree.asItemParent(), new EqualsLookup("00c")).asEditableCell();
+        TreeItemDock item00 = new TreeItemDock(tree.asItemParent(), new EqualsLookup("00c"));
+        EditableCell c00c = item00.asEditableCell();
+        //workaround for http://javafx-jira.kenai.com/browse/RT-15205
+        item00.mouse().click();
         c00c.edit("11");
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("00")).asTreeItem().collapse();
     }
