@@ -26,10 +26,8 @@ package org.jemmy.fx.control.caspian;
 
 import javafx.scene.Node;
 import javafx.scene.control.ScrollBar;
-import org.jemmy.fx.ByStyleClass;
 import org.jemmy.control.Wrap;
 import org.jemmy.input.KnobDragScrollerImpl;
-import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Scroll;
 
 /**
@@ -61,6 +59,4 @@ public class ScrollBarScroller extends KnobTrackScrollerImpl {
     public Wrap<? extends Node> getWrap() {
         return (Wrap<? extends Node>) super.getWrap();
     }
-
-
 }

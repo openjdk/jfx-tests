@@ -32,7 +32,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import org.jemmy.Rectangle;
-import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Wrap;
@@ -43,6 +42,7 @@ import org.jemmy.interfaces.Caret.Direction;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.*;
+import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 
 
@@ -104,9 +104,11 @@ public class TableCellItemWrap<ITEM extends Object> extends ItemWrap<ITEM> imple
 
         final long desiredIndex = items.indexOf(row);
 
-//        Caret c = tableViewWrap.as(Scroll.class).caret();
-        CaretOwner scroller = (CaretOwner) tableViewWrap.as(Parent.class, Node.class).
-                lookup(ScrollBar.class).as(CaretOwner.class);
+        final Wrap<? extends ScrollBar> scrollBarWrap = tableViewWrap.as(Parent.class, Node.class).lookup(ScrollBar.class).wrap();
+        if (!scrollBarWrap.getProperty(Boolean.class, "isVisible")) {
+            return;
+        }
+        CaretOwner scroller = scrollBarWrap.as(CaretOwner.class);
         Caret c = scroller.caret();
 
         Direction direction = new Direction() {

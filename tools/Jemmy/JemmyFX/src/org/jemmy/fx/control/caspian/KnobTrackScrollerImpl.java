@@ -28,6 +28,7 @@ import com.sun.javafx.scene.control.skin.SkinBase;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.layout.StackPane;
+import org.jemmy.JemmyException;
 import org.jemmy.Point;
 import org.jemmy.Vector;
 import org.jemmy.fx.ByStyleClass;
@@ -104,5 +105,31 @@ public class KnobTrackScrollerImpl extends KnobDragScrollerImpl {
     @Override
     public void scrollTo(ScrollCondition condition) {
         throw new UnsupportedOperationException("Use to(Direction).");
+    }
+
+    /**
+     *
+     * @param value
+     */
+    @Override
+    public void to(double value) {
+        visibilityCheck();
+        super.to(value);
+    }
+
+    /**
+     *
+     * @param condition
+     */
+    @Override
+    public void to(Direction condition) {
+        visibilityCheck();
+        super.to(condition);
+    }
+
+    private void visibilityCheck() {
+        if (!wrap.getProperty(Boolean.class, "isVisible")) {
+            throw new JemmyException("Attempt to scroll invisible scroll bar");
+        }
     }
 }
