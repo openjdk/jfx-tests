@@ -126,6 +126,11 @@ public class ListItemWrap<ITEM extends Object> extends ItemWrap<ITEM> implements
         Wrap<? extends ScrollBar> scr =listViewWrap.as(Parent.class, Node.class).
                 lookup(ScrollBar.class, new ScrollBarWrap.ByOrientationScrollBar(true)).
                 wrap();
+
+        if (!scr.getProperty(Boolean.class, "isVisible")) {
+            return;
+        }
+
         Caret c = scr.as(Scroll.class).caret();
 
         Direction direction = new Direction() {
