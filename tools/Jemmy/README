@@ -4,7 +4,7 @@ $ant -Djavafx.home=<Java FX SDK location> jar
 
 Should the build script has trouble downloading JemmyCore libraries
 automatically, you could download it with a web browser by going to
-http://java.net/projects/jemmy/downloads/directory/dist/<jemmy.core.version>
+http://jemmy.java.net/dist/<jemmy.core.version>
 where jemmy.core.version is specified in tools/Jemmy/JemmyFX/depend.properties file.
 Make sure to download all the jars.
 You will have to place the downloaded jars into tools/Jemmy/JemmyFX/lib/jemmy directory.

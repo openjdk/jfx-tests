@@ -35,17 +35,37 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.lookup.PlainLookup;
 
 
+/**
+ * Parent for a collection of single-level objects within a compound control. Such as list,
+ * tree, table and such. 
+ * @author shura
+ * @param <ITEM>
+ */
 public abstract class AbstractItemsParent<ITEM extends Object> extends AbstractParent<ITEM> {
 
+    /**
+     * Maps this to <code>ControlList</code>
+     * @see ControlList
+     */
     protected ItemsList itemsListCreator;
+    /**
+     * A wrap - owner of the hierarchy. Typically a wrap around list, tree or similar.
+     */
     protected Wrap wrap;
+    /**
+     * This is responsible for wrapping items into a <code>Wrap</code>.
+     */
     protected Wrapper wrapper;
+    /**
+     * Type of the wrapped items.
+     */
     protected Class<ITEM> itemClass;
 
     /**
      *
-     * @param scene
-     * @param listViewWrap
+     * @param wrap Owner of the sub-hierarchy. Typically itself is a part of 
+     * <code>Node</code> hierarchy.
+     * @param wrapper 
      * @param itemClass
      */
     public AbstractItemsParent(Wrap wrap, Wrapper wrapper, Class<ITEM> itemClass) {
@@ -71,8 +91,15 @@ public abstract class AbstractItemsParent<ITEM extends Object> extends AbstractP
         return itemClass;
     }
 
-    protected class ItemsList implements ControlList {
+    /**
+     * 
+     */
+    class ItemsList implements ControlList {
 
+        /**
+         * 
+         * @return
+         */
         @Override
         @SuppressWarnings("unchecked")
         public List<ITEM> getControls() {
@@ -80,5 +107,9 @@ public abstract class AbstractItemsParent<ITEM extends Object> extends AbstractP
         }
     }
 
+    /**
+     * Returns list of items - members of the hierarchy.
+     * @return
+     */
     protected abstract List<ITEM> getControls();
 }

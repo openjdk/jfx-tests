@@ -30,17 +30,29 @@ import org.jemmy.control.Wrap;
 import org.jemmy.input.ClickFocus;
 
 /**
- *
+ * This is an SPI class for giving focus to FX controls by clicking on them.
  * @author shura
  */
 public class FXClickFocus extends ClickFocus {
 
+    /**
+     * Name of the focused property.
+     */
     public static final String IS_FOCUSED_PROP = "isFocused";
 
+    /**
+     * 
+     * @param topControl
+     */
     public FXClickFocus(Wrap<? extends Node> topControl) {
         super(topControl);
     }
 
+    /**
+     * 
+     * @param topControl
+     * @param clickPoint
+     */
     public FXClickFocus(Wrap<? extends Node> topControl, Point clickPoint) {
         super(topControl, clickPoint);
     }

@@ -32,7 +32,7 @@ import org.jemmy.env.Environment;
  *
  * @author andrey
  */
-public class SceneNodeHierarchy extends AbstractNodeHierarchy {
+class SceneNodeHierarchy extends AbstractNodeHierarchy {
 
     protected Scene scene;
 

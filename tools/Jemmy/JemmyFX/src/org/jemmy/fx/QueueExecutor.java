@@ -24,6 +24,7 @@
  */
 package org.jemmy.fx;
 
+import com.sun.javafx.tk.Toolkit;
 import javafx.application.Platform;
 import org.jemmy.JemmyException;
 import org.jemmy.TimeoutExpiredException;
@@ -32,16 +33,15 @@ import org.jemmy.action.Action;
 import org.jemmy.env.Environment;
 import org.jemmy.env.Timeout;
 import org.jemmy.timing.State;
-import com.sun.javafx.tk.Toolkit;
 
 /**
- *
+ * A utility class to work with Java FX event queue.
  * @author shura, KAM
  */
 public class QueueExecutor extends AbstractExecutor {
 
     /**
-     *
+     * @see #isQuiet() 
      */
     public static final Timeout QUEUE_THROUGH_TIME = new Timeout("FXExecutor.FX_QUEUE_THROUGH_TIME", 50);
     static final Timeout QUEUE_IDENTIFYING_TIMEOUT =
@@ -58,6 +58,10 @@ public class QueueExecutor extends AbstractExecutor {
         emptyFunction = new EmptyFunction();
     }
 
+    /**
+     * Gets what thread is the queue thread.
+     * @return
+     */
     public Thread getQueueThread() {
         if (queueThread == null) {
             try {
@@ -86,6 +90,9 @@ public class QueueExecutor extends AbstractExecutor {
 
     /**
      * {@inheritDoc}
+     * @param env 
+     * @param action
+     * @param parameters  
      */
     @Override
     public void executeQueue(Environment env, Action action, Object... parameters) {
@@ -105,6 +112,9 @@ public class QueueExecutor extends AbstractExecutor {
 
     /**
      * {@inheritDoc}
+     * @param env 
+     * @param action 
+     * @param parameters 
      */
     @Override
     public void executeQueueDetached(Environment env, Action action, Object... parameters) {
@@ -114,6 +124,10 @@ public class QueueExecutor extends AbstractExecutor {
         Platform.runLater(w);
     }
 
+    /**
+     * Checks whether the calling code is already on the queue thread. 
+     * @return
+     */
     @Override
     public boolean isOnQueue() {
         //return Thread.currentThread().equals(getQueueThread());
@@ -125,6 +139,12 @@ public class QueueExecutor extends AbstractExecutor {
         return true;
     }
 
+    /**
+     * Checks whether the things are "quiet". All is currently does is check that
+     * something comes through the queue quickly enough as defined by 
+     * <code>QUEUE_THROUGH_TIME</code> timeout.
+     * @return
+     */
     @Override
     protected boolean isQuiet() {
         emptyFunction.prepare();

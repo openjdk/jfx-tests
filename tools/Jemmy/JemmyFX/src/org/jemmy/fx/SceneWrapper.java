@@ -29,10 +29,6 @@ import javafx.scene.Scene;
 import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
 
-/**
- *
- * @author shura
- */
 class SceneWrapper implements org.jemmy.control.Wrapper {
 
     private Environment env;

@@ -36,7 +36,7 @@ import org.jemmy.lookup.ControlList;
 
 
 /**
- *
+ * Gets the scenes.
  * @author shura
  */
 class SceneList implements ControlList {

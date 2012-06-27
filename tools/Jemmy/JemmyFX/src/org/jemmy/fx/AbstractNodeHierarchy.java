@@ -33,7 +33,8 @@ import org.jemmy.env.Environment;
 import org.jemmy.lookup.ControlHierarchy;
 
 /**
- *
+ * This is an SPI class encapsulating functionality needed to implement 
+ * <code>Hierarchy</code> of nodes. It is reused in different containers.
  * @author shura, andrey
  */
 public abstract class AbstractNodeHierarchy implements ControlHierarchy {

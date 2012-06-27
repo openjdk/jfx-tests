@@ -40,8 +40,10 @@ import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- *
+ * An SPI class encapsulating JavaFX node. 
+ * @param <T> 
  * @author shura, mrkam
+ * @see NodeDock
  */
 @ControlType(Node.class)
 @MethodProperties({"getBaselineOffset", "getBoundsInLocal", "getBoundsInParent",
@@ -58,6 +60,9 @@ import org.jemmy.lookup.LookupCriteria;
 @DockInfo(generateSubtypeLookups = true)
 public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
+    /**
+     * The node's scene.
+     */
     protected Scene scene;
     private Parent parent = null;
     private Mouse mouse = null;
@@ -65,6 +70,15 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     private Showable show = null;
     private static Wrapper wrapper = new NodeWrapper(Root.ROOT.getEnvironment());
 
+    /**
+     * "Wraps" a node should a wrap be needed.
+     * @param <TP>
+     * @param env
+     * @param type
+     * @param control
+     * @return
+     * @see NodeDock#NodeDock(org.jemmy.env.Environment, javafx.scene.Node) 
+     */
     @DefaultWrapper
     public static <TP extends Node> Wrap<? extends TP> wrap(Environment env, Class<TP> type, TP control) {
         Wrap<? extends TP> res = wrapper.wrap(type, control);
@@ -72,11 +86,28 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
         return res;
     }
 
+    /**
+     * Turns a string into by-id lookup criteria.
+     * @param <B>
+     * @param tp
+     * @param id
+     * @return
+     * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, java.lang.String) 
+     * @see ByID
+     */
     @ObjectLookup("id")
     public static <B extends Node> LookupCriteria<B> idLookup(Class<B> tp, String id) {
         return new ByID<B>(id);
     }
 
+    /**
+     * Turns a string into by-type lookup criteria.
+     * @param <B>
+     * @param tp
+     * @param subtype
+     * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, java.lang.Class) 
+     * @return
+     */
     @ObjectLookup("type")
     public static <B extends Node> LookupCriteria<B> typeLookup(Class<B> tp, final Class<?> subtype) {
         return new LookupCriteria<B>() {
@@ -93,15 +124,30 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
         focus = new FXClickFocus(this);
     }
 
+    /**
+     * Creates the wrap.
+     * @param env
+     * @param node
+     */
     public NodeWrap(Environment env, T node) {
         this(env, node.getScene(), node);
     }
 
+    /**
+     * Gets scene of the node. Every node has a scene.
+     * @return
+     */
     @Property("scene")
     public Scene getScene() {
         return scene;
     }
 
+    /**
+     * Gets node bounds 
+     * @param env
+     * @param nd
+     * @return
+     */
     public static Rectangle getScreenBounds(final Environment env, final Node nd) {
         GetAction<Rectangle> bounds = new GetAction<Rectangle>() {
 
@@ -160,7 +206,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     }
 
     /**
-     * Defines whether a cell is within another cell.
+     * Defines whether a node is completely within another node.
      *
      * @param parent
      * @param cell
@@ -178,7 +224,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
         }
     }
 
-        /**
+    /**
      * Transforms point in local control coordinate system to screen coordinates.
      * @param local
      * @return
@@ -228,6 +274,10 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
         }.dispatch(node.getEnvironment());
     }
 
+    /**
+     * Tells if stage of the scene is focused.
+     * @return
+     */
     public boolean isFocused() {
         return new GetAction<Boolean>() {
                     @Override
@@ -242,6 +292,11 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
                 }.dispatch(getEnvironment());
     }
     
+    /**
+     * Turns into Showable.
+     * @return
+     * @see Showable
+     */
     @As
     public Showable asShowable() {
         if(show == null) {

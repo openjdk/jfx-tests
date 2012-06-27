@@ -24,7 +24,6 @@
  */
 package org.jemmy.fx;
 
-import java.io.File;
 import java.util.Locale;
 import javafx.scene.Scene;
 import org.jemmy.action.ActionExecutor;
@@ -41,23 +40,32 @@ import org.jemmy.lookup.AbstractParent;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.lookup.PlainLookup;
-import org.netbeans.jemmy.image.PNGImageLoader;
 
 /**
- *
+ * Root class for Java FX scene lookup. It also serves as an access point for 
+ * different environment settings.
  * @author shura
  */
 public class Root extends AbstractParent<Scene> {
 
+    /**
+     * The root.
+     */
     public static final Root ROOT = new Root();
+    
+    /**
+     * @deprecated 
+     */
     public static final String LOOKUP_STRING_COMPARISON = Root.class.getName()
             + ".lookup.string.compare";
-    public static final String THEME_FACTORY = "fx.theme.factory";
-    public static final String INPUT_SOURCE = Root.class.getName() + ".input.method";
     private Environment env;
     private SceneWrapper wrapper;
     private SceneList scenes;
     
+    /**
+     * Use Glass robot for user input simulation.
+     * @param env
+     */
     public static void useGlassRobot(Environment env) {
         env.setProperty(ControlInterfaceFactory.class, new GlassInputFactory());
         env.setProperty(ImageCapturer.class, new GlassImageCapturer());
@@ -65,6 +73,10 @@ public class Root extends AbstractParent<Scene> {
         env.setProperty(ImageLoader.class, new FileGlassImageLoader());
     }
 
+    /**
+     * Use AWT robot for user input simulation.
+     * @param env
+     */
     public static void useAWTRobot(Environment env) {
         env.setProperty(ControlInterfaceFactory.class, new AWTRobotInputFactory());
         env.setProperty(ImageCapturer.class, new AWTRobotCapturer());
@@ -83,7 +95,7 @@ public class Root extends AbstractParent<Scene> {
             useGlassRobot(this.env);
         }
         this.env.setPropertyIfNotSet(ActionExecutor.class, QueueExecutor.EXECUTOR);
-        this.env.setProperty(THEME_FACTORY, ThemeDriverFactory.newInstance());
+        this.env.setPropertyIfNotSet(ThemeDriverFactory.class, ThemeDriverFactory.newInstance());
         this.env.initTimeout(QueueExecutor.QUEUE_THROUGH_TIME);
         this.env.initTimeout(QueueExecutor.QUEUE_IDENTIFYING_TIMEOUT);
 
@@ -91,7 +103,7 @@ public class Root extends AbstractParent<Scene> {
         scenes = new SceneList();
     }
 
-    public Wrapper getSceneWrapper() {
+    Wrapper getSceneWrapper() {
         return wrapper;
     }
 
@@ -107,12 +119,11 @@ public class Root extends AbstractParent<Scene> {
     }
 
     /**
-     *
      * @param factory
      * @return
      */
     public ThemeDriverFactory setThemeFactory(ThemeDriverFactory factory) {
-        return (ThemeDriverFactory) env.setProperty(THEME_FACTORY, factory);
+        return (ThemeDriverFactory) env.setProperty(ThemeDriverFactory.class, factory);
     }
 
     /**
@@ -120,7 +131,7 @@ public class Root extends AbstractParent<Scene> {
      * @return
      */
     public ThemeDriverFactory getThemeFactory() {
-        return (ThemeDriverFactory) env.getProperty(THEME_FACTORY);
+        return (ThemeDriverFactory) env.getProperty(ThemeDriverFactory.class);
     }
 
     public <ST extends Scene> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {
@@ -134,6 +145,11 @@ public class Root extends AbstractParent<Scene> {
     public Class<Scene> getType() {
         return Scene.class;
     }
+
+    /**
+     * Whether to use the transformation-unaware coordinates.
+     * @see RelativeMouse
+     */
     public static final String USE_NATIVE_COORDINATES = "use.native.sg.coordinates";
 
     //TODO: shouldn't this be in utility class used by all root impls?

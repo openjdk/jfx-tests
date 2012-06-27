@@ -35,6 +35,7 @@ import org.jemmy.action.GetAction;
 import org.jemmy.control.*;
 import org.jemmy.dock.DefaultParent;
 import org.jemmy.dock.DefaultWrapper;
+import org.jemmy.dock.DockInfo;
 import org.jemmy.dock.ObjectLookup;
 import org.jemmy.env.Environment;
 import org.jemmy.interfaces.Parent;
@@ -47,13 +48,23 @@ import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.timing.State;
 
 /**
- *
+ * A class wrapping Java FX scene.
+ * @param <T> 
  * @author shura
  */
 @ControlType(Scene.class)
 @ControlInterfaces(value = Parent.class, encapsulates = Node.class)
+@DockInfo(generateSubtypeLookups = true)
 public class SceneWrap<T extends Scene> extends Wrap<Scene> {
 
+    /**
+     * "Wraps" a node should a wrap be needed.
+     * @param <TP>
+     * @param env
+     * @param type
+     * @param control
+     * @return
+     */
     @DefaultWrapper
     public static <TP extends Scene> Wrap<? extends TP> wrap(Environment env, Class<TP> type, TP control) {
         Wrap<? extends TP> res = Root.ROOT.getSceneWrapper().wrap(type, control);
@@ -61,16 +72,26 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
         return res;
     }
 
+    /**
+     * Turns string into a by-title lookup criteria.
+     * @param <B>
+     * @param tp
+     * @param title
+     * @param policy
+     * @return
+     */
     @ObjectLookup("title and comparison policy")
     public static <B extends Scene> LookupCriteria<B> titleLookup(Class<B> tp, String title, StringComparePolicy policy) {
         return new ByTitleSceneLookup<B>(title, policy);
     }
 
-    @ObjectLookup("")
-    public static <B extends Scene> LookupCriteria<B> anyLookup(Class<B> tp) {
-        return new Any<B>();
-    }
-
+    /**
+     * Default parent for scenes. 
+     * @param <CONTROL>
+     * @param controlType
+     * @return <code>Root.ROOT</code>
+     * @see Root#ROOT
+     */
     @DefaultParent("all scenes")
     public static <CONTROL extends Scene> Parent<? super Scene> getRoot(Class<CONTROL> controlType) {
         return Root.ROOT;
@@ -78,6 +99,11 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
     private Parent parent = null;
     private Showable showable = null;
 
+    /**
+     * Wraps a scene.
+     * @param env
+     * @param node
+     */
     public SceneWrap(Environment env, Scene node) {
         super(env, node);
     }
@@ -87,6 +113,12 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
         return getScreenBounds(getEnvironment(), getControl());
     }
 
+    /**
+     * Gets scene bounds.
+     * @param env
+     * @param scene
+     * @return
+     */
     public static Rectangle getScreenBounds(final Environment env, final Scene scene) {
         GetAction<Rectangle> bounds = new GetAction<Rectangle>() {
 
@@ -156,6 +188,10 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
         return super.as(interfaceClass, type);
     }
 
+    /**
+     * Turns a scene into a Showable
+     * @return
+     */
     @As
     public Showable asShowable() {
         if (showable == null) {

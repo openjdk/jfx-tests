@@ -32,10 +32,6 @@ import org.jemmy.lookup.HierarchyLookup;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 
-/**
- *
- * @author andrey
- */
 public class NodeParentImpl extends AbstractParent<Node> {
 
     private Environment env;

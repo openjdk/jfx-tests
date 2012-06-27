@@ -28,6 +28,9 @@ import java.util.Arrays;
 import java.util.List;
 import org.jemmy.lookup.LookupCriteria;
 
+/**
+ * @deprecated Not really needed
+ */
 public class CriteriaList<T> {
     protected List<T> list;
 

@@ -34,8 +34,6 @@ import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.dock.ObjectLookup;
-import org.jemmy.fx.AbstractNodeHierarchy;
-import org.jemmy.fx.NodeHierarchy;
 import org.jemmy.fx.NodeParentImpl;
 import org.jemmy.interfaces.CellOwner.Cell;
 import org.jemmy.interfaces.*;

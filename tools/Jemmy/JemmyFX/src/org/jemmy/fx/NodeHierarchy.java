@@ -29,11 +29,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import org.jemmy.env.Environment;
 
-/**
- *
- * @author andrey
- */
-public class NodeHierarchy extends AbstractNodeHierarchy {
+class NodeHierarchy extends AbstractNodeHierarchy {
 
     private Scene scene;
 

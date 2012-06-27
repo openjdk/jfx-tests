@@ -25,21 +25,32 @@
 package org.jemmy.fx;
 
 import javafx.scene.Node;
+import org.jemmy.fx.control.ControlDock;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- * LookupCriteria implementation for styleClass property name.
- *
+ * A criterion to find a node by CSS style name.
+ * <br/><br/>SAMPLES:<a href="../samples/lookup/LookupSample.java">Lookup Sample</a>
+  * @param <T> 
  * @author ineverov
+ * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, org.jemmy.lookup.LookupCriteria<javafx.scene.Node>[]) 
  */
-
 public class ByStyleClass<T extends Node> implements LookupCriteria<T> {
         private String scName;
 
+        /**
+         * 
+         * @param styleClassName
+         */
         public ByStyleClass(String styleClassName){
             scName = styleClassName;
         }
 
+        /**
+         * 
+         * @param cntrl
+         * @return
+         */
         public boolean check(T cntrl) {
             return cntrl.getStyleClass().contains(scName);
         }

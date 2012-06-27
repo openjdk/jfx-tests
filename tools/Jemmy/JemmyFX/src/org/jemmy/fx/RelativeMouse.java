@@ -36,11 +36,14 @@ import org.jemmy.interfaces.Mouse;
 
 
 /**
- * Port of the org.jemmy.fx.FXRelativeMouse
+ * An implementation of mouse which hides node transformation from test code. 
+ * This uses a real mouse and only transforms coordinates to the actual ones
+ * so that <code>(0, 0)</code> is where left-top corner happen to be after 
+ * the transformations.
  *
  * @author Sergey Grinev
  */
-public class RelativeMouse implements Mouse {
+class RelativeMouse implements Mouse {
 
     private Mouse theMouse;
     private NodeWrap<? extends Node> node;

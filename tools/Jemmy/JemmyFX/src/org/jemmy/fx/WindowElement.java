@@ -27,7 +27,7 @@ package org.jemmy.fx;
 import org.jemmy.interfaces.TypeControlInterface;
 
 /**
- * The interface specifies how to get window (a.k.a. root element) where control
+ * The interface specifies how to get a "window" in which control
  * resides. For different control libraries this could be
  * different things: <code>java.awt.Window</code> for AWT,
  * <code>javafx.scene.Scene</code> for FX, etc.

@@ -32,22 +32,25 @@ import org.jemmy.JemmyException;
 import org.jemmy.env.Environment;
 
 /**
- * Runs an FX application
+ * An utility class to runs an FX application.
  * @author shura
  */
 public class AppExecutor {
     private Class mainClass;
 
     /**
-     * @deprecated Use static void execute(Class<? extends Application> program, String... parameters)
+     * @deprecated This represents deprecated Java FX app execution model. 
+     * Use static void execute(Class<? extends Application> program, String... parameters)
      * @param mainClassName Name of the application main class
+     * @throws ClassNotFoundException  
      */
     public AppExecutor(String mainClassName) throws ClassNotFoundException {
         this(Class.forName(mainClassName));
     }
 
     /**
-     * @deprecated Use static void execute(Class<? extends Application> program, String... parameters)
+     * @deprecated This represents deprecated Java FX app execution model.
+     * Use static void execute(Class<? extends Application> program, String... parameters)
      * @param mainClass the application main class
      */
     public AppExecutor(Class mainClass) {
@@ -56,7 +59,8 @@ public class AppExecutor {
 
     /**
      * Runs the app with parameters
-     * @deprecated Use static void execute(Class<? extends Application> program, String... parameters)
+     * @deprecated This represents deprecated Java FX app execution model.
+     * Use static void execute(Class<? extends Application> program, String... parameters)
      * @param parameters
      */
     public void execute(final String... parameters) {
@@ -84,7 +88,8 @@ public class AppExecutor {
     }
 
     /**
-     * @deprecated Use static void execute(Class<? extends Application> program, String... parameters)
+     * @deprecated This represents deprecated Java FX app execution model.
+     * Use static void execute(Class<? extends Application> program, String... parameters)
      * @param program
      */
     public static void execute(Runnable program) {
@@ -97,18 +102,22 @@ public class AppExecutor {
         new Thread(program).start();
     }
 
-    public static void execute(Class<? extends Application> program) {
-        execute(program, new String[0]);
-    }
-
+    /**
+     * 
+     * Runs an FX application.
+     * @param program Application class.
+     * @param parameters Application parameters
+     */
     public static void execute(Class<? extends Application> program, String... parameters) {
         Application.launch(program, parameters);
     }
 
-    public static void executeNoBlock(Class<? extends Application> program) {
-        executeNoBlock(program, new String[0]);
-    }
-
+    /**
+     * 
+     * Runs an FX application in a separate thread.
+     * @param program Application class.
+     * @param parameters Application parameters
+     */
     public static void executeNoBlock(final Class<? extends Application> program, final String... parameters) {
         new Thread(new Runnable() {
 
@@ -118,22 +127,26 @@ public class AppExecutor {
         }).start();
     }
 
+    /**
+     * Runs an FX application by class name and parameters.
+     * @param name A classname
+     * @param argv Application parameters
+     * @deprecated This represents deprecated Java FX app execution model.
+     * Use static void execute(Class<? extends Application> program, String... parameters)
+     * @throws ClassNotFoundException
+     */
     public static void executeReflect(String... argv) throws ClassNotFoundException {
-        if (argv.length == 0) {
-            throw new ClassNotFoundException("No class name to execute - empty parameters");
-        }
         Class mainClass = Class.forName(argv[0]);
-
-        String[] parameters = Arrays.copyOfRange(argv, 1, argv.length);
 
         if (Application.class.isAssignableFrom(mainClass)) {
             Class<? extends Application> app = mainClass;
-            AppExecutor.execute(app, parameters);
+            AppExecutor.execute(app, argv);
             return;
         }
         // throw new ClassNotFoundException("Class doesn't extends " + 
         //                                   Application.class.getName() + ". Old way to start FX app isn't supported");
         // then use old deprecated method to start.
-        new AppExecutor(mainClass).execute(parameters);
+        
+        new AppExecutor(mainClass).execute(argv);
     }
 }

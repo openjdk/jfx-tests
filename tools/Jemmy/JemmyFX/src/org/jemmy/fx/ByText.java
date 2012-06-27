@@ -25,11 +25,7 @@
 package org.jemmy.fx;
 
 import javafx.scene.Node;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextInputControl;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import org.jemmy.action.GetAction;
 import org.jemmy.env.Environment;
@@ -37,15 +33,18 @@ import org.jemmy.lookup.ByStringLookup;
 import org.jemmy.resources.StringComparePolicy;
 
 /**
- *
+ * A criterion to find nodes by text. This supports <code>Text</code>, 
+ * <code>Labeled</code>, <code>TextInputControl</code>, <code>Choice</code>, 
+ * and <code>ComboBox</code> 
  * @param <T>
  * @author Shura
+ * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, org.jemmy.lookup.LookupCriteria<javafx.scene.Node>[]) 
  */
 public class ByText<T> extends ByStringLookup<T> {
 
     /**
      *
-     * @param text
+     * @param text expected text
      */
     public ByText(String text) {
         super(text);
@@ -53,8 +52,8 @@ public class ByText<T> extends ByStringLookup<T> {
 
     /**
      *
-     * @param text
-     * @param policy
+     * @param text expected text
+     * @param policy a way to compare text with the expected
      */
     public ByText(String text, StringComparePolicy policy) {
         super(text, policy);
@@ -66,9 +65,9 @@ public class ByText<T> extends ByStringLookup<T> {
     }
 
     /**
-     *
+     * Gets text of the supported node types
      * @param nd
-     * @return
+     * @return text or empty string if the type is not supported
      */
     public static String getNodeText(final Node nd) {
         return new GetAction<String>() {
@@ -85,17 +84,11 @@ public class ByText<T> extends ByStringLookup<T> {
                     Object selectedItem = ChoiceBox.class.cast(nd).getSelectionModel().getSelectedItem();
                     if (selectedItem != null)
                     setResult(selectedItem.toString());
-                } else /*
-                // the rest is not yet implemented in javafx.scene.control
-
-                 if(nd instanceof TextBox) {
-                    setResult(TextBox.class.cast(nd).get$text());
-                } else if(nd instanceof ListView) {
-                    setResult(getText((ListView)nd));
-                } else if(nd instanceof ChoiceBox) {
-                    setResult(((ChoiceBox)nd).get$selectedItem().toString());
-                } else
-                 */ {
+                } else if(nd instanceof ComboBox) {
+                    Object selectedItem = ComboBox.class.cast(nd).getSelectionModel().getSelectedItem();
+                    if (selectedItem != null)
+                    setResult(selectedItem.toString());
+                } else {
                     setResult("");
                 }
             }
@@ -108,6 +101,12 @@ public class ByText<T> extends ByStringLookup<T> {
         }.dispatch(Environment.getEnvironment());
     }
 
+    /**
+     * Gets text of the supported object types. Supports <code>MenuItem</code> and 
+     * <code>Tab</code>
+     * @param obj
+     * @return text or empty string if the type is not supported
+     */
     public static String getObjectText(final Object obj) {
         if (obj instanceof Node) {
             return getNodeText(Node.class.cast(obj));

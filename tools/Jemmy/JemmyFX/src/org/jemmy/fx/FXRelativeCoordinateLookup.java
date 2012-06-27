@@ -31,7 +31,9 @@ import org.jemmy.env.Environment;
 import org.jemmy.lookup.RelativeCoordinateLookup;
 
 /**
- *
+ * In the worst case scenario, you could look for a node which is to the left/right
+ * or higher/lower than another node.
+ * <br/><br/>SAMPLES:<a href="../samples/lookup/CoorinateLookupSample.java">Coorinate Lookup Sample</a>
  * @author Andrey Nazarov
  */
 public class FXRelativeCoordinateLookup<CONTROL extends Node> extends RelativeCoordinateLookup<CONTROL> {

@@ -35,7 +35,7 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 
 /**
- *
+ * A wrap around <code>javafx.scene.text.Text</code>
  * @param <T>
  * @author Shura
  */
@@ -43,15 +43,24 @@ import org.jemmy.resources.StringComparePolicy;
 @ControlInterfaces({org.jemmy.interfaces.Text.class})
 public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.interfaces.Text {
 
+    
+    /**
+     * Turns string into a by-text lookup criteria
+     * @param <B>
+     * @param tp
+     * @param text
+     * @param policy
+     * @return
+     */
     @ObjectLookup("text and comparison policy")
     public static <B extends Text> LookupCriteria<B> textLookup(Class<B> tp, String text, 
         StringComparePolicy policy) {
         return new ByText<B>(text, policy);
     }
     /**
-     *
-     * @param scene
-     * @param nd
+     * Wraps a text
+     * @param env 
+     * @param node  
      */
     public TextWrap(Environment env, T node) {
         super(env, node);
@@ -60,14 +69,24 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
     /**
      * Look for a certain node and create an operator for it.
      * @param parent
-     * @param type
      * @param criteria
+     * @return  
+     * @deprecated use docks
+     * @see TextDock
      */
     public static TextWrap<Text> find(NodeParent parent, LookupCriteria<Text> criteria) {
         return new TextWrap<Text>(parent.getEnvironment(),
                 parent.getParent().lookup(Text.class, criteria).get());
     }
 
+    /**
+     * 
+     * @param parent
+     * @param text
+     * @return
+     * @deprecated use docks
+     * @see TextDock
+     */
     public static TextWrap<Text> find(NodeParent parent, String text) {
         return find(parent, new ByText<Text>(text, (StringComparePolicy)parent.getEnvironment().
                 getProperty(Root.LOOKUP_STRING_COMPARISON, StringComparePolicy.EXACT)));
