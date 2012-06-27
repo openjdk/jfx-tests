@@ -31,6 +31,7 @@ import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.fx.control.TextInputControlDock;
 import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.samples.SampleBase;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -42,12 +43,12 @@ import org.junit.Test;
  * 
  * @author shura
  */
-public class TextSample {
+public class TextSample extends SampleBase {
 
     static SceneDock scene;
     @BeforeClass
-    public static void launch() {
-        AppExecutor.executeNoBlock(TextApp.class);
+    public static void launch() throws InterruptedException {
+        startApp(TextApp.class);
         scene = new SceneDock();
     }
     

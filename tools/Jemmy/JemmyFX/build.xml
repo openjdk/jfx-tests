@@ -69,12 +69,11 @@ questions.
             unless="no.need.to.copy.jemmy.libs">
         <mkdir dir="${jemmy.lib.dir}"/>
         <property name="jemmy.download.url" value="http://jemmy.java.net/dist"/>
+        <get src="${jemmy.download.url}/junit.jar" dest="${jemmy.lib.dir}"/>
         <property name="dist.url" value="${jemmy.download.url}/${jemmy.core.version}"/>
-        <!--get src="${dist.url}/jemmy.jar" dest="${jemmy.lib.dir}"/-->
         <get src="${dist.url}/JemmyCore.jar" dest="${jemmy.lib.dir}"/>
         <get src="${dist.url}/JemmyAWTInput.jar" dest="${jemmy.lib.dir}"/>
         <get src="${dist.url}/JemmyBrowser.jar" dest="${jemmy.lib.dir}"/>
-        <get src="${dist.url}/junit.jar" dest="${jemmy.lib.dir}"/>
     </target>
     <target name="set-javafx-home" if="javafx.home">
         <echo file="build.properties" message="javafx.home=${javafx.home}"/>

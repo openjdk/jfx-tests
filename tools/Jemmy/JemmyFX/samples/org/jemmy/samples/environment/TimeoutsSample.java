@@ -30,6 +30,7 @@ import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.interfaces.Mouse;
+import org.jemmy.samples.SampleBase;
 import org.jemmy.samples.lookup.LookupApp;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -41,13 +42,13 @@ import org.junit.Test;
  * Please consult component specific samples to learn component specific timeouts
  * @author shura
  */
-public class TimeoutsSample {
+public class TimeoutsSample extends SampleBase {
     private static SceneDock scene;
     private static NodeDock node;
     
     @BeforeClass
-    public static void runApp() {
-        AppExecutor.executeNoBlock(LookupApp.class);
+    public static void runApp() throws InterruptedException {
+        startApp(LookupApp.class);
         scene = new SceneDock();
         node = new NodeDock(scene.asParent(), "lbl_01");
     }

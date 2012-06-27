@@ -38,7 +38,9 @@ import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
+import org.jemmy.input.AWTRobotInputFactory;
 import org.jemmy.lookup.LookupCriteria;
+import org.jemmy.samples.SampleBase;
 import org.jemmy.timing.State;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -47,15 +49,15 @@ import org.junit.BeforeClass;
  *
  * @author shura
  */
-public class InputSampleBase {
+public class InputSampleBase extends SampleBase {
 
     protected static SceneDock scene;
     protected static NodeDock redTarget;
     protected static NodeDock blueTarget;
 
     @BeforeClass
-    public static void before() {
-        AppExecutor.executeNoBlock(InputApp.class);
+    public static void before() throws InterruptedException {
+        startApp(InputApp.class);
         scene = new SceneDock();
         redTarget = new NodeDock(scene.asParent(), Rectangle.class, new TargetCriteria(Color.RED));
         blueTarget = new NodeDock(scene.asParent(), Rectangle.class, new TargetCriteria(Color.BLUE));

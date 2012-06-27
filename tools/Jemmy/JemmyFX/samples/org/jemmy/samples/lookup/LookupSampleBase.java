@@ -27,6 +27,7 @@ package org.jemmy.samples.lookup;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.Root;
+import org.jemmy.samples.SampleBase;
 import org.jemmy.timing.State;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -36,10 +37,10 @@ import static org.junit.Assert.*;
  *
  * @author shura
  */
-public class LookupSampleBase {
+public class LookupSampleBase extends SampleBase {
     @BeforeClass
     public static void setUpClass() throws Exception {
-        AppExecutor.executeNoBlock(LookupApp.class);
+        startApp(LookupApp.class);
     }
     
     @After

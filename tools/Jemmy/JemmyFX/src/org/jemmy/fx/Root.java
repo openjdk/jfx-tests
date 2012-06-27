@@ -24,7 +24,6 @@
  */
 package org.jemmy.fx;
 
-import java.util.Locale;
 import javafx.scene.Scene;
 import org.jemmy.action.ActionExecutor;
 import org.jemmy.control.Wrapper;
@@ -83,14 +82,13 @@ public class Root extends AbstractParent<Scene> {
         env.setProperty(ImageComparator.class, new BufferedImageComparator(env));
         env.setProperty(ImageLoader.class, new FileGlassImageLoader());
     }
-    
+
     private Root() {
         this.env = new Environment(Environment.getEnvironment());
         this.env.setPropertyIfNotSet(RasterComparator.class, new PixelEqualityRasterComparator(0));
         String osName = System.getProperty("os.name").toLowerCase();
-        if(osName.contains("nux") || osName.contains("nix") || osName.contains("sunos")) {
-            //until glassrobot works reliably
-            useAWTRobot(this.env);
+        if(osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os")) {
+            useAWTRobot(env);
         } else {
             useGlassRobot(this.env);
         }

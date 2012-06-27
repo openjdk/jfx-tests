@@ -30,6 +30,7 @@ import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
+import org.jemmy.samples.SampleBase;
 import org.jemmy.samples.lookup.LookupApp;
 import org.jemmy.samples.lookup.LookupSample;
 import static org.junit.Assert.*;
@@ -41,7 +42,7 @@ import org.junit.Test;
  *
  * @author shura
  */
-public class EnvironmentSample {
+public class EnvironmentSample extends SampleBase {
 
     private static SceneDock scene;
     private static NodeDock parent;
@@ -49,8 +50,8 @@ public class EnvironmentSample {
     private static NodeDock node2;
 
     @BeforeClass
-    public static void runApp() {
-        AppExecutor.executeNoBlock(LookupApp.class);
+    public static void runApp() throws InterruptedException {
+        startApp(LookupApp.class);
         scene = new SceneDock();
         parent = new NodeDock(scene.asParent(), GridPane.class);
         node1 = new NodeDock(parent.asParent(), "lbl_00");

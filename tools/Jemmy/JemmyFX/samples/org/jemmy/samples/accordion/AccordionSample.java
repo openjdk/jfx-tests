@@ -32,17 +32,18 @@ import org.jemmy.fx.control.AccordionDock;
 import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.fx.control.TitledPaneDock;
 import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.samples.SampleBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class AccordionSample {
+public class AccordionSample extends SampleBase {
     static SceneDock scene;
     
     @BeforeClass
-    public static void launch() {
-        AppExecutor.executeNoBlock(AccordionApp.class);
+    public static void launch() throws InterruptedException {
+        startApp(AccordionApp.class);
         scene = new SceneDock();
     }
 

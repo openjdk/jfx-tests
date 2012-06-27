@@ -34,6 +34,7 @@ import org.jemmy.fx.control.CheckBoxWrap;
 import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.fx.control.ToggleButtonDock;
 import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.samples.SampleBase;
 import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -42,14 +43,14 @@ import org.junit.Test;
  * How to use buttons: buttons, check boxes, radio buttons.
  * @author shura
  */
-public class ButtonsSample {
+public class ButtonsSample extends SampleBase {
 
     private static SceneDock scene;
     private static LabeledDock status;
     
     @BeforeClass
-    public static void startApp() {
-        AppExecutor.executeNoBlock(ButtonsApp.class);
+    public static void startApp() throws InterruptedException {
+        startApp(ButtonsApp.class);
         scene = new SceneDock();
         status = new LabeledDock(scene.asParent(), "status");
     }
