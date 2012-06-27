@@ -25,7 +25,6 @@
 package org.jemmy.fx;
 
 import javafx.scene.Node;
-import org.jemmy.fx.control.ControlDock;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
