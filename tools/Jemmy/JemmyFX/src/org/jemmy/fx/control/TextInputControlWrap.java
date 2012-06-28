@@ -31,6 +31,7 @@ import org.jemmy.fx.ByText;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
+import org.jemmy.dock.DockInfo;
 import org.jemmy.dock.ObjectLookup;
 import org.jemmy.env.Environment;
 import org.jemmy.input.ClickFocus;
@@ -47,6 +48,7 @@ import org.jemmy.resources.StringComparePolicy;
 
 @ControlType(TextInputControl.class)
 @ControlInterfaces({SelectionText.class})
+@DockInfo(generateSubtypeLookups = true)
 public class TextInputControlWrap<T extends TextInputControl> extends ControlWrap<T> implements Text, IntervalSelectable, Focusable {
 
     @ObjectLookup("text and comparison policy")

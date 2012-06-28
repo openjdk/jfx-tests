@@ -100,24 +100,6 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
         return new ByID<B>(id);
     }
 
-    /**
-     * Turns a string into by-type lookup criteria.
-     * @param <B>
-     * @param tp
-     * @param subtype
-     * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, java.lang.Class) 
-     * @return
-     */
-    @ObjectLookup("type")
-    public static <B extends Node> LookupCriteria<B> typeLookup(Class<B> tp, final Class<?> subtype) {
-        return new LookupCriteria<B>() {
-
-            public boolean check(B control) {
-                return subtype.isInstance(control);
-            }
-        };
-    }
-
     private NodeWrap(Environment env, Scene scene, T node) {
         super(env, node);
         this.scene = scene;

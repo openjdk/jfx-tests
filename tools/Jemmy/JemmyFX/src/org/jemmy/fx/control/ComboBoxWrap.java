@@ -39,16 +39,12 @@ import org.jemmy.env.Environment;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.Root;
-import org.jemmy.interfaces.ControlInterface;
-import org.jemmy.interfaces.Focus;
-import org.jemmy.interfaces.Focusable;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Selectable;
-import org.jemmy.interfaces.Selector;
+import org.jemmy.input.SelectionText;
+import org.jemmy.interfaces.*;
 import org.jemmy.lookup.Lookup;
 
 @ControlType(ComboBox.class)
-@ControlInterfaces(value=Selectable.class)
+@ControlInterfaces({Selectable.class, SelectionText.class})
 public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T>
         implements Selectable<Object> {
 
@@ -81,9 +77,11 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T>
         if (interfaceClass.equals(Focusable.class)) {
             return (INTERFACE) this;
         }
-        Wrap<? extends TextField> inputField = getTextField();
-        if (inputField != null) {
-            return inputField.as(interfaceClass);
+        if (Text.class.isAssignableFrom(interfaceClass) && interfaceClass.isAssignableFrom(SelectionText.class)) {
+            Wrap<? extends TextField> inputField = getTextField();
+            if (inputField != null) {
+                return inputField.as(interfaceClass);
+            }
         }
         return super.as(interfaceClass);
     }
@@ -97,9 +95,9 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T>
         return null;
     }
 
-
     public List getStates() {
         return new GetAction<List>() {
+
             @Override
             public void run(Object... os) throws Exception {
                 setResult(getControl().getItems());
@@ -128,6 +126,7 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T>
     @Property(ChoiceBoxWrap.IS_SHOWING_PROP_NAME)
     public boolean isShowing() {
         return new GetAction<Boolean>() {
+
             @Override
             public void run(Object... os) throws Exception {
                 setResult(getControl().isShowing());

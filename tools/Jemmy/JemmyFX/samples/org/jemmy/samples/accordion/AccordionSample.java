@@ -57,7 +57,7 @@ public class AccordionSample extends SampleBase {
      */
     @Test
     public void selectByTitle() {
-        new AccordionDock(scene.asParent(), Accordion.class).
+        new AccordionDock(scene.asParent()).
                 asTitleSelectable().selector().select("First pane");
     }
 
@@ -66,7 +66,7 @@ public class AccordionSample extends SampleBase {
      */
     @Test
     public void selectByTitlePane() {
-        AccordionDock accordion = new AccordionDock(scene.asParent(), Accordion.class);
+        AccordionDock accordion = new AccordionDock(scene.asParent());
         // first you need find a titled pane you are going to select
         TitledPaneDock first_pane = new TitledPaneDock(scene.asParent(), "First pane", StringComparePolicy.EXACT);
         // then select it through selectable interface
@@ -79,7 +79,7 @@ public class AccordionSample extends SampleBase {
     @Test
     public void expandAndCollapse() {
         // you could manually collapse the expanded titled pane
-        new TitledPaneDock(new AccordionDock(scene.asParent(), Accordion.class).asParent(), "Second pane", StringComparePolicy.EXACT).
+        new TitledPaneDock(new AccordionDock(scene.asParent()).asParent(), "Second pane", StringComparePolicy.EXACT).
                 asCollapsible().collapse();
         // similarly, you can expand
         // note that titled pane is just another node an so you can find it within any container
@@ -92,7 +92,7 @@ public class AccordionSample extends SampleBase {
     @Test
     public void collapseTitlePane() {
         // you can collapse everything by selecting null
-        new AccordionDock(scene.asParent(), Accordion.class).asTitleSelectable().selector().select(null);
+        new AccordionDock(scene.asParent()).asTitleSelectable().selector().select(null);
     }
 
     /**
@@ -100,7 +100,7 @@ public class AccordionSample extends SampleBase {
      */
     @Test
     public void properties() {
-        AccordionDock accordion = new AccordionDock(scene.asParent(), Accordion.class);
+        AccordionDock accordion = new AccordionDock(scene.asParent());
         // you can use following properties: SelectedTitle, Titles, SelectedTitledPane, TitledPanes
         Assert.assertEquals(accordion.getSelectedTitle(), accordion.getTitles().get(1));
         Assert.assertEquals(accordion.getSelectedTitledPane(), accordion.getTitledPanes().get(1));

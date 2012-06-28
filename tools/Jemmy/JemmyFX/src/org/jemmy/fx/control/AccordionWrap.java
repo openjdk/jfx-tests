@@ -32,8 +32,8 @@ import org.jemmy.timing.State;
  */
 @ControlType(Accordion.class)
 @ControlInterfaces(value = {Selectable.class, Selectable.class},
-                   encapsulates = {TitledPane.class, String.class},
-                   name= {"asTitledPaneSelectable", "asTitleSelectable"})
+                   encapsulates = {String.class, TitledPane.class},
+                   name= {"asTitleSelectable", "asTitledPaneSelectable"})
 
 public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTROL> {
     

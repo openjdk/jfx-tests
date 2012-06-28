@@ -74,6 +74,7 @@ questions.
         <get src="${dist.url}/JemmyCore.jar" dest="${jemmy.lib.dir}"/>
         <get src="${dist.url}/JemmyAWTInput.jar" dest="${jemmy.lib.dir}"/>
         <get src="${dist.url}/JemmyBrowser.jar" dest="${jemmy.lib.dir}"/>
+        <get src="${dist.url}/JemmySupport.jar" dest="${jemmy.lib.dir}"/>
     </target>
     <target name="set-javafx-home" if="javafx.home">
         <echo file="build.properties" message="javafx.home=${javafx.home}"/>

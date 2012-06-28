@@ -1,6 +1,9 @@
+=================================================================
 To build Jemmy:
 $cd JemmyFX
 $ant -Djavafx.home=<Java FX SDK location> jar
+
+This will generate dist/JemmyCore.jar - the jar which needs to be added to tests classpath.
 
 Should the build script has trouble downloading JemmyCore libraries
 automatically, you could download it with a web browser by going to
@@ -9,6 +12,16 @@ where jemmy.core.version is specified in tools/Jemmy/JemmyFX/depend.properties f
 Make sure to download all the jars.
 You will have to place the downloaded jars into tools/Jemmy/JemmyFX/lib/jemmy directory.
 
+=================================================================
+To build javadoc
+$ant javadoc
+
+This will generate javadoc and create file dist/JemmyFX.zip which you need to add to your IDE to see JemmyFX javadoc.
+
+Optionally, you could clone JemmyCore sources from https://hg.java.net/hg/jemmy~jemmy3 and call
+$ant javadoc -Djemmy.core.source=<pointer to the downloaded JemmyCore sources>
+
+=================================================================
 To build JemmyFXBrowser:
 $cd JemmyFXBrowser
 $ant jar
