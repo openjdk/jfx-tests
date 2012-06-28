@@ -77,7 +77,9 @@ questions.
         <get src="${dist.url}/JemmySupport.jar" dest="${jemmy.lib.dir}"/>
     </target>
     <target name="set-javafx-home" if="javafx.home">
-        <echo file="build.properties" message="javafx.home=${javafx.home}"/>
+        <propertyfile file="build.properties">
+            <entry key="javafx.home" value="${javafx.home}"/>
+        </propertyfile>
     </target>
     <target name="read-javafx-home" unless="javafx.home">
         <property file="build.properties"/>
