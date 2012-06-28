@@ -24,7 +24,6 @@
  */
 package org.jemmy.fx;
 
-import org.jemmy.fx.control.ListItemDock;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
