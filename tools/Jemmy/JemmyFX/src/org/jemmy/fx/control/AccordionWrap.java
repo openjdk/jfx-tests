@@ -15,16 +15,17 @@ import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
+import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.ByObject;
-import org.jemmy.fx.NodeWrap;
+import org.jemmy.interfaces.Collapsible;
 import org.jemmy.interfaces.ControlInterface;
+import org.jemmy.interfaces.Expandable;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
 import org.jemmy.interfaces.TypeControlInterface;
 import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.timing.State;
 
 /**
  * Wrapper for Accordion control. It implements Selectable to be able to select specific titled pane
@@ -211,15 +212,12 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
         public void select(final TitledPane state) {
             if (getSelectedItem() != state) {
                 if (state == null) {
-                    AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap().mouse().click();
+                    Wrap<? extends TitledPane> titled_pane = AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap();
+                    titled_pane.as(Collapsible.class).collapse();
                 } else {
-                    AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(state)).wrap().mouse().click();
+                    Wrap<? extends TitledPane> titled_pane = AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(state)).wrap();
+                    titled_pane.as(Expandable.class).expand();
                 }
-                AccordionWrap.this.waitState(new State<Boolean>() {
-                    public Boolean reached() {
-                        return getState() == state;
-                    }
-                }, Boolean.TRUE);
             }
         }
     }
@@ -241,24 +239,21 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
         }
 
         public Class getType() {
-            return TitledPane.class;
+            return String.class;
         }
 
         public void select(final String state) {
             if (getState() == null ? state != null : !getState().equals(state)) {
                 if (state == null) {
-                    AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap().mouse().click();
+                    Wrap<? extends TitledPane> titled_pane = AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap();
+                    titled_pane.as(Collapsible.class).collapse();
                 } else {
-                    AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new LookupCriteria<TitledPane>() {
+                    Wrap<? extends TitledPane> titled_pane = AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new LookupCriteria<TitledPane>() {
                         public boolean check(TitledPane cntrl) {
                             return cntrl.getText().equals(state);
                         }
-                    }).wrap().mouse().click();
-                    AccordionWrap.this.waitState(new State<Boolean>() {
-                        public Boolean reached() {
-                            return (getState() == null ? state == null : getState().equals(state));
-                        }
-                    }, Boolean.TRUE);
+                    }).wrap();
+                    titled_pane.as(Expandable.class).expand();
                 }
             }
         }

@@ -26,11 +26,12 @@
 package org.jemmy.samples.accordion;
 
 import javafx.scene.control.Accordion;
-import org.jemmy.fx.AppExecutor;
+import org.jemmy.env.Timeout;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.AccordionDock;
 import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.fx.control.TitledPaneDock;
+import org.jemmy.interfaces.Selector;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
 import org.junit.Assert;
