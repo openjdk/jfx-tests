@@ -26,6 +26,7 @@ package org.jemmy.fx.control;
 
 import javafx.scene.Node;
 import javafx.scene.control.TitledPane;
+import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
@@ -38,12 +39,23 @@ import org.jemmy.interfaces.ControlInterface;
 import org.jemmy.interfaces.Expandable;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.timing.State;
+import org.jemmy.timing.Waiter;
 
 @ControlType({TitledPane.class})
 @ControlInterfaces({Collapsible.class, Expandable.class})
 public class TitledPaneWrap<CONTROL extends TitledPane> extends TextControlWrap<CONTROL> {
 
-    public static final Timeout BETWEEN_EXPAND_COLLAPSE_TIMEOUT = new Timeout("sleep.expand.animation", 1000);
+    public static final Timeout ANIMATION_TIMEOUT = new Timeout("titled.pane.animation", 1000);
+    public static final Timeout ANIMATION_START_TIMEOUT = new Timeout("titled.pane.animation.start", 400);
+    public static final Timeout ANIMATION_START_CHECK_PERIOD_TIMEOUT = new Timeout("titled.pane.animation.start.check.period", 100);
+    public static final Timeout ANIMATION_END_CHECK_PERIOD_TIMEOUT = new Timeout("titled.pane.animation.end.check.period", 200);
+
+    static {
+        Environment.getEnvironment().initTimeout(ANIMATION_TIMEOUT);
+        Environment.getEnvironment().initTimeout(ANIMATION_START_TIMEOUT);
+        Environment.getEnvironment().initTimeout(ANIMATION_START_CHECK_PERIOD_TIMEOUT);
+        Environment.getEnvironment().initTimeout(ANIMATION_END_CHECK_PERIOD_TIMEOUT);
+    }
 
     /**
      *
@@ -80,28 +92,60 @@ public class TitledPaneWrap<CONTROL extends TitledPane> extends TextControlWrap<
 
     public void setExpanded(final boolean isExpanded) {
         if (isExpanded != new GetAction<Boolean>() {
-
             @Override
             public void run(Object... parameters) throws Exception {
                 setResult(getControl().isExpanded());
             }
         }.dispatch(getEnvironment())) {
+            final Rectangle initial_rect = new Rectangle(-1, -1);
+            if (isAnimated()) {
+                waitAnimationEnd(initial_rect);
+            }
+            initial_rect.setBounds(getScreenBounds());
             getTitle().mouse().click();
-        }
-        waitState(new State<Boolean>() {
+            waitState(new State<Boolean>() {
+                @Override
+                public String toString() {
+                    return "{" + isExpanded + '}';
+                }
+                public Boolean reached() {
+                    return getControl().isExpanded();
+                }
+            }, isExpanded);
 
-            @Override
-            public String toString() {
-                return "{" + isExpanded + '}';
+            if (isAnimated()) {
+                waitAnimationStart(initial_rect);
+                waitAnimationEnd(initial_rect);
             }
-
+        }
+    }
+    
+    protected void waitAnimationStart(final Rectangle initial_rect) {
+        new Waiter(getEnvironment().getTimeout(ANIMATION_START_TIMEOUT), getEnvironment().getTimeout(ANIMATION_START_CHECK_PERIOD_TIMEOUT)).waitValue(Boolean.TRUE, new State<Boolean>() {
             public Boolean reached() {
-                return getControl().isExpanded();
+                return !initial_rect.equals(getScreenBounds());
             }
-        }, isExpanded);
-        if (getControl().isAnimated()) {
-            BETWEEN_EXPAND_COLLAPSE_TIMEOUT.sleep();
-        }
+        });
+    }
+
+    protected void waitAnimationEnd(final Rectangle initial_rect) {
+        new Waiter(getEnvironment().getTimeout(ANIMATION_TIMEOUT), getEnvironment().getTimeout(ANIMATION_END_CHECK_PERIOD_TIMEOUT)).waitValue(Boolean.TRUE, new State<Boolean>() {
+            public Boolean reached() {
+                Rectangle current_rect = getScreenBounds();
+                Boolean reached = initial_rect.equals(current_rect);
+                initial_rect.setBounds(current_rect);
+                return reached;
+            }
+        });
+    }
+
+    protected Boolean isAnimated() {
+        return new GetAction<Boolean>() {
+            @Override
+            public void run(Object... os) throws Exception {
+                setResult(getControl().isAnimated());
+            }
+        }.dispatch(getEnvironment());
     }
 
     public Wrap<? extends Node> getTitle() {

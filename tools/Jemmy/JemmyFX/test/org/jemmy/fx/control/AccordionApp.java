@@ -23,19 +23,22 @@
  * questions.
  */
 
-package org.jemmy.samples.accordion;
+package org.jemmy.fx.control;
 
 import java.awt.AWTException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.LabelBuilder;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -67,9 +70,8 @@ public class AccordionApp extends Application {
         VBox box = new VBox();
         Scene scene = new Scene(box);
 
-
-        accordion.getPanes().add(new TitledPane("First pane", LabelBuilder.create().text("First pane's content").minHeight(200).build()));
-        accordion.getPanes().add(new TitledPane("Second pane", LabelBuilder.create().text("Second pane's content").minHeight(200).build()));
+        accordion.getPanes().add(new TitledPane("First pane", createTarget()));
+        accordion.getPanes().add(new TitledPane("Second pane", createTarget()));
 
         box.getChildren().add(accordion);
 
@@ -83,12 +85,22 @@ public class AccordionApp extends Application {
 
         stage.setScene(scene);
 
-        stage.setWidth(300);
-        stage.setHeight(300);
+        stage.setWidth(250);
+        stage.setHeight(800);
 
         stage.show();
 
         reset();
+    }
+
+    Pane createTarget() {
+        Pane pane = new Pane();
+        pane.setMinSize(200, 700);
+        CheckBox check = new CheckBox();
+        check.setTranslateX(100);
+        check.setTranslateY(100);
+        pane.getChildren().add(check);
+        return pane;
     }
 
     private void reset() {
@@ -96,7 +108,7 @@ public class AccordionApp extends Application {
         if (pane != null) {
             pane.setExpanded(false);
         }
-        pane = accordion.getPanes().get(1);
+        pane = accordion.getPanes().get(0);
         pane.setExpanded(true);
     }
 }

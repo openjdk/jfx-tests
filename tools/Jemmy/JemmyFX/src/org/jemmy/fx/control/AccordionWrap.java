@@ -12,17 +12,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 import org.jemmy.action.GetAction;
-import org.jemmy.control.As;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.Property;
+import org.jemmy.control.*;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.ByObject;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Selectable;
-import org.jemmy.interfaces.Selector;
+import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.timing.State;
 
 /**
  * Wrapper for Accordion control. There are two ways to deal with the accordion:
@@ -188,15 +182,12 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
         public void select(final TitledPane state) {
             if (getSelectedItem() != state) {
                 if (state == null) {
-                    AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap().mouse().click();
+                    Wrap<? extends TitledPane> titled_pane = AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap();
+                    titled_pane.as(Collapsible.class).collapse();
                 } else {
-                    AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(state)).wrap().mouse().click();
+                    Wrap<? extends TitledPane> titled_pane = AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(state)).wrap();
+                    titled_pane.as(Expandable.class).expand();
                 }
-                AccordionWrap.this.waitState(new State<Boolean>() {
-                    public Boolean reached() {
-                        return getState() == state;
-                    }
-                }, Boolean.TRUE);
             }
         }
     }
@@ -218,24 +209,21 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
         }
 
         public Class getType() {
-            return TitledPane.class;
+            return String.class;
         }
 
         public void select(final String state) {
             if (getState() == null ? state != null : !getState().equals(state)) {
                 if (state == null) {
-                    AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap().mouse().click();
+                    Wrap<? extends TitledPane> titled_pane = AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap();
+                    titled_pane.as(Collapsible.class).collapse();
                 } else {
-                    AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new LookupCriteria<TitledPane>() {
+                    Wrap<? extends TitledPane> titled_pane = AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new LookupCriteria<TitledPane>() {
                         public boolean check(TitledPane cntrl) {
                             return cntrl.getText().equals(state);
                         }
-                    }).wrap().mouse().click();
-                    AccordionWrap.this.waitState(new State<Boolean>() {
-                        public Boolean reached() {
-                            return (getState() == null ? state == null : getState().equals(state));
-                        }
-                    }, Boolean.TRUE);
+                    }).wrap();
+                    titled_pane.as(Expandable.class).expand();
                 }
             }
         }
