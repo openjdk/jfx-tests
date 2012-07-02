@@ -25,30 +25,52 @@
 package org.jemmy.samples.text;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * This is a sample app to demonstrate Jemmy functionality. It provides a few 
+ * This is a sample app to demonstrate Jemmy functionality. It provides a few
  * text controls to type in.
+ *
  * @author shura
  */
 public class TextApp extends Application {
 
+    Text text;
     TextField singleLine;
     TextArea multiLine;
-        
+
     @Override
     public void start(Stage stage) throws Exception {
+        text = new Text();
+        EventHandler<KeyEvent> textUpdate = new EventHandler<KeyEvent>() {
+
+            public void handle(final KeyEvent t) {
+                Platform.runLater(new Runnable() {
+
+                    public void run() {
+                        updateText((TextInputControl) t.getSource());
+                    }
+                });
+            }
+        };
         singleLine = new TextField();
+        singleLine.addEventHandler(KeyEvent.KEY_TYPED, textUpdate);
         singleLine.setId("single");
         multiLine = new TextArea();
+        multiLine.addEventHandler(KeyEvent.KEY_TYPED, textUpdate);
         reset();
         Button reset = new Button("Reset");
         reset.setOnAction(new EventHandler<ActionEvent>() {
@@ -58,19 +80,23 @@ public class TextApp extends Application {
             }
         });
         VBox content = new VBox();
-        content.getChildren().addAll(singleLine, multiLine);
         content.getChildren().add(reset);
+        content.getChildren().addAll(singleLine, multiLine, text);
         stage.setScene(new Scene(content));
         stage.show();
     }
-    
+
+    private void updateText(TextInputControl textInputControl) {
+        text.setText("uneditable text:\n" + textInputControl.getText());
+    }
+
     private void reset() {
         singleLine.setText("single line text");
         multiLine.setText("multi\nline\ntext\n");
+        updateText(multiLine);
     }
-    
+
     public static void main(String[] args) {
         launch();
     }
-    
 }

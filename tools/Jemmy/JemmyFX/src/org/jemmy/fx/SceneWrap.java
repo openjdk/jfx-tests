@@ -43,26 +43,35 @@ import org.jemmy.interfaces.Show;
 import org.jemmy.interfaces.Showable;
 import org.jemmy.interfaces.TypeControlInterface;
 import org.jemmy.lookup.Any;
+import org.jemmy.lookup.ControlList;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.timing.State;
 
 /**
- * A class wrapping Java FX scene.
- * @param <T> 
+ * Support for Java FX scene. A scene could be found within top-level hierarchy
+ * represented by <code>Root</code> class, using standard lookup approaches such 
+ * as by a title, or by implementing a custom lookup criteria. Besides that a 
+ * scene could be brought to front.<br>
+ * You could find more on lookup in a <a href="../samples/lookup/LookupSample.java">lookup sample</a>
+ * @see Root
+ *
+ * @param <T>
  * @author shura
+ * @see SceneDock
  */
 @ControlType(Scene.class)
-@ControlInterfaces(value = Parent.class, encapsulates = Node.class)
+@ControlInterfaces(value = {Parent.class, Showable.class}, encapsulates = {Node.class})
 @DockInfo(generateSubtypeLookups = true)
 public class SceneWrap<T extends Scene> extends Wrap<Scene> {
 
     /**
-     * "Wraps" a node should a wrap be needed.
+     * Should a scene be already found, this creates a <code>Wrap</code> around it.
+     *
      * @param <TP>
-     * @param env
-     * @param type
-     * @param control
+     * @param env an Environment to assign to the wrap.
+     * @param type in case a class implementing scene is known
+     * @param control the scene itself
      * @return
      */
     @DefaultWrapper
@@ -73,11 +82,13 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
     }
 
     /**
-     * Turns string into a by-title lookup criteria.
-     * @param <B>
-     * @param tp
-     * @param title
-     * @param policy
+     * Creates a lookup criteria which compare scene title with a text sample according 
+     * to comparison rules.
+     *
+     * @param <B> in case a class implementing scene is known
+     * @param tp in case a class implementing scene is known
+     * @param title expected title or a portion of it
+     * @param policy how to compare
      * @return
      */
     @ObjectLookup("title and comparison policy")
@@ -86,11 +97,14 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
     }
 
     /**
-     * Default parent for scenes. 
-     * @param <CONTROL>
-     * @param controlType
-     * @return <code>Root.ROOT</code>
+     * This returns a parent which would be used for scene lookup when no other 
+     * parent specified, which is, basically, always.
+     *
+     * @param <CONTROL> required by contract
+     * @param controlType required by contract
+     * @return a <code>ControlList</code> build around <code>Window.imple_getWindows()</code> - Root#ROOT
      * @see Root#ROOT
+     * @see ControlList
      */
     @DefaultParent("all scenes")
     public static <CONTROL extends Scene> Parent<? super Scene> getRoot(Class<CONTROL> controlType) {
@@ -101,8 +115,9 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
 
     /**
      * Wraps a scene.
-     * @param env
-     * @param node
+     *
+     * @param env an environment specific for this wrap.
+     * @param node the scene.
      */
     public SceneWrap(Environment env, Scene node) {
         super(env, node);
@@ -114,10 +129,11 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
     }
 
     /**
-     * Gets scene bounds.
-     * @param env
-     * @param scene
-     * @return
+     * An utility method to get scene bounds.
+     *
+     * @param env Used to post code through the FX event queue.
+     * @param scene the scene
+     * @return Absolute screen coordinates
      */
     public static Rectangle getScreenBounds(final Environment env, final Scene scene) {
         GetAction<Rectangle> bounds = new GetAction<Rectangle>() {
@@ -169,27 +185,22 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
         }.dispatch(getEnvironment());
     }
 
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.isAssignableFrom(interfaceClass) && Node.class.equals(type)) {
-            return true;
+    /**
+     * Turns the scene into a parent for nodes for further lookup.
+     * @return an implementation of <code>Parent&lt;Node&gt;</code>
+     */
+    @As(Node.class)
+    public Parent<Node> asParent() {
+        if (parent == null) {
+            parent = new NodeParentImpl(new SceneNodeHierarchy(getControl(), getEnvironment()), getEnvironment());
         }
-        return super.is(interfaceClass, type);
-    }
-
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.isAssignableFrom(interfaceClass) && Node.class.equals(type)) {
-            if (parent == null) {
-                parent = new NodeParentImpl(new SceneNodeHierarchy(getControl(), getEnvironment()), getEnvironment());
-            }
-            return (INTERFACE) parent;
-        }
-        return super.as(interfaceClass, type);
+        return parent;
     }
 
     /**
-     * Turns a scene into a Showable
+     * Turns a scene into a Showable. The wrapped scene will be shown using API 
+     * calls.
+     *
      * @return
      */
     @As

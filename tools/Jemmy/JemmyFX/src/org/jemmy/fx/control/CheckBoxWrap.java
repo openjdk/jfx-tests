@@ -26,24 +26,18 @@ package org.jemmy.fx.control;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import org.jemmy.JemmyException;
 import org.jemmy.action.GetAction;
+import org.jemmy.control.*;
+import org.jemmy.env.Environment;
 import org.jemmy.fx.ByText;
 import org.jemmy.fx.NodeParent;
 import org.jemmy.fx.Root;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.MethodProperties;
-import org.jemmy.control.Property;
-import org.jemmy.control.SelectorImpl;
-import org.jemmy.env.Environment;
 import org.jemmy.interfaces.ControlInterface;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
 import org.jemmy.interfaces.TypeControlInterface;
-import org.jemmy.lookup.Any;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 
@@ -53,7 +47,7 @@ import org.jemmy.resources.StringComparePolicy;
  * @author Shura
  */
 @ControlType({CheckBox.class})
-@ControlInterfaces({Selectable.class})
+@ControlInterfaces(value = Selectable.class, encapsulates = CheckBoxWrap.State.class)
 public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> implements Selectable<CheckBoxWrap.State> {
 
     /**
@@ -63,27 +57,27 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
 
     @Override
     public List<State> getStates() {
-            return new GetAction<List<State>>() {
+        return new GetAction<List<State>>() {
 
-                @Override
-                public void run(Object... parameters) {
-                    if (getControl().isAllowIndeterminate()) {
-                        setResult(triStates);
-                    } else {
-                        setResult(twoStates);
-                    }
+            @Override
+            public void run(Object... parameters) {
+                if (getControl().isAllowIndeterminate()) {
+                    setResult(triStates);
+                } else {
+                    setResult(twoStates);
                 }
-            }.dispatch(getEnvironment());
+            }
+        }.dispatch(getEnvironment());
     }
 
     @Override
     public Selector<State> selector() {
-            return stateSelector;
+        return stateSelector;
     }
 
     @Override
     public Class<State> getType() {
-            return State.class;
+        return State.class;
     }
 
     /**
@@ -96,7 +90,7 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
          */
         CHECKED,
         /**
-         * 
+         *
          */
         UNCHECKED,
         /**
@@ -161,14 +155,15 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
     }
 
     public static CheckBoxWrap<CheckBox> find(NodeParent parent, LookupCriteria<CheckBox> criteria) {
-        return new CheckBoxWrap<CheckBox>(parent.getEnvironment(), 
+        return new CheckBoxWrap<CheckBox>(parent.getEnvironment(),
                 parent.getParent().lookup(CheckBox.class, criteria).get());
     }
 
     public static CheckBoxWrap<CheckBox> find(NodeParent parent, String text) {
-        return find(parent, new ByText<CheckBox>(text, (StringComparePolicy)parent.getEnvironment().
+        return find(parent, new ByText<CheckBox>(text, (StringComparePolicy) parent.getEnvironment().
                 getProperty(Root.LOOKUP_STRING_COMPARISON, StringComparePolicy.EXACT)));
     }
+
     /**
      *
      * @param box
@@ -229,41 +224,9 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
         }
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>>  boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (interfaceClass.equals(Selectable.class) && (type.equals(State.class) || type.equals(Boolean.class) && !isTriState())) {
-            return true;
-        }
-        return super.is(interfaceClass, type);
-    }
-
-    @Override
-    public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
-        return interfaceClass.equals(Selectable.class) || super.is(interfaceClass);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>>  INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (interfaceClass.equals(Selectable.class)) {
-            if (type.equals(State.class)) {
-                return (INTERFACE) this;
-            }
-            if (type.equals(Boolean.class)) {
-                ensureNoTriState();
-                return (INTERFACE) booleanSelectable;
-            }
-        }
-        return super.as(interfaceClass, type);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
-        if (interfaceClass.equals(Selectable.class)) {
-            return (INTERFACE) as(Selectable.class, State.class);
-        }
-        return super.as(interfaceClass);
+    @As(Boolean.class)
+    public Selectable<Boolean> asBooleanSelectable() {
+        ensureNoTriState();
+        return booleanSelectable;
     }
 }

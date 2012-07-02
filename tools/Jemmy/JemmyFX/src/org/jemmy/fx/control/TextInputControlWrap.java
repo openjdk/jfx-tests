@@ -24,46 +24,61 @@
  */
 package org.jemmy.fx.control;
 
-import javafx.scene.Scene;
 import javafx.scene.control.TextInputControl;
 import org.jemmy.action.GetAction;
-import org.jemmy.fx.ByText;
+import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.dock.DockInfo;
 import org.jemmy.dock.ObjectLookup;
 import org.jemmy.env.Environment;
+import org.jemmy.fx.ByText;
 import org.jemmy.input.ClickFocus;
 import org.jemmy.input.SelectionText;
-import org.jemmy.interfaces.ControlInterface;
-import org.jemmy.interfaces.Focus;
-import org.jemmy.interfaces.Focusable;
-import org.jemmy.interfaces.IntervalSelectable;
-import org.jemmy.interfaces.IntervalSelector;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
-import org.jemmy.interfaces.Text;
+import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 
+/**
+ * Test support for Java FX text editing controls. Supported operations are: type, 
+ * clean, select, move caret - all that is supported in <code>SelectionText</code>
+ * control interface. See <a href="../../samples/text/TextSample.java"><code>TextSample</code></a>
+ * for more info.
+ * @author shura
+ * @param <T>
+ * @see SelectionText
+ */
 @ControlType(TextInputControl.class)
 @ControlInterfaces({SelectionText.class})
 @DockInfo(generateSubtypeLookups = true)
 public class TextInputControlWrap<T extends TextInputControl> extends ControlWrap<T> implements Text, IntervalSelectable, Focusable {
 
+    /**
+     * Turns a text sample and a string comparison logic into lookup criteria. 
+     * @param <B>
+     * @param tp
+     * @param text
+     * @param policy
+     * @return
+     */
     @ObjectLookup("text and comparison policy")
-    public static <B extends TextInputControl> LookupCriteria<B> textLookup(Class<B> tp, String id, StringComparePolicy policy) {
-        return new ByText<B>(id, policy);
+    public static <B extends TextInputControl> LookupCriteria<B> textLookup(Class<B> tp, String text, StringComparePolicy policy) {
+        return new ByText<B>(text, policy);
     }
 
+    /**
+     * Name of the focused property.
+     */
     public static final String IS_FOCUSED_PROP_NAME = "isFocused";
     private SelectionText inputter;
     private TextInputFocus focus = null;
 
     /**
-     *
-     * @param scene
-     * @param nd
+     * Wraps a text input control.
+     * @param env 
+     * @param node 
      */
     public TextInputControlWrap(Environment env, T node) {
         super(env, node);
@@ -91,10 +106,6 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
         }
     }
 
-    /**
-     *
-     * @return
-     */
     @Property(TEXT_PROP_NAME)
     @Override
     public String text() {
@@ -114,7 +125,7 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
     }
 
     /**
-     *
+     * End of the selection.
      * @return
      */
     @Property(POSITION_PROP_NAME)
@@ -135,7 +146,7 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
     }
 
     /**
-     *
+     * Start of the selection.
      * @return
      */
     public int mark() {
@@ -154,18 +165,11 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
         }.dispatch(getEnvironment());
     }
 
-    /**
-     *
-     * @param arg0
-     */
     @Override
     public void type(String arg0) {
         inputter.type(arg0);
     }
 
-    /**
-     *
-     */
     @Override
     public void clear() {
         inputter.clear();
@@ -200,7 +204,7 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
     }
 
     /**
-     * Selects interval.
+     * Selects an interval.
      * @param start
      * @param end
      */
@@ -241,18 +245,14 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
         }
         return focus;
     }
-
-    @Override
-    public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
-        if(Text.class.isAssignableFrom(interfaceClass) || interfaceClass.isAssignableFrom(SelectionText.class)) return true;
-        return super.is(interfaceClass);
-    }
-
-    @Override
-    public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
-        if(Text.class.isAssignableFrom(interfaceClass) || interfaceClass.isAssignableFrom(SelectionText.class))
-            return (INTERFACE) inputter;
-        return super.as(interfaceClass);
+    
+    /**
+     * Allows to use the control as text control interface.
+     * @return 
+     */
+    @As
+    public SelectionText asText() {
+        return inputter;
     }
 
     private class TextInputFocus extends ClickFocus {

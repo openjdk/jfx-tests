@@ -12,23 +12,26 @@ import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 import org.jemmy.action.GetAction;
+import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.ByObject;
-import org.jemmy.fx.NodeWrap;
-import org.jemmy.interfaces.ControlInterface;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
-import org.jemmy.interfaces.TypeControlInterface;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
 
 /**
- * Wrapper for Accordion control. It implements Selectable to be able to select specific titled pane
- * via Selectable.selector().select(STATE state).
+ * Wrapper for Accordion control. There are two ways to deal with the accordion:
+ * though <code>Selectable</code> control interface or by finding an 
+ * <code>TitledPane</code> (such as through <code>TitledPaneDock</code>) and
+ * causing that to expand or collapse. Please see sample code for more info:
+ * <a href="../../samples/accordion/AccordionSample.java"><code>AccordionSample</code></a>
+ * @see AccordionDock
+ * @see TitledPaneDock
  */
 @ControlType(Accordion.class)
 @ControlInterfaces(value = {Selectable.class, Selectable.class},
@@ -37,16 +40,36 @@ import org.jemmy.timing.State;
 
 public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTROL> {
     
+    /**
+     * A property name to get selected <code>TitlePane</code>.
+     * @see #getProperty(java.lang.String) 
+     * @see #waitProperty(java.lang.String, java.lang.Object) 
+     */
     public static final String SELECTED_TITLED_PANE_PROP = "selectedTitledPane";
+    /**
+     * A property name to get title of the selected <code>TitlePane</code>.
+     * @see #getProperty(java.lang.String) 
+     * @see #waitProperty(java.lang.String, java.lang.Object) 
+     */
     public static final String SELECTED_TITLE_PROP = "selectedTitle";
+    /**
+     * A property name to get a list of <code>TitlePane</code>s.
+     * @see #getProperty(java.lang.String) 
+     * @see #waitProperty(java.lang.String, java.lang.Object) 
+     */
     public static final String ITEMS_PROP = "titledPanes";
+    /**
+     * A property name to get a list of titles of <code>TitlePane</code>s.
+     * @see #getProperty(java.lang.String) 
+     * @see #waitProperty(java.lang.String, java.lang.Object) 
+     */
     public static final String TITLES_PROP = "titles";
 
     private Selectable<TitledPane> titledPaneSelectable = new TitledPaneSelectable();
     private Selectable<String> stringSelectable = new StringSelectable();
 
     /**
-     * 
+     * Wraps an accordion.
      * @param env
      * @param nd
      */
@@ -56,75 +79,28 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
     }
 
     /**
-     *
-     * @param <INTERFACE>
-     * @param interfaceClass
-     * @return
+     * Allow using an accordion as a Selectable. This instance works with the 
+     * title panes.
+     * @return 
      */
-    @Override
-    public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
-        if (Selectable.class.equals(interfaceClass)) {
-            return true;
-        }
-        return super.is(interfaceClass);
+    @As(TitledPane.class)
+    public Selectable<TitledPane> titlePaneSelectable() {
+        return titledPaneSelectable;
     }
 
     /**
-     *
-     * @param <TYPE>
-     * @param <INTERFACE>
-     * @param interfaceClass
-     * @param type
-     * @return
+     * Allow using an accordion as a Selectable. This instance works with strings - 
+     * the title pane titles.
+     * @return 
      */
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Selectable.class.equals(interfaceClass) && TitledPane.class.equals(type)) {
-            return true;
-        }
-        if (Selectable.class.equals(interfaceClass) && String.class.equals(type)) {
-            return true;
-        }
-        return super.is(interfaceClass, type);
+    @As(String.class)
+    public Selectable<String> stringSelectable() {
+        return stringSelectable;
     }
 
     /**
-     *
-     * @param <INTERFACE>
-     * @param interfaceClass
-     * @return
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
-        if (Selectable.class.equals(interfaceClass)) {
-            return (INTERFACE) titledPaneSelectable;
-        }
-        return super.as(interfaceClass);
-    }
-
-    /**
-     *
-     * @param <TYPE>
-     * @param <INTERFACE>
-     * @param interfaceClass
-     * @param type
-     * @return
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Selectable.class.equals(interfaceClass) && TitledPane.class.equals(type)) {
-            return (INTERFACE) titledPaneSelectable;
-        }
-        if (Selectable.class.equals(interfaceClass) && String.class.equals(type)) {
-            return (INTERFACE) stringSelectable;
-        }
-        return super.as(interfaceClass, type);
-    }
-
-    /**
-     *
+     * Gets a list of title panes assigned to this accordion through the event 
+     * queue.
      * @return
      */
     @Property(ITEMS_PROP)
@@ -138,7 +114,8 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
     }
 
     /**
-     *
+     * Gets a list of titles of title panes assigned to this accordion through 
+     * the event queue.
      * @return
      */
     @Property(TITLES_PROP)
@@ -156,7 +133,7 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
     }
 
     /**
-     *
+     * Gets a selected title pane through event queue
      * @return
      */
     @Property(SELECTED_TITLED_PANE_PROP)
@@ -170,7 +147,7 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
     }
 
     /**
-     *
+     * Gets a title of a selected title pane through event queue
      * @return
      */
     @Property(SELECTED_TITLE_PROP)

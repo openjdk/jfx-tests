@@ -91,15 +91,17 @@ public class InputSampleBase extends SampleBase {
         Root.ROOT.getEnvironment().getWaiter(Wrap.WAIT_STATE_TIMEOUT).ensureValue(true, new State<Boolean>() {
 
             public Boolean reached() {
-                for (Event e : InputApp.events.toArray(new Event[0])) {
-                    if (e instanceof MouseEvent) {
-                        if (e.getEventType().equals(type)
-                                && ((Rectangle) e.getSource()).getFill().equals(color)
-                                && ((MouseEvent) e).getButton().equals(btn)
-                                && ((MouseEvent) e).getX() == x
-                                && ((MouseEvent) e).getY() == y
-                                && ((MouseEvent) e).getClickCount() == times) {
-                            return true;
+                if (InputApp.events.size() > 0) {
+                    for (Event e : InputApp.events.toArray(new Event[0])) {
+                        if (e instanceof MouseEvent) {
+                            if (e.getEventType().equals(type)
+                                    && ((Rectangle) e.getSource()).getFill().equals(color)
+                                    && ((MouseEvent) e).getButton().equals(btn)
+                                    && ((MouseEvent) e).getX() == x
+                                    && ((MouseEvent) e).getY() == y
+                                    && ((MouseEvent) e).getClickCount() == times) {
+                                return true;
+                            }
                         }
                     }
                 }

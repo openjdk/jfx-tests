@@ -26,20 +26,22 @@ package org.jemmy.samples.text;
 
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
+import org.jemmy.fx.TextDock;
 import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.fx.control.TextInputControlDock;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  *
- * How to access text controls with Jemmy
+ * How to access text node and text input controls with Jemmy
  * 
  * @author shura
  */
@@ -63,16 +65,30 @@ public class TextSample extends SampleBase {
     @Test
     public void lookup() {
         //naturally, you could find it by it's text
-        TextInputControlDock multiLine = new TextInputControlDock(scene.asParent(), 
-                "multi", StringComparePolicy.SUBSTRING);
-        assertTrue(multiLine.wrap().getControl() instanceof TextArea);
+        //we will find a Text here
+        TextDock text = new TextDock(scene.asParent(), "uneditable", 
+                StringComparePolicy.SUBSTRING);
+        assertTrue(text.wrap().getControl() instanceof Text);
         
         //text, however, could be unknown or even empty, so, you would want to consider
         //one of the generic lookup approaches.
         //such as by id
+        //that would be a TextField
         TextInputControlDock singleLine = new TextInputControlDock(scene.asParent(), 
                 "single");
         assertTrue(singleLine.wrap().getControl() instanceof TextField);
+        
+        //than, again, you may use node type
+        //lets find a text area
+        TextInputControlDock multiLine = new TextInputControlDock(scene.asParent(), 
+                TextArea.class);
+        assertTrue(multiLine.wrap().getControl() instanceof TextArea);
+        
+        //or a text area with certain sub-text
+        TextInputControlDock multiLine2 = new TextInputControlDock(scene.asParent(), 
+                TextArea.class, "line", StringComparePolicy.SUBSTRING);
+        assertEquals(multiLine.control(), multiLine2.control());
+        
     }
 
     /**

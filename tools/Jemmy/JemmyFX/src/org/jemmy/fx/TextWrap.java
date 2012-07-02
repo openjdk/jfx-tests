@@ -35,9 +35,11 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 
 /**
- * A wrap around <code>javafx.scene.text.Text</code>
+ * A wrap around <code>javafx.scene.text.Text</code>. <code>javafx.scene.text.Text</code> 
+ * is a <code>org.jemmy.interfaces.Text</code> - no surprise here :)
  * @param <T>
  * @author Shura
+ * @see TextDock
  */
 @ControlType({Text.class})
 @ControlInterfaces({org.jemmy.interfaces.Text.class})
@@ -45,11 +47,13 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
 
     
     /**
-     * Turns string into a by-text lookup criteria
+     * Converts a text sample and a text comparison logic to lookup criteria.
+     * Looking for a Text node by test content is the most logical approach.
+     * 
      * @param <B>
-     * @param tp
-     * @param text
-     * @param policy
+     * @param tp Text subclass
+     * @param text a text sample
+     * @param policy defines how to compare 
      * @return
      */
     @ObjectLookup("text and comparison policy")
@@ -58,7 +62,7 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
         return new ByText<B>(text, policy);
     }
     /**
-     * Wraps a text
+     * Wraps a text.
      * @param env 
      * @param node  
      */
@@ -98,10 +102,18 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
         return ByText.getNodeText(getControl());
     }
 
+    /**
+     * This is not functional as <code>javafx.scene.text.Text</code> is not editable.
+     * @param arg0 
+     */
     @Override
     public void type(String arg0) {
     }
 
+    /**
+     * This is not functional as <code>javafx.scene.text.Text</code> is not editable.
+     * @param arg0 
+     */
     @Override
     public void clear() {
     }

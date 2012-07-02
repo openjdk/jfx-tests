@@ -40,8 +40,15 @@ import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- * An SPI class encapsulating JavaFX node. 
- * @param <T> 
+ * Test support for JavaFX node. For simplicity, there is no special wrap class
+ * around <code>Parent</code> - any node could be treated as a parent for other 
+ * nodes. If a node is not a <code>Parent</code> the hierarchy will be considered
+ * empty.<br/>
+ * Check <a href="../samples/lookup">lookup samples</a> and <a href="../samples/input">input samples</a>
+ * to get a feeling of what could be done with on this generic level.<br/>
+ * All properties common to all nodes are defined on this level.
+ *
+ * @param <T>
  * @author shura, mrkam
  * @see NodeDock
  */
@@ -56,7 +63,7 @@ import org.jemmy.lookup.LookupCriteria;
     FXClickFocus.IS_FOCUSED_PROP, "isHover", "isManaged",
     "isMouseTransparent", "isPickOnBounds", "isPressed", "isResizable",
     "isVisible"})
-@ControlInterfaces(value = Parent.class, encapsulates = Node.class)
+@ControlInterfaces(value = {Parent.class, Showable.class}, encapsulates = Node.class)
 @DockInfo(generateSubtypeLookups = true)
 public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
@@ -72,12 +79,13 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
     /**
      * "Wraps" a node should a wrap be needed.
+     *
      * @param <TP>
-     * @param env
-     * @param type
-     * @param control
+     * @param env an Environment to assign to the wrap.
+     * @param type in case a class implementing scene is known
+     * @param control the scene itself
      * @return
-     * @see NodeDock#NodeDock(org.jemmy.env.Environment, javafx.scene.Node) 
+     * @see NodeDock#NodeDock(org.jemmy.env.Environment, javafx.scene.Node)
      */
     @DefaultWrapper
     public static <TP extends Node> Wrap<? extends TP> wrap(Environment env, Class<TP> type, TP control) {
@@ -87,12 +95,14 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     }
 
     /**
-     * Turns a string into by-id lookup criteria.
+     * Constructs lookup criteria by an id value. By-id lookup is the most basic 
+     * and the most reliable approach.
+     *
      * @param <B>
-     * @param tp
-     * @param id
+     * @param tp Node type 
+     * @param id expected node id
      * @return
-     * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, java.lang.String) 
+     * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, java.lang.String)
      * @see ByID
      */
     @ObjectLookup("id")
@@ -108,6 +118,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
     /**
      * Creates the wrap.
+     *
      * @param env
      * @param node
      */
@@ -117,6 +128,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
     /**
      * Gets scene of the node. Every node has a scene.
+     *
      * @return
      */
     @Property("scene")
@@ -125,10 +137,11 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     }
 
     /**
-     * Gets node bounds 
-     * @param env
-     * @param nd
-     * @return
+     * An utility method to get scene bounds.
+     *
+     * @param env Used to post code through the FX event queue.
+     * @param nd The node
+     * @return Absolute screen coordinates
      */
     public static Rectangle getScreenBounds(final Environment env, final Node nd) {
         GetAction<Rectangle> bounds = new GetAction<Rectangle>() {
@@ -153,23 +166,17 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
         return getScreenBounds(getEnvironment(), getControl());
     }
 
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.isAssignableFrom(interfaceClass) && Node.class.equals(type)) {
-            return true;
+    /**
+     * This makes possible to search for other nodes within another node's 
+     * hierarchy.
+     * @return node as a parent
+     */
+    @As(Node.class)
+    public Parent<Node> asParent() {
+        if (parent == null) {
+            parent = new NodeParentImpl(this);
         }
-        return super.is(interfaceClass, type);
-    }
-
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.isAssignableFrom(interfaceClass) && Node.class.equals(type)) {
-            if (parent == null) {
-                parent = new NodeParentImpl(this);
-            }
-            return (INTERFACE) parent;
-        }
-        return super.as(interfaceClass, type);
+        return parent;
     }
 
     @Override
@@ -207,7 +214,9 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     }
 
     /**
-     * Transforms point in local control coordinate system to screen coordinates.
+     * Transforms point in local control coordinate system to screen
+     * coordinates.
+     *
      * @param local
      * @return
      * @see #toLocal(org.jemmy.Point)
@@ -220,7 +229,9 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     }
 
     /**
-     * Transforms point in screen coordinates to local control coordinate system.
+     * Transforms point in screen coordinates to local control coordinate
+     * system.
+     *
      * @param global
      * @return coordinates which should be used for mouse operations.
      * @see #toAbsolute(org.jemmy.Point)
@@ -234,6 +245,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
     static Point convertToAbsoluteLayout(final NodeWrap<? extends Node> node, final Point p) {
         return new GetAction<Point>() {
+
             @Override
             public void run(Object... parameters) {
                 Bounds layout = node.getControl().getLayoutBounds();
@@ -246,6 +258,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
     static Point convertToLocalLayout(final NodeWrap<? extends Node> node, final Point p) {
         return new GetAction<Point>() {
+
             @Override
             public void run(Object... parameters) {
                 Bounds layout = node.getControl().getLayoutBounds();
@@ -258,35 +271,41 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
     /**
      * Tells if stage of the scene is focused.
+     *
      * @return
      */
     public boolean isFocused() {
         return new GetAction<Boolean>() {
-                    @Override
-                    public void run(Object... parameters) {
-                        setResult(getControl().isFocused() ||
-                            (as(Parent.class, Node.class).lookup(new LookupCriteria<Node>() {
-                                public boolean check(Node node) {
-                                    return node.isFocused();
-                                }
-                            }).size() > 0));
+
+            @Override
+            public void run(Object... parameters) {
+                setResult(getControl().isFocused()
+                        || (as(Parent.class, Node.class).lookup(new LookupCriteria<Node>() {
+
+                    public boolean check(Node node) {
+                        return node.isFocused();
                     }
-                }.dispatch(getEnvironment());
+                }).size() > 0));
+            }
+        }.dispatch(getEnvironment());
     }
-    
+
     /**
-     * Turns into Showable.
+     * Turns into Showable. If a node is shown, the stage is shown first.
+     * In the future, some other steps may be implemented such as switching tabs, 
+     * scrolling, etc, etc.
+     *
      * @return
      * @see Showable
      */
     @As
     public Showable asShowable() {
-        if(show == null) {
+        if (show == null) {
             show = new NodeShowable();
         }
         return show;
     }
-    
+
     private class NodeShowable implements Showable, Show {
 
         public Show shower() {
