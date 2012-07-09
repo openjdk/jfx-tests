@@ -109,7 +109,7 @@ public class TableViewLookupTest /*extends TableViewTestBase*/ {
                 return tableDock.getSelection().contains(new Point(1, 5)) ? true : null;
             }
         });
-        new TableCellItemDock(table, new EqualsLookup("Mikhail")).asCell().select();
+        new TableCellItemDock(table, new EqualsLookup("Mikhail")).asEditableCell().select();
         tableDock.wrap().waitState(new State() {
 
             public Object reached() {
@@ -121,6 +121,6 @@ public class TableViewLookupTest /*extends TableViewTestBase*/ {
     @Test
     public void edit() {
         table.setEditor(new TextFieldCellEditor());
-        new TableCellItemDock(table, new EqualsLookup("B")).asCell().edit("Aleksander");
+        new TableCellItemDock(table, new EqualsLookup("B")).asEditableCell().edit("Aleksander");
     }
 }

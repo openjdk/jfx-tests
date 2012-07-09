@@ -26,6 +26,7 @@ package org.jemmy.fx.control;
 
 import javafx.scene.Node;
 import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
@@ -33,28 +34,24 @@ import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
-import org.jemmy.dock.DockInfo;
 import org.jemmy.fx.NodeWrap;
 import org.jemmy.fx.Root;
 import org.jemmy.interfaces.Caret.Direction;
-import org.jemmy.interfaces.*;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
+import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- * This wraps an object within the tree
+ * This wraps a
+ *
  * @author barbashov, shura
- * @param <DATA> 
+ * @param <DATA>
  */
 @ControlType(Object.class)
 @ControlInterfaces({org.jemmy.interfaces.TreeItem.class})
-@DockInfo(name = "org.jemmy.fx.control.TreeNodeDock")
-public class TreeNodeWrap<T extends javafx.scene.control.TreeItem> extends Wrap<T> 
-    implements Showable, Show, EditableCell<Object> {
-
-    public static final String EXPANDED_PROP_NAME = "expanded";
-    public static final String LEAF_PROP_NAME = "leaf";
+class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
+        implements Showable, Show, EditableCell<Object> {
 
     private TreeViewWrap<? extends TreeView> treeViewWrap;
     private CellEditor<Object> editor;
@@ -66,7 +63,7 @@ public class TreeNodeWrap<T extends javafx.scene.control.TreeItem> extends Wrap<
         this.treeViewWrap = treeViewWrap;
         this.editor = editor;
     }
-    
+
     TreeViewWrap<? extends TreeView> getViewWrap() {
         return treeViewWrap;
     }
@@ -107,24 +104,19 @@ public class TreeNodeWrap<T extends javafx.scene.control.TreeItem> extends Wrap<
 
     @Override
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (org.jemmy.interfaces.TreeItem.class.equals(interfaceClass)) {
-            return true;
-        }
-        if (Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
-            return true;
-        }
+        if(Parent.class.equals(interfaceClass) && Node.class.equals(type)) return true;
         return super.is(interfaceClass, type);
     }
 
     @Override
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (org.jemmy.interfaces.TreeItem.class.equals(interfaceClass)) {
-            return (INTERFACE) Root.ROOT.getThemeFactory().treeItem(this);
-        }
-        if (Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
-            return getNode().as(interfaceClass, type);
-        }
+        if(Parent.class.equals(interfaceClass) && Node.class.equals(type)) return (INTERFACE) asParent();
         return super.as(interfaceClass, type);
+    }
+
+    
+    public Parent asParent() {
+        return getNode().as(Parent.class, Node.class);
     }
 
     public final Wrap<? extends Node> getNode() {
@@ -149,7 +141,26 @@ public class TreeNodeWrap<T extends javafx.scene.control.TreeItem> extends Wrap<
 
     @Override
     public void show() {
-        System.out.println("Showing " + getControl().getValue());
+        final TreeItem parent = new GetAction<TreeItem>() {
+
+            @Override
+            public void run(Object... parameters) throws Exception {
+                setResult(getControl().getParent());
+            }
+        }.dispatch(getEnvironment());
+        if (parent != null && !new GetAction<Boolean>() {
+
+            @Override
+            public void run(Object... parameters) throws Exception {
+                setResult(parent.isExpanded());
+            }
+        }.dispatch(getEnvironment())) {
+            new TreeItemWrap<TreeItem>(TreeItem.class, parent, treeViewWrap, null).asTreeItem().expand();
+        }
+        scrollTo();
+    }
+
+    private void scrollTo() {
         treeViewWrap.as(Scroll.class).caret().to(new Direction() {
 
             public int to() {
@@ -163,7 +174,8 @@ public class TreeNodeWrap<T extends javafx.scene.control.TreeItem> extends Wrap<
                                     if (index >= 0) {
                                         if (index < minmax[0]) {
                                             minmax[0] = index;
-                                        } else if (index > minmax[1]) {
+                                        }
+                                        if (index > minmax[1]) {
                                             minmax[1] = index;
                                         }
                                     }
@@ -194,7 +206,7 @@ public class TreeNodeWrap<T extends javafx.scene.control.TreeItem> extends Wrap<
         return true;
     }
 
-    @Property(EXPANDED_PROP_NAME)
+    @Property(TreeItemWrap.EXPANDED_PROP_NAME)
     public boolean isExpanded() {
         return new GetAction<Boolean>() {
 
@@ -205,7 +217,7 @@ public class TreeNodeWrap<T extends javafx.scene.control.TreeItem> extends Wrap<
         }.dispatch(getEnvironment());
     }
 
-    @Property(LEAF_PROP_NAME)
+    @Property(TreeItemWrap.LEAF_PROP_NAME)
     public boolean isLeaf() {
         return new GetAction<Boolean>() {
 

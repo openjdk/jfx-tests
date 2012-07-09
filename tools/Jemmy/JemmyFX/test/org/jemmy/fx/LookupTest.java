@@ -97,7 +97,8 @@ public class LookupTest {
 
     @Test
     public void ByText() {
-        Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<Scene>("title1")).as(Parent.class, Node.class).
+        Wrap<? extends Text> w = Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<Scene>("title1")).as(Parent.class, Node.class).
                 lookup(Text.class, new ByText("text1")).wrap();
+        w.as(org.jemmy.interfaces.Text.class).text();
     }
 }

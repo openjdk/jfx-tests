@@ -35,62 +35,60 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.Wrap;
+import org.jemmy.control.*;
 import org.jemmy.dock.DockInfo;
-import org.jemmy.dock.ObjectLookup;
 import org.jemmy.fx.NodeWrap;
 import org.jemmy.fx.WindowElement;
 import org.jemmy.interfaces.Caret.Direction;
-import org.jemmy.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
+import org.jemmy.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 
 
 /**
- * Wrapper for item classes held in ListCell children of ListView. It implements Showable to be able
- * moving hidden Cells to visible area via Show.show(). That can be needed eg. for clicking the cell with mouse.
+ * A list could be used as a parent for objects, which are stored in it. 
  *
- * The class is ported from ListCellOperator in the project JemmyFX.
- * @param <ITEM>
+ * @param DATA
  * @author KAM, shura
+ * @see ItemWrap
+ * @see ListItemDock
  */
 
 @ControlType(Object.class)
-@ControlInterfaces({EditableCell.class, Showable.class})
-@DockInfo(name="org.jemmy.fx.control.ListItemDock")
-public class ListItemWrap<ITEM extends Object> extends ItemWrap<ITEM> implements Showable {
+@ControlInterfaces(value={WindowElement.class, EditableCell.class, Showable.class},
+        encapsulates={ListView.class})
+@DockInfo(name="org.jemmy.fx.control.ListItemDock", multipleCriteria=false, generateSubtypeLookups=true)
+public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements Showable {
 
-    private ListViewWrap<? extends ListView> listViewWrap;
-    private int index = -1;
-    
+    private final ListViewWrap<? extends ListView> listViewWrap;
+    private final WindowElement<ListView> wElement;
+
     /**
      *
      * @param env
-     * @param item
+     * @param data
      * @param listViewWrap
      */
-    public ListItemWrap(ITEM item, int index, ListViewWrap<? extends ListView> listViewWrap, CellEditor<? super ITEM> editor) {
-        super(item, listViewWrap, editor);
+    public ListItemWrap(DATA data, int index, ListViewWrap<? extends ListView> listViewWrap, CellEditor<? super DATA> editor) {
+        super(index, data, listViewWrap, editor);
         this.listViewWrap = listViewWrap;
-        this.index = index;
-    }
-
-    int getIndex() {
-        return index;
+        wElement = new ViewElement<ListView>(ListView.class, listViewWrap.getControl());
     }
 
     /**
-     * This method finds listCell for the selected item. Should be invoked only
-     * using FX.deferAction()
-     * That can be needed for cases like obtaining screenBounds for corresponding ListCell.
+     * Index of this item within the list.
+     * @return 
      */
+    @Property(ITEM_PROP_NAME)
+    public int getIndex() {
+        return (Integer) super.getItem();
+    }
+    
     @Override
-    protected Wrap<? extends ListCell> cellWrap() {
+    public Wrap<? extends ListCell> cellWrap() {
         return listViewWrap.as(Parent.class, Node.class).lookup(ListCell.class,
-          new ListItemByObjectLookup<ITEM>(getControl())).wrap(0);
+          new ListItemByObjectLookup<DATA>(getControl())).wrap(0);
     }
 
     @Override
@@ -105,7 +103,7 @@ public class ListItemWrap<ITEM extends Object> extends ItemWrap<ITEM> implements
 
     @Override
     public void show() {
-        final List<ITEM> items = listViewWrap.getItems();
+        final List<DATA> items = listViewWrap.getItems();
 
         final long desiredIndex = new GetAction<Long>() {
 
@@ -243,28 +241,20 @@ public class ListItemWrap<ITEM extends Object> extends ItemWrap<ITEM> implements
         }
         return super.is(interfaceClass, type);
     }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
-        if(WindowElement.class.equals(interfaceClass)) {
-            return (INTERFACE) listViewWrap.as(interfaceClass);
-        }
-        return super.as(interfaceClass);
+    
+    /**
+     * To get the list view where the item resides.
+     * @return 
+     */
+    @As
+    public WindowElement<ListView> asWindowElement() {
+        return wElement;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if(WindowElement.class.equals(interfaceClass) && Scene.class.equals(type)) {
-            return (INTERFACE) listViewWrap.as(interfaceClass, type);
-        }
-        if(Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
-            return cellWrap().as(interfaceClass, type);
-        }
-        return super.as(interfaceClass, type);
-    }
-
+    /**
+     * @deprecated 
+     * @param <ITEM> 
+     */
     public static class ListItemByObjectLookup<ITEM> implements LookupCriteria<ListCell> {
 
         private final ITEM item;

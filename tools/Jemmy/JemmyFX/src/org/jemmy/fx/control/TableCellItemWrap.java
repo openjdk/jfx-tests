@@ -24,68 +24,74 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.List;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import org.jemmy.Point;
 import org.jemmy.Rectangle;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.Wrap;
+import org.jemmy.control.*;
 import org.jemmy.dock.DockInfo;
-import org.jemmy.fx.NodeWrap;
+import org.jemmy.dock.ObjectLookup;
 import org.jemmy.fx.WindowElement;
-import org.jemmy.interfaces.Caret.Direction;
-import org.jemmy.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
-import org.jemmy.interfaces.*;
-import org.jemmy.lookup.Lookup;
+import org.jemmy.interfaces.EditableCellOwner.EditableCell;
+import org.jemmy.interfaces.Parent;
+import org.jemmy.interfaces.Show;
+import org.jemmy.interfaces.Showable;
 import org.jemmy.lookup.LookupCriteria;
 
 
 /**
- * This represents a content of a single tree cell, as opposed to table items
- * which is a row.
+ * A table could be used as a parent for objects, which are contained in the tree. 
  *
- * @param <ITEM>
+ * @param DATA
  * @author KAM, shura
+ * @see ItemWrap
+ * @see TableCellItemDock
  */
 
 @ControlType(Object.class)
-@ControlInterfaces(value={EditableCell.class, Showable.class}, name={"asCell"})
-@DockInfo(name="org.jemmy.fx.control.TableCellItemDock")
-public class TableCellItemWrap<ITEM extends Object> extends ItemWrap<ITEM> implements Showable {
+@ControlInterfaces(value={WindowElement.class, EditableCell.class, Showable.class}, 
+        encapsulates={TableView.class})
+@DockInfo(name="org.jemmy.fx.control.TableCellItemDock", multipleCriteria=false)
+public class TableCellItemWrap<DATA extends Object> extends ItemWrap<DATA> implements Showable {
 
+    @ObjectLookup("cell coordinates")
+    public static <T> LookupCriteria<T> byCoords(Class<T> type, int row, int column) {
+        return new TableCellItemParent.ByPoint<T>(column, row);
+    }
+    
     private TableViewWrap<? extends TableView> tableViewWrap;
-    private Object row;
+    private int row;
     private TableColumn column;
+    private final WindowElement<TableView> wElement;
     
     /**
      *
      * @param env
      * @param cellItem
-     * @param listViewWrap
+     * @param tableViewWrap
      */
-    public TableCellItemWrap(TableViewWrap<? extends TableView> listViewWrap, 
-            Object row, TableColumn column, ITEM cellItem, CellEditor<? super ITEM> editor) {
-        super(cellItem, listViewWrap, editor);
-        this.tableViewWrap = listViewWrap;
+    public TableCellItemWrap(TableViewWrap<? extends TableView> tableViewWrap, 
+            int row, TableColumn column, DATA cellItem, CellEditor<? super DATA> editor) {
+        super(new Point(tableViewWrap.getColumns().indexOf(column), row), cellItem, tableViewWrap, editor);
+        this.tableViewWrap = tableViewWrap;
         this.row = row;
         this.column = column;
+        wElement = new ViewElement<TableView>(TableView.class, tableViewWrap.getControl());
     }
 
-    /**
-     * This method finds listCell for the selected item. Should be invoked only
-     * using FX.deferAction()
-     * That can be needed for cases like obtaining screenBounds for corresponding ListCell.
-     */
+    @Property(ITEM_PROP_NAME)
     @Override
-    protected Wrap<? extends TableCell> cellWrap() {
+    public Point getItem() {
+        return (Point) super.getItem();
+    }
+    
+    @Override
+    public Wrap<? extends TableCell> cellWrap() {
         return tableViewWrap.as(Parent.class, Node.class).lookup(TableCell.class,
-          new TableListItemByObjectLookup<ITEM>(getControl())).wrap(0);
+          new TableCellLookup(row, column)).wrap(0);
     }
 
     @Override
@@ -100,126 +106,44 @@ public class TableCellItemWrap<ITEM extends Object> extends ItemWrap<ITEM> imple
 
     @Override
     public void show() {
-        final List<ITEM> items = tableViewWrap.getItems();
-
-        final long desiredIndex = items.indexOf(row);
-
-        final Wrap<? extends ScrollBar> scrollBarWrap = tableViewWrap.as(Parent.class, Node.class).lookup(ScrollBar.class).wrap();
-        if (!scrollBarWrap.getProperty(Boolean.class, "isVisible")) {
-            return;
-        }
-        CaretOwner scroller = scrollBarWrap.as(CaretOwner.class);
-        Caret c = scroller.caret();
-
-        Direction direction = new Direction() {
-
-            /**
-             * @return < 0 to scroll toward decreasing value, > 0 - vice versa
-             * 0 to stop scrolling
-             * NOTE - see implementation KnobDragScrollerImpl.to(Direction) which is used in ScrollBarWrap
-             *        better to return constant values (-1 || 0 || +1) to get smooth dragging
-             */
-            @Override
-            public int to() {
-                final int[] minmax = new int[]{Integer.MAX_VALUE, -1};
-                final List items = tableViewWrap.getItems();
-                tableViewWrap.as(Parent.class, Node.class).lookup(TableCell.class,
-                        new LookupCriteria<TableCell>() {
-
-                            public boolean check(TableCell control) {
-                                if (NodeWrap.isInside(tableViewWrap.getControl(), control, getEnvironment())) {
-                                    int index = items.indexOf(control.getItem());
-                                    if (index >= 0) {
-                                        if (index < minmax[0]) {
-                                            minmax[0] = index;
-                                        } else if (index > minmax[1]) {
-                                            minmax[1] = index;
-                                        }
-                                    }
-                                }
-                                return true;
-                            }
-                        }).size();
-                int index = items.indexOf(getControl());
-                if (index < minmax[0]) {
-                    return -1;
-                } else if (index > minmax[1]) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-
-            @Override
-            public String toString() {
-                return "'" + getControl() + "' state at index " + desiredIndex;
-            }
-        };
-        c.to(direction);
+        tableViewWrap.scrollTo(row, tableViewWrap.getColumns().indexOf(column));
     }
 
-    @Override
-    public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
-        if(WindowElement.class.equals(interfaceClass)) {
-            return true;
-        }
-        return super.is(interfaceClass);
+    /**
+     * To get the tree view where the item resides.
+     * @return 
+     */
+    @As
+    public WindowElement<TableView> asWindowElement() {
+        return wElement;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if(WindowElement.class.equals(interfaceClass) && Scene.class.equals(type)) {
-            return true;
-        }
-        if(Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
-            return cellWrap().is(interfaceClass, type);
-        }
-        return super.is(interfaceClass, type);
-    }
+    /**
+     * Deprecated
+     * @param <ITEM> 
+     */
+    public static class TableCellLookup implements LookupCriteria<TableCell> {
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
-        if(WindowElement.class.equals(interfaceClass)) {
-            return (INTERFACE) tableViewWrap.as(interfaceClass);
-        }
-        return super.as(interfaceClass);
-    }
+        private final int row;
+        private final TableColumn column;
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if(WindowElement.class.equals(interfaceClass) && Scene.class.equals(type)) {
-            return (INTERFACE) tableViewWrap.as(interfaceClass, type);
-        }
-        if(Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
-            return cellWrap().as(interfaceClass, type);
-        }
-        return super.as(interfaceClass, type);
-    }
-
-    public static class TableListItemByObjectLookup<ITEM> implements LookupCriteria<TableCell> {
-
-        private final ITEM item;
-
-        public TableListItemByObjectLookup(ITEM item) {
-            this.item = item;
+        public TableCellLookup(int row, TableColumn column) {
+            this.row = row;
+            this.column = column;
         }
 
         @Override
         public boolean check(TableCell control) {
             if (control.isVisible() && control.getOpacity() == 1.0) {
-                if ((control.getItem() != null) && control.getItem().equals(item)) {
-                    return true;
-                }
+                return control.getTableColumn().equals(column)
+                        && control.getTableRow().getIndex() == row;
             }
             return false;
         }
 
         @Override
         public String toString() {
-            return "Looking for a visible listCell with the value '" + item + "'";
+            return "Looking for a (" + row + "," + column + ") cell";
         }
     }
 }

@@ -28,10 +28,9 @@ import org.jemmy.control.Wrap;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- * This is to allow specify custom editors for editable cell collections like
- * list, trees and such. An editor is assigned to a wrap so that all the children 
- * wraps found through lookup are assumed to be &quote;cells&quote; 
- * (or &quote;items&quote;) which already know about the editor.
+ * This is to support cell collections like
+ * list, trees and such. Children of this hierarchy are assumed to support
+ * <code>Cell</code> control interface.
  * 
  * @author shura
  */

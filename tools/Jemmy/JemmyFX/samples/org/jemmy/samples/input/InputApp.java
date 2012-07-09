@@ -154,8 +154,6 @@ public class InputApp extends Application {
 
                         sb.append(MOVED);
 
-                        System.out.println(t.getClass().getName());
-
                     } else if (t.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
 
                         sb.append(DRAGGED);
@@ -274,8 +272,6 @@ public class InputApp extends Application {
                     if (!t.isAltDown() && !t.isControlDown() && !t.isMetaDown()) {
 
                         lbl.appendText(TYPED + t.getCharacter() + "\n");
-
-                        System.out.println((int) t.getCharacter().charAt(0));
 
                     }
 

@@ -28,41 +28,38 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import org.jemmy.control.Wrap;
 
-/**
- *
- * @author shura
- */
-public class TreeNodeParent<T> extends ItemParent<TreeItem, TreeItem, Object> {
+class TreeNodeParent<T extends TreeItem> extends ItemParent<T, Object> {
 
     TreeViewWrap<? extends TreeView> treeViewWrap;
+    private final TreeItem<?> root;
 
-    public TreeNodeParent(TreeViewWrap<? extends TreeView> treeViewWrap) {
-        super(treeViewWrap, TreeItem.class);
+    public TreeNodeParent(TreeViewWrap<? extends TreeView> treeViewWrap, Class<T> lookupCLass) {
+        this(treeViewWrap, lookupCLass, treeViewWrap.getRoot());
+    }
+    public TreeNodeParent(TreeViewWrap<? extends TreeView> treeViewWrap, Class<T> lookupCLass, TreeItem<?> root) {
+        super(treeViewWrap, lookupCLass);
         this.treeViewWrap = treeViewWrap;
+        this.root = root;
     }
 
     @Override
     protected void doRefresh() {
-        refresh(treeViewWrap.getRoot());
+        refresh(root);
     }
 
-    private void refresh(TreeItem<? extends T> parent) {
-        getFound().add((TreeItem<T>) parent);
+    private void refresh(TreeItem<?> parent) {
+        getFound().add(getType().cast(parent));
         getAux().add(null);
         if (parent.isExpanded()) {
-            for (TreeItem<? extends T> si : parent.getChildren()) {
+            for (TreeItem<?> si : parent.getChildren()) {
                 refresh(si);
             }
         }
     }
 
     @Override
-    protected TreeItem getValue(TreeItem item) {
-        return item;
-    }
-
-    @Override
-    public <DT extends TreeItem> Wrap<? extends DT> wrap(Class<DT> type, TreeItem item, Object aux) {
+    protected <DT extends T> Wrap<? extends DT> wrap(Class<DT> type, T item, Object aux) {
         return new TreeNodeWrap(item, treeViewWrap, getEditor());
     }
+
 }

@@ -33,10 +33,7 @@ import org.jemmy.JemmyException;
 import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.Property;
-import org.jemmy.control.Wrap;
+import org.jemmy.control.*;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.FXClickFocus;
 import org.jemmy.fx.NodeWrap;
@@ -46,10 +43,14 @@ import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- * Wrapper for TableView control. 
- * Everywhere coordinates are of form {column, row}
- * @param <CONTROL>
- * @author Shura
+ * Table support in JemmyFX is provided through <code>Table</code> and 
+ * <code>Parent</code> control interfaces.
+ * @see #asItemParent(java.lang.Class) 
+ * @see #asTable(java.lang.Class) 
+ * @see #asTableCellItemParent(java.lang.Class)  
+ * @author shura
+ * @param <CONTROL> 
+ * @see TableViewDock
  */
 @ControlType({TableView.class})
 @ControlInterfaces(value = {Table.class}, encapsulates = {Object.class})
@@ -58,11 +59,21 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
 
     public static final String SELECTION_PROP_NAME = "selection";
     private AbstractScroll hScroll, vScroll;
+    private TableCellItemParent parent;
 
+    /**
+     * 
+     * @param env
+     * @param nd 
+     */
     public TableViewWrap(Environment env, CONTROL nd) {
         super(env, nd);
     }
 
+    /**
+     * Gives a size of a list of objects (rows) displayed in the table. 
+     * @return 
+     */
     @Property("itemCount")
     public int getSize() {
         return new GetAction<Integer>() {
@@ -73,7 +84,11 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
             }
         }.dispatch(getEnvironment());
     }
-    
+
+    /**
+     * Gives a list of objects (rows) displayed in the table. 
+     * @return 
+     */
     @Property("items")
     public ObservableList getItems() {
         return new GetAction<ObservableList>() {
@@ -84,7 +99,11 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
             }
         }.dispatch(getEnvironment());
     }
-    
+
+    /**
+     * Gives a selection. 
+     * @return 
+     */
     @Property("selection")
     public java.util.List<Point> selection() {
         return new GetAction<java.util.List<Point>>() {
@@ -92,14 +111,14 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
             @Override
             public void run(Object... parameters) throws Exception {
                 java.util.List<Point> res = new ArrayList<Point>();
-                for(TablePosition tp : (java.util.List<TablePosition>)getControl().getSelectionModel().getSelectedCells()) {
+                for (TablePosition tp : (java.util.List<TablePosition>) getControl().getSelectionModel().getSelectedCells()) {
                     res.add(new Point(tp.getColumn(), tp.getRow()));
                 }
                 setResult(res);
             }
         }.dispatch(getEnvironment());
     }
-    
+
     Object getRow(final int index) {
         return new GetAction() {
 
@@ -109,54 +128,57 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
             }
         }.dispatch(getEnvironment());
     }
-    
+
     TableColumn getColumn(final int index) {
         return new GetAction<TableColumn>() {
 
             @Override
             public void run(Object... parameters) throws Exception {
-                setResult((TableColumn)getControl().getColumns().get(index));
+                setResult((TableColumn) getControl().getColumns().get(index));
             }
         }.dispatch(getEnvironment());
     }
-    
+
     @Property("getColumns")
     public java.util.List<TableColumn> getColumns() {
         return new GetAction<java.util.List<TableColumn>>() {
 
             @Override
             public void run(Object... parameters) throws Exception {
-                setResult((java.util.List<TableColumn>)getControl().getColumns());
+                setResult((java.util.List<TableColumn>) getControl().getColumns());
             }
         }.dispatch(getEnvironment());
     }
-    
+
     /**
-     * {@inheritDoc }
+     * Jemmy table control interface introduces multiple selections mechanism.
+     * @param <T>
+     * @param type
+     * @return 
      */
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.equals(interfaceClass)
-                && TableCell.class.equals(type)) {
-            return true;
-        }
-        if (Table.class.equals(interfaceClass)
-                && Object.class.equals(type)) {
-            return true;
-        }
-        return super.is(interfaceClass, type);
+    @As(Object.class)
+    public <T> Table<T> asTable(Class<T> type) {
+        return asTableCellItemParent(type);
     }
 
     /**
-     * {@inheritDoc }
+     * You could find items within table and operate with them just like with
+     * any other UI elements.
+     * @param <T>
+     * @param type
+     * @return 
+     * @see TableCellItemWrap
      */
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (CellOwner.class.isAssignableFrom(interfaceClass)) {
-            return (INTERFACE) new TableCellItemParent(this, type);
+    @As(Object.class)
+    public <T> EditableCellOwner<T> asItemParent(Class<T> type) {
+        return asTableCellItemParent(type);
+    }
+
+    private <T> TableCellItemParent<T> asTableCellItemParent(Class<T> type) {
+        if (parent == null || !parent.getType().equals(type)) {
+            parent = new TableCellItemParent<T>(this, type);
         }
-        return super.as(interfaceClass, type);
+        return parent;
     }
 
     /**
@@ -185,8 +207,9 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
 
     /**
      * Obtains wrap for scrollbar
+     *
      * @param vertical
-     * @return 
+     * @return
      */
     private AbstractScroll getScroll(final boolean vertical) {
         Lookup<ScrollBar> lookup = as(Parent.class, Node.class).lookup(ScrollBar.class,
@@ -194,7 +217,8 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
 
                     @Override
                     public boolean check(ScrollBar control) {
-                        return (control.getOrientation() == Orientation.VERTICAL) == vertical;
+                        return (control.getOrientation() == Orientation.VERTICAL) == vertical && 
+                                control.isVisible();
                     }
                 });
         int count = lookup.size();
@@ -211,12 +235,9 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
     /**
      * {@inheritDoc }
      */
-    private Wrap<? extends TableCell> scrollTo(int index) {
+    Wrap<? extends TableCell> scrollTo(final int row, final int column) {
 
         checkScrolls();
-
-        final int column = 0;
-        final int row = index;
 
         if (vScroll != null) {
             vScroll.caret().to(new Caret.Direction() {
@@ -254,7 +275,8 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
 
     /**
      * Identifies which elements are shown in the TableView currently.
-     * @return {minColumn, minRow, maxColumn, maxRow} of cells that are fully 
+     *
+     * @return {minColumn, minRow, maxColumn, maxRow} of cells that are fully
      * visible in the list.
      */
     private int[] shown() {
@@ -267,7 +289,7 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
             public void run(Object... parameters) {
                 final int[] res = new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE, -1, -1};
 
-                as(Parent.class, TableCell.class).lookup(new LookupCriteria<TableCell>() {
+                as(Parent.class, Node.class).lookup(TableCell.class, new LookupCriteria<TableCell>() {
 
                     @Override
                     public boolean check(TableCell control) {
@@ -275,7 +297,7 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
                             Rectangle bounds = getScreenBounds(getEnvironment(), control);
                             int column = getColumnIndex(control);
                             int row = getRowIndex(control);
-                            if (viewArea.contains(bounds)) {
+                            if (viewArea.contains(bounds) && row >= 0 && column >= 0) {
 
                                 res[0] = Math.min(res[0], column);
                                 res[1] = Math.min(res[1], row);

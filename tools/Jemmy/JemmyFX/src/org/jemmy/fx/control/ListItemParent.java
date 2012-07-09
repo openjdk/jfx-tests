@@ -34,7 +34,7 @@ import org.jemmy.lookup.LookupCriteria;
  * @param <ITEM>
  * @author Shura, KAM
  */
-public class ListItemParent<ITEM> extends ItemParent<ITEM, ITEM, Integer>
+public class ListItemParent<ITEM> extends ItemParent<ITEM, Integer>
         implements org.jemmy.interfaces.List<ITEM> {
 
     ListViewWrap<? extends ListView> listViewOp;
@@ -54,11 +54,6 @@ public class ListItemParent<ITEM> extends ItemParent<ITEM, ITEM, Integer>
                 getAux().add(i);
             }
         }
-    }
-
-    @Override
-    protected ITEM getValue(ITEM item) {
-        return item;
     }
 
     @Override

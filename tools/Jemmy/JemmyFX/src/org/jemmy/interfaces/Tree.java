@@ -25,9 +25,13 @@
 package org.jemmy.interfaces;
 
 /**
- *
+ * Allows to perform path-selection operations.
  * @author shura
  */
 public interface Tree<T> extends TypeControlInterface<T> {
+    /**
+     * Actually performs the selection. 
+     * @return 
+     */
     public TreeSelector<T> selector();
 }

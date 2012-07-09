@@ -25,36 +25,86 @@
 package org.jemmy.fx.control;
 
 import javafx.scene.Node;
+import org.jemmy.control.As;
 import org.jemmy.control.ControlType;
+import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
+import org.jemmy.dock.DockInfo;
+import org.jemmy.dock.ObjectLookup;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
+import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Show;
 import org.jemmy.interfaces.Showable;
+import org.jemmy.lookup.LookupCriteria;
+import org.jemmy.resources.StringComparePolicy;
 
 /**
- *
+ * A few compound Java FX controls could be used as a parent for objects, 
+ * which are actually contained within the control. 
+ * This associates the data with corresponding nodes so that you could do all
+ * the things with the data which you usually do with nodes. Such as clicking on, 
+ * using as a parent for nodes, etc.
  * @author shura
  */
 @ControlType(Object.class)
-public abstract class ItemWrap<ITEM extends Object> extends Wrap<ITEM> implements Showable, Show, EditableCell<ITEM> {
+@DockInfo(name="org.jemmy.fx.control.ItemDock", multipleCriteria=false)
+public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implements Showable, Show, EditableCell<DATA> {
+    public static final String ITEM_PROP_NAME = "item";
+
+    @ObjectLookup("object")
+    public static <T> LookupCriteria<T> byObject(Class<T> type, final Object data) {
+        return new LookupCriteria<T> () {
+
+            public boolean check(T control) {
+                return control.equals(data);
+            }
+
+            @Override
+            public String toString() {
+                return "an element which is equals to " + data.toString();
+            }
+        };
+    }
+
+    @ObjectLookup("toString and comparison policy")
+    public static <T> LookupCriteria<T> byToString(Class<T> type, final String data, 
+        final StringComparePolicy policy) {
+        return new LookupCriteria<T> () {
+
+            public boolean check(T control) {
+                return policy.compare(data, control.toString());
+            }
+
+            @Override
+            public String toString() {
+                return "an element which is equals to " + data.toString();
+            }
+        };
+    }
 
     protected Wrap<?> viewWrap;
-    protected CellEditor<? super ITEM> editor;
-
+    protected CellEditor<? super DATA> editor;
+    private final Object item;
+    
     /**
      *
      * @param env
-     * @param item
+     * @param data
      * @param viewWrap
      */
-    public ItemWrap(ITEM item, Wrap<?> listViewWrap, CellEditor<? super ITEM> editor) {
-        super(listViewWrap.getEnvironment(), item);
+    public ItemWrap(Object item, DATA data, Wrap<?> listViewWrap, CellEditor<? super DATA> editor) {
+        super(listViewWrap.getEnvironment(), data);
         this.viewWrap = listViewWrap;
         this.editor = editor;
+        this.item = item;
     }
 
-    public void edit(ITEM newValue) {
+    public Object getItem() {
+        return item;
+    }    
+    
+    public void edit(DATA newValue) {
         as(Showable.class).shower().show();
         editor.edit(this, newValue);
     }
@@ -70,6 +120,22 @@ public abstract class ItemWrap<ITEM extends Object> extends Wrap<ITEM> implement
         return Object.class;
     }
     
-    protected abstract Wrap<? extends Node> cellWrap();
+    /**
+     * There is a node associated with every piece of data. This node could serve
+     * as a parent.
+     * @return 
+     * @see #cellWrap() 
+     */
+    @As(Node.class)
+    public Parent<Node> asNodeParent() {
+        return cellWrap().as(Parent.class, Node.class);
+    }
+
+    /**
+     * There is a node associated with every piece of data.
+     * @return 
+     * @see #asNodeParent() 
+     */
+    public abstract Wrap<? extends Node> cellWrap();
 
 }

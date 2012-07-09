@@ -28,9 +28,15 @@ import org.jemmy.control.Wrap;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- *
+ * Implements path-like selection.
  * @author shura
  */
 public interface TreeSelector<T> {
+    /**
+     * Been called with a chain of criteria, selects nodes adhering to a criterion - 
+     * one level per a criterion.
+     * @param criteria
+     * @return 
+     */
     public Wrap<? extends T> select(LookupCriteria<T>... criteria);
 }

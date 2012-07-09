@@ -26,6 +26,7 @@ package org.jemmy.fx.control;
 
 import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
+import org.jemmy.lookup.Any;
 import org.jemmy.lookup.EqualsLookup;
 import org.jemmy.lookup.LookupCriteria;
 import static org.junit.Assert.assertEquals;
@@ -74,7 +75,7 @@ public class ListTest {
     
     @Test
     public void indexLookup() {
-        new ListItemDock(list, lst.asSelectable().getStates().size() - 1).
+        new ListItemDock(list, lst.asSelectable().getStates().size() - 1, new Any<Object>()).
                 asEditableCell().edit("four");
     }
 
@@ -95,6 +96,6 @@ public class ListTest {
     
     @Test
     public void cellSelect() throws InterruptedException {
-        new ListItemDock(lst.asList(), 0).asEditableCell().select();
+        new ListItemDock(lst.asList(), 0, new Any<Object>()).asEditableCell().select();
     }
 }

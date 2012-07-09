@@ -25,36 +25,117 @@
 package org.jemmy.fx.control;
 
 import javafx.scene.Node;
-import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import org.jemmy.Rectangle;
-import org.jemmy.action.GetAction;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.Property;
-import org.jemmy.control.Wrap;
+import org.jemmy.control.*;
 import org.jemmy.dock.DockInfo;
-import org.jemmy.fx.NodeWrap;
+import org.jemmy.dock.ObjectLookup;
 import org.jemmy.fx.Root;
-import org.jemmy.interfaces.Caret.Direction;
-import org.jemmy.interfaces.EditableCellOwner.EditableCell;
+import org.jemmy.fx.WindowElement;
+import org.jemmy.fx.control.ItemDataParent.ItemCriteria;
+import org.jemmy.interfaces.EditableCellOwner;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
-import org.jemmy.interfaces.*;
+import org.jemmy.interfaces.EditableCellOwner.EditableCell;
+import org.jemmy.interfaces.Show;
 import org.jemmy.lookup.LookupCriteria;
+import org.jemmy.resources.StringComparePolicy;
 
 /**
- * This wraps an object within the tree
+ * A tree could be used as a parent for objects, which are available through 
+ * <code>javafx.scene.control.TreeItem.getValue()</code>. 
+ *
  * @author barbashov, shura
- * @param <DATA> 
+ * @param ITEM
+ * @see ItemWrap
+ * @see TreeItemDock
  */
 @ControlType(Object.class)
-@ControlInterfaces({org.jemmy.interfaces.TreeItem.class, EditableCell.class})
-@DockInfo(name = "org.jemmy.fx.control.TreeItemDock")
+@ControlInterfaces(value = {EditableCellOwner.class, WindowElement.class, org.jemmy.interfaces.TreeItem.class, EditableCell.class},
+encapsulates = {Object.class, TreeView.class},
+name = {"asItemParent"})
+@DockInfo(name = "org.jemmy.fx.control.TreeItemDock", generateSubtypeLookups = true, multipleCriteria = false)
 public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<DATA> {
 
-    private Class<DATA> dataClass;
-    private TreeNodeWrap<TreeItem> theWrap;
+    public static final String EXPANDED_PROP_NAME = "expanded";
+    public static final String LEAF_PROP_NAME = "leaf";
+
+    /**
+     * Allows to find tree items by a sequence of strings which are compared to 
+     * results of <code>getValue().toString()</code> for all items starting from a root
+     * all the way to the node in question - one text pattern per one level.
+     * @param <T>
+     * @param type
+     * @param policy
+     * @param path starting with a pattern for root ending with a pattern for the node
+     * @return 
+     */
+    @ObjectLookup("comparison policy and a toString of elements of the tree path")
+    public static <T> LookupCriteria<T> byPathToString(Class<T> type, final StringComparePolicy policy,
+            final String... path) {
+        return new TreePathCriteria<T, String>(path) {
+
+            @Override
+            protected boolean checkSingleItem(TreeItem item, String pathElement) {
+                return policy.compare(pathElement, item.getValue().toString());
+            }
+
+        };
+    }
+
+    /**
+     * Allows to find tree items by a sequence of objects which are compared to 
+     * results of <code>getValue()</code> for all items starting from a root
+     * all the way to the node in question - one object per one level.
+     * @param <T>
+     * @param type
+     * @param policy
+     * @param path starting with a value for root ending with a value for the node
+     * @return 
+     */
+    @ObjectLookup("elements of the tree path")
+    public static <T> LookupCriteria<T> byPathValues(Class<T> type,
+            final Object... path) {
+        return new TreePathCriteria<T, Object>(path) {
+
+            @Override
+            protected boolean checkSingleItem(TreeItem item, Object pathElement) {
+                return item.getValue().equals(pathElement);
+            }
+
+        };
+    }
+    
+    /**
+     * Allows to find tree items by a sequence of criteria which are applied to 
+     * results of <code>getValue()</code> for all items starting from a root
+     * all the way to the node in question - one criteria per one level.
+     * @param <T>
+     * @param type
+     * @param policy
+     * @param path starting with a criteria for root ending with a criteria for the node
+     * @return 
+     */
+    @ObjectLookup("criteria for elements of the tree path")
+    public static <T> LookupCriteria<T> byPathCriteria(final Class<T> type,
+            final LookupCriteria<T>... path) {
+        return new TreePathCriteria<T, LookupCriteria<T>>(path) {
+
+            @Override
+            protected boolean checkSingleItem(TreeItem item, LookupCriteria<T> pathElement) {
+                return pathElement.check(type.cast(item.getValue()));
+            }
+
+        };
+    }
+    
+    private final Class<DATA> dataClass;
+    private final TreeNodeWrap<TreeItem> theWrap;
+    private TreeItemParent parent = null;
+    private TreeNodeParent itemParent = null;
+    private final TreeViewWrap<? extends TreeView> treeViewWrap;
+    private final WindowElement<TreeView> wElement;
+
     /**
      *
      * @param env
@@ -64,17 +145,17 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
     TreeItemWrap(Class<DATA> dataClass, TreeItem<DATA> item,
             TreeViewWrap<? extends TreeView> treeViewWrap,
             CellEditor<? super DATA> editor) {
-        super(item.getValue(), treeViewWrap, editor);
+        super(item, item.getValue(), treeViewWrap, editor);
+        this.treeViewWrap = treeViewWrap;
         this.dataClass = dataClass;
         theWrap = new TreeNodeWrap(item, treeViewWrap, editor);
+        wElement = new ViewElement<TreeView>(TreeView.class, treeViewWrap.getControl());
     }
 
+    @Property(ITEM_PROP_NAME)
+    @Override
     public TreeItem getItem() {
-        return theWrap.getControl();
-    }
-
-    public Class<DATA> getDataClass() {
-        return dataClass;
+        return (TreeItem) super.getItem();
     }
 
     public TreeViewWrap<? extends TreeView> tree() {
@@ -86,46 +167,13 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
         return theWrap.getScreenBounds();
     }
 
-    @Override
-    public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
-        if (org.jemmy.interfaces.TreeItem.class.equals(interfaceClass)) {
-            return true;
-        }
-        return super.is(interfaceClass);
-    }
-
-    @Override
-    public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
-        if (org.jemmy.interfaces.TreeItem.class.equals(interfaceClass)) {
-            return (INTERFACE) Root.ROOT.getThemeFactory().treeItem(theWrap);
-        }
-        return super.as(interfaceClass);
-    }
-
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (org.jemmy.interfaces.TreeItem.class.equals(interfaceClass)) {
-            return true;
-        }
-        if (Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
-            return true;
-        }
-        return super.is(interfaceClass, type);
-    }
-
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (org.jemmy.interfaces.TreeItem.class.equals(interfaceClass)) {
-            return (INTERFACE) Root.ROOT.getThemeFactory().treeItem(theWrap);
-        }
-        if (Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
-            return theWrap.as(interfaceClass, type);
-        }
-        return super.as(interfaceClass, type);
-    }
-
-    public final Wrap<? extends Node> getNode() {
-        return theWrap.getNode();
+    /**
+     * Tree item is what you can collapse and expand.
+     * @return 
+     */
+    @As
+    public org.jemmy.interfaces.TreeItem asTreeItem() {
+        return Root.ROOT.getThemeFactory().treeItem(this);
     }
 
     @Override
@@ -133,12 +181,20 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
         return theWrap.shower();
     }
 
-    @Property(TreeNodeWrap.EXPANDED_PROP_NAME)
+    /**
+     * Whether the item is expanded.
+     * @return 
+     */
+    @Property(EXPANDED_PROP_NAME)
     public boolean isExpanded() {
         return theWrap.isExpanded();
     }
 
-    @Property(TreeNodeWrap.LEAF_PROP_NAME)
+    /**
+     * Whether the item is a leaf.
+     * @return 
+     */
+    @Property(LEAF_PROP_NAME)
     public boolean isLeaf() {
         return theWrap.isLeaf();
     }
@@ -150,15 +206,88 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
 
     @Override
     public Class<DATA> getType() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return dataClass;
     }
 
     @Override
-    protected Wrap<? extends Node> cellWrap() {
-        return getNode();
+    public Wrap<? extends Node> cellWrap() {
+        return theWrap.getNode();
     }
 
+    @Override
     public void show() {
         theWrap.show();
+    }
+
+    /**
+     * To get the tree view where the item resides.
+     * @return 
+     */
+    @As
+    public WindowElement<TreeView> asWindowElement() {
+        return wElement;
+    }
+
+    /**
+     * A tree item itself serves as a parent for another tree item within it.
+     * <code>javafx.scene.control.TreeItem</code>s. 
+     *
+     * @param <T>
+     * @param type
+     * @return
+     * @see #asTreeItemParent()
+     * @see TreeViewWrap#asItemParent(java.lang.Class)
+     */
+    @As(TreeItem.class)
+    public <T extends TreeItem> EditableCellOwner<T> asTreeItemParent(Class<T> type) {
+        asTreeItem().expand();
+        if (itemParent == null) {
+            itemParent = new TreeNodeParent<T>(treeViewWrap, type, getItem());
+        }
+        return itemParent;
+    }
+
+    /**
+     * A tree item itself serves as a parent for another items within it, 
+     * looking them up by data accessible through
+     * <code>javafx.scene.control.TreeItem.getValue()</code>.
+     *
+     * @param <T>
+     * @param type
+     * @return
+     * @see #asItemParent()
+     * @see TreeViewWrap#asTreeItemParent(java.lang.Class)
+     */
+    @As(Object.class)
+    public <T> EditableCellOwner<T> asItemParent(Class<T> type) {
+        asTreeItem().expand();
+        if (parent == null || !parent.getType().equals(type)) {
+            parent = new TreeItemParent<T>(treeViewWrap, getItem(), type);
+        }
+        return parent;
+    }
+
+    private static abstract class TreePathCriteria<T, ELEMENT> implements ItemCriteria<TreeItem, T> {
+
+        ELEMENT[] path;
+
+        public TreePathCriteria(ELEMENT[] path) {
+            this.path = path;
+        }
+        protected abstract boolean checkSingleItem(TreeItem item, ELEMENT pathElement);
+        public boolean checkItem(TreeItem item) {
+            
+            for (int i = path.length - 1; i >= 0 && item != null; i--) {
+                if (!checkSingleItem(item, path[i])) {
+                    return false;
+                }
+                item = item.getParent();
+            }
+            return true;
+        }
+
+        public boolean check(T control) {
+            return true;
+        }
     }
 }

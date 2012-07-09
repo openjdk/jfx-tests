@@ -26,8 +26,8 @@ package org.jemmy.fx.control;
 
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import org.jemmy.fx.Root;
 import org.jemmy.control.Wrap;
+import org.jemmy.fx.Root;
 import org.jemmy.interfaces.Tree;
 import org.jemmy.interfaces.TreeSelector;
 import org.jemmy.lookup.Lookup;
@@ -46,7 +46,7 @@ class TreeImpl<T> implements Tree<T> {
     TreeItemParent parent;
 
     public TreeImpl(Class<T> itemType, TreeViewWrap<? extends TreeView> outer, TreeItem root, 
-            TreeItemParent parent) {
+            TreeItemParent<T> parent) {
         this.owner = outer;
         this.itemType = itemType;
         this.root = root;
@@ -72,12 +72,11 @@ class TreeImpl<T> implements Tree<T> {
                     public TreeItem<T> reached() {
                         for (TreeItem<T> ti : root.getChildren()) {
                             if (c.check(ti.getValue())) {
-                                System.out.println("Found " + c.toString());
                                 if (criteria.length > 1) {
                                     if (!ti.isExpanded()) {
                                         Root.ROOT.getThemeFactory().treeItem(
-                                                new TreeNodeWrap(ti,
-                                                        owner, parent.getEditor())).expand();
+                                                new TreeItemWrap(itemType, ti, 
+                                                owner, parent.getEditor())).expand();
                                     }
                                     return select(ti, FXStringMenuOwner.decreaseCriteria(criteria));
                                 } else {
@@ -88,6 +87,16 @@ class TreeImpl<T> implements Tree<T> {
                         //well, none found
                         return null;
                     }
+
+                    @Override
+                    public String toString() {
+                        StringBuilder res = new StringBuilder(".");
+                        for (int i = 0; i < criteria.length; i++) {
+                            res.append("/").append(criteria[i].toString());
+                        }
+                        res.append(" path to be available");
+                        return res.toString();
+                    }
                 });
             } else {
                 throw new IllegalStateException("Non-empty criteria list is expected");
@@ -96,7 +105,7 @@ class TreeImpl<T> implements Tree<T> {
 
         @Override
         public Wrap select(LookupCriteria<T>... criteria) {
-            if (owner.getTreeView().isShowRoot()
+            if (((TreeView)owner.getControl()).isShowRoot()
                 && criteria.length > 0
                 && !root.isExpanded()) {
                 Root.ROOT.getThemeFactory().treeItem(new TreeNodeWrap(root, owner, parent.getEditor())).expand();

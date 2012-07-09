@@ -41,25 +41,29 @@ import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
 
-abstract class ItemParent<ITEM, AUX> implements EditableCellOwner<ITEM> {
+abstract class ItemDataParent<ITEM, AUX> implements EditableCellOwner<AUX> {
 
     private List<ITEM> found = new ArrayList<ITEM>();
     private List<AUX> aux = new ArrayList<AUX>();
-    private final Class<ITEM> lookupClass;
     private final Wrap<?> owner;
-    private CellEditor<? super ITEM> editor = null;
+    private CellEditor<? super AUX> editor = null;
+    private final Class<AUX> type;
 
-    ItemParent(Wrap<?> owner, Class<ITEM> lookupClass) {
+    ItemDataParent(Wrap<?> owner, Class<AUX> type) {
         this.owner = owner;
-        this.lookupClass = lookupClass;
+        this.type = type;
     }
 
     protected abstract void doRefresh();
 
-    protected abstract <DT extends ITEM> Wrap<? extends DT> wrap(Class<DT> type, ITEM item, AUX aux);
+    protected abstract <DT extends AUX> Wrap<? extends DT> wrap(Class<DT> type, ITEM item, AUX aux);
 
     public Wrap<?> getOwner() {
         return owner;
+    }
+
+    public Class<AUX> getType() {
+        return type;
     }
 
     protected void refresh() {
@@ -76,41 +80,39 @@ abstract class ItemParent<ITEM, AUX> implements EditableCellOwner<ITEM> {
         return aux;
     }
 
-    public <ST extends ITEM> Lookup<ST> lookup(Class<ST> type, LookupCriteria<ST> lc) {
-        return new ItemLookup<ST>(this, type, lc);
+    public <ST extends AUX> Lookup<ST> lookup(Class<ST> type, LookupCriteria<ST> lc) {
+        return new ItemDataLookup<ITEM, ST>(this, type, lc);
     }
 
-    public <ST extends ITEM> Lookup<ST> lookup(Class<ST> type) {
+    public <ST extends AUX> Lookup<ST> lookup(Class<ST> type) {
         return lookup(type, new Any<ST>());
     }
 
-    public Lookup<ITEM> lookup(LookupCriteria<ITEM> lc) {
+    public Lookup<AUX> lookup(LookupCriteria<AUX> lc) {
         return lookup(getType(), lc);
     }
 
-    public Lookup<ITEM> lookup() {
-        return lookup(new Any<ITEM>());
+    public Lookup<AUX> lookup() {
+        return lookup(new Any<AUX>());
     }
 
-    public Class<ITEM> getType() {
-        return lookupClass;
-    }
-
-    public void setEditor(CellEditor<? super ITEM> editor) {
+    public void setEditor(CellEditor<? super AUX> editor) {
         this.editor = editor;
     }
 
-    CellEditor<? super ITEM> getEditor() {
+    CellEditor<? super AUX> getEditor() {
         return editor;
     }
 
-    public List<Wrap<? extends ITEM>> select(LookupCriteria<ITEM>... criteria) {
-        List<Wrap<? extends ITEM>> res = new ArrayList<Wrap<? extends ITEM>>();
+    public List<Wrap<? extends AUX>> select(LookupCriteria<AUX>... criteria) {
+        List<Wrap<? extends AUX>> res = new ArrayList<Wrap<? extends AUX>>();
         KeyboardModifier[] mods = new KeyboardModifier[0];
-        for (LookupCriteria<ITEM> cr : criteria) {
-            Lookup<ITEM> lu = lookup(cr);
+        for (LookupCriteria<AUX> cr : criteria) {
+            Lookup<AUX> lu = lookup(cr);
             for (int j = 0; j < lu.size(); j++) {
-                Wrap<? extends ITEM> w = lu.wrap(j);
+                Wrap<? extends AUX> w = lu.wrap(j);
+                //TODO use this somehow
+//                w.as(Cell.class).select();
                 w.as(Showable.class).shower().show();
                 w.mouse().click(1, w.getClickPoint(), MouseButtons.BUTTON1,
                         mods);
@@ -121,15 +123,14 @@ abstract class ItemParent<ITEM, AUX> implements EditableCellOwner<ITEM> {
         return res;
     }
 
-    private class ItemLookup<ST extends ITEM> extends ItemParent<ST, AUX>
+    private class ItemDataLookup<ITEM, ST extends AUX> extends ItemDataParent<ITEM, ST>
             implements Lookup<ST> {
 
-        private final ItemParent<ITEM, AUX> prev;
+        private final ItemDataParent<ITEM, AUX> prev;
         private final LookupCriteria<ST> lc;
 
-        public ItemLookup(ItemParent<ITEM, AUX> prev,
-                Class<ST> type, LookupCriteria<ST> lc) {
-            super(prev.owner, type);
+        public ItemDataLookup(ItemDataParent<ITEM, AUX> prev, Class<ST> type, LookupCriteria<ST> lc) {
+            super(owner, type);
             this.prev = prev;
             this.lc = lc;
         }
@@ -140,12 +141,13 @@ abstract class ItemParent<ITEM, AUX> implements EditableCellOwner<ITEM> {
             getFound().clear();
             getAux().clear();
             for (int i = 0; i < prev.getFound().size(); i++) {
-                if(getType().isInstance(prev.getFound().get(i)) &&
-                        lc.check(getType().cast(prev.getFound().get(i))) && 
-                        (!(lc instanceof AuxLookupCriteria) || 
-                        ((AuxLookupCriteria<ST, AUX>)lc).checkAux(getAux().get(i)))) {
-                    getFound().add(getType().cast(prev.getFound().get(i)));
-                    getAux().add(prev.getAux().get(i));
+                ST aux = getType().cast(prev.getAux().get(i));
+                if (getType().isInstance(prev.getAux().get(i)) && 
+                        lc.check(aux) &&
+                        (!(lc instanceof ItemCriteria) ||
+                        ((ItemCriteria<ITEM, AUX>)lc).checkItem(prev.getFound().get(i)))) {
+                    getFound().add(prev.getFound().get(i));
+                    getAux().add(aux);
                 }
             }
         }
@@ -169,7 +171,7 @@ abstract class ItemParent<ITEM, AUX> implements EditableCellOwner<ITEM> {
 
         public Wrap<? extends ST> wrap(int i) {
             wait(i + 1);
-            return prev.wrap(super.getType(), getFound().get(i), getAux().get(i));
+            return prev.wrap(getType(), getFound().get(i), getAux().get(i));
         }
 
         public Wrap<? extends ST> wrap() {
@@ -178,7 +180,7 @@ abstract class ItemParent<ITEM, AUX> implements EditableCellOwner<ITEM> {
 
         public ST get(int i) {
             wait(i + 1);
-            return getType().cast(getFound().get(i));
+            return getType().cast(getAux().get(i));
         }
 
         public ST get() {
@@ -218,13 +220,13 @@ abstract class ItemParent<ITEM, AUX> implements EditableCellOwner<ITEM> {
         }
 
         @Override
-        public <DT extends ST> Wrap<? extends DT> wrap(Class<DT> type, ST item, AUX aux) {
+        protected <DT extends ST> Wrap<? extends DT> wrap(Class<DT> type, ITEM item, ST aux) {
             return prev.wrap(type, item, aux);
         }
+
     }
-
-    interface AuxLookupCriteria<T, AUX> extends LookupCriteria<T> {
-
-        public boolean checkAux(AUX aux);
+    
+    interface ItemCriteria<ITEM, DATA> extends LookupCriteria<DATA> {
+        public boolean checkItem(ITEM item);
     }
 }

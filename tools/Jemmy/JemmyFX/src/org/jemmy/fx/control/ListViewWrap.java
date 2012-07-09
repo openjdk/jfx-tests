@@ -33,10 +33,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import org.jemmy.JemmyException;
 import org.jemmy.action.GetAction;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.Property;
-import org.jemmy.control.Wrap;
+import org.jemmy.control.*;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.NodeParent;
 import org.jemmy.fx.NodeWrap;
@@ -50,13 +47,16 @@ import org.jemmy.timing.State;
 import org.jemmy.timing.Waiter;
 
 /**
- * Wrapper for ListView control. It implements Selectable to be able to select specific item
- * via Selectable.selector().select(STATE state).
- * @param <CONTROL>
- * @author Alexander Kouznetsov <mrkam@mail.ru>
+ * List support in JemmyFX is provided through a few different control interfaces.
+ * Namely, these are <code>List</code>, <code>Parent</code> and <code>Selectable</code>.
+ * @see #asItemParent(java.lang.Class) 
+ * @see #asSelectable(java.lang.Class) 
+ * @author shura, Alexander Kouznetsov <mrkam@mail.ru>
+ * @param <CONTROL> 
+ * @see ListViewDock
  */
 @ControlType({ListView.class})
-@ControlInterfaces(value = {org.jemmy.interfaces.List.class, Selectable.class},
+@ControlInterfaces(value = {org.jemmy.interfaces.List.class, Selectable.class, Scroll.class},
 encapsulates = {Object.class, Object.class})
 public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
         implements Scroll, Selectable<Object> {
@@ -65,8 +65,6 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
     private AbstractScroll emptyScroll = new EmptyScroll();
     private static Scroller emptyScroller = new EmptyScroller();
     private Selectable<Object> objectSelectable = new ListViewSelectable<Object>(Object.class);
-
-    ;
 
     /**
      *
@@ -81,15 +79,20 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
 
     /**
      * Look for a certain node and create an ListViewWrap for it.
+     *
      * @param parent
      * @param type
      * @param criteria
+     * @deprecated Use Docks
      */
     public static ListViewWrap<ListView> find(NodeParent parent, LookupCriteria<ListView> criteria) {
         return new ListViewWrap<ListView>(parent.getEnvironment(),
                 parent.getParent().lookup(ListView.class, criteria).get());
     }
 
+    /**
+     * @deprecated Use Docks
+     */
     public static ListViewWrap<ListView> find(NodeParent parent, final Object item, final int itemIndex) {
         return find(parent, new LookupCriteria<ListView>() {
 
@@ -100,6 +103,9 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
         });
     }
 
+    /**
+     * @deprecated Use Docks
+     */
     public static ListViewWrap<ListView> find(NodeParent parent) {
         return find(parent, new Any<ListView>());
     }
@@ -130,7 +136,7 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
     }
 
     /**
-     *
+     * Is the list vertical?
      * @return
      */
     @Property(ScrollBarWrap.VERTICAL_PROP_NAME)
@@ -144,67 +150,42 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
         }.dispatch(getEnvironment());
     }
 
-    @Override
-    public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
-        // Default Parent is Parent<Node> which is super
-        if (Selectable.class.equals(interfaceClass)) {
-            return true;
+    /** 
+     * In case direct scrolling is needed. Scroller value is within (0, 1) range.
+     * @return 
+     */
+    @As
+    public Scroll asScroll() {
+        if (scroll != null) {
+            return scroll;
+        } else {
+            return emptyScroll;
         }
-        if (interfaceClass.isAssignableFrom(AbstractScroll.class)) {
-            return true;
-        }
-        return super.is(interfaceClass);
-    }
-
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.equals(interfaceClass)
-                && !Node.class.equals(type)) {
-            return true;
-        }
-        if (Selectable.class.equals(interfaceClass)) {
-            return true;
-        }
-        return super.is(interfaceClass, type);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
-        // Default Parent is Parent<Node> which is super
-        if (Selectable.class.equals(interfaceClass)) {
-            return (INTERFACE) objectSelectable;
-        }
-        if (interfaceClass.isAssignableFrom(AbstractScroll.class)) {
-            checkScroll();
-            if (scroll != null) {
-                return (INTERFACE) scroll;
-            } else {
-                return (INTERFACE) emptyScroll;
-            }
-        }
-        return super.as(interfaceClass);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.isAssignableFrom(interfaceClass)
-                && !Node.class.equals(type)) {
-            return (INTERFACE) new ListItemParent<TYPE>(this, type);
-        }
-        if (Selectable.class.equals(interfaceClass)) {
-            return (INTERFACE) new ListViewSelectable<TYPE>(type);
-        }
-        return super.as(interfaceClass, type);
     }
 
     /**
-     *
-     * @return
+     * Select a value in the list. Should more complicated lookup cases be needed,
+     * use <code>asItemParent(Class)</code>.
+     * @param <T>
+     * @param type
+     * @return 
+     * @see #asItemParent(java.lang.Class) 
      */
-    public CONTROL getListView() {
-        return getControl();
+    @As(Object.class)
+    public <T extends Object> Selectable<T> asSelectable(Class<T> type) {
+        return new ListViewSelectable<T>(type);
+    }
+
+    /**
+     * Allows to perform lookup within the list view by criteria formulated
+     * in terms of user data stored in the list.
+     * @return 
+     * @see #asItemParent(java.lang.Class) 
+     * @see ListItemWrap
+     */
+    @As(Object.class)
+    public <T extends Object> org.jemmy.interfaces.List<T> asItemParent(Class<T> type) {
+        return new ListItemParent<T>(this, type);
     }
 
     long getSelectedIndex() {
@@ -212,7 +193,7 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
 
             @Override
             public void run(Object... parameters) {
-                setResult(new Long(getListView().getSelectionModel().getSelectedIndex()));
+                setResult(new Long(getControl().getSelectionModel().getSelectedIndex()));
             }
         }.dispatch(getEnvironment());
     }
@@ -226,7 +207,7 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
 
             @Override
             public void run(Object... parameters) {
-                setResult(getListView().getSelectionModel().getSelectedItem());
+                setResult(getControl().getSelectionModel().getSelectedItem());
             }
         }.dispatch(getEnvironment());
     }
@@ -331,8 +312,8 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
     }
 
     /**
-     * That class holds code which implements interfaces MultiSelectable<ITEM> and selector
-     * for enclosing ListViewWrap
+     * That class holds code which implements interfaces MultiSelectable<ITEM>
+     * and selector for enclosing ListViewWrap
      */
     private class ListViewSelectable<ITEM extends Object> implements Selectable<ITEM>, Selector<ITEM> {
 
@@ -359,7 +340,7 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
 
                 @Override
                 public void run(Object... parameters) {
-                    setResult(createResult(getListView().getItems().iterator()));
+                    setResult(createResult(getControl().getItems().iterator()));
                 }
 
                 @Override

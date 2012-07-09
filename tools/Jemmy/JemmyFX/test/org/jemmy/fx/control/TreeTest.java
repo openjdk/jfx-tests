@@ -24,28 +24,24 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.jemmy.interfaces.TreeItem;
-import org.jemmy.interfaces.EditableCellOwner.EditableCell;
-import org.jemmy.fx.SceneDock;
-import org.jemmy.interfaces.Parent;
 import javafx.scene.Node;
-import org.jemmy.control.Wrap;
-import org.jemmy.lookup.EqualsLookup;
-import org.jemmy.lookup.ByToStringLookup;
+import javafx.scene.control.TreeItem;
 import org.jemmy.TimeoutExpiredException;
+import org.jemmy.control.Wrap;
+import org.jemmy.env.Timeout;
 import org.jemmy.fx.AppExecutor;
-import org.jemmy.interfaces.CellOwner.Cell;
+import org.jemmy.fx.SceneDock;
 import org.jemmy.interfaces.EditableCellOwner;
+import org.jemmy.interfaces.EditableCellOwner.EditableCell;
+import org.jemmy.interfaces.Parent;
+import org.jemmy.interfaces.Selectable;
+import org.jemmy.lookup.AbstractLookup;
+import org.jemmy.lookup.ByToStringLookup;
+import org.jemmy.lookup.EqualsLookup;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.*;
 
 /**
  *
@@ -75,7 +71,7 @@ public class TreeTest {
     public void tearDown() {
     }
 
-    @Test
+    //@Test
     public void lookup() {
         new ScrollBarDock(tree.wrap().as(Parent.class, Node.class)).asScroll().caret().to(0);
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("01")).asTreeItem().expand();
@@ -89,17 +85,11 @@ public class TreeTest {
                 tree.asItemParent().
                 lookup(new EqualsLookup("010")).size());
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().collapse();
-        try {
-            tree.asItemParent().
-                    lookup(new EqualsLookup("022")).wrap();
-            fail("An axception should happen");
-        } catch (TimeoutExpiredException e) {
-        } catch (Exception e) {
-            fail(TimeoutExpiredException.class.getName() + " + should happen");
-        }
+        tree.asItemParent().
+                lookup(new EqualsLookup("022")).wrap();
     }
 
-    @Test
+    //@Test
     public void tree() {
         tree.asTree().selector().select(new ByToStringLookup("0"));
         assertEquals("000", tree.asTree().selector().select(new ByToStringLookup("00"), new ByToStringLookup("000")).getControl());
@@ -110,7 +100,21 @@ public class TreeTest {
         assertEquals("023", tree.asTree().selector().select(new ByToStringLookup("02"), new ByToStringLookup("023")).getControl());
     }
 
-    @Test
+    //@Test
+    public void itemSelectable() {
+        Selectable<TreeItem> selectable = tree.asTreeItemSelectable();
+        selectable.selector().select(selectable.getStates().get(5));
+        tree.wrap().waitProperty(TreeViewWrap.SELECTED_INDEX_PROP_NAME, 5);
+        assertEquals(0, tree.asSelectable(TreeItem.class).getStates().size());
+    }
+
+    //@Test
+    public void objectSelectable() {
+        Selectable<String> selectable = tree.asSelectable(String.class);
+        selectable.selector().select("01");
+    }
+
+    //@Test
     public void collapseAll() {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("0")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
@@ -126,7 +130,7 @@ public class TreeTest {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
     }
 
-    @Test
+    //@Test
     public void edit() {
         tree.asItemParent().setEditor(new TextFieldCellEditor());
         tree.asTree().selector().select(new ByToStringLookup("00"), new ByToStringLookup("00c"));
@@ -138,7 +142,7 @@ public class TreeTest {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("00")).asTreeItem().collapse();
     }
 
-    //@Test
+    @Test
     public void multiple() {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("0")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
@@ -148,20 +152,20 @@ public class TreeTest {
         assertEquals(3, tree.wrap().getControl().getSelectionModel().getSelectedItems().size());
     }
 
-    @Test
+    //@Test
     public void wrap() {
         Parent<String> p = tree.wrap().as(Parent.class, String.class);
         p.lookup().size();
-        p.lookup(new EqualsLookup("01")).as(TreeItem.class).collapse();
-        p.lookup(new EqualsLookup("02")).as(TreeItem.class).expand();
+        p.lookup(new EqualsLookup("01")).as(org.jemmy.interfaces.TreeItem.class).collapse();
+        p.lookup(new EqualsLookup("02")).as(org.jemmy.interfaces.TreeItem.class).expand();
     }
-    
-    @Test
+
+    //@Test
     public void itemWrap() {
         EditableCellOwner<javafx.scene.control.TreeItem> p = tree.wrap().as(EditableCellOwner.class, javafx.scene.control.TreeItem.class);
         p.lookup().size();
         p.setEditor(new TextFieldCellEditor());
-        
+
         p.lookup(new LookupCriteria<javafx.scene.control.TreeItem>() {
 
             public boolean check(javafx.scene.control.TreeItem control) {
@@ -169,5 +173,38 @@ public class TreeTest {
             }
         }).as(EditableCell.class).edit("lala");
     }
-    
+
+    //@Test
+    public void noItem() {
+        Timeout wait = tree.wrap().getEnvironment().getTimeout(AbstractLookup.WAIT_CONTROL_TIMEOUT);
+        tree.wrap().getEnvironment().setTimeout(wait, 100);
+        try {
+            tree.asTree().selector().select(new LookupCriteria() {
+
+                public boolean check(Object cntrl) {
+                    return false;
+                }
+
+                @Override
+                public String toString() {
+                    return "invalidcriteria";
+                }
+            });
+            fail("no exception");
+        } catch (TimeoutExpiredException e) {
+            assertTrue(e.getMessage().contains("invalidcriteria"));
+        } finally {
+            tree.wrap().getEnvironment().setTimeout(wait);
+        }
+    }
+
+    //@Test
+    public void scroll() {
+        new TreeItemDock(tree.asItemParent(), new EqualsLookup("0")).asTreeItem().expand();
+        new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
+        int rowCount = tree.asTreeItemSelectable().getStates().size();
+        tree.asScroll().to(rowCount - 1);
+        tree.asScroll().to(0);
+        tree.asScroll().to((rowCount - 1) / 2);
+    }
 }

@@ -33,66 +33,71 @@ import org.jemmy.lookup.LookupCriteria;
 
 /**
  *
- * @param <ITEM>
+ * @param DATA
  * @author Shura, KAM
  */
-public class TableCellItemParent<ITEM> extends ItemParent<ITEM, ITEM, Point>
-        implements org.jemmy.interfaces.Table<ITEM> {
+class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA>
+        implements org.jemmy.interfaces.Table<DATA> {
 
     TableViewWrap<? extends TableView> tableViewOp;
 
-    public TableCellItemParent(TableViewWrap<? extends TableView> tableViewOp, Class<ITEM> itemClass) {
+    public TableCellItemParent(TableViewWrap<? extends TableView> tableViewOp, Class<DATA> itemClass) {
         super(tableViewOp, itemClass);
         this.tableViewOp = tableViewOp;
     }
 
     @Override
     protected void doRefresh() {
+        List<TableColumn> columns = (List<TableColumn>) tableViewOp.getColumns();
         for (int r = 0; r < tableViewOp.getItems().size(); r++) {
-            List<TableColumn> columns = (List<TableColumn>)tableViewOp.getColumns();
-            for(int c = 0; c < columns.size(); c++) {
-                ITEM item = (ITEM) columns.get(c).getCellData(tableViewOp.getRow(r));
-                getFound().add(item);
-                getAux().add(new Point(c, r));
+            for (int c = 0; c < columns.size(); c++) {
+                getFound().add(new Point(r, c));
+                getAux().add(getType().cast(columns.get(c).getCellData(tableViewOp.getRow(r))));
             }
         }
     }
 
-    @Override
-    protected ITEM getValue(ITEM item) {
-        return item;
-    }
-
-    @Override
-    protected <DT extends ITEM> Wrap<? extends DT> wrap(Class<DT> type, ITEM item, Point aux) {
-                return new TableCellItemWrap<DT>(tableViewOp, 
-                        tableViewOp.getRow(aux.getY()), 
-                        tableViewOp.getColumn(aux.getX()), (DT)item, getEditor());
-    }
-
-    public List<Wrap<? extends ITEM>> select(Point... point) {
-        LookupCriteria<ITEM>[] criteria = new LookupCriteria[point.length];
+//    @Override
+//    protected <DT extends DATA> Wrap<? extends DT> wrap(Class<DT> type, DATA item, Object aux) {
+//                return new TableCellItemWrap<DT>(tableViewOp, 
+//                        tableViewOp.getRow(aux.getY()), 
+//                        tableViewOp.getColumn(aux.getX()), (DT)item, getEditor());
+//    }
+    public List<Wrap<? extends DATA>> select(Point... point) {
+        LookupCriteria<DATA>[] criteria = new LookupCriteria[point.length];
         for (int i = 0; i < point.length; i++) {
-            criteria[i] = new ByPoint<ITEM>(point[i]);
+            criteria[i] = new ByPoint<DATA>(point[i]);
         }
         return super.select(criteria);
     }
 
+    @Override
+    protected <DT extends DATA> Wrap<? extends DT> wrap(Class<DT> type, Point item, DATA aux) {
+        return new TableCellItemWrap<DT>(tableViewOp,
+                item.getX(),
+                tableViewOp.getColumn(item.getY()), (DT) item, getEditor());
+    }
 
-    public static class ByPoint<ITEM> implements AuxLookupCriteria<ITEM, Point> {
-        Point point;
+    public static class ByPoint<DATA> implements ItemCriteria<Point, DATA> {
+
+        private final int x, y;
 
         public ByPoint(Point point) {
-            this.point = point;
+            x = point.x;
+            y = point.y;
         }
 
-        public boolean checkAux(Point aux) {
-            return aux.getX() == point.getX() &&
-                    aux.getY() == point.getY();
+        public ByPoint(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
 
-        public boolean check(ITEM control) {
+        public boolean check(DATA control) {
             return true;
+        }
+
+        public boolean checkItem(Point aux) {
+            return aux.getX() == x && aux.getY() == y;
         }
     }
 }

@@ -34,10 +34,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import org.jemmy.JemmyException;
 import org.jemmy.action.GetAction;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.Property;
-import org.jemmy.control.Wrap;
+import org.jemmy.control.*;
 import org.jemmy.env.Environment;
 import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.*;
@@ -48,19 +45,39 @@ import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.timing.State;
 import org.jemmy.timing.Waiter;
 
+/**
+ * Tree support in JemmyFX is provided through a few different control interfaces.
+ * Namely, these are <code>Tree</code>, <code>Parent</code> and <code>Selectable</code>.
+ * A tree could be considered a parent/selectable for two types of objects:
+ * <code>javafx.scene.control.TreeItem</code> in which case TreeItems are themselves
+ * the elements of the hierarchy/list or the underlying data held within the tree
+ * items.
+ * @see #asTreeItemParent()
+ * @see #asTreeItemSelectable() 
+ * @see #asSelectable(java.lang.Class) 
+ * @see #asItemParent(java.lang.Class) 
+ * @author shura
+ * @param <CONTROL> 
+ * @see TreeViewDock
+ */
 @ControlType({TreeView.class})
-@ControlInterfaces(value = {EditableCellOwner.class, Tree.class, Scroll.class},
-encapsulates = {Object.class, Object.class},
-name = {"asItemParent"})
+@ControlInterfaces(value = {Selectable.class, EditableCellOwner.class, Tree.class, Selectable.class, Scroll.class},
+encapsulates = {TreeItem.class, Object.class, Object.class, Object.class},
+name = {"asTreeItemSelectable", "asItemParent"})
 public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
         implements Scroll, Selectable<TreeItem> {
 
+    public static final String SELECTED_INDEX_PROP_NAME = "tree.selected.index";
+    public static final String SELECTED_ITEM_PROP_NAME = "tree.selected.item";
     public static final String ROOT_PROP_NAME = "rootItem";
     private AbstractScroll scroll;
     private AbstractScroll emptyScroll = new EmptyScroll();
     private static Scroller emptyScroller = new EmptyScroller();
-    private Selectable<TreeItem> objectSelectable = new TreeViewSelectable();
+    private Selectable selectable;
+    private Selectable<TreeItem> itemSelectable;
     private TreeItemParent parent = null;
+    private TreeNodeParent itemParent = null;
+    private Tree tree = null;
 
     /**
      *
@@ -75,8 +92,9 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
 
     /**
      * This method finds TreeCell for the selected item. Should be invoked only
-     * using FX.deferAction()
-     * That can be needed for cases like obtaining screenBounds for corresponding ListCell.
+     * using FX.deferAction() That can be needed for cases like obtaining
+     * screenBounds for corresponding ListCell.
+     *
      * @return ListCell, null if it is not visible
      */
     @SuppressWarnings("unchecked")
@@ -132,114 +150,138 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
         }.dispatch(getEnvironment());
     }
 
-    @Override
-    public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
-        // Default Parent is Parent<Node> which is super
-        if (Selectable.class.equals(interfaceClass)) {
-            return true;
+    /**
+     * Allows to work with tree as with a list on selectable data objects - the 
+     * objects which are accessible through <code>javafx.scene.control.TreeItem.getValue()</code>.
+     * Notice that
+     * only expanded tree items get into the list. A set of items in the 
+     * hierarchy is also limited by the type parameter - objects of other types 
+     * do not make it to the list.
+     * @param <T>
+     * @param type
+     * @return 
+     * @see #asTreeItemSelectable() 
+     */
+    @As(Object.class)
+    public <T> Selectable<T> asSelectable(Class<T> type) {
+        if(selectable == null || !selectable.getType().equals(type)) {
+            selectable = new TreeViewSelectable<T>(type);
         }
-        if (interfaceClass.isAssignableFrom(AbstractScroll.class)) {
-            return true;
-        }
-        return super.is(interfaceClass);
+        return selectable;
     }
 
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.equals(interfaceClass)
-                && !Node.class.equals(type)) {
-            return true;
+    /**
+     * Allows to work with tree as with a list on selectable items. Notice that
+     * only expanded tree items get into the list. 
+     * @return 
+     * @see #asSelectable(java.lang.Class) 
+     */
+    @As(TreeItem.class)
+    public Selectable<TreeItem> asTreeItemSelectable() {
+        if (itemSelectable == null) {
+            itemSelectable = new TreeViewSelectable();
         }
-        if (Selectable.class.equals(interfaceClass)) {
-            return true;
-        }
-        if (Tree.class.equals(interfaceClass)) {
-            return true;
-        }
-        if (interfaceClass.isAssignableFrom(Tree.class)) {
-            return true;
-        }
-        return super.is(interfaceClass, type);
+        return itemSelectable;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
-        // Default Parent is Parent<Node> which is super
-        if (Selectable.class.equals(interfaceClass)) {
-            return (INTERFACE) objectSelectable;
-        }
-        if (interfaceClass.isAssignableFrom(AbstractScroll.class)) {
-            checkScroll();
-            if (scroll != null) {
-                return (INTERFACE) scroll;
-            } else {
-                return (INTERFACE) emptyScroll;
-            }
-        }
-        return super.as(interfaceClass);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.isAssignableFrom(interfaceClass)
-                && !Node.class.equals(type)) {
-            if (TreeItem.class.equals(type)) {
-                return (INTERFACE) new TreeNodeParent<TYPE>(this);
-            } else {
-                initParent(interfaceClass, type);
-                return (INTERFACE) parent;
-            }
-        }
-        if (Selectable.class.equals(interfaceClass) && TreeItem.class.equals(type)) {
-            return (INTERFACE) objectSelectable;
-        }
-        if (Tree.class.isAssignableFrom(interfaceClass)) {
-            initParent(interfaceClass, type);
-            return (INTERFACE) new TreeImpl(type, this, getRoot(), parent);
-        }
-        return super.as(interfaceClass, type);
-    }
-
-    TreeItemParent getParent() {
-        return parent;
-    }
-
-    private <TYPE, INTERFACE extends TypeControlInterface<TYPE>> void initParent(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (parent == null) {
-            parent = new TreeItemParent<TYPE>(this, type);
+    /**
+     * In case direct scrolling is needed. Scroller value is in the interval from 0 to 1.
+     * @return 
+     */
+    @As
+    public Scroll asScroll() {
+        checkScroll();
+        if (scroll != null) {
+            return scroll;
+        } else {
+            return emptyScroll;
         }
     }
 
     /**
-     *
-     * @return
+     * Allows to perform lookup for <code>javafx.scene.control.TreeItem</code>s. 
+     * All objects
+     * within the tree are elements of this hierarchy: whether visible or not. 
+     * Notice though that the implementation does not expand nodes, so 
+     * if a tree is loaded dynamically on node expand, those dynamically added
+     * nodes will not be a part of hierarchy.
+     * @param <T>
+     * @param type
+     * @return 
+     * @see #asTreeItemParent() 
      */
-    public CONTROL getTreeView() {
-        return getControl();
+    @As(TreeItem.class)
+    public <T extends TreeItem> EditableCellOwner<T> asTreeItemParent(Class<T> type) {
+        if(itemParent == null)  {
+            itemParent = new TreeNodeParent<T>(this, type);
+        }
+        return itemParent;
     }
 
-    Long getSelectedIndex() {
-        return new GetAction<Long>() {
+    /**
+     * Allows to perform lookup for data objects - the objects which are accessible 
+     * through <code>javafx.scene.control.TreeItem.getValue()</code>. All objects
+     * within the tree are elements of this hierarchy: whether visible or not. 
+     * Notice though that the implementation does not expand nodes, so 
+     * if a tree is loaded dynamically on node expand, those dynamically added
+     * nodes will not be a part of hierarchy.
+     * @param <T> type of data supported by the tree. If should be consistent with 
+     * the data present in the tree, because the tree data may get casted to this 
+     * type parameter during lookup operations. That, this must be a super type
+     * for all types present in the tree. 
+     * @param type
+     * @return 
+     * @see #asItemParent() 
+     */
+    @As(Object.class)
+    public <T> EditableCellOwner<T> asItemParent(Class<T> type) {
+        if (parent == null || !parent.getType().equals(type)) {
+            parent = new TreeItemParent<T>(this, getRoot(), type);
+        }
+        return parent;
+    }
+
+    /**
+     * Allows selections of paths. Notice that in the tree implementation, 
+     * tree root is not looked up. That
+     * is, fist lookup criterion of the criteria passed for tree selection
+     * will be used for finding a child of the root node 
+     * whether or not the root node is shown.
+     * @param <T>
+     * @param type
+     * @return 
+     */
+    @As(Object.class)
+    public <T> Tree<T> asTree(Class<T> type) {
+        if (tree == null || !tree.getType().equals(type)) {
+            asItemParent(type);
+            tree = new TreeImpl<T>(type, this, getRoot(), parent);
+        }
+        return tree;
+    }
+
+    /**
+     * Returns selected row index.
+     * @return 
+     */
+    @Property(SELECTED_INDEX_PROP_NAME)
+    public int getSelectedIndex() {
+        return new GetAction<Integer>() {
 
             @Override
             public void run(Object... parameters) {
-                setResult(Long.valueOf(getTreeView().getSelectionModel().getSelectedIndex()));
+                setResult(Integer.valueOf(getControl().getSelectionModel().getSelectedIndex()));
             }
         }.dispatch(getEnvironment());
     }
 
-    /**
-     *
-     * @return
-     */
+    @Property(SELECTED_ITEM_PROP_NAME)
     public TreeItem getSelectedItem() {
         return new GetAction<TreeItem>() {
 
             @Override
             public void run(Object... parameters) {
-                setResult((TreeItem) getTreeView().getSelectionModel().getSelectedItem());
+                setResult((TreeItem) getControl().getSelectionModel().getSelectedItem());
             }
         }.dispatch(getEnvironment());
     }
@@ -314,17 +356,17 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
 
     @Override
     public List<TreeItem> getStates() {
-        return objectSelectable.getStates();
+        return asTreeItemSelectable().getStates();
     }
 
     @Override
     public TreeItem getState() {
-        return objectSelectable.getState();
+        return asTreeItemSelectable().getState();
     }
 
     @Override
     public Selector<TreeItem> selector() {
-        return objectSelectable.selector();
+        return asTreeItemSelectable().selector();
     }
 
     @Override
@@ -342,29 +384,51 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
             }
         }.dispatch(getEnvironment());
     }
-
+    
     /**
-     * That class holds code which implements interfaces Selectable<TreeItem> and selector
-     * for enclosing TreeViewWrap
+     * That class holds code which implements interfaces Selectable<*> and
+     * selector for enclosing TreeViewWrap
      */
-    private class TreeViewSelectable implements Selectable<TreeItem>, Selector<TreeItem> {
+    private class TreeViewSelectable<T> implements Selectable<T>, Selector<T> {
 
-        public TreeViewSelectable() {
+        private final Class<T> type;
+
+        public TreeViewSelectable(Class<T> type) {
+            this.type = type;
+        }
+
+        private TreeViewSelectable() {
+            type = null;
         }
 
         @Override
-        public List<TreeItem> getStates() {
-            return new GetAction<ArrayList<TreeItem>>() {
+        public List<T> getStates() {
+            return new GetAction<ArrayList<T>>() {
 
                 @Override
                 public void run(Object... parameters) {
-                    ArrayList<TreeItem> list = new ArrayList<TreeItem>();
-                    getAllNodes(list, getTreeView().getRoot());
+                    ArrayList<T> list = new ArrayList<T>();
+                    getAllNodes(list, getControl().getRoot());
                     setResult(list); // TODO: stub
                 }
 
-                protected void getAllNodes(ArrayList<TreeItem> list, TreeItem node) {
-                    list.add(node);
+                protected void getAllNodes(ArrayList<T> list, TreeItem node) {
+                    if (type == null) {
+                        boolean add = true;
+                        TreeItem parent = node;
+                        while ((parent = parent.getParent()) != null) {
+                            if (!parent.isExpanded()) {
+                                add = false;
+                            }
+                        }
+                        if (add) {
+                            list.add((T) node);
+                        }
+                    } else {
+                        if (type.isInstance(node.getValue())) {
+                            list.add((T) node.getValue());
+                        }
+                    }
                     for (Object subnode : node.getChildren()) {
                         getAllNodes(list, (TreeItem) subnode);
                     }
@@ -378,38 +442,48 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
         }
 
         @Override
-        public TreeItem getState() {
-            return getSelectedItem();
+        public T getState() {
+            if (type == null) {
+                return (T) getSelectedItem();
+            } else if (type.isInstance(getSelectedItem().getValue())) {
+                return (T) getSelectedItem().getValue();
+            } else {
+                return null;
+            }
         }
 
         @Override
-        public Selector<TreeItem> selector() {
+        public Selector<T> selector() {
             return this;
         }
 
         @Override
-        public Class<TreeItem> getType() {
-            return TreeItem.class;
+        public Class<T> getType() {
+            return (type == null) ? (Class<T>) TreeItem.class : type;
         }
 
         @Override
         @SuppressWarnings("unchecked")
-        public void select(final TreeItem state) {
+        public void select(final T state) {
 
             Wrap<TreeItem> cellItem = as(Parent.class, TreeItem.class).lookup(new LookupCriteria<TreeItem>() {
 
                 @Override
                 public boolean check(TreeItem control) {
-                    return control.equals(state);
+                    if (type == null) {
+                        return control.equals(state);
+                    } else {
+                        return control.getValue().equals(state);
+                    }
                 }
             }).wrap(0);
             cellItem.mouse().click();
 
-            new Waiter(WAIT_STATE_TIMEOUT).waitValue(state, new State<TreeItem>() {
+            new Waiter(WAIT_STATE_TIMEOUT).ensureValue(state, new State<T>() {
 
                 @Override
-                public TreeItem reached() {
-                    return getSelectedItem();
+                public T reached() {
+                    return getState();
                 }
 
                 @Override
