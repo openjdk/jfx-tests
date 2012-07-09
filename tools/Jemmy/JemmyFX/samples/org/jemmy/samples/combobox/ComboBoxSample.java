@@ -35,9 +35,11 @@ import org.jemmy.interfaces.Selectable;
 import org.jemmy.samples.SampleBase;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Ignore;
 
-
+/**
+ * 
+ * @author KAM
+ */
 public class ComboBoxSample extends SampleBase {
     private static SceneDock scene;
     private static ComboBoxDock comboBox1;
@@ -68,18 +70,19 @@ public class ComboBoxSample extends SampleBase {
      */
     @Test
     public void selectItemByItemObject() {
+        //the below calls select an item and wait for the selection to take effect
         comboBox1.selector().select("Item 1");
         choiceBox.selector().select(1984);
     }
     
     /**
-     * Checking what item is selected.
+     * Getting what item is selected.
      */
     @Test
     public void getSelectedItem() {
         Object selected1 = comboBox1.asSelectable().getState();
         System.out.println("Selected value in comboBox1 = " + selected1);
-        
+
         Object selected2 = choiceBox.asSelectable().getState();
         System.out.println("Selected value in choiceBox = " + selected2);
     }
@@ -116,35 +119,11 @@ public class ComboBoxSample extends SampleBase {
         
         System.out.println("Selected item index in comboBox2 = " + selectedIndex);
     }
-    
-    /**
-     * Accessing ComboBox object directly.
-     * 
-     * This *must* be done on JavaFX thread. Use Jemmy GetAction.dispatch() 
-     * functionality to achieve that.
-     */
-    @Test
-    public void accessComboBoxDirectly() {
-        boolean hasOnAction = new GetAction<Boolean>() {
-
-            /**
-             * the body of this method will be invoked on JavaFX thread
-             * so we can access ComboBox object directly
-             */
-            @Override
-            public void run(Object... args) throws Exception {
-                // setting result of GetAction.dispatch() method.
-                setResult(comboBox2.control().getOnAction() != null);
-            }
-        }.dispatch(comboBox2.wrap().getEnvironment());
         
-        System.out.println("comboBox2 has onAction function = " + hasOnAction);
-    }
-    
     /**
      * Selecting an item of specific type
      */
-    @Ignore @Test
+    @Test
     public void selectItemByTypeAndIndex() {
         // TODO: Doesn't work yet due to http://javafx-jira.kenai.com/browse/JMY-144     
         Selectable<Date> selectable = comboBox1.wrap().as(Selectable.class, Date.class);
@@ -160,6 +139,7 @@ public class ComboBoxSample extends SampleBase {
     @Test
     public void enterValue() {
         String value = "Lithuania";
+        comboBox3.clear();
         comboBox3.type(value);
         comboBox3.keyboard().pushKey(Keyboard.KeyboardButtons.ENTER);
     }

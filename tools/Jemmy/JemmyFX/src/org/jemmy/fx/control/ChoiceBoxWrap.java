@@ -24,26 +24,22 @@
  */
 package org.jemmy.fx.control;
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.stage.PopupWindow;
-import javafx.stage.Window;
+import org.jemmy.action.Action;
 import org.jemmy.action.GetAction;
-import org.jemmy.fx.ByText;
-import org.jemmy.fx.ByWindowType;
-import org.jemmy.fx.Root;
+import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
-import org.jemmy.control.MethodProperties;
 import org.jemmy.control.Property;
-import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
-import org.jemmy.interfaces.ControlInterface;
+import org.jemmy.fx.ByWindowType;
+import org.jemmy.fx.Root;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
@@ -54,58 +50,22 @@ import org.jemmy.lookup.LookupCriteria;
  * @author shura
  */
 @ControlType(ChoiceBox.class)
-@ControlInterfaces(value=Selectable.class)
-public class ChoiceBoxWrap<T extends ChoiceBox> extends ControlWrap<T>
-        implements Selectable<Object> {
+@ControlInterfaces(value=Selectable.class, encapsulates=Object.class)
+public class ChoiceBoxWrap<T extends ChoiceBox> extends ControlWrap<T> {
 
     public static final String IS_SHOWING_PROP_NAME = "isShowing";
+    private Selectable selectable = null;
 
     public ChoiceBoxWrap(Environment env, T node) {
         super(env, node);
     }
 
-    @Override
-    public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
-        if (interfaceClass.equals(Selectable.class)) {
-            return true;
+    @As(Object.class)
+    public <T> Selectable<T> asSelectable(Class<T> type) {
+        if(selectable == null || !selectable.getType().equals(type)) {
+            selectable = new ChoiceSelector(type);
         }
-        return super.is(interfaceClass);
-    }
-
-    @Override
-    public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
-        if (interfaceClass.equals(Selectable.class)) {
-            return (INTERFACE) this;
-        }
-        return super.as(interfaceClass);
-    }
-
-    public List getStates() {
-        return new GetAction<List>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().getItems());
-            }
-        }.dispatch(getEnvironment());
-    }
-
-    public Object getState() {
-        return new GetAction() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().getSelectionModel().getSelectedItem());
-            }
-        }.dispatch(getEnvironment());
-    }
-
-    public Selector<Object> selector() {
-        return new ChoiceSelector();
-    }
-
-    public Class<Object> getType() {
-        return Object.class;
+        return selectable;
     }
 
     @Property(IS_SHOWING_PROP_NAME)
@@ -119,7 +79,45 @@ public class ChoiceBoxWrap<T extends ChoiceBox> extends ControlWrap<T>
         }.dispatch(getEnvironment());
     }
 
-    private class ChoiceSelector implements Selector {
+    private class ChoiceSelector<T> implements Selectable<T>, Selector<T> {
+
+        private final Class<T> type;
+        private final List<T> states = new ArrayList<T>();
+
+        public ChoiceSelector(Class<T> type) {
+            this.type = type;
+            getEnvironment().getExecutor().execute(getEnvironment(), true,
+                    new Action() {
+
+                        @Override
+                        public void run(Object... os) throws Exception {
+                            for (Object t : getControl().getItems()) {
+                                if (ChoiceBoxWrap.ChoiceSelector.this.type.isInstance(t)) {
+                                    states.add(ChoiceBoxWrap.ChoiceSelector.this.type.cast(t));
+                                }
+                            }
+                        }
+                    });
+        }
+
+        public List<T> getStates() {
+            return states;
+        }
+
+        public T getState() {
+            Object selected = new GetAction() {
+
+                @Override
+                public void run(Object... os) throws Exception {
+                    setResult(getControl().getSelectionModel().getSelectedItem());
+                }
+            }.dispatch(getEnvironment());
+            if (type.isInstance(selected)) {
+                return type.cast(selected);
+            } else {
+                return null;
+            }
+        }
 
         public void select(final Object state) {
             if (!isShowing()) {
@@ -141,6 +139,14 @@ public class ChoiceBoxWrap<T extends ChoiceBox> extends ControlWrap<T>
                     return true;
                 }
             }).wrap().mouse().click();
+        }
+
+        public Selector<T> selector() {
+            return this;
+        }
+
+        public Class<T> getType() {
+            return type;
         }
     }
 }

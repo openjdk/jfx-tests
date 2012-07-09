@@ -24,68 +24,54 @@
  */
 package org.jemmy.fx.control;
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.PopupWindow;
+import org.jemmy.action.Action;
 import org.jemmy.action.GetAction;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.Property;
-import org.jemmy.control.Wrap;
+import org.jemmy.control.*;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.Root;
 import org.jemmy.input.SelectionText;
-import org.jemmy.interfaces.*;
+import org.jemmy.interfaces.Focus;
+import org.jemmy.interfaces.Parent;
+import org.jemmy.interfaces.Selectable;
+import org.jemmy.interfaces.Selector;
 import org.jemmy.lookup.Lookup;
+import org.jemmy.timing.State;
 
 @ControlType(ComboBox.class)
-@ControlInterfaces({Selectable.class, SelectionText.class})
-public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T>
-        implements Selectable<Object> {
+@ControlInterfaces(value={Selectable.class, SelectionText.class},
+        encapsulates={Object.class})
+@MethodProperties("getValue")
+public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
 
     private Focus focus = Root.ROOT.getThemeFactory().comboBoxFocuser(this);
+    private Selectable selectable = null;
 
     public ComboBoxWrap(Environment env, T node) {
         super(env, node);
     }
 
-    @Override
-    public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
-        if (interfaceClass.equals(Selectable.class)) {
-            return true;
+    @As(Object.class)
+    public <T> Selectable<T> asSelectable(Class<T> type) {
+        if(selectable == null || !selectable.getType().equals(type)) {
+            selectable = new ComboSelector<T>(type);
         }
-        if (interfaceClass.equals(Focusable.class)) {
-            return true;
-        }
-        Wrap<? extends TextField> inputField = getTextField();
-        if (inputField != null) {
-            return inputField.is(interfaceClass);
-        }
-        return super.is(interfaceClass);
+        return selectable;
     }
-
-    @Override
-    public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
-        if (interfaceClass.equals(Selectable.class)) {
-            return (INTERFACE) this;
-        }
-        if (interfaceClass.equals(Focusable.class)) {
-            return (INTERFACE) this;
-        }
-        if (Text.class.isAssignableFrom(interfaceClass) && interfaceClass.isAssignableFrom(SelectionText.class)) {
-            Wrap<? extends TextField> inputField = getTextField();
-            if (inputField != null) {
-                return inputField.as(interfaceClass);
-            }
-        }
-        return super.as(interfaceClass);
+    
+    @As
+    public SelectionText asText() {
+        return getTextField().as(SelectionText.class);
     }
-
+    
     protected Wrap<? extends TextField> getTextField() {
         Lookup lookup = as(Parent.class, Node.class).lookup(TextField.class);
         if (lookup.size() > 0) {
@@ -93,34 +79,6 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T>
             return inputField;
         }
         return null;
-    }
-
-    public List getStates() {
-        return new GetAction<List>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().getItems());
-            }
-        }.dispatch(getEnvironment());
-    }
-
-    public Object getState() {
-        return new GetAction() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().getSelectionModel().getSelectedItem());
-            }
-        }.dispatch(getEnvironment());
-    }
-
-    public Selector<Object> selector() {
-        return new ComboSelector();
-    }
-
-    public Class<Object> getType() {
-        return Object.class;
     }
 
     @Property(ChoiceBoxWrap.IS_SHOWING_PROP_NAME)
@@ -133,10 +91,29 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T>
             }
         }.dispatch(getEnvironment());
     }
+    
+    private class ComboSelector<T> implements Selectable<T>, Selector<T> {
 
-    private class ComboSelector implements Selector {
+        private final Class<T> type;
+        private final List<T> states = new ArrayList<T>();
 
-        public void select(final Object state) {
+        public ComboSelector(Class<T> type) {
+            this.type = type;
+            getEnvironment().getExecutor().execute(getEnvironment(), true,
+                    new Action() {
+
+                        @Override
+                        public void run(Object... os) throws Exception {
+                            for (Object t : getControl().getItems()) {
+                                if (ComboSelector.this.type.isInstance(t)) {
+                                    states.add(ComboSelector.this.type.cast(t));
+                                }
+                            }
+                        }
+                    });
+        }
+
+        public void select(final T state) {
             if (!isShowing()) {
                 ComboBoxWrap.this.as(Parent.class, Node.class).lookup(new ByStyleClass<Node>("arrow-button")).wrap().mouse().click();
             }
@@ -145,7 +122,55 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T>
                     as(Parent.class, Node.class);
 
             Wrap<? extends ListView> list = popupContainer.lookup(ListView.class).wrap();
-            list.as(Selectable.class).selector().select(state);
+            list.as(Selectable.class, type).selector().select(state);
+            getEnvironment().getWaiter(WAIT_STATE_TIMEOUT).ensureValue(state, new State<T>() {
+
+                public T reached() {
+                    return new GetAction<T>() {
+
+                        @Override
+                        public void run(Object... os) throws Exception {
+                            System.out.println(getControl().getValue());
+                            System.out.println(type.isInstance(getControl().getValue()) ? 
+                                    type.cast(getControl().getValue()) : null);
+                            setResult(type.isInstance(getControl().getValue()) ? 
+                                    type.cast(getControl().getValue()) : null);
+                        }
+                    }.dispatch(getEnvironment());
+                }
+
+                @Override
+                public String toString() {
+                    return "selection to be equal to \"" + state + "\"";
+                }
+            });
+        }
+
+        public List<T> getStates() {
+            return states;
+        }
+
+        public T getState() {
+            Object selected = new GetAction() {
+
+                @Override
+                public void run(Object... os) throws Exception {
+                    setResult(getControl().getSelectionModel().getSelectedItem());
+                }
+            }.dispatch(getEnvironment());
+            if (type.isInstance(selected)) {
+                return type.cast(selected);
+            } else {
+                return null;
+            }
+        }
+
+        public Selector<T> selector() {
+            return this;
+        }
+
+        public Class<T> getType() {
+            return type;
         }
     }
 
