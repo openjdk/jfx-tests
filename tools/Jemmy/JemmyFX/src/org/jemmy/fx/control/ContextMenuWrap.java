@@ -25,38 +25,41 @@
 package org.jemmy.fx.control;
 
 import java.util.List;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
-import org.jemmy.control.MethodProperties;
-import org.jemmy.control.Property;
-import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
+import org.jemmy.fx.WindowWrap;
 import org.jemmy.input.StringMenuOwner;
 import org.jemmy.interfaces.Parent;
 
-@ControlType({Menu.class})
+/**
+ * Context menu is supported in the very same way as menu bar.
+ * Please consult <a href="../../samples/menu">samples</a> for more info.
+ * @see MenuBarWrap
+ * @see ContextMenuDock
+ * @author shura
+ */
+@ControlType(ContextMenu.class)
 @ControlInterfaces(value = {Parent.class, StringMenuOwner.class},
-        encapsulates = {MenuItem.class, MenuItem.class}, name={"asMenuParent"})
-public class MenuWrap<ITEM extends Menu> extends MenuItemWrap<ITEM> {
+encapsulates = {MenuItem.class, MenuItem.class}, name = {"asMenuParent", "asMenuOwner"})
+public class ContextMenuWrap<T extends ContextMenu> extends WindowWrap<T> {
 
     private StringMenuOwnerImpl menuOwner = null;
     private Parent<MenuItem> parent = null;
 
-    /**
-     *
-     * @param env
-     * @param scene
-     * @param nd
-     */
-    @SuppressWarnings("unchecked")
-    public MenuWrap(Environment env, ITEM item) {
-        super(env, item);
+    public ContextMenuWrap(Environment env, T window) {
+        super(env, window);
     }
 
+    /**
+     * @see MenuBarWrap#asMenuParent() 
+     * @return 
+     */
     @As(MenuItem.class)
     public Parent<MenuItem> asMenuParent() {
         if (parent == null) {
@@ -77,26 +80,16 @@ public class MenuWrap<ITEM extends Menu> extends MenuItemWrap<ITEM> {
         return parent;
     }
 
+    /**
+     * @see MenuBarWrap#asMenuOwner() 
+     * @return 
+     */
     @As(MenuItem.class)
     public StringMenuOwner<MenuItem> asMenuOwner() {
-        if(menuOwner == null) {
-             menuOwner = new StringMenuOwnerImpl(this, this.as(Parent.class, Menu.class));
+        if (menuOwner == null) {
+            menuOwner = new StringMenuOwnerImpl(this, this.as(Parent.class, Menu.class));
         }
         return menuOwner;
     }
-    
-    @Property("isShowing")
-    public boolean isShowing() {
-        return isShowing(getControl(), getEnvironment());
-    }
-    
-    static boolean isShowing(final Menu menu, Environment env) {
-        return new GetAction<Boolean>() {
 
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(menu.isShowing());
-            }
-        }.dispatch(env);
-    }
 }

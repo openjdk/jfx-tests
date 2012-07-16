@@ -70,7 +70,7 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
      * @param path starting with a pattern for root ending with a pattern for the node
      * @return 
      */
-    @ObjectLookup("comparison policy and a toString of elements of the tree path")
+    //better to disable these for now @ObjectLookup("comparison policy and a toString of elements of the tree path")
     public static <T> LookupCriteria<T> byPathToString(Class<T> type, final StringComparePolicy policy,
             final String... path) {
         return new TreePathCriteria<T, String>(path) {
@@ -93,7 +93,7 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
      * @param path starting with a value for root ending with a value for the node
      * @return 
      */
-    @ObjectLookup("elements of the tree path")
+    //better to disable these for now @ObjectLookup("elements of the tree path")
     public static <T> LookupCriteria<T> byPathValues(Class<T> type,
             final Object... path) {
         return new TreePathCriteria<T, Object>(path) {
@@ -116,7 +116,7 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
      * @param path starting with a criteria for root ending with a criteria for the node
      * @return 
      */
-    @ObjectLookup("criteria for elements of the tree path")
+    //better to disable these for now @ObjectLookup("criteria for elements of the tree path")
     public static <T> LookupCriteria<T> byPathCriteria(final Class<T> type,
             final LookupCriteria<T>... path) {
         return new TreePathCriteria<T, LookupCriteria<T>>(path) {

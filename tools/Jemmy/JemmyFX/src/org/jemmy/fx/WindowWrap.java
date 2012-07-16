@@ -22,52 +22,45 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package org.jemmy.fx.control;
+package org.jemmy.fx;
 
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.stage.Window;
+import org.jemmy.Rectangle;
+import org.jemmy.action.GetAction;
+import org.jemmy.control.ControlType;
 import org.jemmy.control.Wrap;
-import org.jemmy.input.StringMenuOwner;
+import org.jemmy.dock.DefaultParent;
+import org.jemmy.env.Environment;
 import org.jemmy.interfaces.Parent;
-import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.resources.StringComparePolicy;
 
 /**
- *
+ * Window could be used as a target for mouse events.
  * @author shura
  */
-class StringMenuOwnerImpl extends StringMenuOwner<MenuItem> {
-
-    private final Parent<Menu> parent;
-    public StringMenuOwnerImpl(Wrap<?> wrap, Parent<Menu> parent) {
-        super(wrap);
-        this.parent = parent;
+@ControlType(Window.class)
+public class WindowWrap<T extends Window> extends Wrap<T> {
+    
+    @DefaultParent("all scenes")
+    public static <CONTROL extends Window> Parent<? super Window> getRoot(Class<CONTROL> controlType) {
+        return Windows.WINDOWS;
+    }
+    
+    public WindowWrap(Environment env, T node) {
+        super(env, node);
     }
 
     @Override
-    protected LookupCriteria<MenuItem> createCriteria(String string, StringComparePolicy compare_policy) {
-        return new ByTextMenuItem(string, compare_policy);
-    }
+    public Rectangle getScreenBounds() {
+        return new GetAction<Rectangle>() {
 
-    public Class<MenuItem> getType() {
-        return MenuItem.class;
-    }
-
-    public org.jemmy.interfaces.Menu menu() {
-        return new MenuImpl(parent);
+            @Override
+            public void run(Object... os) throws Exception {
+                Rectangle res = new Rectangle();
+                res.setLocation((int)getControl().getX(), (int)getControl().getY());
+                res.setSize((int)getControl().getWidth(), (int)getControl().getHeight());
+                setResult(res);
+            }
+        }.dispatch(getEnvironment());
     }
     
-    protected void prepare() {
-    }
-
-    class MenuImpl extends MenuTreeSelectorImpl implements org.jemmy.interfaces.Menu {
-        public MenuImpl(Parent<Menu> parent) {
-            super(parent);
-        }
-
-        public void push(LookupCriteria... criteria) {
-            prepare();
-            select(criteria).mouse().click();
-        }
-    }
 }

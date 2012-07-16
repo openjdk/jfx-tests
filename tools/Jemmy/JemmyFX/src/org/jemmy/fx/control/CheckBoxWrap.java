@@ -34,10 +34,8 @@ import org.jemmy.env.Environment;
 import org.jemmy.fx.ByText;
 import org.jemmy.fx.NodeParent;
 import org.jemmy.fx.Root;
-import org.jemmy.interfaces.ControlInterface;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
-import org.jemmy.interfaces.TypeControlInterface;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 
@@ -98,7 +96,7 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
          */
         UNDEFINED
     };
-    private final static List<Boolean> booleanStates;
+    final static List<Boolean> booleanStates;
     private final static List<State> twoStates;
     private final static List<State> triStates;
     private Selector<State> stateSelector = new SelectorImpl<CheckBox, State>(this, this);

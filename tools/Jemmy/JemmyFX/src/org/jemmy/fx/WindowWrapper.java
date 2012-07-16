@@ -24,44 +24,29 @@
  */
 package org.jemmy.fx;
 
-import javafx.scene.Node;
-import javafx.scene.Parent;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.jemmy.control.DefaultWrapper;
+import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
-import org.jemmy.lookup.AbstractParent;
-import org.jemmy.lookup.HierarchyLookup;
-import org.jemmy.lookup.Lookup;
-import org.jemmy.lookup.LookupCriteria;
+import org.jemmy.fx.control.ContextMenuWrap;
 
-public class NodeParentImpl extends AbstractParent<Node> {
+class WindowWrapper extends DefaultWrapper {
+
+    private static final List<Class<? extends Wrap>> OPERATORS = new ArrayList<Class<? extends Wrap>>();
     
-    private Environment env;
-    private AbstractNodeHierarchy nodeHierarchy;
-
-    public NodeParentImpl(NodeWrap<? extends Node> wrap) {
-        this((javafx.scene.Parent) wrap.getControl(), wrap.getEnvironment());
+    static {
+        OPERATORS.add(WindowWrap.class);
+        OPERATORS.add(ContextMenuWrap.class);
     }
 
-    public NodeParentImpl(AbstractNodeHierarchy nodeHierarchy, Environment env) {
-        this.nodeHierarchy = nodeHierarchy;
-        this.env = env;
-    }
-
-    public NodeParentImpl(Parent parent, Environment env) {
-        this(new NodeHierarchy(parent, env), env);
+    WindowWrapper(Environment env) {
+        super(env, OPERATORS.toArray(new Class[0]));
     }
 
     @Override
-    public <ST extends Node> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {
-        return new HierarchyLookup<ST>(env, nodeHierarchy, new NodeWrapper(env), controlClass, criteria);
-    }
-
-    @Override
-    public Lookup<Node> lookup(LookupCriteria<Node> criteria) {
-        return lookup(Node.class, criteria);
-    }
-
-    @Override
-    public Class<Node> getType() {
-        return Node.class;
+    public <T> Wrap<? extends T> wrap(Class<T> controlClass, T control) {
+        return super.wrap(controlClass, control);
     }
 }

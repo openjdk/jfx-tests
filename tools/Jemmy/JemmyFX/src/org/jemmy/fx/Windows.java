@@ -22,52 +22,40 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package org.jemmy.fx.control;
+package org.jemmy.fx;
 
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import org.jemmy.control.Wrap;
-import org.jemmy.input.StringMenuOwner;
-import org.jemmy.interfaces.Parent;
+import javafx.stage.Window;
+import org.jemmy.env.Environment;
+import org.jemmy.lookup.AbstractParent;
+import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.lookup.PlainLookup;
 
-/**
- *
- * @author shura
- */
-class StringMenuOwnerImpl extends StringMenuOwner<MenuItem> {
+class Windows extends AbstractParent<Window> {
+    
+    public static final Windows WINDOWS = new Windows();
+    
+    private final WindowWrapper wrapper;
+    private final WindowList list;
+    private final Environment env;
 
-    private final Parent<Menu> parent;
-    public StringMenuOwnerImpl(Wrap<?> wrap, Parent<Menu> parent) {
-        super(wrap);
-        this.parent = parent;
-    }
-
-    @Override
-    protected LookupCriteria<MenuItem> createCriteria(String string, StringComparePolicy compare_policy) {
-        return new ByTextMenuItem(string, compare_policy);
-    }
-
-    public Class<MenuItem> getType() {
-        return MenuItem.class;
-    }
-
-    public org.jemmy.interfaces.Menu menu() {
-        return new MenuImpl(parent);
+    private Windows() {
+        wrapper = new WindowWrapper(Root.ROOT.getEnvironment());
+        list = new WindowList();
+        env = new Environment(Root.ROOT.getEnvironment());
     }
     
-    protected void prepare() {
+
+    public <ST extends Window> Lookup<ST> lookup(Class<ST> type, LookupCriteria<ST> lc) {
+        return new PlainLookup<ST>(env, list, wrapper, type, lc);
     }
 
-    class MenuImpl extends MenuTreeSelectorImpl implements org.jemmy.interfaces.Menu {
-        public MenuImpl(Parent<Menu> parent) {
-            super(parent);
-        }
-
-        public void push(LookupCriteria... criteria) {
-            prepare();
-            select(criteria).mouse().click();
-        }
+    public Lookup<Window> lookup(LookupCriteria<Window> lc) {
+        return new PlainLookup<Window>(env, list, wrapper, Window.class, lc);
     }
+
+    public Class<Window> getType() {
+        return Window.class;
+    }
+    
 }

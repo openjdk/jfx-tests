@@ -22,36 +22,44 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package org.jemmy.fx.control;
+package org.jemmy.fx;
 
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import org.jemmy.JemmyException;
-import org.jemmy.control.Wrap;
-import org.jemmy.control.Wrapper;
 
-public abstract class AbstractMenuItemsParent<ITEM extends MenuItem> extends AbstractItemsParent<ITEM> {
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import javafx.stage.Window;
+import org.jemmy.action.GetAction;
+import org.jemmy.lookup.ControlList;
 
-    public AbstractMenuItemsParent(Wrap wrap, Class<ITEM> itemClass) {
-        super(wrap, new ItemWrapper(wrap), itemClass);
-    }
 
-    protected static class ItemWrapper<ITEM extends MenuItem> implements Wrapper {
-        protected Wrap wrap;
+/**
+ * Allows to search among windows.
+ * @author shura
+ */
+class WindowList implements ControlList {
 
-        public ItemWrapper(Wrap wrap) {
-            this.wrap = wrap;
-        }
+    @Override
+    public List<?> getControls() {
+        GetAction<List<?>> scenes = new GetAction<List<?>>() {
 
-        @Override
-        public <T> Wrap<? extends T> wrap(Class<T> controlClass, T control) {
-            if (MenuItem.class.isAssignableFrom(controlClass)) {
-                if (Menu.class.isAssignableFrom(control.getClass())) {
-                    return (Wrap<? extends T>) new MenuWrap<Menu>((Menu)control, wrap);
+            @Override
+            public void run(Object... parameters) {
+                LinkedList<Window> res = new LinkedList<Window>();
+                Iterator<Window> windows = Window.impl_getWindows();
+                while(windows.hasNext()) {
+                    res.add(windows.next());
                 }
-                return (Wrap<? extends T>) new MenuItemWrap<ITEM>((ITEM)control, wrap);
+                setResult(res);
             }
-            throw new JemmyException("Unexpected control class is used: " + controlClass);
+        };
+        try {
+            Root.ROOT.getEnvironment().getExecutor().execute(Root.ROOT.getEnvironment(), true, scenes);
+            return scenes.getResult();
+        } catch (Throwable th) {
+            th.printStackTrace(System.err);
+            return new ArrayList();
         }
     }
 }

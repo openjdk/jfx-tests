@@ -53,10 +53,12 @@ public class MenuApp extends Application {
         enabled.setSelected(true);
         
         RadioMenuItem option1 = new RadioMenuItem("Option _1");
+        option1.setId("option1");
         RadioMenuItem option2 = new RadioMenuItem("Option _2");
         option2.setId("option2");
         option2.setOnAction(new PrintAction("Option 2 is pushed"));
         RadioMenuItem option3 = new RadioMenuItem("Option _3");
+        option3.setId("option3");
         
         ToggleGroup options = new ToggleGroup();
         option1.setToggleGroup(options);
@@ -82,17 +84,27 @@ public class MenuApp extends Application {
         
         Menu action = new Menu("A_ction");
         action.getItems().setAll(runItem);
+        action.setId("action");
         
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().setAll(fileMenu, action);
         
-        ContextMenu contextMenu = new ContextMenu(new MenuItem("_My menu item 1"), new MenuItem("My menu item _2"));
+        MenuItem cSubMenu = new MenuItem("sub-item");
+        
+        Menu cMenu = new Menu("item _1");
+        cMenu.getItems().add(cSubMenu);
+        ContextMenu contextMenu = new ContextMenu(cMenu, new MenuItem("item _2"));
         
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContextMenu(contextMenu);
         
+        MenuItem eleven = new MenuItem("_Eleven");
+        
+        Menu one = new Menu("_One");
+        one.getItems().add(eleven);
+        
         MenuButton menuButton = new MenuButton("_Menu Button");
-        menuButton.getItems().setAll(new MenuItem("_One"), new MenuItem("_Two"), new MenuItem("T_hree"));
+        menuButton.getItems().setAll(one, new MenuItem("_Two"), new MenuItem("T_hree"));
         
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(menuBar);

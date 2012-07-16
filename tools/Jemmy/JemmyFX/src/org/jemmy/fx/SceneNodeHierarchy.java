@@ -24,25 +24,27 @@
  */
 package org.jemmy.fx;
 
-import javafx.scene.Node;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.Scene;
 import org.jemmy.env.Environment;
 
 /**
  *
- * @author andrey
+ * @author andrey, shura
  */
 class SceneNodeHierarchy extends AbstractNodeHierarchy {
 
     protected Scene scene;
 
     public SceneNodeHierarchy(Scene scene, Environment env) {
-        super(null, env);
+        super(env);
         this.scene = scene;
     }
 
-    @Override
-    protected Node getRoot() {
-        return scene.getRoot();
+    public List<?> getControls() {
+        ArrayList<Object> res = new ArrayList<Object>(1);
+        res.add(scene.getRoot());
+        return res;
     }
 }

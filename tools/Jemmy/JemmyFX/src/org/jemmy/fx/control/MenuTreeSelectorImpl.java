@@ -34,7 +34,7 @@ import org.jemmy.lookup.LookupCriteria;
 class MenuTreeSelectorImpl implements TreeSelector {
     protected Parent<Menu> parent;
 
-    public MenuTreeSelectorImpl(Parent<Menu> parent) {
+    public MenuTreeSelectorImpl(Parent<Menu> parent/*, Environment env*/) {
         this.parent = parent;
     }
 

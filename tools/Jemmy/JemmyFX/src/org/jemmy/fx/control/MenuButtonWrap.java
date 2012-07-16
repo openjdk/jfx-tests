@@ -25,26 +25,36 @@
 package org.jemmy.fx.control;
 
 import java.util.List;
-import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import org.jemmy.action.GetAction;
+import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
+import org.jemmy.control.Property;
 import org.jemmy.env.Environment;
 import org.jemmy.input.StringMenuOwner;
-import org.jemmy.interfaces.MenuOwner;
+import org.jemmy.interfaces.Collapsible;
+import org.jemmy.interfaces.Expandable;
 import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Tree;
-import org.jemmy.interfaces.TypeControlInterface;
+import org.jemmy.timing.State;
 
+/**
+ * Menu button is supported in the very same way as menu bar.
+ * Please consult <a href="../../samples/menu">samples</a> for more info.
+ * @see MenuBarWrap
+ * @see MenuButtonDock
+ * @author shura
+ * @param <CONTROL> 
+ */
 @ControlType({MenuButton.class})
-//@ControlInterfaces(value = {Parent.class, StringMenuOwner.class},
-//encapsulates = {Menu.class, Menu.class, MenuItem.class})
-
+@ControlInterfaces(value = {Parent.class, StringMenuOwner.class, Expandable.class, Collapsible.class},
+encapsulates = {MenuItem.class, MenuItem.class}, name = {"asMenuParent", "asMenuOwner"})
 public class MenuButtonWrap<CONTROL extends MenuButton> extends TextControlWrap<CONTROL> {
 
-    private StringMenuOwnerImpl menuOwner = new StringMenuOwnerImpl(this, this.as(Parent.class, MenuItem.class));
+    private StringMenuOwnerImpl menuOwner = null;
+    private Parent<MenuItem> parent = null;
 
     /**
      *
@@ -57,39 +67,114 @@ public class MenuButtonWrap<CONTROL extends MenuButton> extends TextControlWrap<
         super(env, nd);
     }
 
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (MenuItem.class.isAssignableFrom(type)) {
-            if (Parent.class.equals(interfaceClass)) {
-                return true;
+    @Property("isShowing")
+    public boolean isShowing() {
+        return new GetAction<Boolean>() {
+
+            @Override
+            public void run(Object... os) throws Exception {
+                setResult(getControl().isShowing());
             }
-            if (MenuOwner.class.isAssignableFrom(interfaceClass)) {
-                return true;
-            }
-            if (Tree.class.isAssignableFrom(interfaceClass)) {
-                return true;
-            }
-        }
-        return super.is(interfaceClass, type);
+        }.dispatch(getEnvironment());
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>>
-           INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (MenuItem.class.isAssignableFrom(type)) {
-            if (Parent.class.equals(interfaceClass)) {
-                return (INTERFACE) new AbstractMenuItemsParent(this, type) {
-                    @Override
-                    protected List getControls() {
-                        return getControl().getItems();
-                    }
-                };
-            }
-            if (MenuOwner.class.isAssignableFrom(interfaceClass)) {
-                return (INTERFACE) menuOwner;
-            }
+    /**
+     * @see MenuBarWrap#asMenuParent() 
+     * @return 
+     */
+    @As(MenuItem.class)
+    public Parent<MenuItem> asMenuParent() {
+        if (parent == null) {
+            parent = new MenuItemParent(this) {
+
+                @Override
+                protected List getControls() {
+                    return new GetAction<List<?>>() {
+
+                        @Override
+                        public void run(Object... os) throws Exception {
+                            setResult(getControl().getItems());
+                        }
+                    }.dispatch(getEnvironment());
+                }
+            };
         }
-        return super.as(interfaceClass, type);
+        return parent;
+    }
+
+    /**
+     * @see MenuBarWrap#asMenuOwner()  
+     * @return 
+     */
+    @As(MenuItem.class)
+    public StringMenuOwner<MenuItem> asMenuOwner() {
+        if (menuOwner == null) {
+            menuOwner = new StringMenuOwnerImpl(this, this.as(Parent.class, Menu.class)) {
+
+                @Override
+                protected void prepare() {
+                    if (!isShowing()) {
+                        mouse().click();
+                        getEnvironment().getWaiter(WAIT_STATE_TIMEOUT).ensureValue(true,
+                                new State<Boolean>() {
+
+                                    public Boolean reached() {
+                                        return isShowing();
+                                    }
+                                });
+                    }
+                }
+            };
+        }
+        return menuOwner;
+    }
+    
+    private Expandable expandable = null;
+    private State<Boolean> showingState = new State<Boolean>() {
+        boolean expected = true;
+        
+        public Boolean reached() {
+            return isShowing();
+        }
+    };
+
+    /**
+     * Clicks on the button if the menu is not visible.
+     * @return 
+     */
+    @As
+    public Expandable asExpandable() {
+        if (expandable == null) {
+            expandable = new Expandable() {
+
+                public void expand() {
+                    if(!isShowing())
+                        mouse().click();
+                    waitState(showingState, true);
+                }
+            };
+        }
+        return expandable;
+    }
+    private Collapsible collapsible = null;
+
+    /**
+     * Clicks on the button if the menu is visible.
+     * @return 
+     */
+    @As
+    public Collapsible asCollapsible() {
+        if (collapsible == null) {
+            collapsible = new Collapsible() {
+
+                public void collapse() {
+                    if(isShowing())
+                        mouse().click();
+                    waitState(showingState, false);
+                }
+            };
+            
+        }
+        return collapsible;
     }
 }

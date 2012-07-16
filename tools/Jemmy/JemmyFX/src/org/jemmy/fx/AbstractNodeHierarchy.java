@@ -39,11 +39,9 @@ import org.jemmy.lookup.ControlHierarchy;
  */
 public abstract class AbstractNodeHierarchy implements ControlHierarchy {
 
-    protected javafx.scene.Parent root;
     protected Environment env;
 
-    public AbstractNodeHierarchy(Parent root, Environment env) {
-        this.root = root;
+    public AbstractNodeHierarchy(Environment env) {
         this.env = env;
     }
    
@@ -85,21 +83,4 @@ public abstract class AbstractNodeHierarchy implements ControlHierarchy {
         return childAction.getResult();
     }
 
-    public List<?> getControls() {
-        GetAction<List<?>> controls = new GetAction<List<?>>() {
-            @Override
-            public void run(Object... parameters) {                
-                if (root != null) {
-                    setResult(root.getChildrenUnmodifiable());
-                } else {
-                    List root = new ArrayList();
-                    root.add(getRoot());
-                    setResult(root);
-                }
-            }
-        };
-        env.getExecutor().execute(env, true, controls);
-        return controls.getResult();
-    }
-    protected abstract Node getRoot();
 }

@@ -24,50 +24,30 @@
  */
 package org.jemmy.fx.control;
 
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import org.jemmy.control.Wrap;
-import org.jemmy.input.StringMenuOwner;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.resources.StringComparePolicy;
+import javafx.scene.control.RadioMenuItem;
+import org.jemmy.control.*;
+import org.jemmy.env.Environment;
+import org.jemmy.interfaces.Selectable;
 
 /**
- *
+ * This is a menu item and so could be found within the menu hierarchy. It could 
+ * also be selected/unselected.
+ * Please consult <a href="../../samples/menu">samples</a> for more info.
+ * @see MenuBarWrap
  * @author shura
  */
-class StringMenuOwnerImpl extends StringMenuOwner<MenuItem> {
-
-    private final Parent<Menu> parent;
-    public StringMenuOwnerImpl(Wrap<?> wrap, Parent<Menu> parent) {
-        super(wrap);
-        this.parent = parent;
-    }
-
-    @Override
-    protected LookupCriteria<MenuItem> createCriteria(String string, StringComparePolicy compare_policy) {
-        return new ByTextMenuItem(string, compare_policy);
-    }
-
-    public Class<MenuItem> getType() {
-        return MenuItem.class;
-    }
-
-    public org.jemmy.interfaces.Menu menu() {
-        return new MenuImpl(parent);
+@ControlType(RadioMenuItem.class)
+@MethodProperties(MenuItemWrap.IS_SELECTED_PROP_NAME)
+@ControlInterfaces(value=Selectable.class, encapsulates=Boolean.class)
+public class RadioMenuItemWrap<T extends RadioMenuItem>  extends MenuItemWrap<T> {
+    private final SelectableImpl selectable = new SelectableImpl();
+    
+    public RadioMenuItemWrap(Environment env, T item) {
+        super(env, item);
     }
     
-    protected void prepare() {
-    }
-
-    class MenuImpl extends MenuTreeSelectorImpl implements org.jemmy.interfaces.Menu {
-        public MenuImpl(Parent<Menu> parent) {
-            super(parent);
-        }
-
-        public void push(LookupCriteria... criteria) {
-            prepare();
-            select(criteria).mouse().click();
-        }
-    }
+    @As(Boolean.class)
+    public Selectable<Boolean> asSelectable() {
+        return selectable;
+    }    
 }

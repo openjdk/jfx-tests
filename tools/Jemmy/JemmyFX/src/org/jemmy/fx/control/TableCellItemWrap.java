@@ -54,7 +54,7 @@ import org.jemmy.lookup.LookupCriteria;
 @ControlType(Object.class)
 @ControlInterfaces(value={WindowElement.class, EditableCell.class, Showable.class}, 
         encapsulates={TableView.class})
-@DockInfo(name="org.jemmy.fx.control.TableCellItemDock", multipleCriteria=false)
+@DockInfo(name="org.jemmy.fx.control.TableCellItemDock", generateSubtypeLookups=true, multipleCriteria=false)
 public class TableCellItemWrap<DATA extends Object> extends ItemWrap<DATA> implements Showable {
 
     @ObjectLookup("cell coordinates")

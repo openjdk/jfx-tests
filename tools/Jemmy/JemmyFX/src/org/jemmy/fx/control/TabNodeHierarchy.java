@@ -24,6 +24,8 @@
  */
 package org.jemmy.fx.control;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import org.jemmy.env.Environment;
@@ -38,12 +40,13 @@ public class TabNodeHierarchy extends AbstractNodeHierarchy {
     protected Tab tab;
 
     public TabNodeHierarchy(Tab tab, Environment env) {
-        super(null, env);
+        super(env);
         this.tab = tab;
     }
 
-    @Override
-    protected Node getRoot() {
-        return tab.getContent();
+    public List<?> getControls() {
+        ArrayList<Object> res = new ArrayList<Object>();
+        res.add(tab.getContent());
+        return res;
     }
 }

@@ -45,7 +45,7 @@ import org.jemmy.fx.control.*;
 public class NodeWrapper extends DefaultWrapper {
 
     private static final List<Class<? extends Wrap>> OPERATORS = new ArrayList<Class<? extends Wrap>>();
-    
+
     static {
         OPERATORS.add(NodeWrap.class);
         OPERATORS.add(TextWrap.class);

@@ -25,29 +25,25 @@
 package org.jemmy.samples.menu;
 
 
-import javafx.scene.Scene;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ScrollPane;
-import javafx.stage.Popup;
-import org.jemmy.fx.ByText;
-import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.*;
-import org.jemmy.input.StringMenuOwner;
-import org.jemmy.interfaces.Keyboard;
 import org.jemmy.interfaces.Mouse.MouseButtons;
-import org.jemmy.lookup.Lookup;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
+import org.junit.After;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * 
- * @author KAM
+ * This sample shows how to use JavaFX menu. There are two generic ways to do so:
+ * through <code>MenuOwner</code> interface, when only basic menu operations are 
+ * needed, and performing lookup and more complicated steps through <code>MenuItemDock</code>
+ * class.
+ * @author KAM, shura
  */
 public class MenuSample extends SampleBase {
     private static SceneDock scene;
@@ -61,117 +57,95 @@ public class MenuSample extends SampleBase {
         // Obtaining a Dock for scene
         scene = new SceneDock();
 
-        /**
-        * Looking up for MenuBar. There is just one MenuBar in the scene so
-        * no criteria is specified.
-        */
+        //Looking up for MenuBar. There is just one MenuBar in the scene so
+        //no criteria is specified.
         menuBar = new MenuBarDock(scene.asParent());
     }
 
     /**
-     * Pushing menu item in menuBar.
+     * Push a menu.
      */ 
     @Test
     public void pushMenu() {
         
-        // Pressing Action > Run menu item. Items are looked up by text which
-        // also includes mnemonics so it is better to use ids as in pushMenuOption
-        menuBar.menu().push(
-                new ByTextMenuItem("A_ction", StringComparePolicy.EXACT), 
-                new ByTextMenuItem("Run", StringComparePolicy.SUBSTRING));
+        //it is possible to push menu hierarchycally. 
+        //Underscores in the item names mark mnemonics
+        menuBar.asMenuOwner().push("A_ction", "_Run");
+        
+        //it is also possible to find the menu item first
+        //and then click it with mouse.
+        //it will itself expand the path to become visible
+        new MenuItemDock(menuBar.asMenuParent(), "Option _1", StringComparePolicy.EXACT).mouse().click();
     }
     
     /**
-     * Pushing menu to change selected radio option.
+     * Push a menu while identifying items by ids.
      */
     @Test
-    public void pushMenuOption() {
-        
-        // Pressing File > Options > Option 2 menu item. Items are looked up by 
-        // ids which is the best approach.
+    public void pushMenuById() {        
+        //you could find menu components by id
         menuBar.menu().push(
                 new ByIdMenuItem("file"), 
                 new ByIdMenuItem("options"),
-                new ByIdMenuItem("option2"));
+                new ByIdMenuItem("option1"));
+        
+        //or using MenuItemDock
+        new MenuItemDock(menuBar.asMenuParent(), "action").mouse().click();
     }
     
     /**
-     * Checking whether menu item is checked.
-     * http://javafx-jira.kenai.com/browse/JMY-177
+     * Select a <code>CheckMenuItem</code>.
      */
     @Test
-    public void getCheckedMenuItem() {
+    public void checkMenuItem() {
         
-        // Calling Menu.select() method to open parent menu so that 
-        // necessary menu item is visible
-        MenuItemDock options = new MenuItemDock(menuBar.menu().select(
-                new ByIdMenuItem("file"), new ByIdMenuItem("options")));
+        //find a CheckMenuItem with text "Enabled"
+        CheckMenuItemDock checkMenuItem = new CheckMenuItemDock(menuBar.asMenuParent(), 
+                "Enabled", StringComparePolicy.SUBSTRING);
         
-        // Looking up for necessary menu item by text
-        MenuItemDock menuItem = new MenuItemDock(options.asMenuParent(), 
-                new ByTextMenuItem("Enabled", StringComparePolicy.SUBSTRING));
+        //you could do a siple mouse click to select the checkbox, 
+        //but of course you would want
+        //to verify what the current selection is and so on.
+        //instead just do this
+        checkMenuItem.asSelectable().selector().select(false);
         
-        // Getting selected property of menu item
-        Boolean selected = menuItem.wrap().getProperty(Boolean.class, "isSelected");
-        System.out.println("Enabled menu item is selected = " + selected);
-        
-        // Closing a menu via several ESC key presses
-        // http://javafx-jira.kenai.com/browse/JMY-181
-        menuItem.keyboard().pushKey(Keyboard.KeyboardButtons.ESCAPE);
-        menuItem.keyboard().pushKey(Keyboard.KeyboardButtons.ESCAPE);
+        //you could check if the item is selected
+        Boolean selected = checkMenuItem.isSelected();
+
     }
     
     /**
-     * Checking what menu option is selected.
-     * http://javafx-jira.kenai.com/browse/JMY-177
+     * Select a <code>RadioMenuItem</code>.
      */
     @Test
-    public void getSelectedRadioMenuItem() {
+    public void radioMenuItem() {
         
-        // Calling Menu.select() method to open parent menu so that 
-        // necessary menu item is visible
-        MenuItemDock options = new MenuItemDock(menuBar.menu().select(
-                new ByIdMenuItem("file"), new ByIdMenuItem("options")));
+        //for radio button, same approach as above would work, but click also works
+        //as you do not need to ckech the value - whether it selected or not
+        new RadioMenuItemDock(menuBar.asMenuParent(), "Option _2", StringComparePolicy.EXACT).mouse().click();
         
-        // Geting all the option menu items
-        Lookup<MenuItem> lookup = options.asMenuParent().lookup(new ByTextMenuItem<MenuItem>("Option", StringComparePolicy.SUBSTRING));
-        System.out.println("Found " + lookup.size() + " option menu items.");
-        MenuItemDock selectedMenuItem = null;
-        for (int i = 0; i < lookup.size(); i++) {
-            MenuItemDock menuItem = new MenuItemDock(lookup.wrap(i));
-            Boolean selected = menuItem.wrap().getProperty(Boolean.class, "isSelected");
-            if (selected) {
-                selectedMenuItem = menuItem;
-            }
-            System.out.println(menuItem.wrap().getProperty("getText") + " menu item is selected = " + selected);
-        }
-        
-        // Selecting checked item to close the menu
-        selectedMenuItem.mouse().click();
     }
     
     /**
-     * Push ContextMenuItem
+     * Work with context menu.
      * 
-     * TODO: Doesn't seem to be possible in current JemmyFX version
-     * http://javafx-jira.kenai.com/browse/JMY-180
      */
-    @Test @Ignore // TODO: Fix this sample one the issue is fixed
+    @Test 
     public void pushContextMenuItem() {
-        
-        // Obtaining a nodeDock for the ScrollPane which has a context menu
         NodeDock scrollPane = new NodeDock(scene.asParent(), ScrollPane.class);
-        
-        // Clicking right mouse button once
+                
+        //right click to call the popup
         // http://javafx-jira.kenai.com/browse/JMY-179
         scrollPane.mouse().click(1, scrollPane.wrap().getClickPoint(), MouseButtons.BUTTON3);
         
-        // Obtaining a popup scene
-        SceneDock popupScene = new SceneDock(new ByWindowType<Scene>(Popup.class));
+        //pushing a context menu is just like pushing main menu
+        new ContextMenuDock().asMenuOwner().push("item _2");
         
-//        scene2.asParent().lookup().dump(System.out);
-//        MenuDock menu = new MenuDock(scene2.asParent());
-//        menu.menu().push(new ByTextMenuItem("My Menu Item", StringComparePolicy.EXACT));
+
+        scrollPane.mouse().click(1, scrollPane.wrap().getClickPoint(), MouseButtons.BUTTON3);
+
+        //or
+        new MenuItemDock(new ContextMenuDock().asMenuParent(), "sub-", StringComparePolicy.SUBSTRING).mouse().click();
     }
     
     /**
@@ -180,14 +154,31 @@ public class MenuSample extends SampleBase {
     @Test
     public void pushMenuButtonMenuItem() {
         
-        // Obtaining MenuButtonDock by its text.
-        MenuButtonDock menuButton = new MenuButtonDock(scene.asParent(), new ByText<MenuButton>("_Menu Button"));
+        MenuButtonDock menuButton = new MenuButtonDock(scene.asParent(), "_Menu Button", StringComparePolicy.EXACT);
         
-        // JemmyDock API is not sufficient in this area so we're switching to plain old wrap stuff
-        // http://javafx-jira.kenai.com/browse/JMY-178
-        StringMenuOwner button_menu_owner = menuButton.wrap().as(StringMenuOwner.class, MenuItem.class);
+        //same as other menus
+        new MenuItemDock(menuButton.asMenuParent(), "_Eleven", StringComparePolicy.EXACT).mouse().click();
         
-        // Pushing menu item by text
-        button_menu_owner.push("_Two");
+        //or
+        menuButton.asMenuOwner().push("_Two");
+    }
+    
+    /**
+     * Finally, how to collapse
+     */
+    @Test
+    public void collapse() {
+        //expand
+        new MenuItemDock(menuBar.asMenuParent(), "option1").mouse().move();
+        
+        //and collapse
+        menuBar.asCollapsible().collapse();
+    }
+
+    @After
+    public void after() {
+        //wait for everything to be totally collapsed after every test
+        new MenuDock(menuBar.asMenuParent(), 0).wrap().waitProperty("isShowing", false);
+        new MenuDock(menuBar.asMenuParent(), 1).wrap().waitProperty("isShowing", false);        
     }
 }
