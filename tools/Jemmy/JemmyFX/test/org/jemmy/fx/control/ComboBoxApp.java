@@ -29,6 +29,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 //import org.jemmy.fx.Browser;
 
@@ -60,6 +61,7 @@ public class ComboBoxApp  extends Application {
 //            }
 //        });
 
+
         ComboBox combo = new ComboBox();
         for (int i = 0; i < 20; i++) {
             combo.getItems().add("Item " + i);
@@ -67,7 +69,11 @@ public class ComboBoxApp  extends Application {
 
         combo.setEditable(true);
 
-        box.getChildren().add(combo);
+        Popup popup = new Popup();
+        popup.getContent().add(combo);
+
+       
+        //box.getChildren().add(combo);
 
         stage.setScene(scene);
 
@@ -75,5 +81,7 @@ public class ComboBoxApp  extends Application {
         stage.setHeight(300);
 
         stage.show();
+
+        popup.show(scene.getWindow());
     }
 }

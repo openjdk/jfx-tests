@@ -27,16 +27,16 @@ package org.jemmy.fx.control;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.stage.PopupWindow;
 import org.jemmy.action.Action;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.*;
 import org.jemmy.env.Environment;
+import org.jemmy.fx.ByObject;
 import org.jemmy.fx.ByStyleClass;
-import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.Root;
 import org.jemmy.input.SelectionText;
 import org.jemmy.interfaces.Focus;
@@ -44,6 +44,7 @@ import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
 import org.jemmy.lookup.Lookup;
+import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
 
 @ControlType(ComboBox.class)
@@ -51,6 +52,7 @@ import org.jemmy.timing.State;
         encapsulates={Object.class})
 @MethodProperties("getValue")
 public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
+    private final static String COMBO_BOX_STYLE_CLASS = "combo-box-popup";
 
     private Focus focus = Root.ROOT.getThemeFactory().comboBoxFocuser(this);
     private Selectable selectable = null;
@@ -117,9 +119,11 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
             if (!isShowing()) {
                 ComboBoxWrap.this.as(Parent.class, Node.class).lookup(new ByStyleClass<Node>("arrow-button")).wrap().mouse().click();
             }
-            Parent<Node> popupContainer =
-                    Root.ROOT.lookup(new ByWindowType(PopupWindow.class)).
-                    as(Parent.class, Node.class);
+            Parent<Node> popupContainer = Root.ROOT.lookup(new LookupCriteria<Scene>() {
+                public boolean check(Scene cntrl) {
+                    return Root.ROOT.lookup(new ByObject<Scene>(cntrl)).wrap().as(Parent.class, Node.class).lookup(new ByStyleClass(COMBO_BOX_STYLE_CLASS)).size() == 1;
+                }
+            }).as(Parent.class, Node.class);
 
             Wrap<? extends ListView> list = popupContainer.lookup(ListView.class).wrap();
             list.as(Selectable.class, type).selector().select(state);
