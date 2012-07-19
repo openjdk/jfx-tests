@@ -25,12 +25,11 @@
 package org.jemmy.fx;
 
 import java.util.List;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import org.jemmy.env.Environment;
 
-class NodeHierarchy extends AbstractNodeHierarchy {
+public class NodeHierarchy extends AbstractNodeHierarchy {
 
     private Scene scene;
     private final Parent root;
