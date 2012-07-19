@@ -45,7 +45,6 @@ class TreeItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
     }
 
     private void refresh(TreeItem<? extends AUX> parent) {
-        System.out.println("adding: " + parent);
         getFound().add((TreeItem<AUX>) parent);
         getAux().add((AUX) parent.getValue());
         for (TreeItem<? extends AUX> si : parent.getChildren()) {

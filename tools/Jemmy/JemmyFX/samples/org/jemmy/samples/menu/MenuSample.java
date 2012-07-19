@@ -25,8 +25,6 @@
 package org.jemmy.samples.menu;
 
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.ScrollPane;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.SceneDock;
@@ -84,7 +82,7 @@ public class MenuSample extends SampleBase {
     @Test
     public void pushMenuById() {        
         //you could find menu components by id
-        menuBar.menu().push(
+        menuBar.asMenuOwner().push(
                 new ByIdMenuItem("file"), 
                 new ByIdMenuItem("options"),
                 new ByIdMenuItem("option1"));

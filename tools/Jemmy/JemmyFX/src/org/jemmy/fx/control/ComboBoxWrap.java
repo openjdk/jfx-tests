@@ -130,9 +130,6 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
 
                         @Override
                         public void run(Object... os) throws Exception {
-                            System.out.println(getControl().getValue());
-                            System.out.println(type.isInstance(getControl().getValue()) ? 
-                                    type.cast(getControl().getValue()) : null);
                             setResult(type.isInstance(getControl().getValue()) ? 
                                     type.cast(getControl().getValue()) : null);
                         }

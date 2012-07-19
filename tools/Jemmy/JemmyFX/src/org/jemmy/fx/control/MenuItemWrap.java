@@ -158,10 +158,6 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
         Root.ROOT.lookup(new LookupCriteria<Scene>() {
 
             public boolean check(Node node, ControlHierarchy hierarchy) {
-                if (node.getProperties().get(Menu.class) != null) {
-                    System.out.println(node.toString());
-                    System.out.println(((MenuItem) node.getProperties().get(Menu.class)).getText());
-                }
                 if (node instanceof MenuButton && parent == null) {
                     MenuButton mb = ((MenuButton) node);
                     //menu button could be in menu bar or by itself
@@ -212,7 +208,6 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
                         return getChildren(cntrl.getRoot());
                     }
                 };
-                System.out.println("checking scene " + cntrl.getWindow());
                 return check(hierarchy.getControls(), hierarchy);
             }
 
