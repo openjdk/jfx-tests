@@ -41,12 +41,14 @@ import org.jemmy.lookup.LookupCriteria;
 
 /**
  * Test support for JavaFX node. For simplicity, there is no special wrap class
- * around <code>Parent</code> - any node could be treated as a parent for other 
- * nodes. If a node is not a <code>Parent</code> the hierarchy will be considered
- * empty.<br/>
- * Check <a href="../samples/lookup">lookup samples</a> and <a href="../samples/input">input samples</a>
- * to get a feeling of what could be done with on this generic level.<br/>
- * All properties common to all nodes are defined on this level.
+ * around
+ * <code>Parent</code> - any node could be treated as a parent for other nodes.
+ * If a node is not a
+ * <code>Parent</code> the hierarchy will be considered empty.<br/> Check <a
+ * href="../samples/lookup">lookup samples</a> and <a
+ * href="../samples/input">input samples</a> to get a feeling of what could be
+ * done with on this generic level.<br/> All properties common to all nodes are
+ * defined on this level.
  *
  * @param <T>
  * @author shura, mrkam
@@ -95,11 +97,11 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     }
 
     /**
-     * Constructs lookup criteria by an id value. By-id lookup is the most basic 
+     * Constructs lookup criteria by an id value. By-id lookup is the most basic
      * and the most reliable approach.
      *
      * @param <B>
-     * @param tp Node type 
+     * @param tp Node type
      * @param id expected node id
      * @return
      * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, java.lang.String)
@@ -167,8 +169,9 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     }
 
     /**
-     * This makes possible to search for other nodes within another node's 
+     * This makes possible to search for other nodes within another node's
      * hierarchy.
+     *
      * @return node as a parent
      */
     @As(Node.class)
@@ -206,8 +209,10 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
         if (cell != null) {
             Rectangle bounds = NodeWrap.getScreenBounds(env, cell);
             Rectangle viewBounds = NodeWrap.getScreenBounds(env, parent);
-            return (bounds.y > viewBounds.y
-                    && bounds.y + bounds.height < viewBounds.y + viewBounds.height);
+            return (bounds.y >= viewBounds.y
+                    && bounds.y + bounds.height <= viewBounds.y + viewBounds.height
+                    && bounds.x >= viewBounds.x
+                    && bounds.x + bounds.width <= viewBounds.x + viewBounds.width);
         } else {
             return false;
         }
@@ -291,8 +296,8 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     }
 
     /**
-     * Turns into Showable. If a node is shown, the stage is shown first.
-     * In the future, some other steps may be implemented such as switching tabs, 
+     * Turns into Showable. If a node is shown, the stage is shown first. In the
+     * future, some other steps may be implemented such as switching tabs,
      * scrolling, etc, etc.
      *
      * @return

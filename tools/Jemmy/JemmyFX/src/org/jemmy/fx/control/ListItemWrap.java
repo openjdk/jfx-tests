@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import javafx.geometry.Bounds;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
@@ -122,7 +123,7 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
         }.dispatch(getEnvironment());
 
         Wrap<? extends ScrollBar> scr =listViewWrap.as(Parent.class, Node.class).
-                lookup(ScrollBar.class, new ScrollBarWrap.ByOrientationScrollBar(true)).
+                lookup(ScrollBar.class, new ScrollBarWrap.ByOrientationScrollBar(listViewWrap.getControl().getOrientation() == Orientation.VERTICAL)).
                 wrap();
 
         if (!scr.getProperty(Boolean.class, "isVisible")) {

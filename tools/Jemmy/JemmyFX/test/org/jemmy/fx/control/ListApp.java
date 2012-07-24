@@ -28,6 +28,7 @@ import java.awt.AWTException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -58,6 +59,7 @@ public class ListApp extends Application {
 
 
         ListView<String> lst = new ListView<String>();
+//        lst.setOrientation(Orientation.HORIZONTAL);
         lst.getItems().add("one");
         lst.getItems().add("  1 ");
         lst.getItems().add("  2 ");
