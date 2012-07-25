@@ -167,7 +167,8 @@ public class TreeApp  extends Application {
         TreeItem<String> i029 = new MyTreeItem<String>("029");
         i02.getChildren().addAll(i020, i021, i022, i023, i024, i025, i026, i027, i028, i029);
         TreeItem<String> i0290 = new TreeItem<String>("0290");
-        i029.getChildren().add(i0290);
+        TreeItem<String> iLong = new TreeItem<String>("0looooooooooooooooooooooooooooooooooo00000000000000000000000000000000000000oooooooooooooooooooooooooong");
+        i029.getChildren().addAll(i0290,iLong);
         
         final TreeView<String> view = new TreeView<String>(i0);
         view.setEditable(true);

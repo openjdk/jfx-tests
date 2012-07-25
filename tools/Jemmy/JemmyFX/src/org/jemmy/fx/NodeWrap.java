@@ -206,13 +206,25 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
      * @return
      */
     public static boolean isInside(Node parent, Node cell, Environment env) {
+        return isInBounds(parent, cell, env, false) && isInBounds(parent, cell, env, true);
+    }
+
+    /**
+     * Defines whether a node is completely within vertical or horizontal bounds
+     * of another node.
+     *
+     * @param parent
+     * @param cell
+     * @param env
+     * @return
+     */
+    public static boolean isInBounds(Node parent, Node cell, Environment env, boolean isVertical) {
         if (cell != null) {
             Rectangle bounds = NodeWrap.getScreenBounds(env, cell);
             Rectangle viewBounds = NodeWrap.getScreenBounds(env, parent);
-            return (bounds.y >= viewBounds.y
-                    && bounds.y + bounds.height <= viewBounds.y + viewBounds.height
-                    && bounds.x >= viewBounds.x
-                    && bounds.x + bounds.width <= viewBounds.x + viewBounds.width);
+            return isVertical ? bounds.y >= viewBounds.y && bounds.y + bounds.height <= viewBounds.y + viewBounds.height
+                    : bounds.x >= viewBounds.x && bounds.x + bounds.width <= viewBounds.x + viewBounds.width;
+
         } else {
             return false;
         }

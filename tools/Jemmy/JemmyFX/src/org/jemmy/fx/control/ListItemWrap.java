@@ -33,33 +33,32 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollBar;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.*;
 import org.jemmy.dock.DockInfo;
 import org.jemmy.fx.NodeWrap;
+import org.jemmy.fx.Utils;
 import org.jemmy.fx.WindowElement;
+import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.Caret.Direction;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 
-
 /**
- * A list could be used as a parent for objects, which are stored in it. 
+ * A list could be used as a parent for objects, which are stored in it.
  *
  * @param DATA
  * @author KAM, shura
  * @see ItemWrap
  * @see ListItemDock
  */
-
 @ControlType(Object.class)
-@ControlInterfaces(value={WindowElement.class, EditableCell.class, Showable.class},
-        encapsulates={ListView.class})
-@DockInfo(name="org.jemmy.fx.control.ListItemDock", multipleCriteria=false, generateSubtypeLookups=true)
+@ControlInterfaces(value = {WindowElement.class, EditableCell.class, Showable.class},
+encapsulates = {ListView.class})
+@DockInfo(name = "org.jemmy.fx.control.ListItemDock", multipleCriteria = false, generateSubtypeLookups = true)
 public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements Showable {
 
     private final ListViewWrap<? extends ListView> listViewWrap;
@@ -79,17 +78,18 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
 
     /**
      * Index of this item within the list.
-     * @return 
+     *
+     * @return
      */
     @Property(ITEM_PROP_NAME)
     public int getIndex() {
         return (Integer) super.getItem();
     }
-    
+
     @Override
     public Wrap<? extends ListCell> cellWrap() {
         return listViewWrap.as(Parent.class, Node.class).lookup(ListCell.class,
-          new ListItemByObjectLookup<DATA>(getControl())).wrap(0);
+                new ListItemByObjectLookup<DATA>(getControl())).wrap(0);
     }
 
     @Override
@@ -110,79 +110,93 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
 
             @Override
             public void run(Object... parameters) {
-                int len=items.size();
-                
-                for (int i=0; i<len; i++) {
+                int len = items.size();
+
+                for (int i = 0; i < len; i++) {
                     if (getControl().equals(items.get(i))) {
-                        setResult((long)i);
+                        setResult((long) i);
                         return;
                     }
                 }
             }
-            
         }.dispatch(getEnvironment());
 
-        Wrap<? extends ScrollBar> scr =listViewWrap.as(Parent.class, Node.class).
-                lookup(ScrollBar.class, new ScrollBarWrap.ByOrientationScrollBar(listViewWrap.getControl().getOrientation() == Orientation.VERTICAL)).
-                wrap();
+        AbstractScroll scroll1 = Utils.getContainerScroll(listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() == Orientation.VERTICAL);
+        if (scroll1 != null) {
+            Caret c = scroll1.caret();
+            Direction direction = new Direction() {
 
-        if (!scr.getProperty(Boolean.class, "isVisible")) {
-            return;
-        }
+                /**
+                 * @return < 0 to scroll toward decreasing value, > 0 - vice
+                 * versa 0 to stop scrolling NOTE - see implementation
+                 * KnobDragScrollerImpl.to(Direction) which is used in
+                 * ScrollBarWrap better to return constant values (-1 || 0 ||
+                 * +1) to get smooth dragging
+                 */
+                @Override
+                public int to() {
+                    final int[] minmax = new int[]{listViewWrap.as(Selectable.class, Object.class).getStates().size(), -1}; //minmax[0] - the least index of visible element. minmax[1] - the most index. 
+                    final List items = listViewWrap.getItems();
+                    listViewWrap.as(Parent.class, Node.class).lookup(ListCell.class,
+                            new LookupCriteria<ListCell>() {
 
-        Caret c = scr.as(Scroll.class).caret();
-
-        Direction direction = new Direction() {
-
-            /**
-             * @return < 0 to scroll toward decreasing value, > 0 - vice versa
-             * 0 to stop scrolling
-             * NOTE - see implementation KnobDragScrollerImpl.to(Direction) which is used in ScrollBarWrap
-             *        better to return constant values (-1 || 0 || +1) to get smooth dragging
-             */
-            @Override
-            public int to() {
-                final int[] minmax = new int[]{listViewWrap.as(Selectable.class, Object.class).getStates().size(), -1}; //minmax[0] - the least index of visible element. minmax[1] - the most index. 
-                final List items = listViewWrap.getItems();
-                listViewWrap.as(Parent.class, Node.class).lookup(ListCell.class,
-                        new LookupCriteria<ListCell>() {
-
-                            public boolean check(ListCell control) {
-                                if (NodeWrap.isInside(listViewWrap.getControl(), control, getEnvironment())) {
+                                public boolean check(ListCell control) {
                                     int index = items.indexOf(control.getItem());
-                                    if (index >= 0) {
-                                        if (index < minmax[0]) {
-                                            minmax[0] = index;
-                                        //} else if (index > minmax[1]) {//doesn't work, if we have 1 element in list. So rewrite:
-                                        }
-                                        if (index > minmax[1]) {
-                                            minmax[1] = index;
+                                    if (NodeWrap.isInBounds(getClippedContainerWrap().getControl(), control, getEnvironment(), listViewWrap.getControl().getOrientation() == Orientation.VERTICAL)) {
+                                        if (index >= 0) {
+                                            if (index < minmax[0]) {
+                                                minmax[0] = index;
+                                                //} else if (index > minmax[1]) {//doesn't work, if we have 1 element in list. So rewrite:
+                                            }
+                                            if (index > minmax[1]) {
+                                                minmax[1] = index;
+                                            }
                                         }
                                     }
+                                    return true;
                                 }
-                                return true;
-                            }
-                        }).size();
-                int index = items.indexOf(getControl());
-                if (index < minmax[0]) {
-                    return -1;
-                } else if (index > minmax[1]) {
-                    return 1;
-                } else {
-                    return 0;
+                            }).size();
+                    int index = items.indexOf(getControl());
+                    if (index < minmax[0]) {
+                        return -1;
+                    } else if (index > minmax[1]) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
                 }
-            }
 
-            @Override
-            public String toString() {
-                return "'" + getControl() + "' state at index " + desiredIndex;
-            }
-        };
-        c.to(direction);
+                @Override
+                public String toString() {
+                    return "'" + getControl() + "' state at index " + desiredIndex;
+                }
+            };
+            c.to(direction);
+        }
+        AbstractScroll scroll2 = Utils.getContainerScroll(listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() != Orientation.VERTICAL);
+        Utils.makeCenterVisible(getClippedContainerWrap(), this, scroll2);
+
+    }
+    /**
+     * @return wrap of parent container that contains TableCells
+     */
+    private Wrap<? extends javafx.scene.Parent> clippedContainer;
+
+    private Wrap<? extends javafx.scene.Parent> getClippedContainerWrap() {
+        if (clippedContainer == null) {
+            clippedContainer = ((Parent<Node>) listViewWrap.as(Parent.class, Node.class)).lookup(javafx.scene.Parent.class, new LookupCriteria<javafx.scene.Parent>() {
+
+                public boolean check(javafx.scene.Parent control) {
+                    return control.getClass().getName().endsWith("VirtualFlow$ClippedContainer");
+                }
+            }).wrap();
+        }
+        return clippedContainer;
     }
 
     /**
      * Identifies which elements are shown in the list currently.
+     *
      * @return list of indices of all elements that are fully visible in the
      * list.
      */
@@ -198,19 +212,19 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
                 final List<Long> res = new LinkedList<Long>();
 
                 listViewWrap.as(Parent.class, Node.class).lookup(
-                                     ListCell.class, new LookupCriteria<ListCell>() {
+                        ListCell.class, new LookupCriteria<ListCell>() {
 
                     @Override
                     public boolean check(ListCell control) {
-                        if (control.isVisible() && control.getOpacity() == 1.0 ) {
+                        if (control.isVisible() && control.getOpacity() == 1.0) {
                             Bounds controlBounds = lv.sceneToLocal(
                                     control.localToScene(control.getBoundsInLocal()));
                             if (viewArea.contains(controlBounds)) {
                                 Long index = new Long(control.getIndex());
-                                    res.add(index);
-                                    return false;
-                                }
+                                res.add(index);
+                                return false;
                             }
+                        }
                         return false;
                     }
                 }).size();
@@ -225,7 +239,7 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
 
     @Override
     public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
-        if(WindowElement.class.equals(interfaceClass)) {
+        if (WindowElement.class.equals(interfaceClass)) {
             return true;
         }
         return super.is(interfaceClass);
@@ -234,18 +248,19 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
     @Override
     @SuppressWarnings("unchecked")
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if(WindowElement.class.equals(interfaceClass) && Scene.class.equals(type)) {
+        if (WindowElement.class.equals(interfaceClass) && Scene.class.equals(type)) {
             return true;
         }
-        if(Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
+        if (Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
             return cellWrap().is(interfaceClass, type);
         }
         return super.is(interfaceClass, type);
     }
-    
+
     /**
      * To get the list view where the item resides.
-     * @return 
+     *
+     * @return
      */
     @As
     public WindowElement<ListView> asWindowElement() {
@@ -253,8 +268,7 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
     }
 
     /**
-     * @deprecated 
-     * @param <ITEM> 
+     * @deprecated @param <ITEM>
      */
     public static class ListItemByObjectLookup<ITEM> implements LookupCriteria<ListCell> {
 
