@@ -42,7 +42,7 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 
 @ControlType({Tab.class})
-@ControlInterfaces(value = {Parent.class, Cell.class, Selectable.class},
+@ControlInterfaces(value = {Parent.class, Cell.class},
 encapsulates = {Node.class})
 public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
         implements Close, Closer, Cell<Tab> {

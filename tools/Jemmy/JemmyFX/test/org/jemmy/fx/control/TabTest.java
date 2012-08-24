@@ -75,4 +75,8 @@ public class TabTest {
         }
     }
 
+    @Test
+    public void tabDock() {
+        new TabDock(new TabPaneDock(new SceneDock().asParent()).asTabParent(), 3).asCell().select();
+    }
 }
