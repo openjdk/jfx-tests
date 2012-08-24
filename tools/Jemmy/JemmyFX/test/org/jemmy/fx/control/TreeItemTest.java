@@ -25,6 +25,7 @@
 package org.jemmy.fx.control;
 
 import javafx.scene.control.TreeItem;
+import org.jemmy.env.Timeout;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.lookup.EqualsLookup;
@@ -111,6 +112,7 @@ public class TreeItemTest {
         new TreeItemDock(tree.asItemParent(), "02").asTreeItem().collapse();
         new TreeItemDock(tree.asItemParent(), "0").asTreeItem().collapse();
         new TreeItemDock(tree.asItemParent(), "0290").asEditableCell().select();
+        new TreeItemDock(tree.asItemParent(), "0looooooooooooooooooooooooooooooooooo00000000000000000000000000000000000000oooooooooooooooooooooooooong").asEditableCell().select();
     }
 
     @Test

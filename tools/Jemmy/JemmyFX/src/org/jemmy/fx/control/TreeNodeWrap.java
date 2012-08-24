@@ -24,10 +24,12 @@
  */
 package org.jemmy.fx.control;
 
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
@@ -36,6 +38,8 @@ import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.NodeWrap;
 import org.jemmy.fx.Root;
+import org.jemmy.fx.Utils;
+import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.Caret.Direction;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
@@ -104,17 +108,20 @@ class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
 
     @Override
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if(Parent.class.equals(interfaceClass) && Node.class.equals(type)) return true;
+        if (Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
+            return true;
+        }
         return super.is(interfaceClass, type);
     }
 
     @Override
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if(Parent.class.equals(interfaceClass) && Node.class.equals(type)) return (INTERFACE) asParent();
+        if (Parent.class.equals(interfaceClass) && Node.class.equals(type)) {
+            return (INTERFACE) asParent();
+        }
         return super.as(interfaceClass, type);
     }
 
-    
     public Parent asParent() {
         return getNode().as(Parent.class, Node.class);
     }
@@ -159,6 +166,19 @@ class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
         }
         scrollTo();
     }
+    private Wrap<? extends javafx.scene.Parent> clippedContainer;
+
+    private Wrap<? extends javafx.scene.Parent> getClippedContainerWrap() {
+        if (clippedContainer == null) {
+            clippedContainer = ((Parent<Node>) treeViewWrap.as(Parent.class, Node.class)).lookup(javafx.scene.Parent.class, new LookupCriteria<javafx.scene.Parent>() {
+
+                public boolean check(javafx.scene.Parent control) {
+                    return control.getClass().getName().endsWith("VirtualFlow$ClippedContainer");
+                }
+            }).wrap();
+        }
+        return clippedContainer;
+    }
 
     private void scrollTo() {
         treeViewWrap.as(Scroll.class).caret().to(new Direction() {
@@ -169,7 +189,7 @@ class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
                         new LookupCriteria<TreeCell>() {
 
                             public boolean check(TreeCell control) {
-                                if (NodeWrap.isInside(treeViewWrap.getControl(), control, getEnvironment())) {
+                                if (NodeWrap.isInBounds(getClippedContainerWrap().getControl(), control, getEnvironment(), true)) {
                                     int index = treeViewWrap.getRow(control.getTreeItem());
                                     if (index >= 0) {
                                         if (index < minmax[0]) {
@@ -193,6 +213,8 @@ class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
                 }
             }
         });
+        AbstractScroll scroll2 = Utils.getContainerScroll(treeViewWrap.as(Parent.class, Node.class), false);
+        Utils.makeCenterVisible(getClippedContainerWrap(), this, scroll2);
     }
 
     protected boolean isReallyVisible(Node node) {

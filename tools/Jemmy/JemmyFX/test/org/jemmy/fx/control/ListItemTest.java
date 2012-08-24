@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  * @author shura
  */
 public class ListItemTest {
-    
+
     public ListItemTest() {
     }
 
@@ -29,17 +29,16 @@ public class ListItemTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-
     ListViewDock lst;
     org.jemmy.interfaces.List list;
-    
+
     @Before
     public void setUp() throws InterruptedException {
         lst = new ListViewDock(new SceneDock().asParent());
         list = lst.asList();
         list.setEditor(new TextFieldCellEditor<Object>());
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -61,12 +60,12 @@ public class ListItemTest {
 
     @Test
     public void byValue() {
-        ListItemDock i24 = new ListItemDock(lst.asList(),"  24 ");
+        ListItemDock i24 = new ListItemDock(lst.asList(), "  24 ");
         i24.asEditableCell().select();
         assertEquals("  24 ", i24.control());
     }
-    
-    @Test 
+
+    @Test
     public void byIndex() {
         ListItemDock i5 = new ListItemDock(lst.asList(), 5, new Any());
         i5.asEditableCell().select();

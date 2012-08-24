@@ -26,8 +26,8 @@ package org.jemmy.fx.control;
 
 import java.awt.AWTException;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -45,8 +45,10 @@ import javafx.util.Callback;
  */
 public class ListApp extends Application {
 
+    public static final String H_MODE = "hMode";
+
     public static void main(String[] args) throws AWTException {
-//        org.jemmy.client.Browser.runBrowser();
+//        Browser.runBrowser();
         launch(args);
     }
 
@@ -56,8 +58,10 @@ public class ListApp extends Application {
         Scene scene = new Scene(box);
 
 
-
         ListView<String> lst = new ListView<String>();
+        if (getParameters().getUnnamed().size() == 1 && H_MODE.equals(getParameters().getUnnamed().get(0))) {
+            lst.setOrientation(Orientation.HORIZONTAL);
+        }
         lst.getItems().add("one");
         lst.getItems().add("  1 ");
         lst.getItems().add("  2 ");
