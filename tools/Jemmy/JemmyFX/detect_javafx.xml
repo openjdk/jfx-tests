@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="find-javafx">
+    <property name="properties" value="${basedir}/nbproject/project.properties"/>
+    <target name="check-if-orig-exists">
+        <available file="${properties}.orig" property="orig.exist"/>
+    </target>
+    <target name="create-orig" unless="orig.exist">
+        <copy file="${properties}"
+              tofile="${properties}.orig" />
+    </target>
+    <target name="check-javafx-in-jdk" unless="javafx.home" depends="check-if-orig-exists, create-orig">
+        <available file="${java.home}/lib/jfxrt.jar" property="jfxrt-jar-exists"/>
+        <fail unless="jfxrt-jar-exists" message="${java.home}/lib/jfxrt.jar does not exist"/>
+        <echo message="Building with JavaFX from ${java.home}"/>
+        <delete file="${properties}"/>
+        <copy file="${properties}.orig" tofile="${properties}">
+            <filterchain>
+                <tokenfilter>
+                    <replaceregex pattern="^file.reference.jfxrt.jar=.*$"
+                                  replace="file.reference.jfxrt.jar=$\{java.home\}/lib/jfxrt.jar"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+    </target>
+    <target name="write-javafx-home" if="javafx.home" depends="check-if-orig-exists, create-orig">
+        <available file="${javafx.home}/lib/jfxrt.jar" property="jfxrt-jar-exists"/>
+        <fail unless="jfxrt-jar-exists" message="${javafx.home}/lib/jfxrt.jar does not exist"/>
+        <echo message="Building with JavaFX from ${javafx.home}"/>
+        <propertyfile file="../JemmyFX/build.properties">
+            <entry key="javafx.home" value="${javafx.home}"/>
+        </propertyfile>
+        <delete file="${properties}"/>
+        <copy file="${properties}.orig"
+              tofile="${properties}" >
+            <filterchain>
+                <tokenfilter>
+                    <replaceregex pattern="^file.reference.jfxrt.jar=.*$"
+                                  replace="file.reference.jfxrt.jar=${javafx.home}/lib/jfxrt.jar"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+    </target>
+    <target name="find-javafx" depends="check-javafx-in-jdk, write-javafx-home"/>
+</project>
