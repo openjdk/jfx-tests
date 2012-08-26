@@ -21,6 +21,7 @@
                 </tokenfilter>
             </filterchain>
         </copy>
+        <delete file="${properties}.orig"/>
     </target>
     <target name="write-javafx-home" if="javafx.home" depends="check-if-orig-exists, create-orig">
         <available file="${javafx.home}/lib/jfxrt.jar" property="jfxrt-jar-exists"/>
