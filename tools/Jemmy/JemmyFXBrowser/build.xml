@@ -2,8 +2,8 @@
 <project name="JemmyJCBrowser" default="default" basedir=".">
     <description>Builds, tests, and runs the project JemmyJCBrowser.</description>
     <import file="nbproject/build-impl.xml"/>
+    <property file="../JemmyFX/build.properties"/>
     <target name="-pre-init">
-        <property file="../JemmyFX/build.properties"/>
-        <fail unless="javafx.home" message="No javafx.home set. Please build JemmyFX with -Djavafx.home=..."/>
+        <ant antfile="../JemmyFX/detect_javafx.xml" inheritall="true"/>
     </target>
 </project>
