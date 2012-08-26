@@ -27,6 +27,7 @@ questions.
     <description>Builds, tests, and runs the project JemmyJC.</description>
     <import file="nbproject/build-impl.xml"/>
 
+    <property file="build.properties"/>
     <property name="jemmy.lib.dir" location="lib/jemmy"/>
     <property name="javafx.lib.dir" location="lib/javafx"/>
     <property name="test.includes" value="**/*Sample.java"/>
@@ -37,18 +38,26 @@ questions.
         <jar destfile="${jar.name}" filesetmanifest="merge">
             <zipgroupfileset file="${reference.JemmyCore.jar}"/>
             <zipgroupfileset file="${reference.JemmyAWTInput.jar}"/>
+            <zipgroupfileset file="${reference.GlassImage.jar}"/>
+            <zipgroupfileset file="${reference.GlassRobot.jar}"/>
             <zipgroupfileset file="${dist.jar}"/>
         </jar>
     </target>
-    <target name="real-clean" depends="clean">
+    <target name="disable-libs">
+        <property name="no.need.to.copy.jemmy.libs" value="yes"/>
+    </target>
+    <target name="real-clean" depends="disable-libs, clean">
         <delete dir="${jemmy.lib.dir}" failonerror="false"/>
         <delete dir="${javafx.lib.dir}" failonerror="false"/>
     </target>
     <target name="-post-clean">
         <delete dir="${docks.dir}" failonerror="false"/>
     </target>
-    <target name="-post-init" depends="copy-javafx,copy-jemmy-libs"/>
-    <target name="-pre-compile" depends="copy-javafx,copy-jemmy-libs">
+    <target name="-pre-init">
+        <ant antfile="detect_javafx.xml" inheritall="true"/>
+    </target>
+    <target name="-post-init" depends="copy-jemmy-libs"/>
+    <target name="-pre-compile">
         <delete file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" failonerror="false"/>
         <mkdir dir="${docks.dir}"/>
     </target>
@@ -62,7 +71,7 @@ questions.
     <target name="read-jemmy-core-version" unless="jemmy.core.version">
         <property file="depend.properties"/>
     </target>
-    <target name="check-jemmy-libs">
+    <target name="check-jemmy-libs" unless="no.need.to.copy.jemmy.libs">
         <available file="${jemmy.lib.dir}/JemmyCore.jar" property="no.need.to.copy.jemmy.libs"/>
     </target>
     <target name="copy-jemmy-libs" depends="check-jemmy-libs,read-jemmy-core-version"
@@ -75,32 +84,6 @@ questions.
         <get src="${dist.url}/JemmyAWTInput.jar" dest="${jemmy.lib.dir}"/>
         <get src="${dist.url}/JemmyBrowser.jar" dest="${jemmy.lib.dir}"/>
         <get src="${dist.url}/JemmySupport.jar" dest="${jemmy.lib.dir}"/>
-    </target>
-    <target name="set-javafx-home" if="javafx.home">
-        <propertyfile file="build.properties">
-            <entry key="javafx.home" value="${javafx.home}"/>
-        </propertyfile>
-    </target>
-    <target name="read-javafx-home" unless="javafx.home">
-        <property file="build.properties"/>
-    </target>
-    <target name="copy-javafx" depends="copy-javafx-libs, copy-javafx-bin">
-        <property file="fxclasspath.properties"/>
-    </target>
-    <target name="copy-javafx-libs" depends="set-javafx-home,read-javafx-home">
-        <fail unless="javafx.home" message="No javafx.home set and no build.properties file"/>
-        <echo message="javafx.home=${javafx.home}"/>
-        <copy todir="${javafx.lib.dir}/lib">
-            <fileset dir="${javafx.home}/rt/lib"/>
-        </copy>
-    </target>
-    <target name="check-javafx-bin">
-        <available file="${javafx.home}/rt/bin" type="dir" property="javafx.bin.exists"/>
-    </target>
-    <target name="copy-javafx-bin" if="javafx.bin.exists" depends="check-javafx-bin">
-        <copy todir="${javafx.lib.dir}/bin">
-            <fileset dir="${javafx.home}/rt/bin"/>
-        </copy>
     </target>
     <target depends="test-single" name="test"/>
     <target name="warn-no-core-sources" unless="jemmy.core.source">

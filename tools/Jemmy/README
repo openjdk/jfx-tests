@@ -1,11 +1,14 @@
 =================================================================
 To build Jemmy:
 $cd JemmyFX
-$ant -Djavafx.home=<Java FX SDK location> jar
+1)If you are using a Java FX bundled with the JDK, simple set JDK_HOME to point to the JDK and run
+$ant jar
+2)If you are compiling for some other Java FX, do this:
+$ant -Djavafx.home=<Java FX RE location> jar
+Please make sure to use Java FX runtime environment location - the one having lib/jfxrt.jar within.
 
-This will generate dist/JemmyCore.jar - the jar which needs to be added to tests classpath.
-
-Should the build script has trouble downloading JemmyCore libraries
+The above command is supposed to download a few JemmyCore jars needed for JemmyFX.
+Should the build script has trouble downloading 
 automatically, you could download it with a web browser by going to
 http://jemmy.java.net/dist/<jemmy.core.version>
 where jemmy.core.version is specified in tools/Jemmy/JemmyFX/depend.properties file.
