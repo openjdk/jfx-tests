@@ -1,11 +1,18 @@
 =================================================================
-To build Jemmy:
-$cd JemmyFX
+To build JemmyFX:
+$ cd JemmyFX
 1)If you are using a Java FX bundled with the JDK, simple set JDK_HOME to point to the JDK and run
-$ant jar
+$ ant jar
 2)If you are compiling for some other Java FX, do this:
-$ant -Djavafx.home=<Java FX RE location> jar
+$ ant -Djavafx.rt=<Java FX RE location> jar
 Please make sure to use Java FX runtime environment location - the one having lib/jfxrt.jar within.
+
+To re-build JemmyFX for another Java FX, please do 
+$ ant real-clean
+and then build it like shown above
+
+=================================================================
+To download JemmyCore jars.
 
 The above command is supposed to download a few JemmyCore jars needed for JemmyFX.
 Should the build script has trouble downloading 

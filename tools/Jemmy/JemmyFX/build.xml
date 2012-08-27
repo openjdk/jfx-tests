@@ -44,16 +44,17 @@ questions.
         </jar>
     </target>
     <target name="disable-libs">
+        <property name="no.need.to.find.java.fx" value="yes"/>
         <property name="no.need.to.copy.jemmy.libs" value="yes"/>
     </target>
     <target name="real-clean" depends="disable-libs, clean">
         <delete dir="${jemmy.lib.dir}" failonerror="false"/>
-        <delete dir="${javafx.lib.dir}" failonerror="false"/>
+        <delete file="build.properties" failonerror="false"/>
     </target>
     <target name="-post-clean">
         <delete dir="${docks.dir}" failonerror="false"/>
     </target>
-    <target name="-pre-init">
+    <target name="-pre-init" unless="no.need.to.find.java.fx">
         <ant antfile="detect_javafx.xml" inheritall="true"/>
     </target>
     <target name="-post-init" depends="copy-jemmy-libs"/>
