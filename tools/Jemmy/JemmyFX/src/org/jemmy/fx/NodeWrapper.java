@@ -59,6 +59,7 @@ public class NodeWrapper extends DefaultWrapper {
         OPERATORS.add(ListViewWrap.class);
         OPERATORS.add(MenuBarWrap.class);
         OPERATORS.add(MenuButtonWrap.class);
+        OPERATORS.add(SplitMenuButtonWrap.class);
         OPERATORS.add(ToolBarWrap.class);
         OPERATORS.add(ChoiceBoxWrap.class);
         OPERATORS.add(ComboBoxWrap.class);

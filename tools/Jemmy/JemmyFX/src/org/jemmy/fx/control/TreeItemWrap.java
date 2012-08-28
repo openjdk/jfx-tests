@@ -30,7 +30,6 @@ import javafx.scene.control.TreeView;
 import org.jemmy.Rectangle;
 import org.jemmy.control.*;
 import org.jemmy.dock.DockInfo;
-import org.jemmy.dock.ObjectLookup;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.WindowElement;
 import org.jemmy.fx.control.ItemDataParent.ItemCriteria;
@@ -152,6 +151,10 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
         wElement = new ViewElement<TreeView>(TreeView.class, treeViewWrap.getControl());
     }
 
+    public TreeNodeWrap<TreeItem> getNodeWrap() {
+        return theWrap;
+    }
+
     @Property(ITEM_PROP_NAME)
     @Override
     public TreeItem getItem() {
@@ -173,7 +176,7 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
      */
     @As
     public org.jemmy.interfaces.TreeItem asTreeItem() {
-        return Root.ROOT.getThemeFactory().treeItem(this);
+        return Root.ROOT.getThemeFactory().treeItem(this.theWrap);
     }
 
     @Override

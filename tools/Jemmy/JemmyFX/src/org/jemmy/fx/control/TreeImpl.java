@@ -42,14 +42,12 @@ class TreeImpl<T> implements Tree<T> {
 
     Class<T> itemType;
     TreeViewWrap owner;
-    TreeItem root;
     TreeItemParent parent;
 
-    public TreeImpl(Class<T> itemType, TreeViewWrap<? extends TreeView> outer, TreeItem root, 
+    public TreeImpl(Class<T> itemType, TreeViewWrap<? extends TreeView> outer, 
             TreeItemParent<T> parent) {
         this.owner = outer;
         this.itemType = itemType;
-        this.root = root;
         this.parent = parent;
     }
 
@@ -75,8 +73,8 @@ class TreeImpl<T> implements Tree<T> {
                                 if (criteria.length > 1) {
                                     if (!ti.isExpanded()) {
                                         Root.ROOT.getThemeFactory().treeItem(
-                                                new TreeItemWrap(itemType, ti, 
-                                                owner, parent.getEditor())).expand();
+                                                new TreeNodeWrap(
+                                                    owner.getRoot(), owner, parent.getEditor())).expand();
                                     }
                                     return select(ti, FXStringMenuOwner.decreaseCriteria(criteria));
                                 } else {
@@ -107,10 +105,10 @@ class TreeImpl<T> implements Tree<T> {
         public Wrap select(LookupCriteria<T>... criteria) {
             if (((TreeView)owner.getControl()).isShowRoot()
                 && criteria.length > 0
-                && !root.isExpanded()) {
-                Root.ROOT.getThemeFactory().treeItem(new TreeNodeWrap(root, owner, parent.getEditor())).expand();
+                && !owner.getRoot().isExpanded()) {
+                Root.ROOT.getThemeFactory().treeItem(new TreeNodeWrap(owner.getRoot(), owner, parent.getEditor())).expand();
             }
-            Wrap res = new TreeItemWrap(itemType, select(root, criteria), owner, 
+            Wrap res = new TreeItemWrap(itemType, select(owner.getRoot(), criteria), owner,
                     parent.getEditor());
             res.mouse().click();
             return res;

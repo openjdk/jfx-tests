@@ -54,7 +54,7 @@ import org.jemmy.lookup.LookupCriteria;
  */
 @ControlType(Object.class)
 @ControlInterfaces({org.jemmy.interfaces.TreeItem.class})
-class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
+public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
         implements Showable, Show, EditableCell<Object> {
 
     private TreeViewWrap<? extends TreeView> treeViewWrap;

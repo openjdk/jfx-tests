@@ -34,7 +34,7 @@ class TreeNodeParent<T extends TreeItem> extends ItemParent<T, Object> {
     private final TreeItem<?> root;
 
     public TreeNodeParent(TreeViewWrap<? extends TreeView> treeViewWrap, Class<T> lookupCLass) {
-        this(treeViewWrap, lookupCLass, treeViewWrap.getRoot());
+        this(treeViewWrap, lookupCLass, null);
     }
     public TreeNodeParent(TreeViewWrap<? extends TreeView> treeViewWrap, Class<T> lookupCLass, TreeItem<?> root) {
         super(treeViewWrap, lookupCLass);
@@ -44,7 +44,11 @@ class TreeNodeParent<T extends TreeItem> extends ItemParent<T, Object> {
 
     @Override
     protected void doRefresh() {
-        refresh(root);
+        if (root == null) {
+            refresh(treeViewWrap.getRoot());
+        } else {
+            refresh(root);
+        }
     }
 
     private void refresh(TreeItem<?> parent) {

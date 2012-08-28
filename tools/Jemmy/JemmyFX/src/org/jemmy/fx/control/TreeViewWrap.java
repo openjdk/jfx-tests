@@ -236,7 +236,7 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
     @As(Object.class)
     public <T> EditableCellOwner<T> asItemParent(Class<T> type) {
         if (parent == null || !parent.getType().equals(type)) {
-            parent = new TreeItemParent<T>(this, getRoot(), type);
+            parent = new TreeItemParent<T>(this, type);
         }
         return parent;
     }
@@ -255,7 +255,7 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
     public <T> Tree<T> asTree(Class<T> type) {
         if (tree == null || !tree.getType().equals(type)) {
             asItemParent(type);
-            tree = new TreeImpl<T>(type, this, getRoot(), parent);
+            tree = new TreeImpl<T>(type, this, parent);
         }
         return tree;
     }

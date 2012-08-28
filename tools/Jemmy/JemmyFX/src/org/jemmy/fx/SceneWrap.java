@@ -212,24 +212,22 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
     }
 
     static void show(final Environment env, final Scene scene) {
-        env.getExecutor().execute(env, true, new Action() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                Window stage = scene.getWindow();
-                if (stage instanceof Stage) {
+        if (isStageInstance(scene, env)) {
+            env.getExecutor().execute(env, true, new Action() {
+                @Override
+                public void run(Object... os) throws Exception {
+                    Window stage = scene.getWindow();
                     if (!((Stage) stage).isFocused()) {
                         ((Stage) stage).toFront();
                     }
                 }
-            }
-        });
-        env.getWaiter(WAIT_STATE_TIMEOUT).ensureValue(true, new State<Boolean>() {
-
-            public Boolean reached() {
-                return isFocused(scene, env);
-            }
-        });
+            });
+            env.getWaiter(WAIT_STATE_TIMEOUT).ensureValue(true, new State<Boolean>() {
+                public Boolean reached() {
+                    return isFocused(scene, env);
+                }
+            });
+        }
     }
 
     private static boolean isFocused(final Scene scene, Environment env) {
@@ -238,6 +236,16 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
             @Override
             public void run(Object... os) throws Exception {
                 setResult(scene.getWindow().isFocused());
+            }
+        }.dispatch(env);
+    }
+
+    private static boolean isStageInstance(final Scene scene, Environment env) {
+        return new GetAction<Boolean>() {
+
+            @Override
+            public void run(Object... os) throws Exception {
+                setResult(scene.getWindow() instanceof Stage);
             }
         }.dispatch(env);
     }

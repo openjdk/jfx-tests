@@ -39,7 +39,7 @@ import org.jemmy.fx.NodeWrap;
 import org.jemmy.fx.control.ComboBoxWrap;
 import org.jemmy.fx.control.MenuBarWrap;
 import org.jemmy.fx.control.ThemeDriverFactory;
-import org.jemmy.fx.control.TreeItemWrap;
+import org.jemmy.fx.control.TreeNodeWrap;
 import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Parent;
@@ -120,8 +120,8 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
 
     @Override
     public <T> org.jemmy.fx.control.caspian.TreeItem treeItem(Wrap<T> wrap) {
-        if(wrap instanceof TreeItemWrap) {
-            TreeItemWrap itemWrap = (TreeItemWrap) wrap;
+        if(wrap instanceof TreeNodeWrap) {
+            TreeNodeWrap itemWrap = (TreeNodeWrap) wrap;
             return new org.jemmy.fx.control.caspian.TreeItem(itemWrap);
         }
         return null;

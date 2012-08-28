@@ -27,6 +27,7 @@ package org.jemmy.input.glass;
 import org.jemmy.action.Action;
 import org.jemmy.control.Wrap;
 import org.jemmy.env.Timeout;
+import org.jemmy.interfaces.Focusable;
 import org.jemmy.interfaces.Keyboard;
 import org.jemmy.interfaces.Modifier;
 
@@ -101,6 +102,9 @@ class GlassKeyboard implements Keyboard {
     }
 
     private void doPushKey(final Timeout pushTime, final KeyboardButton key, final Modifier... modifiers) {
+        if (control.is(Focusable.class)) {
+            control.as(Focusable.class).focuser().focus();
+        }
         factory.runAction(control, new Action() {
 
             @Override
