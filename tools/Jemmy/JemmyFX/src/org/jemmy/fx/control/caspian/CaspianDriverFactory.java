@@ -38,6 +38,7 @@ import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.NodeWrap;
 import org.jemmy.fx.control.ComboBoxWrap;
 import org.jemmy.fx.control.MenuBarWrap;
+import org.jemmy.fx.control.SplitMenuButtonWrap;
 import org.jemmy.fx.control.ThemeDriverFactory;
 import org.jemmy.fx.control.TreeNodeWrap;
 import org.jemmy.interfaces.Focus;
@@ -46,6 +47,7 @@ import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Scroll;
 import org.jemmy.interfaces.Scroller;
 import org.jemmy.interfaces.Shifter;
+import org.jemmy.interfaces.SplitMenuButton;
 import org.jemmy.timing.State;
 
 /**
@@ -120,9 +122,8 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
 
     @Override
     public <T> org.jemmy.fx.control.caspian.TreeItem treeItem(Wrap<T> wrap) {
-        if(wrap instanceof TreeNodeWrap) {
-            TreeNodeWrap itemWrap = (TreeNodeWrap) wrap;
-            return new org.jemmy.fx.control.caspian.TreeItem(itemWrap);
+        if (wrap instanceof TreeNodeWrap) {
+            return new org.jemmy.fx.control.caspian.TreeItem((TreeNodeWrap)wrap);
         }
         return null;
     }
@@ -164,6 +165,14 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
                 comboBoxWrap.as(Parent.class, Node.class).lookup(new ByStyleClass<Node>("arrow-button")).wrap().mouse().click(comboBoxWrap.isShowing() ? 1 : 2);
             }
         };
+    }
+
+    @Override
+    public <T> SplitMenuButton splitMenuButton(Wrap<T> wrap) {
+        if(wrap instanceof SplitMenuButtonWrap) {
+            return new org.jemmy.fx.control.caspian.SplitMenuButtonImpl((SplitMenuButtonWrap) wrap);
+        }
+        return null;
     }
 
     abstract class NodeFocus implements Focus {

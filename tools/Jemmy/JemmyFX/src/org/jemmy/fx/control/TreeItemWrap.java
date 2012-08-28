@@ -151,10 +151,6 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
         wElement = new ViewElement<TreeView>(TreeView.class, treeViewWrap.getControl());
     }
 
-    public TreeNodeWrap<TreeItem> getNodeWrap() {
-        return theWrap;
-    }
-
     @Property(ITEM_PROP_NAME)
     @Override
     public TreeItem getItem() {

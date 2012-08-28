@@ -39,6 +39,7 @@ import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.ByStyleClass;
+import org.jemmy.fx.Root;
 import org.jemmy.input.StringMenuOwner;
 import org.jemmy.interfaces.Collapsible;
 import org.jemmy.interfaces.Expandable;
@@ -59,7 +60,7 @@ encapsulates = {MenuItem.class, MenuItem.class}, name = {"asMenuParent", "asMenu
 
 public class SplitMenuButtonWrap<CONTROL extends SplitMenuButton> extends MenuButtonWrap<CONTROL> {
 
-    protected org.jemmy.fx.control.caspian.SplitMenuButton buttonHelper = null;
+    protected org.jemmy.interfaces.SplitMenuButton buttonHelper = null;
 
     /**
      *
@@ -75,7 +76,7 @@ public class SplitMenuButtonWrap<CONTROL extends SplitMenuButton> extends MenuBu
     @Override
     protected void clickExpansionPoint() {
         if (buttonHelper == null) {
-            buttonHelper = new org.jemmy.fx.control.caspian.SplitMenuButton(this);
+            buttonHelper = Root.ROOT.getThemeFactory().splitMenuButton(this);
         }
         buttonHelper.clickExpansionPoint();
     }
