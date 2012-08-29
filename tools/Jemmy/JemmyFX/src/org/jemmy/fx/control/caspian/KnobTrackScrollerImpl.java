@@ -24,7 +24,7 @@
  */
 package org.jemmy.fx.control.caspian;
 
-import com.sun.javafx.scene.control.skin.SkinBase;
+import javafx.scene.control.SkinBase;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.layout.StackPane;

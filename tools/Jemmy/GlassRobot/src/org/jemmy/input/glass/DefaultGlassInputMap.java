@@ -25,6 +25,7 @@
 package org.jemmy.input.glass;
 
 import com.sun.glass.events.KeyEvent;
+import com.sun.glass.ui.Robot;
 import java.util.HashMap;
 import java.util.Map;
 import org.jemmy.interfaces.Keyboard;
@@ -150,9 +151,9 @@ public class DefaultGlassInputMap implements GlassInputMap {
         modifiers.put(Keyboard.KeyboardModifiers.SHIFT_DOWN_MASK, KeyEvent.VK_SHIFT);
 
         //buttons
-        buttons.put(Mouse.MouseButtons.BUTTON1, 1);
-        buttons.put(Mouse.MouseButtons.BUTTON2, 4);
-        buttons.put(Mouse.MouseButtons.BUTTON3, 2);
+        buttons.put(Mouse.MouseButtons.BUTTON1, Robot.MOUSE_LEFT_BTN);
+        buttons.put(Mouse.MouseButtons.BUTTON2, Robot.MOUSE_RIGHT_BTN);
+        buttons.put(Mouse.MouseButtons.BUTTON3, Robot.MOUSE_MIDDLE_BTN);
     }
 
     @Override
