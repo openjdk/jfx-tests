@@ -28,16 +28,16 @@ package org.jemmy.fx.control.caspian;
 import javafx.scene.Node;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.control.SplitMenuButtonWrap;
-import org.jemmy.interfaces.SplitMenuButton;
+import org.jemmy.fx.control.ThemeDriverFactory;
 
-public class SplitMenuButtonImpl implements SplitMenuButton {
+public class SplitMenuButtonImpl implements ThemeDriverFactory.SplitMenuButton {
     protected SplitMenuButtonWrap wrap;
 
     public SplitMenuButtonImpl(SplitMenuButtonWrap wrap) {
         this.wrap = wrap;
     }
 
-    public void clickExpansionPoint() {
+    public void invokeExpandOrCollapseAction() {
         wrap.asParent().lookup(Node.class, new ByStyleClass<Node>("arrow-button")).wrap().mouse().click();
     }
 }

@@ -35,7 +35,6 @@ import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Scroll;
 import org.jemmy.interfaces.Scroller;
 import org.jemmy.interfaces.Shifter;
-import org.jemmy.interfaces.SplitMenuButton;
 import org.jemmy.interfaces.TreeItem;
 
 /**
@@ -83,4 +82,8 @@ public abstract class ThemeDriverFactory {
     public abstract Focus comboBoxFocuser(final ComboBoxWrap<? extends ComboBox> comboBoxWrap);
 
     public abstract <T> SplitMenuButton splitMenuButton(final Wrap<T> wrap);
+
+    public interface SplitMenuButton {
+        public void invokeExpandOrCollapseAction();
+    }
  }

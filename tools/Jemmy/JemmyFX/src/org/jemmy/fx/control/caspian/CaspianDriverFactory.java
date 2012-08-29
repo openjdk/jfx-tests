@@ -47,7 +47,6 @@ import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Scroll;
 import org.jemmy.interfaces.Scroller;
 import org.jemmy.interfaces.Shifter;
-import org.jemmy.interfaces.SplitMenuButton;
 import org.jemmy.timing.State;
 
 /**
