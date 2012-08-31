@@ -32,6 +32,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Slider;
+import javafx.scene.control.SplitMenuButton;
 import org.jemmy.action.Action;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByStyleClass;
@@ -166,12 +167,10 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
         };
     }
 
+
     @Override
-    public <T> SplitMenuButton splitMenuButton(Wrap<T> wrap) {
-        if(wrap instanceof SplitMenuButtonWrap) {
-            return new org.jemmy.fx.control.caspian.SplitMenuButtonImpl((SplitMenuButtonWrap) wrap);
-        }
-        return null;
+    public void splitMenuButtonExpandCollapseAction(SplitMenuButtonWrap<? extends SplitMenuButton> wrap) {
+        wrap.asParent().lookup(Node.class, new ByStyleClass<Node>("arrow-button")).wrap().mouse().click();
     }
 
     abstract class NodeFocus implements Focus {

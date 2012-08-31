@@ -60,8 +60,6 @@ encapsulates = {MenuItem.class, MenuItem.class}, name = {"asMenuParent", "asMenu
 
 public class SplitMenuButtonWrap<CONTROL extends SplitMenuButton> extends MenuButtonWrap<CONTROL> {
 
-    protected org.jemmy.fx.control.ThemeDriverFactory.SplitMenuButton buttonHelper = null;
-
     /**
      *
      * @param env
@@ -75,9 +73,6 @@ public class SplitMenuButtonWrap<CONTROL extends SplitMenuButton> extends MenuBu
 
     @Override
     protected void invokeExpandOrCollapseAction() {
-        if (buttonHelper == null) {
-            buttonHelper = Root.ROOT.getThemeFactory().splitMenuButton(this);
-        }
-        buttonHelper.invokeExpandOrCollapseAction();
+        Root.ROOT.getThemeFactory().splitMenuButtonExpandCollapseAction(this);
     }
 }

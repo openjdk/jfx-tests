@@ -29,6 +29,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Slider;
+import javafx.scene.control.SplitMenuButton;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.control.caspian.CaspianDriverFactory;
 import org.jemmy.interfaces.Focus;
@@ -81,9 +82,5 @@ public abstract class ThemeDriverFactory {
 
     public abstract Focus comboBoxFocuser(final ComboBoxWrap<? extends ComboBox> comboBoxWrap);
 
-    public abstract <T> SplitMenuButton splitMenuButton(final Wrap<T> wrap);
-
-    public interface SplitMenuButton {
-        public void invokeExpandOrCollapseAction();
-    }
+    public abstract void splitMenuButtonExpandCollapseAction(final SplitMenuButtonWrap<? extends SplitMenuButton> wrap);
  }
