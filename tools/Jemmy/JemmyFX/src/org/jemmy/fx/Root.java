@@ -80,7 +80,7 @@ public class Root extends AbstractParent<Scene> {
         env.setProperty(ControlInterfaceFactory.class, new AWTRobotInputFactory());
         env.setProperty(ImageCapturer.class, new AWTRobotCapturer());
         env.setProperty(ImageComparator.class, new BufferedImageComparator(env));
-        env.setProperty(ImageLoader.class, new FileGlassImageLoader());
+        env.setProperty(ImageLoader.class, new FilesystemImageLoader());
     }
 
     private Root() {
