@@ -85,9 +85,7 @@ public class Root extends AbstractParent<Scene> {
 
     private Root() {
         this.env = new Environment(Environment.getEnvironment());
-        if (env.getProperty(RasterComparator.class) == null) {
-            this.env.setProperty(RasterComparator.class, new PixelEqualityRasterComparator(0));
-        }
+        this.env.setPropertyIfNotSet(RasterComparator.class, new PixelEqualityRasterComparator(0));
         String osName = System.getProperty("os.name").toLowerCase();
         if(osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os")) {
             useAWTRobot(env);
