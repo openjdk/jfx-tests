@@ -85,14 +85,16 @@ public class Root extends AbstractParent<Scene> {
 
     private Root() {
         this.env = new Environment(Environment.getEnvironment());
-        this.env.setPropertyIfNotSet(RasterComparator.class, new PixelEqualityRasterComparator(0));
+        if (env.getProperty(RasterComparator.class) == null) {
+            this.env.setProperty(RasterComparator.class, new PixelEqualityRasterComparator(0));
+        }
         String osName = System.getProperty("os.name").toLowerCase();
         if(osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os")) {
             useAWTRobot(env);
         } else {
             useGlassRobot(this.env);
         }
-        this.env.setPropertyIfNotSet(ActionExecutor.class, QueueExecutor.EXECUTOR);
+        this.env.setProperty(ActionExecutor.class, QueueExecutor.EXECUTOR);
         this.env.setPropertyIfNotSet(ThemeDriverFactory.class, ThemeDriverFactory.newInstance());
         this.env.initTimeout(QueueExecutor.QUEUE_THROUGH_TIME);
         this.env.initTimeout(QueueExecutor.QUEUE_IDENTIFYING_TIMEOUT);
