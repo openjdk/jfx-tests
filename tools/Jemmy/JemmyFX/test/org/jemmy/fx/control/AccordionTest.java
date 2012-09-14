@@ -26,10 +26,8 @@
 package org.jemmy.fx.control;
 
 import org.jemmy.fx.SceneDock;
-import org.jemmy.interfaces.Selector;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -46,12 +44,17 @@ public class AccordionTest extends SampleBase {
     }
 
     @Before
-    public void reset() {
+    public void before() throws InterruptedException {
+        reset();
+        Thread.sleep(1000);
+    }
+
+    public void reset() throws InterruptedException {
         new LabeledDock(scene.asParent(), "Reset", StringComparePolicy.EXACT).mouse().click();
     }
 
     @Test
-    public void stress() {
+    public void stress() throws InterruptedException {
         TitledPaneDock first_pane = new TitledPaneDock(scene.asParent(), "First pane", StringComparePolicy.EXACT);
         TitledPaneDock second_pane = new TitledPaneDock(scene.asParent(), "Second pane", StringComparePolicy.EXACT);
         CheckBoxDock first_check = new CheckBoxDock(first_pane.asParent());

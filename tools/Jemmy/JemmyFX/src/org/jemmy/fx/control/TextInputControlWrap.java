@@ -42,10 +42,12 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 
 /**
- * Test support for Java FX text editing controls. Supported operations are: type, 
- * clean, select, move caret - all that is supported in <code>SelectionText</code>
- * control interface. See <a href="../../samples/text/TextSample.java"><code>TextSample</code></a>
- * for more info.
+ * Test support for Java FX text editing controls. Supported operations are:
+ * type, clean, select, move caret - all that is supported in
+ * <code>SelectionText</code> control interface. See <a
+ * href="../../samples/text/TextSample.java"><code>TextSample</code></a> for
+ * more info.
+ *
  * @author shura
  * @param <T>
  * @see SelectionText
@@ -56,7 +58,8 @@ import org.jemmy.resources.StringComparePolicy;
 public class TextInputControlWrap<T extends TextInputControl> extends ControlWrap<T> implements Text, IntervalSelectable, Focusable {
 
     /**
-     * Turns a text sample and a string comparison logic into lookup criteria. 
+     * Turns a text sample and a string comparison logic into lookup criteria.
+     *
      * @param <B>
      * @param tp
      * @param text
@@ -67,7 +70,6 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
     public static <B extends TextInputControl> LookupCriteria<B> textLookup(Class<B> tp, String text, StringComparePolicy policy) {
         return new ByText<B>(text, policy);
     }
-
     /**
      * Name of the focused property.
      */
@@ -77,13 +79,13 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
 
     /**
      * Wraps a text input control.
-     * @param env 
-     * @param node 
+     *
+     * @param env
+     * @param node
      */
     public TextInputControlWrap(Environment env, T node) {
         super(env, node);
         inputter = new SelectionText(this) {
-
             @Override
             public String text() {
                 return TextInputControlWrap.this.text();
@@ -101,7 +103,8 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
         };
         //huh?
         //TBD why there's not get$multiline() ?
-        if(text().contains("\n")) {
+        final String text = text();
+        if (text != null && text.contains("\n")) {
             inputter.addNavKeys(KeyboardButtons.UP, KeyboardButtons.DOWN);
         }
     }
@@ -110,7 +113,6 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
     @Override
     public String text() {
         return new GetAction<String>() {
-
             @Override
             public void run(Object... parameters) {
                 setResult(getControl().getText());
@@ -120,18 +122,17 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
             public String toString() {
                 return "Getting text of " + getControl();
             }
-
         }.dispatch(getEnvironment());
     }
 
     /**
      * End of the selection.
+     *
      * @return
      */
     @Property(POSITION_PROP_NAME)
     public int dot() {
         return new GetAction<Integer>() {
-
             @Override
             public void run(Object... parameters) {
                 setResult(getControl().getSelection().getEnd());
@@ -141,17 +142,16 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
             public String toString() {
                 return "Getting position of " + getControl();
             }
-
         }.dispatch(getEnvironment());
     }
 
     /**
      * Start of the selection.
+     *
      * @return
      */
     public int mark() {
         return new GetAction<Integer>() {
-
             @Override
             public void run(Object... parameters) {
                 setResult(getControl().getSelection().getStart());
@@ -161,7 +161,6 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
             public String toString() {
                 return "Getting selection position of " + getControl();
             }
-
         }.dispatch(getEnvironment());
     }
 
@@ -197,6 +196,7 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
 
     /**
      * An instance of SelectionText which is actually used to perform input
+     *
      * @return
      */
     protected SelectionText input() {
@@ -205,6 +205,7 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
 
     /**
      * Selects an interval.
+     *
      * @param start
      * @param end
      */
@@ -214,7 +215,9 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
     }
 
     /**
-     * Selects <code>index</code>'th occurance of the regex.
+     * Selects
+     * <code>index</code>'th occurance of the regex.
+     *
      * @param regex
      * @param index
      */
@@ -224,6 +227,7 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
 
     /**
      * Selects first occurance of the regex.
+     *
      * @param regex
      */
     public void select(String regex) {
@@ -232,6 +236,7 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
 
     /**
      * Retuns the selection portion of the text.
+     *
      * @return
      */
     public String selection() {
@@ -240,15 +245,16 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
 
     @Override
     public Focus focuser() {
-        if(focus == null) {
+        if (focus == null) {
             focus = new TextInputFocus();
         }
         return focus;
     }
-    
+
     /**
      * Allows to use the control as text control interface.
-     * @return 
+     *
+     * @return
      */
     @As
     public SelectionText asText() {
@@ -263,11 +269,10 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
 
         @Override
         public void focus() {
-            if(!getProperty(Boolean.class, IS_FOCUSED_PROP_NAME)) {
+            if (!getProperty(Boolean.class, IS_FOCUSED_PROP_NAME)) {
                 super.focus();
             }
             waitProperty(IS_FOCUSED_PROP_NAME, true);
         }
-
     }
 }

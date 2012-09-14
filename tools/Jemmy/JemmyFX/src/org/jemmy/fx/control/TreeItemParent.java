@@ -39,9 +39,17 @@ class TreeItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
         this.root = root;
     }
 
+    TreeItemParent(TreeViewWrap<? extends TreeView> treeViewWrap, Class<AUX> type) {
+        this(treeViewWrap, null, type);
+    }
+
     @Override
     protected void doRefresh() {
-        refresh(root);
+        if (root == null) {
+            refresh(treeViewWrap.getRoot());
+        } else {
+            refresh(root);
+        }
     }
 
     private void refresh(TreeItem<? extends AUX> parent) {

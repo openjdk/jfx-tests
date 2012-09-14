@@ -149,7 +149,7 @@ public class MenuButtonWrap<CONTROL extends MenuButton> extends TextControlWrap<
 
                 public void expand() {
                     if(!isShowing())
-                        mouse().click();
+                        invokeExpandOrCollapseAction();
                     waitState(showingState, true);
                 }
             };
@@ -169,12 +169,16 @@ public class MenuButtonWrap<CONTROL extends MenuButton> extends TextControlWrap<
 
                 public void collapse() {
                     if(isShowing())
-                        mouse().click();
+                        invokeExpandOrCollapseAction();
                     waitState(showingState, false);
                 }
             };
             
         }
         return collapsible;
+    }
+
+    protected void invokeExpandOrCollapseAction() {
+        mouse().click();
     }
 }

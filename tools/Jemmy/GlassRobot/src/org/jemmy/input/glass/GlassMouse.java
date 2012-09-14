@@ -27,6 +27,8 @@ package org.jemmy.input.glass;
 import org.jemmy.Point;
 import org.jemmy.action.Action;
 import org.jemmy.control.Wrap;
+import org.jemmy.env.Environment;
+import org.jemmy.env.Timeout;
 import org.jemmy.interfaces.Modifier;
 import org.jemmy.interfaces.Mouse;
 import org.jemmy.interfaces.Showable;
@@ -37,13 +39,35 @@ import org.jemmy.interfaces.Showable;
  */
 class GlassMouse implements Mouse {
 
+    private static boolean haveOldPos = false;
+    private static int smoothness;
+    private static int delay;
+    private static double oldX;
+    private static double oldY;
+
     private Wrap<?> control;
     boolean detached = false;
     private final GlassInputFactory factory;
+
+    static {
+        smoothness =  Integer.parseInt((String)Environment.getEnvironment().getProperty(GlassInputFactory.ROBOT_MOUSE_SMOOTHNESS_PROPERTY));
+        delay =  Integer.parseInt((String)Environment.getEnvironment().getProperty(GlassInputFactory.ROBOT_MOUSE_STEP_DELAY_PROPERTY));
+    }
     
     public GlassMouse(Wrap<?> control, final GlassInputFactory outer) {
         this.factory = outer;
         this.control = control;
+    }
+
+    public static void setMouseSmoothness(int mouseSmoothness) {
+        if(mouseSmoothness <= 0) {
+            throw new IllegalArgumentException("Mouse smoothness should be greater than zero.");
+        }
+        smoothness = mouseSmoothness;
+    }
+
+    public static int getMouseSmoothness() {
+        return smoothness;
     }
     
     private void doPress(final MouseButton button, final Modifier... modifiers) {
@@ -117,10 +141,30 @@ class GlassMouse implements Mouse {
             
             @Override
             public void run(Object... parameters) {
-                Point pnt = new Point(control.getScreenBounds().x, control.getScreenBounds().y);
-                GlassInputFactory.getRobot().mouseMove(pnt.x + p.x, pnt.y + p.y);
-                //robot.mouseMove(p.x, p.y);
-                //robot.mouseMove(p.x, p.y);
+                double targetX = control.getScreenBounds().x + p.x;
+                double targetY = control.getScreenBounds().y + p.y;
+                if (haveOldPos && (oldX != targetX || oldY != targetY)) {
+                    double currX = oldX;
+                    double currY = oldY;
+                    double hyp = Math.sqrt((targetX - currX) * (targetX - currX) +
+                            (targetY - currY) * (targetY - currY));
+                    double steps = Math.ceil(hyp / Math.min(hyp, smoothness));
+                    double vx = (targetX - currX) / steps;
+                    double vy = (targetY - currY) / steps;
+                    assert (long)vx * vx + (long)vy * vy <= (long)smoothness * smoothness;
+                    while (Math.round(currX) != Math.round(targetX) ||
+                            Math.round(currY) != Math.round(targetY)) {
+                        currX += vx;
+                        currY += vy;
+                        GlassInputFactory.getRobot().mouseMove((int)currX, (int)currY);
+                        new Timeout(GlassInputFactory.ROBOT_MOUSE_STEP_DELAY_PROPERTY, delay).sleep();
+                    }
+                } else {
+                    GlassInputFactory.getRobot().mouseMove((int)targetX, (int)targetY);
+                }
+                haveOldPos = true;
+                oldX = targetX;
+                oldY = targetY;
             }
             
             @Override

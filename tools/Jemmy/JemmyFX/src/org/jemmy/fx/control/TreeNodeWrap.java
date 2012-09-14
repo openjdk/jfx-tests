@@ -24,12 +24,10 @@
  */
 package org.jemmy.fx.control;
 
-import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
@@ -47,14 +45,14 @@ import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- * This wraps a
+ * This wraps a node that renders the tree's data item
  *
  * @author barbashov, shura
  * @param <DATA>
  */
 @ControlType(Object.class)
 @ControlInterfaces({org.jemmy.interfaces.TreeItem.class})
-class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
+public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
         implements Showable, Show, EditableCell<Object> {
 
     private TreeViewWrap<? extends TreeView> treeViewWrap;

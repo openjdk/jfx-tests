@@ -132,7 +132,7 @@ public class ScrollTrack implements Shifter {
      * @param count defines number of clicks
      */
     public void click(Point clickPoint, int count) {
-        Mouse mouse = trackNode.as(Mouse.class);
+        Mouse mouse = trackNode.mouse();
 
         while (count > 0) {
             mouse.click(1, clickPoint);

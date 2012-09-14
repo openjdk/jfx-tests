@@ -29,7 +29,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Menu;
-import javafx.scene.text.Text;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.*;
@@ -177,7 +176,7 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
                     for (MenuItem mi : ((MenuButton) node).getItems()) {
                         if (mi == item) {
                             //if so, expanf the menu button and keep loking
-                            new MenuButtonWrap<MenuButton>(getEnvironment(), mb).asExpandable().expand();
+                            (new NodeWrapper(getEnvironment()).wrap(MenuButton.class, mb)).as(Expandable.class).expand();
                         }
                     }
                 } else if (node.getProperties().get(MenuItem.class) == item) {

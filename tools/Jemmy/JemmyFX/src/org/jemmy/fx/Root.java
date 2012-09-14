@@ -80,7 +80,7 @@ public class Root extends AbstractParent<Scene> {
         env.setProperty(ControlInterfaceFactory.class, new AWTRobotInputFactory());
         env.setProperty(ImageCapturer.class, new AWTRobotCapturer());
         env.setProperty(ImageComparator.class, new BufferedImageComparator(env));
-        env.setProperty(ImageLoader.class, new FileGlassImageLoader());
+        env.setProperty(ImageLoader.class, new FilesystemImageLoader());
     }
 
     private Root() {
@@ -92,7 +92,7 @@ public class Root extends AbstractParent<Scene> {
         } else {
             useGlassRobot(this.env);
         }
-        this.env.setPropertyIfNotSet(ActionExecutor.class, QueueExecutor.EXECUTOR);
+        this.env.setProperty(ActionExecutor.class, QueueExecutor.EXECUTOR);
         this.env.setPropertyIfNotSet(ThemeDriverFactory.class, ThemeDriverFactory.newInstance());
         this.env.initTimeout(QueueExecutor.QUEUE_THROUGH_TIME);
         this.env.initTimeout(QueueExecutor.QUEUE_IDENTIFYING_TIMEOUT);

@@ -32,14 +32,16 @@ import javafx.scene.control.Control;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Slider;
+import javafx.scene.control.SplitMenuButton;
 import org.jemmy.action.Action;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.NodeWrap;
 import org.jemmy.fx.control.ComboBoxWrap;
 import org.jemmy.fx.control.MenuBarWrap;
+import org.jemmy.fx.control.SplitMenuButtonWrap;
 import org.jemmy.fx.control.ThemeDriverFactory;
-import org.jemmy.fx.control.TreeItemWrap;
+import org.jemmy.fx.control.TreeNodeWrap;
 import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Parent;
@@ -120,9 +122,8 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
 
     @Override
     public <T> org.jemmy.fx.control.caspian.TreeItem treeItem(Wrap<T> wrap) {
-        if(wrap instanceof TreeItemWrap) {
-            TreeItemWrap itemWrap = (TreeItemWrap) wrap;
-            return new org.jemmy.fx.control.caspian.TreeItem(itemWrap);
+        if (wrap instanceof TreeNodeWrap) {
+            return new org.jemmy.fx.control.caspian.TreeItem((TreeNodeWrap)wrap);
         }
         return null;
     }
@@ -164,6 +165,12 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
                 comboBoxWrap.as(Parent.class, Node.class).lookup(new ByStyleClass<Node>("arrow-button")).wrap().mouse().click(comboBoxWrap.isShowing() ? 1 : 2);
             }
         };
+    }
+
+
+    @Override
+    public void splitMenuButtonExpandCollapseAction(SplitMenuButtonWrap<? extends SplitMenuButton> wrap) {
+        wrap.asParent().lookup(Node.class, new ByStyleClass<Node>("arrow-button")).wrap().mouse().click();
     }
 
     abstract class NodeFocus implements Focus {
