@@ -180,7 +180,7 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
 
             @Override
             public void run(Object... os) throws Exception {
-                getControl().getWindow().isShowing();
+                setResult(getControl().getWindow().isShowing());
             }
         }.dispatch(getEnvironment());
     }

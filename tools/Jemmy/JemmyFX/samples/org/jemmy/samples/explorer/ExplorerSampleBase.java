@@ -4,18 +4,13 @@
  */
 package org.jemmy.samples.explorer;
 
-import org.jemmy.browser.BrowserDescriptor;
-import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.ListViewDock;
-import org.jemmy.input.AWTRobotInputFactory;
 import org.jemmy.samples.SampleBase;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

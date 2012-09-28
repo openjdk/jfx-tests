@@ -32,6 +32,7 @@ import org.jemmy.fx.control.ChoiceBoxDock;
 import org.jemmy.fx.control.ComboBoxDock;
 import org.jemmy.interfaces.Keyboard;
 import org.jemmy.interfaces.Selectable;
+import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.samples.SampleBase;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -73,6 +74,20 @@ public class ComboBoxSample extends SampleBase {
         //the below calls select an item and wait for the selection to take effect
         comboBox1.selector().select("Item 1");
         choiceBox.selector().select(1984);
+    }
+    
+    /**
+     * Selecting an item by criteria.
+     */
+    @Test
+    public void selectItemByCriteria() {
+        //the below calls select an item and wait for the selection to take effect
+        comboBox1.asSelectable().select(new LookupCriteria() {
+
+            public boolean check(Object cntrl) {
+                return cntrl.toString().contains("2");
+            }
+        });
     }
     
     /**
