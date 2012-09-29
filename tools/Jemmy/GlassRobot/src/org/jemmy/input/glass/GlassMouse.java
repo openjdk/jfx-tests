@@ -159,9 +159,11 @@ class GlassMouse implements Mouse {
                         GlassInputFactory.getRobot().mouseMove((int)currX, (int)currY);
                         new Timeout(GlassInputFactory.ROBOT_MOUSE_STEP_DELAY_PROPERTY, delay).sleep();
                     }
-                } else {
-                    GlassInputFactory.getRobot().mouseMove((int)targetX, (int)targetY);
                 }
+
+                GlassInputFactory.getRobot().mouseMove((int)targetX, (int)targetY);
+                new Timeout(GlassInputFactory.ROBOT_MOUSE_STEP_DELAY_PROPERTY, delay).sleep();
+                
                 haveOldPos = true;
                 oldX = targetX;
                 oldY = targetY;
