@@ -59,7 +59,7 @@ public class GlassImage implements Image, WriteableRaster {
     private boolean ignoreAlpha = true;
     private final Environment env;
 
-    GlassImage(Environment env, Pixels data) {
+    public GlassImage(Environment env, Pixels data) {
         this.image = data;
         switch (Pixels.getNativeFormat()) {
             case Pixels.Format.BYTE_BGRA_PRE:
