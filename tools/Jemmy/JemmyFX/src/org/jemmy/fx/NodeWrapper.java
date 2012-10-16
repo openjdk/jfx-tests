@@ -71,6 +71,8 @@ public class NodeWrapper extends DefaultWrapper {
         OPERATORS.add(SeparatorWrap.class);
         OPERATORS.add(TitledPaneWrap.class);
         OPERATORS.add(AccordionWrap.class);
+        OPERATORS.add(WebViewWrap.class);
+        OPERATORS.add(WebNodeWrap.class);
     }
 
     /**
