@@ -54,7 +54,7 @@ public class WebViewTest extends SampleBase {
             }
         });
 
-        WebNodeDock body = new WebNodeDock(web_view.asWebViewParent(), new LookupCriteria<org.w3c.dom.Node>() {
+        WebNodeDock body = new WebNodeDock(web_view.asWebNodeParent(), new LookupCriteria<org.w3c.dom.Node>() {
             public boolean check(org.w3c.dom.Node cntrl) {
                 if (cntrl.getNodeName().equals("BODY")) {
                     return true;
@@ -63,7 +63,7 @@ public class WebViewTest extends SampleBase {
             }
         });
         
-        WebNodeDock button = new WebNodeDock(body.asWebViewParent(), new LookupCriteria<org.w3c.dom.Node>() {
+        WebNodeDock button = new WebNodeDock(body.asWebNodeParent(), new LookupCriteria<org.w3c.dom.Node>() {
             public boolean check(org.w3c.dom.Node cntrl) {
                 if (cntrl.getNodeName().equals("BUTTON")) {
                     return true;

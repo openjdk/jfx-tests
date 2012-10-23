@@ -25,35 +25,29 @@
 package org.jemmy.fx.control;
 
 import com.sun.webpane.webkit.JSObject;
-import javafx.geometry.Orientation;
-import javafx.scene.Node;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.web.WebView;
-import org.jemmy.JemmyException;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
+import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Wrap;
 import org.jemmy.dock.DockInfo;
 import org.jemmy.fx.Root;
-import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.*;
-import org.jemmy.lookup.Lookup;
-import org.jemmy.lookup.LookupCriteria;
 import org.w3c.dom.NodeList;
 
 @ControlType({org.w3c.dom.Node.class})
 @DockInfo(name = "org.jemmy.fx.control.WebNodeDock")
-@ControlInterfaces( value = {Parent.class, Showable.class},
+@ControlInterfaces( value = {Parent.class},
                     encapsulates = {org.w3c.dom.Node.class},
-                    name= {"asWebViewParent"})
+                    name= {"asWebNodeParent"})
 public class WebNodeWrap<CONTROL extends org.w3c.dom.Node> extends Wrap<CONTROL>
                                                            implements Showable, Show {
 
-    private WebViewWrap<? extends WebView> view;
-    private String path = new String();
-    private JSObject bounds;
+    protected WebViewWrap<? extends WebView> view;
+    protected String path = new String();
+    protected JSObject bounds;
 
     /**
      *
@@ -71,26 +65,9 @@ public class WebNodeWrap<CONTROL extends org.w3c.dom.Node> extends Wrap<CONTROL>
         return WebView.class;
     }
 
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.equals(interfaceClass)
-                && org.w3c.dom.Node.class.isAssignableFrom(type)) {
-            return true;
-        }
-        if (Selectable.class.equals(interfaceClass)) {
-            return true;
-        }
-        return super.is(interfaceClass, type);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.equals(interfaceClass)
-                && org.w3c.dom.Node.class.isAssignableFrom(type)) {
-            return (INTERFACE) new WebNodeParent(view, type);
-        }
-        return super.as(interfaceClass, type);
+    @As(org.w3c.dom.Node.class)
+    public <T extends org.w3c.dom.Node> Parent<T> asWebNodeParent(Class<T> type) {
+        return new WebNodeParent(view, this, type);
     }
 
     @Override

@@ -44,12 +44,18 @@ public class WebNodeParent<ITEM extends org.w3c.dom.Node> extends AbstractParent
     protected Wrapper wrapper;
     protected Class<ITEM> itemClass;
     protected Scene scene;
-    WebViewWrap<? extends WebView> wrap;
+    protected WebViewWrap<? extends WebView> view;
+    protected WebNodeWrap<? extends org.w3c.dom.Node> node;
 
     public WebNodeParent(WebViewWrap<? extends WebView> webViewOp, Class<ITEM> itemClass) {
-        this.wrap = webViewOp;
+        this(webViewOp, null, itemClass);
+    }
+
+    public WebNodeParent(WebViewWrap<? extends WebView> webViewOp, WebNodeWrap<? extends org.w3c.dom.Node> webNodeOp, Class<ITEM> itemClass) {
+        this.view = webViewOp;
         this.wrapper = new ItemWrapper<ITEM>(webViewOp);
         this.itemClass = itemClass;
+        this.node = webNodeOp;
     }
 
     public Wrapper getWrapper() {
@@ -58,7 +64,7 @@ public class WebNodeParent<ITEM extends org.w3c.dom.Node> extends AbstractParent
 
     @Override
     public <ST extends ITEM> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {
-        return new PlainLookup<ST>(wrap.getEnvironment(),
+        return new PlainLookup<ST>(view.getEnvironment(),
                 this, wrapper, controlClass, criteria);
     }
 
@@ -92,14 +98,14 @@ public class WebNodeParent<ITEM extends org.w3c.dom.Node> extends AbstractParent
 
     @Override
     public List<ITEM> getControls() {
-        wrap.getEnvironment().getWaiter(WebViewWrap.PAGE_LOADING_TIMEOUT).ensureValue(Worker.State.SUCCEEDED, new State<Worker.State>() {
+        view.getEnvironment().getWaiter(WebViewWrap.PAGE_LOADING_TIMEOUT).ensureValue(Worker.State.SUCCEEDED, new State<Worker.State>() {
             public Worker.State reached() {
                 return new GetAction<Worker.State>() {
                     @Override
                     public void run(Object... parameters) throws Exception {
-                        setResult(wrap.getControl().getEngine().getLoadWorker().getState());
+                        setResult(view.getControl().getEngine().getLoadWorker().getState());
                     }
-                }.dispatch(wrap.getEnvironment());
+                }.dispatch(view.getEnvironment());
             }
         });
 
@@ -115,11 +121,16 @@ public class WebNodeParent<ITEM extends org.w3c.dom.Node> extends AbstractParent
             @Override
             public void run(Object... parameters) throws Exception {
                 List<ITEM> list = new ArrayList<ITEM>();
-                final NodeList childNodes = wrap.getControl().getEngine().getDocument().getChildNodes();
+
+                final NodeList childNodes;
+                if (node == null) {
+                    childNodes = view.getControl().getEngine().getDocument().getChildNodes();
+                } else {
+                    childNodes = node.getControl().getChildNodes();
+                }
                 addChildren(list, childNodes);
                 setResult(list);
             }
-        }.dispatch(wrap.getEnvironment());
+        }.dispatch(view.getEnvironment());
     }
-
 }

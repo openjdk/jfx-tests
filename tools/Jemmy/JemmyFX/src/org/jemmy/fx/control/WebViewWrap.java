@@ -25,18 +25,19 @@
 package org.jemmy.fx.control;
 
 import javafx.scene.web.WebView;
+import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.fx.NodeWrap;
 import org.jemmy.env.Environment;
 import org.jemmy.env.Timeout;
 import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.TypeControlInterface;
+import org.jemmy.lookup.AbstractParent;
 
 @ControlType({WebView.class})
 @ControlInterfaces( value = {Parent.class}, 
                     encapsulates = {org.w3c.dom.Node.class},
-                    name= {"asWebViewParent"})
+                    name= {"asWebNodeParent"})
 public class WebViewWrap<CONTROL extends WebView> extends NodeWrap<CONTROL> {
 
     public static final Timeout PAGE_LOADING_TIMEOUT = new Timeout("webview.page.loading.timeout", 5000);
@@ -56,22 +57,8 @@ public class WebViewWrap<CONTROL extends WebView> extends NodeWrap<CONTROL> {
         super(env, nd);
     }
 
-    @Override
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> boolean is(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.equals(interfaceClass)
-                && org.w3c.dom.Node.class.isAssignableFrom(type)) {
-            return true;
-        }
-        return super.is(interfaceClass, type);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
-        if (Parent.class.equals(interfaceClass)
-                && org.w3c.dom.Node.class.isAssignableFrom(type)) {
-            return (INTERFACE) new WebNodeParent(this, type);
-        }
-        return super.as(interfaceClass, type);
+    @As(org.w3c.dom.Node.class)
+    public <T extends org.w3c.dom.Node> AbstractParent<T> asWebNodeParent(Class<T> type) {
+        return new WebNodeParent(this, type);
     }
 }
