@@ -31,6 +31,7 @@ import org.jemmy.action.GetAction;
 import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
+import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.dock.DockInfo;
 import org.jemmy.fx.Root;
@@ -44,6 +45,8 @@ import org.w3c.dom.NodeList;
                     name= {"asWebNodeParent"})
 public class WebNodeWrap<CONTROL extends org.w3c.dom.Node> extends Wrap<CONTROL>
                                                            implements Showable, Show {
+
+    public static final String WEB_NODE_PATH_PROP_NAME = "webnode.path";
 
     protected WebViewWrap<? extends WebView> view;
     protected String path = new String();
@@ -91,6 +94,14 @@ public class WebNodeWrap<CONTROL extends org.w3c.dom.Node> extends Wrap<CONTROL>
                 setResult(new Rectangle(rect.x + left, rect.y + top, right - left, bottom - top));
             }
         }.dispatch(Root.ROOT.getEnvironment());
+    }
+
+    @Property(WEB_NODE_PATH_PROP_NAME)
+    public String getPath() {
+        if (path.isEmpty()) {
+            getPath(getControl());
+        }
+        return path;
     }
 
     protected void getPath(org.w3c.dom.Node node) {

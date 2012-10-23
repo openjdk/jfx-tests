@@ -33,6 +33,9 @@ import org.jemmy.env.Environment;
 import org.jemmy.env.Timeout;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.lookup.AbstractParent;
+import org.jemmy.lookup.LookupCriteria;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 
 @ControlType({WebView.class})
 @ControlInterfaces( value = {Parent.class}, 
@@ -60,5 +63,41 @@ public class WebViewWrap<CONTROL extends WebView> extends NodeWrap<CONTROL> {
     @As(org.w3c.dom.Node.class)
     public <T extends org.w3c.dom.Node> AbstractParent<T> asWebNodeParent(Class<T> type) {
         return new WebNodeParent(this, type);
+    }
+
+    public static class ByName implements LookupCriteria<org.w3c.dom.Node> {
+        protected String name;
+        public ByName(String name) {
+            this.name = name;
+        }
+        public boolean check(org.w3c.dom.Node cntrl) {
+            if (cntrl.getNodeName().equals(name)) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public static class ByAttribute implements LookupCriteria<org.w3c.dom.Node> {
+        protected String name;
+        protected String value;
+        public ByAttribute(String name, String value) {
+            this.name = name;
+            this.value = value;
+        }
+        public boolean check(org.w3c.dom.Node cntrl) {
+            final NamedNodeMap attributes = cntrl.getAttributes();
+            if (attributes == null) {
+                return false;
+            }
+            Node item = attributes.getNamedItem(name);
+            if (item == null) {
+                return false;
+            }
+            if (item.getNodeValue().equals(value)) {
+                return true;
+            }
+            return false;
+        }
     }
 }

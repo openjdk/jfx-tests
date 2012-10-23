@@ -27,6 +27,8 @@ package org.jemmy.fx.control;
 
 import javafx.scene.web.WebView;
 import org.jemmy.fx.SceneDock;
+import org.jemmy.fx.control.WebViewWrap.ByAttribute;
+import org.jemmy.fx.control.WebViewWrap.ByName;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.samples.SampleBase;
 import org.junit.Before;
@@ -54,23 +56,9 @@ public class WebViewTest extends SampleBase {
             }
         });
 
-        WebNodeDock body = new WebNodeDock(web_view.asWebNodeParent(), new LookupCriteria<org.w3c.dom.Node>() {
-            public boolean check(org.w3c.dom.Node cntrl) {
-                if (cntrl.getNodeName().equals("BODY")) {
-                    return true;
-                }
-                return false;
-            }
-        });
+        WebNodeDock body = new WebNodeDock(web_view.asWebNodeParent(), new ByName("BODY"));
         
-        WebNodeDock button = new WebNodeDock(body.asWebNodeParent(), new LookupCriteria<org.w3c.dom.Node>() {
-            public boolean check(org.w3c.dom.Node cntrl) {
-                if (cntrl.getNodeName().equals("BUTTON")) {
-                    return true;
-                }
-                return false;
-            }
-        });
+        WebNodeDock button = new WebNodeDock(body.asWebNodeParent(), new ByAttribute("type", "button"));
 
         button.wrap().mouse().click();
     }
