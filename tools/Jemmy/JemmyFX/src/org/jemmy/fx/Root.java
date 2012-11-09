@@ -41,7 +41,7 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.lookup.PlainLookup;
 
 /**
- * Root class for Java FX scene lookup. It also serves as an access point for 
+ * Root class for Java FX scene lookup. It also serves as an access point for
  * different environment settings.
  * @author shura
  */
@@ -51,16 +51,16 @@ public class Root extends AbstractParent<Scene> {
      * The root.
      */
     public static final Root ROOT = new Root();
-    
+
     /**
-     * @deprecated 
+     * @deprecated
      */
     public static final String LOOKUP_STRING_COMPARISON = Root.class.getName()
             + ".lookup.string.compare";
     private Environment env;
     private SceneWrapper wrapper;
     private SceneList scenes;
-    
+
     /**
      * Use Glass robot for user input simulation.
      * @param env
@@ -70,6 +70,21 @@ public class Root extends AbstractParent<Scene> {
         env.setProperty(ImageCapturer.class, new GlassImageCapturer());
         env.setProperty(ImageComparator.class, new GlassPixelImageComparator(env));
         env.setProperty(ImageLoader.class, new FileGlassImageLoader());
+    }
+
+    /**
+     * @param className - name of the class to lookup
+     * @return true if class is presented otherwise false
+     */
+    public static boolean checkClassPresence(String className){
+        boolean result = true;
+        try {
+            Class.forName(className);
+        } catch (ClassNotFoundException ex) {
+            result = false;
+        } finally {
+            return result;
+        }
     }
 
     /**
@@ -87,7 +102,8 @@ public class Root extends AbstractParent<Scene> {
         this.env = new Environment(Environment.getEnvironment());
         this.env.setPropertyIfNotSet(RasterComparator.class, new PixelEqualityRasterComparator(0));
         String osName = System.getProperty("os.name").toLowerCase();
-        if(osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os")) {
+        //TODO this needs to be rewritten with the API either from profiles or jigsaw
+        if( ( osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os") ) && checkClassPresence("java.awt.Component")) {
             useAWTRobot(env);
         } else {
             useGlassRobot(this.env);

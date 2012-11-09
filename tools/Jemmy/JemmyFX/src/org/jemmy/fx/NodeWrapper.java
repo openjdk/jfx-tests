@@ -71,8 +71,11 @@ public class NodeWrapper extends DefaultWrapper {
         OPERATORS.add(SeparatorWrap.class);
         OPERATORS.add(TitledPaneWrap.class);
         OPERATORS.add(AccordionWrap.class);
-        OPERATORS.add(WebViewWrap.class);
-        OPERATORS.add(WebNodeWrap.class);
+        //TODO this needs to be rewritten with the API either from profiles or jigsaw
+        if(Root.checkClassPresence("org.w3c.dom.Node")){
+            OPERATORS.add(WebViewWrap.class);
+            OPERATORS.add(WebNodeWrap.class);
+        }
     }
 
     /**
