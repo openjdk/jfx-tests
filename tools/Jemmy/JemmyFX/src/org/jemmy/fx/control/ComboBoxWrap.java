@@ -40,6 +40,7 @@ import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.Root;
 import org.jemmy.input.SelectionText;
 import org.jemmy.interfaces.Focus;
+import org.jemmy.interfaces.CriteriaSelectable;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
@@ -48,21 +49,22 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
 
 @ControlType(ComboBox.class)
-@ControlInterfaces(value={Selectable.class, SelectionText.class},
+@ControlInterfaces(value={CriteriaSelectable.class, SelectionText.class},
+        name={"asSelectable"},
         encapsulates={Object.class})
 @MethodProperties("getValue")
 public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
     private final static String COMBO_BOX_STYLE_CLASS = "combo-box-popup";
 
     private Focus focus = Root.ROOT.getThemeFactory().comboBoxFocuser(this);
-    private Selectable selectable = null;
+    private CriteriaSelectable selectable = null;
 
     public ComboBoxWrap(Environment env, T node) {
         super(env, node);
     }
 
     @As(Object.class)
-    public <T> Selectable<T> asSelectable(Class<T> type) {
+    public <T> CriteriaSelectable<T> asSelectable(Class<T> type) {
         if(selectable == null || !selectable.getType().equals(type)) {
             selectable = new ComboSelector<T>(type);
         }
@@ -71,7 +73,11 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
     
     @As
     public SelectionText asText() {
-        return getTextField().as(SelectionText.class);
+        if(getTextField() != null) {
+            return getTextField().as(SelectionText.class);
+        } else {
+            return null;
+        }
     }
     
     protected Wrap<? extends TextField> getTextField() {
@@ -94,7 +100,7 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
         }.dispatch(getEnvironment());
     }
     
-    private class ComboSelector<T> implements Selectable<T>, Selector<T> {
+    private class ComboSelector<T> extends CriteriaSelectable<T> implements Selector<T> {
 
         private final Class<T> type;
         private final List<T> states = new ArrayList<T>();

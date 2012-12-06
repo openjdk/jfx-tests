@@ -51,7 +51,7 @@ class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA>
         List<TableColumn> columns = (List<TableColumn>) tableViewOp.getColumns();
         for (int r = 0; r < tableViewOp.getItems().size(); r++) {
             for (int c = 0; c < columns.size(); c++) {
-                getFound().add(new Point(r, c));
+                getFound().add(new Point(c, r));
                 getAux().add(getType().cast(columns.get(c).getCellData(tableViewOp.getRow(r))));
             }
         }
@@ -74,8 +74,8 @@ class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA>
     @Override
     protected <DT extends DATA> Wrap<? extends DT> wrap(Class<DT> type, Point item, DATA aux) {
         return new TableCellItemWrap<DT>(tableViewOp,
-                item.getX(),
-                tableViewOp.getColumn(item.getY()), (DT) item, getEditor());
+                item.getY(),
+                tableViewOp.getColumn(item.getX()), (DT) item, getEditor());
     }
 
     public static class ByPoint<DATA> implements ItemCriteria<Point, DATA> {

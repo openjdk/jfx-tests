@@ -89,8 +89,6 @@ public class AccordionApp extends Application {
         stage.setHeight(800);
 
         stage.show();
-
-        reset();
     }
 
     Pane createTarget() {

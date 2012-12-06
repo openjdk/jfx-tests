@@ -38,7 +38,6 @@ import org.jemmy.input.ScrollTrack;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Scroll;
 import org.jemmy.interfaces.Shifter;
-import org.jemmy.lookup.Any;
 
 /**
  * Base class for deriving classes like SliderScroller and ScrollBarScroller.
@@ -72,9 +71,7 @@ public class KnobTrackScrollerImpl extends KnobDragScrollerImpl {
      */
     protected final void setWraps(Wrap<? extends Control> wrap, final Class skinClass) {
         this.wrap = wrap;
-        Wrap<? extends SkinBase> skinWrap = wrap.as(Parent.class, Node.class).
-                                                      lookup(skinClass, new Any<SkinBase>()).wrap(0);
-        skin = skinWrap.as(Parent.class, Node.class);
+        skin = wrap.as(Parent.class, Node.class);
         isVertical = wrap.getProperty(Boolean.class, Scroll.VERTICAL_PROP_NAME).booleanValue();
     }
 

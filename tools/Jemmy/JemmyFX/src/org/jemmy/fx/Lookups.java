@@ -33,7 +33,7 @@ import org.jemmy.interfaces.Parent;
  * This class is intended for static import. It provides some shortcuts
  * to the most used functionality of Jemmy classes.
  * @author shura
- * @deprecated Use docs.
+ * @deprecated Use Docks.
  * @see SceneDock
  * @see NodeDock
  */

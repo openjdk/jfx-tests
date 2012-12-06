@@ -23,52 +23,52 @@
  * questions.
  */
 
-package org.jemmy.fx.control;
+package org.jemmy.samples.webview;
 
+import javafx.scene.web.WebView;
 import org.jemmy.fx.SceneDock;
-import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.fx.control.WebNodeDock;
+import org.jemmy.fx.control.WebViewDock;
+import org.jemmy.fx.control.WebViewWrap.ByAttribute;
+import org.jemmy.fx.control.WebViewWrap.ByName;
+import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.samples.SampleBase;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class AccordionTest extends SampleBase {
-    final static int STRESS_COUNT = 20;
-
+public class WebViewSample extends SampleBase {
     static SceneDock scene;
     
     @BeforeClass
     public static void launch() throws InterruptedException {
-        startApp(AccordionApp.class);
+        startApp(WebViewApp.class);
         scene = new SceneDock();
     }
 
     @Before
-    public void before() throws InterruptedException {
-        reset();
-        Thread.sleep(1000);
+    public void reset() {
     }
 
-    public void reset() throws InterruptedException {
-        new LabeledDock(scene.asParent(), "Reset", StringComparePolicy.EXACT).mouse().click();
-    }
 
     @Test
-    public void stress() throws InterruptedException {
-        TitledPaneDock first_pane = new TitledPaneDock(scene.asParent(), "First pane", StringComparePolicy.EXACT);
-        TitledPaneDock second_pane = new TitledPaneDock(scene.asParent(), "Second pane", StringComparePolicy.EXACT);
-        CheckBoxDock first_check = new CheckBoxDock(first_pane.asParent());
-        CheckBoxDock second_check = new CheckBoxDock(second_pane.asParent());
-        for (int i = 0; i < STRESS_COUNT; i++) {
-            reset();
-            second_pane.asExpandable().expand();
-        }
-        for (int i = 0; i < STRESS_COUNT / 2; i++) {
-            first_pane.asExpandable().expand();
-            CheckBoxWrap.State state = i % 2 == 0 ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED;
-            first_check.asSelectable().selector().select(state);
-            second_pane.asExpandable().expand();
-            second_check.asSelectable().selector().select(state);
-        }
+    public void parent() {
+
+        // finding the WebView wrap
+        WebViewDock web_view = new WebViewDock(scene.asParent(), new LookupCriteria<WebView>() {
+            public boolean check(WebView cntrl) {
+                return true;
+            }
+        });
+
+        // WebViewWrap as parent for org.w3c.dom.Node
+        // ByName() lookup criteria
+        WebNodeDock body = new WebNodeDock(web_view.asWebNodeParent(), new ByName("BODY"));
+
+        // WebNodeWrap as parent for org.w3c.dom.Node
+        // ByAttribute() lookup criteria
+        WebNodeDock button = new WebNodeDock(body.asWebNodeParent(), new ByAttribute("type", "button"));
+
+        button.wrap().mouse().click();
     }
 }
