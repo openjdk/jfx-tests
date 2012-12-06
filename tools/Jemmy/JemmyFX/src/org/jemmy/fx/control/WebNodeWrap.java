@@ -24,7 +24,7 @@
  */
 package org.jemmy.fx.control;
 
-import com.sun.webpane.webkit.JSObject;
+import com.sun.webkit.JSObject;
 import javafx.scene.web.WebView;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
