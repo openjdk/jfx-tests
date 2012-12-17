@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+    <HEAD>
+        <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html">
+        <TITLE></TITLE>
+    </HEAD>
+    <BODY>
+
+        <h2>Doclet test: Properties and Cross References</h2>
+
+	<p>N.B.: this test has no associated application, only html instructions.
+
+        <h3>Step 1: Open javadoc provided with javafx in any browser available</h3>
+        <p>To proceed please go to <pre><b>SDKROOT</b>/docs/api</pre> and choose file index.html</p>
+
+
+        <h3>Step 2: "properties" are listed in separate section</h3>
+
+        <p> select package <b>javafx.animation</b> in upper-left frame</p>
+        <p> make sure class <b>Animation</b> present in the list of package members (bottom-left frame)</p>
+        <p> select class <b>Animation</b> in the list of package members </p>
+        <p> in right frame, check sections <b>Property Summary</b>,<b>Field Summary</b>,<b>Constructor Summary</b>,
+            <b>Method Summary</b> are exist
+
+        <h3>Step 3: "summary" and "detail" sections</h3>
+        <p> check <b>rate</b> property present in both <b>Property Summary</b> and <b>Property Detail</b> sections
+
+        <h3>Step 4: inherited documentation</h3>
+        <p> check <b>setRate</b> and <b>getRate</b> methods has same non-empty documentation text
+
+        <h3>Step 5: cross-reference for property</h3>
+        <p> in "Property Summary" section, click on <b>autoReverse</b> property
+	<p> make sure <b>autoReverse</b> property decription shown in "Property Detail" section
+
+        <h3>Step 6: cross-reference for field</h3>
+        <p> in "Field Summary" section, click on <b>INDEFINITE</b> field
+	<p> make sure <b>INDEFINITE</b> field decription shown in "Field Detail" section
+
+        <h3>Step 7: cross-reference for constructor</h3>
+        <p> in "Constructor Summary" section, click on <b>Animation()</b> constructor
+	<p> make sure <b>Animation()</b> constructor decription shown in "Constructor Detail" section
+
+        <h3>Step 8: cross-reference for method</h3>
+        <p> in "Method Summary" section, click on <b>autoReverseProperty()</b> method
+	<p> make sure <b>autoReverseProperty()</b> method decription shown in "Method Detail" section
+
+</BODY>
+</HTML>

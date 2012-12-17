@@ -1,0 +1,21 @@
+
+* .text{
+    -fx-font-smoothing-type: gray;
+}
+
+.text-field .text{
+    -fx-font-smoothing-type: gray;
+}
+
+.progress-indicator .text{
+    -fx-font-smoothing-type: gray;
+}
+
+.label, .check-box, .radio-button, .button, .toggle-button, .menu-item, .slider, .progress-indicator {
+    -fx-background-color: white;
+}
+
+
+
+
+

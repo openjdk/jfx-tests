@@ -1,32 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="find-javafx">
     <property name="properties" value="${basedir}/nbproject/private/private.properties"/>
-    <target name="write-java-fx">
+    <target name="write-javafx-to-nb">
         <mkdir dir="${basedir}/nbproject/private" />
         <touch file="${properties}"/>
         <propertyfile file="${properties}">
-            <entry key="javafx.rt" value="${javafx.rt.text}"/>
-        </propertyfile>
-        <propertyfile file="build.properties">
-            <entry key="javafx.rt" value="${javafx.rt.text}"/>
+            <entry key="javafx.rt" value="${javafx.rt}"/>
         </propertyfile>
     </target>
-    <target name="check-javafx-in-jdk" unless="javafx.rt">
-        <available file="${java.home}/lib/jfxrt.jar" property="jfxrt-jar-exists"/>
-        <fail unless="jfxrt-jar-exists" message="${java.home}/lib/jfxrt.jar does not exist"/>
-        <property name="javafx.rt.text" value="${java.home}"/>
-        <antcall target="write-java-fx" inheritall="true"/>
+    <target name="detect-javafx-in-root" unless="javafx.detected">
+        <ant antfile="../../../detect_javafx.xml" target="find-javafx" inheritall="true"/>
+        <property file="../../../build.properties"/>
     </target>
-    <target name="write-javafx-rt" if="javafx.rt">
-        <available file="${javafx.rt}/lib/jfxrt.jar" property="jfxrt-jar-exists"/>
-        <fail unless="jfxrt-jar-exists" message="${javafx.rt}/lib/jfxrt.jar does not exist"/>
-        <property name="javafx.rt.text" value="${javafx.rt}"/>
-        <antcall target="write-java-fx" inheritall="true"/>
-    </target>
-    <target name="read-javafx-rt" unless="javafx.rt">
-        <property file="build.properties"/>
-    </target>
-    <target name="find-javafx" depends="read-javafx-rt, check-javafx-in-jdk, write-javafx-rt">
+    <target name="find-javafx" depends="detect-javafx-in-root, write-javafx-to-nb">
         <echo message="Building with JavaFX from ${javafx.rt}"/>
     </target>
 </project>

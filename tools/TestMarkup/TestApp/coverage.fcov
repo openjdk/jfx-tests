@@ -1,0 +1,4 @@
+3;test.pkg.Test1Test.test1(),test.pkg.Test1Test.test3();MEDIUM
+1;test.pkg.Test1Test.test1();LOW
+0;test.pkg.Test1Test;FULL
+5;test.pkg.Test1Test;FULL

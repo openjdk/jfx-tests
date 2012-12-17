@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+    <HEAD>
+        <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html">
+        <TITLE></TITLE>
+    </HEAD>
+    <BODY>
+
+        <h2>Doclet test: Visibility Rules</h3>
+
+	<p>N.B.: this test has no associated application, only html instructions.
+
+        <h3>Step 1: Open javadoc provided with javafx in any browser available</h3>
+        <p>
+
+            To proceed please go to <pre><b>SDKROOT</b>/docs/api</pre> and choose file index.html</pre>
+        </p>
+
+
+        <h3>Step 2: Validate public classes and interfaces are listed</h3>
+
+        <p> select package <b>javafx.animation</b> in upper-left frame</p>
+        <p> make sure class <b>Animation</b> present in the list of package members (bottom-left frame)</p>
+        <p> select class <b>Animation</b> in the list of package members </p>
+        <p> make sure class description of some kind appear in right frame</p>
+        <p> make sure interface <b>Interpolatable</b> present in the list of package members (bottom-left frame)</p>
+        <p> select interface <b>Interpolatable</b> in the list of package members</p>
+        <p> make sure interface description of some kind appear in right frame</p>
+
+        <h3>Step 3: public and protected members are treated as visible</h3>
+
+        <p> select package <b>javafx.animation</b> in upper-left frame</p>
+        <p> select class <b>Animation</b> in the list of package members </p>
+	<p> make sure field <b>INDEFINITE</b> present in javadoc in right frame</p>
+	<p> make sure method <b>setCycleDuration</b> present in javadoc in right frame</p>
+
+        <h3>Step 4: package local entities are not listed</h3>
+
+        <p> select package <b>javafx.animation</b> in upper-left frame</p>
+        <p> select class <b>Transition</b> in the list of package members </p>
+	<p> make sure member <b>parent</b> is not appear in javadoc in right frame</p>
+
+        <h3>Step 5: members marked as "implementation internal" are not listed</h3>
+        <p> select package <b>javafx.animation</b> in upper-left frame</p>
+        <p> select class <b>Transition</b> in the list of package members </p>
+	<p> make sure members with names beginning with <b>impl_</b> does not appear in javadoc in right frame</p>
+
+        <h3>Step 6: properties with any visible accessors should be listed regardless of their own visibility</h3>
+        <p> select package <b>javafx.animation</b> in upper-left frame</p>
+        <p> select class <b>Animation</b> in the list of package members </p>
+	<p> make sure property <b>onFinished</b> present in javadoc in right frame</p>
+
+
+
+</BODY>
+</HTML>

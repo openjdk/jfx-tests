@@ -177,7 +177,7 @@ public class Browser {
                     Thread.sleep(100); // otherwise mac doesn't start
                 } catch (InterruptedException ex) {
                 }
-                Scene scene = Root.ROOT.lookup(new ByWindowType(Stage.class)).lookup(Scene.class).wrap(0).getControl();
+                Scene scene = (Scene)Root.ROOT.lookup(new ByWindowType(Stage.class)).lookup(Scene.class).wrap(0).getControl();
                 return scene.getWindow().isShowing() ? Boolean.TRUE : null;
             }
         });

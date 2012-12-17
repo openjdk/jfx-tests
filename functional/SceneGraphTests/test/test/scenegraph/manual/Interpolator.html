@@ -1,0 +1,39 @@
+<!--
+ * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Interpolator Test Content</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <p><b>Interpolator Test</b>
+        <p>This test verify that different implementations of javafx.animation.Interpolator works correctly. It visualize every Interpolator in Timeline
+            as a function from time (in terms of this Timeline).
+        <p>Test workflow:
+        <ul>
+            <li>You should see window frame titled "Interpolator Test".
+            <li>Don't move window or perform any actions on computer until drawing ends.
+            <li>Verify there are 8 animations are being drawn in this frame.
+            <li>Wait till all animations in this frame finish.
+            <li>Every animation has a title. Verify described behaviour for each title as listed below.
+                <br>For every animation verify that it starts from <font style="color:green;font-weight: bold">green</font> circle
+                under the title and ends at the bottom <font style="color:red;font-weight: bold">red</font> line.
+                <ul>
+                    <li>LINEAR: straight line</li>
+                    <li>EASE_IN: almost straight line with a curve at the start</li>
+                    <li>EASE_OUT: almost straight line with a curves near the end</li>
+                    <li>EASE_BOTH: almost straight line with curves at the start and near the end</li>
+                    <li>DISCRETE: horizontal line connected to vertical line</li>
+                    <li>SPLINE: parabolic line</li>
+                    <li>CUSTOM: sinusoidal line</li>
+                </ul>
+            <li>Note image may not look exactly as one below, judge according to table above.
+
+        </ul>
+        <p>Example:<br>
+            <img src="InterpolatorTest.png" style="border:1px dotted black;" alt="Interpolator Test Example"/>
+    </body>
+</html>

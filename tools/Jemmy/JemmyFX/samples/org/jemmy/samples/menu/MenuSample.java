@@ -174,9 +174,10 @@ public class MenuSample extends SampleBase {
     }
 
     @After
-    public void after() {
+    public void after() throws InterruptedException {
         //wait for everything to be totally collapsed after every test
         new MenuDock(menuBar.asMenuParent(), 0).wrap().waitProperty("isShowing", false);
         new MenuDock(menuBar.asMenuParent(), 1).wrap().waitProperty("isShowing", false);        
+        Thread.sleep(200);
     }
 }

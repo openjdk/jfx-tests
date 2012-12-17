@@ -1,0 +1,128 @@
+/*
+ * Copyright (c) 2011, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ */
+package test.scenegraph.lcd.controls;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import javafx.scene.text.Text;
+import org.jemmy.action.AbstractExecutor;
+import org.jemmy.control.Wrap;
+import org.jemmy.env.TestOut;
+import org.jemmy.fx.NodeDock;
+import org.jemmy.fx.Root;
+import org.jemmy.fx.SceneDock;
+import org.jemmy.fx.TextDock;
+import org.jemmy.fx.control.ControlDock;
+import org.jemmy.image.AWTImage;
+import org.jemmy.image.AWTRobotCapturer;
+import org.jemmy.image.Image;
+import org.jemmy.image.RoughImageComparator;
+import org.jemmy.lookup.Lookup;
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import test.javaclient.shared.JemmyUtils;
+import test.scenegraph.lcd.LcdUtils;
+import test.scenegraph.lcd.PixelsCalc;
+
+/**
+ *
+ * @author Alexander Petrov
+ */
+public class LCDControlsTestBase {
+    public static final int MAX_COLOR_PIXELS_COUNT = 40;
+    public static final int MAX_GREEN_PIXELS_COUNT = 10;
+    private static final double LOWER_THRESHOLD = 0.25;
+    private static final double UPPER_THRESHOLD = 0.95;
+
+    static {
+        test.javaclient.shared.Utils.initializeAwt();
+    }
+    private SceneDock scene;
+    private ControlDock buttonApply;
+
+    @Before
+    public void before() {
+         if (LcdUtils.isApplicablePlatform()) {
+             //prepare env
+            JemmyUtils.initJemmy();
+            JemmyUtils.setJemmyRoughComparator(0.0001);
+             this.scene = new SceneDock();
+             this.buttonApply = new ControlDock(scene.asParent(), LCDControlsTestApp.BUTTON_APPLY_ID);
+        }
+    }
+
+    public void commonTest() {
+        if (LcdUtils.isApplicablePlatform()) {
+            buttonApply.mouse().click();
+
+            NodeDock rightPaneDock = new NodeDock(scene.asParent(), LCDControlsTestApp.RIGHT_PANE_ID);
+
+            buttonApply.mouse().move();
+            List<Image> lcdImages = getAllTextImages(rightPaneDock);
+
+            testImages(lcdImages, LCDControlsTestApp.action.isLCDWork());
+        }
+    }
+
+    private List<Image> getAllTextImages(NodeDock dock) {
+        List<Image> value = new LinkedList<Image>();
+
+        Lookup textLookup = dock.asParent().lookup(Text.class);
+        for (int i = 0; i < textLookup.size(); i++) {
+            TextDock text = new TextDock(textLookup, i);
+            try {
+                value.add(text.wrap().getScreenImage());
+            } catch (Exception ex) {
+                System.err.println("Warning: node doesn't visible.");
+            }
+        }
+
+        return value;
+    }
+
+    private void testImages(List<Image> lcdImages, boolean lcdWork) {
+        Iterator<Image> lcdImagesIterator = lcdImages.iterator();
+
+        while (lcdImagesIterator.hasNext()) {
+            testImage(lcdImagesIterator.next(), lcdWork);
+        }
+    }
+
+    private void testImage(Image lcdImage, boolean lcdWork) {
+        if(!JemmyUtils.usingGlassRobot()){
+            PixelsCalc lcdPixelsCalc = new PixelsCalc();
+
+            lcdPixelsCalc.calculate(lcdImage, false);
+
+            assertTrue("LCD text out of the control's bounds", greenPixelsTest(lcdPixelsCalc));
+
+            assertTrue("LCD test fail", lcdTest(lcdPixelsCalc, lcdWork));
+
+        } else
+            System.out.println("testImage method for Glass robot is not yet implemented");
+
+    }
+
+    private boolean greenPixelsTest(PixelsCalc calc) {
+        return calc.getGreenPixelCount() < MAX_GREEN_PIXELS_COUNT;
+    }
+
+    private boolean lcdTest(PixelsCalc calc, boolean lcd) {
+
+        if (lcd) {
+            if (calc.getColorPixelCount() != 0) {
+                double percent = (double) calc.getColorPixelCount()
+                        / (calc.getColorPixelCount() + calc.getGrayPixelCount());
+                return (percent < UPPER_THRESHOLD) && (percent > LOWER_THRESHOLD);
+            }
+            return false;
+        } else {
+            return calc.getColorPixelCount() <= MAX_COLOR_PIXELS_COUNT;
+        }
+
+    }
+}

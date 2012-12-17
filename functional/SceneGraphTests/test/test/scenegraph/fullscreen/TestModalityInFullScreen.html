@@ -1,0 +1,34 @@
+<!--
+ * Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Animation fullscreen test</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <p><b>LCD Text Test</b>
+        <p>This test verify modality window in Mac OS X native full screen mode.
+        <p>Test workflow:
+        <ul>
+            <li> Only for Mac OS X 10.7! In other platform test pass!
+            <li> Enter to native full screen mode(button in top right corner)
+            <li> Click on button "Show modality window"
+            <li> New window must be opened in native full screen mode. 
+            <li> Exit from native full screen mode(button in top right corner)
+            <li> You should see a modal window in normal mode(you should not see the first window)
+            <li> Close modality window.
+            <li> You should see the first window in native full screen mode.
+            <li> There should be no errors.
+        </ul>
+<p>
+<h2>Hint:</h2>
+<p>
+<pre>
+    <p>Enter to native full screen:<br>
+            <img src="fsmode.jpg" style="border:1px dotted black;" 
+                alt="Enter to full screen mode"/>
+    </body>
+</html>

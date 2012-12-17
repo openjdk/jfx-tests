@@ -1,0 +1,42 @@
+<!--
+ * Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>LCD text test</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <p><b>LCD Text Test</b>
+        <p>This test verify LCD Text works correctly.
+        <p>Test workflow:
+        <ul>
+            <li> Play with all the controls
+            <li> No artifacts should be seen when changing the controls
+            <li>   and no functional failures as well
+
+        </ul>
+<p>
+<h2>Attention!</h2>
+<p>
+<pre>
+
+1. how to use  "text origin" radiobutton and expected behavior
+ - set font size approximately 50-70 pt
+ - set text origin to "baseline"
+ - set text origin to "bottom" - text should move up
+ - set text origin to "baseline"
+ - set text origin to "top" - text should move down
+
+2. how to test "text alignment"
+ - insert additional characters into test string to make it's length 15-30 characters
+ - adjust "wrapping width" to make test text height 2-3 lines
+ - use "text alignment" radiobutton
+        <p>Example:<br>
+            <img src="align14.png" style="border:1px dotted black;" alt="text alignment demo"/>
+
+
+    </body>
+</html>

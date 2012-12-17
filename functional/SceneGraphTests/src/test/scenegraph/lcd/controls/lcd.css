@@ -1,0 +1,12 @@
+* Text{
+    -fx-font-smoothing-type: lcd;
+}
+
+.progress-indicator Text{
+    -fx-font-smoothing-type: lcd;
+}
+
+.label, .check-box, .radio-button, .button, .toggle-button, .menu-item, .slider, .progress-indicator {
+    -fx-background-color: white;
+}
+
