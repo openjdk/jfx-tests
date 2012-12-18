@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2010-2012, Oracle and/or its affiliates. All rights reserved.
+  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+-->
+<!--
+    Run this project to prepare a full shipping build of all tests and auxiliary tools.
+-->
+<project name="JavaFX tests" default="all" basedir=".">
+    <import file="detect_javafx.xml"/>
+
+    <target name="all" depends="find-javafx">
+        <runtarget targetname="compile-test"/>
+        <runtarget targetname="jar"/>
+    </target>
+
+    <target name="clean">
+        <runtarget targetname="clean"/>
+    </target>
+
+    <macrodef name="runtarget">
+        <attribute name="targetname" default="jar"/>
+	<sequential/>
+        <!--sequential>
+            <ant antfile="SharedTestUtils/build.xml" target="@{targetname}" inheritAll="false"/> 
+            <ant antfile="ClientTestRunner/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="GlassTests/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="ControlsTests/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="WebNodeAutomated/build.xml" target="@{targetname}" inheritAll="false"/> 
+            <ant antfile="RenderingTests/build.xml" target="@{targetname}" inheritAll="false"/> 
+            <ant antfile="SceneGraphTests/build.xml" target="@{targetname}" inheritAll="false"/> 
+			<ant antfile="EmbeddedTests/build.xml" target="@{targetname}" inheritAll="false"/> 
+            <ant antfile="FXCssTests/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="FxmlTests/build.xml" target="@{targetname}" inheritAll="false"/> 
+            <ant antfile="JavaFXCompatibility/build.xml" target="@{targetname}" inheritAll="false"/> 
+            <ant antfile="WebNodeManualTests/build.xml" target="@{targetname}" inheritAll="false"/> 
+        </sequential-->
+    </macrodef>
+
+</project>

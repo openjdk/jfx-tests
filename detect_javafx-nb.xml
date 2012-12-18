@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="find-javafx" basedir=".">
+    <target name="write-javafx-to-nb">
+        <dirname property="property.file.dir" file="property.file"/>
+        <mkdir dir="${property.file.dir}" />
+        <touch file="${property.file}"/>
+        <propertyfile file="${property.file}">
+            <entry key="javafx.rt" value="${javafx.rt}"/>
+        </propertyfile>
+    </target>
+    <target name="detect-javafx-in-root" unless="javafx.detected">
+        <echo message="Basedir: ${basedir}"/>
+        <ant antfile="${basedir}/detect_javafx.xml" target="find-javafx" inheritall="true"/>
+        <property file="${basedir}/build.properties"/>
+    </target>
+    <target name="find-javafx" depends="detect-javafx-in-root, write-javafx-to-nb">
+        <echo message="Building with JavaFX from ${javafx.rt}"/>
+    </target>
+</project>
