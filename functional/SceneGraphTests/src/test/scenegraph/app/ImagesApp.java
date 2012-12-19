@@ -52,6 +52,7 @@ public class ImagesApp extends BasicButtonChooserApp {
         }
         {
             ImageView iv = new ImageView();
+            System.out.println("defaultImagePath = " + defaultImagePath);
             Image image = new Image(getClass().getResourceAsStream(defaultImagePath), 50, 50, false, false);
             if (image.getRequestedHeight() != 50) {
                 reportGetterFailure("image.getRequestedHeight()");

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="find-javafx" basedir=".">
     <target name="write-javafx-to-nb">
-        <dirname property="property.file.dir" file="property.file"/>
-        <mkdir dir="${property.file.dir}" />
+        <dirname property="property.file.dir" file="${property.file}"/>
+        <mkdir dir="${property.file.dir}"/>
         <touch file="${property.file}"/>
         <propertyfile file="${property.file}">
             <entry key="javafx.rt" value="${javafx.rt}"/>

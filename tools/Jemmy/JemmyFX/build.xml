@@ -71,13 +71,15 @@ questions.
         <echo message="build=${DSTAMP}${TSTAMP}" file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" append="true"/>
     </target>
     <target name="read-jemmy-core-version" unless="jemmy.core.version">
-        <property file="depend.properties"/>
+        <echo message="basedir=${basedir}"/>
+        <property file="${basedir}/depend.properties"/>
     </target>
     <target name="check-jemmy-libs" unless="no.need.to.copy.jemmy.libs">
         <available file="${jemmy.lib.dir}/JemmyCore.jar" property="no.need.to.copy.jemmy.libs"/>
     </target>
     <target name="copy-jemmy-libs" depends="check-jemmy-libs,read-jemmy-core-version"
             unless="no.need.to.copy.jemmy.libs">
+        <echo message="jemmy.core.version=${jemmy.core.version}"/>
         <mkdir dir="${jemmy.lib.dir}"/>
         <property name="jemmy.download.url" value="http://jemmy.java.net/dist"/>
         <get src="${jemmy.download.url}/junit.jar" dest="${jemmy.lib.dir}"/>

@@ -10,8 +10,5 @@
 <project name="GlassRobot" default="default" basedir=".">
     <description>Builds, tests, and runs the project GlassRobot.</description>
     <import file="nbproject/build-impl.xml"/>
-    <property file="../JemmyFX/build.properties"/>
-    <target name="-pre-init">
-        <ant antfile="../JemmyFX/detect_javafx.xml" inheritall="true"/>
-    </target>
+    <property file="../../../build.properties"/>
 </project>

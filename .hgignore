@@ -8,4 +8,6 @@
 .*/nbproject/private/.*
 tools/Jemmy/JemmyFX.*/lib/.*
 tools/Jemmy/JemmyFX/docks/.*
+.*/images-svn/*
+
 

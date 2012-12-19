@@ -61,8 +61,8 @@ public class ImagesManager {
     }
 
     /**
-     * Set's the absolute directory to for screenshots work. Shouldn't be called for
-     * desktop run.
+     * Set's the absolute directory to for screenshots work. Shouldn't be called
+     * for desktop run.
      *
      * @param absoluteDir absolute directory, where whill be result screenshots
      */
@@ -183,10 +183,16 @@ public class ImagesManager {
     }
 
     private String computeGoldenImagePath() {
-        return baseDir + File.separator + ".." + File.separator + ROOT_IMAGES_DIRECTORY + File.separator
+        File imageSetDir = new File(baseDir + File.separator + ROOT_IMAGES_DIRECTORY);
+        String imageFile = File.separator
                 + getProjectName() + File.separator
                 + getPrismOrderFolderName() + File.separator
                 + osFolder();
+        if (imageSetDir.exists() && imageSetDir.isDirectory()) {
+            return imageSetDir.getAbsolutePath() + imageFile;
+        } else {
+            return baseDir + File.separator + ".." + File.separator + ROOT_IMAGES_DIRECTORY + imageFile;
+        }
     }
 
     private static String getPrismOrderFolderName() {
