@@ -890,6 +890,13 @@ is divided into following sections:
         </propertyfile>
         <antcall target="-maybe-call-dep">
             <param name="call.built.properties" value="${built-jar.properties}"/>
+            <param location="${project.JemmyFX}" name="call.subproject"/>
+            <param location="${project.JemmyFX}/build.xml" name="call.script"/>
+            <param name="call.target" value="jar"/>
+            <param name="transfer.built-jar.properties" value="${built-jar.properties}"/>
+        </antcall>
+        <antcall target="-maybe-call-dep">
+            <param name="call.built.properties" value="${built-jar.properties}"/>
             <param location="${project.GlassImage}" name="call.subproject"/>
             <param location="${project.GlassImage}/build.xml" name="call.script"/>
             <param name="call.target" value="jar"/>
@@ -899,13 +906,6 @@ is divided into following sections:
             <param name="call.built.properties" value="${built-jar.properties}"/>
             <param location="${project.GlassRobot}" name="call.subproject"/>
             <param location="${project.GlassRobot}/build.xml" name="call.script"/>
-            <param name="call.target" value="jar"/>
-            <param name="transfer.built-jar.properties" value="${built-jar.properties}"/>
-        </antcall>
-        <antcall target="-maybe-call-dep">
-            <param name="call.built.properties" value="${built-jar.properties}"/>
-            <param location="${project.JemmyFX}" name="call.subproject"/>
-            <param location="${project.JemmyFX}/build.xml" name="call.script"/>
             <param name="call.target" value="jar"/>
             <param name="transfer.built-jar.properties" value="${built-jar.properties}"/>
         </antcall>
