@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+
+This code is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License version 2 only, as
+published by the Free Software Foundation. Oracle designates this
+particular file as subject to the "Classpath" exception as provided
+by Oracle in the LICENSE file that accompanied this code.
+
+This code is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+version 2 for more details (a copy is included in the LICENSE file that
+accompanied this code).
+
+You should have received a copy of the GNU General Public License version
+2 along with this work; if not, write to the Free Software Foundation,
+Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+
+Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+or visit www.oracle.com if you need additional information or have any
+questions.
+-->
+<project name="Jemmy lib" default="default" basedir=".">
+    <property name="jemmy.lib.dir" location="jemmy_core"/>
+    <target name="read-jemmy-core-version" unless="jemmy.core.version">
+        <echo message="basedir = ${basedir}"/>
+        <property file="${basedir}/depend.properties"/>
+    </target>
+    <target name="check-jemmy-libs">
+        <available file="${jemmy.lib.dir}/depend.properties" property="libs.already.copyed"/>
+    </target>
+    <target name="check-jemmy-libs-version" 
+            depends="check-jemmy-libs" if="libs.already.copyed">
+        <property file="${jemmy.lib.dir}/depend.properties" prefix="test."/>
+        <condition property="same.version.already.copied">
+            <equals arg1="${jemmy.core.version}" arg2="${test.jemmy.core.version}"/>
+        </condition>
+    </target>
+    <target name="remove-wrong-version" unless="same.version.already.copied" if="libs.already.copyed">
+	<antcall target="clean-jemmy-core"/>
+    </target>
+    <target name="get-jemmy-core" depends="read-jemmy-core-version, check-jemmy-libs-version, remove-wrong-version"
+            unless="same.version.already.copied">
+        <echo message="jemmy.core.version=${jemmy.core.version}"/>
+        <mkdir dir="${jemmy.lib.dir}"/>
+        <property name="jemmy.download.url" value="http://jemmy.java.net/dist"/>
+        <get src="${jemmy.download.url}/junit.jar" dest="${jemmy.lib.dir}"/>
+        <property name="dist.url" value="${jemmy.download.url}/${jemmy.core.version}"/>
+        <get src="${dist.url}/JemmyCore.jar" dest="${jemmy.lib.dir}"/>
+        <get src="${dist.url}/JemmyAWTInput.jar" dest="${jemmy.lib.dir}"/>
+        <get src="${dist.url}/JemmyBrowser.jar" dest="${jemmy.lib.dir}"/>
+        <get src="${dist.url}/JemmySupport.jar" dest="${jemmy.lib.dir}"/>
+        <echo message="jemmy.core.version=${jemmy.core.version}" file="${jemmy.lib.dir}/depend.properties" />
+    </target>
+    <target name="clean-jemmy-core">
+       <delete dir="${jemmy.lib.dir}" failonerror="false"/>
+    </target>
+</project>

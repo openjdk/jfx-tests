@@ -2,8 +2,8 @@
 <project name="JemmyJCBrowser" default="default" basedir=".">
     <description>Builds, tests, and runs the project JemmyJCBrowser.</description>
     <import file="nbproject/build-impl.xml"/>
-    <property file="../JemmyFX/build.properties"/>
-    <target name="-pre-init">
-        <ant antfile="../JemmyFX/detect_javafx.xml" inheritall="true"/>
+    <property file="../../../build.properties"/>
+    <target name="-post-init">
+        <ant antfile="build.xml" target="get-jemmy-core" inheritall="false" inheritrefs="false" dir=".."/>
     </target>
 </project>

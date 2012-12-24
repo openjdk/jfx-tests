@@ -11,4 +11,7 @@
     <description>Builds, tests, and runs the project GlassRobot.</description>
     <import file="nbproject/build-impl.xml"/>
     <property file="../../../build.properties"/>
+    <target name="-post-init">
+        <ant antfile="build.xml" target="get-jemmy-core" inheritall="false" inheritrefs="false" dir=".."/>
+    </target>
 </project>

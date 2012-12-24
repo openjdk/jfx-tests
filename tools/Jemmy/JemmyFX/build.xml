@@ -27,8 +27,7 @@ questions.
     <description>Builds, tests, and runs the project JemmyJC.</description>
     <import file="nbproject/build-impl.xml"/>
 
-    <property name="jemmy.lib.dir" location="lib/jemmy"/>
-    <property name="javafx.lib.dir" location="lib/javafx"/>
+    <property name="jemmy.lib.dir" location="../jemmy_core"/>
     <property name="test.includes" value="**/*Sample.java"/>
     <property name="javac.includes" value="${test.includes}"/>
     <property name="docks.dir" location="docks"/>
@@ -46,9 +45,6 @@ questions.
         <property name="no.need.to.find.java.fx" value="yes"/>
         <property name="no.need.to.copy.jemmy.libs" value="yes"/>
     </target>
-    <target name="real-clean" depends="disable-libs, clean">
-        <delete dir="${jemmy.lib.dir}" failonerror="false"/>
-    </target>
     <target name="-post-clean">
         <delete dir="${docks.dir}" failonerror="false"/>
     </target>
@@ -58,7 +54,9 @@ questions.
             <property name="property.file" value="${basedir}/nbproject/private/private.properties"/>
         </ant>
     </target>
-    <target name="-post-init" depends="copy-jemmy-libs"/>
+    <target name="-post-init">
+        <ant antfile="build.xml" target="get-jemmy-core" inheritall="false" inheritrefs="false" dir=".."/>
+    </target>
     <target name="-pre-compile">
         <delete file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" failonerror="false"/>
         <mkdir dir="${docks.dir}"/>
@@ -69,25 +67,6 @@ questions.
         <copy file="src/org/jemmy/fx/jemmy.properties" tofile="${basedir}/build/classes/org/jemmy/fx/jemmy.properties"/>
         <tstamp/>
         <echo message="build=${DSTAMP}${TSTAMP}" file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" append="true"/>
-    </target>
-    <target name="read-jemmy-core-version" unless="jemmy.core.version">
-        <echo message="basedir=${basedir}"/>
-        <property file="${basedir}/depend.properties"/>
-    </target>
-    <target name="check-jemmy-libs" unless="no.need.to.copy.jemmy.libs">
-        <available file="${jemmy.lib.dir}/JemmyCore.jar" property="no.need.to.copy.jemmy.libs"/>
-    </target>
-    <target name="copy-jemmy-libs" depends="check-jemmy-libs,read-jemmy-core-version"
-            unless="no.need.to.copy.jemmy.libs">
-        <echo message="jemmy.core.version=${jemmy.core.version}"/>
-        <mkdir dir="${jemmy.lib.dir}"/>
-        <property name="jemmy.download.url" value="http://jemmy.java.net/dist"/>
-        <get src="${jemmy.download.url}/junit.jar" dest="${jemmy.lib.dir}"/>
-        <property name="dist.url" value="${jemmy.download.url}/${jemmy.core.version}"/>
-        <get src="${dist.url}/JemmyCore.jar" dest="${jemmy.lib.dir}"/>
-        <get src="${dist.url}/JemmyAWTInput.jar" dest="${jemmy.lib.dir}"/>
-        <get src="${dist.url}/JemmyBrowser.jar" dest="${jemmy.lib.dir}"/>
-        <get src="${dist.url}/JemmySupport.jar" dest="${jemmy.lib.dir}"/>
     </target>
     <target depends="test-single" name="test"/>
     <target name="warn-no-core-sources" unless="jemmy.core.source">
