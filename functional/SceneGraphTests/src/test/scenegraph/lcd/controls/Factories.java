@@ -118,11 +118,17 @@ public enum Factories implements Factory{
         @Override
         public Parent createControl() {
             TableView tableView = new TableView();
-            tableView.getColumns().addAll(TableColumnBuilder.create()
-                        .minWidth(50)
-                        .cellValueFactory(new PropertyValueFactory("test"))
-                        .text("Test")
-                        .build());
+//            tableView.getColumns().addAll(TableColumnBuilder.create()
+//                        .minWidth(50)
+//                        .cellValueFactory(new PropertyValueFactory("test"))
+//                        .text("Test")
+//                        .build());
+            TableColumn tableColumn = new TableColumn("Text");
+            tableColumn.setMinWidth(50);
+            tableColumn.setCellValueFactory(new PropertyValueFactory("test"));
+            tableView.getColumns().add(tableColumn);
+            System.err.println("TableColumnFactory is temporarily modifier. Please, review once http://javafx-jira.kenai.com/browse/RT-27027 is resolved.");
+            
             tableView.getItems().addAll(FXCollections.observableArrayList((Object)new TestTableItem()));
             tableView.setMaxHeight(150);
             tableView.setMaxWidth(150);
