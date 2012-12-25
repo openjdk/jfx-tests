@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="JemmyJCBrowser" default="default" basedir=".">
-    <description>Builds, tests, and runs the project JemmyJCBrowser.</description>
+<project name="JemmyFXBrowser" default="default" basedir=".">
+    <description>Builds, tests, and runs the project JemmyFXBrowser.</description>
     <import file="nbproject/build-impl.xml"/>
     <property file="../../../build.properties"/>
     <target name="-post-init">
