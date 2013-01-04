@@ -669,15 +669,15 @@ public class ImageLoadingApp {
         if (gl_alpha_true_img == null || gl_white_bkg_img == null) {
             return false;
         }
-        if (gl_alpha_true_img.getImage().getWidth() != gl_white_bkg_img.getImage().getWidth()) {
+        if (gl_alpha_true_img.getSize().getWidth() != gl_white_bkg_img.getSize().getWidth()) {
             return false;
         }
-        if (gl_alpha_true_img.getImage().getHeight() != gl_white_bkg_img.getImage().getHeight()) {
+        if (gl_alpha_true_img.getSize().getHeight() != gl_white_bkg_img.getSize().getHeight()) {
             return false;
         }
         boolean diff = false;
-        for (int i = 0; i < gl_alpha_true_img.getImage().getWidth(); i++) {
-            for (int j = 0; j < gl_alpha_true_img.getImage().getHeight(); j++) {
+        for (int i = 0; i < gl_alpha_true_img.getSize().getWidth(); i++) {
+            for (int j = 0; j < gl_alpha_true_img.getSize().getHeight(); j++) {
 
                 double[] colors_a = new double[gl_alpha_true_img.getSupported().length];
                 gl_alpha_true_img.getColors(i, j, colors_a);
