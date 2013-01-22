@@ -9,5 +9,5 @@
 tools/Jemmy/JemmyFX.*/lib/.*
 tools/Jemmy/JemmyFX/docks/.*
 .*/images-svn/*
-
+.*/coverage.fcov
 
