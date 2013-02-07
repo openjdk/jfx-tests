@@ -1,0 +1,11 @@
+This directory contain functional test suites for JavaFX.
+
+As a general rule, one must be able to build a suite by calling 
+$ ant -Djavafx.rt=…
+
+Please consult root repository readme on how to set javafx.rt variable.
+
+Next, to run the test, one have option of opening a suite project in NetBeans and run the tests from the IDE, or by issuing a command:
+$ ant test
+
+
