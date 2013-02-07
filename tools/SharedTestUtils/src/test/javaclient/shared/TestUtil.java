@@ -1,25 +1,6 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010-2011, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation. Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
  */
 package test.javaclient.shared;
 
@@ -74,6 +55,10 @@ public class TestUtil {
         return (vmOpt != null) ? vmOpt : null;
     }
 
+
+
+
+
     public static boolean write(Serializable obj, String name) {
         try {
             FileOutputStream ostream = new FileOutputStream(name);
@@ -88,12 +73,12 @@ public class TestUtil {
         return true;
     }
 
-    public static Object read(String name) {
+    public static Object read(String name)  {
         Object obj = null;
         try {
             FileInputStream ostream = new FileInputStream(name);
             ObjectInputStream p = new ObjectInputStream(ostream);
-            obj = p.readObject();
+             obj = p.readObject();
             ostream.close();
         } catch (IOException ex) {
             Logger.getLogger(TreeNode.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,6 +87,8 @@ public class TestUtil {
         }
         return obj;
     }
+
+
 
     /**
      * Verify screenshots of two wraps
@@ -132,14 +119,18 @@ public class TestUtil {
 
     public static Wrap<? extends Scene> getScene() {
         final Wrap<? extends Scene> scene;
-
-        scene = Root.ROOT.lookup(new ByWindowType(Stage.class)).lookup(Scene.class).wrap(0);
-        Utils.deferAction(new Runnable() {
-            public void run() {
-                scene.getControl().getWindow().setFocused(true);
-            }
-        });
-
+        if (AppLauncher.getInstance().getMode() == AppLauncher.Mode.SWING) {
+            scene = SwingAWTUtils.getScene();
+        } else if (AppLauncher.getInstance().getMode() == AppLauncher.Mode.SWT) {
+            scene = SWTUtils.getScene();
+        } else {
+            scene = Root.ROOT.lookup(new ByWindowType(Stage.class)).lookup(Scene.class).wrap(0);
+            Utils.deferAction(new Runnable() {
+                public void run() {
+                    scene.getControl().getWindow().setFocused(true);
+                }
+            });
+        }
         return scene;
     }
 
