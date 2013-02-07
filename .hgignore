@@ -10,4 +10,6 @@ tools/Jemmy/JemmyFX.*/lib/.*
 tools/Jemmy/JemmyFX/docks/.*
 .*/images-svn/*
 .*/coverage.fcov
-
+tools/Jemmy/jemmy_core
+functional/.*/.image.properties
+build.properties
