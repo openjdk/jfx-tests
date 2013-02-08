@@ -11,6 +11,12 @@
     <description>Builds, tests, and runs the project GlassImage.</description>
     <import file="nbproject/build-impl.xml"/>
     <property file="../../../build.properties"/>
+    <target name="-pre-init" unless="no.need.to.find.java.fx">
+        <ant antfile="../../../detect_javafx-nb.xml" inheritall="true">
+            <property name="basedir" location="${basedir}/../../.."/>
+            <property name="property.file" value="${basedir}/nbproject/private/private.properties"/>
+        </ant>
+    </target>
     <target name="-post-init">
         <ant antfile="build.xml" target="get-jemmy-core" inheritall="false" inheritrefs="false" dir=".."/>
     </target>
