@@ -27,6 +27,7 @@ package org.jemmy.samples.input;
 import java.util.HashMap;
 import javafx.event.Event;
 import javafx.event.EventType;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -61,6 +62,7 @@ public class InputSampleBase extends SampleBase {
         scene = new SceneDock();
         redTarget = new NodeDock(scene.asParent(), Rectangle.class, new TargetCriteria(Color.RED));
         blueTarget = new NodeDock(scene.asParent(), Rectangle.class, new TargetCriteria(Color.BLUE));
+        new NodeDock(scene.asParent(), Button.class).mouse().click();
     }
 
     @After
