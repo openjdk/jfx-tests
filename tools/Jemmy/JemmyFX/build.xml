@@ -47,6 +47,7 @@ questions.
     </target>
     <target name="-post-clean">
         <delete dir="${docks.dir}" failonerror="false"/>
+        <delete dir="${basedir}/target"/>
     </target>
     <target name="-pre-init" unless="no.need.to.find.java.fx">
         <ant antfile="../../../detect_javafx-nb.xml" inheritall="true">
@@ -80,6 +81,28 @@ Specify the location by jemmy.core.source variable.
         <echo>
 Taking JemmyCore sources from ${jemmy.core.source}/core/JemmyCore.
         </echo>
+    </target>
+    <target name="maven" depends="jar">
+        <ant antfile="build.xml" dir="${project.GlassRobot}" target="maven"/>
+	<property file="${project.GlassRobot}/src/org/jemmy/input/glass/jemmy.properties"/>
+	<property name="GlassRobot.version" value="${javafx.version}.${version.minor}.${version.mini}"/>
+        <ant antfile="build.xml" dir="${project.GlassImage}" target="maven"/>
+	<property file="${project.GlassImage}/src/org/jemmy/input/glass/jemmy.properties"/>
+	<property name="GlassImage.version" value="${javafx.version}.${version.minor}.${version.mini}"/>
+        <property file="${basedir}/src/org/jemmy/fx/jemmy.properties"/>
+        <copy file="pom-tmpl.xml" tofile="pom.xml" overwrite="true">
+            <filterchain>
+                <replacetokens>
+                    <token key="GlassRobot.version" value="${GlassRobot.version}"/>
+                    <token key="GlassImage.version" value="${GlassImage.version}"/>
+                    <token key="JemmyFX.version" value="${javafx.version}.${version.minor}.${version.mini}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+        <exec command="mvn">
+            <arg value="-e"/>
+            <arg value="install"/>
+        </exec>
     </target>
     <target name="javadoc" depends="init, compile, -post-compile, warn-no-core-sources, inform-core-sources">
         <echo message="${jemmy.core.source}"/>

@@ -20,4 +20,21 @@
     <target name="-post-init">
         <ant antfile="build.xml" target="get-jemmy-core" inheritall="false" inheritrefs="false" dir=".."/>
     </target>
+    <target name="-post-clean">
+        <delete dir="${basedir}/target"/>
+    </target>
+    <target name="maven" depends="jar">
+        <property file="${basedir}/src/org/jemmy/input/glass/jemmy.properties"/>
+        <copy file="pom-tmpl.xml" tofile="pom.xml" overwrite="true">
+            <filterchain>
+                <replacetokens>
+                    <token key="GlassRobot.version" value="${javafx.version}.${version.minor}.${version.mini}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+        <exec command="mvn">
+            <arg value="-e"/>
+            <arg value="install"/>
+        </exec>
+    </target>
 </project>

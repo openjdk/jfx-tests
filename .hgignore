@@ -6,8 +6,10 @@
 .*/dist/.*$
 .*/build/.*$
 .*/nbproject/private/.*
-tools/Jemmy/JemmyFX.*/lib/.*
+tools/Jemmy/.*/lib/.*
 tools/Jemmy/JemmyFX/docks/.*
+tools/Jemmy/.*/target/.*
+tools/Jemmy/.*/pom.xml
 .*/images-svn/*
 .*/coverage.fcov
 tools/Jemmy/jemmy_core
