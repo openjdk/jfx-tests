@@ -1,41 +1,18 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010-2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation. Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
  */
 package test.scenegraph.binding;
 
-/*
- * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- */
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
+import org.jemmy.control.Wrap;
 import org.jemmy.fx.Lookups;
 import org.jemmy.fx.Root;
-import org.jemmy.control.Wrap;
 import org.jemmy.image.Image;
 import org.junit.Before;
 import test.javaclient.shared.AppLauncher;
@@ -43,10 +20,10 @@ import static test.javaclient.shared.JemmyUtils.initJemmy;
 import test.javaclient.shared.TestUtil;
 
 /**
- *
  * @author Sergey Grinev
  */
 public class BindingTestBase {
+
     static {
         test.javaclient.shared.Utils.initializeAwt();
     }
@@ -73,7 +50,6 @@ public class BindingTestBase {
     private void prepare(Constraint c) {
         final Constraint _c = c;
         javafx.application.Platform.runLater(new Runnable() {
-
             public void run() {
                 final Wrap<? extends ChoiceBox> list = Lookups.byID(scene, "modelsList", ChoiceBox.class);
                 list.getControl().getSelectionModel().select(_c); // no wrap yet
@@ -91,7 +67,6 @@ public class BindingTestBase {
         }
 
         btnApply.mouse().click();
-
     }
 
     public void commonTest(NumberConstraints c) {
@@ -137,25 +112,20 @@ public class BindingTestBase {
 
         Image image = null;
         int idx = 0;
-        for (Object current :  cb.getControl().getItems()) {
+        for (Object current : cb.getControl().getItems()) {
             final Object _current = current;
-        javafx.application.Platform.runLater(new Runnable() {
+            javafx.application.Platform.runLater(new Runnable() {
+                public void run() {
+                    cb.getControl().getSelectionModel().select(_current);
+                    btnVerify.mouse().move();
+                    btnVerify.mouse().click();
+                }
+            });
+            try {
+                Thread.sleep(20);
+                //TODO: overwise jemmy misses very first click on apply...investigate
+            } catch (InterruptedException ex) {}
 
-            public void run() {
-            cb.getControl().getSelectionModel().select(_current);
-            btnVerify.mouse().move();
-            btnVerify.mouse().click();
-            }});
-        try {
-            Thread.sleep(20);
-            //TODO: overwise jemmy misses very first click on apply...investigate
-        } catch (InterruptedException ex) {
-        }
-
-        try {
-            Thread.sleep(200);
-            //TODO: overwise left(binded) scene dont have enough time to update
-        } catch (InterruptedException ex) {}
             TestUtil.compareScreenshots(new StringBuilder(getClass().getSimpleName()).append("-").append(c).append("-").append(idx++).toString(),
                     leftPane, rightPane);
 
