@@ -19,7 +19,7 @@
         <ant antfile="build.xml" dir="${project.JemmyFX}" target="maven"/>
 	<property file="${project.JemmyFX}/src/org/jemmy/fx/jemmy.properties" prefix="fx"/>
         <ant antfile="build.xml" dir="${project.GlassImage}" target="maven"/>
-	<property file="${project.GlassImage}/src/org/jemmy/input/glass/jemmy.properties" prefix="image"/>
+	<property file="${project.GlassImage}/src/org/jemmy/image/jemmy.properties" prefix="image"/>
         <property file="${basedir}/src/org/jemmy/fx/jemmy.properties" prefix="browser"/>
         <copy file="pom-tmpl.xml" tofile="pom.xml" overwrite="true">
             <filterchain>

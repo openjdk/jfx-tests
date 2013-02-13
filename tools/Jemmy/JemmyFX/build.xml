@@ -86,7 +86,7 @@ Taking JemmyCore sources from ${jemmy.core.source}/core/JemmyCore.
         <ant antfile="build.xml" dir="${project.GlassRobot}" target="maven"/>
 	<property file="${project.GlassRobot}/src/org/jemmy/input/glass/jemmy.properties" prefix="robot"/>
         <ant antfile="build.xml" dir="${project.GlassImage}" target="maven"/>
-	<property file="${project.GlassImage}/src/org/jemmy/input/glass/jemmy.properties" prefix="image"/>
+	<property file="${project.GlassImage}/src/org/jemmy/image/jemmy.properties" prefix="image"/>
         <property file="${basedir}/src/org/jemmy/fx/jemmy.properties" prefix="fx"/>
         <copy file="pom-tmpl.xml" tofile="pom.xml" overwrite="true">
             <filterchain>
