@@ -17,19 +17,16 @@
     </target>
     <target name="maven" depends="jar">
         <ant antfile="build.xml" dir="${project.JemmyFX}" target="maven"/>
-	<property file="${project.JemmyFX}/src/org/jemmy/fx/jemmy.properties"/>
-	<property name="JemmyFX.version" value="${javafx.version}.${version.minor}.${version.mini}"/>
+	<property file="${project.JemmyFX}/src/org/jemmy/fx/jemmy.properties" prefix="fx"/>
         <ant antfile="build.xml" dir="${project.GlassImage}" target="maven"/>
-	<property file="${project.GlassImage}/src/org/jemmy/input/glass/jemmy.properties"/>
-	<property name="GlassImage.version" value="${javafx.version}.${version.minor}.${version.mini}"/>
-        <ant antfile="build.xml" dir="../JemmyFX" target="maven"/>
-        <property file="${basedir}/src/org/jemmy/fx/jemmy.properties"/>
+	<property file="${project.GlassImage}/src/org/jemmy/input/glass/jemmy.properties" prefix="image"/>
+        <property file="${basedir}/src/org/jemmy/fx/jemmy.properties" prefix="browser"/>
         <copy file="pom-tmpl.xml" tofile="pom.xml" overwrite="true">
             <filterchain>
                 <replacetokens>
-                    <token key="JemmyFXBrowser.version" value="${javafx.version}.${version.minor}.${version.mini}"/>
-                    <token key="JemmyFX.version" value="${JemmyFX.version}"/>
-                    <token key="GlassImage.version" value="${GlassImage.version}"/>
+                    <token key="JemmyFXBrowser.version" value="${browser.javafx.version}.${browser.version.minor}.${browser.version.mini}"/>
+                    <token key="JemmyFX.version" value="${fx.javafx.version}.${fx.version.minor}.${fx.version.mini}"/>
+                    <token key="GlassImage.version" value="${image.javafx.version}.${image.version.minor}.${image.version.mini}"/>
                 </replacetokens>
             </filterchain>
         </copy>

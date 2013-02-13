@@ -84,18 +84,16 @@ Taking JemmyCore sources from ${jemmy.core.source}/core/JemmyCore.
     </target>
     <target name="maven" depends="jar">
         <ant antfile="build.xml" dir="${project.GlassRobot}" target="maven"/>
-	<property file="${project.GlassRobot}/src/org/jemmy/input/glass/jemmy.properties"/>
-	<property name="GlassRobot.version" value="${javafx.version}.${version.minor}.${version.mini}"/>
+	<property file="${project.GlassRobot}/src/org/jemmy/input/glass/jemmy.properties" prefix="robot"/>
         <ant antfile="build.xml" dir="${project.GlassImage}" target="maven"/>
-	<property file="${project.GlassImage}/src/org/jemmy/input/glass/jemmy.properties"/>
-	<property name="GlassImage.version" value="${javafx.version}.${version.minor}.${version.mini}"/>
-        <property file="${basedir}/src/org/jemmy/fx/jemmy.properties"/>
+	<property file="${project.GlassImage}/src/org/jemmy/input/glass/jemmy.properties" prefix="image"/>
+        <property file="${basedir}/src/org/jemmy/fx/jemmy.properties" prefix="fx"/>
         <copy file="pom-tmpl.xml" tofile="pom.xml" overwrite="true">
             <filterchain>
                 <replacetokens>
-                    <token key="GlassRobot.version" value="${GlassRobot.version}"/>
-                    <token key="GlassImage.version" value="${GlassImage.version}"/>
-                    <token key="JemmyFX.version" value="${javafx.version}.${version.minor}.${version.mini}"/>
+                    <token key="GlassRobot.version" value="${robot.javafx.version}.${robot.version.minor}.${robot.version.mini}"/>
+                    <token key="GlassImage.version" value="${image.javafx.version}.${image.version.minor}.${image.version.mini}"/>
+                    <token key="JemmyFX.version" value="${fx.javafx.version}.${fx.version.minor}.${fx.version.mini}"/>
                 </replacetokens>
             </filterchain>
         </copy>
