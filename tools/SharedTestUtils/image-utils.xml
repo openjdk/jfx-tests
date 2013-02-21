@@ -52,6 +52,8 @@
         <mkdir dir="${image.dir}"/>
         <exec executable="svn" dir="${image.dir}" failonerror="true" failifexecutionfails="true">
             <arg line="checkout"/>
+            <arg line="--non-interactive"/>
+            <arg line=" --trust-server-cert"/>
             <arg line="${images.repository}/${images.module}"/>
             <arg line="--revision"/>
             <arg line="${images.version}"/>
