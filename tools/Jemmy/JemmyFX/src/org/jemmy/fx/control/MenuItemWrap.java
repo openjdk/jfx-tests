@@ -40,6 +40,7 @@ import org.jemmy.interfaces.*;
 import org.jemmy.lookup.ControlHierarchy;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.timing.State;
 
 /**
  * This represents a single menu item within menu hierarchy. It could be looked 
@@ -220,9 +221,14 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
 
     private void expand(final Menu menu) {
         if (!MenuWrap.isShowing(menu, getEnvironment())) {
-            Menu parent = getParentMenu(menu);
+            final Menu parent = getParentMenu(menu);
             if (parent != null) {
                 expand(parent);
+                waitState(new State<Boolean>() {
+                    public Boolean reached() {
+                        return MenuWrap.isParentShown(menu, getEnvironment());
+                    }
+                }, true);
             }
             Wrap<? extends Node> mWrap = findWrap(menu);
             if (mWrap.getControl() instanceof MenuButton) {
