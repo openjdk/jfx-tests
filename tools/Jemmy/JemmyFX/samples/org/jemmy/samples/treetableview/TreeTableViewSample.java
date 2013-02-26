@@ -66,14 +66,18 @@ public class TreeTableViewSample extends SampleBase {
      * structure of data.
      */
     @Test
-    public void expandingCollapsing() throws InterruptedException {
-        //Collapse some inside item.
-        TreeTableItemDock treeTableItemDock = new TreeTableItemDock(treeTableView.asTreeItemParent(), treeTableView.wrap(), "0-0");
-        treeTableItemDock.collapse();
-
-        //Collapse root.
-        TreeTableItemDock rootItemDock = new TreeTableItemDock(treeTableView.wrap().getRootWrap());
-        rootItemDock.collapse();
+    public void expandingCollapsing() throws InterruptedException {        
+        TreeTableItemDock treeTableItemDock1 = new TreeTableItemDock(treeTableView.asTreeItemParent(), treeTableView.wrap(), "0-0-0");
+        TreeTableItemDock treeTableItemDock2 = new TreeTableItemDock(treeTableView.asTreeItemParent(), treeTableView.wrap(), "0-0-1");
+        
+        treeTableItemDock1.collapse();
+        treeTableItemDock2.collapse();
+        
+        //Some intermediate action is needed, between the same item is collapsed
+        //and expanded, because otherwise, jemmy will try to expand before the
+        //JFX is ready for it.
+        treeTableItemDock1.expand();
+        treeTableItemDock2.expand();
     }
 
     /**
