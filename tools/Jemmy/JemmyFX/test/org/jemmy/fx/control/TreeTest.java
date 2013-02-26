@@ -38,13 +38,13 @@ import org.jemmy.interfaces.Selectable;
 import org.jemmy.lookup.AbstractLookup;
 import org.jemmy.lookup.ByToStringLookup;
 import org.jemmy.lookup.EqualsLookup;
+import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 import static org.junit.Assert.*;
 import org.junit.*;
 
 /**
- *
  * @author shura
  */
 public class TreeTest {
@@ -71,7 +71,7 @@ public class TreeTest {
     public void tearDown() {
     }
 
-    //@Test
+    @Test
     public void lookup() {
         new ScrollBarDock(tree.wrap().as(Parent.class, Node.class)).asScroll().caret().to(0);
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("01")).asTreeItem().expand();
@@ -85,11 +85,11 @@ public class TreeTest {
                 tree.asItemParent().
                 lookup(new EqualsLookup("010")).size());
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().collapse();
-        tree.asItemParent().
-                lookup(new EqualsLookup("022")).wrap();
+        tree.asItemParent().lookup(new EqualsLookup("022")).wrap();
+        new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
     }
 
-    //@Test
+    @Test
     public void tree() {
         tree.asTree().selector().select(new ByToStringLookup("0"));
         assertEquals("000", tree.asTree().selector().select(new ByToStringLookup("00"), new ByToStringLookup("000")).getControl());
@@ -100,7 +100,7 @@ public class TreeTest {
         assertEquals("023", tree.asTree().selector().select(new ByToStringLookup("02"), new ByToStringLookup("023")).getControl());
     }
 
-    //@Test
+    @Test
     public void itemSelectable() {
         Selectable<TreeItem> selectable = tree.asTreeItemSelectable();
         selectable.selector().select(selectable.getStates().get(5));
@@ -108,13 +108,13 @@ public class TreeTest {
         assertEquals(0, tree.asSelectable(TreeItem.class).getStates().size());
     }
 
-    //@Test
+    @Test
     public void objectSelectable() {
         Selectable<String> selectable = tree.asSelectable(String.class);
         selectable.selector().select("01");
     }
 
-    //@Test
+    @Test
     public void collapseAll() {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("0")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
@@ -128,9 +128,10 @@ public class TreeTest {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("00")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("01")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
+        new TreeItemDock(tree.asItemParent(), new EqualsLookup("00")).asTreeItem().collapse();
     }
 
-    //@Test
+    @Test
     public void edit() {
         tree.asItemParent().setEditor(new TextFieldCellEditor());
         tree.asTree().selector().select(new ByToStringLookup("00"), new ByToStringLookup("00c"));
@@ -152,35 +153,36 @@ public class TreeTest {
         assertEquals(3, tree.wrap().getControl().getSelectionModel().getSelectedItems().size());
     }
 
-    //@Test
+    @Test
     public void wrap() {
         Parent<String> p = tree.wrap().as(Parent.class, String.class);
         p.lookup().size();
-        p.lookup(new EqualsLookup("01")).as(org.jemmy.interfaces.TreeItem.class).collapse();
-        p.lookup(new EqualsLookup("02")).as(org.jemmy.interfaces.TreeItem.class).expand();
+        final Lookup<String> lookup1 = p.lookup(new EqualsLookup("01"));
+        lookup1.as(org.jemmy.interfaces.TreeItem.class).collapse();
+        final Lookup<String> lookup2 = p.lookup(new EqualsLookup("02"));
+        lookup2.as(org.jemmy.interfaces.TreeItem.class).expand();
+        lookup1.as(org.jemmy.interfaces.TreeItem.class).expand();
     }
 
-    //@Test
+    @Test
     public void itemWrap() {
         EditableCellOwner<javafx.scene.control.TreeItem> p = tree.wrap().as(EditableCellOwner.class, javafx.scene.control.TreeItem.class);
         p.lookup().size();
         p.setEditor(new TextFieldCellEditor());
 
         p.lookup(new LookupCriteria<javafx.scene.control.TreeItem>() {
-
             public boolean check(javafx.scene.control.TreeItem control) {
-                return control.getValue().equals("00");
+                return control.getValue().equals("12");
             }
         }).as(EditableCell.class).edit("lala");
     }
 
-    //@Test
+    @Test
     public void noItem() {
         Timeout wait = tree.wrap().getEnvironment().getTimeout(AbstractLookup.WAIT_CONTROL_TIMEOUT);
         tree.wrap().getEnvironment().setTimeout(wait, 100);
         try {
             tree.asTree().selector().select(new LookupCriteria() {
-
                 public boolean check(Object cntrl) {
                     return false;
                 }
@@ -198,7 +200,7 @@ public class TreeTest {
         }
     }
 
-    //@Test
+    @Test
     public void scroll() {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("0")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();

@@ -64,6 +64,7 @@ public class NodeWrapper extends DefaultWrapper {
         OPERATORS.add(ChoiceBoxWrap.class);
         OPERATORS.add(ComboBoxWrap.class);
         OPERATORS.add(TreeViewWrap.class);
+        OPERATORS.add(TreeTableViewWrap.class);
         OPERATORS.add(TabPaneWrap.class);
         OPERATORS.add(TableViewWrap.class);
         OPERATORS.add(TableCellWrap.class);

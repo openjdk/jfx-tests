@@ -24,57 +24,59 @@
  */
 package org.jemmy.fx.control;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import javafx.collections.ObservableList;
-import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import org.jemmy.JemmyException;
 import org.jemmy.Point;
-import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.*;
 import org.jemmy.env.Environment;
-import org.jemmy.fx.FXClickFocus;
-import org.jemmy.fx.NodeWrap;
-import org.jemmy.input.AbstractScroll;
+import org.jemmy.fx.control.Scrollable2DImpl.ScrollsLookupCriteria;
 import org.jemmy.interfaces.*;
-import org.jemmy.lookup.Lookup;
-import org.jemmy.lookup.LookupCriteria;
 
 /**
- * Table support in JemmyFX is provided through <code>Table</code> and 
+ * Table support in JemmyFX is provided through
+ * <code>Table</code> and
  * <code>Parent</code> control interfaces.
- * @see #asItemParent(java.lang.Class) 
- * @see #asTable(java.lang.Class) 
- * @see #asTableCellItemParent(java.lang.Class)  
+ *
+ * @see #asItemParent(java.lang.Class)
+ * @see #asTable(java.lang.Class)
+ * @see #asTableCellItemParent(java.lang.Class)
  * @author shura
- * @param <CONTROL> 
+ * @param <CONTROL>
  * @see TableViewDock
  */
 @ControlType({TableView.class})
-@ControlInterfaces(value = {Table.class}, encapsulates = {Object.class})
-public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
-        implements Focusable {
+@ControlInterfaces(value = {Table.class, Scrollable2D.class},
+encapsulates = {Object.class})
+public class TableViewWrap<CONTROL extends TableView> extends ControlWrap<CONTROL> implements Focusable {
 
+    public static final String DATA_COLUMNS_PROP_NAME = "data.columns";
+    public static final String COLUMNS_PROP_NAME = "columns";
+    public static final String ITEMS_PROP_NAME = "items";
     public static final String SELECTION_PROP_NAME = "selection";
-    private AbstractScroll hScroll, vScroll;
+    public static final String ITEMS_COUNT_PROP_NAME = "item.count";
+    private TableTreeScroll scroll;
+    private Scrollable2D scrollable2D;
     private TableCellItemParent parent;
 
     /**
-     * 
+     * TableViewWrap is a wrap for TableView control of JavaFX
+     *
      * @param env
-     * @param nd 
+     * @param nd
      */
     public TableViewWrap(Environment env, CONTROL nd) {
         super(env, nd);
     }
 
     /**
-     * Gives a size of a list of objects (rows) displayed in the table. 
-     * @return 
+     * Gives a size of a list of objects (rows) displayed in the table.
+     *
+     * @return
      */
-    @Property("itemCount")
+    @Property(ITEMS_COUNT_PROP_NAME)
     public int getSize() {
         return new GetAction<Integer>() {
 
@@ -86,10 +88,11 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
     }
 
     /**
-     * Gives a list of objects (rows) displayed in the table. 
-     * @return 
+     * Gives a list of objects (rows) displayed in the table.
+     *
+     * @return
      */
-    @Property("items")
+    @Property(ITEMS_PROP_NAME)
     public ObservableList getItems() {
         return new GetAction<ObservableList>() {
 
@@ -101,10 +104,11 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
     }
 
     /**
-     * Gives a selection. 
-     * @return 
+     * Gives a selection.
+     *
+     * @return
      */
-    @Property("selection")
+    @Property(SELECTION_PROP_NAME)
     public java.util.List<Point> selection() {
         return new GetAction<java.util.List<Point>>() {
 
@@ -139,39 +143,104 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
         }.dispatch(getEnvironment());
     }
 
-    @Property("getColumns")
+    /**
+     * @return list of columns.
+     */
+    @Property(COLUMNS_PROP_NAME)
     public java.util.List<TableColumn> getColumns() {
         return new GetAction<java.util.List<TableColumn>>() {
-
             @Override
             public void run(Object... parameters) throws Exception {
-                setResult((java.util.List<TableColumn>) getControl().getColumns());
+                setResult(getControl().getColumns());
             }
         }.dispatch(getEnvironment());
     }
 
     /**
+     * @return List of columns, which are on the last level (leaf columns) of
+     * table header. In the case of nested columns, some columns are parents,
+     * and some are children. This method returns the list of columns, which
+     * have no children. Those columns correspond to the realy shown columns of
+     * data in TableView.
+     */
+    @Property(DATA_COLUMNS_PROP_NAME)
+    public java.util.List<TableColumn> getDataColumns() {
+        return new GetAction<java.util.List<TableColumn>>() {
+            @Override
+            public void run(Object... parameters) throws Exception {
+                ArrayList fillList = new ArrayList<TableColumn>();
+                getLastLevelColumns((java.util.List<? extends TableColumnBase>) getControl().getColumns(), fillList);
+                setResult((java.util.List<TableColumn>) fillList);
+            }
+        }.dispatch(getEnvironment());
+    }
+
+    protected static void getLastLevelColumns(java.util.List<? extends TableColumnBase> columnsToSearchIn, java.util.List fillingList) {
+        for (TableColumnBase column : columnsToSearchIn) {
+            if (column.getColumns().size() > 0) {
+                getLastLevelColumns(column.getColumns(), fillingList);
+            } else {
+                fillingList.add(column);
+            }
+        }
+    }
+
+    /**
      * Jemmy table control interface introduces multiple selections mechanism.
+     *
      * @param <T>
      * @param type
-     * @return 
+     * @return
      */
     @As(Object.class)
     public <T> Table<T> asTable(Class<T> type) {
         return asTableCellItemParent(type);
     }
 
+    @As
+    public Scrollable2D asScrollable2D() {
+        if (scrollable2D == null) {
+            scrollable2D = new Scrollable2DImpl(this, new ScrollsLookupCriteria() {
+                @Override
+                public boolean checkFor(ScrollBar scrollBar) {
+                    return ((scrollBar.getParent() instanceof VirtualFlow)
+                            && (scrollBar.getParent().getParent() instanceof TableView));
+                }
+            });
+        }
+        return scrollable2D;
+    }
+
     /**
      * You could find items within table and operate with them just like with
      * any other UI elements.
+     *
      * @param <T>
      * @param type
-     * @return 
+     * @return
      * @see TableCellItemWrap
      */
     @As(Object.class)
     public <T> EditableCellOwner<T> asItemParent(Class<T> type) {
         return asTableCellItemParent(type);
+    }
+
+    void scrollTo(int row, int column) {
+        if (scroll == null) {
+            scroll = new TableTreeScroll(this);
+        }
+        scroll.checkScrolls();
+        TableUtils.<TableCell>scrollTo(getEnvironment(), this, scroll.hScroll, scroll.vScroll, row, column, new TableUtils.ColumnRowIndexInfoProvider() {
+            @Override
+            int getColumnIndex(IndexedCell cell) {
+                return TableViewWrap.this.getColumnIndex(cell);
+            }
+
+            @Override
+            int getRowIndex(IndexedCell cell) {
+                return TableViewWrap.this.getRowIndex(cell);
+            }
+        }, TableCell.class);
     }
 
     private <T> TableCellItemParent<T> asTableCellItemParent(Class<T> type) {
@@ -181,154 +250,11 @@ public class TableViewWrap<CONTROL extends TableView> extends NodeWrap<CONTROL>
         return parent;
     }
 
-    /**
-     * Initialize wraps for ScrollBars if they're not yet initialized
-     */
-    private void checkScrolls() {
-        if (vScroll == null) {
-            vScroll = getScroll(true);
-        }
-        if (hScroll == null) {
-            hScroll = getScroll(false);
-        }
+    protected int getRowIndex(IndexedCell tableCell) {
+        return ((TableCell) tableCell).getTableRow().getIndex();
     }
 
-    /**
-     * @return wrap of parent container that contains TableCells
-     */
-    private Wrap<? extends javafx.scene.Parent> getClippedContainerWrap() {
-        return ((Parent<Node>) as(Parent.class, Node.class)).lookup(javafx.scene.Parent.class, new LookupCriteria<javafx.scene.Parent>() {
-
-            public boolean check(javafx.scene.Parent control) {
-                return control.getClass().getName().endsWith("VirtualFlow$ClippedContainer");
-            }
-        }).wrap();
-    }
-
-    /**
-     * Obtains wrap for scrollbar
-     *
-     * @param vertical
-     * @return
-     */
-    private AbstractScroll getScroll(final boolean vertical) {
-        Lookup<ScrollBar> lookup = as(Parent.class, Node.class).lookup(ScrollBar.class,
-                new LookupCriteria<ScrollBar>() {
-
-                    @Override
-                    public boolean check(ScrollBar control) {
-                        return (control.getOrientation() == Orientation.VERTICAL) == vertical && 
-                                control.isVisible();
-                    }
-                });
-        int count = lookup.size();
-        if (count == 0) {
-            return null;
-        } else if (count == 1) {
-            return lookup.as(AbstractScroll.class);
-        } else {
-            throw new JemmyException("There are more than 1 " + (vertical ? "vertical" : "horizontal")
-                    + " ScrollBars in this TableView");
-        }
-    }
-
-    /**
-     * {@inheritDoc }
-     */
-    Wrap<? extends TableCell> scrollTo(final int row, final int column) {
-
-        checkScrolls();
-
-        if (vScroll != null) {
-            vScroll.caret().to(new Caret.Direction() {
-
-                public int to() {
-                    int[] shown = shown();
-                    if (shown[1] > row) {
-                        return -1;
-                    }
-                    if (shown[3] < row) {
-                        return 1;
-                    }
-                    return 0;
-                }
-            });
-        }
-        if (hScroll != null) {
-            hScroll.caret().to(new Caret.Direction() {
-
-                public int to() {
-                    int[] shown = shown();
-                    if (shown[0] > column) {
-                        return -1;
-                    }
-                    if (shown[2] < column) {
-                        return 1;
-                    }
-                    return 0;
-                }
-            });
-        }
-        return null;
-        //as(Parent.class, Node.class).lookup(TableCell.class, ) 
-    }
-
-    /**
-     * Identifies which elements are shown in the TableView currently.
-     *
-     * @return {minColumn, minRow, maxColumn, maxRow} of cells that are fully
-     * visible in the list.
-     */
-    private int[] shown() {
-        final Rectangle viewArea = getScreenBounds(getEnvironment(), getClippedContainerWrap().getControl());
-
-        int[] res = new GetAction<int[]>() {
-
-            @Override
-            @SuppressWarnings("unchecked")
-            public void run(Object... parameters) {
-                final int[] res = new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE, -1, -1};
-
-                as(Parent.class, Node.class).lookup(TableCell.class, new LookupCriteria<TableCell>() {
-
-                    @Override
-                    public boolean check(TableCell control) {
-                        if (control.isVisible() && control.getOpacity() == 1.0) {
-                            Rectangle bounds = getScreenBounds(getEnvironment(), control);
-                            int column = getColumnIndex(control);
-                            int row = getRowIndex(control);
-                            if (viewArea.contains(bounds) && row >= 0 && column >= 0) {
-
-                                res[0] = Math.min(res[0], column);
-                                res[1] = Math.min(res[1], row);
-                                res[2] = Math.max(res[2], column);
-                                res[3] = Math.max(res[3], row);
-                            }
-                        }
-                        return false;
-                    }
-                }).size();
-
-                setResult(res);
-            }
-        }.dispatch(getEnvironment());
-
-        return res;
-    }
-
-    private static int getRowIndex(TableCell tableCell) {
-        return tableCell.getTableRow().getIndex();
-    }
-
-    private static int getColumnIndex(TableCell tableCell) {
-        return tableCell.getTableView().getVisibleLeafIndex(tableCell.getTableColumn());
-    }
-
-    @Override
-    public Focus focuser() {
-        final Rectangle bounds = getScreenBounds();
-        return new FXClickFocus(this, new Point(
-                Math.max(bounds.getWidth() / 2, bounds.getWidth() - 3),
-                Math.max(bounds.getHeight() / 2, bounds.getHeight() - 3)));
+    protected int getColumnIndex(IndexedCell tableCell) {
+        return ((TableCell) tableCell).getTableView().getVisibleLeafIndex(((TableCell) tableCell).getTableColumn());
     }
 }

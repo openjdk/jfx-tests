@@ -24,6 +24,7 @@
  */
 package org.jemmy.fx.control;
 
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -66,7 +67,7 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
         this.editor = editor;
     }
 
-    TreeViewWrap<? extends TreeView> getViewWrap() {
+    TreeViewWrap<? extends TreeView> getTreeViewWrap() {
         return treeViewWrap;
     }
 
@@ -99,7 +100,7 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
     @Override
     public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
         if (org.jemmy.interfaces.TreeItem.class.equals(interfaceClass)) {
-            return (INTERFACE) Root.ROOT.getThemeFactory().treeItem(this);
+            return (INTERFACE) Root.ROOT.getThemeFactory().treeItem(this, treeViewWrap);
         }
         return super.as(interfaceClass);
     }
@@ -212,7 +213,7 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
             }
         });
         AbstractScroll scroll2 = Utils.getContainerScroll(treeViewWrap.as(Parent.class, Node.class), false);
-        Utils.makeCenterVisible(getClippedContainerWrap(), this, scroll2);
+        Utils.makeCenterVisible(this.getTreeViewWrap(), this, scroll2, Orientation.HORIZONTAL);
     }
 
     protected boolean isReallyVisible(Node node) {

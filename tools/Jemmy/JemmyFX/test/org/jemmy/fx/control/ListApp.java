@@ -100,7 +100,6 @@ public class ListApp extends Application {
 
         lst.setEditable(true);
         lst.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-
             public ListCell<String> call(ListView<String> p) {
                 return new TextFieldListCell();
             }
@@ -111,8 +110,10 @@ public class ListApp extends Application {
 
         stage.setScene(scene);
 
-        stage.setWidth(300);
-        stage.setHeight(300);
+        lst.setMaxSize(300, 300);
+
+        stage.setWidth(400);
+        stage.setHeight(500);
 
         stage.show();
     }
@@ -125,7 +126,6 @@ public class ListApp extends Application {
             setEditable(true);
             textBox = new TextField();
             textBox.setOnKeyReleased(new EventHandler<KeyEvent>() {
-
                 public void handle(KeyEvent t) {
                     if (t.getCode() == KeyCode.ENTER) {
                         commitEdit(textBox.getText());

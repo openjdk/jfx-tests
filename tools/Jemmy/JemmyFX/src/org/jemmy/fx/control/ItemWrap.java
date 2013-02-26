@@ -25,9 +25,9 @@
 package org.jemmy.fx.control;
 
 import javafx.scene.Node;
+import org.jemmy.Rectangle;
 import org.jemmy.control.As;
 import org.jemmy.control.ControlType;
-import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.dock.DockInfo;
 import org.jemmy.dock.ObjectLookup;
@@ -40,16 +40,18 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 
 /**
- * A few compound Java FX controls could be used as a parent for objects, 
- * which are actually contained within the control. 
- * This associates the data with corresponding nodes so that you could do all
- * the things with the data which you usually do with nodes. Such as clicking on, 
- * using as a parent for nodes, etc.
+ * A few compound Java FX controls could be used as a parent for objects, which
+ * are actually contained within the control. This associates the data with
+ * corresponding nodes so that you could do all the things with the data which
+ * you usually do with nodes. Such as clicking on, using as a parent for nodes,
+ * etc.
+ *
  * @author shura
  */
 @ControlType(Object.class)
 @DockInfo(name="org.jemmy.fx.control.ItemDock", multipleCriteria=false)
 public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implements Showable, Show, EditableCell<DATA> {
+
     public static final String ITEM_PROP_NAME = "item";
 
     @ObjectLookup("object")
@@ -68,8 +70,8 @@ public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implement
     }
 
     @ObjectLookup("toString and comparison policy")
-    public static <T> LookupCriteria<T> byToString(Class<T> type, final String data, 
-        final StringComparePolicy policy) {
+    public static <T> LookupCriteria<T> byToString(Class<T> type, final String data,
+            final StringComparePolicy policy) {
         return new LookupCriteria<T> () {
 
             public boolean check(T control) {
@@ -85,8 +87,9 @@ public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implement
 
     protected Wrap<?> viewWrap;
     protected CellEditor<? super DATA> editor;
+    private Class<DATA> dataClass;
     private final Object item;
-    
+
     /**
      *
      * @param env
@@ -99,11 +102,16 @@ public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implement
         this.editor = editor;
         this.item = item;
     }
+    
+    public ItemWrap(Class<DATA> dataClass, Object item, DATA data, Wrap<?> listViewWrap, CellEditor<? super DATA> editor) {
+        this(item, data, listViewWrap, editor);
+        this.dataClass = dataClass;        
+    }
 
     public Object getItem() {
         return item;
-    }    
-    
+    }
+
     public void edit(DATA newValue) {
         as(Showable.class).shower().show();
         editor.edit(this, newValue);
@@ -115,26 +123,42 @@ public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implement
     }
 
     public Class getType() {
-        //this is only needed for editing where type is not really sticking
-        //outside anywhere
-        return Object.class;
+        //Object.class - this is only needed for editing where type is not 
+        //really sticking outside anywhere
+        return dataClass == null ? Object.class : dataClass;
     }
-    
+
     /**
      * There is a node associated with every piece of data. This node could serve
      * as a parent.
-     * @return 
-     * @see #cellWrap() 
+     * @return
+     * @see #cellWrap()
      */
     @As(Node.class)
     public Parent<Node> asNodeParent() {
         return cellWrap().as(Parent.class, Node.class);
     }
 
+    @Override
+    public Show shower() {
+        return cellWrap().as(Showable.class).shower();
+    }
+
+    @Override
+    public void show() {
+        cellWrap().as(Showable.class).shower().show();
+    }
+
+    @Override
+    public Rectangle getScreenBounds() {
+        return cellWrap().getScreenBounds();
+    }
+
     /**
      * There is a node associated with every piece of data.
-     * @return 
-     * @see #asNodeParent() 
+     *
+     * @return
+     * @see #asNodeParent()
      */
     public abstract Wrap<? extends Node> cellWrap();
 

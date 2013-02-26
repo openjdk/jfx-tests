@@ -24,29 +24,15 @@
  */
 package org.jemmy.fx.control;
 
-import javafx.scene.Node;
-import org.jemmy.fx.WindowElement;
+import javafx.scene.control.TreeItem;
+import org.jemmy.interfaces.Focusable;
+import org.jemmy.interfaces.Scroll;
+import org.jemmy.interfaces.Selectable;
 
 /**
- *
- * @author shura
+ * @author Alexander Kirov
  */
-class ViewElement<T extends Node> implements WindowElement<T> {
+interface AbstractTreeWrap extends Scroll, Selectable<TreeItem>, Focusable {
 
-    Class<T> type;
-    T value;
 
-    public ViewElement(Class<T> type, T value) {
-        this.type = type;
-        this.value = value;
-    }
-
-    public T getWindow() {
-        return value;
-    }
-
-    public Class<T> getType() {
-        return type;
-    }
-    
 }

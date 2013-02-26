@@ -42,6 +42,7 @@ import org.jemmy.fx.control.MenuBarWrap;
 import org.jemmy.fx.control.SplitMenuButtonWrap;
 import org.jemmy.fx.control.ThemeDriverFactory;
 import org.jemmy.fx.control.TreeNodeWrap;
+import org.jemmy.fx.control.TreeTableItemWrap;
 import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Parent;
@@ -52,10 +53,10 @@ import org.jemmy.timing.State;
 
 /**
  * Defines control behaviour for Caspian theme.
- * 
+ *
  * Ported from the project JemmyFX, original class 
  * is   org.jemmy.fx.control.caspian.CaspianDriverFactory
- * 
+ *
  * @author shura
  */
 public class CaspianDriverFactory extends ThemeDriverFactory {
@@ -121,9 +122,12 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
     }
 
     @Override
-    public <T> org.jemmy.fx.control.caspian.TreeItem treeItem(Wrap<T> wrap) {
+    public <T> org.jemmy.interfaces.TreeItem treeItem(Wrap<T> wrap, Wrap parentControlWrap) {
         if (wrap instanceof TreeNodeWrap) {
-            return new org.jemmy.fx.control.caspian.TreeItem((TreeNodeWrap)wrap);
+            return new org.jemmy.fx.control.caspian.TreeItem((TreeNodeWrap) wrap, parentControlWrap);
+        }
+        if (wrap instanceof TreeTableItemWrap) {
+            return new org.jemmy.fx.control.caspian.TreeTableItem((TreeTableItemWrap) wrap, parentControlWrap);
         }
         return null;
     }
@@ -174,10 +178,13 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
     }
 
     abstract class NodeFocus implements Focus {
+
         NodeWrap nodeWrap;
+
         public NodeFocus(NodeWrap nodeWrap) {
             this.nodeWrap = nodeWrap;
         }
+
         public void focus() {
             if (!nodeWrap.isFocused()) {
                 activate();
@@ -188,6 +195,7 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
                 }
             }, true);
         }
+
         abstract protected void activate();
     }
 
