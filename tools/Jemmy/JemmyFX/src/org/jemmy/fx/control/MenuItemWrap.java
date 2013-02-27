@@ -57,7 +57,7 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
      * First mouse is moved into a menu component. If node is not activated 
      * during this timeout, click is performed.
      */
-    public static final Timeout BEFORE_CLICK_TO_EXPAND_SLEEP = new Timeout("menu.before.click.to.expand", 100);
+    public static final Timeout BEFORE_CLICK_TO_EXPAND_SLEEP = new Timeout("menu.before.click.to.expand", 1000);
     
     /**
      * 
