@@ -280,6 +280,7 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
 
         public void select(Boolean state) {
             if (!state.equals(getState())) {
+                getEnvironment().getTimeout(BEFORE_CLICK_TO_EXPAND_SLEEP).sleep();
                 mouse().click();
                 waitProperty(IS_SELECTED_PROP_NAME, state);
             }
