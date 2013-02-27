@@ -43,24 +43,24 @@ import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.timing.State;
 
 /**
- * This represents a single menu item within menu hierarchy. It could be looked 
+ * This represents a single menu item within menu hierarchy. It could be looked
  * up starting from a menu bar, a menu button or a context menu.
+ *
  * @see MenuBarWrap
  * @author shura
- * @param <ITEM> 
+ * @param <ITEM>
  */
 @ControlType(MenuItem.class)
 @MethodProperties({"getId", "getStyle", "getText", "getUserData"})
 public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
 
     /**
-     * First mouse is moved into a menu component. If node is not activated 
+     * First mouse is moved into a menu component. If node is not activated
      * during this timeout, click is performed.
      */
-    public static final Timeout BEFORE_CLICK_TO_EXPAND_SLEEP = new Timeout("menu.before.click.to.expand", 1000);
-    
+    public static final Timeout BEFORE_CLICK_TO_EXPAND_SLEEP = new Timeout("menu.before.click.to.expand", 500);
     /**
-     * 
+     *
      */
     public static final String IS_SELECTED_PROP_NAME = "isSelected";
 
@@ -98,7 +98,6 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
     public static <B extends MenuItem> LookupCriteria<B> idLookup(Class<B> tp, String id) {
         return new ByID<B>(id);
     }
-    
     private Wrap<?> placeholder = null;
     private MenuShowable menuShowable = new MenuShowable();
     private final NodeWrapper wrapper;
@@ -125,9 +124,10 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
     }
 
     /**
-     * While a node been shown, all parent items are expanded so that the node 
+     * While a node been shown, all parent items are expanded so that the node
      * is visible and represented by a node.
-     * @return 
+     *
+     * @return
      */
     @As
     public Showable asShowable() {
@@ -144,7 +144,6 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
 
     private Menu getParentMenu(final MenuItem item) {
         return new GetAction<Menu>() {
-
             @Override
             public void run(Object... os) throws Exception {
                 setResult(item.getParentMenu());
@@ -156,7 +155,6 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
         final Node[] menuControl = new Node[1];
         final Menu parent = getParentMenu(item);
         Root.ROOT.lookup(new LookupCriteria<Scene>() {
-
             public boolean check(Node node, ControlHierarchy hierarchy) {
                 if (node instanceof MenuButton && parent == null) {
                     MenuButton mb = ((MenuButton) node);
@@ -203,7 +201,6 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
                     return false;
                 }
                 AbstractNodeHierarchy hierarchy = new AbstractNodeHierarchy(getEnvironment()) {
-
                     public List<?> getControls() {
                         return getChildren(cntrl.getRoot());
                     }
@@ -219,11 +216,16 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
         return wrapper.wrap(Node.class, menuControl[0]);
     }
 
+    /**
+     * Sleeps are applied in this method, because of RT-28683. We need to wait,
+     * until a popup is really shown, but cannot determine that, in JFX.
+     */
     private void expand(final Menu menu) {
         if (!MenuWrap.isShowing(menu, getEnvironment())) {
             final Menu parent = getParentMenu(menu);
             if (parent != null) {
                 expand(parent);
+                getEnvironment().getTimeout(BEFORE_CLICK_TO_EXPAND_SLEEP).sleep();
                 waitState(new State<Boolean>() {
                     public Boolean reached() {
                         return MenuWrap.isParentShown(menu, getEnvironment());
@@ -239,12 +241,13 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
                 }
             } else {
                 mWrap.mouse().move();
+                getEnvironment().getTimeout(BEFORE_CLICK_TO_EXPAND_SLEEP).sleep();
             }
         }
     }
 
     /**
-     * @deprecated  Use docks
+     * @deprecated Use docks
      */
     public static class MenuByText implements LookupCriteria<MenuItem> {
 
@@ -280,7 +283,6 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
 
         public void select(Boolean state) {
             if (!state.equals(getState())) {
-                getEnvironment().getTimeout(BEFORE_CLICK_TO_EXPAND_SLEEP).sleep();
                 mouse().click();
                 waitProperty(IS_SELECTED_PROP_NAME, state);
             }
