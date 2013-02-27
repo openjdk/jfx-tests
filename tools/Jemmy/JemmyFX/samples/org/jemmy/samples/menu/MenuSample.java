@@ -41,6 +41,11 @@ import org.junit.Test;
  * through <code>MenuOwner</code> interface, when only basic menu operations are 
  * needed, and performing lookup and more complicated steps through <code>MenuItemDock</code>
  * class.
+ *
+ * Attention : http://javafx-jira.kenai.com/browse/RT-24873 according to this
+ * issue, popup may do not appear at first click, so some of this samples may 
+ * fail.
+ *
  * @author KAM, shura
  */
 public class MenuSample extends SampleBase {
