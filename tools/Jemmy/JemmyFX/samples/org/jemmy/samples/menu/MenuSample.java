@@ -29,6 +29,8 @@ import javafx.scene.control.ScrollPane;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.*;
+import org.jemmy.input.AWTRobotInputFactory;
+import org.jemmy.input.glass.GlassInputFactory;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Mouse.MouseButtons;
 import org.jemmy.resources.StringComparePolicy;
@@ -64,6 +66,10 @@ public class MenuSample extends SampleBase {
         //Looking up for MenuBar. There is just one MenuBar in the scene so
         //no criteria is specified.
         menuBar = new MenuBarDock(scene.asParent());
+        
+        //Set mouse smoothness.
+        GlassInputFactory.setMouseSmoothness(5);
+        AWTRobotInputFactory.setMouseSmoothness(5);
     }
 
     /**
