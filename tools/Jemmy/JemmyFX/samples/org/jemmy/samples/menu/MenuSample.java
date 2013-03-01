@@ -49,6 +49,8 @@ import org.junit.Test;
  * issue, popup may do not appear at first click, so some of this samples may 
  * fail.
  *
+ * Some samples may fail due to RT-28743.
+ * 
  * @author KAM, shura
  */
 public class MenuSample extends SampleBase {
@@ -65,11 +67,7 @@ public class MenuSample extends SampleBase {
 
         //Looking up for MenuBar. There is just one MenuBar in the scene so
         //no criteria is specified.
-        menuBar = new MenuBarDock(scene.asParent());
-        
-        //Set mouse smoothness.
-        GlassInputFactory.setMouseSmoothness(5);
-        AWTRobotInputFactory.setMouseSmoothness(5);
+        menuBar = new MenuBarDock(scene.asParent());        
     }
 
     /**
