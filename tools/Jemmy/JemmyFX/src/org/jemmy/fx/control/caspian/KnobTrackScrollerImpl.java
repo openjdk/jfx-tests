@@ -55,7 +55,8 @@ public class KnobTrackScrollerImpl extends KnobDragScrollerImpl {
 
     /**
      * Just a repeater for super constructor to use in derived classes
-     * @param wrap
+     *
+     * @param wrap - (for instance, wrap of scrollBar)
      * @param scroll
      */
     public KnobTrackScrollerImpl(Wrap<? extends Node> wrap, Scroll scroll) {
@@ -78,19 +79,19 @@ public class KnobTrackScrollerImpl extends KnobDragScrollerImpl {
     @Override
     protected Wrap<?> getKnob() {
         return skin.lookup(StackPane.class,
-                           new ByStyleClass<StackPane>(KnobTrackScrollerImpl.SLIDER_KNOB_STYLECLASS)).wrap();
+                new ByStyleClass<StackPane>(KnobTrackScrollerImpl.SLIDER_KNOB_STYLECLASS)).wrap();
     }
 
     public Shifter getTrack() {
         Wrap<?> track = skin.lookup(StackPane.class,
-                           new ByStyleClass<StackPane>(KnobTrackScrollerImpl.SLIDER_TRACK_STYLECLASS)).wrap();
+                new ByStyleClass<StackPane>(KnobTrackScrollerImpl.SLIDER_TRACK_STYLECLASS)).wrap();
         return new ScrollTrack(track, wrap, isVertical, 0);
     }
 
     @Override
     public Vector getScrollVector() {
-        Point end = isVertical ? new Point(0, wrap.getControl().getHeight()) :
-                                 new Point(wrap.getControl().getWidth(), 0);
+        Point end = isVertical ? new Point(0, wrap.getControl().getHeight())
+                : new Point(wrap.getControl().getWidth(), 0);
         return new Vector(wrap.toAbsolute(new Point(0, 0)), wrap.toAbsolute(end));
     }
 
@@ -105,13 +106,16 @@ public class KnobTrackScrollerImpl extends KnobDragScrollerImpl {
     }
 
     /**
+     * Scrolling will be done, if scrollBar is visible, otherwise, we think,
+     * that the whole content is visible.
      *
      * @param value
      */
     @Override
     public void to(double value) {
-        visibilityCheck();
-        super.to(value);
+        if (isVisible()) {
+            super.to(value);
+        }
     }
 
     /**
@@ -120,13 +124,19 @@ public class KnobTrackScrollerImpl extends KnobDragScrollerImpl {
      */
     @Override
     public void to(Direction condition) {
-        visibilityCheck();
-        super.to(condition);
+        if (condition.to() != 0) {
+            visibilityCheck();
+            super.to(condition);
+        }
     }
 
     private void visibilityCheck() {
-        if (!wrap.getProperty(Boolean.class, "isVisible")) {
+        if (!isVisible()) {
             throw new JemmyException("Attempt to scroll invisible scroll bar");
         }
+    }
+
+    private boolean isVisible() {
+        return wrap.getProperty(Boolean.class, "isVisible");
     }
 }

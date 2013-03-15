@@ -34,8 +34,10 @@
     <target name="fail-no-image-version" unless="images.version">
         <fail message="No image version!"/>
     </target>
-
-    <target name="download-images" depends="load-image-properties, compare.image.properties, fail-no-image-repository, fail-no-image-version" 
+    <target name="download-images" unless="fxsqe.nosvn">
+        <antcall target="-do-download-images" />
+    </target>
+    <target name="-do-download-images" depends="load-image-properties, compare.image.properties, fail-no-image-repository, fail-no-image-version" 
             unless="same.image.properties">
         <echo message="Checking out version ${images.version} of ${images.repository}/${images.module} to ${image.dir}/${images.module}"/>
         <available file="${image.dir}/${images.module}" type="dir" property="images.checked.out"/>
@@ -52,6 +54,8 @@
         <mkdir dir="${image.dir}"/>
         <exec executable="svn" dir="${image.dir}" failonerror="true" failifexecutionfails="true">
             <arg line="checkout"/>
+            <arg line="--non-interactive"/>
+            <arg line=" --trust-server-cert"/>
             <arg line="${images.repository}/${images.module}"/>
             <arg line="--revision"/>
             <arg line="${images.version}"/>

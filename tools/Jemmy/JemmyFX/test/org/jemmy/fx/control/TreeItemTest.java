@@ -25,7 +25,6 @@
 package org.jemmy.fx.control;
 
 import javafx.scene.control.TreeItem;
-import org.jemmy.env.Timeout;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.lookup.EqualsLookup;
@@ -33,7 +32,6 @@ import org.jemmy.resources.StringComparePolicy;
 import org.junit.*;
 
 /**
- *
  * @author shura
  */
 public class TreeItemTest {
@@ -85,7 +83,6 @@ public class TreeItemTest {
                 "23", StringComparePolicy.SUBSTRING).asEditableCell().select();
     }
 
-    
 //    @Test
 //    public void byToStringPath() {
 //        new TreeItemDock(tree.asItemParent(), StringComparePolicy.EXACT, "0", "02", "023").asEditableCell().select();
@@ -103,7 +100,6 @@ public class TreeItemTest {
 //                new EqualsLookup<Object>("02"),
 //                new EqualsLookup<Object>("025")).asEditableCell().select();
 //    }
-
     @Test
     public void autoExpand() {
         new TreeItemDock(tree.asItemParent(), "00").asTreeItem().collapse();

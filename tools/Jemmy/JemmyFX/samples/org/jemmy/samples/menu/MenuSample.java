@@ -29,6 +29,9 @@ import javafx.scene.control.ScrollPane;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.*;
+import org.jemmy.input.AWTRobotInputFactory;
+import org.jemmy.input.glass.GlassInputFactory;
+import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Mouse.MouseButtons;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
@@ -41,6 +44,13 @@ import org.junit.Test;
  * through <code>MenuOwner</code> interface, when only basic menu operations are 
  * needed, and performing lookup and more complicated steps through <code>MenuItemDock</code>
  * class.
+ *
+ * Attention : http://javafx-jira.kenai.com/browse/RT-24873 according to this
+ * issue, popup may do not appear at first click, so some of this samples may 
+ * fail.
+ *
+ * Some samples may fail due to RT-28743.
+ * 
  * @author KAM, shura
  */
 public class MenuSample extends SampleBase {
@@ -57,7 +67,7 @@ public class MenuSample extends SampleBase {
 
         //Looking up for MenuBar. There is just one MenuBar in the scene so
         //no criteria is specified.
-        menuBar = new MenuBarDock(scene.asParent());
+        menuBar = new MenuBarDock(scene.asParent());        
     }
 
     /**
@@ -73,7 +83,13 @@ public class MenuSample extends SampleBase {
         //it is also possible to find the menu item first
         //and then click it with mouse.
         //it will itself expand the path to become visible
-        new MenuItemDock(menuBar.asMenuParent(), "Option _1", StringComparePolicy.EXACT).mouse().click();
+        final MenuItemDock menuItemDock = new MenuItemDock(menuBar.asMenuParent(), "Option _1", StringComparePolicy.EXACT);
+        menuItemDock.mouse().click();
+        
+        //We must close Menu, because otherwise an additional click is needed, 
+        //to close the menu (see RT-19955), the click, which could be used for 
+        //another action, which could lead to tests fails.
+        menuItemDock.keyboard().pushKey(KeyboardButtons.ESCAPE);
     }
     
     /**
@@ -88,14 +104,20 @@ public class MenuSample extends SampleBase {
                 new ByIdMenuItem("option1"));
         
         //or using MenuItemDock
-        new MenuItemDock(menuBar.asMenuParent(), "action").mouse().click();
+        final MenuItemDock menuItemDock = new MenuItemDock(menuBar.asMenuParent(), "action");
+        menuItemDock.mouse().click();
+        
+        //We must close Menu, because otherwise an additional click is needed, 
+        //to close the menu (see RT-19955), the click, which could be used for 
+        //another action, which could lead to tests fails.
+        menuItemDock.keyboard().pushKey(KeyboardButtons.ESCAPE);
     }
     
     /**
      * Select a <code>CheckMenuItem</code>.
      */
     @Test
-    public void checkMenuItem() {
+    public void checkMenuItem() {        
         
         //find a CheckMenuItem with text "Enabled"
         CheckMenuItemDock checkMenuItem = new CheckMenuItemDock(menuBar.asMenuParent(), 
@@ -120,7 +142,7 @@ public class MenuSample extends SampleBase {
         
         //for radio button, same approach as above would work, but click also works
         //as you do not need to ckech the value - whether it selected or not
-        new RadioMenuItemDock(menuBar.asMenuParent(), "Option _2", StringComparePolicy.EXACT).mouse().click();
+        new RadioMenuItemDock(menuBar.asMenuParent(), "Option _2", StringComparePolicy.EXACT).mouse().click();        
         
     }
     
@@ -160,7 +182,7 @@ public class MenuSample extends SampleBase {
         //or
         menuButton.asMenuOwner().push("_Two");
     }
-    
+
     /**
      * Finally, how to collapse
      */

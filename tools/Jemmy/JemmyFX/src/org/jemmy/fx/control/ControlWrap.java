@@ -24,7 +24,6 @@
  */
 package org.jemmy.fx.control;
 
-import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
 import org.jemmy.fx.NodeWrap;
 import org.jemmy.control.ControlType;

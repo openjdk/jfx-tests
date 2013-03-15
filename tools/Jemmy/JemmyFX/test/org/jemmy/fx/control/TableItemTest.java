@@ -16,13 +16,13 @@ import static org.junit.Assert.*;
  * @author shura
  */
 public class TableItemTest {
-    
+
     public TableItemTest() {
     }
 
     static TableViewDock tableDock;
     static Table table;
-            
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         AppExecutor.executeNoBlock(TableViewApp.class);
@@ -34,11 +34,11 @@ public class TableItemTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }

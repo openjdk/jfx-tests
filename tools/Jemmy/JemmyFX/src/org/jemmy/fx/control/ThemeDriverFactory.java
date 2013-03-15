@@ -76,7 +76,7 @@ public abstract class ThemeDriverFactory {
 
     public abstract Shifter track(final Wrap<? extends Control> wrap, final Scroll scroll);
     
-    public abstract <T> TreeItem treeItem(Wrap<T> itemWrap);
+    public abstract <T> TreeItem treeItem(Wrap<T> itemWrap, Wrap parentControlWrap);
 
     public abstract Focus menuBarFocuser(final MenuBarWrap<? extends MenuBar> menuBarWrap);
 

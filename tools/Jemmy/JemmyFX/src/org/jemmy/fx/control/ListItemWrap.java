@@ -71,7 +71,11 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
      * @param listViewWrap
      */
     public ListItemWrap(DATA data, int index, ListViewWrap<? extends ListView> listViewWrap, CellEditor<? super DATA> editor) {
-        super(index, data, listViewWrap, editor);
+        this(null, data, index, listViewWrap, editor);
+    }
+
+    public ListItemWrap(Class<DATA> dataClass, DATA data, int index, ListViewWrap<? extends ListView> listViewWrap, CellEditor<? super DATA> editor) {
+        super(dataClass, index, data, listViewWrap, editor);
         this.listViewWrap = listViewWrap;
         wElement = new ViewElement<ListView>(ListView.class, listViewWrap.getControl());
     }
@@ -140,22 +144,22 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
                     listViewWrap.as(Parent.class, Node.class).lookup(ListCell.class,
                             new LookupCriteria<ListCell>() {
 
-                                public boolean check(ListCell control) {
-                                    int index = items.indexOf(control.getItem());
-                                    if (NodeWrap.isInBounds(getClippedContainerWrap().getControl(), control, getEnvironment(), listViewWrap.getControl().getOrientation() == Orientation.VERTICAL)) {
-                                        if (index >= 0) {
-                                            if (index < minmax[0]) {
-                                                minmax[0] = index;
-                                                //} else if (index > minmax[1]) {//doesn't work, if we have 1 element in list. So rewrite:
-                                            }
-                                            if (index > minmax[1]) {
-                                                minmax[1] = index;
-                                            }
-                                        }
+                        public boolean check(ListCell control) {
+                            int index = items.indexOf(control.getItem());
+                            if (NodeWrap.isInBounds(getClippedContainerWrap().getControl(), control, getEnvironment(), listViewWrap.getControl().getOrientation() == Orientation.VERTICAL)) {
+                                if (index >= 0) {
+                                    if (index < minmax[0]) {
+                                        minmax[0] = index;
+                                        //} else if (index > minmax[1]) {//doesn't work, if we have 1 element in list. So rewrite:
                                     }
-                                    return true;
+                                    if (index > minmax[1]) {
+                                        minmax[1] = index;
+                                    }
                                 }
-                            }).size();
+                            }
+                            return true;
+                        }
+                    }).size();
                     int index = items.indexOf(getControl());
                     if (index < minmax[0]) {
                         return -1;

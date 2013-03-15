@@ -51,7 +51,6 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 /**
- *
  * @author kam, shura
  */
 public class TableViewApp extends Application {
@@ -147,7 +146,7 @@ public class TableViewApp extends Application {
         VBox vBox = new VBox();
         vBox.getChildren().setAll(tableView);
 
-        Scene scene = new Scene(vBox, 600, 300);
+        Scene scene = new Scene(vBox, 800, 600);
 
         stage.setScene(scene);
         stage.show();

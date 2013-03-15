@@ -25,10 +25,12 @@
 package org.jemmy.fx.control.caspian;
 
 import javafx.scene.Node;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.StackPane;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.control.TreeNodeWrap;
 import org.jemmy.interfaces.Parent;
+import org.jemmy.interfaces.Scrollable2D;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
 
@@ -38,9 +40,9 @@ import org.jemmy.timing.State;
  */
 public class TreeItem implements org.jemmy.interfaces.TreeItem<javafx.scene.control.TreeItem> {
 
-    TreeNodeWrap<? extends javafx.scene.control.TreeItem> wrap;
+    private TreeNodeWrap<? extends javafx.scene.control.TreeItem> wrap;
+    private Wrap<? extends TreeView> treeViewWrap;
     State<Boolean> expandedState = new State<Boolean>() {
-
         public Boolean reached() {
             return wrap.isExpanded();
         }
@@ -51,17 +53,17 @@ public class TreeItem implements org.jemmy.interfaces.TreeItem<javafx.scene.cont
         }
     };
 
-    public TreeItem(Wrap<? extends javafx.scene.control.TreeItem> wrap) {
+    public TreeItem(Wrap<? extends javafx.scene.control.TreeItem> wrap, Wrap<? extends TreeView> treeViewWrap) {
         if (!(wrap instanceof TreeNodeWrap)) {
             throw new IllegalArgumentException("Class " + wrap.getClass().getName()
                     + " is not supported by " + TreeItem.class.getName());
         }
-       this.wrap = (TreeNodeWrap<? extends javafx.scene.control.TreeItem>)wrap;
+        this.wrap = (TreeNodeWrap<? extends javafx.scene.control.TreeItem>) wrap;
+        this.treeViewWrap = treeViewWrap;
     }
 
     private Wrap<? extends Node> findPointer(Wrap<?> skin) {
         return skin.as(Parent.class, Node.class).lookup(StackPane.class, new LookupCriteria<StackPane>() {
-
             public boolean check(StackPane cntrl) {
                 return cntrl.getChildren().size() == 0;
             }
@@ -71,6 +73,9 @@ public class TreeItem implements org.jemmy.interfaces.TreeItem<javafx.scene.cont
     public void expand() {
         wrap.show();
         if (!wrap.isExpanded()) {
+            if (treeViewWrap.as(Scrollable2D.class).isHorizontalScrollable()) {
+                treeViewWrap.as(Scrollable2D.class).hto(treeViewWrap.as(Scrollable2D.class).hmin());
+            }
             findPointer(wrap.getNode()).mouse().click();
             wrap.waitState(expandedState, true);
         }
@@ -79,6 +84,9 @@ public class TreeItem implements org.jemmy.interfaces.TreeItem<javafx.scene.cont
     public void collapse() {
         wrap.show();
         if (wrap.isExpanded()) {
+            if (treeViewWrap.as(Scrollable2D.class).isHorizontalScrollable()) {
+                treeViewWrap.as(Scrollable2D.class).hto(treeViewWrap.as(Scrollable2D.class).hmin());
+            }
             findPointer(wrap.getNode()).mouse().click();
             wrap.waitState(expandedState, false);
         }

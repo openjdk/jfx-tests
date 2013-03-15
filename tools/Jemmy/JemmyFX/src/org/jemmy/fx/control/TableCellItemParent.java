@@ -25,7 +25,7 @@
 package org.jemmy.fx.control;
 
 import java.util.List;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 import org.jemmy.Point;
 import org.jemmy.control.Wrap;
@@ -36,8 +36,7 @@ import org.jemmy.lookup.LookupCriteria;
  * @param DATA
  * @author Shura, KAM
  */
-class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA>
-        implements org.jemmy.interfaces.Table<DATA> {
+class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA> implements org.jemmy.interfaces.Table<DATA> {
 
     TableViewWrap<? extends TableView> tableViewOp;
 
@@ -47,8 +46,14 @@ class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA>
     }
 
     @Override
+    protected <DT extends DATA> Wrap<? extends DT> wrap(Class<DT> type, Point item, DATA aux) {
+        return new TableCellItemWrap<DT>(tableViewOp,
+                item.getY(),
+                tableViewOp.getColumn(item.getX()), (DT) item, getEditor());
+    }
+
     protected void doRefresh() {
-        List<TableColumn> columns = (List<TableColumn>) tableViewOp.getColumns();
+        List<? extends TableColumnBase> columns = tableViewOp.getDataColumns();
         for (int r = 0; r < tableViewOp.getItems().size(); r++) {
             for (int c = 0; c < columns.size(); c++) {
                 getFound().add(new Point(c, r));
@@ -57,12 +62,6 @@ class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA>
         }
     }
 
-//    @Override
-//    protected <DT extends DATA> Wrap<? extends DT> wrap(Class<DT> type, DATA item, Object aux) {
-//                return new TableCellItemWrap<DT>(tableViewOp, 
-//                        tableViewOp.getRow(aux.getY()), 
-//                        tableViewOp.getColumn(aux.getX()), (DT)item, getEditor());
-//    }
     public List<Wrap<? extends DATA>> select(Point... point) {
         LookupCriteria<DATA>[] criteria = new LookupCriteria[point.length];
         for (int i = 0; i < point.length; i++) {
@@ -70,14 +69,7 @@ class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA>
         }
         return super.select(criteria);
     }
-
-    @Override
-    protected <DT extends DATA> Wrap<? extends DT> wrap(Class<DT> type, Point item, DATA aux) {
-        return new TableCellItemWrap<DT>(tableViewOp,
-                item.getY(),
-                tableViewOp.getColumn(item.getX()), (DT) item, getEditor());
-    }
-
+   
     public static class ByPoint<DATA> implements ItemCriteria<Point, DATA> {
 
         private final int x, y;

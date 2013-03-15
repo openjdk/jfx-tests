@@ -30,9 +30,7 @@ import org.jemmy.control.Wrap;
 import org.jemmy.fx.Root;
 import org.jemmy.interfaces.Tree;
 import org.jemmy.interfaces.TreeSelector;
-import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.timing.State;
 
 /**
  *
@@ -40,78 +38,46 @@ import org.jemmy.timing.State;
  */
 class TreeImpl<T> implements Tree<T> {
 
-    Class<T> itemType;
-    TreeViewWrap owner;
-    TreeItemParent parent;
+    private TreeViewWrap<? extends TreeView> owner;
+    private TreeItemParent<T> parent;
+    private Class<T> itemType;
 
-    public TreeImpl(Class<T> itemType, TreeViewWrap<? extends TreeView> outer, 
-            TreeItemParent<T> parent) {
-        this.owner = outer;
+    public TreeImpl(Class<T> itemType, TreeViewWrap<? extends TreeView> owner, TreeItemParent<T> parent) {
+        this.owner = owner;
         this.itemType = itemType;
         this.parent = parent;
-    }
-
-    public TreeSelector<T> selector() {
-        return new TreeSelectorImpl();
     }
 
     public Class<T> getType() {
         return itemType;
     }
 
-    private class TreeSelectorImpl<T> implements TreeSelector<T> {
-
-        private TreeItem<T> select(final TreeItem<T> root, final LookupCriteria<T>... criteria) {
-            if (criteria.length >= 1) {
-                final LookupCriteria<T> c = criteria[0];
-                return owner.getEnvironment().getWaiter(Lookup.WAIT_CONTROL_TIMEOUT).
-                        ensureState(new State<TreeItem<T>>() {
-
-                    public TreeItem<T> reached() {
-                        for (TreeItem<T> ti : root.getChildren()) {
-                            if (c.check(ti.getValue())) {
-                                if (criteria.length > 1) {
-                                    if (!ti.isExpanded()) {
-                                        Root.ROOT.getThemeFactory().treeItem(
-                                                new TreeNodeWrap(
-                                                    owner.getRoot(), owner, parent.getEditor())).expand();
-                                    }
-                                    return select(ti, FXStringMenuOwner.decreaseCriteria(criteria));
-                                } else {
-                                    return ti;
-                                }
-                            }
-                        }
-                        //well, none found
-                        return null;
-                    }
-
-                    @Override
-                    public String toString() {
-                        StringBuilder res = new StringBuilder(".");
-                        for (int i = 0; i < criteria.length; i++) {
-                            res.append("/").append(criteria[i].toString());
-                        }
-                        res.append(" path to be available");
-                        return res.toString();
-                    }
-                });
-            } else {
-                throw new IllegalStateException("Non-empty criteria list is expected");
+    public TreeSelector<T> selector() {
+        return new TreeSelectorImpl<T>() {
+            @Override
+            public Wrap select(LookupCriteria<T>... criteria) {
+                if (isShowRoot() && criteria.length > 0 && !getRoot().isExpanded()) {
+                    expand();
+                }
+                Wrap res = new TreeItemWrap(itemType, select(owner, getRoot(), criteria), owner, parent.getEditor());
+                res.mouse().click();
+                return res;
             }
-        }
 
-        @Override
-        public Wrap select(LookupCriteria<T>... criteria) {
-            if (((TreeView)owner.getControl()).isShowRoot()
-                && criteria.length > 0
-                && !owner.getRoot().isExpanded()) {
-                Root.ROOT.getThemeFactory().treeItem(new TreeNodeWrap(owner.getRoot(), owner, parent.getEditor())).expand();
+            @Override
+            protected void expand() {
+                Root.ROOT.getThemeFactory().treeItem(new TreeNodeWrap(getRoot(), owner, parent.getEditor()), owner).expand();
             }
-            Wrap res = new TreeItemWrap(itemType, select(owner.getRoot(), criteria), owner,
-                    parent.getEditor());
-            res.mouse().click();
-            return res;
-        }
+
+            @Override
+            protected TreeItem getRoot() {
+                return owner.getRoot();
+            }
+
+            @Override
+            protected boolean isShowRoot() {
+                return owner.getControl().isShowRoot();
+            }
+        };
     }
 }

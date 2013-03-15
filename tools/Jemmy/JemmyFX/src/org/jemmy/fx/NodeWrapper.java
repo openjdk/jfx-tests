@@ -28,6 +28,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import org.jemmy.control.DefaultWrapper;
@@ -64,6 +66,7 @@ public class NodeWrapper extends DefaultWrapper {
         OPERATORS.add(ChoiceBoxWrap.class);
         OPERATORS.add(ComboBoxWrap.class);
         OPERATORS.add(TreeViewWrap.class);
+        OPERATORS.add(TreeTableViewWrap.class);
         OPERATORS.add(TabPaneWrap.class);
         OPERATORS.add(TableViewWrap.class);
         OPERATORS.add(TableCellWrap.class);
@@ -71,6 +74,10 @@ public class NodeWrapper extends DefaultWrapper {
         OPERATORS.add(SeparatorWrap.class);
         OPERATORS.add(TitledPaneWrap.class);
         OPERATORS.add(AccordionWrap.class);
+        if(Platform.isSupported(ConditionalFeature.WEB)){
+            OPERATORS.add(WebViewWrap.class);
+            OPERATORS.add(WebNodeWrap.class);
+        }
     }
 
     /**
