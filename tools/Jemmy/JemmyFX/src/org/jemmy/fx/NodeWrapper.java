@@ -28,6 +28,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import org.jemmy.control.DefaultWrapper;
@@ -72,8 +74,7 @@ public class NodeWrapper extends DefaultWrapper {
         OPERATORS.add(SeparatorWrap.class);
         OPERATORS.add(TitledPaneWrap.class);
         OPERATORS.add(AccordionWrap.class);
-        //TODO this needs to be rewritten with the API either from profiles or jigsaw
-        if(Root.checkClassPresence("org.w3c.dom.Node")){
+        if(Platform.isSupported(ConditionalFeature.WEB)){
             OPERATORS.add(WebViewWrap.class);
             OPERATORS.add(WebNodeWrap.class);
         }

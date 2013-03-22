@@ -18,7 +18,7 @@
     </target>
     <property name="images.module" value="SceneGraphTests"/>
     <property name="image.properties" location="${basedir}/image.properties"/>
-    <target name="-post-compile-test" depends="download-images">
+    <target name="-post-compile-test" depends="download-images" unless="fxsqe.nosvn">
         <copy todir="${build.test.classes.dir}">
             <fileset dir="${basedir}/images-svn/SceneGraphTests/resources"/>
         </copy>

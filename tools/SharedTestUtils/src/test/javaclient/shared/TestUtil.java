@@ -29,10 +29,14 @@ import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.jemmy.TimeoutExpiredException;
 import org.jemmy.control.Wrap;
+import org.jemmy.env.Timeout;
 import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.Root;
 import org.jemmy.image.Image;
+import org.jemmy.timing.State;
+import org.jemmy.timing.Waiter;
 import test.javaclient.shared.description.TreeNode;
 import test.javaclient.shared.screenshots.ImagesManager;
 
@@ -110,11 +114,33 @@ public class TestUtil {
      * @param existing wrap for object already placed on UI
      * @param oneToWaitFor wrap for object can be not yet placed on UI
      */
-    public static void compareScreenshots(String testName, Wrap existing, Wrap oneToWaitFor) {
-        Image sceneImage = existing.getScreenImage();
-        String diffName = ImagesManager.getInstance().getScreenshotPath(testName + "-diff"); //= RESULT_PATH + testName + "-diff.png";
-        String resName = ImagesManager.getInstance().getScreenshotPath(testName); //= RESULT_PATH + testName + IMAGE_POSTFIX;
-        oneToWaitFor.waitImage(sceneImage, resName, diffName);
+    public static void compareScreenshots(String testName, final Wrap existing, final Wrap oneToWaitFor) {
+        long time = 1000;
+        try {
+            new Waiter(new Timeout("tryWaitTimeout", time)).waitState(
+                    new State<Boolean>() {
+                        @Override
+                        public Boolean reached() {
+                            return oneToWaitFor.getScreenImage().compareTo(existing.getScreenImage()) != null
+                                    ? null : Boolean.TRUE;
+                        }});
+        } catch (TimeoutExpiredException ex) {
+            //There is a difference
+            Image res = oneToWaitFor.getScreenImage();
+            Image expected = existing.getScreenImage();
+            Image diff = res.compareTo(expected);
+            
+            String resName = ImagesManager.getInstance().getScreenshotPath(testName);
+            String diffName = ImagesManager.getInstance().getScreenshotPath(testName + "-diff");
+            String expectedName = ImagesManager.getInstance().getScreenshotPath(testName + "-expected");
+            
+            oneToWaitFor.getEnvironment().getOutput(Wrap.OUTPUT).println(
+                    String.format("Saving diff to [%s], result to [%s], expected to [%s]", diffName, resName, expected));
+            
+            res.save(resName);
+            diff.save(diffName);
+            expected.save(expectedName);
+        }
     }
 
     /**
