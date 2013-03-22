@@ -23,6 +23,7 @@
  */
 package test.scenegraph.imageops;
 
+import java.io.InputStream;
 import javafx.scene.paint.Color;
 
 /**
@@ -36,5 +37,6 @@ public interface ColorComponentProvider {
     public Color getColor(double componentValue);
     public int getARGBColor(int componentValue);
     
-    public String getGoldImagePath();
+    //Replace String getGoldImageInputStream with InputStream getGoldImageInputStream
+    public InputStream getGoldImageInputStream();
 }

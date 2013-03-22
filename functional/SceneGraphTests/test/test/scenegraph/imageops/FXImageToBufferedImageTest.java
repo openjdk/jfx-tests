@@ -38,7 +38,7 @@ public class FXImageToBufferedImageTest {
     @Test
     public void testRed() {
         BufferedImage testImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-        SwingFXUtils.fromFXImage(new Image(ColorComponents.Red.getGoldImagePath()), testImage);
+        SwingFXUtils.fromFXImage(new Image(ColorComponents.Red.getGoldImageInputStream()), testImage);
 
         testImage(testImage, ColorComponents.Red);
     }
@@ -46,7 +46,7 @@ public class FXImageToBufferedImageTest {
     @Test
     public void testGreen() {
         BufferedImage testImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-        SwingFXUtils.fromFXImage(new Image(ColorComponents.Green.getGoldImagePath()), testImage);
+        SwingFXUtils.fromFXImage(new Image(ColorComponents.Green.getGoldImageInputStream()), testImage);
 
         testImage(testImage, ColorComponents.Green);
     }
@@ -54,7 +54,7 @@ public class FXImageToBufferedImageTest {
     @Test
     public void testBlue() {
         BufferedImage testImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-        SwingFXUtils.fromFXImage(new Image(ColorComponents.Blue.getGoldImagePath()), testImage);
+        SwingFXUtils.fromFXImage(new Image(ColorComponents.Blue.getGoldImageInputStream()), testImage);
 
         testImage(testImage, ColorComponents.Blue);
     }
@@ -62,7 +62,7 @@ public class FXImageToBufferedImageTest {
     @Test
     public void testOpacity() {
         BufferedImage testImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-        SwingFXUtils.fromFXImage(new Image(ColorComponents.Opacity.getGoldImagePath()), testImage);
+        SwingFXUtils.fromFXImage(new Image(ColorComponents.Opacity.getGoldImageInputStream()), testImage);
 
         testImage(testImage, ColorComponents.Opacity);
     }

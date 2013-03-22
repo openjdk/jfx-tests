@@ -23,6 +23,7 @@
  */
 package test.scenegraph.imageops;
 
+import java.io.InputStream;
 import javafx.scene.paint.Color;
 
 /**
@@ -50,8 +51,8 @@ public enum ColorComponents implements ColorComponentProvider{
             return 0xFF000000 + (((componentValue > 255) ? 255 : componentValue) << 16);
         }
 
-        public String getGoldImagePath() {
-            return getClass().getResource("red.png").toExternalForm();
+        public InputStream getGoldImageInputStream() {
+            return getClass().getResourceAsStream("red.png");
         }
     }),
     Green(new ColorComponentProvider() {
@@ -73,8 +74,8 @@ public enum ColorComponents implements ColorComponentProvider{
             return 0xFF000000 + (((componentValue > 255) ? 255 : componentValue) << 8);
         }
 
-        public String getGoldImagePath() {
-            return getClass().getResource("green.png").toExternalForm();
+        public InputStream getGoldImageInputStream() {
+            return getClass().getResourceAsStream("green.png");
         }
     }),
     Blue(new ColorComponentProvider() {
@@ -97,8 +98,8 @@ public enum ColorComponents implements ColorComponentProvider{
             return 0xFF000000 + ((componentValue > 255) ? 255 : componentValue);
         }
 
-        public String getGoldImagePath() {
-            return getClass().getResource("blue.png").toExternalForm();
+        public InputStream getGoldImageInputStream() {
+            return getClass().getResourceAsStream("blue.png");
         }
     }),
     Opacity(new ColorComponentProvider() {
@@ -120,8 +121,8 @@ public enum ColorComponents implements ColorComponentProvider{
             return 0x00000000 + (((componentValue > 255) ? 255 : componentValue) << 24);
         }
 
-        public String getGoldImagePath() {
-            return getClass().getResource("opacity.png").toExternalForm();
+        public InputStream getGoldImageInputStream() {
+            return getClass().getResourceAsStream("opacity.png");
         }
     });
         
@@ -148,8 +149,8 @@ public enum ColorComponents implements ColorComponentProvider{
         return provider.getARGBColor(componentValue);
     }
 
-    public String getGoldImagePath() {
-        return provider.getGoldImagePath();
+    public InputStream getGoldImageInputStream() {
+        return provider.getGoldImageInputStream();
     }
     
 }
