@@ -23,6 +23,8 @@
  */
 package test.scenegraph.functional.controls.events;
 
+import javafx.scene.control.Tooltip;
+import org.jemmy.action.GetAction;
 import org.jemmy.fx.control.ChoiceBoxDock;
 import org.jemmy.interfaces.Selectable;
 import org.junit.Before;
@@ -64,6 +66,15 @@ public class ChoiceBoxEventsTest extends EventTestHidingPopup<ChoiceBoxDock>
     @Test(timeout = 30000)
     public void onAction()
     {
+        final Tooltip tooltip = new GetAction<Tooltip>() {
+            @Override
+            public void run(Object... os) throws Exception {
+                Tooltip tmp = getPrimeNodeDock().control().getTooltip();
+                getPrimeNodeDock().control().setTooltip(null);
+                setResult(tmp);
+            }
+        }.dispatch(getPrimeNodeDock().wrap().getEnvironment());
+        
         test(EventTypes.ACTION, new Command() {
 
             public void invoke() {
@@ -79,6 +90,13 @@ public class ChoiceBoxEventsTest extends EventTestHidingPopup<ChoiceBoxDock>
                 }
             }
         });
+        
+        new GetAction<Object>() {
+            @Override
+            public void run(Object... os) throws Exception {
+                getPrimeNodeDock().control().setTooltip(tooltip);
+            }
+        }.dispatch(getPrimeNodeDock().wrap().getEnvironment());
     }
     
 }
