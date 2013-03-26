@@ -73,21 +73,6 @@ public class Root extends AbstractParent<Scene> {
     }
 
     /**
-     * @param className - name of the class to lookup
-     * @return true if class is presented otherwise false
-     */
-    public static boolean checkClassPresence(String className){
-        boolean result = true;
-        try {
-            Class.forName(className);
-        } catch (ClassNotFoundException ex) {
-            result = false;
-        } finally {
-            return result;
-        }
-    }
-
-    /**
      * Use AWT robot for user input simulation.
      * @param env
      */
@@ -102,8 +87,10 @@ public class Root extends AbstractParent<Scene> {
         this.env = new Environment(Environment.getEnvironment());
         this.env.setPropertyIfNotSet(RasterComparator.class, new PixelEqualityRasterComparator(0));
         String osName = System.getProperty("os.name").toLowerCase();
+        String runtimeName = System.getProperty("java.runtime.name");
+        boolean isEmbedded = runtimeName != null && runtimeName.toLowerCase().contains("embedded");
         //TODO this needs to be rewritten with the API either from profiles or jigsaw
-        if( ( osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os") ) && checkClassPresence("java.awt.Component")) {
+        if( ( osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os") ) && !isEmbedded) {
             useAWTRobot(env);
         } else {
             useGlassRobot(this.env);
