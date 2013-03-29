@@ -515,42 +515,7 @@ public class SceneEventHandlersTest extends TestBase
     }
     
     protected void dnd(Wrap from, Point from_point, Wrap to, Point to_point) throws InterruptedException {
-            final int STEPS = 50;
-//        if (!Utils.isGlassRobotAvailable()) {
-//            System.err.println("Use jemmy robot");
-//            from.mouse().move(from_point);
-//            from.mouse().press();
-//            int differenceX = to.toAbsolute(to_point).x - from.toAbsolute(from_point).x;
-//            int differenceY = to.toAbsolute(to_point).y - from.toAbsolute(from_point).y;
-//            Mouse mouse = from.mouse();
-//            for (int i = 0; i <= STEPS; i++) {
-//                mouse.move(new Point(from_point.x + differenceX * i / STEPS, from_point.y + differenceY * i / STEPS));
-//                Thread.sleep(20);
-//            }
-//            from.mouse().release();
-//        } else
-        {
-//            System.out.println("Draging");
-            System.err.println("Use glass robot");
-            Point abs_from_point = new Point(from_point);
-            abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
-            Point abs_to_point = new Point(to_point);
-            abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
-            if (robot == null) {
-                robot = com.sun.glass.ui.Application.GetApplication().createRobot(); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
-            }
-            robot.mouseMove(abs_from_point.x, abs_from_point.y);
-            robot.mousePress(1);
-            int differenceX = abs_to_point.x - abs_from_point.x;
-            int differenceY = abs_to_point.y - abs_from_point.y;
-            for (int i = 0; i <= STEPS; i++) {
-                robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
-                Thread.sleep(20);
-            }
-//            System.out.println("Releasing");
-            robot.mouseRelease(1);
-        }
-        //Thread.sleep(1000);
+            from.drag().dnd(to, to_point);
     }
     
     private TextControlWrap<Button> actionButton;
