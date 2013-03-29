@@ -668,31 +668,34 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     // Workaround to make drag'n'drop work
     protected void dnd(Wrap from, Point from_point, Wrap to, Point to_point) 
     {
-        final int STEPS = 50;
-        System.err.println("Use glass robot");
-        Point abs_from_point = new Point(from_point);
-        abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
-        Point abs_to_point = new Point(to_point);
-        abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
-        if (robot == null) {
-            robot = com.sun.glass.ui.Application.GetApplication().createRobot(); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
-        }
-        robot.mouseMove(abs_from_point.x, abs_from_point.y);
-        robot.mousePress(1);
-        int differenceX = abs_to_point.x - abs_from_point.x;
-        int differenceY = abs_to_point.y - abs_from_point.y;
-        for (int i = 0; i <= STEPS; i++) {
-            robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
-            try 
-            {
-                Thread.sleep(20);
-            } 
-            catch (InterruptedException ex) 
-            {
-                System.err.println("Interrupted while drag'n'drop");;
-            }
-        }
-        robot.mouseRelease(1);
+	from.drag().dnd(to, to_point);
+	
+	//Now use Drag interface to drag instead of workaround
+//        final int STEPS = 50;
+//        System.err.println("Use glass robot");
+//        Point abs_from_point = new Point(from_point);
+//        abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
+//        Point abs_to_point = new Point(to_point);
+//        abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
+//        if (robot == null) {
+//            robot = com.sun.glass.ui.Application.GetApplication().createRobot(); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
+//        }
+//        robot.mouseMove(abs_from_point.x, abs_from_point.y);
+//        robot.mousePress(1);
+//        int differenceX = abs_to_point.x - abs_from_point.x;
+//        int differenceY = abs_to_point.y - abs_from_point.y;
+//        for (int i = 0; i <= STEPS; i++) {
+//            robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
+//            try 
+//            {
+//                Thread.sleep(20);
+//            } 
+//            catch (InterruptedException ex) 
+//            {
+//                System.err.println("Interrupted while drag'n'drop");;
+//            }
+//        }
+//        robot.mouseRelease(1);
     }
     
     static Robot robot = null;
