@@ -20,6 +20,7 @@ import org.jemmy.interfaces.Mouse;
 import org.jemmy.timing.State;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import test.javaclient.shared.TestBase;
 import test.javaclient.shared.Utils;
@@ -87,6 +88,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragDone()
     {
@@ -106,6 +108,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragDroped()
     {
@@ -125,6 +128,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragEntered()
     {
@@ -143,6 +147,8 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
+    
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragEnteredTarget()
     {
@@ -162,6 +168,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragExited()
     {
@@ -181,6 +188,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragExitedTarget()
     {
@@ -200,6 +208,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragOver()
     {
@@ -260,6 +269,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragDetected()
     {
@@ -408,6 +418,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragEntered()
     {
@@ -420,6 +431,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragEnteredTarget()
     {
@@ -432,6 +444,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragExited()
     {
@@ -444,6 +457,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragExitedTarget()
     {
@@ -456,6 +470,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragOver()
     {
@@ -468,6 +483,7 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragReleased()
     {
