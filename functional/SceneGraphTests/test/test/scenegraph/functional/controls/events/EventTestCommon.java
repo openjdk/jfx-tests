@@ -45,6 +45,7 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import test.javaclient.shared.JemmyUtils;
 import test.javaclient.shared.TestBase;
@@ -87,6 +88,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drags from node to text field.
      * DRAG_DONE event comes when drag is finished on text field.
@@ -106,6 +108,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drag from text field to node.
      * Text in node's tooltip will change to text from text field.
@@ -124,6 +127,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drag from text field to node.
      */
@@ -141,6 +145,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drag from text field to node.
      */
@@ -158,6 +163,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drag from 
      */
@@ -176,6 +182,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test(timeout = 30000)
     public void onDragExitedTarget()
     {
@@ -191,6 +198,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test(timeout = 30000)
     public void onDragOver()
     {
@@ -205,6 +213,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test(timeout = 30000)
     public void onDragDetected()
     {
@@ -230,6 +239,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drags mouse inside of tested node
      */
@@ -384,6 +394,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drags mouse onto tested node.
      * Event should come to tested node.
@@ -432,6 +443,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 //        });
 //    }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drags mouse out of tested node.
      * Event should come to tested node.
@@ -480,6 +492,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 //        });
 //    }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drags mouse over tested node starting outside of one.
      */
@@ -503,6 +516,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
+    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Releases drag on tested node. Drag starts outside of node.
      */
