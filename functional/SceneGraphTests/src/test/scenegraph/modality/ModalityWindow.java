@@ -286,7 +286,7 @@ public class ModalityWindow {
                 initialX = 200 * (isApplet ? 1 : 0);
                 initialY = 0;
                 width = 640;
-                height = 113;
+                height = 121;//Height equals sum of hights of all controls in 8b83
                 break;
             case HIERARHICAL:
                 initialX = 200 * (isApplet ? 1 : 0);
