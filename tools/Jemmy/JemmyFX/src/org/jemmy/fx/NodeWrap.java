@@ -25,8 +25,6 @@
 package org.jemmy.fx;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -80,11 +78,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     static {
         try {
             WRAPPER = new JemmySupportWrapper(NodeWrap.class.getClassLoader(), "support.xml", Root.ROOT.getEnvironment());
-        } catch (ParserConfigurationException ex) {
-            throw new JemmyException("Unable to load support information", ex);
-        } catch (SAXException ex) {
-            throw new JemmyException("Unable to load support information", ex);
-        } catch (IOException ex) {
+        } catch (ParserConfigurationException|SAXException|IOException ex) {
             throw new JemmyException("Unable to load support information", ex);
         }
     }
