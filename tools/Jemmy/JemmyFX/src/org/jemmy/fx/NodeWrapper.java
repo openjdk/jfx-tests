@@ -44,6 +44,7 @@ import org.jemmy.fx.control.*;
  *
  * @author shura
  */
+@Deprecated
 public class NodeWrapper extends DefaultWrapper {
 
     private static final List<Class<? extends Wrap>> OPERATORS = new ArrayList<Class<? extends Wrap>>();

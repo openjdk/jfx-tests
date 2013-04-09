@@ -24,10 +24,15 @@
  */
 package org.jemmy.fx;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javax.xml.parsers.ParserConfigurationException;
+import org.jemmy.JemmyException;
 import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
@@ -38,6 +43,7 @@ import org.jemmy.dock.ObjectLookup;
 import org.jemmy.env.Environment;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
+import org.xml.sax.SAXException;
 
 /**
  * Test support for JavaFX node. For simplicity, there is no special wrap class
@@ -69,6 +75,20 @@ import org.jemmy.lookup.LookupCriteria;
 @DockInfo(generateSubtypeLookups = true)
 public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
+    public static final Wrapper WRAPPER;
+    
+    static {
+        try {
+            WRAPPER = new JemmySupportWrapper(NodeWrap.class.getClassLoader(), "support.xml", Root.ROOT.getEnvironment());
+        } catch (ParserConfigurationException ex) {
+            throw new JemmyException("Unable to load support information", ex);
+        } catch (SAXException ex) {
+            throw new JemmyException("Unable to load support information", ex);
+        } catch (IOException ex) {
+            throw new JemmyException("Unable to load support information", ex);
+        }
+    }
+
     /**
      * The node's scene.
      */
@@ -77,7 +97,6 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     private Mouse mouse = null;
     private Focus focus;
     private Showable show = null;
-    private static Wrapper wrapper = new NodeWrapper(Root.ROOT.getEnvironment());
 
     /**
      * "Wraps" a node should a wrap be needed.
@@ -91,7 +110,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
      */
     @DefaultWrapper
     public static <TP extends Node> Wrap<? extends TP> wrap(Environment env, Class<TP> type, TP control) {
-        Wrap<? extends TP> res = wrapper.wrap(type, control);
+        Wrap<? extends TP> res = new WrapperDelegate(new WrapperDelegate(NodeWrap.WRAPPER, env), env).wrap(type, control);
         res.setEnvironment(env);
         return res;
     }

@@ -41,6 +41,14 @@ questions.
             <zipgroupfileset file="${dist.jar}"/>
         </jar>
     </target>
+    <target name="yes-profile" if="jemmy.fx.profile">
+        <property file="${jemmy.fx.profile}"/>
+    </target>
+    <target name="no-profile" unless="jemmy.fx.profile">
+        <property name="profile.includes" value="**"/>
+        <property name="profile.excludes" value=""/>
+    </target>
+    <target name="read-profile" depends="no-profile,yes-profile"/>
     <target name="disable-libs">
         <property name="no.need.to.find.java.fx" value="yes"/>
         <property name="no.need.to.copy.jemmy.libs" value="yes"/>
@@ -61,6 +69,21 @@ questions.
     <target name="-pre-compile">
         <delete file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" failonerror="false"/>
         <mkdir dir="${docks.dir}"/>
+    </target>
+    <target depends="init,deps-jar,-pre-pre-compile,-pre-compile, -copy-persistence-xml,-compile-depend, read-profile" if="have.sources" name="-do-compile">
+        <echo message="Compiling  ${profile.includes} but not ${profile.excludes}"/>
+        <mkdir dir="${src.docks.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.classes.dir}" classpath="${javac.classpath}" includes="${profile.includes}" excludes="${profile.excludes}">
+            <compilerarg value="-processor"/>
+            <compilerarg value="org.jemmy.support.Proccessor"/>
+            <compilerarg value="-Aactions=docks,dump"/>
+            <compilerarg value="-s"/>
+            <compilerarg value="${basedir}/${src.docks.dir}"/>
+        </javac>
+        <copy todir="${build.classes.dir}">
+            <fileset dir="${src.docks.dir}" excludes="${build.classes.excludes},${excludes}" includes="${includes}"/>
+            <fileset dir="${src.dir}" excludes="${build.classes.excludes},${excludes}" includes="${includes}"/>
+        </copy>
     </target>
     <target name="-post-compile">
         <javac srcdir="${docks.dir}" destdir="${build.classes.dir}" classpath="${javac.classpath}"/>

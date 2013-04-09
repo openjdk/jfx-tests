@@ -100,7 +100,7 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
     }
     private Wrap<?> placeholder = null;
     private MenuShowable menuShowable = new MenuShowable();
-    private final NodeWrapper wrapper;
+    private final Wrapper wrapper;
 
     /**
      *
@@ -110,7 +110,7 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
      */
     public MenuItemWrap(Environment env, ITEM item) {
         super(env, item);
-        wrapper = new NodeWrapper(env);
+        wrapper = new WrapperDelegate(NodeWrap.WRAPPER, env);
     }
 
     @Override
@@ -175,7 +175,7 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
                     for (MenuItem mi : ((MenuButton) node).getItems()) {
                         if (mi == item) {
                             //if so, expanf the menu button and keep loking
-                            (new NodeWrapper(getEnvironment()).wrap(MenuButton.class, mb)).as(Expandable.class).expand();
+                            wrapper.wrap(MenuButton.class, mb).as(Expandable.class).expand();
                         }
                     }
                 } else if (node.getProperties().get(MenuItem.class) == item) {
