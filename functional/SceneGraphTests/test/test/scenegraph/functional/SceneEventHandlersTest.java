@@ -20,7 +20,6 @@ import org.jemmy.interfaces.Mouse;
 import org.jemmy.timing.State;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import test.javaclient.shared.TestBase;
 import test.javaclient.shared.Utils;
@@ -88,7 +87,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragDone()
     {
@@ -108,7 +106,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragDroped()
     {
@@ -128,7 +125,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragEntered()
     {
@@ -148,7 +144,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragEnteredTarget()
     {
@@ -168,7 +163,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragExited()
     {
@@ -188,7 +182,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragExitedTarget()
     {
@@ -208,7 +201,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragOver()
     {
@@ -269,7 +261,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testDragDetected()
     {
@@ -418,7 +409,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragEntered()
     {
@@ -431,7 +421,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragEnteredTarget()
     {
@@ -444,7 +433,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragExited()
     {
@@ -457,7 +445,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragExitedTarget()
     {
@@ -470,7 +457,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragOver()
     {
@@ -483,7 +469,6 @@ public class SceneEventHandlersTest extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test
     public void testMouseDragReleased()
     {
@@ -530,8 +515,39 @@ public class SceneEventHandlersTest extends TestBase
         }, SceneEventHandlersApp.HANDLED_STYLE);
     }
     
-    protected void dnd(Wrap from, Point from_point, Wrap to, Point to_point) throws InterruptedException {
-            from.drag().dnd(to, to_point);
+    protected void dnd(Wrap from, Point from_point, Wrap to, Point to_point) throws InterruptedException 
+    {
+	if(!Utils.isWindows())
+	{
+	    from.drag().dnd(to, to_point);
+	    return;
+	}
+	
+	final int STEPS = 50;
+        System.err.println("Use glass robot");
+        Point abs_from_point = new Point(from_point);
+        abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
+        Point abs_to_point = new Point(to_point);
+        abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
+        if (robot == null) {
+            robot = com.sun.glass.ui.Application.GetApplication().createRobot(); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
+        }
+        robot.mouseMove(abs_from_point.x, abs_from_point.y);
+        robot.mousePress(1);
+        int differenceX = abs_to_point.x - abs_from_point.x;
+        int differenceY = abs_to_point.y - abs_from_point.y;
+        for (int i = 0; i <= STEPS; i++) {
+            robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
+            try 
+            {
+                Thread.sleep(20);
+            } 
+            catch (InterruptedException ex) 
+            {
+                System.err.println("Interrupted while drag'n'drop");;
+            }
+        }
+        robot.mouseRelease(1);
     }
     
     private TextControlWrap<Button> actionButton;
