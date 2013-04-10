@@ -122,6 +122,6 @@ public class TreeViewSample extends SampleBase {
     public void edit() {
         //make sure you have set up an editor (see launch())
         //and then
-        new TreeItemDock(treeView.asItemParent(), "0-3-0", EXACT).asEditableCell().edit("new value");
+        new TreeItemDock(treeView.asItemParent(), "0-3", EXACT).asEditableCell().edit("new value");
     }
 }
