@@ -24,18 +24,9 @@
  */
 package org.jemmy.samples.treeview;
 
-import org.jemmy.samples.treetableview.*;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jemmy.fx.SceneDock;
-import org.jemmy.Point;
 import org.jemmy.fx.control.TextFieldCellEditor;
 import org.jemmy.fx.control.TreeItemDock;
-import org.jemmy.fx.control.TreeTableCellItemDock;
-import org.jemmy.fx.control.TreeTableItemDock;
-import org.jemmy.fx.control.TreeTableViewDock;
 import org.jemmy.fx.control.TreeViewDock;
 import org.jemmy.lookup.LookupCriteria;
 import static org.jemmy.resources.StringComparePolicy.*;
@@ -108,11 +99,11 @@ public class TreeViewSample extends SampleBase {
         //collapse
         new TreeItemDock(treeView.asItemParent(), "0-2-0", EXACT).collapse();
         new TreeItemDock(treeView.asItemParent(), "0-2", EXACT).collapse();
-        new TreeItemDock(treeView.asItemParent(), "0-3-0", EXACT).collapse();
+        new TreeItemDock(treeView.asItemParent(), "0-3-3", EXACT).collapse();
         //expand happens automatically
         new TreeItemDock(treeView.asItemParent(), "0-2-0-2", EXACT).mouse().click();
         //but there's, of course, an expand:
-        new TreeItemDock(treeView.asItemParent(), "0-3-0", EXACT).expand();
+        new TreeItemDock(treeView.asItemParent(), "0-3-3", EXACT).expand();
     }
 
     /**
@@ -122,6 +113,6 @@ public class TreeViewSample extends SampleBase {
     public void edit() {
         //make sure you have set up an editor (see launch())
         //and then
-        new TreeItemDock(treeView.asItemParent(), "0-3-2-3", EXACT).asEditableCell().edit("new value");
+        new TreeItemDock(treeView.asItemParent(), "0-0-0-1", EXACT).asEditableCell().edit("new value");
     }
 }
