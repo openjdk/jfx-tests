@@ -45,7 +45,6 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import test.javaclient.shared.JemmyUtils;
 import test.javaclient.shared.TestBase;
@@ -88,7 +87,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drags from node to text field.
      * DRAG_DONE event comes when drag is finished on text field.
@@ -108,7 +106,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drag from text field to node.
      * Text in node's tooltip will change to text from text field.
@@ -127,7 +124,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drag from text field to node.
      */
@@ -145,7 +141,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drag from text field to node.
      */
@@ -163,7 +158,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drag from 
      */
@@ -182,7 +176,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test(timeout = 30000)
     public void onDragExitedTarget()
     {
@@ -198,7 +191,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test(timeout = 30000)
     public void onDragOver()
     {
@@ -213,7 +205,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     @Test(timeout = 30000)
     public void onDragDetected()
     {
@@ -239,7 +230,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drags mouse inside of tested node
      */
@@ -394,7 +384,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drags mouse onto tested node.
      * Event should come to tested node.
@@ -443,7 +432,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 //        });
 //    }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drags mouse out of tested node.
      * Event should come to tested node.
@@ -492,7 +480,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 //        });
 //    }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Drags mouse over tested node starting outside of one.
      */
@@ -516,7 +503,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Ignore//Due to https://javafx-jira.kenai.com/browse/RT-29455
     /**
      * Releases drag on tested node. Drag starts outside of node.
      */
@@ -682,34 +668,37 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     // Workaround to make drag'n'drop work
     protected void dnd(Wrap from, Point from_point, Wrap to, Point to_point) 
     {
-	from.drag().dnd(to, to_point);
+	if(!Utils.isWindows())
+	{
+	    from.drag().dnd(to, to_point);
+	    return;
+	}
 	
-	//Now use Drag interface to drag instead of workaround
-//        final int STEPS = 50;
-//        System.err.println("Use glass robot");
-//        Point abs_from_point = new Point(from_point);
-//        abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
-//        Point abs_to_point = new Point(to_point);
-//        abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
-//        if (robot == null) {
-//            robot = com.sun.glass.ui.Application.GetApplication().createRobot(); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
-//        }
-//        robot.mouseMove(abs_from_point.x, abs_from_point.y);
-//        robot.mousePress(1);
-//        int differenceX = abs_to_point.x - abs_from_point.x;
-//        int differenceY = abs_to_point.y - abs_from_point.y;
-//        for (int i = 0; i <= STEPS; i++) {
-//            robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
-//            try 
-//            {
-//                Thread.sleep(20);
-//            } 
-//            catch (InterruptedException ex) 
-//            {
-//                System.err.println("Interrupted while drag'n'drop");;
-//            }
-//        }
-//        robot.mouseRelease(1);
+	final int STEPS = 50;
+        System.err.println("Use glass robot");
+        Point abs_from_point = new Point(from_point);
+        abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
+        Point abs_to_point = new Point(to_point);
+        abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
+        if (robot == null) {
+            robot = com.sun.glass.ui.Application.GetApplication().createRobot(); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
+        }
+        robot.mouseMove(abs_from_point.x, abs_from_point.y);
+        robot.mousePress(1);
+        int differenceX = abs_to_point.x - abs_from_point.x;
+        int differenceY = abs_to_point.y - abs_from_point.y;
+        for (int i = 0; i <= STEPS; i++) {
+            robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
+            try 
+            {
+                Thread.sleep(20);
+            } 
+            catch (InterruptedException ex) 
+            {
+                System.err.println("Interrupted while drag'n'drop");;
+            }
+        }
+        robot.mouseRelease(1);
     }
     
     static Robot robot = null;
