@@ -92,7 +92,7 @@ public class TreeTableDataWrap<DATA> extends ItemWrap<DATA> {
      */
     @As
     public org.jemmy.interfaces.TreeItem asTreeItem() {
-        return Root.ROOT.getThemeFactory().treeItem(new TreeTableItemWrap(treeTableViewWrap, TreeItem.class, item), treeTableViewWrap);
+        return ThemeDriverFactory.getThemeFactory().treeItem(new TreeTableItemWrap(treeTableViewWrap, TreeItem.class, item), treeTableViewWrap);
     }
 
     /**

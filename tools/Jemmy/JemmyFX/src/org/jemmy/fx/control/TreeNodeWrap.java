@@ -100,7 +100,7 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
     @Override
     public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
         if (org.jemmy.interfaces.TreeItem.class.equals(interfaceClass)) {
-            return (INTERFACE) Root.ROOT.getThemeFactory().treeItem(this, treeViewWrap);
+            return (INTERFACE) ThemeDriverFactory.getThemeFactory().treeItem(this, treeViewWrap);
         }
         return super.as(interfaceClass);
     }

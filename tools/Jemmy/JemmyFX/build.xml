@@ -73,7 +73,7 @@ questions.
     <target depends="init,deps-jar,-pre-pre-compile,-pre-compile, -copy-persistence-xml,-compile-depend, read-profile" if="have.sources" name="-do-compile">
         <echo message="Compiling  ${profile.includes} but not ${profile.excludes}"/>
         <mkdir dir="${src.docks.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${build.classes.dir}" classpath="${javac.classpath}" includes="${profile.includes}" excludes="${profile.excludes}">
+        <javac sourcepath="" srcdir="${src.dir}" destdir="${build.classes.dir}" classpath="${javac.classpath}" includes="${profile.includes}" excludes="${profile.excludes}">
             <compilerarg value="-processor"/>
             <compilerarg value="org.jemmy.support.Proccessor"/>
             <compilerarg value="-Aactions=docks,dump"/>

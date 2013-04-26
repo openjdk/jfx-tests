@@ -31,6 +31,7 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitMenuButton;
 import org.jemmy.control.Wrap;
+import org.jemmy.fx.Root;
 import org.jemmy.fx.control.caspian.CaspianDriverFactory;
 import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Scroll;
@@ -50,6 +51,10 @@ import org.jemmy.interfaces.TreeItem;
  * @author shura
  */
 public abstract class ThemeDriverFactory {
+    
+    static {
+        Root.ROOT.getEnvironment().setPropertyIfNotSet(ThemeDriverFactory.class, ThemeDriverFactory.newInstance());
+    }
 
     final static String NOT_SUPPORTED = "Not supported in the ThemeDriverFactory";
     /**
@@ -59,6 +64,22 @@ public abstract class ThemeDriverFactory {
      */
     public static ThemeDriverFactory newInstance() {
         return new CaspianDriverFactory(); 
+    }
+
+    /**
+     * @param factory
+     * @return
+     */
+    public static ThemeDriverFactory setThemeFactory(ThemeDriverFactory factory) {
+        return (ThemeDriverFactory) Root.ROOT.getEnvironment().setProperty(ThemeDriverFactory.class, factory);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static ThemeDriverFactory getThemeFactory() {
+        return (ThemeDriverFactory) Root.ROOT.getEnvironment().getProperty(ThemeDriverFactory.class);
     }
     /**
      * Returns scroller for Slider and ScrollBar. Default implementation is yet disabled.

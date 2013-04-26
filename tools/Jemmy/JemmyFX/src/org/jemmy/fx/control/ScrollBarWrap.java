@@ -129,7 +129,7 @@ public class ScrollBarWrap<T extends ScrollBar> extends ControlWrap<T> implement
 
             @Override
             public Scroller scroller() {
-                return Root.ROOT.getThemeFactory().caret(ScrollBarWrap.this, this);
+                return ThemeDriverFactory.getThemeFactory().caret(ScrollBarWrap.this, this);
             }
         };
     }
@@ -197,7 +197,7 @@ public class ScrollBarWrap<T extends ScrollBar> extends ControlWrap<T> implement
     }
 
     public Shifter shifter() {
-        return Root.ROOT.getThemeFactory().track(this, theScroll);
+        return ThemeDriverFactory.getThemeFactory().track(this, theScroll);
     }
 
     @Override

@@ -28,7 +28,6 @@ import javafx.scene.Scene;
 import org.jemmy.action.ActionExecutor;
 import org.jemmy.control.Wrapper;
 import org.jemmy.env.Environment;
-import org.jemmy.fx.control.ThemeDriverFactory;
 import org.jemmy.image.*;
 import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import org.jemmy.image.pixel.RasterComparator;
@@ -96,7 +95,6 @@ public class Root extends AbstractParent<Scene> {
             useGlassRobot(this.env);
         }
         this.env.setProperty(ActionExecutor.class, QueueExecutor.EXECUTOR);
-        this.env.setPropertyIfNotSet(ThemeDriverFactory.class, ThemeDriverFactory.newInstance());
         this.env.initTimeout(QueueExecutor.QUEUE_THROUGH_TIME);
         this.env.initTimeout(QueueExecutor.QUEUE_IDENTIFYING_TIMEOUT);
 
@@ -117,22 +115,6 @@ public class Root extends AbstractParent<Scene> {
      */
     public Environment getEnvironment() {
         return env;
-    }
-
-    /**
-     * @param factory
-     * @return
-     */
-    public ThemeDriverFactory setThemeFactory(ThemeDriverFactory factory) {
-        return (ThemeDriverFactory) env.setProperty(ThemeDriverFactory.class, factory);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public ThemeDriverFactory getThemeFactory() {
-        return (ThemeDriverFactory) env.getProperty(ThemeDriverFactory.class);
     }
 
     public <ST extends Scene> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {

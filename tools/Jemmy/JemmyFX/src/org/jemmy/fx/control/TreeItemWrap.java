@@ -122,7 +122,7 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
      */
     @As
     public org.jemmy.interfaces.TreeItem asTreeItem() {
-        return Root.ROOT.getThemeFactory().treeItem(this.theWrap, treeViewWrap);
+        return ThemeDriverFactory.getThemeFactory().treeItem(this.theWrap, treeViewWrap);
     }
 
     @Override

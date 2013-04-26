@@ -133,11 +133,11 @@ public class TreeTableItemWrap<ITEM_TYPE extends TreeItem> extends Wrap<ITEM_TYP
     }
 
     public void expand() {
-        Root.ROOT.getThemeFactory().treeItem(this, treeTableViewWrap).expand();
+        ThemeDriverFactory.getThemeFactory().treeItem(this, treeTableViewWrap).expand();
     }
 
     public void collapse() {
-        Root.ROOT.getThemeFactory().treeItem(this, treeTableViewWrap).collapse();
+        ThemeDriverFactory.getThemeFactory().treeItem(this, treeTableViewWrap).collapse();
     }
 
     @Shortcut
@@ -168,7 +168,7 @@ public class TreeTableItemWrap<ITEM_TYPE extends TreeItem> extends Wrap<ITEM_TYP
 
     @As
     public org.jemmy.interfaces.TreeItem asTreeItem() {
-        return Root.ROOT.getThemeFactory().treeItem(this, treeTableViewWrap);
+        return ThemeDriverFactory.getThemeFactory().treeItem(this, treeTableViewWrap);
     }
 
     @Shortcut

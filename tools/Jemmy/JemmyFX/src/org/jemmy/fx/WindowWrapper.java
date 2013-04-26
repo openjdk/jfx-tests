@@ -30,7 +30,6 @@ import java.util.List;
 import org.jemmy.control.DefaultWrapper;
 import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
-import org.jemmy.fx.control.ContextMenuWrap;
 
 class WindowWrapper extends DefaultWrapper {
 
@@ -38,7 +37,10 @@ class WindowWrapper extends DefaultWrapper {
     
     static {
         OPERATORS.add(WindowWrap.class);
-        OPERATORS.add(ContextMenuWrap.class);
+        try {
+            OPERATORS.add((Class<? extends Wrap>)WindowWrapper.class.getClassLoader().loadClass("org.jemmy.fx.control.ContextMenuWrap"));
+        } catch (ClassNotFoundException ex) {
+        }
     }
 
     WindowWrapper(Environment env) {

@@ -66,7 +66,7 @@ class TreeImpl<T> implements Tree<T> {
 
             @Override
             protected void expand() {
-                Root.ROOT.getThemeFactory().treeItem(new TreeNodeWrap(getRoot(), owner, parent.getEditor()), owner).expand();
+                ThemeDriverFactory.getThemeFactory().treeItem(new TreeNodeWrap(getRoot(), owner, parent.getEditor()), owner).expand();
             }
 
             @Override
