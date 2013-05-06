@@ -24,6 +24,7 @@
 package test.scenegraph.binding;
 
 import com.sun.javafx.collections.ImmutableObservableList;
+import java.lang.reflect.Constructor;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.*;
@@ -37,11 +38,11 @@ import javafx.scene.Group;
 import javafx.scene.effect.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.scene.web.HTMLEditor;
 import test.scenegraph.binding.BindingApp.Factory;
 import test.scenegraph.binding.BindingApp.NodeAndBindee;
 import static test.scenegraph.binding.Factories.Package.*;
@@ -474,8 +475,18 @@ public enum Factories implements Factory {
     HtmlEditor(controls, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            HTMLEditor node = new HTMLEditor();
-            prepareControl(node);
+            Node node = null;
+            try {
+                Class<?> htmlEditorCl = Class.forName("javafx.scene.web.HTMLEditor");
+                for(Constructor constructor : htmlEditorCl.getDeclaredConstructors()) {
+                    if(constructor.getGenericParameterTypes().length == 0) {
+                        constructor.setAccessible(true);
+                        node = (Node) constructor.newInstance();
+                        prepareControl((Control)node);
+                    }
+                }
+            } catch (Exception ignored) {
+            }
             return new BindingApp.NodeAndBindee(node, node);
         }
     }),
