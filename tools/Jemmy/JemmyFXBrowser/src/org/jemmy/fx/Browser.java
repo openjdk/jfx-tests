@@ -22,6 +22,7 @@ import org.jemmy.browser.HierarchyDescriptor;
 import org.jemmy.browser.HierarchyView;
 import org.jemmy.control.Wrap;
 import org.jemmy.control.Wrapper;
+import org.jemmy.control.WrapperDelegate;
 import org.jemmy.env.Environment;
 import org.jemmy.env.Timeout;
 import org.jemmy.lookup.ControlList;
@@ -126,8 +127,7 @@ public class Browser {
                         }.dispatch(wrap.getEnvironment());
                     }
                     NodeHierarchy hierarchy = new NodeHierarchy(parent, Environment.getEnvironment());
-                    NodeWrapper wrapper = new NodeWrapper(((SceneWrap<? extends Scene>) wrap).getControl(),
-                            Environment.getEnvironment());
+                    Wrapper wrapper = new WrapperDelegate(NodeWrap.WRAPPER, Environment.getEnvironment());
 
                     @Override
                     public ControlList getHierarchy() {
