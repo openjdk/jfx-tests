@@ -29,6 +29,7 @@ import javafx.scene.Node;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
@@ -87,6 +88,14 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
                 }
             }
         }.dispatch(getEnvironment());
+    }
+    
+    @Override
+    public Point getClickPoint() {
+        Rectangle clippedContainerBounds = getClippedContainerWrap().getScreenBounds();
+        Rectangle fullScreenBounds = getScreenBounds();
+        Rectangle intersection = fullScreenBounds.intersection(clippedContainerBounds);
+        return new Point(intersection.x + intersection.width / 2, intersection.y + intersection.height / 2);
     }
 
     @Override
@@ -212,8 +221,9 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
                 }
             }
         });
-        AbstractScroll scroll2 = Utils.getContainerScroll(treeViewWrap.as(Parent.class, Node.class), false);
-        Utils.makeCenterVisible(this.getTreeViewWrap(), this, scroll2, Orientation.HORIZONTAL);
+        //Disabled, as getClickPoint() don't require to center the cell.
+        //AbstractScroll scroll2 = Utils.getContainerScroll(treeViewWrap.as(Parent.class, Node.class), false);
+        //Utils.makeCenterVisible(this.getTreeViewWrap(), this, scroll2, Orientation.HORIZONTAL);
     }
 
     protected boolean isReallyVisible(Node node) {
