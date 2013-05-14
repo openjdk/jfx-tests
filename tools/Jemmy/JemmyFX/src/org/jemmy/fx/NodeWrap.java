@@ -163,12 +163,8 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
             @Override
             public void run(Object... parameters) {
-                Bounds rect = nd.localToScene(nd.getLayoutBounds());
-                Rectangle res = SceneWrap.getScreenBounds(env, nd.getScene());
-                res.x += rect.getMinX();
-                res.y += rect.getMinY();
-                res.width = (int) rect.getWidth();
-                res.height = (int) rect.getHeight();
+                Bounds rect = nd.localToScreen(nd.getLayoutBounds());
+                Rectangle res = new Rectangle(rect.getMinX(), rect.getMinY(), rect.getWidth(), rect.getHeight());
                 setResult(res);
             }
         };
