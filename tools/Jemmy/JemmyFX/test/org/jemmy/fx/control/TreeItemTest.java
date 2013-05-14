@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -37,28 +37,18 @@ import org.junit.*;
 public class TreeItemTest {
 
     private TreeViewDock tree;
-    private LabeledDock selection;
+//    private LabeledDock selection;
 
-    public TreeItemTest() {
-    }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         TreeTest.setUpClass();
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
     @Before
     public void setUp() {
         tree = new TreeViewDock(new SceneDock().asParent());
-        selection = new LabeledDock(new SceneDock().asParent(), "selection");
-    }
-
-    @After
-    public void tearDown() {
+//        selection = new LabeledDock(new SceneDock().asParent(), "selection");
     }
 
     @Test
@@ -83,23 +73,23 @@ public class TreeItemTest {
                 "23", StringComparePolicy.SUBSTRING).asEditableCell().select();
     }
 
-//    @Test
-//    public void byToStringPath() {
-//        new TreeItemDock(tree.asItemParent(), StringComparePolicy.EXACT, "0", "02", "023").asEditableCell().select();
-//    }
-//
-//    @Test
-//    public void byPath() {
-//        new TreeItemDock(tree.asItemParent(), "0", "02", "024").asEditableCell().select();
-//    }
-//
-//    @Test
-//    public void byCriteriaPath() {
-//        new TreeItemDock(tree.asItemParent(),
-//                new EqualsLookup<Object>("0"),
-//                new EqualsLookup<Object>("02"),
-//                new EqualsLookup<Object>("025")).asEditableCell().select();
-//    }
+    @Test
+    public void byToStringPath() {
+        new TreeItemDock(tree.asItemParent(), StringComparePolicy.EXACT, "0", "02", "023").asEditableCell().select();
+    }
+
+    @Test
+    public void byPath() {
+        new TreeItemDock(tree.asItemParent(), "0", "02", "024").asEditableCell().select();
+    }
+
+    @Test
+    public void byCriteriaPath() {
+        new TreeItemDock(tree.asItemParent(),
+                new EqualsLookup<Object>("0"),
+                new EqualsLookup<Object>("02"),
+                new EqualsLookup<Object>("025")).asEditableCell().select();
+    }
     @Test
     public void autoExpand() {
         new TreeItemDock(tree.asItemParent(), "00").asTreeItem().collapse();

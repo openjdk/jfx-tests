@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -100,12 +100,12 @@ public class TreeTest {
         assertEquals("023", tree.asTree().selector().select(new ByToStringLookup("02"), new ByToStringLookup("023")).getControl());
     }
 
-    @Test
+    @Test//too
     public void itemSelectable() {
         Selectable<TreeItem> selectable = tree.asTreeItemSelectable();
         selectable.selector().select(selectable.getStates().get(5));
         tree.wrap().waitProperty(TreeViewWrap.SELECTED_INDEX_PROP_NAME, 5);
-        assertEquals(0, tree.asSelectable(TreeItem.class).getStates().size());
+        assertEquals(24, tree.asSelectable(TreeItem.class).getStates().size());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class TreeTest {
     }
 
     @Test
-    public void collapseAll() {
+    public void collapseAll() throws InterruptedException {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("0")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("02")).asTreeItem().expand();
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("00")).asTreeItem().expand();
@@ -172,7 +172,7 @@ public class TreeTest {
 
         p.lookup(new LookupCriteria<javafx.scene.control.TreeItem>() {
             public boolean check(javafx.scene.control.TreeItem control) {
-                return control.getValue().equals("12");
+                return control.getValue().equals("012");
             }
         }).as(EditableCell.class).edit("lala");
     }

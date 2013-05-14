@@ -178,13 +178,18 @@ public class TreeApp extends Application {
         view.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         box.getChildren().add(view);
 
-        final Label lastItem = new Label();
-        lastItem.setId("selection");
-        box.getChildren().add(lastItem);
+        final Label selectedItem = new Label();
+        selectedItem.setId("selection");
+        box.getChildren().add(selectedItem);
 
         view.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent t) {
-                lastItem.setText(view.getSelectionModel().getSelectedItems().get(0).getValue());
+                final TreeItem<String> value = view.getSelectionModel().getSelectedItems().get(0);
+                if (value != null) {
+                    selectedItem.setText(value.getValue());
+                } else {
+                    selectedItem.setText("null");
+                }
             }
         });
 
