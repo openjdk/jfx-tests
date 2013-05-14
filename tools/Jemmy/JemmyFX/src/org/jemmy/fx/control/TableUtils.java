@@ -112,7 +112,10 @@ class TableUtils {
             final ColumnRowIndexInfoProvider infoProvider,
             final Class<CellClass> cellType) {
 
-        final Rectangle viewArea = getClippedContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();
+        final Rectangle viewArea = getContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();
+        final Rectangle clippedContainerArea = getClippedContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();
+        
+        final Rectangle actuallyVisibleArea = new Rectangle(viewArea.x, viewArea.y, clippedContainerArea.width, clippedContainerArea.height);
 
         return new GetAction<int[]>() {
             @Override
@@ -127,7 +130,7 @@ class TableUtils {
                             Rectangle bounds = NodeWrap.getScreenBounds(wrap.getEnvironment(), control);
                             int column = infoProvider.getColumnIndex(control);
                             int row = infoProvider.getRowIndex(control);
-                            if (viewArea.contains(bounds) && row >= 0 && column >= 0) {
+                            if (actuallyVisibleArea.contains(bounds) && row >= 0 && column >= 0) {
                                 res[0] = Math.min(res[0], column);
                                 res[1] = Math.min(res[1], row);
                                 res[2] = Math.max(res[2], column);
@@ -146,13 +149,25 @@ class TableUtils {
     /**
      * @return wrap of parent container that contains Cells
      */
+    static Wrap<? extends javafx.scene.Parent> getContainerWrap(Parent<Node> parent) {
+        return getParentWrap(parent, VIRTIAL_FLOW_CLASS_NAME);
+    }
+
     static Wrap<? extends javafx.scene.Parent> getClippedContainerWrap(Parent<Node> parent) {
+        return getParentWrap(parent, CLIPPED_CONTAINER_CLASS_NAME);
+    }    
+    
+    static private Wrap<? extends javafx.scene.Parent> getParentWrap(Parent<Node> parent, final String className) {
         return parent.lookup(javafx.scene.Parent.class, new LookupCriteria<javafx.scene.Parent>() {
+            @Override
             public boolean check(javafx.scene.Parent control) {
-                return control.getClass().getName().endsWith("VirtualFlow");
+                return control.getClass().getName().endsWith(className);
             }
         }).wrap();
     }
+    
+    private static final String VIRTIAL_FLOW_CLASS_NAME = "VirtualFlow";
+    private static final String CLIPPED_CONTAINER_CLASS_NAME = "VirtualFlow$ClippedContainer";
 
     static abstract class ColumnRowIndexInfoProvider {
 
