@@ -71,7 +71,9 @@ public class TestBase extends TestBaseBase {
      *
      */
     public void setWaitImageDelay(long _delay) {
-        Root.ROOT.getEnvironment().setTimeout(Wrap.WAIT_STATE_TIMEOUT, _delay);
+        if (!(test.javaclient.shared.TestUtil.isEmbedded() && _delay < Wrap.WAIT_STATE_TIMEOUT.getValue())) {
+            Root.ROOT.getEnvironment().setTimeout(Wrap.WAIT_STATE_TIMEOUT, _delay);
+        }
     }
 
     @Before
