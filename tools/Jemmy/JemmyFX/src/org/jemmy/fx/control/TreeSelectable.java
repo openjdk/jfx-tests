@@ -53,7 +53,13 @@ abstract class TreeSelectable<T> implements Selectable<T>, Selector<T> {
     abstract protected Environment getEnvironment();
 
     TreeSelectable(Class<T> type) {
-        this.type = type;
+        if (type == null) {
+            //When type is null - selection by TreeItem.
+            this.type = (Class<T>) TreeItem.class;
+        } else {
+            //When not null - by data.
+            this.type = type;
+        }
     }
 
     TreeSelectable() {
@@ -71,7 +77,7 @@ abstract class TreeSelectable<T> implements Selectable<T>, Selector<T> {
             }
 
             protected void getAllNodes(ArrayList<T> list, TreeItem node) {
-                if (type == null) {
+                if (type.isAssignableFrom(TreeItem.class)) {
                     boolean add = true;
                     TreeItem parent = node;
                     while ((parent = parent.getParent()) != null) {
@@ -101,7 +107,7 @@ abstract class TreeSelectable<T> implements Selectable<T>, Selector<T> {
 
     @Override
     public T getState() {
-        if (type == null) {
+        if (type.isAssignableFrom(TreeItem.class)) {
             return (T) getSelectedItem();
         } else if (type.isInstance(getSelectedItem().getValue())) {
             return (T) getSelectedItem().getValue();
@@ -117,17 +123,16 @@ abstract class TreeSelectable<T> implements Selectable<T>, Selector<T> {
 
     @Override
     public Class<T> getType() {
-        return (type == null) ? (Class<T>) TreeItem.class : type;
+        return type;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void select(final T state) {
-
         Wrap<? extends TreeItem> cellItem = asTreeItemParent().lookup(new LookupCriteria<TreeItem>() {
             @Override
             public boolean check(TreeItem control) {
-                if (type == null) {
+                if (type.isAssignableFrom(TreeItem.class)) {
                     return control.equals(state);
                 } else {
                     return control.getValue().equals(state);

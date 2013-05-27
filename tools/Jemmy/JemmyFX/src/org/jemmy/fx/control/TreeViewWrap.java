@@ -377,6 +377,8 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
 
     protected class TreeViewSelectable<T> extends TreeSelectable<T> {
 
+        private TreeNodeParent treeNodeParent;
+        
         TreeViewSelectable(Class<T> type) {
             super(type);
         }
@@ -402,7 +404,10 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
 
         @Override
         protected Parent asTreeItemParent() {
-            return TreeViewWrap.this.asItemParent(Object.class);
+            if (treeNodeParent == null) {
+                treeNodeParent = new TreeNodeParent(TreeViewWrap.this, TreeItem.class);
+            }
+            return treeNodeParent;
         }
 
         @Override
