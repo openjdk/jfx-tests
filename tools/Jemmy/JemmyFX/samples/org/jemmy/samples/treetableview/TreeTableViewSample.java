@@ -66,7 +66,7 @@ public class TreeTableViewSample extends SampleBase {
      * structure of data.
      */
     @Test
-    public void expandingCollapsing() throws InterruptedException {        
+    public void expandingCollapsing() throws InterruptedException {     
         TreeTableItemDock treeTableItemDock1 = new TreeTableItemDock(treeTableView.asTreeItemParent(), treeTableView.wrap(), "0-0-0");
         TreeTableItemDock treeTableItemDock2 = new TreeTableItemDock(treeTableView.asTreeItemParent(), treeTableView.wrap(), "0-0-1");
         
@@ -117,6 +117,7 @@ public class TreeTableViewSample extends SampleBase {
     @Test
     public void scrollToCell() {
         new TreeTableCellItemDock(treeTableView.asTable(), "0-3-3-3-lastname").shower().show();
+        new TreeTableCellItemDock(treeTableView.asTable(), "0-0-0").shower().show();
     }
 
     /**

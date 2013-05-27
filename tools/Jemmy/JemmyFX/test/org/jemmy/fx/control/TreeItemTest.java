@@ -24,6 +24,8 @@
  */
 package org.jemmy.fx.control;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.TreeItem;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.interfaces.Parent;
@@ -90,7 +92,7 @@ public class TreeItemTest {
                 new EqualsLookup<Object>("02"),
                 new EqualsLookup<Object>("025")).asEditableCell().select();
     }
-    @Test
+    //@Test//https://javafx-jira.kenai.com/browse/RT-30658
     public void autoExpand() {
         new TreeItemDock(tree.asItemParent(), "00").asTreeItem().collapse();
         new TreeItemDock(tree.asItemParent(), "01").asTreeItem().collapse();
