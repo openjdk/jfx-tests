@@ -27,6 +27,7 @@ package org.jemmy.fx.control;
 import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.control.*;
 import org.jemmy.dock.DockInfo;
@@ -114,6 +115,11 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
     @Override
     public Rectangle getScreenBounds() {
         return theWrap.getScreenBounds();
+    }
+    
+    @Override
+    public Point getClickPoint() {
+        return theWrap.getClickPoint();
     }
 
     /**
