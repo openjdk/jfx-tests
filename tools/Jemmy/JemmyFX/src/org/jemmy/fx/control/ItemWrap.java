@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,6 +25,7 @@
 package org.jemmy.fx.control;
 
 import javafx.scene.Node;
+import org.jemmy.JemmyException;
 import org.jemmy.Rectangle;
 import org.jemmy.control.As;
 import org.jemmy.control.ControlType;
@@ -112,16 +113,23 @@ public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implement
         return item;
     }
 
-    public void edit(DATA newValue) {
-        as(Showable.class).shower().show();
-        editor.edit(this, newValue);
+    @Override
+    public void edit(DATA newValue) {        
+        if (editor == null) {
+            throw new JemmyException("Editor is null for <" + toString() + ">.");
+        } else {
+            as(Showable.class).shower().show();
+            editor.edit(this, newValue);
+        }
     }
 
+    @Override
     public void select() {
         as(Showable.class).shower().show();
         mouse().click();
     }
 
+    @Override
     public Class getType() {
         //Object.class - this is only needed for editing where type is not 
         //really sticking outside anywhere

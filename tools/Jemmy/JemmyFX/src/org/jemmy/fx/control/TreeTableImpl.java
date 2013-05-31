@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -27,7 +27,6 @@ package org.jemmy.fx.control;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView;
 import org.jemmy.control.Wrap;
-import org.jemmy.fx.Root;
 import org.jemmy.interfaces.Tree;
 import org.jemmy.interfaces.TreeSelector;
 import org.jemmy.lookup.LookupCriteria;
@@ -38,19 +37,21 @@ import org.jemmy.lookup.LookupCriteria;
 class TreeTableImpl<T> implements Tree<T> {
 
     protected TreeTableViewWrap<? extends TreeTableView> owner;
-    protected TreeTableDataParent<T> parent;
+    protected TreeTableItemParent<T> parent;
     protected Class<T> itemType;
 
-    public TreeTableImpl(Class<T> itemType, TreeTableViewWrap<? extends TreeTableView> owner, TreeTableDataParent<T> parent) {
+    public TreeTableImpl(Class<T> itemType, TreeTableViewWrap<? extends TreeTableView> owner, TreeTableItemParent<T> parent) {
         this.owner = owner;
         this.itemType = itemType;
         this.parent = parent;
     }
 
+    @Override
     public Class<T> getType() {
         return itemType;
     }
 
+    @Override
     public TreeSelector<T> selector() {
         return new TreeSelectorImpl<T>() {
             @Override
@@ -58,14 +59,14 @@ class TreeTableImpl<T> implements Tree<T> {
                 if (isShowRoot() && criteria.length > 0 && !getRoot().isExpanded()) {
                     expand();
                 }
-                Wrap res = new TreeTableDataWrap(itemType, select(owner, getRoot(), criteria), owner, parent.getEditor());
+                Wrap res = new TreeTableItemWrap(select(owner, getRoot(), criteria), owner, itemType, null);
                 res.mouse().click();
                 return res;
             }
 
             @Override
             protected void expand() {
-                ThemeDriverFactory.getThemeFactory().treeItem(new TreeTableDataWrap(itemType, getRoot(), owner, parent.getEditor()), owner).expand();
+                new TreeTableItemWrap(getRoot(), owner, itemType, null).expand();
             }
 
             @Override

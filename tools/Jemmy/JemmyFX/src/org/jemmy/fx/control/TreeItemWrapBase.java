@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -58,9 +58,8 @@ public class TreeItemWrapBase {
 
     /**
      * Allows to find tree items by a sequence of objects which are compared to
-     * results of
-     * <code>getValue()</code> for all items starting from a root all the way to
-     * the node in question - one object per one level.
+     * results of <code>getValue()</code> for all items starting from a root all
+     * the way to the node in question - one object per one level.
      *
      * @param <T>
      * @param type
@@ -100,18 +99,15 @@ public class TreeItemWrapBase {
         };
     }
 
-    private static abstract class TreePathCriteria<T, ELEMENT> implements ItemCriteria<TreeItem, T> {
+private static abstract class TreePathCriteria<T, ELEMENT> implements ItemCriteria<TreeItem, T> {
 
         ELEMENT[] path;
 
         public TreePathCriteria(ELEMENT[] path) {
             this.path = path;
         }
-
         protected abstract boolean checkSingleItem(TreeItem item, ELEMENT pathElement);
-
         public boolean checkItem(TreeItem item) {
-
             for (int i = path.length - 1; i >= 0 && item != null; i--) {
                 if (!checkSingleItem(item, path[i])) {
                     return false;

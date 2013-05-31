@@ -44,10 +44,10 @@ public class TableItemTest {
     }
     @Test
     public void byCoords() {
-        new TableCellItemDock(table, 1, 3).asEditableCell().select();
+        new TableCellItemDock(table, 3, 1).asEditableCell().select();
         new TableCellItemDock(table, 0, 0).asEditableCell().select();
-        new TableCellItemDock(table, 1, 4).asEditableCell().select();
-        new TableCellItemDock(table, 1, tableDock.getItemCount() - 1).asEditableCell().select();
+        new TableCellItemDock(table, 4, 1).asEditableCell().select();
+        new TableCellItemDock(table, tableDock.getItemCount() - 1, 1).asEditableCell().select();
     }
     @Test
     public void byToString() {

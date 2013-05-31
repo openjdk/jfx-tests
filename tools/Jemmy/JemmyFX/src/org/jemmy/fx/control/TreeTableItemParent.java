@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,59 +24,48 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView;
 import org.jemmy.control.Wrap;
+import org.jemmy.interfaces.EditableCellOwner;
 
 /**
  * @author Alexander Kirov
  */
-class TreeTableItemParent<CONTROL extends TreeItem> extends ItemParent<CONTROL, Integer> {
+class TreeTableItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
 
-    Class<CONTROL> type;
-    TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap;
+    private final TreeItem<? extends AUX> root;
+    private final TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap;
 
-    public TreeTableItemParent(TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap, Class<CONTROL> type) {
+    TreeTableItemParent(TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap, TreeItem<? extends AUX> root, Class<AUX> type) {
         super(treeTableViewWrap, type);
+        this.root = root;
         this.treeTableViewWrap = treeTableViewWrap;
-        this.type = type;
+    }
+
+    TreeTableItemParent(TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap, Class<AUX> type) {
+        this(treeTableViewWrap, null, type);
+    }
+
+    @Override
+    protected <DT extends AUX> Wrap<? extends DT> wrap(Class<DT> type, TreeItem item, AUX aux) {
+        return new TreeTableItemWrap<DT>(item, treeTableViewWrap, type, getEditor());
     }
 
     @Override
     protected void doRefresh() {
-        List items = getVisibleItems();
-        for (int i = 0; i < items.size(); i++) {
-            Object item = items.get(i);
-            if (getType().isInstance(item)) {
-                getFound().add(getType().cast(item));
-                getAux().add(i);
-            }
+        if (root == null) {
+            refresh(treeTableViewWrap.getRoot());
+        } else {
+            refresh(root);
         }
     }
 
-    @Override
-    protected <DT extends CONTROL> Wrap<? extends DT> wrap(Class<DT> type, CONTROL item, Integer aux) {
-        return new TreeTableItemWrap(treeTableViewWrap, type, item);
-    }
-
-    private List<TreeItem> getVisibleItems() {
-        List<TreeItem> list = new ArrayList<TreeItem>();
-        final TreeItem root = treeTableViewWrap.getRoot();
-        if (treeTableViewWrap.isShowRoot()) {
-            list.add(root);
-        }
-        getVisibleItemsRecursive(root, list);
-        return list;
-    }
-
-    private void getVisibleItemsRecursive(TreeItem root, List<TreeItem> listForAddition) {
-        if (root.isExpanded()) {
-            for (Object item : root.getChildren()) {
-                listForAddition.add((TreeItem) item);
-                getVisibleItemsRecursive((TreeItem) item, listForAddition);
-            }
+    private void refresh(TreeItem<? extends AUX> parent) {
+        getFound().add((TreeItem<AUX>) parent);
+        getAux().add((AUX) parent.getValue());
+        for (TreeItem<? extends AUX> si : parent.getChildren()) {
+            refresh(si);
         }
     }
 }

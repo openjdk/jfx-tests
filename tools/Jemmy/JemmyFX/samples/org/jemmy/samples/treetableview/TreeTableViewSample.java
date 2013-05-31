@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012-2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -29,12 +29,14 @@ import java.util.List;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.Point;
 import org.jemmy.fx.control.TextFieldCellEditor;
-import org.jemmy.fx.control.TreeTableCellItemDock;
-import org.jemmy.fx.control.TreeTableItemDock;
+import org.jemmy.fx.control.TreeTableCellDock;
 import org.jemmy.fx.control.TreeTableViewDock;
+import org.jemmy.fx.control.TreeTableItemDock;
+import org.jemmy.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
+import org.jemmy.samples.treetableview.TreeTableViewApp.Person;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -52,13 +54,49 @@ public class TreeTableViewSample extends SampleBase {
         scene = new SceneDock();
 
         /**
-         * Looking up for TableView control. The best option is to do that by
-         * id.
+         * Looking up for TreeTableView control. The best option is to do that
+         * by id.
          */
-        treeTableView = new TreeTableViewDock(scene.asParent(), TreeTableViewApp.TREE_TABLE_VIEW_ID);
+        treeTableView = new TreeTableViewDock(scene.asParent(),
+                TreeTableViewApp.TREE_TABLE_VIEW_ID);
 
         //Set an editor right away.
         treeTableView.asTable().setEditor(new TextFieldCellEditor<Object>());
+        treeTableView.asTreeItemParent(Person.class).setEditor(new TextFieldCellEditor<Object>());
+    }
+
+    /**
+     * TreeTableView lookup is no different than other components - check the
+     * lookup samples, table item lookup is another matter.
+     *
+     * You can lookup cells by content, treeItems or data items (objects/data
+     * inside the tree item), directly, or by lookup criteria. You will need to
+     * use appropriate implementation of Parent interface over data or its
+     * representation in cells or treeItems.
+     */
+    @Test
+    public void itemLookup() {
+        //Cell lookups are similar to lookups for TableView, logically, and by interface.
+        //You could find a cell by it's content.
+        new TreeTableCellDock(treeTableView.asTable(), "0-1-lastname").mouse().click();
+        //By coordinates.
+        new TreeTableCellDock(treeTableView.asTable(), 1, 1).mouse().click();
+        //By toString() of the object.
+        new TreeTableCellDock(treeTableView.asTable(),
+                "0-2-first", StringComparePolicy.SUBSTRING).mouse().click();
+        //Or any other way by creating a custom lookup criteria.
+        new TreeTableCellDock(treeTableView.asTable(), new LookupCriteria<Object>() {
+            @Override
+            public boolean check(Object cntrl) {
+                return cntrl instanceof Date;
+            }
+        }).mouse().click();
+        //TreeItem lookups are simimilar to lookups for TreeView.
+        //Lookup treeItem, for instance, by the first column's content (only in visible part of TreeTableView).
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0", StringComparePolicy.EXACT).mouse().click();
+        //Lookup by data item, which is stored in treeItem.
+        new TreeTableCellDock(treeTableView.asDataParent(),
+                treeTableView.wrap().getControl().getRoot().getValue()).mouse().click();
     }
 
     /**
@@ -66,13 +104,19 @@ public class TreeTableViewSample extends SampleBase {
      * structure of data.
      */
     @Test
-    public void expandingCollapsing() throws InterruptedException {     
+    public void expandingCollapsing() throws InterruptedException {
+        //As we need to see the TreeItem for lookup by first column. 
+        //Scrolling - is similar to TreeView and TableView.         
+        treeTableView.asScrollable2D().vto(0);
+
+        //Select by first column - is unique for TreeTableView wrap, as it works with cell'c content.
+        //Select by text in TreeView wrap works with toString() representation of data. There is similar mechanism for TreeTableView.
         TreeTableItemDock treeTableItemDock1 = new TreeTableItemDock(treeTableView.asTreeItemParent(), treeTableView.wrap(), "0-0-0");
         TreeTableItemDock treeTableItemDock2 = new TreeTableItemDock(treeTableView.asTreeItemParent(), treeTableView.wrap(), "0-0-1");
-        
+
         treeTableItemDock1.collapse();
         treeTableItemDock2.collapse();
-        
+
         //Some intermediate action is needed, between the same item is collapsed
         //and expanded, because otherwise, jemmy will try to expand before the
         //JFX is ready for it.
@@ -81,43 +125,25 @@ public class TreeTableViewSample extends SampleBase {
     }
 
     /**
-     * TableView lookup is no different than other components - check the lookup
-     * samples, table item lookup is another matter.
-     */
-    @Test
-    public void lookup() {
-        //You could find a cell by it's content.
-        new TreeTableCellItemDock(treeTableView.asTable(), "0-1-lastname").asEditableCell().select();
-        //By coordinates.
-        new TreeTableCellItemDock(treeTableView.asTable(), 1, 1).asEditableCell().select();
-        //By toString() of the object.
-        new TreeTableCellItemDock(treeTableView.asTable(), "0-2-first", StringComparePolicy.SUBSTRING).asEditableCell().select();
-        //Or any other way by creating a custom lookup criteria.
-        new TreeTableCellItemDock(treeTableView.asTable(), new LookupCriteria<Object>() {
-            public boolean check(Object cntrl) {
-                return cntrl instanceof Date;
-            }
-        }).asEditableCell().select();
-    }
-
-    /**
      * Selecting a cell by column and row indexes.
      */
     @Test
     public void selectCellByColumnAndRow() {
-        new TreeTableCellItemDock(treeTableView.asTable(), 2, 2).asEditableCell().select();
+        new TreeTableCellDock(treeTableView.asTable(), 2, 2).asEditableCell().select();
         //or
         treeTableView.asTable().select(new Point(3, 3));
     }
 
     /**
      * Scrolling happens automatically when you are trying to select a cell.
-     * Should you need the scrolling anyway ...
+     * Should you need the scrolling anyway ... Shower interface is implemented
+     * for TreeItem wrap, or for cell wrap.
      */
     @Test
     public void scrollToCell() {
-        new TreeTableCellItemDock(treeTableView.asTable(), "0-3-3-3-lastname").shower().show();
-        new TreeTableCellItemDock(treeTableView.asTable(), "0-0-0").shower().show();
+        new TreeTableCellDock(treeTableView.asTable(), "0-3-3-3-lastname").shower().show();
+        new TreeTableCellDock(treeTableView.asTable(), "0-0-0").shower().show();
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), StringComparePolicy.EXACT, "0", "0-3", "0-3-2").shower().show();
     }
 
     /**
@@ -125,7 +151,8 @@ public class TreeTableViewSample extends SampleBase {
      */
     @Test
     public void getTableSize() {
-        System.out.println("tableView has " + treeTableView.getColumns().size() + " columns and " + treeTableView.getItems().size() + " rows.");
+        System.out.println("tableView has " + treeTableView.getColumns().size()
+                + " columns and " + treeTableView.getItems().size() + " rows.");
     }
 
     /**
@@ -141,7 +168,14 @@ public class TreeTableViewSample extends SampleBase {
      */
     @Test
     public void editCell() {
-        new TreeTableCellItemDock(treeTableView.asTable(), 2, 2).asEditableCell().edit("Kirov");
+        treeTableView.asTreeItemParent(Person.class).lookup(new LookupCriteria<Person>() {
+            @Override
+            public boolean check(Person cntrl) {
+                return cntrl.firstNameProperty().getValue().equals("0-0-0-2-firstname");
+            }
+        }).wrap().as(EditableCell.class).edit("Kirov A.");
+
+        new TreeTableCellDock(treeTableView.asTable(), 2, 2).asEditableCell().edit("Kirov");
     }
 
     /**
@@ -157,9 +191,19 @@ public class TreeTableViewSample extends SampleBase {
      */
     @Test
     public void getSelectedCells() {
-        new TreeTableCellItemDock(treeTableView.asTable(), "0-2-first", StringComparePolicy.SUBSTRING).asEditableCell().select();
+        new TreeTableCellDock(treeTableView.asTable(), "0-2-first",
+                StringComparePolicy.SUBSTRING).asEditableCell().select();
         List<Point> selection = treeTableView.getSelectedCells();
         System.out.println("Selected indices are = " + selection);
-        System.out.println("While actual are = " + treeTableView.control().getSelectionModel().getSelectedIndices());
+        System.out.println("While actual are = "
+                + treeTableView.control().getSelectionModel().getSelectedIndices());
+    }
+
+    /**
+     * How to scroll using Scrollable2D interface.
+     */
+    @Test
+    public void scrollingViaScrollable2D() {
+        treeTableView.asScrollable2D().asVerticalScroll().to(0.9);
     }
 }
