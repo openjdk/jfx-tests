@@ -59,10 +59,6 @@ public class TreeTableViewSample extends SampleBase {
          */
         treeTableView = new TreeTableViewDock(scene.asParent(),
                 TreeTableViewApp.TREE_TABLE_VIEW_ID);
-
-        //Set an editor right away.
-        treeTableView.asTable().setEditor(new TextFieldCellEditor<Object>());
-        treeTableView.asTreeItemParent(Person.class).setEditor(new TextFieldCellEditor<Object>());
     }
 
     /**
@@ -164,10 +160,11 @@ public class TreeTableViewSample extends SampleBase {
     }
 
     /**
-     * Editing cell value.
+     * Editing cell value. Before the editing, you need to specify the editor.
      */
     @Test
     public void editCell() {
+        treeTableView.asTreeItemParent(Person.class).setEditor(new TextFieldCellEditor<Object>());
         treeTableView.asTreeItemParent(Person.class).lookup(new LookupCriteria<Person>() {
             @Override
             public boolean check(Person cntrl) {
@@ -175,6 +172,7 @@ public class TreeTableViewSample extends SampleBase {
             }
         }).wrap().as(EditableCell.class).edit("Kirov A.");
 
+        treeTableView.asTable().setEditor(new TextFieldCellEditor<Object>());
         new TreeTableCellDock(treeTableView.asTable(), 2, 2).asEditableCell().edit("Kirov");
     }
 
