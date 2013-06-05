@@ -102,7 +102,9 @@ public class TreeTableViewSample extends SampleBase {
     public void expandingCollapsing() throws InterruptedException {
         //collapse
         new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0-0", EXACT).collapse();
-        //expand:
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0", EXACT).collapse();
+        //expand: 
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0", EXACT).expand();        
         new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0-0", EXACT).expand();        
     }
 

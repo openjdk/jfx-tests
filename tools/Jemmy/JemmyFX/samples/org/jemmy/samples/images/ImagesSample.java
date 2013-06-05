@@ -60,6 +60,7 @@ import static org.junit.Assert.*;
 public class ImagesSample extends SampleBase {
 
     private static SceneDock scene;
+    public static final String SCENE_PNG = "scene.png";
     public static final String RADIO_PNG = "radio.golden.png";
     public static final String TOGGLE_PNG = "toggle.golden.png";
     public static final String RADIO_RES_PNG = "radio.res.png";
@@ -91,6 +92,7 @@ public class ImagesSample extends SampleBase {
         //to store reference images somehwre with tests
         radio.wrap().getScreenImage().save(RADIO_PNG);
         toggle.wrap().getScreenImage().save(TOGGLE_PNG);
+        scene.wrap().getScreenImage().save(SCENE_PNG);
     }
 
     /**
@@ -184,7 +186,7 @@ public class ImagesSample extends SampleBase {
         //should be ok as images are close
         radio.mouse().click();
         button.mouse().click();
-        radio.waitImage(RADIO_PNG, "relaxed.1." + RADIO_RES_PNG, "relaxed.1." + RADIO_DIFF_PNG);
+        radio.waitImage(RADIO_PNG, "distance.0." + RADIO_RES_PNG, "distance.0." + RADIO_DIFF_PNG);
 
         //now use maximum (over all pixels) distance
         Environment.getEnvironment().setProperty(RasterComparator.class, new MaxDistanceComparator(.3));
@@ -193,7 +195,7 @@ public class ImagesSample extends SampleBase {
         radio.mouse().click();
         button.mouse().click();
         try {
-            radio.waitImage(RADIO_PNG, "relaxed.1." + RADIO_RES_PNG, "relaxed.1." + RADIO_DIFF_PNG);
+            radio.waitImage(RADIO_PNG, "distance.1." + RADIO_RES_PNG, "distance.1." + RADIO_DIFF_PNG);
             throw new IllegalStateException("images are expected to be different!");
         } catch (TimeoutExpiredException e) {
         }
