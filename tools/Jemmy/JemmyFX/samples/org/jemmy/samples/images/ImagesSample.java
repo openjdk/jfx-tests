@@ -26,7 +26,6 @@ package org.jemmy.samples.images;
 
 import java.io.File;
 import javafx.scene.control.Button;
-import org.jemmy.Dimension;
 import org.jemmy.TimeoutExpiredException;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.Root;
@@ -39,14 +38,12 @@ import org.jemmy.image.FilesystemImageLoader;
 import org.jemmy.image.GlassImage;
 import org.jemmy.image.GlassPixelImageComparator;
 import org.jemmy.image.Image;
+import org.jemmy.image.ImageLoader;
 import org.jemmy.image.pixel.AverageDistanceComparator;
-import org.jemmy.image.pixel.ColorMappingComparator;
 import org.jemmy.image.pixel.MaxDistanceComparator;
 import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import org.jemmy.image.pixel.PixelImageComparator;
-import org.jemmy.image.pixel.Raster.Component;
 import org.jemmy.image.pixel.RasterComparator;
-import org.jemmy.image.pixel.WriteableRaster;
 import static org.jemmy.resources.StringComparePolicy.*;
 import org.jemmy.samples.SampleBase;
 import org.jemmy.samples.buttons.*;
@@ -94,12 +91,6 @@ public class ImagesSample extends SampleBase {
         //to store reference images somehwre with tests
         radio.wrap().getScreenImage().save(RADIO_PNG);
         toggle.wrap().getScreenImage().save(TOGGLE_PNG);
-        //tell Jemmy where to get reference images
-        //in real testing you may want to use
-        //org.jemmy.image.ClasspathImageLoader
-        FilesystemImageLoader loader = new FilesystemImageLoader();
-        loader.setImageRoot(new File(System.getProperty("user.dir")));
-        Root.ROOT.getEnvironment().setImageLoader(loader);
     }
 
     /**
