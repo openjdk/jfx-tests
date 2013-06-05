@@ -36,18 +36,18 @@ import org.jemmy.lookup.LookupCriteria;
  * @param <DATA>
  * @author Alexander Kirov
  */
-class TreeTableCellItemParent<DATA> extends ItemDataParent<Point, DATA> implements org.jemmy.interfaces.Table<DATA> {
+class TreeTableCellParent<DATA> extends ItemDataParent<Point, DATA> implements org.jemmy.interfaces.Table<DATA> {
 
     private TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap;
 
-    public TreeTableCellItemParent(TreeTableViewWrap<? extends TreeTableView> tableViewOp, Class<DATA> itemClass) {
+    public TreeTableCellParent(TreeTableViewWrap<? extends TreeTableView> tableViewOp, Class<DATA> itemClass) {
         super(tableViewOp, itemClass);
         this.treeTableViewWrap = tableViewOp;
     }
 
     @Override
     protected <DT extends DATA> Wrap<? extends DT> wrap(Class<DT> type, Point item, DATA aux) {
-        return new TreeTableCellItemWrap<DT>(treeTableViewWrap, item.getY(), treeTableViewWrap.getColumn(item.getX()), (DT) item, getEditor());
+        return new TreeTableCellWrap<DT>(treeTableViewWrap, item.getY(), treeTableViewWrap.getColumn(item.getX()), (DT) item, getEditor());
     }
 
     protected List<? extends TableColumnBase> getColumns() {

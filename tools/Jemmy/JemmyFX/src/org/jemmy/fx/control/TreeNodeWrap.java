@@ -45,6 +45,7 @@ import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
+import static org.jemmy.fx.control.TableUtils.*;
 
 /**
  * This wraps a node that renders the tree's data item
@@ -92,10 +93,12 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
     
     @Override
     public Point getClickPoint() {
-        Rectangle clippedContainerBounds = getClippedContainerWrap().getScreenBounds();
-        Rectangle fullScreenBounds = getScreenBounds();
-        Rectangle intersection = fullScreenBounds.intersection(clippedContainerBounds);
-        return new Point(intersection.x + intersection.width / 2, intersection.y + intersection.height / 2);
+        Rectangle visibleAreaBounds = TableUtils.getActuallyVisibleArea(treeViewWrap);
+        Rectangle treeNodeWrapBounds = this.getScreenBounds();
+        Rectangle intersection = treeNodeWrapBounds.intersection(visibleAreaBounds);
+        int dx = intersection.x - treeNodeWrapBounds.x;
+        int dy = intersection.y - treeNodeWrapBounds.y;
+        return new Point(dx + intersection.width / 2, dy + intersection.height / 2);
     }
 
     @Override

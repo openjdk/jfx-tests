@@ -78,8 +78,8 @@ import org.jemmy.interfaces.Tree;
  * @param <CONTROL>
  */
 @ControlType({TreeTableView.class})
-@ControlInterfaces(value = {Selectable.class, EditableCellOwner.class, Parent.class, Tree.class, Table.class, Scroll.class, Scrollable2D.class},
-encapsulates = {TreeItem.class, Object.class, TreeItem.class, Object.class, Object.class},
+@ControlInterfaces(value = {Selectable.class, EditableCellOwner.class, EditableCellOwner.class, Tree.class, Table.class, Scroll.class, Scrollable2D.class},
+encapsulates = {TreeItem.class, Object.class, Object.class, Object.class, Object.class},
 name = {"asTreeItemSelectable", "asDataParent", "asTreeItemParent"})
 public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWrap<CONTROL> implements Scroll, Selectable<TreeItem>, Focusable {
 
@@ -100,8 +100,7 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
     private Selectable selectable;
     private Scrollable2D scrollable2D;
     private Selectable<TreeItem> itemSelectable;
-    private TreeTableCellItemParent cellParent;
-    private TreeTableDataParent dataParent;
+    private TreeTableCellParent cellParent;
     private TreeTableItemParent itemParent;
 
     public TreeTableViewWrap(Environment env, CONTROL nd) {
@@ -122,9 +121,9 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
         return asTreeTableCellItemParent(type);
     }
 
-    private <T> TreeTableCellItemParent<T> asTreeTableCellItemParent(Class<T> type) {
+    private <T> TreeTableCellParent<T> asTreeTableCellItemParent(Class<T> type) {
         if (cellParent == null || !cellParent.getType().equals(type)) {
-            cellParent = new TreeTableCellItemParent<T>(this, type);
+            cellParent = new TreeTableCellParent<T>(this, type);
         }
         return cellParent;
     }
@@ -164,7 +163,7 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
     public <T> Tree<T> asTree(Class<T> type) {
         if (tree == null || !tree.getType().equals(type)) {
             asItemParent(type);
-            tree = new TreeTableImpl<T>(type, this, dataParent);
+            tree = new TreeTableImpl<T>(type, this, itemParent);
         }
         return tree;
     }
@@ -182,20 +181,12 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
      * @return
      * @see #asTreeItemParent()
      */
-    @As(TreeItem.class)
-    public Parent<TreeItem> asTreeItemParent() {
-        if (itemParent == null) {
-            itemParent = new TreeTableItemParent<TreeItem>(this, TreeItem.class);
+    @As(Object.class)
+    public <T> EditableCellOwner<T> asTreeItemParent(Class<T> type) {
+        if (itemParent == null || !itemParent.getType().equals(type)) {
+            itemParent = new TreeTableItemParent<T>(this, getRoot(), type);
         }
         return itemParent;
-    }
-
-    @As(Object.class)
-    public <T> EditableCellOwner<T> asTreeTableDataParent(Class<T> type) {
-        if (dataParent == null || !dataParent.getType().equals(type)) {
-            dataParent = new TreeTableDataParent<T>(this, type);
-        }
-        return dataParent;
     }
 
     /**
@@ -258,18 +249,22 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
         }.dispatch(getEnvironment());
     }
 
+    @Override
     public TreeItem getState() {
         return asTreeItemSelectable().getState();
     }
 
+    @Override
     public List<TreeItem> getStates() {
         return asTreeItemSelectable().getStates();
     }
 
+    @Override
     public Class<TreeItem> getType() {
         return TreeItem.class;
     }
 
+    @Override
     public Selector<TreeItem> selector() {
         return asTreeItemSelectable().selector();
     }
@@ -307,18 +302,21 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
     }
 
     @Property(VALUE_PROP_NAME)
+    @Override
     public double position() {
         checkScroll();
         return scroll.position();
     }
 
     @Property(MINIMUM_PROP_NAME)
+    @Override
     public double minimum() {
         checkScroll();
         return scroll.minimum();
     }
 
     @Property(MAXIMUM_PROP_NAME)
+    @Override
     public double maximum() {
         checkScroll();
         return scroll.maximum();
@@ -332,16 +330,19 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
     }
 
     @Deprecated
+    @Override
     public Scroller scroller() {
         checkScroll();
         return scroll.scroller();
     }
 
+    @Override
     public Caret caret() {
         checkScroll();
         return scroll.caret();
     }
 
+    @Override
     public void to(double position) {
         checkScroll();
         scroll.to(position);
@@ -418,7 +419,7 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
         if (root == null) {
             return null;
         } else {
-            return new TreeTableItemWrap(this, Object.class, root);
+            return new TreeTableItemWrap(root, this, Object.class, null);
         }
     }
 
@@ -512,7 +513,7 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
 
     public IndexedCell getTreeCell(TreeItem item) {
         int index = getRow(item);
-        return (IndexedCell) as(Parent.class, IndexedCell.class).lookup(IndexedCell.class, TreeTableCellItemWrap.<IndexedCell>byCoords(IndexedCell.class, index, 0)).get();
+        return (IndexedCell) as(Parent.class, IndexedCell.class).lookup(IndexedCell.class, TreeTableCellWrap.<IndexedCell>byCoords(IndexedCell.class, index, 0)).get();
     }
 
     protected class TreeTableViewSelectable<T> extends TreeSelectable<T> {
@@ -542,7 +543,7 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
 
         @Override
         protected Parent asTreeItemParent() {
-            return TreeTableViewWrap.this.asTreeItemParent();
+            return TreeTableViewWrap.this.asTreeItemParent(Object.class);
         }
 
         @Override

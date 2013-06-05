@@ -72,6 +72,7 @@ public class TreeTableViewApp extends Application {
             }
         });
         numberCol.setPrefWidth(100);
+        numberCol.setCellFactory(TextFieldTreeTableCell.<Person>forTreeTableColumn());
 
         TreeTableColumn<Person, String> firstNameCol = new TreeTableColumn<Person, String>("First Name");
         firstNameCol.setPrefWidth(150);
@@ -126,7 +127,6 @@ public class TreeTableViewApp extends Application {
         treeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         treeTableView.getSelectionModel().setCellSelectionEnabled(true);
         treeTableView.getSelectionModel().select(5, numberCol);
-        treeTableView.setEditable(true);
 
         VBox vBox = new VBox();
         vBox.getChildren().setAll(treeTableView);
@@ -212,7 +212,7 @@ public class TreeTableViewApp extends Application {
 
         @Override
         public String toString() {
-            return getFirstName() + " " + getLastName();
+            return number.getValue();
         }
     }
 }

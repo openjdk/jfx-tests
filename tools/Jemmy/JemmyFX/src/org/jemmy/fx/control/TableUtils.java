@@ -112,10 +112,7 @@ class TableUtils {
             final ColumnRowIndexInfoProvider infoProvider,
             final Class<CellClass> cellType) {
 
-        final Rectangle viewArea = getContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();
-        final Rectangle clippedContainerArea = getClippedContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();
-        
-        final Rectangle actuallyVisibleArea = new Rectangle(viewArea.x, viewArea.y, clippedContainerArea.width, clippedContainerArea.height);
+        final Rectangle actuallyVisibleArea = getActuallyVisibleArea(wrap);
 
         return new GetAction<int[]>() {
             @Override
@@ -144,6 +141,17 @@ class TableUtils {
                 setResult(res);
             }
         }.dispatch(env);
+    }
+    
+    /**
+     * Used for TreeView, TableView, TreeTableView.
+     * @param wrap of control.
+     * @return 
+     */
+    static Rectangle getActuallyVisibleArea(final Wrap<? extends Control> wrap) {
+        final Rectangle viewArea = getContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();
+        final Rectangle clippedContainerArea = getClippedContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();        
+        return new Rectangle(viewArea.x, viewArea.y, clippedContainerArea.width, clippedContainerArea.height);
     }
 
     /**

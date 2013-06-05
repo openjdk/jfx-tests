@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -27,6 +27,7 @@ package org.jemmy.fx.control;
 import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.control.*;
 import org.jemmy.dock.DockInfo;
@@ -68,14 +69,12 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
     }
 
     @ObjectLookup("elements of the tree path")
-    public static <T> LookupCriteria<T> byPathValues(Class<T> type, final 
-            Object... path) {
+    public static <T> LookupCriteria<T> byPathValues(Class<T> type, final  Object... path) {
         return TreeItemWrapBase.byPathValues(type, path);
     }
 
     @ObjectLookup("criteria for elements of the tree path")    
-    public static <T> LookupCriteria<T> byPathCriteria(final Class<T> type, 
-    final LookupCriteria<T>... path) {
+    public static <T> LookupCriteria<T> byPathCriteria(final Class<T> type, final LookupCriteria<T>... path) {
         return TreeItemWrapBase.byPathCriteria(type, path);
     }
     
@@ -114,6 +113,11 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
     @Override
     public Rectangle getScreenBounds() {
         return theWrap.getScreenBounds();
+    }
+    
+    @Override
+    public Point getClickPoint() {
+        return theWrap.getClickPoint();
     }
 
     /**
