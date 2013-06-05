@@ -103,7 +103,7 @@ public class ImagesSample extends SampleBase {
         //let's use comparison logic, which is
         //comparing all pixels for equality.
         //this is, also, a default comparator
-        Root.ROOT.getEnvironment().setProperty(RasterComparator.class, new PixelEqualityRasterComparator(0));
+        Environment.getEnvironment().setProperty(RasterComparator.class, new PixelEqualityRasterComparator(0));
         //since the UI is in original state, images should be the same
         radio.waitImage(RADIO_PNG, "default.0." + RADIO_RES_PNG, "default.0." + RADIO_DIFF_PNG);
         toggle.waitImage(TOGGLE_PNG, "default.0." + TOGGLE_RES_PNG, "default.0." + TOGGLE_DIFF_PNG);

@@ -84,10 +84,10 @@ public class Root extends AbstractParent<Scene> {
 
     private Root() {
         this.env = new Environment(Environment.getEnvironment());
-        this.env.setPropertyIfNotSet(RasterComparator.class, new PixelEqualityRasterComparator(0));
         String osName = System.getProperty("os.name").toLowerCase();
         String runtimeName = System.getProperty("java.runtime.name");
         boolean isEmbedded = runtimeName != null && runtimeName.toLowerCase().contains("embedded");
+        Environment.getEnvironment().setPropertyIfNotSet(RasterComparator.class, new PixelEqualityRasterComparator(0));
         //TODO this needs to be rewritten with the API either from profiles or jigsaw
         if( ( osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os") ) && !isEmbedded) {
             useAWTRobot(env);
