@@ -34,7 +34,7 @@ import org.jemmy.fx.control.TreeTableViewDock;
 import org.jemmy.fx.control.TreeTableItemDock;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.resources.StringComparePolicy;
+import static org.jemmy.resources.StringComparePolicy.*;
 import org.jemmy.samples.SampleBase;
 import org.jemmy.samples.treetableview.TreeTableViewApp.Person;
 import org.junit.BeforeClass;
@@ -72,14 +72,14 @@ public class TreeTableViewSample extends SampleBase {
      */
     @Test
     public void itemLookup() {
-        //Cell lookups are similar to lookups for TableView, logically, and by interface.
+        //Cell lookups are similar to lookups for TableView.
         //You could find a cell by it's content.
         new TreeTableCellDock(treeTableView.asTable(), "0-1-lastname").mouse().click();
         //By coordinates.
         new TreeTableCellDock(treeTableView.asTable(), 1, 1).mouse().click();
         //By toString() of the object.
         new TreeTableCellDock(treeTableView.asTable(),
-                "0-2-first", StringComparePolicy.SUBSTRING).mouse().click();
+                "0-2-first", SUBSTRING).mouse().click();
         //Or any other way by creating a custom lookup criteria.
         new TreeTableCellDock(treeTableView.asTable(), new LookupCriteria<Object>() {
             @Override
@@ -87,37 +87,23 @@ public class TreeTableViewSample extends SampleBase {
                 return cntrl instanceof Date;
             }
         }).mouse().click();
-        //TreeItem lookups are simimilar to lookups for TreeView.
+        //TreeItem lookups are similar to lookups for TreeView.
         //Lookup treeItem, for instance, by the first column's content (only in visible part of TreeTableView).
-        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0", StringComparePolicy.EXACT).mouse().click();
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0", EXACT).mouse().click();
         //Lookup by data item, which is stored in treeItem.
         new TreeTableCellDock(treeTableView.asDataParent(),
                 treeTableView.wrap().getControl().getRoot().getValue()).mouse().click();
     }
 
     /**
-     * Will expand and collapse a treeItem. An operation, related to tree
-     * structure of data.
+     * How to expand and collapse a treeItem. 
      */
     @Test
     public void expandingCollapsing() throws InterruptedException {
-        //As we need to see the TreeItem for lookup by first column. 
-        //Scrolling - is similar to TreeView and TableView.         
-        treeTableView.asScrollable2D().vto(0);
-
-        //Select by first column - is unique for TreeTableView wrap, as it works with cell'c content.
-        //Select by text in TreeView wrap works with toString() representation of data. There is similar mechanism for TreeTableView.
-        TreeTableItemDock treeTableItemDock1 = new TreeTableItemDock(treeTableView.asTreeItemParent(), treeTableView.wrap(), "0-0-0");
-        TreeTableItemDock treeTableItemDock2 = new TreeTableItemDock(treeTableView.asTreeItemParent(), treeTableView.wrap(), "0-0-1");
-
-        treeTableItemDock1.collapse();
-        treeTableItemDock2.collapse();
-
-        //Some intermediate action is needed, between the same item is collapsed
-        //and expanded, because otherwise, jemmy will try to expand before the
-        //JFX is ready for it.
-        treeTableItemDock1.expand();
-        treeTableItemDock2.expand();
+        //collapse
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0-0", EXACT).collapse();
+        //expand:
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0-0", EXACT).expand();        
     }
 
     /**
@@ -132,14 +118,13 @@ public class TreeTableViewSample extends SampleBase {
 
     /**
      * Scrolling happens automatically when you are trying to select a cell.
-     * Should you need the scrolling anyway ... Shower interface is implemented
-     * for TreeItem wrap, or for cell wrap.
+     * Should you need the scrolling anyway just call show()
      */
     @Test
     public void scrollToCell() {
         new TreeTableCellDock(treeTableView.asTable(), "0-3-3-3-lastname").shower().show();
         new TreeTableCellDock(treeTableView.asTable(), "0-0-0").shower().show();
-        new TreeTableItemDock(treeTableView.asTreeItemParent(), StringComparePolicy.EXACT, "0", "0-3", "0-3-2").shower().show();
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), EXACT, "0", "0-3", "0-3-2").shower().show();
     }
 
     /**
@@ -164,7 +149,7 @@ public class TreeTableViewSample extends SampleBase {
      */
     @Test
     public void editCell() {
-        treeTableView.asTreeItemParent(Person.class).setEditor(new TextFieldCellEditor<Object>());
+        treeTableView.asTreeItemParent(Person.class).setEditor(new TextFieldCellEditor<>());
         treeTableView.asTreeItemParent(Person.class).lookup(new LookupCriteria<Person>() {
             @Override
             public boolean check(Person cntrl) {
@@ -172,7 +157,7 @@ public class TreeTableViewSample extends SampleBase {
             }
         }).wrap().as(EditableCell.class).edit("Kirov A.");
 
-        treeTableView.asTable().setEditor(new TextFieldCellEditor<Object>());
+        treeTableView.asTable().setEditor(new TextFieldCellEditor<>());
         new TreeTableCellDock(treeTableView.asTable(), 2, 2).asEditableCell().edit("Kirov");
     }
 
@@ -190,7 +175,7 @@ public class TreeTableViewSample extends SampleBase {
     @Test
     public void getSelectedCells() {
         new TreeTableCellDock(treeTableView.asTable(), "0-2-first",
-                StringComparePolicy.SUBSTRING).asEditableCell().select();
+                SUBSTRING).asEditableCell().select();
         List<Point> selection = treeTableView.getSelectedCells();
         System.out.println("Selected indices are = " + selection);
         System.out.println("While actual are = "
