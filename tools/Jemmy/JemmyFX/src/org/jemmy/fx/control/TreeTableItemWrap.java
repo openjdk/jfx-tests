@@ -224,6 +224,20 @@ public class TreeTableItemWrap<DATA> extends Wrap<DATA> implements org.jemmy.int
 
     @Override
     public void show() {
+        final TreeItem parentItem = new GetAction<TreeItem>() {
+            @Override
+            public void run(Object... parameters) throws Exception {
+                setResult(treeItem.getParent());
+            }
+        }.dispatch(getEnvironment());
+        if (parentItem != null && !new GetAction<Boolean>() {
+            @Override
+            public void run(Object... parameters) throws Exception {
+                setResult(parentItem.isExpanded());
+            }
+        }.dispatch(getEnvironment())) {
+            new TreeTableItemWrap(parentItem, treeTableViewWrap, dataType, null).expand();
+        }
         treeTableViewWrap.scrollTo(new GetAction<Integer>() {
             @Override
             public void run(Object... parameters) throws Exception {
