@@ -3,7 +3,36 @@
     <description>Builds, tests, and runs the project JemmyFXBrowser.</description>
     <import file="nbproject/build-impl.xml"/>
     <property file="../../../build.properties"/>
+    <target name="-pre-init" unless="no.need.to.find.java.fx">
+        <ant antfile="../../../detect_javafx-nb.xml" inheritall="true">
+            <property name="basedir" location="${basedir}/../../.."/>
+            <property name="property.file" value="${basedir}/nbproject/private/private.properties"/>
+        </ant>
+    </target>
     <target name="-post-init">
         <ant antfile="build.xml" target="get-jemmy-core" inheritall="false" inheritrefs="false" dir=".."/>
+    </target>
+    <target name="-post-clean">
+        <delete dir="${basedir}/target"/>
+    </target>
+    <target name="maven" depends="jar">
+        <ant antfile="build.xml" dir="${project.JemmyFX}" target="maven"/>
+	<property file="${project.JemmyFX}/src/org/jemmy/fx/jemmy.properties" prefix="fx"/>
+        <ant antfile="build.xml" dir="${project.GlassImage}" target="maven"/>
+	<property file="${project.GlassImage}/src/org/jemmy/image/jemmy.properties" prefix="image"/>
+        <property file="${basedir}/src/org/jemmy/fx/jemmy.properties" prefix="browser"/>
+        <copy file="pom-tmpl.xml" tofile="pom.xml" overwrite="true">
+            <filterchain>
+                <replacetokens>
+                    <token key="JemmyFXBrowser.version" value="${browser.javafx.version}.${browser.version.minor}.${browser.version.mini}"/>
+                    <token key="JemmyFX.version" value="${fx.javafx.version}.${fx.version.minor}.${fx.version.mini}"/>
+                    <token key="GlassImage.version" value="${image.javafx.version}.${image.version.minor}.${image.version.mini}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+        <exec command="mvn">
+            <arg value="-e"/>
+            <arg value="install"/>
+        </exec>
     </target>
 </project>

@@ -27,6 +27,7 @@ package org.jemmy.samples.input;
 import java.util.HashMap;
 import javafx.event.Event;
 import javafx.event.EventType;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -61,6 +62,7 @@ public class InputSampleBase extends SampleBase {
         scene = new SceneDock();
         redTarget = new NodeDock(scene.asParent(), Rectangle.class, new TargetCriteria(Color.RED));
         blueTarget = new NodeDock(scene.asParent(), Rectangle.class, new TargetCriteria(Color.BLUE));
+        new NodeDock(scene.asParent(), Button.class).mouse().click();
     }
 
     @After
@@ -89,18 +91,19 @@ public class InputSampleBase extends SampleBase {
     protected void checkMouseEvent(final Color color, final EventType type, final MouseButton btn, final int x, final int y, final int times) {
 
         Root.ROOT.getEnvironment().getWaiter(Wrap.WAIT_STATE_TIMEOUT).ensureValue(true, new State<Boolean>() {
-
             public Boolean reached() {
-                if (InputApp.events.size() > 0) {
-                    for (Event e : InputApp.events.toArray(new Event[0])) {
-                        if (e instanceof MouseEvent) {
-                            if (e.getEventType().equals(type)
-                                    && ((Rectangle) e.getSource()).getFill().equals(color)
-                                    && ((MouseEvent) e).getButton().equals(btn)
-                                    && ((MouseEvent) e).getX() == x
-                                    && ((MouseEvent) e).getY() == y
-                                    && ((MouseEvent) e).getClickCount() == times) {
-                                return true;
+                synchronized (InputApp.events) {
+                    if (InputApp.events.size() > 0) {
+                        for (Event e : InputApp.events.toArray(new Event[0])) {
+                            if (e instanceof MouseEvent) {
+                                if (e.getEventType().equals(type)
+                                        && ((Rectangle) e.getSource()).getFill().equals(color)
+                                        && ((MouseEvent) e).getButton().equals(btn)
+                                        && ((MouseEvent) e).getX() == x
+                                        && ((MouseEvent) e).getY() == y
+                                        && ((MouseEvent) e).getClickCount() == times) {
+                                    return true;
+                                }
                             }
                         }
                     }
@@ -113,18 +116,19 @@ public class InputSampleBase extends SampleBase {
     protected void checkKeyboardEvent(final EventType type, final KeyCode btn, final String character) {
 
         Root.ROOT.getEnvironment().getWaiter(Wrap.WAIT_STATE_TIMEOUT).ensureValue(true, new State<Boolean>() {
-
             public Boolean reached() {
-                for (Event e : InputApp.events.toArray(new Event[0])) {
-                    if (e instanceof KeyEvent) {
-                        if (e.getEventType().equals(type)
-                                && ((KeyEvent) e).getCode().equals(btn)
-                                && (!e.getEventType().equals(KeyEvent.KEY_TYPED) || ((KeyEvent) e).getCharacter().equals(character))) {
-                            return true;
+                synchronized (InputApp.events) {
+                    for (Event e : InputApp.events.toArray(new Event[0])) {
+                        if (e instanceof KeyEvent) {
+                            if (e.getEventType().equals(type)
+                                    && ((KeyEvent) e).getCode().equals(btn)
+                                    && (!e.getEventType().equals(KeyEvent.KEY_TYPED) || ((KeyEvent) e).getCharacter().equals(character))) {
+                                return true;
+                            }
                         }
                     }
+                    return false;
                 }
-                return false;
             }
         });
     }

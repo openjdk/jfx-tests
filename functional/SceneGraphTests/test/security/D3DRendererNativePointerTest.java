@@ -1,35 +1,20 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation. Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
  */
 package security;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.nio.ByteBuffer;
+import java.util.Map;
 import junit.framework.Assert;
 import org.junit.Test;
-import test.javaclient.shared.Utils;
 
 /**
- *
+ * This is test for issue https://bug.oraclecorp.com/pls/bug/webbug_print.show?c_rptno=14828433
+
  * @author Sergey Grinev
  */
 public class D3DRendererNativePointerTest {
@@ -40,25 +25,86 @@ public class D3DRendererNativePointerTest {
     public void issue14828433_long_boolean() {
         try {
             Class clazz = Class.forName(D3D_REN, false, ClassLoader.getSystemClassLoader());
+
             Constructor constructor = clazz.getConstructor(new Class[]{long.class, boolean.class});
-            constructor.newInstance(0x30303030, true);
-        } catch (ReflectiveOperationException ex) {
+            Assert.assertEquals(D3D_REN + " constructor must be private.",  Modifier.PRIVATE, constructor.getModifiers() & Modifier.PRIVATE);
+            //constructor.newInstance(0x30303030, true);
+        } catch (NoSuchMethodException ex) {
             ex.printStackTrace();
-            Assert.assertFalse("D3DRendererDelegate constructor wasn't found on Windows. Something wrong.", Utils.isWindows());
+            System.out.println("Absent constructor is a valid result.");
+            return;
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+            System.out.println("Absent " + D3D_REN + " class is a valid result.");
+            return;
         }
+        Assert.fail();
     }
 
     @Test
     public void issue14828433_long() {
         try {
             Class clazz = Class.forName(D3D_REN, false, ClassLoader.getSystemClassLoader());
-            Constructor constructor = clazz.getConstructor(new Class[]{long.class});
 
-            https://bug.oraclecorp.com/pls/bug/webbug_print.show?c_rptno=14828433
-            constructor.newInstance(0x30303030);
-        } catch (ReflectiveOperationException ex) {
+            Constructor constructor = clazz.getConstructor(new Class[]{long.class});
+            Assert.assertEquals(D3D_REN + " constructor must be private.",  Modifier.PRIVATE, constructor.getModifiers() & Modifier.PRIVATE);
+            //constructor.newInstance(0x30303030, true);
+        } catch (NoSuchMethodException ex) {
             ex.printStackTrace();
-            Assert.assertFalse("D3DRendererDelegate constructor wasn't found on Windows. Something wrong.", Utils.isWindows());
+            System.out.println("Absent " + D3D_REN + " constructor is a valid result.");
+            return;
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+            System.out.println("Absent " + D3D_REN + " class is a valid result.");
+            return;
         }
+        Assert.fail();
     }
+    
+    private static final String D3D_TEXTURE = "com.sun.scenario.effect.impl.hw.d3d.D3DTexture";
+    
+    @Test
+    public void issue14828433_texture() {
+        // com.sun.scenario.effect.impl.hw.d3d.D3DTexture.create(0x30303030, 0, 0);
+        try {
+            Class clazz = Class.forName(D3D_TEXTURE, false, ClassLoader.getSystemClassLoader());
+            Method methodCreate = clazz.getMethod("create", new Class[] {long.class, int.class, int.class});
+            
+            //methodCreate.invoke(null, 0x30303030, 0, 0);
+            Assert.assertEquals(D3D_TEXTURE + "#create must be private.",  Modifier.PRIVATE, methodCreate.getModifiers() & Modifier.PRIVATE);
+            //constructor.newInstance(0x30303030, true);
+        } catch (NoSuchMethodException ex) {
+            ex.printStackTrace();
+            System.out.println("Absent " + D3D_TEXTURE + "#create method is a valid result.");
+            return;
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+            System.out.println("Absent " + D3D_TEXTURE + " class is a valid result.");
+            return;
+        }
+        Assert.fail();
+    }
+    
+    private static final String D3D_SHADER = "com.sun.scenario.effect.impl.hw.d3d.D3DShader";
+    @Test
+    public void issue14828433_shader() {
+        //new com.sun.scenario.effect.impl.hw.d3d.D3DShader(0x30303030, null, null);
+        try {
+            Class clazz = Class.forName(D3D_SHADER, false, ClassLoader.getSystemClassLoader());
+            Constructor constructor = clazz.getConstructor(new Class[]{long.class, ByteBuffer.class, Map.class});
+            
+            Assert.assertEquals(D3D_SHADER + " constructor must be private.",  Modifier.PRIVATE, constructor.getModifiers() & Modifier.PRIVATE);
+            //constructor.newInstance(0x30303030, null, null);
+        } catch (NoSuchMethodException ex) {
+            ex.printStackTrace();
+            System.out.println("Absent " + D3D_SHADER + " constructor is a valid result.");
+            return;
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+            System.out.println("Absent " + D3D_SHADER + " class is a valid result.");
+            return;
+        }
+        Assert.fail();
+    }
+    
 }

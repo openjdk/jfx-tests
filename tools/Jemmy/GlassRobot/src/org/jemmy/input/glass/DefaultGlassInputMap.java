@@ -152,8 +152,8 @@ public class DefaultGlassInputMap implements GlassInputMap {
 
         //buttons
         buttons.put(Mouse.MouseButtons.BUTTON1, Robot.MOUSE_LEFT_BTN);
-        buttons.put(Mouse.MouseButtons.BUTTON2, Robot.MOUSE_RIGHT_BTN);
-        buttons.put(Mouse.MouseButtons.BUTTON3, Robot.MOUSE_MIDDLE_BTN);
+        buttons.put(Mouse.MouseButtons.BUTTON2, Robot.MOUSE_MIDDLE_BTN);
+        buttons.put(Mouse.MouseButtons.BUTTON3, Robot.MOUSE_RIGHT_BTN);
     }
 
     @Override

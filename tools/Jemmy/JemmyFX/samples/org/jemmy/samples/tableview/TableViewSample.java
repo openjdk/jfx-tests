@@ -98,7 +98,7 @@ public class TableViewSample extends SampleBase {
      */
     @Test
     public void scrollToCell() {
-        new TableCellItemDock(tableView.asTable(), "Wlastname").shower().show();
+        new TableCellItemDock(tableView.asTable(), "Tlastname").shower().show();
     }
     
     /**

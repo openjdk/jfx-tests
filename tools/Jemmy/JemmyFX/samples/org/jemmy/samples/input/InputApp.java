@@ -25,6 +25,7 @@
 package org.jemmy.samples.input;
 
 import java.text.DecimalFormat;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import javafx.application.Application;
@@ -66,7 +67,7 @@ public class InputApp extends Application {
     public static final String DRAGGED = "DRAGGED ";
     public static final String MOVED = "MOVED ";
     public static final String SCROLL = "SCROLL ";
-    public static final List<Event> events = new LinkedList<Event>();
+    public static final List<Event> events = Collections.synchronizedList(new LinkedList<Event>());
 
     public static void main(String[] args) {
 

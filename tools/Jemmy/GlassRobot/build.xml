@@ -11,7 +11,30 @@
     <description>Builds, tests, and runs the project GlassRobot.</description>
     <import file="nbproject/build-impl.xml"/>
     <property file="../../../build.properties"/>
+    <target name="-pre-init" unless="no.need.to.find.java.fx">
+        <ant antfile="../../../detect_javafx-nb.xml" inheritall="true">
+            <property name="basedir" location="${basedir}/../../.."/>
+            <property name="property.file" value="${basedir}/nbproject/private/private.properties"/>
+        </ant>
+    </target>
     <target name="-post-init">
         <ant antfile="build.xml" target="get-jemmy-core" inheritall="false" inheritrefs="false" dir=".."/>
+    </target>
+    <target name="-post-clean">
+        <delete dir="${basedir}/target"/>
+    </target>
+    <target name="maven" depends="jar">
+        <property file="${basedir}/src/org/jemmy/input/glass/jemmy.properties"/>
+        <copy file="pom-tmpl.xml" tofile="pom.xml" overwrite="true">
+            <filterchain>
+                <replacetokens>
+                    <token key="GlassRobot.version" value="${javafx.version}.${version.minor}.${version.mini}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+        <exec command="mvn">
+            <arg value="-e"/>
+            <arg value="install"/>
+        </exec>
     </target>
 </project>
