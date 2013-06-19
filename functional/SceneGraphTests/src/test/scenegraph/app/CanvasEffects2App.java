@@ -381,12 +381,13 @@ public class CanvasEffects2App extends BasicButtonChooserApp {
             GraphicsContext gc = canvas.getGraphicsContext2D();
             group.getChildren().add(canvas);
 
+            gc.setEffect(e); // rt-31164 !!!!
             gc.stroke();
             gc.setFill(Color.RED);
             gc.setFont(new Font(36));
             gc.fillText("Glow!",0,30);
 
-            gc.applyEffect(e);
+          //  gc.applyEffect(e); // rt-31164
             return group;
         }
 
