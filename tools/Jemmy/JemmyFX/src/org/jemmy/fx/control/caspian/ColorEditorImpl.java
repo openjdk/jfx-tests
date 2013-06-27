@@ -35,7 +35,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
-import org.jemmy.fx.ByID;
 import org.jemmy.fx.ByObject;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.ByText;
@@ -55,16 +54,15 @@ class ColorEditorImpl implements Editor<Color> {
 
     protected static final String COLOR_PALETTE_STYLE_CLASS = "color-palette";
     protected static final String COLOR_RECT_STYLE_CLASS = "color-rect";
-    protected static final String TOGGLE_BUTTON_ID = "toggle-button-right";
+    protected static final String TOGGLE_BUTTON_STYLE_CLASS = "right-pill";
     protected static final String WEB_COLOR_STYLE_CLASS = "webcolor-field";
-    protected static final String INTEGER_FIELD_STYLE_CLASS = "integer-field";
+    protected static final String ALPHA_SETTINGS_STYLE_CLASS = "color-input-field";
     protected static final String USE_TEXT = "Use";
 
     public ColorEditorImpl(ColorPickerWrap picker) {
         this.picker = picker;
     }
 
-    @Override
     public Color value() {
         return new GetAction<Color>() {
             @Override
@@ -78,20 +76,17 @@ class ColorEditorImpl implements Editor<Color> {
         }.dispatch(picker.getEnvironment());
     }
 
-    @Override
     public void enter(final Color state) {
         if (value() == state) {
             return;
         }
         picker.mouse().click();
         Wrap<? extends Scene> popup = Root.ROOT.lookup(new LookupCriteria<Scene>() {
-            @Override
             public boolean check(Scene cntrl) {
                 return Root.ROOT.lookup(new ByObject<Scene>(cntrl)).wrap().as(Parent.class, Node.class).lookup(new ByStyleClass(COLOR_PALETTE_STYLE_CLASS)).size() == 1;
             }
         }).wrap();
         final Lookup lookup = popup.as(Parent.class, Node.class).lookup(Shape.class, new ByStyleClass(COLOR_RECT_STYLE_CLASS)).lookup(Shape.class, new LookupCriteria<Shape>() {
-            @Override
             public boolean check(Shape cntrl) {
                 return cntrl.getFill().equals(state);
             }
@@ -102,23 +97,27 @@ class ColorEditorImpl implements Editor<Color> {
         }
         popup.as(Parent.class, Node.class).lookup(Hyperlink.class).wrap().mouse().click();
         Wrap<? extends Scene> dlg = Root.ROOT.lookup(new LookupCriteria<Scene>() {
-            @Override
             public boolean check(Scene cntrl) {
-                return Root.ROOT.lookup(new ByObject<Scene>(cntrl)).wrap().as(Parent.class, Node.class).lookup(ToggleButton.class, new ByID(TOGGLE_BUTTON_ID)).size() > 0;
+                return Root.ROOT.lookup(new ByObject<Scene>(cntrl)).wrap().as(Parent.class, Node.class).lookup(ToggleButton.class, new ByStyleClass(TOGGLE_BUTTON_STYLE_CLASS)).size() > 0;
             }
         }).wrap();
-        dlg.as(Parent.class, Node.class).lookup(ToggleButton.class, new ByID(TOGGLE_BUTTON_ID)).wrap().mouse().click();
+        dlg.as(Parent.class, Node.class).lookup(ToggleButton.class, new ByStyleClass(TOGGLE_BUTTON_STYLE_CLASS)).wrap().mouse().click();
         Wrap<? extends TextField> color = dlg.as(Parent.class, Node.class).lookup(TextField.class, new ByStyleClass(WEB_COLOR_STYLE_CLASS)).wrap();
         final String hex = "#" + Integer.toHexString(((int) (state.getRed() * 255) << 16) + ((int) (state.getGreen() * 255) << 8) + (int) (state.getBlue() * 255)).toUpperCase();
         if (!color.as(Text.class).text().equals(hex)) {
             color.as(Text.class).clear();
             color.as(Text.class).type(hex);
         }
-        Wrap<? extends TextField> alpha = dlg.as(Parent.class, Node.class).lookup(TextField.class, new ByStyleClass(INTEGER_FIELD_STYLE_CLASS)).lookup(new LookupCriteria<Node>() {
+        Wrap<? extends TextField> alpha = dlg.as(Parent.class, Node.class).lookup(TextField.class, new ByStyleClass(ALPHA_SETTINGS_STYLE_CLASS) {
             @Override
             public boolean check(Node cntrl) {
-                return cntrl.getParent().isVisible();
+                javafx.scene.Parent parent = cntrl.getParent();
+                if (parent != null) {
+                    return super.check(cntrl) && parent.isVisible();
+                }
+                return super.check(cntrl);
             }
+            
         }).wrap();
         String opacity = String.valueOf((int) (state.getOpacity()*100));
         if (!alpha.as(Text.class).text().equals(opacity)) {
@@ -127,7 +126,6 @@ class ColorEditorImpl implements Editor<Color> {
         }
         dlg.as(Parent.class, Node.class).lookup(new ByText(USE_TEXT, StringComparePolicy.EXACT)).wrap().mouse().click();
         picker.waitState(new State<Boolean>() {
-            @Override
             public Boolean reached() {
                 return ((Math.abs(value().getRed() - state.getRed()) <= 0.01) &&
                        (Math.abs(value().getGreen() - state.getGreen()) <= 0.01) &&
@@ -137,7 +135,6 @@ class ColorEditorImpl implements Editor<Color> {
         }, Boolean.TRUE);
     }
 
-    @Override
     public Class<Color> getType() {
         return Color.class;
     }
