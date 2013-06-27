@@ -1,3 +1,26 @@
+/*
+ * Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ */
 package test.scenegraph.binding;
 
 import java.lang.reflect.Method;
@@ -15,6 +38,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Control;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 import javafx.scene.layout.GridPane;
@@ -23,12 +47,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.web.HTMLEditor;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import test.javaclient.shared.InteroperabilityApp;
 import test.javaclient.shared.Utils;
 
 public class BindingApp extends InteroperabilityApp {
+
     protected Pane controlBox;
     protected Group rightPane;
     protected Group leftPane;
@@ -124,6 +150,7 @@ public class BindingApp extends InteroperabilityApp {
     }
 
     public interface Factory {
+
         public abstract NodeAndBindee create();
 
         public abstract Constraint getConstraints(String name);
@@ -132,6 +159,7 @@ public class BindingApp extends InteroperabilityApp {
     }
 
     public final static class NodeAndBindee {
+
         final Node node;
         final Object bindee;
 
@@ -172,7 +200,6 @@ public class BindingApp extends InteroperabilityApp {
   //      stage.toFront();
     }
 
-    
     public static List<Constraint> populateList(Factory factory, boolean ignoreConstraints) {
         List<Constraint> list = new ArrayList<Constraint>();
         Class bc = factory.create().bindee.getClass();
@@ -219,12 +246,10 @@ public class BindingApp extends InteroperabilityApp {
         }
         return list;
     }
-
     private static final String[] unsupported = new String[]{
         "onDrag", "onMouse", "onKey", "ZProperty", "parent", "scene", "cursor",
         "cacheHint", "rotationAxis", "nputMethod", "eventDisp", "strokeLineCap",
-        "strokeMiterLimit", "fillRule", "minWidth", "maxWidth", "minHeight", "maxHeight",
-    };
+        "strokeMiterLimit", "fillRule", "minWidth", "maxWidth", "minHeight", "maxHeight",};
 
     private void updateField(Constraint c) {
         nab = factory.create();
@@ -244,21 +269,31 @@ public class BindingApp extends InteroperabilityApp {
     }
 
     private static void preparePane(Group pane, Node node) {
+        compressControlIfNeeded(node);
         pane.getChildren().clear();
         final Rectangle bounds = new Rectangle(){{setWidth(300); setHeight(300);setFill(Color.TRANSPARENT);}};
         
         pane.getChildren().add(bounds);
         pane.setClip(new Rectangle(){{setWidth(300); setHeight(300);}});
-        pane.getChildren().add(node);
+        pane.getChildren().add(node);        
+    }
+
+    private static void compressControlIfNeeded(Node control) {
+        if (HTMLEditor.class.isAssignableFrom(control.getClass())) {
+            ((Control) control).setMinSize(200, 200);
+            ((Control) control).setPrefSize(200, 200);
+            ((Control) control).setMaxSize(200, 200);
+        }
     }
 
     /**
-     * Reflection call for code like bindee.widthProperty().bind(bindTarget.valueProperty());
-     * 
+     * Reflection call for code like
+     * bindee.widthProperty().bind(bindTarget.valueProperty());
+     *
      * @param bindee Node which you want to be changed by binding
      * @param propertyName name of the property, e.g. widthProperty
      * @param bindTarget Node which you want to be updated by binding
-     * @param observableClass 
+     * @param observableClass
      */
     private static void bind(Object bindee, String propertyName, Object bindTarget, Class observableClass) {
         try {
