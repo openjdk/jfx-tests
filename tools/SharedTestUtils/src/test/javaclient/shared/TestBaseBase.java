@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2012, 2013 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,7 +23,6 @@
  */
 package test.javaclient.shared;
 
-import java.util.LinkedList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -31,7 +30,7 @@ import javafx.scene.control.Control;
 import javafx.scene.input.MouseEvent;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
-import org.jemmy.env.Environment;
+import org.jemmy.fx.Root;
 import org.jemmy.fx.control.ControlDock;
 import org.jemmy.fx.control.ControlWrap;
 import org.jemmy.interfaces.Parent;
@@ -105,7 +104,7 @@ public class TestBaseBase {
             public void run(Object... parameters) {
                 ((BasicButtonChooserApp) application).restoreSceneRoot();
             }
-        }.dispatch(Environment.getEnvironment());
+        }.dispatch(Root.ROOT.getEnvironment());
     }
     protected void verifyGetters() {
         Assert.assertEquals("", application.getFailures());
