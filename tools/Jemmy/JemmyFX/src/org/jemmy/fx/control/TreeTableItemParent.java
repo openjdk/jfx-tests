@@ -49,7 +49,7 @@ class TreeTableItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
 
     @Override
     protected <DT extends AUX> Wrap<? extends DT> wrap(Class<DT> type, TreeItem item, AUX aux) {
-        return new TreeTableItemWrap<DT>(type, item, treeTableViewWrap, getEditor());
+        return new TreeTableItemWrap<DT>(item, treeTableViewWrap, type, getEditor());
     }
 
     @Override

@@ -124,8 +124,9 @@ public class ListViewSample extends SampleBase {
     
     /**
      * Selecting multiple items by indexes
+     * This sample sometimes fails due to http://javafx-jira.kenai.com/browse/JMY-156
      */
-    @Test
+    //@Test
     public void selectMultipleItemsByIndexes() {
         int[] itemIndexes = {20, 30, 40};
         listView2.asList().select(itemIndexes);
@@ -181,7 +182,7 @@ public class ListViewSample extends SampleBase {
     /**
      * Editing a value of a cell in editable ListView
      */
-    //@Test//https://javafx-jira.kenai.com/browse/RT-31165
+    @Test
     public void editListItem() {
         String value = "Lithuania";
         

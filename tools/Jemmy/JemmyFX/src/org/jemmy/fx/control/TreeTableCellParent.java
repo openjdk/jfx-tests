@@ -47,7 +47,7 @@ class TreeTableCellParent<DATA> extends ItemDataParent<Point, DATA> implements o
 
     @Override
     protected <DT extends DATA> Wrap<? extends DT> wrap(Class<DT> type, Point item, DATA aux) {
-        return new TreeTableCellWrap<DT>(treeTableViewWrap, item.getY(), treeTableViewWrap.getColumn(item.getX()), (DT) aux, getEditor());
+        return new TreeTableCellWrap<DT>(treeTableViewWrap, item.getY(), treeTableViewWrap.getColumn(item.getX()), (DT) item, getEditor());
     }
 
     protected List<? extends TableColumnBase> getColumns() {

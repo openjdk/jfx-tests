@@ -109,7 +109,7 @@ public class TreeViewSample extends SampleBase {
     /**
      * How to edit
      */
-    //@Test//https://javafx-jira.kenai.com/browse/RT-31165
+    @Test
     public void edit() {
         //make sure you have set up an editor (see launch())
         //and then

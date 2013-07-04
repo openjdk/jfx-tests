@@ -32,8 +32,6 @@ import org.jemmy.interfaces.TreeSelector;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- * Implementation of Tree interface for TreeTableView.
- * 
  * @author Alexander Kirov
  */
 class TreeTableImpl<T> implements Tree<T> {
@@ -61,14 +59,14 @@ class TreeTableImpl<T> implements Tree<T> {
                 if (isShowRoot() && criteria.length > 0 && !getRoot().isExpanded()) {
                     expand();
                 }
-                Wrap res = new TreeTableItemWrap(itemType, select(owner, getRoot(), criteria), owner, null);
+                Wrap res = new TreeTableItemWrap(select(owner, getRoot(), criteria), owner, itemType, null);
                 res.mouse().click();
                 return res;
             }
 
             @Override
             protected void expand() {
-                new TreeTableItemWrap(itemType, getRoot(), owner, null).expand();
+                new TreeTableItemWrap(getRoot(), owner, itemType, null).expand();
             }
 
             @Override

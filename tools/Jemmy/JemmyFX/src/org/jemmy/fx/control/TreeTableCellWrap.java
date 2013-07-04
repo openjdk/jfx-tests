@@ -67,10 +67,6 @@ public class TreeTableCellWrap<DATA extends Object> extends ItemWrap<DATA> imple
     private TreeTableColumn column;
     private final WindowElement<TreeTableView> windowElement;
 
-    public TreeTableCellWrap(TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap, int row, TreeTableColumn column, CellEditor<? super DATA> editor) {
-        this(treeTableViewWrap, null, row, column, (DATA) column.getCellData(row), editor);
-    }    
-    
     public TreeTableCellWrap(TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap, int row, TreeTableColumn column, DATA cellItem, CellEditor<? super DATA> editor) {
         this(treeTableViewWrap, null, row, column, cellItem, editor);
     }

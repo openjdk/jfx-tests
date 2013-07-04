@@ -36,7 +36,7 @@ import org.jemmy.timing.State;
  */
 abstract class TreeSelectorImpl<T> implements TreeSelector<T> {
 
-     protected TreeItem<T> select(final Wrap owner, final TreeItem<T> root, final LookupCriteria<T>... criteria) {
+    protected TreeItem<T> select(final Wrap owner, final TreeItem<T> root, final LookupCriteria<T>... criteria) {
         if (criteria.length >= 1) {
             final LookupCriteria<T> c = criteria[0];
             return owner.getEnvironment().getWaiter(Lookup.WAIT_CONTROL_TIMEOUT).

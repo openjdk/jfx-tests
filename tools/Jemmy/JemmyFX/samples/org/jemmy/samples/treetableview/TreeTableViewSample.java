@@ -95,7 +95,7 @@ public class TreeTableViewSample extends SampleBase {
         //Lookup treeItem, for instance, by the first column's content (only in visible part of TreeTableView).
         new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0", EXACT).mouse().click();
         //Lookup by data item, which is stored in treeItem.
-        new TreeTableCellDock(treeTableView.asTableItemParent(),
+        new TreeTableCellDock(treeTableView.asDataParent(),
                 treeTableView.wrap().getControl().getRoot().getValue()).mouse().click();
         //Lookup by text of the first column. Ir works only if according treeItem is visible.
         new TreeTableItemDock(treeTableView.asTreeItemParent(), treeTableView.wrap(), "0-0-1").mouse().click();

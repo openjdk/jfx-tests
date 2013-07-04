@@ -132,7 +132,7 @@ public class TreeTest {
         new TreeItemDock(tree.asItemParent(), new EqualsLookup("00")).asTreeItem().collapse();
     }
 
-    //@Test//https://javafx-jira.kenai.com/browse/RT-31165
+    @Test
     public void edit() {
         tree.asItemParent().setEditor(new TextFieldCellEditor());
         tree.asTree().selector().select(new ByToStringLookup("00"), new ByToStringLookup("00c"));
@@ -165,7 +165,7 @@ public class TreeTest {
         lookup1.as(org.jemmy.interfaces.TreeItem.class).expand();
     }
 
-    //@Test//https://javafx-jira.kenai.com/browse/RT-31165
+    @Test
     public void itemWrap() {
         EditableCellOwner<javafx.scene.control.TreeItem> p = tree.wrap().as(EditableCellOwner.class, javafx.scene.control.TreeItem.class);
         p.lookup().size();

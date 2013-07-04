@@ -24,6 +24,8 @@
  */
 package org.jemmy.fx.control;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.TreeItem;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.interfaces.Parent;
