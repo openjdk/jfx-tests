@@ -24,6 +24,7 @@
  */
 package org.jemmy.fx.control;
 
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.MenuBar;
@@ -33,6 +34,7 @@ import javafx.scene.control.SplitMenuButton;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.control.caspian.CaspianDriverFactory;
+import org.jemmy.interfaces.Editor;
 import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Scroll;
 import org.jemmy.interfaces.Scroller;
@@ -104,4 +106,6 @@ public abstract class ThemeDriverFactory {
     public abstract Focus comboBoxFocuser(final ComboBoxWrap<? extends ComboBox> comboBoxWrap);
 
     public abstract void splitMenuButtonExpandCollapseAction(final SplitMenuButtonWrap<? extends SplitMenuButton> wrap);
+
+    public abstract Editor colorEditor(final ColorPickerWrap<? extends ColorPicker> colorPickerWrap);
  }

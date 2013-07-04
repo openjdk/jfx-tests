@@ -72,7 +72,7 @@ public class BindingTestBase {
     public void commonTest(NumberConstraints c) {
         prepare(c);
         System.out.println("waiting for " + c);
-        Wrap<? extends Slider> slider = Lookups.byID(scene, BindingControl.ID, Slider.class);
+        final Wrap<? extends Slider> slider = Lookups.byID(scene, BindingControl.ID, Slider.class);
         Lookups.byID(scene, "leftNode" + c, Node.class);
 
         Image image = null;
@@ -96,7 +96,16 @@ public class BindingTestBase {
 
             if (i < SHIFTS) {
                 // wrap.shifter().shift(Dir.MORE); // doesn't work since http://javafx-jira.kenai.com/browse/RT-12956
-                slider.getControl().increment();
+                // slider.getControl().increment();
+                test.javaclient.shared.Utils.deferAction(new Runnable() {
+                    public void run() {
+                        try {
+                            slider.getControl().increment();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
 //                double next = wrap.minimum() + shift * (i+1);
 //                System.out.println("shifting to " + next);
 //                caret.to(new ToPosition(wrap, next, shift / 10));

@@ -23,34 +23,32 @@
  */
 package test.scenegraph.binding;
 
-import javafx.beans.value.ObservableValue;
-import javafx.scene.layout.StackPaneBuilder;
-import javafx.scene.shape.CircleBuilder;
-import javafx.scene.shape.EllipseBuilder;
-import javafx.scene.shape.RectangleBuilder;
-import javafx.scene.effect.FloatMap;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.BlurType;
-import javafx.scene.shape.ArcType;
-import javafx.scene.shape.StrokeLineJoin;
-import javafx.scene.shape.StrokeType;
-import javafx.scene.effect.Effect;
 import java.util.Arrays;
 import java.util.List;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.DepthTest;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.FloatMap;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-
 import static test.scenegraph.binding.Consts.*;
 
 /**
@@ -74,10 +72,11 @@ public enum ObjectConstraints implements Constraint {
     textOverrun(OverrunStyle.class, false),
     effect(Effect.class, false, EFFECTS),
     clip(Node.class, true,
-    RectangleBuilder.create().x(0).y(0).width(20).height(300),
-    RectangleBuilder.create().x(40).y(0).width(360).height(300),
-    CircleBuilder.create().centerX(100).centerY(100).radius(50),
-    EllipseBuilder.create().centerX(50).centerY(50).radiusX(100).radiusY(30)),
+    new FuncPtr(){ public Node build(){ return new Rectangle(0,0,20,300);}},    //RectangleBuilder.create().x(0).y(0).width(20).height(300),
+    new FuncPtr(){ public Node build(){ return new Rectangle(40,0,360,300);}}, //RectangleBuilder.create().x(40).y(0).width(360).height(300),
+    new FuncPtr(){ public Node build(){ return new Circle(50){{setCenterX(100);setCenterY(100);}};}}, //CircleBuilder.create().centerX(100).centerY(100).radius(50),
+    new FuncPtr(){ public Node build(){ return new Ellipse(100,30){{setCenterX(50);setCenterY(50);}};}}//EllipseBuilder.create().centerX(50).centerY(50).radiusX(100).radiusY(30)),
+    ),
     strokeType(StrokeType.class, false),
     strokeLineJoin(StrokeLineJoin.class, false),
     type(ArcType.class, false),
@@ -88,6 +87,9 @@ public enum ObjectConstraints implements Constraint {
     mode(BlendMode.class, false),
     mapData(FloatMap.class, false, MAP_WAVES_2, MAP_WAVES);
 
+    private static class FuncPtr{
+        public Node build(){ return null;}
+    }
     private final List list;
     private final Class clazz;
     /**
@@ -139,7 +141,10 @@ public enum ObjectConstraints implements Constraint {
                         cb.getSelectionModel().selectNext();
                     }
                 });
-                parent.addAll(btnPrev, StackPaneBuilder.create().prefWidth(220).children(cb).build(), btnNext);
+                 StackPane sp = new StackPane();
+                 sp.setPrefWidth(220);
+                 sp.getChildren().add(cb);
+                parent.addAll(btnPrev, sp , btnNext);
 
             }
 
@@ -151,6 +156,7 @@ public enum ObjectConstraints implements Constraint {
                 return clazz;
             }
 
+            @Override
             public Object getValue() {
                 if (builderMode) {
                     // N.B.: we rely here on fact that items in cb are stay at positions we put them there
@@ -170,10 +176,9 @@ public enum ObjectConstraints implements Constraint {
 
             private Object buildBy(Object builder) {
                 if (builder != null) {
-                    // builders has no interface for build (due to different return value in each case)
-                    // so we backdoor with Reflection.
                     try {
-                        return builder.getClass().getMethod("build").invoke(builder);
+                        FuncPtr rfr = (FuncPtr)builder;
+                        return rfr.build();
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

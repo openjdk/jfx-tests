@@ -27,7 +27,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SliderBuilder;
 
 /**
  *
@@ -89,14 +88,13 @@ public enum NumberConstraints implements Constraint {
     BindingControl bc;
 
     public BindingControl getBindingControl() {
-        return bc != null ? bc : (bc = new BindingControl() {
-
-            private Slider slider = SliderBuilder.create().min(getMin()).max(getMax()).value(getMin()).
-                    blockIncrement((getMax() - getMin()) / 4).
-                    majorTickUnit((getMax() - getMin()) / 4).
-                    minorTickCount(2).prefWidth(200).showTickLabels(true).showTickMarks(true).
-                    id(ID).build();
-
+        return bc != null ? bc : (bc= new BindingControl() {
+            private final Slider slider = new Slider(getMin(),getMax(),getMin()){{
+            setBlockIncrement((getMax() - getMin()) / 4);
+            setMajorTickUnit((getMax() - getMin()) / 4);
+            setMinorTickCount(2);setPrefWidth(200);setShowTickLabels(true);setShowTickMarks(true);
+            setId(ID);
+            }};
 
             public void create(ObservableList<Node> parent) {
                 parent.add(slider);

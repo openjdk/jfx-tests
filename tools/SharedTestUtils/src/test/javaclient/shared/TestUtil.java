@@ -115,9 +115,9 @@ public class TestUtil {
      * @param oneToWaitFor wrap for object can be not yet placed on UI
      */
     public static void compareScreenshots(String testName, final Wrap existing, final Wrap oneToWaitFor) {
-        long time = 1000;
+        long time = 3000;
         try {
-            new Waiter(new Timeout("tryWaitTimeout", time)).waitState(
+            new Waiter(new Timeout("tryWaitTimeout", time)).ensureState(
                     new State<Boolean>() {
                         @Override
                         public Boolean reached() {
@@ -140,6 +140,7 @@ public class TestUtil {
             res.save(resName);
             diff.save(diffName);
             expected.save(expectedName);
+            throw ex;
         }
     }
 

@@ -27,6 +27,7 @@ package org.jemmy.fx.control.caspian;
 import com.sun.javafx.scene.control.skin.ScrollBarSkin;
 import com.sun.javafx.scene.control.skin.SliderSkin;
 import javafx.scene.Node;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.MenuBar;
@@ -38,12 +39,14 @@ import org.jemmy.action.Action;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.NodeWrap;
+import org.jemmy.fx.control.ColorPickerWrap;
 import org.jemmy.fx.control.ComboBoxWrap;
 import org.jemmy.fx.control.MenuBarWrap;
 import org.jemmy.fx.control.SplitMenuButtonWrap;
 import org.jemmy.fx.control.ThemeDriverFactory;
 import org.jemmy.fx.control.TreeNodeWrap;
 import org.jemmy.fx.control.TreeTableItemWrap;
+import org.jemmy.interfaces.Editor;
 import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Parent;
@@ -178,6 +181,11 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
         wrap.asParent().lookup(Node.class, new ByStyleClass<Node>("arrow-button")).wrap().mouse().click();
     }
 
+    @Override
+    public Editor colorEditor(final ColorPickerWrap<? extends ColorPicker> colorPickerWrap) {
+        return new ColorEditorImpl(colorPickerWrap);
+    }
+
     abstract class NodeFocus implements Focus {
 
         NodeWrap nodeWrap;
@@ -186,11 +194,13 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
             this.nodeWrap = nodeWrap;
         }
 
+        @Override
         public void focus() {
             if (!nodeWrap.isFocused()) {
                 activate();
             }
             nodeWrap.waitState(new State<Boolean>() {
+                @Override
                 public Boolean reached() {
                     return nodeWrap.isFocused();
                 }

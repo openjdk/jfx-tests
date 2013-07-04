@@ -194,7 +194,6 @@ public class ModalityWindow {
                     runner.run();
                 }
             });
-
             creationButtonsArray.add(button);
         }
         creationButtons.getChildren().addAll(creationButtonsArray);
@@ -293,7 +292,7 @@ public class ModalityWindow {
                 initialX = 200 * (isApplet ? 1 : 0);
                 initialY = 0;
                 width = 640;
-                height = 270;
+                height = 300;
                 break;
         }
     }
