@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -27,6 +27,7 @@ package org.jemmy.fx.control;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.IndexedCell;
+import javafx.util.Callback;
 import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
@@ -38,6 +39,7 @@ import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.Caret;
 import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Parent;
+import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
@@ -50,6 +52,60 @@ class TableUtils {
         return new FXClickFocus(wrap, new Point(
                 Math.max(bounds.getWidth() / 2, bounds.getWidth() - 3),
                 Math.max(bounds.getHeight() / 2, bounds.getHeight() - 3)));
+    }
+
+    public static <T extends Node> void scrollToInSingleDimension(final Wrap<? extends Control> controlWrap,
+            final Class<T> itemClass,
+            final Callback<T, Integer> indexCallback,
+            final Integer targetControlIndex,
+            final Caret caret,
+            final boolean isVertical) {
+        caret.to(new Caret.Direction() {
+            /**
+             * @return < 0 to scroll toward decreasing value, > 0 - vice versa 0
+             * to stop scrolling NOTE - see implementation
+             * KnobDragScrollerImpl.to(Direction) which is used in ScrollBarWrap
+             * better to return constant values (-1 || 0 || +1) to get smooth
+             * dragging
+             */
+            @Override
+            public int to() {
+                final int[] minmax = new int[]{Integer.MAX_VALUE, -1};
+                controlWrap.as(Parent.class, Node.class).lookup(itemClass, new LookupCriteria<T>() {
+                    @Override
+                    public boolean check(T cntrl) {
+                        final Parent as = controlWrap.as(Parent.class, Node.class);
+                        final Wrap<? extends javafx.scene.Parent> clippedContainerWrap = TableUtils.getClippedContainerWrap(as);
+                        final javafx.scene.Parent control = clippedContainerWrap.getControl();
+                        if (NodeWrap.isInBounds(control, cntrl,
+                                controlWrap.getEnvironment(), isVertical)) {
+                            int index = indexCallback.call(cntrl);
+                            if (index >= 0) {
+                                if (index < minmax[0]) {
+                                    minmax[0] = index;
+                                }
+                                if (index > minmax[1]) {
+                                    minmax[1] = index;
+                                }
+                            }
+                        }
+                        return true;
+                    }
+                }).size();
+                if (targetControlIndex < minmax[0]) {
+                    return -1;
+                } else if (targetControlIndex > minmax[1]) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+
+            @Override
+            public String toString() {
+                return "'" + controlWrap.getControl() + "' state at index " + targetControlIndex;
+            }
+        });
     }
 
     /**
@@ -142,15 +198,37 @@ class TableUtils {
             }
         }.dispatch(env);
     }
-    
+
     /**
-     * Used for TreeView, TableView, TreeTableView.
+     * @param controlWrap wrap of control like listView, tableView, treeView, or
+     * treeTableView.
+     * @param treeRowWrap wrap of row : treeItem, treeTableRow or tableRow,
+     * listItem.
+     * @return center of area, which is visible part of row/item.
+     */
+    public static Point getClickPoint(Wrap controlWrap, Wrap rowWrap) {
+        Rectangle visibleAreaBounds = rowWrap.getScreenBounds();
+        return getClickPointCommon(controlWrap, visibleAreaBounds);
+    }
+
+    /**
+     * Method, specific for TableView and TreeTableView, which counts only
+     * actual cells width, without space of the last empty column.
+     */
+    public static Point getTableRowClickPoint(Wrap controlWrap, Wrap rowWrap) {
+        Rectangle clickableArea = TableUtils.constructClickableArea(rowWrap);
+        return getClickPointCommon(controlWrap, clickableArea);
+    }
+
+    /**
+     * Used for ListView, TreeView, TableView, TreeTableView.
+     *
      * @param wrap of control.
-     * @return 
+     * @return
      */
     static Rectangle getActuallyVisibleArea(final Wrap<? extends Control> wrap) {
         final Rectangle viewArea = getContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();
-        final Rectangle clippedContainerArea = getClippedContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();        
+        final Rectangle clippedContainerArea = getClippedContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();
         return new Rectangle(viewArea.x, viewArea.y, clippedContainerArea.width, clippedContainerArea.height);
     }
 
@@ -163,8 +241,8 @@ class TableUtils {
 
     static Wrap<? extends javafx.scene.Parent> getClippedContainerWrap(Parent<Node> parent) {
         return getParentWrap(parent, CLIPPED_CONTAINER_CLASS_NAME);
-    }    
-    
+    }
+
     static private Wrap<? extends javafx.scene.Parent> getParentWrap(Parent<Node> parent, final String className) {
         return parent.lookup(javafx.scene.Parent.class, new LookupCriteria<javafx.scene.Parent>() {
             @Override
@@ -173,7 +251,35 @@ class TableUtils {
             }
         }).wrap();
     }
-    
+
+    /**
+     * Common algorithm
+     */
+    private static Point getClickPointCommon(Wrap controlWrap, Rectangle clickableArea) {
+        Rectangle visibleAreaBounds = TableUtils.getActuallyVisibleArea(controlWrap);
+        Rectangle intersection = clickableArea.intersection(visibleAreaBounds);
+        int dx = intersection.x - clickableArea.x;
+        int dy = intersection.y - clickableArea.y;
+        return new Point(dx + intersection.width / 2, dy + intersection.height / 2);
+    }
+
+    /**
+     * Special for TableView, and TreeTableView, as the last column contains 
+     * empty not clickable space.
+     */
+    private static Rectangle constructClickableArea(Wrap<?> wrap) {
+        Rectangle rec = null;
+        final Lookup lookup = wrap.as(Parent.class, Node.class).lookup(IndexedCell.class);
+        for (int i = 0; i < lookup.size(); i++) {
+            Wrap cell = lookup.wrap(i);
+            if (rec == null) {
+                rec = cell.getScreenBounds();
+            } else {
+                rec = rec.union(cell.getScreenBounds());
+            }
+        }
+        return rec;
+    }
     private static final String VIRTIAL_FLOW_CLASS_NAME = "VirtualFlow";
     private static final String CLIPPED_CONTAINER_CLASS_NAME = "VirtualFlow$ClippedContainer";
 

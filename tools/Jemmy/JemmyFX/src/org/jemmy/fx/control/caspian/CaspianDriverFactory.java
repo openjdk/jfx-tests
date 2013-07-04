@@ -33,6 +33,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitMenuButton;
+import org.jemmy.JemmyException;
 import org.jemmy.action.Action;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByStyleClass;
@@ -129,7 +130,7 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
         if (wrap instanceof TreeTableItemWrap) {
             return new org.jemmy.fx.control.caspian.TreeTableItem((TreeTableItemWrap) wrap, parentControlWrap);
         }
-        return null;
+        throw new JemmyException("Unknown type of parameter.");
     }
 
     @Override
