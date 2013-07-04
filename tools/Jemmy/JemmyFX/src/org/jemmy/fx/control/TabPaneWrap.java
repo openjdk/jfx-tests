@@ -115,11 +115,11 @@ public class TabPaneWrap<CONTROL extends TabPane> extends NodeWrap<CONTROL> {
     }
 
     @Override
-    public Focus focuser() {        
+    public Focus focuser() {
         return new Focus() {
-/*TODO We can't simulate user input in order to switch tabs because there is no way to get real node corresponding to Tab.
- * http://javafx-jira.kenai.com/browse/RT-18230
- * So focus is requested and tabs are switched by keyboard*/
+            /*TODO We can't simulate user input in order to switch tabs because there is no way to get real node corresponding to Tab.
+             * http://javafx-jira.kenai.com/browse/RT-18230
+             * So focus is requested and tabs are switched by keyboard*/
             public void focus() {
                 new GetAction<Void>(){
 
@@ -129,7 +129,7 @@ public class TabPaneWrap<CONTROL extends TabPane> extends NodeWrap<CONTROL> {
                     }
                 }.dispatch(getEnvironment());
             }
-        };        
+        };
     }
 
     private class TabPaneSelectable implements Selectable<Tab>, Selector<Tab> {
@@ -164,6 +164,7 @@ public class TabPaneWrap<CONTROL extends TabPane> extends NodeWrap<CONTROL> {
         }
 
         public void select(final Tab state) {
+            TabWrap.checkNotDisabledState(state, getEnvironment());
 
             int targetIndex = getItems().indexOf(state);
             if (targetIndex < 0) {

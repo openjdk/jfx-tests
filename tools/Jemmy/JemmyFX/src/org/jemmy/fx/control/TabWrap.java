@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009-2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -34,12 +34,14 @@ import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.dock.ObjectLookup;
+import org.jemmy.env.Environment;
 import org.jemmy.fx.NodeParentImpl;
 import org.jemmy.interfaces.CellOwner.Cell;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.ByStringLookup;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.timing.State;
 
 @ControlType({Tab.class})
 @ControlInterfaces(value = {Parent.class, Cell.class},
@@ -47,6 +49,8 @@ encapsulates = {Node.class})
 public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
         implements Close, Closer, Cell<Tab> {
 
+    public final static String DISABLED_PROP_NAME = "disabled";    
+    
     @Override
     @SuppressWarnings("unchecked")
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
@@ -102,6 +106,7 @@ public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
     }
 
     public void close() {
+        checkNotDisabledState(getControl(), getEnvironment());
         select();
         pane.as(Parent.class, Node.class).lookup(Node.class, new LookupCriteria<Node>() {
 
@@ -125,10 +130,33 @@ public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
             }
         }.dispatch(getEnvironment());
     }
+    
+    @Property(DISABLED_PROP_NAME)
+    public boolean isDisabled() {
+        return new GetAction<Boolean>() {
+            @Override
+            public void run(Object... os) throws Exception {
+                setResult(getControl().isDisabled());
+            }
+        }.dispatch(getEnvironment());
+    }
+
+    @Property(TEXT_PROP_NAME)
+    public String getText() {
+        return getText(getControl(), getEnvironment());
+    }
+
+    private static String getText(final Tab tab, Environment env) {
+        return new GetAction<String>() {
+            @Override
+            public void run(Object... os) throws Exception {
+                setResult(tab.getText());
+            }
+        }.dispatch(env);
+    }
 
     /**
-     *
-     * @author andrey
+     * @author Andrey Nazarov
      */
     public static class ByTooltipTab<T extends Tab> extends ByStringLookup<T> {
 
@@ -168,5 +196,27 @@ public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
         public String getText(T control) {
             return control.getText();
         }
+    }
+
+    static void checkNotDisabledState(final Tab tab, final Environment env) {
+        env.getWaiter(WAIT_STATE_TIMEOUT).ensureValue(true, new State<Boolean>() {
+            @Override
+            public Boolean reached() {
+                if (!new GetAction<Boolean>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        setResult(tab.isDisabled());
+                    }
+                }.dispatch(env)) {
+                    return Boolean.TRUE;
+                }
+                return null;
+            }
+
+            @Override
+            public String toString() {
+                return "Wait state Tab <text : " + getText(tab, env) + "> is not disabled.";
+            }
+        });
     }
 }
