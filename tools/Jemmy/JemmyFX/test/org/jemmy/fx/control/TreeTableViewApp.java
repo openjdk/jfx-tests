@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -94,7 +94,11 @@ public class TreeTableViewApp extends Application {
         VBox vBox = new VBox();
         vBox.getChildren().setAll(treeTableView);
 
-        Scene scene = new Scene(vBox);
+        //Down change scene sizes.
+        //uncomment on https://javafx-jira.kenai.com/browse/RT-31123 fix
+        //Scene scene = new Scene(vBox, 200, 200);
+        
+        Scene scene = new Scene(vBox, 600, 600);
 
         stage.setScene(scene);
         stage.show();
@@ -185,6 +189,11 @@ public class TreeTableViewApp extends Application {
         public Data(String mainData, String additionalData) {
             this.mainData = new SimpleStringProperty(mainData);
             this.additionalData = new SimpleStringProperty(additionalData);
+        }
+        
+        @Override
+        public String toString() {
+            return "Main data <" + mainData.getValue() + "> additional data <" + additionalData.getValue() + ">.";
         }
     }
 }

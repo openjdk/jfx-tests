@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -27,29 +27,23 @@ package org.jemmy.fx.control;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView;
 import org.jemmy.control.Wrap;
-import org.jemmy.interfaces.EditableCellOwner;
 
 /**
  * @author Alexander Kirov
  */
-class TreeTableItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
+public class TreeTableNodeParent<T extends TreeItem> extends ItemParent<T, Object> {
 
-    private final TreeItem<? extends AUX> root;
-    private final TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap;
+    TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap;
+    private final TreeItem<?> root;
 
-    TreeTableItemParent(TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap, TreeItem<? extends AUX> root, Class<AUX> type) {
-        super(treeTableViewWrap, type);
-        this.root = root;
+    public TreeTableNodeParent(TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap, Class<T> lookupCLass) {
+        this(treeTableViewWrap, lookupCLass, null);
+    }
+
+    public TreeTableNodeParent(TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap, Class<T> lookupCLass, TreeItem<?> root) {
+        super(treeTableViewWrap, lookupCLass);
         this.treeTableViewWrap = treeTableViewWrap;
-    }
-
-    TreeTableItemParent(TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap, Class<AUX> type) {
-        this(treeTableViewWrap, null, type);
-    }
-
-    @Override
-    protected <DT extends AUX> Wrap<? extends DT> wrap(Class<DT> type, TreeItem item, AUX aux) {
-        return new TreeTableItemWrap<DT>(type, item, treeTableViewWrap, getEditor());
+        this.root = root;
     }
 
     @Override
@@ -61,11 +55,18 @@ class TreeTableItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
         }
     }
 
-    private void refresh(TreeItem<? extends AUX> parent) {
-        getFound().add((TreeItem<AUX>) parent);
-        getAux().add((AUX) parent.getValue());
-        for (TreeItem<? extends AUX> si : parent.getChildren()) {
-            refresh(si);
+    private void refresh(TreeItem<?> parent) {
+        getFound().add(getType().cast(parent));
+        getAux().add(null);
+        if (parent.isExpanded()) {
+            for (TreeItem<?> si : parent.getChildren()) {
+                refresh(si);
+            }
         }
+    }
+
+    @Override
+    protected <DT extends T> Wrap<? extends DT> wrap(Class<DT> type, T item, Object aux) {
+        return new TreeTableNodeWrap(item, new TreeTableItemWrap(Object.class, item, treeTableViewWrap, getEditor()), treeTableViewWrap, getEditor());
     }
 }

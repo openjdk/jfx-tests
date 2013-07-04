@@ -24,25 +24,21 @@
  */
 package org.jemmy.fx.control;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
-import org.jemmy.JemmyException;
+import org.jemmy.Point;
 import org.jemmy.Rectangle;
-import org.jemmy.action.GetAction;
 import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
+import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.dock.DockInfo;
 import org.jemmy.dock.ObjectLookup;
-import org.jemmy.dock.Shortcut;
-import org.jemmy.fx.NodeWrap;
 import org.jemmy.fx.WindowElement;
+import static org.jemmy.fx.control.TableUtils.getClickPoint;
 import org.jemmy.interfaces.EditableCellOwner;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
@@ -62,7 +58,8 @@ import org.jemmy.resources.StringComparePolicy;
 @ControlInterfaces(value = {EditableCellOwner.class, WindowElement.class, org.jemmy.interfaces.TreeItem.class, EditableCell.class, Showable.class},
         encapsulates = {Object.class, TreeTableView.class})
 @DockInfo(name = "org.jemmy.fx.control.TreeTableItemDock", multipleCriteria = false, generateSubtypeLookups = true)
-public class TreeTableItemWrap<DATA> extends Wrap<DATA> implements org.jemmy.interfaces.TreeItem<DATA>, Showable, Show {
+public class TreeTableItemWrap<DATA> extends ItemWrap<DATA>
+        implements EditableCell<DATA>, org.jemmy.interfaces.TreeItem<DATA> {
 
     public static final String ITEM_PROP_NAME = "item";
     public static final String EXPANDED_PROP_NAME = "expanded";
@@ -136,192 +133,138 @@ public class TreeTableItemWrap<DATA> extends Wrap<DATA> implements org.jemmy.int
             }
         };
     }
-    private TreeTableItemParent parent;
-    private TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap;
-    private Class<DATA> dataType;
-    private DATA dataItem;
+
+    private final TreeTableNodeWrap<TreeItem> treeTableNodeWrap;
+    private TreeTableItemParent parent = null;
+    private TreeTableNodeParent itemParent = null;
+    private final TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap;
     private final WindowElement<TreeTableView> wElement;
-    private TreeItem<DATA> treeItem;
-    private CellEditor<? super DATA> editor;
+    private final org.jemmy.interfaces.TreeItem treeItemImpl;
 
-    public TreeTableItemWrap(TreeItem<DATA> treeItem,
+    TreeTableItemWrap(Class<DATA> dataClass, TreeItem<DATA> item,
             TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap,
-            Class<DATA> dataType,
             CellEditor<? super DATA> editor) {
-
-        super(treeTableViewWrap.getEnvironment(), treeItem.getValue());
+        super(dataClass, item, item.getValue(), treeTableViewWrap, editor);
         this.treeTableViewWrap = treeTableViewWrap;
-        this.dataType = dataType;
-        this.treeItem = treeItem;
-        this.dataType = dataType;
-        this.editor = editor;
-        wElement = new ViewElement<TreeTableView>(TreeTableView.class, treeTableViewWrap.getControl());
+        treeTableNodeWrap = new TreeTableNodeWrap(item, this, treeTableViewWrap, editor);
+        wElement = new ViewElement<TreeTableView>(TreeTableView.class,
+                treeTableViewWrap.getControl());
+        treeItemImpl = ThemeDriverFactory.getThemeFactory().treeItem(this, treeTableViewWrap);
+    }
+
+    @Property(ITEM_PROP_NAME)
+    @Override
+    public TreeItem getItem() {
+        return (TreeItem) super.getItem();
+    }
+
+    public TreeTableViewWrap<? extends TreeTableView> tree() {
+        return treeTableViewWrap;
     }
 
     @Override
     public Rectangle getScreenBounds() {
-        return NodeWrap.getScreenBounds(getEnvironment(), getNode().getControl());
+        return treeTableNodeWrap.getScreenBounds();
     }
-
-    @Shortcut
-    public boolean isExpanded() {
-        return new GetAction<Boolean>() {
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(treeItem.isExpanded());
-            }
-        }.dispatch(getEnvironment());
-    }
-
-    @Shortcut
-    public boolean isLeaf() {
-        return new GetAction<Boolean>() {
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(treeItem.isLeaf());
-            }
-        }.dispatch(getEnvironment());
-    }
-
+    
     @Override
-    public void expand() {
-        ThemeDriverFactory.getThemeFactory().treeItem(this, treeTableViewWrap).expand();
-    }
-
-    @Override
-    public void collapse() {
-        ThemeDriverFactory.getThemeFactory().treeItem(this, treeTableViewWrap).collapse();
-    }
-
-    @Shortcut
-    public Wrap<? extends TreeTableRow> getNode() {
-        show();
-        Lookup lookup = treeTableViewWrap.as(Parent.class, Node.class).lookup(TreeTableRow.class, new LookupCriteria<TreeTableRow>() {
-            @Override
-            public boolean check(TreeTableRow control) {
-                TreeItem treeItem = control.getTreeItem();
-                return treeItem == null ? TreeTableItemWrap.this.treeItem == null : treeItem.equals(TreeTableItemWrap.this.treeItem);
-            }
-        });
-        if (lookup.size() == 0) {
-            return null;
-        } else if (lookup.size() > 1) {
-            throw new JemmyException("Illegal state: incorrect amount of nodes was found");
-        } else {
-            return lookup.wrap();
-        }
-    }
-
-    @Shortcut
-    public DATA getValue() {
-        return (DATA) new GetAction() {
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(treeItem.getValue());
-            }
-        }.dispatch(getEnvironment());
-    }
-
-    @Override
-    public void show() {
-        final TreeItem parentItem = new GetAction<TreeItem>() {
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(treeItem.getParent());
-            }
-        }.dispatch(getEnvironment());
-        if (parentItem != null && !new GetAction<Boolean>() {
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(parentItem.isExpanded());
-            }
-        }.dispatch(getEnvironment())) {
-            new TreeTableItemWrap(parentItem, treeTableViewWrap, dataType, null).expand();
-        }
-        treeTableViewWrap.scrollTo(new GetAction<Integer>() {
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(getVisibleIndex(treeItem));
-            }
-        }.dispatch(getEnvironment()), 0);
-    }
-
-    @Override
-    public Class<DATA> getType() {
-        return dataType;
-    }
-
-    public Wrap<? extends Node> cellWrap() {
-        return getNode();
+    public Point getClickPoint() {        
+        return treeTableNodeWrap.getClickPoint();
     }
 
     @Override
     public Show shower() {
-        return this;
-    }
-
-    @As
-    public EditableCell<DATA> asEditableCell() {
-        return new EditableCell<DATA>() {
-            @Override
-            public void edit(DATA newValue) {
-                new TreeTableCellWrap<DATA>(treeTableViewWrap, getVisibleIndex(treeItem), treeTableViewWrap.getColumn(0), null, editor).edit(newValue);
-            }
-
-            @Override
-            public void select() {
-                new TreeTableCellWrap<DATA>(treeTableViewWrap, getVisibleIndex(treeItem), treeTableViewWrap.getColumn(0), null, editor).select();
-            }
-
-            @Override
-            public Class<DATA> getType() {
-                return dataType;
-            }
-        };
-    }
-
-    @As
-    public EditableCellOwner asEditableCellOwner() {
-        return new TreeTableItemParent<DATA>(treeTableViewWrap, treeItem, dataType);
-    }
-
-    @Override
-    public String toString() {
-        return "Wrap on TreeItem<" + treeItem + "> is leaf <" + isLeaf() + ">, isExpanded <" + isExpanded() + ">, value <" + getValue() + ">.";
-    }
-
-    private int getVisibleIndex(TreeItem item) {
-        TreeTableView view = treeTableViewWrap.getControl();
-        TreeItem root = view.getRoot();
-        if (root != null) {
-            return recursiveIndexSearch(item, root, new SimpleIntegerProperty(view.isShowRoot() ? 0 : -1));
-        } else {
-            return -1;
-        }
-    }
-
-    private int recursiveIndexSearch(TreeItem searched, TreeItem current, IntegerProperty currentIndex) {
-        if (current.equals(searched)) {
-            return currentIndex.getValue();
-        } else {
-            if (current.isExpanded()) {
-                for (Object newItem : current.getChildren()) {
-                    currentIndex.setValue(currentIndex.getValue() + 1);
-                    int res = recursiveIndexSearch(searched, (TreeItem) newItem, currentIndex);
-                    if (res > -1) {
-                        return currentIndex.getValue();
-                    }
-                }
-            }
-        }
-        return -1;
+        return treeTableNodeWrap.shower();
     }
 
     /**
-     * To get the tree table view where the tree item resides.
+     * Whether the item is expanded.
+     * @return
      */
-    @As(TreeTableView.class)
-    public WindowElement getWindowElement() {
+    @Property(EXPANDED_PROP_NAME)
+    public boolean isExpanded() {
+        return treeTableNodeWrap.isExpanded();
+    }
+
+    /**
+     * Whether the item is a leaf.
+     * @return
+     */
+    @Property(LEAF_PROP_NAME)
+    public boolean isLeaf() {
+        return treeTableNodeWrap.isLeaf();
+    }
+
+    @Override
+    public void edit(DATA newValue) {
+        editor.edit(this, newValue);
+    }
+
+    @Override
+    public Wrap<? extends Node> cellWrap() {
+        return treeTableNodeWrap.getNode();
+    }
+
+    @Override
+    public void show() {
+        treeTableNodeWrap.show();
+    }
+
+    /**
+     * To get the tree view where the item resides.
+     * @return
+     */
+    @As
+    public WindowElement<TreeTableView> asWindowElement() {
         return wElement;
+    }
+
+    /**
+     * A tree item itself serves as a parent for another tree item within it.
+     * <code>javafx.scene.control.TreeItem</code>s.
+     *
+     * @param <T>
+     * @param type
+     * @return
+     * @see #asTreeItemParent()
+     * @see TreeViewWrap#asItemParent(java.lang.Class)
+     */
+    @As(TreeItem.class)
+    public <T extends TreeItem> EditableCellOwner<T> asTreeItemParent(Class<T> type) {
+        expand();
+        if (itemParent == null) {
+            itemParent = new TreeTableNodeParent<T>(treeTableViewWrap, type, getItem());
+        }
+        return itemParent;
+    }
+
+    /**
+     * A tree item itself serves as a parent for another items within it,
+     * looking them up by data accessible through
+     * <code>javafx.scene.control.TreeItem.getValue()</code>.
+     *
+     * @param <T>
+     * @param type
+     * @return
+     * @see #asItemParent()
+     * @see TreeViewWrap#asTreeItemParent(java.lang.Class)
+     */
+    @As(Object.class)
+    public <T> EditableCellOwner<T> asItemParent(Class<T> type) {
+        expand();
+        if (parent == null || !parent.getType().equals(type)) {
+            parent = new TreeTableItemParent<T>(treeTableViewWrap, getItem(), type);
+        }
+        return parent;
+    }    
+
+    @Override
+    public void expand() {
+        treeItemImpl.expand();
+    }
+
+    @Override
+    public void collapse() {
+        treeItemImpl.collapse();
     }
 }

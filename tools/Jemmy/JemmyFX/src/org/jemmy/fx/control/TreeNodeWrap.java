@@ -24,11 +24,11 @@
  */
 package org.jemmy.fx.control;
 
-import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.util.Callback;
 import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
@@ -37,9 +37,6 @@ import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.NodeWrap;
-import org.jemmy.fx.Root;
-import org.jemmy.fx.Utils;
-import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.Caret.Direction;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
@@ -93,12 +90,7 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
     
     @Override
     public Point getClickPoint() {
-        Rectangle visibleAreaBounds = TableUtils.getActuallyVisibleArea(treeViewWrap);
-        Rectangle treeNodeWrapBounds = this.getScreenBounds();
-        Rectangle intersection = treeNodeWrapBounds.intersection(visibleAreaBounds);
-        int dx = intersection.x - treeNodeWrapBounds.x;
-        int dy = intersection.y - treeNodeWrapBounds.y;
-        return new Point(dx + intersection.width / 2, dy + intersection.height / 2);
+        return TableUtils.getClickPoint(treeViewWrap, this);
     }
 
     @Override
@@ -192,41 +184,15 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
     }
 
     private void scrollTo() {
-        treeViewWrap.as(Scroll.class).caret().to(new Direction() {
+        TableUtils.scrollToInSingleDimension(treeViewWrap, TreeCell.class, 
+                new Callback<TreeCell, Integer>(){
 
-            public int to() {
-                final int[] minmax = new int[]{treeViewWrap.getStates().size(), -1};
-                treeViewWrap.as(Parent.class, Node.class).lookup(TreeCell.class,
-                        new LookupCriteria<TreeCell>() {
-
-                            public boolean check(TreeCell control) {
-                                if (NodeWrap.isInBounds(getClippedContainerWrap().getControl(), control, getEnvironment(), true)) {
-                                    int index = treeViewWrap.getRow(control.getTreeItem());
-                                    if (index >= 0) {
-                                        if (index < minmax[0]) {
-                                            minmax[0] = index;
-                                        }
-                                        if (index > minmax[1]) {
-                                            minmax[1] = index;
-                                        }
-                                    }
-                                }
-                                return true;
-                            }
-                        }).size();
-                int index = treeViewWrap.getRow(getControl());
-                if (index < minmax[0]) {
-                    return -1;
-                } else if (index > minmax[1]) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+            @Override
+            public Integer call(TreeCell p) {
+                return treeViewWrap.getRow(p.getTreeItem());
             }
-        });
-        //Disabled, as getClickPoint() don't require to center the cell.
-        //AbstractScroll scroll2 = Utils.getContainerScroll(treeViewWrap.as(Parent.class, Node.class), false);
-        //Utils.makeCenterVisible(this.getTreeViewWrap(), this, scroll2, Orientation.HORIZONTAL);
+        }, treeViewWrap.getRow(getControl()), 
+        treeViewWrap.as(Scroll.class).caret(), true);
     }
 
     protected boolean isReallyVisible(Node node) {
