@@ -59,11 +59,11 @@ public class ComboBoxTest {
     public void tearDown() {
     }
 
-    //@Test//Fails because of https://javafx-jira.kenai.com/browse/RT-31454
+    @Test
     public void select() throws InterruptedException {
         Parent<Node> parent = Root.ROOT.lookup().as(Parent.class, Node.class);
         Wrap<? extends ComboBox> bar = parent.lookup(ComboBox.class).wrap();
         bar.as(Selectable.class).selector().select("Item 1");
-        bar.as(Text.class).type("Text");
+        //bar.as(Text.class).type("Text");//Fails because of https://javafx-jira.kenai.com/browse/RT-31454
     }
 }
