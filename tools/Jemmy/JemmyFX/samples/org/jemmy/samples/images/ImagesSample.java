@@ -24,7 +24,6 @@
  */
 package org.jemmy.samples.images;
 
-import java.io.File;
 import javafx.scene.control.Button;
 import org.jemmy.TimeoutExpiredException;
 import org.jemmy.env.Environment;
@@ -34,11 +33,9 @@ import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.fx.control.ToggleButtonDock;
 import org.jemmy.image.AWTImage;
 import org.jemmy.image.BufferedImageComparator;
-import org.jemmy.image.FilesystemImageLoader;
 import org.jemmy.image.GlassImage;
 import org.jemmy.image.GlassPixelImageComparator;
 import org.jemmy.image.Image;
-import org.jemmy.image.ImageLoader;
 import org.jemmy.image.pixel.AverageDistanceComparator;
 import org.jemmy.image.pixel.MaxDistanceComparator;
 import org.jemmy.image.pixel.PixelEqualityRasterComparator;
@@ -105,6 +102,7 @@ public class ImagesSample extends SampleBase {
         //this is, also, a default comparator
         Environment.getEnvironment().setProperty(RasterComparator.class, new PixelEqualityRasterComparator(0));
         //since the UI is in original state, images should be the same
+        button.mouse().click();
         radio.waitImage(RADIO_PNG, "default.0." + RADIO_RES_PNG, "default.0." + RADIO_DIFF_PNG);
         toggle.waitImage(TOGGLE_PNG, "default.0." + TOGGLE_RES_PNG, "default.0." + TOGGLE_DIFF_PNG);
         //let's click on both and check that the images do not match
