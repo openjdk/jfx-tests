@@ -163,18 +163,16 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
             @Override
             public void run(Object... parameters) {
-                Bounds rect = null;
-                try {
-                    rect = nd.localToScreen(nd.getLayoutBounds());
-                } catch (Exception ex) {
-                    System.out.println("Exception for node "  + nd);
-                    throw ex;
-                }
+                Bounds rect= nd.localToScreen(nd.getLayoutBounds());
                 Rectangle res = new Rectangle(rect.getMinX(), rect.getMinY(), rect.getWidth(), rect.getHeight());
                 setResult(res);
             }
         };
-        env.getExecutor().execute(env, true, bounds);
+        try {
+            env.getExecutor().execute(env, true, bounds);
+        } catch (Exception ex) {
+            env.getExecutor().execute(env, true, bounds);
+        }
         return bounds.getResult();
     }
 
@@ -337,7 +335,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
         }
         return show;
     }
-
+    
     private class NodeShowable implements Showable, Show {
 
         public Show shower() {
