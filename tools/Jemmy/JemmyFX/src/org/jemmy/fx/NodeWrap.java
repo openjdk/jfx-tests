@@ -168,11 +168,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
                 setResult(res);
             }
         };
-        try {
-            env.getExecutor().execute(env, true, bounds);
-        } catch (Exception ex) {
-            env.getExecutor().execute(env, true, bounds);
-        }
+        env.getExecutor().execute(env, true, bounds);
         return bounds.getResult();
     }
 

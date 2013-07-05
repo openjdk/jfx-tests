@@ -28,6 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.IndexedCell;
 import javafx.util.Callback;
+import org.jemmy.JemmyException;
 import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
@@ -77,8 +78,13 @@ class TableUtils {
                         final Parent as = controlWrap.as(Parent.class, Node.class);
                         final Wrap<? extends javafx.scene.Parent> clippedContainerWrap = TableUtils.getClippedContainerWrap(as);
                         final javafx.scene.Parent control = clippedContainerWrap.getControl();
-                        if (NodeWrap.isInBounds(control, cntrl,
-                                controlWrap.getEnvironment(), isVertical)) {
+                        boolean checkIndices = false;
+                        try {
+                            checkIndices = NodeWrap.isInBounds(control, cntrl, controlWrap.getEnvironment(), isVertical);
+                        } catch (JemmyException ex) {
+                            return true;
+                        }
+                        if (checkIndices) {
                             int index = indexCallback.call(cntrl);
                             if (index >= 0) {
                                 if (index < minmax[0]) {
@@ -89,6 +95,7 @@ class TableUtils {
                                 }
                             }
                         }
+
                         return true;
                     }
                 }).size();
