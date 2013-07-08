@@ -79,7 +79,7 @@ public class ImagesSample extends SampleBase {
      * images.
      */
     @Before
-    public void lookup() {
+    public void lookup() throws InterruptedException {
         radio = new ToggleButtonDock(scene.asParent(), "radio2", EXACT);
         toggle = new ToggleButtonDock(scene.asParent(), "toggle2", EXACT);
         //need something to get focus away
@@ -87,6 +87,7 @@ public class ImagesSample extends SampleBase {
         button.mouse().click();
         //save images as golden. Of course, in real testing you would have
         //to store reference images somehwre with tests
+        Thread.sleep(1000);
         radio.wrap().getScreenImage().save(RADIO_PNG);
         toggle.wrap().getScreenImage().save(TOGGLE_PNG);
         scene.wrap().getScreenImage().save(SCENE_PNG);
