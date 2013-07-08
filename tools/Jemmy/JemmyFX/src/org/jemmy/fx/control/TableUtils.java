@@ -79,11 +79,11 @@ class TableUtils {
                         final Wrap<? extends javafx.scene.Parent> clippedContainerWrap = TableUtils.getClippedContainerWrap(as);
                         final javafx.scene.Parent control = clippedContainerWrap.getControl();
                         boolean checkIndices = false;
-                        try {
+//                        try {
                             checkIndices = NodeWrap.isInBounds(control, cntrl, controlWrap.getEnvironment(), isVertical);
-                        } catch (JemmyException ex) {
-                            return true;
-                        }
+//                        } catch (JemmyException ex) {                            
+//                            return true;
+//                        }
                         if (checkIndices) {
                             int index = indexCallback.call(cntrl);
                             if (index >= 0) {
