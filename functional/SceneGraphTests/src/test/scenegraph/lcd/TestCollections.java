@@ -45,7 +45,7 @@ public enum TestCollections {
         2, 4, 3.3
     }, SizeScaleTestAction.ScaleAxis.All)),
     ScaleX(SizeScaleTestAction.generateScales(new double[]{
-        2, 2.5, 4, 5, 3.3
+        2, 2.5, 4, 6, 3.3
     }, SizeScaleTestAction.ScaleAxis.X)),
     ScaleY(SizeScaleTestAction.generateScales(new double[]{
         2, 2.5, 4, 8, 3.3
