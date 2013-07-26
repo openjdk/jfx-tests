@@ -62,7 +62,10 @@ public class TreeViewEventsTest extends EventTestCommon<TreeViewDock>
     @After
     public void collapseRootNode()
     {
-        getPrimeNodeDock().getRootItem().setExpanded(true);
+        if (null != getPrimeNodeDock()){
+            if (null != getPrimeNodeDock().getRootItem())
+                getPrimeNodeDock().getRootItem().setExpanded(true);
+        }
     }
     
     @Override

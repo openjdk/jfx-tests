@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -22,61 +22,53 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
+
 package org.jemmy.fx.control;
 
 import java.awt.AWTException;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-//import org.jemmy.fx.Browser;
 
 /**
- * @author shura
+ * This small FX app is used in ColorPicker JemmyFX samples. It displays an ColorPicker control.
+ *
  */
-public class ComboBoxApp extends Application {
 
+public class ColorPickerApp extends Application {
+    /**
+     *
+     * @param args
+     * @throws AWTException
+     */
     public static void main(String[] args) throws AWTException {
         launch(args);
     }
 
+    /**
+     *
+     * @param stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         VBox box = new VBox();
         Scene scene = new Scene(box);
 
-//        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//            boolean browserStarted = false;
-//            public void handle(KeyEvent ke) {
-//                if (!browserStarted && ke.isControlDown() && ke.isShiftDown() && ke.getCode() == KeyCode.B) {
-//                    browserStarted = true;
-//                    javafx.application.Platform.runLater(new Runnable() {
-//                        public void run() {
-//                            try {
-//                                Browser.runBrowser();
-//                            } catch (AWTException ex) {
-//                                ex.printStackTrace();
-//                            }
-//                        }
-//                    });
-//                }
-//            }
-//        });
+        box.setSpacing(10);
 
+        ColorPicker picker = new ColorPicker();
+        picker.setId("picker id");
 
-        ComboBox combo = new ComboBox();
-        for (int i = 0; i < 20; i++) {
-            combo.getItems().add("Item " + i);
-        }
+        Rectangle rect = new Rectangle(50, 50);
+        rect.setId("rect id");
 
-        combo.setEditable(true);
+        rect.fillProperty().bind(picker.valueProperty());
 
-        Popup popup = new Popup();
-        popup.getContent().add(combo);
-
-        //box.getChildren().add(combo);
+        box.getChildren().addAll(picker, rect);
 
         stage.setScene(scene);
 
@@ -84,7 +76,5 @@ public class ComboBoxApp extends Application {
         stage.setHeight(300);
 
         stage.show();
-
-        popup.show(scene.getWindow());
     }
 }

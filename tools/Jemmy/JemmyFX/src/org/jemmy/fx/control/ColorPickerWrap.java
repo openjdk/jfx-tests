@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -22,48 +22,33 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
+
 package org.jemmy.fx.control;
 
-import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import org.jemmy.control.Wrap;
-import org.jemmy.fx.AppExecutor;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.paint.Color;
+import org.jemmy.control.*;
+import org.jemmy.env.Environment;
 import org.jemmy.fx.Root;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Selectable;
-import org.jemmy.interfaces.Text;
-import org.junit.*;
+import org.jemmy.interfaces.Editor;
 
-/**
- * @author shura
- */
-public class ComboBoxTest {
+@ControlType(ColorPicker.class)
+@ControlInterfaces(value=Editor.class,
+                   encapsulates=Color.class,
+                   name= "asColorEditor")
+public class ColorPickerWrap<T extends ColorPicker> extends ControlWrap<T> {
 
-    public ComboBoxTest() {
+    private Editor editor = null;
+
+    public ColorPickerWrap(Environment env, T node) {
+        super(env, node);
     }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-        AppExecutor.executeNoBlock(ComboBoxApp.class);
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    @Test
-    public void select() throws InterruptedException {
-        Parent<Node> parent = Root.ROOT.lookup().as(Parent.class, Node.class);
-        Wrap<? extends ComboBox> bar = parent.lookup(ComboBox.class).wrap();
-        bar.as(Selectable.class).selector().select("Item 1");
-        //bar.as(Text.class).type("Text");//Fails because of https://javafx-jira.kenai.com/browse/RT-31454
+    @As(Object.class)
+    public Editor<Color> asColorEditor() {
+        if (editor == null) {
+            editor = ThemeDriverFactory.getThemeFactory().colorEditor(this);
+        }
+        return editor;
     }
 }

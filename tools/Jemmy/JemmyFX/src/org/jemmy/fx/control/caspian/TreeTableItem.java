@@ -24,6 +24,8 @@
  */
 package org.jemmy.fx.control.caspian;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.Node;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.StackPane;
@@ -75,8 +77,8 @@ public class TreeTableItem implements org.jemmy.interfaces.TreeItem<javafx.scene
             if (treeTableViewWrap.as(Scrollable2D.class).isHorizontalScrollable()) {
                 treeTableViewWrap.as(Scrollable2D.class).hto(treeTableViewWrap.as(Scrollable2D.class).hmin());
             }
-            findPointer(wrap.getNode()).mouse().click();
-            wrap.waitState(expandedState, true);
+            findPointer(wrap.cellWrap()).mouse().click();
+            wrap.waitState(expandedState, true);            
         }
     }
 
@@ -86,7 +88,7 @@ public class TreeTableItem implements org.jemmy.interfaces.TreeItem<javafx.scene
             if (treeTableViewWrap.as(Scrollable2D.class).isHorizontalScrollable()) {
                 treeTableViewWrap.as(Scrollable2D.class).hto(treeTableViewWrap.as(Scrollable2D.class).hmin());
             }
-            findPointer(wrap.getNode()).mouse().click();
+            findPointer(wrap.cellWrap()).mouse().click();
             wrap.waitState(expandedState, false);
         }
     }

@@ -36,6 +36,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTablePosition;
+import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 import org.jemmy.Point;
 import org.jemmy.action.GetAction;
@@ -80,7 +81,7 @@ import org.jemmy.interfaces.Tree;
 @ControlType({TreeTableView.class})
 @ControlInterfaces(value = {Selectable.class, EditableCellOwner.class, EditableCellOwner.class, Tree.class, Table.class, Scroll.class, Scrollable2D.class},
 encapsulates = {TreeItem.class, Object.class, Object.class, Object.class, Object.class},
-name = {"asTreeItemSelectable", "asDataParent", "asTreeItemParent"})
+name = {"asTreeItemSelectable", "asTableItemParent", "asTreeItemParent"})
 public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWrap<CONTROL> implements Scroll, Selectable<TreeItem>, Focusable {
 
     public static final String SELECTED_INDEX_PROP_NAME = "tree.selected.index";
@@ -94,21 +95,56 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
     public static final String ITEMS_PROP_NAME = "items";
     public static final String DATA_COLUMNS_PROP_NAME = "data.columns";
     public static final String COLUMNS_PROP_NAME = "columns";
-    
     private Tree tree;
-    private TableTreeScroll scroll;
-    private Selectable selectable;
-    private Scrollable2D scrollable2D;
-    private Selectable<TreeItem> itemSelectable;
+    private Table table;
     private TreeTableCellParent cellParent;
-    private TreeTableItemParent itemParent;
+    private TreeTableItemParent treeTableItemParent;
+    private TreeTableNodeParent nodeParent;
+    private Selectable selectable;
+    private Selectable<TreeItem> itemSelectable;
+    private TableTreeScroll scroll;
+    private Scrollable2D scrollable2D;
 
     public TreeTableViewWrap(Environment env, CONTROL nd) {
         super(env, nd);
     }
 
     /**
-     * You could find items within table and operate with them just like with
+     * Jemmy table control interface introduces multiple selections mechanism.
+     *
+     * @param <T>
+     * @param type
+     * @return
+     */
+    @As(Object.class)
+    public <T> Table<T> asTable(Class<T> type) {
+        if (table == null || !table.getType().equals(type)) {
+            table = asTreeTableCellItemParent(type);
+        }
+        return table;
+    }
+
+    /**
+     * Allows selections of paths. Notice that in the tree implementation, tree
+     * root is not looked up. That is, fist lookup criterion of the criteria
+     * passed for tree selection will be used for finding a child of the root
+     * node whether or not the root node is shown.
+     *
+     * @param <T>
+     * @param type
+     * @return
+     */
+    @As(Object.class)
+    public <T> Tree<T> asTree(Class<T> type) {
+        if (tree == null || !tree.getType().equals(type)) {
+            asTreeItemParent(TreeItem.class);
+            tree = new TreeTableImpl<T>(type, this, treeTableItemParent);
+        }
+        return tree;
+    }
+
+    /**
+     * You could find items within treetable and operate with them just like with
      * any other UI elements.
      *
      * @param <T>
@@ -117,19 +153,58 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
      * @see TableCellItemWrap
      */
     @As(Object.class)
-    public <T> EditableCellOwner<T> asItemParent(Class<T> type) {
+    public <T> EditableCellOwner<T> asTableItemParent(Class<T> type) {
         return asTreeTableCellItemParent(type);
     }
 
-    private <T> TreeTableCellParent<T> asTreeTableCellItemParent(Class<T> type) {
-        if (cellParent == null || !cellParent.getType().equals(type)) {
-            cellParent = new TreeTableCellParent<T>(this, type);
+    /**
+     * Allows to perform lookup for data objects - the objects which are
+     * accessible through
+     * <code>javafx.scene.control.TreeItem.getValue()</code>. All objects within
+     * the treeTable are elements of this hierarchy: whether visible or not. Notice
+     * though that the implementation does not expand nodes, so if a tree is
+     * loaded dynamically on node expand, those dynamically added nodes will not
+     * be a part of hierarchy.
+     *
+     * @param <T> type of data supported by the tree. If should be consistent
+     * with the data present in the tree, because the tree data may get casted
+     * to this type parameter during lookup operations. That, this must be a
+     * super type for all types present in the tree.
+     * @param type
+     * @return
+     * @see #asTableItemParent()
+     */
+    @As(Object.class)
+    public <T> EditableCellOwner<T> asTreeItemParent(Class<T> type) {
+        if (treeTableItemParent == null || !treeTableItemParent.getType().equals(type)) {
+            treeTableItemParent = new TreeTableItemParent<T>(this, getRoot(), type);
         }
-        return cellParent;
+        return treeTableItemParent;
     }
 
     /**
-     * Allows to work with tree as with a list on selectable data objects - the
+     * Allows to perform lookup for
+     * <code>javafx.scene.control.TreeItem</code>s. All objects within the tree
+     * are elements of this hierarchy: whether visible or not. Notice though
+     * that the implementation does not expand nodes, so if a tree is loaded
+     * dynamically on node expand, those dynamically added nodes will not be a
+     * part of hierarchy.
+     *
+     * @param <T>
+     * @param type
+     * @return
+     * @see #asTreeItemParent()
+     */
+    @As(TreeItem.class)
+    public <T extends TreeItem> EditableCellOwner<T> asItemParent(Class<T> type) {
+        if (nodeParent == null) {
+            nodeParent = new TreeTableNodeParent<T>(this, type);
+        }
+        return nodeParent;
+    }
+
+    /**
+     * Allows to work with treeTable as with a list on selectable data objects - the
      * objects which are accessible through
      * <code>javafx.scene.control.TreeItem.getValue()</code>. Notice that only
      * expanded tree items get into the list. A set of items in the hierarchy is
@@ -150,48 +225,8 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
     }
 
     /**
-     * Allows selections of paths. Notice that in the tree implementation, tree
-     * root is not looked up. That is, fist lookup criterion of the criteria
-     * passed for tree selection will be used for finding a child of the root
-     * node whether or not the root node is shown.
-     *
-     * @param <T>
-     * @param type
-     * @return
-     */
-    @As(Object.class)
-    public <T> Tree<T> asTree(Class<T> type) {
-        if (tree == null || !tree.getType().equals(type)) {
-            asItemParent(type);
-            tree = new TreeTableImpl<T>(type, this, itemParent);
-        }
-        return tree;
-    }
-
-    /**
-     * Allows to perform lookup for
-     * <code>javafx.scene.control.TreeItem</code>s. All objects within the tree
-     * are elements of this hierarchy: whether visible or not. Notice though
-     * that the implementation does not expand nodes, so if a tree is loaded
-     * dynamically on node expand, those dynamically added nodes will not be a
-     * part of hierarchy.
-     *
-     * @param <T>
-     * @param type
-     * @return
-     * @see #asTreeItemParent()
-     */
-    @As(Object.class)
-    public <T> EditableCellOwner<T> asTreeItemParent(Class<T> type) {
-        if (itemParent == null || !itemParent.getType().equals(type)) {
-            itemParent = new TreeTableItemParent<T>(this, getRoot(), type);
-        }
-        return itemParent;
-    }
-
-    /**
-     * Allows to work with tree as with a list on selectable items. Notice that
-     * only expanded tree items get into the list.
+     * Allows to work with treeTable as with a list on selectable items. Notice
+     * that only expanded tree items get into the list.
      *
      * @return
      * @see #asSelectable(java.lang.Class)
@@ -202,6 +237,32 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
             itemSelectable = new TreeTableViewSelectable();
         }
         return itemSelectable;
+    }
+
+    /**
+     * Returns implementation of Scrollable2D interface.
+     */
+    @As
+    public Scrollable2D asScrollable2D() {
+        if (scrollable2D == null) {
+            scrollable2D = new Scrollable2DImpl(this, new ScrollsLookupCriteria() {
+                @Override
+                public boolean checkFor(ScrollBar scrollBar) {
+                    return ((scrollBar.getParent() instanceof VirtualFlow)
+                            && (scrollBar.getParent().getParent() instanceof TreeTableView));
+                }
+            });
+        }
+        return scrollable2D;
+    }
+
+    /**
+     * Returns implementation of vertical scroll.
+     */
+    @As
+    public Scroll asScroll() {
+        checkScroll();
+        return scroll.asScroll();
     }
 
     @Property(ROOT_PROP_NAME)
@@ -267,38 +328,6 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
     @Override
     public Selector<TreeItem> selector() {
         return asTreeItemSelectable().selector();
-    }
-
-    /**
-     * Jemmy table control interface introduces multiple selections mechanism.
-     *
-     * @param <T>
-     * @param type
-     * @return
-     */
-    @As(Object.class)
-    public <T> Table<T> asTable(Class<T> type) {
-        return asTreeTableCellItemParent(type);
-    }
-
-    @As
-    public Scrollable2D asScrollable2D() {
-        if (scrollable2D == null) {
-            scrollable2D = new Scrollable2DImpl(this, new ScrollsLookupCriteria() {
-                @Override
-                public boolean checkFor(ScrollBar scrollBar) {
-                    return ((scrollBar.getParent() instanceof VirtualFlow)
-                            && (scrollBar.getParent().getParent() instanceof TreeTableView));
-                }
-            });
-        }
-        return scrollable2D;
-    }
-
-    @As
-    public Scroll asScroll() {
-        checkScroll();
-        return scroll.asScroll();
     }
 
     @Property(VALUE_PROP_NAME)
@@ -419,7 +448,7 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
         if (root == null) {
             return null;
         } else {
-            return new TreeTableItemWrap(root, this, Object.class, null);
+            return new TreeTableItemWrap(Object.class, root, this, null);
         }
     }
 
@@ -437,7 +466,10 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
             }
         }.dispatch(getEnvironment());
     }
-
+    
+    /**
+     * @return List<Integer>, containing list of selected indices.
+     */
     @Property(SELECTED_INDICES_PROP_NAME)
     public java.util.List<Integer> getSelectedIndices() {
         return new GetAction<java.util.List<Integer>>() {
@@ -497,7 +529,7 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
 
     TreeTableColumn getColumn(final int index) {
         return (TreeTableColumn) getDataColumns().get(index);
-    }
+        }
 
     protected int getRowIndex(IndexedCell tableCell) {
         return ((TreeTableCell) tableCell).getTreeTableRow().getIndex();
@@ -512,8 +544,7 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
     }
 
     public IndexedCell getTreeCell(TreeItem item) {
-        int index = getRow(item);
-        return (IndexedCell) as(Parent.class, IndexedCell.class).lookup(IndexedCell.class, TreeTableCellWrap.<IndexedCell>byCoords(IndexedCell.class, index, 0)).get();
+        return (TreeTableRow) new TreeTableNodeWrap<>(item, new TreeTableItemWrap<>(Object.class, item, this, null), this, null).getNode().getControl();
     }
 
     protected class TreeTableViewSelectable<T> extends TreeSelectable<T> {
@@ -543,12 +574,19 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
 
         @Override
         protected Parent asTreeItemParent() {
-            return TreeTableViewWrap.this.asTreeItemParent(Object.class);
+            return TreeTableViewWrap.this.asItemParent(TreeItem.class);
         }
 
         @Override
         protected Environment getEnvironment() {
             return TreeTableViewWrap.this.getEnvironment();
         }
+    }
+
+    private <T> TreeTableCellParent<T> asTreeTableCellItemParent(Class<T> type) {
+        if (cellParent == null || !cellParent.getType().equals(type)) {
+            cellParent = new TreeTableCellParent<T>(this, type);
+        }
+        return cellParent;
     }
 }

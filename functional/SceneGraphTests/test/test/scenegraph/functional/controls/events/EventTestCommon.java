@@ -182,11 +182,21 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         test(EventTypes.DRAG_EXITED_TARGET, new Command() {
 
             public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = bounds.getWidth() / 2;
-                double y = - ControlEventsApp.INSETS / 2;
-//                primeDock.drag().dnd(new Point(x, y));
-                dnd(primeDock.wrap(), primeDock.wrap().getClickPoint(), primeDock.wrap(), new Point(x, y));
+                NodeDock knownPointOutOfTarget = new NodeDock(tabDock.asParent(), 
+                        ControlEventsApp.DRAG_FIELD_ID);
+                
+                Point p1 =  primeDock.wrap().getClickPoint();
+                p1.setLocation(p1.x -4 , p1.y + 5);
+                primeDock.mouse().move(p1);
+                primeDock.mouse().press();
+                 try { Thread.sleep(200); } catch (InterruptedException ex) {}
+                 p1.setLocation(p1.x +8 , p1.y);
+                primeDock.mouse().move(p1);
+                 try { Thread.sleep(200); } catch (InterruptedException ex) {}
+                 
+                knownPointOutOfTarget.mouse().move();
+                knownPointOutOfTarget.mouse().release();
+                try { Thread.sleep(200); } catch (InterruptedException ex) {}
             }
         });
     }
@@ -529,13 +539,15 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     @Test(timeout = 30000)
     public void onAction()
     {
-        Assume.assumeTrue(control.getProcessedEvents().contains(ActionEvent.class));
-        test(EventTypes.ACTION, new Command() {
+//        Assume.assumeTrue(control.getProcessedEvents().contains(ActionEvent.class));
+        if (control.getProcessedEvents().contains(ActionEvent.class)) {
+            test(EventTypes.ACTION, new Command() {
 
-            public void invoke() {
-                primeDock.mouse().click();
-            }
-        });
+                public void invoke() {
+                    primeDock.mouse().click();
+                }
+            });
+        }
     }
     
     @Test(timeout = 30000)

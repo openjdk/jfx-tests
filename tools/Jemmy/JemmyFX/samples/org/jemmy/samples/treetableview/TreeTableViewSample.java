@@ -69,6 +69,10 @@ public class TreeTableViewSample extends SampleBase {
      * inside the tree item), directly, or by lookup criteria. You will need to
      * use appropriate implementation of Parent interface over data or its
      * representation in cells or treeItems.
+     *
+     * Explore different possible lookup possibilities via API. There are more
+     * than 15 possible ways to specify cell for lookup, and more than 20 ways
+     * to specify treeItem for lookup.
      */
     @Test
     public void itemLookup() {
@@ -91,21 +95,25 @@ public class TreeTableViewSample extends SampleBase {
         //Lookup treeItem, for instance, by the first column's content (only in visible part of TreeTableView).
         new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0", EXACT).mouse().click();
         //Lookup by data item, which is stored in treeItem.
-        new TreeTableCellDock(treeTableView.asDataParent(),
+        new TreeTableCellDock(treeTableView.asTableItemParent(),
                 treeTableView.wrap().getControl().getRoot().getValue()).mouse().click();
+        //Lookup by text of the first column. Ir works only if according treeItem is visible.
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), treeTableView.wrap(), "0-0-1").mouse().click();
     }
 
     /**
-     * How to expand and collapse a treeItem. 
+     * How to expand and collapse a treeItem.
      */
     @Test
     public void expandingCollapsing() throws InterruptedException {
         //collapse
-        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0-0", EXACT).collapse();
-        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0", EXACT).collapse();
-        //expand: 
-        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0", EXACT).expand();        
-        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-0-0", EXACT).expand();        
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-2-0", EXACT).collapse();
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-2", EXACT).collapse();
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-3-3", EXACT).collapse();
+        //expand happens automatically
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-2-0-2", EXACT).mouse().click();
+        //but there's, of course, an expand:
+        new TreeTableItemDock(treeTableView.asTreeItemParent(), "0-3-3", EXACT).expand();
     }
 
     /**

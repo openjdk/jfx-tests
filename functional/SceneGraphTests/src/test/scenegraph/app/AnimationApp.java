@@ -143,7 +143,7 @@ public class AnimationApp extends BasicButtonChooserApp {
             }
 
             // test KeyValue.getEndValue() method
-            if (!(keyValue4.getEndValue() instanceof Boolean) || true != keyValue4.getEndValue()) {
+            if (!(keyValue4.getEndValue() instanceof Boolean) || true != (Boolean) keyValue4.getEndValue()) {
                 reportGetterFailure("KeyValue.getEndValue");
             }
 

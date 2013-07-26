@@ -75,6 +75,7 @@ public class NodeWrapper extends DefaultWrapper {
         OPERATORS.add(SeparatorWrap.class);
         OPERATORS.add(TitledPaneWrap.class);
         OPERATORS.add(AccordionWrap.class);
+        OPERATORS.add(ColorPickerWrap.class);
         if(Platform.isSupported(ConditionalFeature.WEB)){
             OPERATORS.add(WebViewWrap.class);
             OPERATORS.add(WebNodeWrap.class);
