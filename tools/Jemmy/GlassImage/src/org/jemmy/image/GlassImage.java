@@ -79,13 +79,17 @@ public class GlassImage implements Image, WriteableRaster {
     }
 
     GlassImage(GlassImage orig) {
-        this.image = Application.GetApplication().createPixels(orig.size.width, orig.size.height,
-                ByteBuffer.allocate(orig.data.capacity()));
+        this(orig, orig.size);
+    }
+    
+    GlassImage(GlassImage orig, Dimension size) {
+        this.image = Application.GetApplication().createPixels(size.width, size.height,
+                ByteBuffer.allocate(size.width * size.height * 4)); //same logic as in Pixels
         supported = orig.supported;
         bytesPerPixel = orig.bytesPerPixel;
         bytesPerComponent = orig.bytesPerComponent;
         maxColorComponent = orig.maxColorComponent;
-        size = orig.size;
+        this.size = size;
         env = Environment.getEnvironment();
     }
 
