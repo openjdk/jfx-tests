@@ -23,6 +23,7 @@
  */
 package test.scenegraph.functional.controls.events;
 
+import org.jemmy.fx.control.TextInputControlDock;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import test.scenegraph.app.ControlEventsApp;
@@ -32,7 +33,8 @@ import test.scenegraph.app.ControlEventsApp.Controls;
  *
  * @author Aleksandr Sakharuk
  */
-public class TextAreaEventsTest extends EventTestTextInput
+public class TextAreaEventsTest extends EventTestCommon<TextInputControlDock> 
+     //   EventTestTextInput
 {
     
     @BeforeClass
@@ -51,4 +53,27 @@ public class TextAreaEventsTest extends EventTestTextInput
         setControl(Controls.TEXT_AREA);
     }
     
+@Override
+    protected TextInputControlDock findPrimeDock()
+    {
+        return new TextInputControlDock(getActiveTabDock().asParent(), 
+                ControlEventsApp.CONTROL_ID);
+    }
+    
+    /*
+    @Test(timeout = 30000)
+    public void onInputMethodTextChanged()
+    {
+        test(ControlEventsApp.EventTypes.INPUT_METHOD_TEXT_CHANGED, new Command() {
+
+            public void invoke() {
+                getPrimeNodeDock().mouse().click();
+                getPrimeNodeDock().keyboard().typeChar('i');
+                new TextInputControlDock(getActiveTabDock().asParent(), 
+                        ControlEventsApp.DRAG_FIELD_ID).mouse().click();
+            }
+        });
+        
+    }
+    */    
 }

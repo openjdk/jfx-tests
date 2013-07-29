@@ -54,7 +54,7 @@ public abstract class EventTestTextInput extends EventTestCommon<TextInputContro
             }
         });
     }
-    
+    /*
     @Test(timeout = 30000)
     public void onInputMethodTextChanged()
     {
@@ -69,5 +69,5 @@ public abstract class EventTestTextInput extends EventTestCommon<TextInputContro
         });
         
     }
-    
+    */
 }

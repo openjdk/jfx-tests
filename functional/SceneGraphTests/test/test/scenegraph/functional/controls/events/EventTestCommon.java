@@ -56,7 +56,9 @@ import test.scenegraph.app.ControlEventsTab;
 
 /**
  *
- * @author Aleksandr Sakharuk
+ * @author Aleksandr Sakharuk, rewritten by Victor Shubov
+ * // step1: tests work OK in Windows
+ * @param <T>
  */
 public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 {
@@ -66,168 +68,48 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     public void before()
     {
         super.before();
-        scene = new SceneDock(super.scene);
+        sceneDock = new SceneDock(super.scene);
     }
     
-    /**
-     * Clicks with right mouse button on node
-     */
-    @Test(timeout = 30000)
+    // * Clicks with right mouse button on node
+    @Test(timeout = 20000)
     public void onContextMenuRequested()
     {
         test(EventTypes.CONTEXT_MENU_REQUESTED, new Command() {
 
             @Override
             public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = bounds.getWidth() / 2;
-                double y = bounds.getHeight() / 2;
-                primeDock.mouse().click(1, new Point(x, y), Mouse.MouseButtons.BUTTON3);
+                final Point clickPoint = primeDock.wrap().getClickPoint();
+                primeDock.mouse().click(1, clickPoint, Mouse.MouseButtons.BUTTON3);
+                try { Thread.sleep(200);} catch(InterruptedException e){}
+                primeDock.mouse().click(1, new Point(clickPoint.x - 2, clickPoint.y), Mouse.MouseButtons.BUTTON1);
             }
         });
     }
     
-    /**
-     * Drags from node to text field.
-     * DRAG_DONE event comes when drag is finished on text field.
-     * Text in text field will change to node's class name.
-     */
-    @Test(timeout = 30000)
-    public void onDragDone()
-    {
-        test(EventTypes.DRAG_DONE, new Command() {
+    Command dragFromControlToTarget = new Command() {
+        public void invoke() {
+            NodeDock dragTarget = new NodeDock(tabDock.asParent(),
+                    ControlEventsApp.DRAG_TARGET_ID);
+            dnd(primeDock, dragTarget);
+        }
+    };
 
-            public void invoke() {
-                Wrap dragTarget = new NodeDock(tabDock.asParent(), 
-                        ControlEventsApp.DRAG_TARGET_ID).wrap();
-//                primeDock.drag().dnd(dragTarget, dragTarget.getClickPoint());
-                dnd(primeDock.wrap(), primeDock.wrap().getClickPoint(), dragTarget, dragTarget.getClickPoint());
-            }
-        });
-    }
-    
-    /**
-     * Drag from text field to node.
-     * Text in node's tooltip will change to text from text field.
-     */
-    @Test(timeout = 30000)
-    public void onDragDroped()
-    {
-        test(EventTypes.DRAG_DROPPED, new Command() {
-
-            public void invoke() {
-                NodeDock dragSource = new NodeDock(tabDock.asParent(), 
-                        ControlEventsApp.DRAG_FIELD_ID);
-//                dragSource.drag().dnd(primeDock.wrap(), primeDock.wrap().getClickPoint());
-                dnd(dragSource.wrap(), dragSource.wrap().getClickPoint(), primeDock.wrap(), primeDock.wrap().getClickPoint());
-            }
-        });
-    }
-    
-    /**
-     * Drag from text field to node.
-     */
-    @Test(timeout = 30000)
-    public void onDragEntered()
-    {
-        test(EventTypes.DRAG_ENTERED, new Command() {
-
-            public void invoke() {
-                NodeDock dragSource = new NodeDock(tabDock.asParent(), 
-                        ControlEventsApp.DRAG_FIELD_ID);
-//                dragSource.drag().dnd(primeDock.wrap(), primeDock.wrap().getClickPoint());
-                dnd(dragSource.wrap(), dragSource.wrap().getClickPoint(), primeDock.wrap(), primeDock.wrap().getClickPoint());
-            }
-        });
-    }
-    
-    /**
-     * Drag from text field to node.
-     */
-    @Test(timeout = 30000)
-    public void onDragEnteredTarget()
-    {
-        test(EventTypes.DRAG_ENTERED_TARGET, new Command() {
-
-            public void invoke() {
-                NodeDock dragSource = new NodeDock(tabDock.asParent(), 
-                        ControlEventsApp.DRAG_FIELD_ID);
-//                dragSource.drag().dnd(primeDock.wrap(), primeDock.wrap().getClickPoint());
-                dnd(dragSource.wrap(), dragSource.wrap().getClickPoint(), primeDock.wrap(), primeDock.wrap().getClickPoint());
-            }
-        });
-    }
-    
-    /**
-     * Drag from 
-     */
-    @Test(timeout = 30000)
-    public void onDragExited()
-    {
-        test(EventTypes.DRAG_EXITED, new Command() {
-
-            public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = bounds.getWidth() / 2;
-                double y = - ControlEventsApp.INSETS / 2;
-//                primeDock.drag().dnd(new Point(x, y));
-                dnd(primeDock.wrap(), primeDock.wrap().getClickPoint(), primeDock.wrap(), new Point(x, y));
-            }
-        });
-    }
-    
-    @Test(timeout = 30000)
-    public void onDragExitedTarget()
-    {
-        test(EventTypes.DRAG_EXITED_TARGET, new Command() {
-
-            public void invoke() {
-                NodeDock knownPointOutOfTarget = new NodeDock(tabDock.asParent(), 
-                        ControlEventsApp.DRAG_FIELD_ID);
-                
-                Point p1 =  primeDock.wrap().getClickPoint();
-                p1.setLocation(p1.x -4 , p1.y + 5);
-                primeDock.mouse().move(p1);
-                primeDock.mouse().press();
-                 try { Thread.sleep(200); } catch (InterruptedException ex) {}
-                 p1.setLocation(p1.x +8 , p1.y);
-                primeDock.mouse().move(p1);
-                 try { Thread.sleep(200); } catch (InterruptedException ex) {}
-                 
-                knownPointOutOfTarget.mouse().move();
-                knownPointOutOfTarget.mouse().release();
-                try { Thread.sleep(200); } catch (InterruptedException ex) {}
-            }
-        });
-    }
-    
-    @Test(timeout = 30000)
-    public void onDragOver()
-    {
-        test(EventTypes.DRAG_OVER, new Command() {
-
-            public void invoke() {
-                NodeDock dragSource = new NodeDock(tabDock.asParent(), 
-                        ControlEventsApp.DRAG_FIELD_ID);
-//                dragSource.drag().dnd(primeDock.wrap(), primeDock.wrap().getClickPoint());
-                dnd(dragSource.wrap(), dragSource.wrap().getClickPoint(), primeDock.wrap(), primeDock.wrap().getClickPoint());
-            }
-        });
-    }
-    
     @Test(timeout = 30000)
     public void onDragDetected()
     {
-        test(EventTypes.DRAG_DETECTED, new Command() {
-
-            public void invoke() {
-                Wrap dragTarget = new NodeDock(tabDock.asParent(), 
-                        ControlEventsApp.DRAG_TARGET_ID).wrap();
-//                primeDock.drag().dnd(dragTarget, dragTarget.getClickPoint());
-                dnd(primeDock.wrap(), primeDock.wrap().getClickPoint(), dragTarget, dragTarget.getClickPoint());
-            }
-        });
+        test(EventTypes.DRAG_DETECTED, dragFromControlToTarget);
     }
+    
+    // * Drags from node to text field.
+    // * DRAG_DONE event comes when drag is finished on text field.
+    // * Text in text field will change to node's class name.
+    @Test(timeout = 20000)
+    public void onDragDone()
+    {
+        test(EventTypes.DRAG_DONE, dragFromControlToTarget);
+    }
+    
     
     @Test(timeout = 30000)
     public void onMouseClicked()
@@ -240,34 +122,9 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    /**
-     * Drags mouse inside of tested node
-     */
-    @Test(timeout = 30000)
-    public void onMouseDraged()
-    {
-        test(EventTypes.MOUSE_DRAGGED, new Command() {
-
-            public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = bounds.getWidth() * 3 / 4;
-                double y = bounds.getHeight() / 2;
-//                primeDock.mouse().move(new Point(x, y));
-//                primeDock.mouse().press(Mouse.MouseButtons.BUTTON1);
-//                for(; x > bounds.getWidth() / 4; x--)
-//                {
-//                    primeDock.mouse().move(new Point(x, y));
-//                }
-//                primeDock.mouse().release(Mouse.MouseButtons.BUTTON1);
-                dnd(primeDock.wrap(), new Point(x, y), primeDock.wrap(), new Point(x / 3, y));
-            }
-        });
-    }
     
-    /**
-     * Moves mouse onto tested node.
-     * Event should come to tested node.
-     */
+    // * Moves mouse onto tested node.
+    // * Event should come to tested node.
     @Test(timeout = 30000)
     public void onMouseEntered()
     {
@@ -277,7 +134,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                 Bounds bounds = primeDock.getBoundsInLocal();
                 double x = - ControlEventsApp.INSETS / 2;
                 double y = bounds.getHeight() / 2;
-                for(; x <= bounds.getWidth() / 2; x++)
+                for(; (x <= bounds.getWidth() / 2) && (!gotEvent()); x++)
                 {
                     primeDock.mouse().move(new Point(x, y));
                 }
@@ -285,72 +142,8 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    /**
-     * Moves mouse onto tested node.
-     * Event should come to scene.
-     */
-//    @Test(timeout = 30000)
-//    public void onMouseEnteredTarget()
-//    {
-//        test(EventTypes.MOUSE_ENTERED_TARGET, new Command() {
-//
-//            public void invoke() {
-//                Bounds bounds = primeDock.getBoundsInLocal();
-//                double x = - bounds.getWidth() / 2;
-//                double y = bounds.getHeight() / 2;
-//                for(; x <= bounds.getWidth() / 2; x++)
-//                {
-//                    primeDock.mouse().move(new Point(x, y));
-//                }
-//            }
-//        });
-//    }
     
-    /**
-     * Moves mouse out of tested node.
-     * Event should come to tested node.
-     */
-    @Test(timeout = 30000)
-    public void onMouseExited()
-    {
-        test(EventTypes.MOUSE_EXITED, new Command() {
-
-            public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = bounds.getWidth() / 2;
-                double y = bounds.getHeight() / 2;
-                for(; x >= - ControlEventsApp.INSETS / 2; x--)
-                {
-                    primeDock.mouse().move(new Point(x, y));
-                }
-            }
-        });
-    }
-    
-    /**
-     * Moves mouse out of tested node.
-     * Event should come to scene.
-     */
-//    @Test(timeout = 30000)
-//    public void onMouseExitedTarget()
-//    {
-//        test(EventTypes.MOUSE_EXITED_TARGET, new Command() {
-//
-//            public void invoke() {
-//                Bounds bounds = primeDock.getBoundsInLocal();
-//                double x = bounds.getWidth() / 2;
-//                double y = bounds.getHeight() / 2;
-//                for(; x >= - bounds.getWidth() / 2; x--)
-//                {
-//                    primeDock.mouse().move(new Point(x, y));
-//                }
-//            }
-//        });
-//    }
-    
-    /**
-     * Moves mouse inside of tested node.
-     */
+    // * Moves mouse inside of tested node.
     @Test(timeout = 30000)
     public void onMouseMoved()
     {
@@ -360,14 +153,13 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                 Bounds bounds = primeDock.getBoundsInLocal();
                 double x = 0;
                 double y = bounds.getHeight() / 2;
-                for(; x < bounds.getWidth(); x++)
+                for(; (x < bounds.getWidth()) && (!gotEvent()); x++)
                 {
                     primeDock.mouse().move(new Point(x, y));
                 }
             }
         });
     }
-    
     @Test(timeout = 30000)
     public void onMousePressed()
     {
@@ -394,105 +186,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    /**
-     * Drags mouse onto tested node.
-     * Event should come to tested node.
-     */
-    @Test(timeout = 30000)
-    public void onMouseDragEntered()
-    {
-        test(EventTypes.MOUSE_DRAG_ENTERED, new Command() {
-
-            public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = - ControlEventsApp.INSETS / 2;
-                double y = bounds.getHeight() / 2;
-                primeDock.mouse().move(new Point(x, y));
-                primeDock.mouse().press(Mouse.MouseButtons.BUTTON1);
-                for(; x < bounds.getWidth() / 2; x++)
-                {
-                    primeDock.mouse().move(new Point(x, y));
-                }
-                primeDock.mouse().release(Mouse.MouseButtons.BUTTON1);
-            }
-        });
-    }
-    
-    /**
-     * Drags mouse onto tested node.
-     * Event should come to scene.
-     */
-//    @Test(timeout = 30000)
-//    public void onMouseDragEnteredTarget()
-//    {
-//        test(EventTypes.MOUSE_DRAG_ENTERED_TARGET, new Command() {
-//
-//            public void invoke() {
-//                Bounds bounds = primeDock.getBoundsInLocal();
-//                double x = - bounds.getWidth() / 2;
-//                double y = bounds.getHeight() / 2;
-//                primeDock.mouse().move(new Point(x, y));
-//                primeDock.mouse().press(Mouse.MouseButtons.BUTTON1);
-//                for(; x < bounds.getWidth() / 2; x++)
-//                {
-//                    primeDock.mouse().move(new Point(x, y));
-//                }
-//                primeDock.mouse().release(Mouse.MouseButtons.BUTTON1);
-//            }
-//        });
-//    }
-    
-    /**
-     * Drags mouse out of tested node.
-     * Event should come to tested node.
-     */
-    @Test(timeout = 30000)
-    public void onMouseDragExited()
-    {
-        test(EventTypes.MOUSE_DRAG_EXITED, new Command() {
-
-            public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = bounds.getWidth() + ControlEventsApp.INSETS / 2;
-                double y = bounds.getHeight() / 2;
-                primeDock.mouse().move(new Point(x, y));
-                primeDock.mouse().press();
-                for(; x >= - ControlEventsApp.INSETS / 2; x--)
-                {
-                    primeDock.mouse().move(new Point(x, y));
-                }
-                primeDock.mouse().release();
-            }
-        });
-    }
-    
-    /**
-     * Drags mouse out of tested node.
-     * Event should come to scene.
-     */
-//    @Test(timeout = 30000)
-//    public void onMouseDragExitedTarget()
-//    {
-//        test(EventTypes.MOUSE_DRAG_EXITED_TARGET, new Command() {
-//
-//            public void invoke() {
-//                Bounds bounds = primeDock.getBoundsInLocal();
-//                double x = 3 * bounds.getWidth() / 2;
-//                double y = bounds.getHeight() / 2;
-//                primeDock.mouse().move(new Point(x, y));
-//                primeDock.mouse().press();
-//                for(; x >= - bounds.getWidth() / 2; x--)
-//                {
-//                    primeDock.mouse().move(new Point(x, y));
-//                }
-//                primeDock.mouse().release();
-//            }
-//        });
-//    }
-    
-    /**
-     * Drags mouse over tested node starting outside of one.
-     */
+    // * Drags mouse over tested node starting outside of one.
     @Test(timeout = 30000)
     public void onMouseDragOver()
     {
@@ -504,7 +198,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                 double y = bounds.getHeight() / 2;
                 primeDock.mouse().move(new Point(x, y));
                 primeDock.mouse().press();
-                for(; x >= - ControlEventsApp.INSETS / 2; x--)
+                for(;( x >= - ControlEventsApp.INSETS / 2) && (!gotEvent()); x--)
                 {
                     primeDock.mouse().move(new Point(x, y));
                 }
@@ -513,33 +207,10 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    /**
-     * Releases drag on tested node. Drag starts outside of node.
-     */
-    @Test(timeout = 30000)
-    public void onMouseDragReleased()
-    {
-        test(EventTypes.MOUSE_DRAG_RELEASED, new Command() {
-
-            public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = bounds.getWidth() + ControlEventsApp.INSETS / 2;
-                double y = bounds.getHeight() / 2;
-                primeDock.mouse().move(new Point(x, y));
-                primeDock.mouse().press();
-                for(; x >= bounds.getWidth() / 2; x--)
-                {
-                    primeDock.mouse().move(new Point(x, y));
-                }
-                primeDock.mouse().release();
-            }
-        });
-    }
     
     @Test(timeout = 30000)
     public void onAction()
     {
-//        Assume.assumeTrue(control.getProcessedEvents().contains(ActionEvent.class));
         if (control.getProcessedEvents().contains(ActionEvent.class)) {
             test(EventTypes.ACTION, new Command() {
 
@@ -550,75 +221,363 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         }
     }
     
-    @Test(timeout = 30000)
+    
+    private final Command commandPushKey = new Command() {
+            public void invoke() {
+                
+                final Point p1 = primeDock.wrap().getClickPoint();
+                final Mouse m = primeDock.mouse();
+                
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        m.move(p1);
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+                
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        m.click();
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+                
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        primeDock.keyboard().detached().pushKey(Keyboard.KeyboardButtons.A);
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+    
+            }};
+
+    @Test(timeout = 10000)
     public void onKeyPressed()
     {
-        Assume.assumeTrue(control.getProcessedEvents().contains(KeyEvent.class));
-        test(EventTypes.KEY_PRESSED, new Command() {
-
-            public void invoke() {
-                primeDock.mouse().click(); // move focus to tested node
-                primeDock.keyboard().pressKey(Keyboard.KeyboardButtons.A);
-                try { Thread.sleep(500); } catch (InterruptedException ex) {}
-                primeDock.keyboard().releaseKey(Keyboard.KeyboardButtons.A);
-            }
-        });
+        if (control.getProcessedEvents().contains(KeyEvent.class)) 
+        test(EventTypes.KEY_PRESSED, commandPushKey);
     }
     
-    @Test(timeout = 30000)
+    @Test(timeout = 10000)
     public void onKeyRelease()
     {
-        Assume.assumeTrue(control.getProcessedEvents().contains(KeyEvent.class));
-        test(EventTypes.KEY_RELEASED, new Command() {
-
-            public void invoke() {
-                primeDock.mouse().click(); // move focus to tested node
-                primeDock.keyboard().pressKey(Keyboard.KeyboardButtons.A);
-                try { Thread.sleep(500); } catch (InterruptedException ex) {}
-                primeDock.keyboard().releaseKey(Keyboard.KeyboardButtons.A);
-            }
-        });
+        if(control.getProcessedEvents().contains(KeyEvent.class))
+        test(EventTypes.KEY_RELEASED, commandPushKey);
     }
     
-    @Test(timeout = 30000)
+    @Test(timeout = 10000)
     public void onKeyTyped()
     {
-        Assume.assumeTrue(control.getProcessedEvents().contains(KeyEvent.class));
-        test(EventTypes.KEY_TYPED, new Command() {
-
-            public void invoke() {
-                Assume.assumeTrue(control.getProcessedEvents().contains(KeyEvent.class));
-                primeDock.keyboard().pushKey(Keyboard.KeyboardButtons.A);
-            }
-        });
+        if(control.getProcessedEvents().contains(KeyEvent.class))
+        test(EventTypes.KEY_TYPED, commandPushKey);
     }
-    
-    @Test(timeout = 30000)
+
+    @Test(timeout = 8000)
     public void onScroll()
     {
         Assume.assumeTrue(control.getProcessedEvents().contains(ScrollEvent.class));
         test(EventTypes.SCROLL, new Command() {
 
             public void invoke() {
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
                 primeDock.mouse().move();
                 primeDock.mouse().turnWheel(1);
-            }
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+            }            
         });
     }
 
-    protected final void test(EventTypes eventType, Command command) 
+    // * Releases drag on tested node. Drag starts outside of node.
+    @Test(timeout = 20000)
+    public void onMouseDragReleased()
     {
+        test(EventTypes.MOUSE_DRAG_RELEASED, new Command() {
+
+            public void invoke() {
+                final Point p1 = primeDock.wrap().getClickPoint();
+                final double pointInX = p1.x;
+                final double pointOutX = p1.x - primeDock.getBoundsInParent().getWidth()/2 -  10;//.getWidth() / 2 - 1;
+                
+                final Mouse m = primeDock.mouse();
+                
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        p1.setLocation(pointOutX, p1.y);  
+                        m.move(p1);
+                        m.press();
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+                try {Thread.sleep(50);}catch(InterruptedException e){}
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        p1.setLocation(pointOutX+6, p1.y);  
+                        m.move(p1);
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+                try {Thread.sleep(50);}catch(InterruptedException e){}
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        p1.setLocation(pointOutX+8, p1.y);  
+                        m.move(p1);
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+                try {Thread.sleep(50);}catch(InterruptedException e){}
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        p1.setLocation(pointInX, p1.y +1);
+                        m.move(p1);
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        m.release();
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+                
+            }
+        });
+    }
+    
+    
+    
+    // * Drags mouse onto tested node.
+    // * Event should come to tested node.
+    @Test(timeout = 30000)
+    public void onMouseDragEntered()
+    {
+        test(EventTypes.MOUSE_DRAG_ENTERED, new Command() {
+
+            public void invoke() {
+                final Point p1 = primeDock.wrap().getClickPoint();
+                double offset = p1.x - primeDock.wrap().getScreenBounds().getWidth()/2 -  10;//.getWidth() / 2 - 1;
+                p1.setLocation(offset, p1.y);
+                final Mouse m = primeDock.mouse();
+                
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                      m.move(p1);
+                      m.press();
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        p1.setLocation(p1.x + 4, p1.y);
+                        m.move(p1);
+                        m.press();
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        p1.setLocation(p1.x + 12, p1.y);
+                        m.move(p1);
+                        m.release();
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+            }
+        });
+    }
+    
+    
+    private final Command commandDnDFromDragSourceToPrimeDock = new Command() {
+            public void invoke() {
+                final NodeDock dragSource = new NodeDock(tabDock.asParent(), 
+                        ControlEventsApp.DRAG_FIELD_ID);
+                dnd(dragSource, primeDock);
+    
+}};
+    
+    // * Drag from text field to node.
+    // * Text in node's tooltip will change to text from text field.
+    @Test(timeout = 20000)
+    public void onDragDroped()
+    {
+        test(EventTypes.DRAG_DROPPED, commandDnDFromDragSourceToPrimeDock);
+    }
+
+    // * Drag from text field to node.
+    @Test(timeout = 30000)
+    public void onDragEntered()
+    {
+        test(EventTypes.DRAG_ENTERED, commandDnDFromDragSourceToPrimeDock);
+    }
+    
+    // * Drag from text field to node.
+    @Test(timeout = 30000)
+    public void onDragEnteredTarget()
+    {
+        test(EventTypes.DRAG_ENTERED_TARGET, commandDnDFromDragSourceToPrimeDock);
+    }
+ 
+    @Test(timeout = 30000)
+    public void onDragOver()
+    {
+        test(EventTypes.DRAG_OVER, commandDnDFromDragSourceToPrimeDock  );
+    }
+    
+
+    
+    
+    
+    @Test(timeout = 30000)
+    public void onMouseDragExited()
+    {
+        test(EventTypes.MOUSE_DRAG_EXITED, new Command() {
+
+            public void invoke() {
+                final Point p1 = primeDock.wrap().getClickPoint();
+                final double pointInX = p1.x;
+                final double pointOutX = p1.x - primeDock.wrap().getScreenBounds().getWidth()/2 -  14;//.getWidth() / 2 - 1;
+                
+                final Mouse m = primeDock.mouse();
+                
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        p1.setLocation(pointOutX, p1.y);  
+                        m.move(p1);
+                        m.press();
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        p1.setLocation(pointOutX+10, p1.y);  
+                        m.move(p1);
+                        m.press();
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        p1.setLocation(pointInX, p1.y);
+                        m.move(p1);
+                        m.press();
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        p1.setLocation(pointInX+8, p1.y);
+                        m.move(p1);
+                        m.press();
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+                
+                new GetAction<Object>() {
+                    @Override
+                    public void run(Object... os) throws Exception {
+                        p1.setLocation(pointOutX, p1.y);
+                        m.move(p1);
+                        m.release();
+                    }
+                }.dispatch(Root.ROOT.getEnvironment());
+            }
+        });
+    }
+    
+
+    // * Moves mouse out of tested node.
+    // * Event should come to tested node.
+    Command dragControlAndExitCommand = new Command() {
+
+        public void invoke() {
+
+            final Point p1 = primeDock.wrap().getClickPoint();
+            final double pointOutX = p1.x - primeDock.wrap().getScreenBounds().getWidth() / 2 - 14;//.getWidth() / 2 - 1;
+            
+            final Mouse m = primeDock.mouse();
+            new GetAction<Object>() {
+                @Override
+                public void run(Object... os) throws Exception {
+                    m.move(new Point(p1.x -4 ,p1.y));
+                    m.press();
+                }
+            }.dispatch(Root.ROOT.getEnvironment());
+            
+            new GetAction<Object>() {
+                @Override
+                public void run(Object... os) throws Exception {
+                    m.move(p1);
+                 //   m.press();
+                }
+            }.dispatch(Root.ROOT.getEnvironment());
+            new GetAction<Object>() {
+                @Override
+                public void run(Object... os) throws Exception {
+                    m.move(new Point(p1.x+4,p1.y));
+                //   m.press();
+                }
+            }.dispatch(Root.ROOT.getEnvironment());
+            
+            new GetAction<Object>() {
+                @Override
+                public void run(Object... os) throws Exception {
+                    p1.setLocation(pointOutX, p1.y);
+                    m.move(p1);
+                    m.release();
+                }
+            }.dispatch(Root.ROOT.getEnvironment());
+        }
+    };
+    // * Drags mouse inside of tested node
+    @Test(timeout = 30000)
+    public void onMouseDraged()
+    {
+        test(EventTypes.MOUSE_DRAGGED, dragControlAndExitCommand);
+    }
+    
+    @Test(timeout = 30000)
+    public void onDragExited()
+    {
+        test(EventTypes.DRAG_EXITED, dragControlAndExitCommand);
+    }
+    
+    @Test(timeout = 30000)
+    public void onDragExitedTarget()
+    {
+        test(EventTypes.DRAG_EXITED_TARGET, dragControlAndExitCommand);        
+    }
+    
+    @Test(timeout = 30000)
+    public void onMouseExited()
+    {
+        test(EventTypes.MOUSE_EXITED, dragControlAndExitCommand);
+    }
+    
+
+    
+    protected void setEventType(EventTypes eventType)
+    {
+        this.eventType = eventType;
+    }
+    
+    
+    protected final void test(EventTypes eventType, Command command) {
         selectTab();
         setEventType(eventType);
-        selectEventType();
-        command.invoke();
-        waitHandler();
+        if (selectEventType()) {
+            command.invoke();
+            waitHandler();
+        }
     }
 
     private void selectTab() 
     {
-        tabPaneDock = new TabPaneDock(scene.asParent());
-//        System.out.println(control.toString());
+        final TabPaneDock tabPaneDock = new TabPaneDock(sceneDock.asParent());
         tabDock = new TabDock(tabPaneDock.asTabParent(), new LookupCriteria<Tab>() {
 
             public boolean check(Tab cntrl) {
@@ -627,8 +586,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                 return id.equals(control.toString());
             }
         });
-//        System.out.println(tabDock.control().getId());
-//        tabPaneDock.selector().select(tabDock.control());
         new GetAction<Object>() {
 
             @Override
@@ -641,25 +598,53 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     
     protected abstract T findPrimeDock();
 
-    private void selectEventType() 
-    {
+    boolean selectEventType() {
         eventRadio = new LabeledDock(tabDock.asParent(), RadioButton.class,
                 eventType.toString());
-        eventRadio.mouse().click();
+        if (null != eventRadio) {
+            
+            // Yes, I need retry count here. One click via Jemmy is not enough in real world.
+            // testcase: run TextFiledEventTest 8 times.
+            // (PS: one click using real hand and real mouse - OK)
+            
+            int retryCount = 0;
+            while ((!((RadioButton)eventRadio.control()).isSelected()) && (retryCount++ < 4 )) {
+            new GetAction<Object>() {
+                @Override
+                public void run(Object... os) throws Exception {
+                    eventRadio.mouse().click();
+                }
+            }.dispatch(Root.ROOT.getEnvironment());
+
+            try { Thread.sleep(20); } catch (InterruptedException e){}
+            }
+            eventRadio.wrap().waitState(new State<Boolean>() {
+            public Boolean reached() {
+                return ((RadioButton)eventRadio.control()).isSelected();
+            }
+            
+        }, true);            
+            
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    private void waitHandler() 
-    {
-        eventRadio.wrap().waitState(new State<String>() {
+    
+    State targetState = new State<String>() {
             public String reached() {
                 return eventRadio.control().getStyle();
             }
-        }, ControlEventsTab.HANDLED_STYLE);
+        };
+    
+    boolean gotEvent() {
+        return ( ControlEventsTab.HANDLED_STYLE.equals(targetState.reached()));
     }
     
-    protected void setEventType(EventTypes eventType)
+    private void waitHandler() 
     {
-        this.eventType = eventType;
+        eventRadio.wrap().waitState(targetState, ControlEventsTab.HANDLED_STYLE);
     }
     
     protected void setControl(Controls control)
@@ -678,15 +663,24 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     }
     
     // Workaround to make drag'n'drop work
-    protected void dnd(Wrap from, Point from_point, Wrap to, Point to_point) 
+    protected void dnd(final NodeDock _ndFrom, final NodeDock _ndTo) {
+        final Wrap from = _ndFrom.wrap();
+        final Wrap to = _ndTo.wrap();
+      
+        dnd(from, to);
+    }
+    
+    
+    protected void dnd(final Wrap from, final Wrap to) 
     {
+        final Point to_point = to.getClickPoint();
+        final Point from_point = from.getClickPoint();
 	if(!Utils.isWindows())
 	{
 	    from.drag().dnd(to, to_point);
 	    return;
 	}
 	
-	final int STEPS = 50;
         System.err.println("Use glass robot");
         Point abs_from_point = new Point(from_point);
         abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
@@ -699,16 +693,9 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         robot.mousePress(1);
         int differenceX = abs_to_point.x - abs_from_point.x;
         int differenceY = abs_to_point.y - abs_from_point.y;
-        for (int i = 0; i <= STEPS; i++) {
+	final int STEPS = differenceX > differenceY ? differenceX : differenceY;
+        for (int i = 0; (i <= STEPS) && (!gotEvent()); i++) {
             robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
-            try 
-            {
-                Thread.sleep(20);
-            } 
-            catch (InterruptedException ex) 
-            {
-                System.err.println("Interrupted while drag'n'drop");;
-            }
         }
         robot.mouseRelease(1);
     }
@@ -718,13 +705,11 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     {
         if (Utils.isMacOS()) 
         {
-            //AWTRobotInputFactory.runInOtherJVM(true);
             JemmyUtils.runInOtherJVM(true);
         }
     }
     
-    private SceneDock scene;
-    private TabPaneDock tabPaneDock;
+    private SceneDock sceneDock;
     private TabDock tabDock;
     private T primeDock; 
     private LabeledDock eventRadio;
