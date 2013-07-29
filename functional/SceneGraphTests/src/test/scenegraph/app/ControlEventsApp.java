@@ -90,7 +90,7 @@ public class ControlEventsApp extends InteroperabilityApp {
             tab.setId(c.toString());
             tabPane.getTabs().add(tab);
         }
-        return new Scene(tabPane);
+        return new Scene(tabPane, 800, 600);
     }
 
     public abstract static class AbstractControlFactory<T extends Control> {
@@ -115,7 +115,12 @@ public class ControlEventsApp extends InteroperabilityApp {
         DRAG_EXITED(DragEvent.DRAG_EXITED),
         DRAG_EXITED_TARGET(DragEvent.DRAG_EXITED_TARGET),
         DRAG_OVER(DragEvent.DRAG_OVER),
-        INPUT_METHOD_TEXT_CHANGED(InputMethodEvent.INPUT_METHOD_TEXT_CHANGED),
+
+//         temporary removed while test method
+//         for automated test suite is not provided
+//         https://javafx-jira.kenai.com/browse/RT-31875
+       // INPUT_METHOD_TEXT_CHANGED(InputMethodEvent.INPUT_METHOD_TEXT_CHANGED),
+        
         KEY_PRESSED(KeyEvent.KEY_PRESSED),
         KEY_RELEASED(KeyEvent.KEY_RELEASED),
         KEY_TYPED(KeyEvent.KEY_TYPED),

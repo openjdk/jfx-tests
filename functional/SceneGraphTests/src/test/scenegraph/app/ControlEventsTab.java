@@ -26,8 +26,6 @@ package test.scenegraph.app;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -134,6 +132,8 @@ public class ControlEventsTab extends Tab
             final RadioButton rb = new RadioButton(et.toString());
             eventTypes.getChildren().add(rb);
             rb.setToggleGroup(eventSwitch);
+            
+            //eventSwitch.getSelectedToggle().
             rb.setStyle(NOT_HANDLED_STYLE);
             rb.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 
@@ -177,12 +177,20 @@ public class ControlEventsTab extends Tab
         resetButton.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent t) {
+                
+                dragTooltip.setText(ControlEventsTab.DRAG_WAIT);
+                dragTarget.setText("");
+                
+                final RadioButton trb = (RadioButton)eventSwitch.getSelectedToggle();
+                trb.setSelected(false);
+                
                 for(Node n: eventTypes.getChildren())
                 {
                     n.setStyle(NOT_HANDLED_STYLE);
-                    dragTooltip.setText(ControlEventsTab.DRAG_WAIT);
+                    
+                    //dragTooltip.setText(ControlEventsTab.DRAG_WAIT);
                     eventSwitch.selectToggle(null);
-                    dragTarget.setText("");
+                    //dragTarget.setText("");
                 }
             }
         });
