@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009-2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,9 +23,11 @@
  */
 package test.scenegraph.transparency;
 
+import java.util.concurrent.Callable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.shape.Rectangle;
+import org.jemmy.JemmyException;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.Lookups;
 import org.jemmy.image.*;
@@ -33,13 +35,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import test.javaclient.shared.JemmyUtils;
 import test.javaclient.shared.TestBase;
+import test.scenegraph.stage.PopupTest;
 
 /**
  *
  * @author Taras Ledkov < taras.ledkov@oracle.com >
  */
 public class TransparencyWindowTest extends TestBase {
-
 
     //@RunUI
     @BeforeClass
@@ -53,19 +55,23 @@ public class TransparencyWindowTest extends TestBase {
      * Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW) feature
      */
     @Test
-    public void PopupTransparency() throws InterruptedException {
+    public void PopupTransparency() throws Throwable {
         Wrap<? extends Button> wrapBtnPopup = Lookups.byID(scene, "BtnShowPopup", Button.class);
         wrapBtnPopup.mouse().click();
 
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
-        }
+        PopupTest.checkStatementWithWaiting("Check transparency", wrapBtnPopup.getEnvironment(), new Callable<String>() {
+            public String call() {
+                Wrap<? extends Rectangle> wrapGreenRect = Lookups.byID(scene, "RectGreen", Rectangle.class);
+                Wrap<? extends CheckBox> wrapCheckBox_isSupportedTransparentWindow = Lookups.byID(scene, "TRANSPARENT_WINDOW", CheckBox.class);
 
-        Wrap<? extends Rectangle> wrapGreenRect = Lookups.byID(scene, "RectGreen", Rectangle.class);
-        Wrap<? extends CheckBox> wrapCheckBox_isSupportedTransparentWindow = Lookups.byID(scene, "TRANSPARENT_WINDOW", CheckBox.class);
-
-        Image image = scene.getScreenImage();
-        JemmyUtils.comparePopUpRGB(image, wrapGreenRect.getControl(), wrapCheckBox_isSupportedTransparentWindow.getControl(), TransparencyWindowApp.smallRectSize);
+                Image image = scene.getScreenImage();
+                try {
+                    JemmyUtils.comparePopUpRGB(image, wrapGreenRect.getControl(), wrapCheckBox_isSupportedTransparentWindow.getControl(), TransparencyWindowApp.smallRectSize);
+                } catch (JemmyException ex) {
+                    return ex.getMessage();
+                }
+                return null;
+            }
+        });
     }
 }

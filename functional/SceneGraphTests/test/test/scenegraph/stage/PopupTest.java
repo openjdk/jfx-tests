@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009-2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,14 +23,20 @@
  */
 package test.scenegraph.stage;
 
+import java.util.concurrent.Callable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.stage.PopupWindow;
 import org.jemmy.Point;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
+import org.jemmy.env.Environment;
+import org.jemmy.env.Timeout;
 import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.Lookups;
 import org.jemmy.fx.Root;
@@ -38,13 +44,13 @@ import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.CheckBoxDock;
 import org.jemmy.fx.control.CheckBoxWrap;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
-import org.junit.Assert;
+import org.jemmy.timing.State;
+import org.jemmy.timing.Waiter;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import test.javaclient.shared.TestBase;
 
 /**
- *
  * @author Taras Ledkov < taras.ledkov@oracle.com >
  */
 public class PopupTest extends TestBase {
@@ -61,128 +67,195 @@ public class PopupTest extends TestBase {
     /**
      */
     @Test
-    public void autoHide_consumeAutoHidingEvents_hideOnEscape() throws InterruptedException {
+    public void autoHide_consumeAutoHidingEvents_hideOnEscape() throws Throwable {
         showPopup(true, true, true);
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         pressEscOnPopup();
-        Assert.assertFalse("Popup must be hided", isPopupShowing());
-        checkEventsCounts("Close by ESC (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 0, 0, 1);
+        checkPopupShowing(false);
+        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+            public String call() {
+                return checkEventsCounts("Close by ESC (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 0, 0, 1);
+            }
+        });
 
         showPopup(true, true, true);
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         clickMouseOutsidePopup();
-        Assert.assertFalse("Popup must be hided", isPopupShowing());
-        checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 0, 0, 0);
+        checkPopupShowing(false);
+        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+            public String call() {
+                return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 0, 0, 0);
+            }
+        });
     }
 
     @Test
-    public void autoHide_consumeAutoHidingEvents() throws InterruptedException {
+    public void autoHide_consumeAutoHidingEvents() throws Throwable {
         showPopup(true, true, false);
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         pressEscOnPopup();
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         clickMouseOutsidePopup();
-        Assert.assertFalse("Popup must be hided", isPopupShowing());
-        checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 1, 0, 1);
+        checkPopupShowing(false);
+        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+            public String call() {
+                return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 1, 0, 1);
+            }
+        });
     }
 
     @Test
-    public void consumeAutoHidingEvents_hideOnEscape() throws InterruptedException {
+    public void consumeAutoHidingEvents_hideOnEscape() throws Throwable {
         showPopup(false, true, true);
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         clickMouseOutsidePopup();
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         pressEscOnPopup();
-        Assert.assertFalse("Popup must be hided", isPopupShowing());
-        checkEventsCounts("Close by ESC (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 0, 0, 1);
+        checkPopupShowing(false);
+        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+            public String call() {
+                return checkEventsCounts("Close by ESC (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 0, 0, 1);
+            }
+        });
     }
 
     @Test
-    public void autoHide_hideOnEscape() throws InterruptedException {
+    public void autoHide_hideOnEscape() throws Throwable {
         showPopup(true, false, true);
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         pressEscOnPopup();
-        Assert.assertFalse("Popup must be hided", isPopupShowing());
-        checkEventsCounts("Close by ESC (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 1, 0, 1);
+        checkPopupShowing(false);
+        checkStatementWithWaiting("Popup must be hided", scene.getEnvironment(), new Callable<String>() {
+            public String call() {
+                return checkEventsCounts("Close by ESC (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 1, 0, 1);
+            }
+        });
 
         showPopup(true, false, true);
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         clickMouseOutsidePopup();
-        Assert.assertFalse("Popup must be hided", isPopupShowing());
-        checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 0, 0, 0);
+        checkPopupShowing(false);
+        checkStatementWithWaiting("Popup must be hided", scene.getEnvironment(), new Callable<String>() {
+            public String call() {
+                return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 0, 0, 0);
+            }
+        });
     }
 
     @Test
-    public void autoHide() throws InterruptedException {
+    public void autoHide() throws Throwable {
         showPopup(true, false, false);
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         pressEscOnPopup();
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         clickMouseOutsidePopup();
-        Assert.assertFalse("Popup must be hided", isPopupShowing());
-        checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 1, 0, 1);
+        checkPopupShowing(false);
+        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+            public String call() {
+                return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 1, 0, 1);
+            }
+        });
     }
 
     @Test
-    public void hideOnEscape() throws InterruptedException {
+    public void hideOnEscape() throws Throwable {
         showPopup(false, false, true);
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         clickMouseOutsidePopup();
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         pressEscOnPopup();
-        Assert.assertFalse("Popup must be hided", isPopupShowing());
-        checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 1, 0, 1);
+        checkPopupShowing(false);
+        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+            public String call() {
+                return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 1, 0, 1);
+            }
+        });
     }
 
     @Test
-    public void not_hide() throws InterruptedException {
+    public void not_hide() throws Throwable {
         showPopup(false, false, false);
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         clickMouseOutsidePopup();
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
+        checkPopupShowing(true);
         pressEscOnPopup();
-        Assert.assertTrue("Popup must be showed", isPopupShowing());
-        checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 1, 0, 1);
+        checkPopupShowing(true);
+        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+            public String call() {
+                return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 1, 0, 1);
+            }
+        });
     }
-    
+
     private void showPopup(boolean autoHide, boolean consumeAutoHidingEvents, boolean hideOnEscape) throws InterruptedException {
         CheckBoxDock dockCbAutoHide = new CheckBoxDock(new SceneDock(scene).asParent(), PopupApp.ID_CHBOX_AUTO_HIDE);
         CheckBoxDock dockCbConsumeAutoHidingEvents = new CheckBoxDock(new SceneDock(scene).asParent(), PopupApp.ID_CHBOX_CONSUME_AUTO_HIDING_EVENTS);
         CheckBoxDock dockCbHideOnEscape = new CheckBoxDock(new SceneDock(scene).asParent(), PopupApp.ID_CHBOX_HIDE_ON_ESCAPE);
-        
+
         dockCbAutoHide.asSelectable().selector().select(autoHide ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
-        System.out.println(dockCbAutoHide.wrap().getControl().isFocused());
+        //System.out.println(dockCbAutoHide.wrap().getControl().isFocused());
         dockCbConsumeAutoHidingEvents.asSelectable().selector().select(consumeAutoHidingEvents ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
-        System.out.println(dockCbConsumeAutoHidingEvents.wrap().getControl().isFocused());
+        //System.out.println(dockCbConsumeAutoHidingEvents.wrap().getControl().isFocused());
         dockCbHideOnEscape.asSelectable().selector().select(hideOnEscape ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
-        System.out.println(dockCbHideOnEscape.wrap().getControl().isFocused());
-        
+        //System.out.println(dockCbHideOnEscape.wrap().getControl().isFocused());
+
         Wrap<? extends Button> wrapBtnPopup = Lookups.byID(scene, PopupApp.ID_BTN_SWOW_POPUP, Button.class);
         wrapBtnPopup.mouse().click();
         try {
             Thread.sleep(delayMs);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private void checkEventsCounts(String msg, int nMousePressOnScene, int nKeyPressOnScene, int nMousePressOnPopup, int nKeyPressOnPopup) {
+    private String checkEventsCounts(String msg, int nMousePressOnScene, int nKeyPressOnScene, int nMousePressOnPopup, int nKeyPressOnPopup) {
         Wrap<? extends Label> wrapLblMousePressOnScene = Lookups.byID(scene, PopupApp.ID_LABEL_MOUSE_PRESS_COUNT_ON_SCENE, Label.class);
         Wrap<? extends Label> wrapLblKeyPressOnScene = Lookups.byID(scene, PopupApp.ID_LABEL_KEY_PRESS_COUNT_ON_SCENE, Label.class);
         Wrap<? extends Label> wrapLblMousePressOnPopup = Lookups.byID(scene, PopupApp.ID_LABEL_MOUSE_PRESS_COUNT_ON_POPUP, Label.class);
         Wrap<? extends Label> wrapLblKeyPressOnPopup = Lookups.byID(scene, PopupApp.ID_LABEL_KEY_PRESS_COUNT_ON_POPUP, Label.class);
 
-        Assert.assertEquals(msg + " MOUSE_PRESSED count on scene", nMousePressOnScene, Integer.parseInt(wrapLblMousePressOnScene.getControl().getText()));
-        Assert.assertEquals(msg + " KEY_PRESSED count on scene", nKeyPressOnScene, Integer.parseInt(wrapLblKeyPressOnScene.getControl().getText()));
-        Assert.assertEquals(msg + " MOUSE_PRESSED count on popup", nMousePressOnPopup, Integer.parseInt(wrapLblMousePressOnPopup.getControl().getText()));
-        Assert.assertEquals(msg + " KEY_PRESSED count on popup", nKeyPressOnPopup, Integer.parseInt(wrapLblKeyPressOnPopup.getControl().getText()));
+        if (nMousePressOnScene != Integer.parseInt(wrapLblMousePressOnScene.getControl().getText())) {
+            return msg + " MOUSE_PRESSED count on scene check failed";
+        }
+        if (nKeyPressOnScene != Integer.parseInt(wrapLblKeyPressOnScene.getControl().getText())) {
+            return msg + " KEY_PRESSED count on scene check failed";
+        }
+        if (nMousePressOnPopup != Integer.parseInt(wrapLblMousePressOnPopup.getControl().getText())) {
+            return msg + " MOUSE_PRESSED count on popup check failed";
+        }
+        if (nKeyPressOnPopup != Integer.parseInt(wrapLblKeyPressOnPopup.getControl().getText())) {
+            return msg + " KEY_PRESSED count on popup check failed";
+        }
+        return null;
+    }
+
+    private void checkPopupShowing(final boolean expectedShowing) throws Throwable {
+        if (!expectedShowing) {
+            //If check is negative, wait, and after that check.
+            Thread.sleep(3000);
+        }
+        try {
+            scene.waitState(new State() {
+                public Object reached() {
+                    if (expectedShowing == isPopupShowing()) {
+                        return true;
+                    } else {
+                        return null;
+                    }
+                }
+            });
+        } catch (Throwable ex) {
+            System.out.println("Failed check on popup showing. Expected popup showing state : <" + expectedShowing + ">.");
+            throw ex;
+        }
     }
 
     private boolean isPopupShowing() {
-        
+
         return new GetAction<Boolean>() {
             @Override
             public void run(Object... parameters) throws Exception {
-                setResult(new Boolean(PopupApp.isPopupShowing()));
+                setResult(PopupApp.isPopupShowing());
             }
         }.dispatch(Root.ROOT.getEnvironment()).booleanValue();
     }
@@ -194,5 +267,31 @@ public class PopupTest extends TestBase {
     private void pressEscOnPopup() {
         Wrap<? extends Scene> popupScene = Root.ROOT.lookup(new ByWindowType(PopupWindow.class)).lookup(Scene.class).wrap(0);
         popupScene.keyboard().pushKey(KeyboardButtons.ESCAPE);
+    }
+
+    public static void checkStatementWithWaiting(String message, Environment env, final Callable<String> runnable) throws Throwable {
+        final ObjectProperty<String> failStorage = new SimpleObjectProperty<String>(null);
+
+        try {
+            new Waiter(new Timeout(message, 5000)).ensureState(new State() {
+                public Object reached() {
+                    try {
+                        String status = runnable.call();
+                        if (status != null) {
+                            failStorage.set(status);
+                            return null;
+                        }                        
+                    } catch (Exception ex) {
+                        Logger.getLogger(PopupTest.class.getName()).log(Level.SEVERE, null, ex);
+                        failStorage.set(ex.getMessage());
+                        return null;
+                    }
+                    return Boolean.TRUE;
+                }
+            });
+        } catch (Throwable ex) {
+            System.err.println("Error message : " + failStorage.get());
+            throw ex;
+        }
     }
 }
