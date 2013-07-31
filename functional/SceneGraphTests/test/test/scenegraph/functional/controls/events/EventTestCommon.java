@@ -111,17 +111,6 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     }
     
     
-    @Test(timeout = 30000)
-    public void onMouseClicked()
-    {
-        test(EventTypes.MOUSE_CLICKED, new Command() {
-
-            public void invoke() {
-                primeDock.mouse().click();
-            }
-        });
-    }
-    
     
     // * Moves mouse onto tested node.
     // * Event should come to tested node.
@@ -150,16 +139,27 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         test(EventTypes.MOUSE_MOVED, new Command() {
 
             public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = 0;
-                double y = bounds.getHeight() / 2;
-                for(; (x < bounds.getWidth()) && (!gotEvent()); x++)
+                final Bounds bounds = primeDock.getBoundsInLocal();
+                final double y = bounds.getHeight() / 2;
+                for(double x = 0; (x < bounds.getWidth()) && (!gotEvent()); x++)
                 {
                     primeDock.mouse().move(new Point(x, y));
                 }
             }
         });
     }
+    
+    @Test(timeout = 30000)
+    public void onMouseClicked()
+    {
+        test(EventTypes.MOUSE_CLICKED, new Command() {
+
+            public void invoke() {
+                primeDock.mouse().click();
+            }
+        });
+    }
+    
     @Test(timeout = 30000)
     public void onMousePressed()
     {
@@ -241,14 +241,14 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                         m.click();
                     }
                 }.dispatch(Root.ROOT.getEnvironment());
+                try { Thread.sleep(20); } catch (InterruptedException e){}
                 
                 new GetAction<Object>() {
                     @Override
                     public void run(Object... os) throws Exception {
-                        primeDock.keyboard().detached().pushKey(Keyboard.KeyboardButtons.A);
+                        primeDock.keyboard().pushKey(Keyboard.KeyboardButtons.A);
                     }
                 }.dispatch(Root.ROOT.getEnvironment());
-    
             }};
 
     @Test(timeout = 10000)
@@ -507,7 +507,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                     m.press();
                 }
             }.dispatch(Root.ROOT.getEnvironment());
-            
+            try {Thread.sleep(50);}catch(InterruptedException e){}
             new GetAction<Object>() {
                 @Override
                 public void run(Object... os) throws Exception {
@@ -515,6 +515,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                  //   m.press();
                 }
             }.dispatch(Root.ROOT.getEnvironment());
+            try {Thread.sleep(50);}catch(InterruptedException e){}
             new GetAction<Object>() {
                 @Override
                 public void run(Object... os) throws Exception {
@@ -522,7 +523,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                 //   m.press();
                 }
             }.dispatch(Root.ROOT.getEnvironment());
-            
+            try {Thread.sleep(50);}catch(InterruptedException e){}
             new GetAction<Object>() {
                 @Override
                 public void run(Object... os) throws Exception {
@@ -645,6 +646,11 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     private void waitHandler() 
     {
         eventRadio.wrap().waitState(targetState, ControlEventsTab.HANDLED_STYLE);
+        
+        // this "sleep" fixes Linux/onKeyPressed behavior, when
+        // application exits before key released
+        try { Thread.sleep(50); } catch (InterruptedException e){}
+
     }
     
     protected void setControl(Controls control)
@@ -674,7 +680,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     protected void dnd(final Wrap from, final Wrap to) 
     {
         final Point to_point = to.getClickPoint();
-        final Point from_point = from.getClickPoint();
+        //final Point from_point = from.getClickPoint();
 	if(!Utils.isWindows())
 	{
 	    from.drag().dnd(to, to_point);
@@ -682,7 +688,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 	}
 	
         System.err.println("Use glass robot");
-        Point abs_from_point = new Point(from_point);
+        Point abs_from_point = from.getClickPoint(); //new Point(from_point);
         abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
         Point abs_to_point = new Point(to_point);
         abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
