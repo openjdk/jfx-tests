@@ -273,23 +273,23 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     }
 
     @Test(timeout = 8000)
-    public void onScroll()
-    {
-        Assume.assumeTrue(control.getProcessedEvents().contains(ScrollEvent.class));
-        test(EventTypes.SCROLL, new Command() {
+    public void onScroll() {
+        if (control.getProcessedEvents().contains(ScrollEvent.class)) {
+            test(EventTypes.SCROLL, new Command() {
 
-            public void invoke() {
-                new GetAction<Object>() {
-                    @Override
-                    public void run(Object... os) throws Exception {
-                primeDock.mouse().move();
-                primeDock.mouse().turnWheel(1);
-                    }
-                }.dispatch(Root.ROOT.getEnvironment());
-            }            
-        });
+                public void invoke() {
+                    new GetAction<Object>() {
+                        @Override
+                        public void run(Object... os) throws Exception {
+                            primeDock.mouse().move();
+                            primeDock.mouse().turnWheel(1);
+                        }
+                    }.dispatch(Root.ROOT.getEnvironment());
+                }
+            });
+        }
     }
-
+    
     // * Releases drag on tested node. Drag starts outside of node.
     @Test(timeout = 20000)
     public void onMouseDragReleased()
