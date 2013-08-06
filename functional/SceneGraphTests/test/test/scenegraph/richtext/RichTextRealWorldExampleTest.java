@@ -90,7 +90,7 @@ public class RichTextRealWorldExampleTest extends TestBase {
         new Waiter(Wrap.WAIT_STATE_TIMEOUT).ensureState(new State() {
             public Object reached() {
                 try {
-                    ScreenshotUtils.checkScreenshot("checkScreenshot-" + testName, scene);
+                    ScreenshotUtils.checkScreenshot("RichTextRealWorldExampleTest-" + testName, scene);
                     return true;
                 } catch (Throwable t) {
                     return null;

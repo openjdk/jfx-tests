@@ -43,7 +43,7 @@ public class RichTextSpecSymbTest extends TestBase {
     /**
      * Test for line break with special symbols.
      */
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void part1() {
         generateFor(0);
         checkScreenshot("part1");
@@ -52,7 +52,7 @@ public class RichTextSpecSymbTest extends TestBase {
     /**
      * Test for line break with special symbols.
      */
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void part2() {
         generateFor(1);
         checkScreenshot("part2");
@@ -61,7 +61,7 @@ public class RichTextSpecSymbTest extends TestBase {
     /**
      * Test for line break with special symbols.
      */
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void part3() {
         generateFor(2);
         checkScreenshot("part3");
@@ -70,7 +70,7 @@ public class RichTextSpecSymbTest extends TestBase {
     /**
      * Test for line break with special symbols.
      */
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void part4() {
         generateFor(3);
         checkScreenshot("part4");
@@ -79,7 +79,7 @@ public class RichTextSpecSymbTest extends TestBase {
     /**
      * Test for line break with special symbols.
      */
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void part5() {
         generateFor(4);
         checkScreenshot("part5");
@@ -88,7 +88,7 @@ public class RichTextSpecSymbTest extends TestBase {
     /**
      * Test for line break with special symbols.
      */
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void part6() {
         generateFor(5);
         checkScreenshot("part6");
@@ -97,7 +97,7 @@ public class RichTextSpecSymbTest extends TestBase {
     /**
      * Test for line break with special symbols.
      */
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void part7() {
         generateFor(6);
         checkScreenshot("part7");
@@ -106,7 +106,7 @@ public class RichTextSpecSymbTest extends TestBase {
     /**
      * Test for line break with special symbols.
      */
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void part8() {
         generateFor(7);
         checkScreenshot("part8");
@@ -115,7 +115,7 @@ public class RichTextSpecSymbTest extends TestBase {
     /**
      * Test for line break with special symbols.
      */
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void part9() {
         generateFor(8);
         checkScreenshot("part9");
@@ -124,7 +124,7 @@ public class RichTextSpecSymbTest extends TestBase {
     /**
      * Test for line break with special symbols.
      */
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void part10() {
         generateFor(9);
         checkScreenshot("part10");
@@ -133,7 +133,7 @@ public class RichTextSpecSymbTest extends TestBase {
     /**
      * Test for line break with special symbols.
      */
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void part11() {
         generateFor(10);
         checkScreenshot("part11");
