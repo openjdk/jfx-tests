@@ -27,6 +27,7 @@ package org.jemmy.input.glass;
 import com.sun.glass.ui.Application;
 import com.sun.glass.ui.Robot;
 import org.jemmy.action.Action;
+import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
 import org.jemmy.env.Timeout;
@@ -40,6 +41,7 @@ public class GlassInputFactory implements ControlInterfaceFactory {
     public static final Timeout MCLICK = new Timeout("mouse.click", 30);
     public static final Timeout WAIT_FACTORY = new Timeout("wait.glass.robot", 10000);
     private static Robot robot = null;
+    private static Environment env = null;
 
     public static final String ROBOT_MOUSE_SMOOTHNESS_PROPERTY = "glass.robot.mouse.smoothness";
     public static final String ROBOT_MOUSE_STEP_DELAY_PROPERTY = "glass.robot.mouse.step_delay";
@@ -67,6 +69,10 @@ public class GlassInputFactory implements ControlInterfaceFactory {
     public GlassInputFactory() {
         this(new DefaultGlassInputMap());
     }
+    
+    public static void setInitEnvironment(Environment e) {
+        env = e;
+    }
 
     public static Robot getRobot() {
         if (robot == null) {
@@ -75,7 +81,12 @@ public class GlassInputFactory implements ControlInterfaceFactory {
                 @Override
                 public Robot reached() {
                     try {
-                        return Application.GetApplication().createRobot();
+                        return new GetAction<Robot>() {
+                            @Override
+                            public void run(Object... os) throws Exception {
+                                setResult(Application.GetApplication().createRobot());
+                            }
+                        }.dispatch(env);
                     } catch (Exception e) {
                         return null;
                     }

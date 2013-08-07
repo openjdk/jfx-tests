@@ -40,6 +40,7 @@ import org.jemmy.timing.State;
 public class GlassImageCapturer implements ImageCapturer{
     public static final Timeout WAIT_FACTORY = new Timeout("wait.for.robot.init", 60000);
     private static Robot robot;
+    private static Environment env = null;
     
     static {
         Environment.getEnvironment().setTimeout(WAIT_FACTORY);
@@ -50,6 +51,10 @@ public class GlassImageCapturer implements ImageCapturer{
         }
     }
 
+    public static void setInitEnvironment(Environment e) {
+        env = e;
+    }
+    
     @Override
     public GlassImage capture(final Wrap<?> wrap, final Rectangle rctngl) {
         final Rectangle rect = wrap.getScreenBounds();
@@ -71,7 +76,12 @@ public class GlassImageCapturer implements ImageCapturer{
                 @Override
                 public Robot reached() {
                     try {
-                        return Application.GetApplication().createRobot();
+                        return new GetAction<Robot>() {
+                            @Override
+                            public void run(Object... os) throws Exception {
+                                setResult(Application.GetApplication().createRobot());
+                            }
+                        }.dispatch(env);
                     } catch (Exception e) {
                         return null;
                     }

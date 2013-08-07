@@ -100,10 +100,12 @@ public class Root extends AbstractParent<Scene> {
         } else {
             useGlassRobot(this.env);
         }
-        
         this.env.setProperty(ActionExecutor.class, QueueExecutor.EXECUTOR);
         this.env.initTimeout(QueueExecutor.QUEUE_THROUGH_TIME);
         this.env.initTimeout(QueueExecutor.QUEUE_IDENTIFYING_TIMEOUT);
+        
+        GlassInputFactory.setInitEnvironment(env);
+        GlassImageCapturer.setInitEnvironment(env);
 
         wrapper = new SceneWrapper(env);
         scenes = new SceneList();

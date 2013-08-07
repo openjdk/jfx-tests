@@ -530,7 +530,12 @@ public class SceneEventHandlersTest extends TestBase
         Point abs_to_point = new Point(to_point);
         abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
         if (robot == null) {
-            robot = com.sun.glass.ui.Application.GetApplication().createRobot(); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
+            robot = new GetAction<com.sun.glass.ui.Robot>() {
+                        @Override
+                        public void run(Object... os) throws Exception {
+                            setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
+                        }
+                    }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
         }
         robot.mouseMove(abs_from_point.x, abs_from_point.y);
         robot.mousePress(1);
