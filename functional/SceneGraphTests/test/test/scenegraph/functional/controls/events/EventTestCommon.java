@@ -43,7 +43,6 @@ import org.jemmy.interfaces.Keyboard;
 import org.jemmy.interfaces.Mouse;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import test.javaclient.shared.JemmyUtils;
@@ -94,7 +93,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             dnd(primeDock, dragTarget);
         }
     };
-
+    
     @Test(timeout = 30000)
     public void onDragDetected()
     {
@@ -534,6 +533,17 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             }.dispatch(Root.ROOT.getEnvironment());
         }
     };
+    
+    
+    
+    private final Command dndFromDragSourceToCtrlAndBack = new Command() {
+            public void invoke() {
+                final NodeDock dragSource = new NodeDock(tabDock.asParent(), 
+                        ControlEventsApp.DRAG_FIELD_ID);
+                dndd(dragSource, primeDock);
+    
+}};
+    
     // * Drags mouse inside of tested node
     @Test(timeout = 30000)
     public void onMouseDraged()
@@ -544,13 +554,13 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     @Test(timeout = 30000)
     public void onDragExited()
     {
-        test(EventTypes.DRAG_EXITED, dragControlAndExitCommand);
+        test(EventTypes.DRAG_EXITED, dndFromDragSourceToCtrlAndBack);
     }
     
     @Test(timeout = 30000)
     public void onDragExitedTarget()
     {
-        test(EventTypes.DRAG_EXITED_TARGET, dragControlAndExitCommand);        
+        test(EventTypes.DRAG_EXITED_TARGET, dndFromDragSourceToCtrlAndBack);
     }
     
     @Test(timeout = 30000)
@@ -677,6 +687,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     }
     
     
+    
     protected void dnd(final Wrap from, final Wrap to) 
     {
         final Point to_point = to.getClickPoint();
@@ -700,6 +711,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                         }
                     }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
         }
+        
         robot.mouseMove(abs_from_point.x, abs_from_point.y);
         robot.mousePress(1);
         int differenceX = abs_to_point.x - abs_from_point.x;
@@ -708,9 +720,60 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         for (int i = 0; (i <= STEPS) && (!gotEvent()); i++) {
             robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
         }
+        
         robot.mouseRelease(1);
     }
     
+    protected void dndd(final NodeDock _ndFrom, final NodeDock _ndTo) {
+        final Wrap from = _ndFrom.wrap();
+        final Wrap to = _ndTo.wrap();
+      
+        dndd(from, to);
+    }
+    
+    protected void dndd(final Wrap from, final Wrap to) 
+    {
+        final Point to_point = to.getClickPoint();
+        //final Point from_point = from.getClickPoint();
+	if(!Utils.isWindows())
+	{
+	    from.drag().dnd(to, to_point);
+	    return;
+	}
+        if (robot == null) {
+        System.err.println("Use glass robot");
+            robot = new GetAction<com.sun.glass.ui.Robot>() {
+                        @Override
+                        public void run(Object... os) throws Exception {
+                            setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
+                        }
+                    }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
+        }
+	
+        Point abs_from_point = from.getClickPoint(); //new Point(from_point);
+        abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
+        Point abs_to_point = new Point(to_point);
+        abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
+        robot.mouseMove(abs_from_point.x, abs_from_point.y);
+        robot.mousePress(1);
+        try {Thread.sleep(500);}catch(Exception e){}
+        
+        int differenceX = abs_to_point.x - abs_from_point.x;
+        int differenceY = abs_to_point.y - abs_from_point.y;
+	final int STEPS = differenceX > differenceY ? differenceX : differenceY;
+        for (int i = 0; (i <= STEPS) && (!gotEvent()); i++) {
+            robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
+        }
+        try {Thread.sleep(500);}catch(Exception e){}
+        for (int i = STEPS; (i >=0) && (!gotEvent()); i--) {
+            robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
+        }
+        
+        robot.mouseRelease(1);
+        try {Thread.sleep(500);}catch(Exception e){}
+    }
+    
+
     static Robot robot = null;
     static 
     {
