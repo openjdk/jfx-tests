@@ -74,8 +74,11 @@ public class ChoiceBoxEventsTest extends EventTestHidingPopup<ChoiceBoxDock>
                 {
                     if(!state.equals(s.getState()))
                     {
-                        getPrimeNodeDock().asSelectable(String.class).
+                        while (!(state.equals(s.getState()))) {
+                            getPrimeNodeDock().asSelectable(String.class).
                                 selector().select(state);
+                            try { Thread.sleep(300);} catch(Exception e){}
+                        }
                         break;
                     }
                 }

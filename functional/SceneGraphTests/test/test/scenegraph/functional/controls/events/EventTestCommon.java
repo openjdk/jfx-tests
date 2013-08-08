@@ -593,7 +593,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 
             public boolean check(Tab cntrl) {
                 String id = cntrl.getId();
-                System.out.println(cntrl.getId() + " tab found. Looking for " + control.toString() + ".");
+              //  System.out.println(cntrl.getId() + " tab found. Looking for " + control.toString() + ".");
                 return id.equals(control.toString());
             }
         });
