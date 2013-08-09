@@ -131,15 +131,22 @@ public class LCDControlsTestBase {
     }
 
     private boolean lcdTest(PixelsCalc calc, boolean lcd) {
-
+        System.out.println("______ LCDControlsTestApp.action=" + LCDControlsTestApp.action + " __________");
+        System.out.println(" LCD=" + lcd);
+        final int colorPixelCount = calc.getColorPixelCount();
         if (lcd) {
-            if (calc.getColorPixelCount() != 0) {
-                double percent = (double) calc.getColorPixelCount()
-                        / (calc.getColorPixelCount() + calc.getGrayPixelCount());
+            final int greyPixelCount = calc.getGrayPixelCount();
+            final double sumPixelCount = colorPixelCount + greyPixelCount;
+            System.out.println(" colorPixelCount=" + colorPixelCount + " greyPixelCount=" + greyPixelCount);
+            if (colorPixelCount != 0) {
+                double percent = colorPixelCount  / sumPixelCount;
+                System.out.println(" percent = colorPixelCount  / sumPixelCount =" + percent 
+                                 + "[  < " + UPPER_THRESHOLD + " && >" + LOWER_THRESHOLD);
                 return (percent < UPPER_THRESHOLD) && (percent > LOWER_THRESHOLD);
             }
             return false;
         } else {
+            System.out.println(" lcd = false, return colorPixelCount=" + colorPixelCount + "<= MAX_COLOR_PIXELS_COUNT" + MAX_COLOR_PIXELS_COUNT);
             return calc.getColorPixelCount() <= MAX_COLOR_PIXELS_COUNT;
         }
 
