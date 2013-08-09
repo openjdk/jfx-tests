@@ -535,6 +535,40 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     };
     
     
+    Command startDragOnControl = new Command() {
+
+        public void invoke() {
+
+            final Point p1 = primeDock.wrap().getClickPoint();
+            final double pointOutX = p1.x - primeDock.wrap().getScreenBounds().getWidth() / 2 - 14;//.getWidth() / 2 - 1;
+            
+            final Mouse m = primeDock.mouse();
+            new GetAction<Object>() {
+                @Override
+                public void run(Object... os) throws Exception {
+                    m.move(new Point(p1.x -4 ,p1.y));
+                    m.press();
+                }
+            }.dispatch(Root.ROOT.getEnvironment());
+            try {Thread.sleep(500);}catch(InterruptedException e){}
+            new GetAction<Object>() {
+                @Override
+                public void run(Object... os) throws Exception {
+                    m.move(new Point(p1.x+4,p1.y));
+                //   m.press();
+                }
+            }.dispatch(Root.ROOT.getEnvironment());
+            try {Thread.sleep(500);}catch(InterruptedException e){}
+            new GetAction<Object>() {
+                @Override
+                public void run(Object... os) throws Exception {
+                    p1.setLocation(pointOutX, p1.y);
+                    m.release();
+                }
+            }.dispatch(Root.ROOT.getEnvironment());
+        }
+    };
+    
     
     private final Command dndFromDragSourceToCtrlAndBack = new Command() {
             public void invoke() {
@@ -548,7 +582,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     @Test(timeout = 30000)
     public void onMouseDraged()
     {
-        test(EventTypes.MOUSE_DRAGGED, dragControlAndExitCommand);
+        test(EventTypes.MOUSE_DRAGGED, startDragOnControl);
     }
     
     @Test(timeout = 30000)
