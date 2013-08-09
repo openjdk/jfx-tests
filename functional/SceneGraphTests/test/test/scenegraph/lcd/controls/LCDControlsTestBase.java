@@ -70,6 +70,11 @@ public class LCDControlsTestBase {
             NodeDock rightPaneDock = new NodeDock(scene.asParent(), LCDControlsTestApp.RIGHT_PANE_ID);
 
             buttonApply.mouse().move();
+            
+            // wait until LCD rendered:
+            // here should be a loop: 
+            // check image every 300ms and wait until image become stable
+            try { Thread.sleep(400);} catch(Exception e){}
             checkAllTextImages(rightPaneDock,LCDControlsTestApp.action.isLCDWork());
        }
     }
