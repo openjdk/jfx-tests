@@ -84,8 +84,10 @@ public class LCDControlsTestBase {
 
         Lookup textLookup = dock.asParent().lookup(Text.class);
         for (int i = 0; i < textLookup.size(); i++) {
-            TextDock text = new TextDock(textLookup, i);
-            System.out.println("text=" + text.getText() );
+            final TextDock text = new TextDock(textLookup, i);
+            final String strtext = text.getText();
+            System.out.println("text=" + strtext );
+            if (strtext.length() > 0 )
             try {
                 final Image image = text.wrap().getScreenImage();
                 testImage(image, _lcdWork);
