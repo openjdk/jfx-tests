@@ -114,7 +114,10 @@ public class LCDControlsTestBase {
     }
 
     private boolean greenPixelsTest(final PixelsCalc calc) {
-        return calc.getGreenPixelCount() < MAX_GREEN_PIXELS_COUNT;
+        final int greenPixels = calc.getGreenPixelCount();
+        boolean bResult = greenPixels < MAX_GREEN_PIXELS_COUNT;
+        System.out.println(" greenPixelsTest:" + (bResult?"Passed":"FAILED")  +  "  ( actual:" + greenPixels + " MAX_GREEN_PIXELS_COUNT=" + MAX_GREEN_PIXELS_COUNT);
+        return  bResult;
     }
 
     private boolean lcdTest(final PixelsCalc calc, final boolean lcd) {
