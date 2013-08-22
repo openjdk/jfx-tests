@@ -34,11 +34,8 @@ public class RichTextRealWorldExampleTest extends TestBase {
      */
     @Test
     public void heightTest() {
-        Assert.fail("Need to resolve RT-28788");
-
-//        double etalon = ?;
-//        Assert.assertEquals("Content height has unexpected value!",etalon, getContentHeight());
-
+        double etalon = 854;
+        Assert.assertEquals("Content height has unexpected value!",etalon, getContentHeight());
     }
 
     /**
