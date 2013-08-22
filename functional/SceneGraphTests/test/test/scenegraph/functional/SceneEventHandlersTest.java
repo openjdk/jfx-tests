@@ -178,6 +178,11 @@ public class SceneEventHandlersTest extends TestBase
                 {
                     System.err.println("Interrupted while drug.");
                 }
+                finally
+                {
+                    scene.mouse().move();
+                    scene.mouse().click();
+                }
             }
         });
     }
@@ -196,6 +201,11 @@ public class SceneEventHandlersTest extends TestBase
                 catch (InterruptedException ex) 
                 {
                     System.err.println("Interrupted while drug.");
+                }
+                finally
+                {
+                    scene.mouse().move();
+                    scene.mouse().click();
                 }
             }
         });
@@ -315,6 +325,10 @@ public class SceneEventHandlersTest extends TestBase
                 {
                     scene.mouse().move(new Point(x, y));
                 }
+                for(; x >= -25; y = x = x - 1)
+                {
+                    scene.mouse().move(new Point(x, y));
+                }
             }
         });
     }
@@ -328,6 +342,10 @@ public class SceneEventHandlersTest extends TestBase
             public void invoke() {
                 int x = -25, y = -25;
                 for(; x <= 25; y = x = x + 1)
+                {
+                    scene.mouse().move(new Point(x, y));
+                }
+                for(; x >= -25; y = x = x - 1)
                 {
                     scene.mouse().move(new Point(x, y));
                 }
@@ -347,6 +365,10 @@ public class SceneEventHandlersTest extends TestBase
                 {
                     scene.mouse().move(new Point(x, y));
                 }
+                for(; x <= 25; y = x = x + 1)
+                {
+                    scene.mouse().move(new Point(x, y));
+                }
             }
         });
     }
@@ -360,6 +382,10 @@ public class SceneEventHandlersTest extends TestBase
             public void invoke() {
                 int x = 25, y = 25;
                 for(; x >= -25; y = x = x - 1)
+                {
+                    scene.mouse().move(new Point(x, y));
+                }
+                for(; x <= 25; y = x = x + 1)
                 {
                     scene.mouse().move(new Point(x, y));
                 }
