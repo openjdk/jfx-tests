@@ -21,7 +21,7 @@
 			<or>
 				<available file="${javafx.rt}/lib/ext/jfxrt.jar"/>
 				<available file="${java.home}/lib/ext/jfxrt.jar"/>
-				<available file="${java.home}/lib/ext/jfxrt-graphics.jar"/>
+				<available file="${javafx.home}/lib/ext/jfxrt-graphics.jar"/>
 			</or>
         </condition>
     </target>
