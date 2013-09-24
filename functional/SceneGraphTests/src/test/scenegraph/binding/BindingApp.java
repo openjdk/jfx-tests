@@ -47,7 +47,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.scene.web.HTMLEditor;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import test.javaclient.shared.InteroperabilityApp;
@@ -93,7 +92,7 @@ public class BindingApp extends InteroperabilityApp {
         setMaxWidth(340);
         setMinWidth(340);
         setPrefHeight(70);}};
-        
+
                 final HBox controls = new HBox(){{
                 getChildren().addAll(controlBox, list, btnApply, btnVerify);
                 setSpacing(15);
@@ -109,8 +108,8 @@ public class BindingApp extends InteroperabilityApp {
 
         leftPane = new Group();
         leftPane.setId("leftPane");
-        
-        final Pane leftContainer = 
+
+        final Pane leftContainer =
         new Pane(){{
             setId("leftPane");
             setStyle("-fx-border-color: rosybrown;");
@@ -132,7 +131,7 @@ public class BindingApp extends InteroperabilityApp {
             setMinSize(300, 300);
         }};
         GridPane.setConstraints(rightContainer, 1, 2);
-        
+
         GridPane field = new GridPane(){{
             getChildren().addAll(controls, text = new Text(),
             leftContainer, rightContainer, leftLabel, rightLabel);
@@ -168,7 +167,7 @@ public class BindingApp extends InteroperabilityApp {
             this.bindee = bindee;
         }
     }
-    
+
     private static boolean ignoreConstraints = false;
     public static Factory factory = new Factories.DefaultFactory() {
         public NodeAndBindee create() {
@@ -272,17 +271,23 @@ public class BindingApp extends InteroperabilityApp {
         compressControlIfNeeded(node);
         pane.getChildren().clear();
         final Rectangle bounds = new Rectangle(){{setWidth(300); setHeight(300);setFill(Color.TRANSPARENT);}};
-        
+
         pane.getChildren().add(bounds);
         pane.setClip(new Rectangle(){{setWidth(300); setHeight(300);}});
-        pane.getChildren().add(node);        
+        pane.getChildren().add(node);
     }
 
     private static void compressControlIfNeeded(Node control) {
-        if (HTMLEditor.class.isAssignableFrom(control.getClass())) {
-            ((Control) control).setMinSize(200, 200);
-            ((Control) control).setPrefSize(200, 200);
-            ((Control) control).setMaxSize(200, 200);
+        // Use reflection to run on javafx embedded controls profile
+        try {
+            if (Class.forName("javafx.scene.web.HTMLEditor").isAssignableFrom(control.getClass())) {
+                ((Control) control).setMinSize(200, 200);
+                ((Control) control).setPrefSize(200, 200);
+                ((Control) control).setMaxSize(200, 200);
+            }
+        } catch (ClassNotFoundException exception) {
+            System.err.println("Warning: javafx.scene.web.HTMLEditor is currently not supported on embedded");
+            exception.printStackTrace();
         }
     }
 
