@@ -64,8 +64,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.media.MediaErrorEvent;
-import javafx.scene.web.WebEvent;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
@@ -76,7 +74,7 @@ import test.javaclient.shared.InteroperabilityApp;
  * @author Aleksandr Sakharuk
  */
 public class ControlEventsApp extends InteroperabilityApp {
-    
+
 
     public static void main(String[] args) {
         test.javaclient.shared.Utils.launch(ControlEventsApp.class, args);
@@ -97,7 +95,7 @@ public class ControlEventsApp extends InteroperabilityApp {
 
         public abstract T create();
     }
-    
+
     public static final String CONTROL_ID = "control";
     public static final String DRAG_TARGET_ID = "drag_target";
     public static final String DRAG_FIELD_ID = "drag_field";
@@ -120,7 +118,7 @@ public class ControlEventsApp extends InteroperabilityApp {
 //         for automated test suite is not provided
 //         https://javafx-jira.kenai.com/browse/RT-31875
        // INPUT_METHOD_TEXT_CHANGED(InputMethodEvent.INPUT_METHOD_TEXT_CHANGED),
-        
+
         KEY_PRESSED(KeyEvent.KEY_PRESSED),
         KEY_RELEASED(KeyEvent.KEY_RELEASED),
         KEY_TYPED(KeyEvent.KEY_TYPED),
@@ -141,11 +139,11 @@ public class ControlEventsApp extends InteroperabilityApp {
         MOUSE_DRAG_OVER(MouseDragEvent.MOUSE_DRAG_OVER),
         MOUSE_DRAG_RELEASED(MouseDragEvent.MOUSE_DRAG_RELEASED),
         SCROLL(ScrollEvent.SCROLL),
-        MEDIA_ERROR(MediaErrorEvent.MEDIA_ERROR),
-        ALERT(WebEvent.ALERT),
-        RESIZED(WebEvent.RESIZED),
-        STATUS_CHANGED(WebEvent.STATUS_CHANGED),
-        VISIBILITY_CHANGED(WebEvent.VISIBILITY_CHANGED),
+        MEDIA_ERROR(getNotEmbeddedEvent("javafx.scene.media.MediaErrorEvent","MEDIA_ERROR")),
+        ALERT(getNotEmbeddedEvent("javafx.scene.web.WebEvent","ALERT")),
+        RESIZED(getNotEmbeddedEvent("javafx.scene.web.WebEvent", "RESIZED")),
+        STATUS_CHANGED(getNotEmbeddedEvent("javafx.scene.web.WebEvent","STATUS_CHANGED")),
+        VISIBILITY_CHANGED(getNotEmbeddedEvent("javafx.scene.web.WebEvent","VISIBILITY_CHANGED")),
         WINDOW_CLOSE_REQUEST(WindowEvent.WINDOW_CLOSE_REQUEST),
         WINDOW_HIDDEN(WindowEvent.WINDOW_HIDDEN),
         WINDOW_HIDING(WindowEvent.WINDOW_HIDING),
@@ -162,8 +160,25 @@ public class ControlEventsApp extends InteroperabilityApp {
         LIST_VIEW_EDIT_CANCEL_EVENT(ListView.editCancelEvent()),
         TREE_VIEW_EDIT_START_EVENT(TreeView.editStartEvent()),
         TREE_VIEW_EDIT_COMMIT_EVENT(TreeView.editCommitEvent()),
-        TREE_VIEW_EDIT_CANCEL_EVENT(TreeView.editCancelEvent())
-        ;
+        TREE_VIEW_EDIT_CANCEL_EVENT(TreeView.editCancelEvent());
+
+
+        private static EventType<? extends Event> getNotEmbeddedEvent(String fullTypeName, String fieldName) {
+            EventType<? extends Event> event = null;
+            try {
+                Class cl = Class.forName(fullTypeName);
+                event = (EventType<? extends Event>) cl.getField(fieldName).get(null);
+            } catch (ClassNotFoundException missingInEmbeddedException) {
+                System.err.println("Warning: type " + fullTypeName + " is not currently supported in Javafx Embedded.");
+            } catch (NoSuchFieldException exc) {
+                System.err.println("Field " + fieldName + "not found");
+            } catch (Exception exc){
+                exc.printStackTrace();
+            } finally {
+                return event;
+            }
+
+        }
 
         private EventTypes(EventType<? extends Event> type) {
             this.type = type;
@@ -184,9 +199,9 @@ public class ControlEventsApp extends InteroperabilityApp {
         private EventType<? extends Event> type;
     }
 
-    public static enum Controls 
+    public static enum Controls
     {
-        
+
         ACCORDION(new AbstractControlFactory<Accordion>() {
 
             @Override
@@ -198,10 +213,10 @@ public class ControlEventsApp extends InteroperabilityApp {
                 accordion.getPanes().addAll(t1, t2, t3);
                 return accordion;
             }
-        }, ContextMenuEvent.class, DragEvent.class, 
-                MouseEvent.class, MouseDragEvent.class, KeyEvent.class, 
+        }, ContextMenuEvent.class, DragEvent.class,
+                MouseEvent.class, MouseDragEvent.class, KeyEvent.class,
                 ScrollEvent.class),
-        
+
         CHOICE_BOX(new AbstractControlFactory<ChoiceBox>() {
 
             @Override
@@ -211,8 +226,8 @@ public class ControlEventsApp extends InteroperabilityApp {
                 cb.setValue("one");
                 return cb;
             }
-        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class, 
-                MouseEvent.class, MouseDragEvent.class, KeyEvent.class, 
+        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class,
+                MouseEvent.class, MouseDragEvent.class, KeyEvent.class,
                 ScrollEvent.class),
 
         LABEL(new AbstractControlFactory<Label>() {
@@ -220,39 +235,39 @@ public class ControlEventsApp extends InteroperabilityApp {
             public Label create() {
                 return new Label("Label");
             }
-        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class, 
+        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class,
                 MouseDragEvent.class),
-        
+
         BUTTON(new AbstractControlFactory<Button>() {
 
             @Override
             public Button create() {
                 return new Button("Button");
             }
-        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class, 
-                MouseEvent.class, MouseDragEvent.class, KeyEvent.class, 
+        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class,
+                MouseEvent.class, MouseDragEvent.class, KeyEvent.class,
                 ScrollEvent.class),
-        
+
         CHECK_BOX(new AbstractControlFactory<CheckBox>() {
 
             @Override
             public CheckBox create() {
                 return new CheckBox("CheckBox");
             }
-        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class, 
-                MouseEvent.class, MouseDragEvent.class, KeyEvent.class, 
+        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class,
+                MouseEvent.class, MouseDragEvent.class, KeyEvent.class,
                 ScrollEvent.class),
-        
+
         HYPERLINK(new AbstractControlFactory<Hyperlink>() {
 
             @Override
             public Hyperlink create() {
                 return new Hyperlink("www.oracle.com");
             }
-        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class, 
-                MouseEvent.class, MouseDragEvent.class, KeyEvent.class, 
+        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class,
+                MouseEvent.class, MouseDragEvent.class, KeyEvent.class,
                 ScrollEvent.class),
-        
+
         MENU_BUTTON(new AbstractControlFactory<MenuButton>() {
 
             @Override
@@ -261,19 +276,19 @@ public class ControlEventsApp extends InteroperabilityApp {
                 m.getItems().addAll(new MenuItem("Burger"), new MenuItem("Hot Dog"));
                 return m;
             }
-        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class, 
+        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class,
                 MouseDragEvent.class, KeyEvent.class, ScrollEvent.class),
-        
+
         TOGGLE_BUTTON(new AbstractControlFactory<ToggleButton>() {
 
             @Override
             public ToggleButton create() {
                 return new ToggleButton("Toggle button");
             }
-        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class, 
-                MouseEvent.class, MouseDragEvent.class, KeyEvent.class, 
+        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class,
+                MouseEvent.class, MouseDragEvent.class, KeyEvent.class,
                 ScrollEvent.class),
-        
+
         TITLED_PANE(new AbstractControlFactory<TitledPane>() {
 
             @Override
@@ -283,19 +298,19 @@ public class ControlEventsApp extends InteroperabilityApp {
                 tp.setMaxWidth(l.getWidth());
                 return tp;
             }
-        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class, 
+        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class,
                 MouseDragEvent.class, KeyEvent.class, ScrollEvent.class),
-        
+
         COLOR_PICKER(new AbstractControlFactory<ColorPicker>() {
 
             @Override
             public ColorPicker create() {
                 return new ColorPicker();
             }
-        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class, 
-                MouseEvent.class, MouseDragEvent.class, KeyEvent.class, 
+        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class,
+                MouseEvent.class, MouseDragEvent.class, KeyEvent.class,
                 ScrollEvent.class),
-        
+
         COMBO_BOX(new AbstractControlFactory<ComboBox>() {
 
             @Override
@@ -305,10 +320,10 @@ public class ControlEventsApp extends InteroperabilityApp {
                 cb.setValue("one");
                 return cb;
             }
-        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class, 
-                MouseEvent.class, MouseDragEvent.class, KeyEvent.class, 
+        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class,
+                MouseEvent.class, MouseDragEvent.class, KeyEvent.class,
                 ScrollEvent.class),
-        
+
         PAGINATION(new AbstractControlFactory<Pagination>() {
 
             @Override
@@ -322,10 +337,10 @@ public class ControlEventsApp extends InteroperabilityApp {
                 });
                 return p;
             }
-        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class, 
-                MouseEvent.class, MouseDragEvent.class, KeyEvent.class, 
+        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class,
+                MouseEvent.class, MouseDragEvent.class, KeyEvent.class,
                 ScrollEvent.class),
-        
+
         LIST_VIEW(new AbstractControlFactory<ListView>() {
 
             @Override
@@ -352,40 +367,40 @@ public class ControlEventsApp extends InteroperabilityApp {
                 });
                 return lv;
             }
-        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class, 
-                MouseDragEvent.class, KeyEvent.class, ScrollEvent.class, 
+        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class,
+                MouseDragEvent.class, KeyEvent.class, ScrollEvent.class,
                 ListView.class),
-        
+
         TEXT_FIELD(new AbstractControlFactory<TextField>() {
 
             @Override
             public TextField create() {
                 return new TextField("Text field");
             }
-        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class, 
-                MouseEvent.class, MouseDragEvent.class, KeyEvent.class, 
+        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class,
+                MouseEvent.class, MouseDragEvent.class, KeyEvent.class,
                 ScrollEvent.class, InputMethodEvent.class),
-        
+
         PASSWORD_FIELD(new AbstractControlFactory<PasswordField>() {
 
             @Override
             public PasswordField create() {
                 return new PasswordField();
             }
-        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class, 
-                MouseEvent.class, MouseDragEvent.class, KeyEvent.class, 
+        }, ActionEvent.class, ContextMenuEvent.class, DragEvent.class,
+                MouseEvent.class, MouseDragEvent.class, KeyEvent.class,
                 ScrollEvent.class, InputMethodEvent.class),
-        
+
         TEXT_AREA(new AbstractControlFactory<TextArea>() {
 
             @Override
             public TextArea create() {
                 return new TextArea("Text area");
             }
-        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class, 
-                MouseDragEvent.class, KeyEvent.class, ScrollEvent.class, 
+        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class,
+                MouseDragEvent.class, KeyEvent.class, ScrollEvent.class,
                 InputMethodEvent.class),
-        
+
         TREE_VIEW(new AbstractControlFactory<TreeView>() {
 
             @Override
@@ -393,8 +408,8 @@ public class ControlEventsApp extends InteroperabilityApp {
                 TreeItem<String> root = new CheckBoxTreeItem<String>("Root node");
                 root.setExpanded(true);
                 root.getChildren().addAll(
-                        new CheckBoxTreeItem<String>("Item 1"), 
-                        new CheckBoxTreeItem<String>("Item 2"), 
+                        new CheckBoxTreeItem<String>("Item 1"),
+                        new CheckBoxTreeItem<String>("Item 2"),
                         new CheckBoxTreeItem<String>("Item 3")
                 );
                 TreeView<String> tw = new TreeView<String>(root);
@@ -402,30 +417,30 @@ public class ControlEventsApp extends InteroperabilityApp {
                 tw.setEditable(true);
                 return tw;
             }
-        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class, 
-                MouseDragEvent.class, KeyEvent.class, ScrollEvent.class, 
+        }, ContextMenuEvent.class, DragEvent.class, MouseEvent.class,
+                MouseDragEvent.class, KeyEvent.class, ScrollEvent.class,
                 TreeView.class)
         ;
 
-        private Controls(AbstractControlFactory<? extends Control> f, 
-                Class<?>... eventsDeclaringClasses) 
+        private Controls(AbstractControlFactory<? extends Control> f,
+                Class<?>... eventsDeclaringClasses)
         {
             this.f = f;
             this.eventsDeclaringClasses = Arrays.asList(eventsDeclaringClasses);
         }
 
-        public Control getControl() 
+        public Control getControl()
         {
             return f.create();
         }
-        
+
         public List<Class<?>> getProcessedEvents()
         {
             return eventsDeclaringClasses;
         }
-        
+
         private AbstractControlFactory<? extends Control> f;
         private List<Class<?>> eventsDeclaringClasses;
-        
+
     }
 }
