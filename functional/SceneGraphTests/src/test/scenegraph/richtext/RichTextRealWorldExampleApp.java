@@ -49,6 +49,11 @@ public class RichTextRealWorldExampleApp extends InteroperabilityApp {
     private static RichTextRealWorldExampleApp application;
 
     @Override
+    protected boolean needToLoadCustomFont() {
+        return false;
+    }
+
+    @Override
     protected Scene getScene() {
         application = this;
         sp = new ScrollPane(buildContent());

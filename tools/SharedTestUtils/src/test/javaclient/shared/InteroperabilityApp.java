@@ -36,25 +36,29 @@ public abstract class InteroperabilityApp extends Application {
     static {
         System.setProperty("prism.lcdtext", "false");
     }
-
     Scene scene;
     protected Stage stage;
 
     protected abstract Scene getScene();
 
+    protected boolean needToLoadCustomFont() {
+        return true;
+    }
+
     @Override
     public void start(Stage stage) throws InterruptedException {
         this.stage = stage;
         stage.setTitle(this.getClass().getSimpleName());
-        if(isEmbedded())
+        if (isEmbedded()) {
             stage.setFullScreen(true);
+        }
         scene = getScene();
-        Utils.setCustomFont(scene);
+        if (needToLoadCustomFont()) {
+            Utils.setCustomFont(scene);
+        }
         stage.setScene(scene);
         stage.show();
         stage.toFront();
         stage.requestFocus();
     }
-
-
 }
