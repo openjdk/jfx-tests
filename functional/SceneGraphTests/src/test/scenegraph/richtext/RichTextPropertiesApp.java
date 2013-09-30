@@ -74,6 +74,11 @@ public class RichTextPropertiesApp extends InteroperabilityApp {
         return application;
     }
 
+    @Override
+    protected boolean needToLoadCustomFont() {
+        return false;
+    }
+    
     private void initApplication() {
         root = new HBox();
         textPage = new TextPage();
