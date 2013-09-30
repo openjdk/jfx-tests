@@ -103,7 +103,7 @@ public class ModalityBase extends Utils {
     }
     
     protected void sceneMouseClickable(final String stageID, int waitingClicks) throws InterruptedException {
-        Wrap<? extends Scene> sceneWrap = getSceneWrap(stageID);
+        final Wrap<? extends Scene> sceneWrap = getSceneWrap(stageID);
         
         // this toFront call is to let the test work in applet mode
         new GetAction() {
