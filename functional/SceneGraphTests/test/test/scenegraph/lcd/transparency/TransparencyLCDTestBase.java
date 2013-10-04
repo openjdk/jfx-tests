@@ -150,13 +150,11 @@ public class TransparencyLCDTestBase {
             greenComponentValue = (int)(colors[idxGreen] * 0xFF);
 
         } else if (image instanceof org.jemmy.image.AWTImage) {
+                        
+            int rgb = ((org.jemmy.image.AWTImage)image).getTheImage().getRGB(
+                    ((org.jemmy.image.AWTImage)image).getTheImage().getWidth() / 2, ((org.jemmy.image.AWTImage)image).getTheImage().getHeight() / 2);
 
-            java.awt.image.BufferedImage bufferedImage = ((org.jemmy.image.AWTImage)image).getTheImage();
-
-            java.awt.Color color = new java.awt.Color(bufferedImage.getRGB(
-                    bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2));
-
-            greenComponentValue = color.getGreen();
+            greenComponentValue = (rgb >> 8) & 0xFF;
 
         } else {
             Assert.fail("Unknown image type: " + image.getClass().getName());
