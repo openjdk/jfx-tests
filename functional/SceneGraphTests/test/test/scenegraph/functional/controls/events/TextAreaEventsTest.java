@@ -61,7 +61,7 @@ public class TextAreaEventsTest extends EventTestCommon<TextInputControlDock>
     }
     
     /*
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onInputMethodTextChanged()
     {
         test(ControlEventsApp.EventTypes.INPUT_METHOD_TEXT_CHANGED, new Command() {

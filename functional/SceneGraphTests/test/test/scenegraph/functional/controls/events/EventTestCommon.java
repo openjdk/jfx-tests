@@ -71,7 +71,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     }
     
     // * Clicks with right mouse button on node
-    @Test(timeout = 20000)
+    @Test(timeout = 60000)
     public void onContextMenuRequested()
     {
         test(EventTypes.CONTEXT_MENU_REQUESTED, new Command() {
@@ -94,7 +94,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         }
     };
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onDragDetected()
     {
         test(EventTypes.DRAG_DETECTED, dragFromControlToTarget);
@@ -103,7 +103,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     // * Drags from node to text field.
     // * DRAG_DONE event comes when drag is finished on text field.
     // * Text in text field will change to node's class name.
-    @Test(timeout = 20000)
+    @Test(timeout = 60000)
     public void onDragDone()
     {
         test(EventTypes.DRAG_DONE, dragFromControlToTarget);
@@ -113,7 +113,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     
     // * Moves mouse onto tested node.
     // * Event should come to tested node.
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onMouseEntered()
     {
         test(EventTypes.MOUSE_ENTERED, new Command() {
@@ -132,7 +132,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     
     
     // * Moves mouse inside of tested node.
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onMouseMoved()
     {
         test(EventTypes.MOUSE_MOVED, new Command() {
@@ -148,7 +148,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onMouseClicked()
     {
         test(EventTypes.MOUSE_CLICKED, new Command() {
@@ -159,7 +159,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onMousePressed()
     {
         test(EventTypes.MOUSE_PRESSED, new Command() {
@@ -172,7 +172,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onMouseReleased()
     {
         test(EventTypes.MOUSE_RELEASED, new Command() {
@@ -186,7 +186,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     }
     
     // * Drags mouse over tested node starting outside of one.
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onMouseDragOver()
     {
         test(EventTypes.MOUSE_DRAG_OVER, new Command() {
@@ -207,7 +207,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     }
     
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onAction()
     {
         if (control.getProcessedEvents().contains(ActionEvent.class)) {
@@ -250,28 +250,28 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                 }.dispatch(Root.ROOT.getEnvironment());
             }};
 
-    @Test(timeout = 10000)
+    @Test(timeout = 60000)
     public void onKeyPressed()
     {
         if (control.getProcessedEvents().contains(KeyEvent.class)) 
         test(EventTypes.KEY_PRESSED, commandPushKey);
     }
     
-    @Test(timeout = 10000)
+    @Test(timeout = 60000)
     public void onKeyRelease()
     {
         if(control.getProcessedEvents().contains(KeyEvent.class))
         test(EventTypes.KEY_RELEASED, commandPushKey);
     }
     
-    @Test(timeout = 10000)
+    @Test(timeout = 60000)
     public void onKeyTyped()
     {
         if(control.getProcessedEvents().contains(KeyEvent.class))
         test(EventTypes.KEY_TYPED, commandPushKey);
     }
 
-    @Test(timeout = 8000)
+    @Test(timeout = 60000)
     public void onScroll() {
         if (control.getProcessedEvents().contains(ScrollEvent.class)) {
             test(EventTypes.SCROLL, new Command() {
@@ -290,7 +290,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     }
     
     // * Releases drag on tested node. Drag starts outside of node.
-    @Test(timeout = 20000)
+    @Test(timeout = 60000)
     public void onMouseDragReleased()
     {
         test(EventTypes.MOUSE_DRAG_RELEASED, new Command() {
@@ -349,7 +349,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     
     // * Drags mouse onto tested node.
     // * Event should come to tested node.
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onMouseDragEntered()
     {
         test(EventTypes.MOUSE_DRAG_ENTERED, new Command() {
@@ -400,27 +400,27 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     
     // * Drag from text field to node.
     // * Text in node's tooltip will change to text from text field.
-    @Test(timeout = 20000)
+    @Test(timeout = 60000)
     public void onDragDroped()
     {
         test(EventTypes.DRAG_DROPPED, commandDnDFromDragSourceToPrimeDock);
     }
 
     // * Drag from text field to node.
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onDragEntered()
     {
         test(EventTypes.DRAG_ENTERED, commandDnDFromDragSourceToPrimeDock);
     }
     
     // * Drag from text field to node.
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onDragEnteredTarget()
     {
         test(EventTypes.DRAG_ENTERED_TARGET, commandDnDFromDragSourceToPrimeDock);
     }
  
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onDragOver()
     {
         test(EventTypes.DRAG_OVER, commandDnDFromDragSourceToPrimeDock  );
@@ -430,7 +430,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     
     
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onMouseDragExited()
     {
         test(EventTypes.MOUSE_DRAG_EXITED, new Command() {
@@ -579,25 +579,25 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 }};
     
     // * Drags mouse inside of tested node
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onMouseDraged()
     {
         test(EventTypes.MOUSE_DRAGGED, startDragOnControl);
     }
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onDragExited()
     {
         test(EventTypes.DRAG_EXITED, dndFromDragSourceToCtrlAndBack);
     }
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onDragExitedTarget()
     {
         test(EventTypes.DRAG_EXITED_TARGET, dndFromDragSourceToCtrlAndBack);
     }
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onMouseExited()
     {
         test(EventTypes.MOUSE_EXITED, dragControlAndExitCommand);
