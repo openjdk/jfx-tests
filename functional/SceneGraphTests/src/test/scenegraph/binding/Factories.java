@@ -486,6 +486,7 @@ public enum Factories implements Factory {
                     }
                 }
             } catch (Exception ignored) {
+                System.err.println("Warning: HtmlEditor is not currently supported in JavaFX Embedded");
             }
             return new BindingApp.NodeAndBindee(node, node);
         }
