@@ -137,12 +137,21 @@ public class TestTextApp extends BasicButtonChooserApp {
         parentBoundsRect.setY(parentBounds.getMinY());
     }
     
+    public TestTextApp(final String header) {
+        super(900, 550, header, false);
+    }
+    
     public TestTextApp() {
         super(900, 550, "TestText", false);
     }
     
+    
     @Override
     protected TestNode setup() {
+        return prepare( "TestText1");
+    }    
+    
+    public TestNode prepare(final String pagename) {
         TestNode root = new TestNode();
         
         TestNode page = new TestNode() {
@@ -708,7 +717,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 
             }
         };
-        root.add(page, "TestText1");
+        root.add(page, pagename);
         this.selectNode(page);
         return root;
     }
