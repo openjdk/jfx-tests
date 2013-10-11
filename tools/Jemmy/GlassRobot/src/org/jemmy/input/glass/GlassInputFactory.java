@@ -154,9 +154,9 @@ public class GlassInputFactory implements ControlInterfaceFactory {
 
     void runAction(Wrap<?> control, Action action, boolean detached) {
         if (detached) {
-            control.getEnvironment().getExecutor().executeDetached(control.getEnvironment(), false, action);
+            control.getEnvironment().getExecutor().executeDetached(control.getEnvironment(), true, action);
         } else {
-            control.getEnvironment().getExecutor().execute(control.getEnvironment(), false, action);
+            control.getEnvironment().getExecutor().execute(control.getEnvironment(), true, action);
         }
     }
 
