@@ -68,6 +68,8 @@
             <arg line="update"/>
             <arg line="--revision"/>
             <arg line="${images.version}"/>
+            <arg line="--non-interactive"/>
+            <arg line=" --trust-server-cert"/>
         </exec>
     </target>
 
