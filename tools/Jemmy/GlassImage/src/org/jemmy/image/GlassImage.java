@@ -8,6 +8,7 @@ import org.jemmy.image.pixel.PNGFileImageStore;
 import com.sun.glass.ui.Application;
 import com.sun.glass.ui.Pixels;
 import java.nio.ByteBuffer;
+import java.util.concurrent.atomic.AtomicReference;
 import org.jemmy.Dimension;
 import org.jemmy.JemmyException;
 import org.jemmy.env.Environment;
@@ -41,16 +42,16 @@ import org.jemmy.image.pixel.WriteableRaster;
 public class GlassImage implements Image, WriteableRaster {
 
     static {
-        Environment.getEnvironment().setPropertyIfNotSet(ImageComparator.class, 
+        Environment.getEnvironment().setPropertyIfNotSet(ImageComparator.class,
                 new GlassPixelImageComparator(Environment.getEnvironment()));
         Environment.getEnvironment().setPropertyIfNotSet(ImageStore.class, new PNGFileImageStore());
         try {
             Class.forName(PixelImageComparator.class.getName());
         } catch(ClassNotFoundException e) {}
     }
-    
+
     private final Pixels image;
-    private ByteBuffer data = null;
+    private final ByteBuffer data;
     private final Component[] supported;
     private int bytesPerPixel;
     private int bytesPerComponent;
@@ -74,14 +75,15 @@ public class GlassImage implements Image, WriteableRaster {
         bytesPerPixel = data.getBytesPerComponent(); //yeah, well ...
         bytesPerComponent = bytesPerPixel / supported.length;
         maxColorComponent = Math.pow(2, bytesPerComponent * 8) - 1;
-        size = new Dimension(image.getWidth(), image.getHeight());
+        this.data = getInitialData();
+        size = getInitialSize();
         this.env = env;
     }
 
     GlassImage(GlassImage orig) {
         this(orig, orig.size);
     }
-    
+
     GlassImage(GlassImage orig, Dimension size) {
         this.image = Application.GetApplication().createPixels(size.width, size.height,
                 ByteBuffer.allocate(size.width * size.height * 4)); //same logic as in Pixels
@@ -89,6 +91,7 @@ public class GlassImage implements Image, WriteableRaster {
         bytesPerPixel = orig.bytesPerPixel;
         bytesPerComponent = orig.bytesPerComponent;
         maxColorComponent = orig.maxColorComponent;
+        data = getInitialData();
         this.size = size;
         env = Environment.getEnvironment();
     }
@@ -100,7 +103,8 @@ public class GlassImage implements Image, WriteableRaster {
         this.bytesPerPixel = bytesPerPixel;
         bytesPerComponent = bytesPerPixel / supported.length;
         maxColorComponent = Math.pow(2, bytesPerComponent * 8) - 1;
-        size = new Dimension(image.getWidth(), image.getHeight());
+        data = getInitialData();
+        size = getInitialSize();
         env = Environment.getEnvironment();
     }
 
@@ -118,14 +122,35 @@ public class GlassImage implements Image, WriteableRaster {
     }
 
     public ByteBuffer getData() {
-        if (data == null) {
-            data = image.asByteBuffer();
-        }
         return data;
+    }
+    
+    private Dimension getInitialSize() {
+        final AtomicReference<Dimension> sizeRef = new AtomicReference<Dimension>();
+        Application.invokeAndWait(new Runnable() {
+
+            @Override
+            public void run() {
+                sizeRef.set(new Dimension(image.getWidth(), image.getHeight()));
+            }
+        });
+        return sizeRef.get();
+    }
+
+    private ByteBuffer getInitialData() {
+        final AtomicReference<ByteBuffer> dataRef = new AtomicReference<ByteBuffer>();
+        Application.invokeAndWait(new Runnable() {
+
+            @Override
+            public void run() {
+                dataRef.set(image.asByteBuffer());
+            }
+        });
+        return dataRef.get();
     }
 
     private int getBufferOffset(int x, int y) {
-        return y * image.getWidth() * bytesPerPixel + x * bytesPerPixel;
+        return y * size.width * bytesPerPixel + x * bytesPerPixel;
     }
 
     private void setNumber(int position, int componentIndex, long value) {
