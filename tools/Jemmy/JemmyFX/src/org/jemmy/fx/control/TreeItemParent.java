@@ -32,7 +32,7 @@ class TreeItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
 
     private final TreeItem<? extends AUX> root;
     private final TreeViewWrap<? extends TreeView> treeViewWrap;
-
+    
     TreeItemParent(TreeViewWrap<? extends TreeView> treeViewWrap, TreeItem<? extends AUX> root, Class<AUX> type) {
         super(treeViewWrap, type);
         this.treeViewWrap = treeViewWrap;
@@ -41,6 +41,11 @@ class TreeItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
 
     TreeItemParent(TreeViewWrap<? extends TreeView> treeViewWrap, Class<AUX> type) {
         this(treeViewWrap, null, type);
+    }
+
+    @Override
+    protected <DT extends AUX> Wrap<? extends DT> wrap(Class<DT> type, TreeItem item, AUX aux) {
+        return new TreeItemWrap<DT>(type, item, treeViewWrap, getEditor());
     }
 
     @Override
@@ -56,13 +61,8 @@ class TreeItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
         getFound().add((TreeItem<AUX>) parent);
         getAux().add((AUX) parent.getValue());
         for (TreeItem<? extends AUX> si : parent.getChildren()) {
-                refresh(si);
+            refresh(si);
         }
-    }
-
-    @Override
-    protected <DT extends AUX> Wrap<? extends DT> wrap(Class<DT> type, TreeItem item, AUX aux) {
-        return new TreeItemWrap<DT>(type, item, treeViewWrap, getEditor());
     }
 //    @Override
 //    protected TreeItem getValue(TreeItem item) {

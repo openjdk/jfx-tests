@@ -42,7 +42,7 @@ public class BufferedImageToFXImageOpacityTest extends ReadImageOpacityTest{
         WritableImage testingImage = new WritableImage(256, 256);
         try {
             SwingFXUtils.toFXImage(
-                    ImageIO.read(new URL(getColorComponentProvider().getGoldImagePath())),
+                    ImageIO.read(getColorComponentProvider().getGoldImageInputStream()),
                     testingImage);
         } catch (IOException ex) {
             Assert.fail(ex.getMessage());

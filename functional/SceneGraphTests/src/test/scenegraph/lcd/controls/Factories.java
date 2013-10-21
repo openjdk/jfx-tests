@@ -113,11 +113,11 @@ public enum Factories implements Factory{
             return MenuBarBuilder.create()
                     .menus(
                         MenuBuilder.create()
-                        .text("Text")
+                        .text("Text1")
                         .items(
                             MenuItemBuilder
                             .create()
-                            .text("Text")
+                            .text("Text2")
                             .build())
                         .build())
                     .build();
@@ -160,15 +160,15 @@ public enum Factories implements Factory{
         @Override
         public Parent createControl() {
             TitledPane expandedPane = TitledPaneBuilder.create()
-                    .text("Test")
-                    .content(new Button("Test"))
+                    .text("Test1")
+                    .content(new Button("Test3"))
                     .build(); 
             return AccordionBuilder.create()
                     .maxHeight(200)
                     .maxWidth(200)
                     .panes(expandedPane,
                     TitledPaneBuilder.create()
-                            .text("Test")
+                            .text("Test2")
                             .build())
                     .expandedPane(expandedPane)
                     .build();

@@ -26,6 +26,7 @@ package org.jemmy.fx;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import org.jemmy.control.WrapperDelegate;
 import org.jemmy.env.Environment;
 import org.jemmy.lookup.AbstractParent;
 import org.jemmy.lookup.HierarchyLookup;
@@ -52,7 +53,7 @@ public class NodeParentImpl extends AbstractParent<Node> {
 
     @Override
     public <ST extends Node> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {
-        return new HierarchyLookup<ST>(env, nodeHierarchy, new NodeWrapper(env), controlClass, criteria);
+        return new HierarchyLookup<ST>(env, nodeHierarchy, new WrapperDelegate(NodeWrap.WRAPPER, env), controlClass, criteria);
     }
 
     @Override

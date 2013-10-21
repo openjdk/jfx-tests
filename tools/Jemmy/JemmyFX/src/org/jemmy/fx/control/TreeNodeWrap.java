@@ -28,6 +28,8 @@ import javafx.scene.Node;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.util.Callback;
+import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
@@ -35,14 +37,12 @@ import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.NodeWrap;
-import org.jemmy.fx.Root;
-import org.jemmy.fx.Utils;
-import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.Caret.Direction;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
+import static org.jemmy.fx.control.TableUtils.*;
 
 /**
  * This wraps a node that renders the tree's data item
@@ -66,7 +66,7 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
         this.editor = editor;
     }
 
-    TreeViewWrap<? extends TreeView> getViewWrap() {
+    TreeViewWrap<? extends TreeView> getTreeViewWrap() {
         return treeViewWrap;
     }
 
@@ -87,6 +87,11 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
             }
         }.dispatch(getEnvironment());
     }
+    
+    @Override
+    public Point getClickPoint() {
+        return TableUtils.getClickPoint(treeViewWrap, this);
+    }
 
     @Override
     public <INTERFACE extends ControlInterface> boolean is(Class<INTERFACE> interfaceClass) {
@@ -99,7 +104,7 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
     @Override
     public <INTERFACE extends ControlInterface> INTERFACE as(Class<INTERFACE> interfaceClass) {
         if (org.jemmy.interfaces.TreeItem.class.equals(interfaceClass)) {
-            return (INTERFACE) Root.ROOT.getThemeFactory().treeItem(this);
+            return (INTERFACE) ThemeDriverFactory.getThemeFactory().treeItem(this, treeViewWrap);
         }
         return super.as(interfaceClass);
     }
@@ -179,40 +184,15 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
     }
 
     private void scrollTo() {
-        treeViewWrap.as(Scroll.class).caret().to(new Direction() {
+        TableUtils.scrollToInSingleDimension(treeViewWrap, TreeCell.class, 
+                new Callback<TreeCell, Integer>(){
 
-            public int to() {
-                final int[] minmax = new int[]{treeViewWrap.getStates().size(), -1};
-                treeViewWrap.as(Parent.class, Node.class).lookup(TreeCell.class,
-                        new LookupCriteria<TreeCell>() {
-
-                            public boolean check(TreeCell control) {
-                                if (NodeWrap.isInBounds(getClippedContainerWrap().getControl(), control, getEnvironment(), true)) {
-                                    int index = treeViewWrap.getRow(control.getTreeItem());
-                                    if (index >= 0) {
-                                        if (index < minmax[0]) {
-                                            minmax[0] = index;
-                                        }
-                                        if (index > minmax[1]) {
-                                            minmax[1] = index;
-                                        }
-                                    }
-                                }
-                                return true;
-                            }
-                        }).size();
-                int index = treeViewWrap.getRow(getControl());
-                if (index < minmax[0]) {
-                    return -1;
-                } else if (index > minmax[1]) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+            @Override
+            public Integer call(TreeCell p) {
+                return treeViewWrap.getRow(p.getTreeItem());
             }
-        });
-        AbstractScroll scroll2 = Utils.getContainerScroll(treeViewWrap.as(Parent.class, Node.class), false);
-        Utils.makeCenterVisible(getClippedContainerWrap(), this, scroll2);
+        }, treeViewWrap.getRow(getControl()), 
+        treeViewWrap.as(Scroll.class).caret(), true);
     }
 
     protected boolean isReallyVisible(Node node) {

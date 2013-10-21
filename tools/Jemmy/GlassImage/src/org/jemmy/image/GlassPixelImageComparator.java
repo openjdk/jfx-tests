@@ -24,6 +24,7 @@
  */
 package org.jemmy.image;
 
+import org.jemmy.Dimension;
 import org.jemmy.env.Environment;
 import org.jemmy.image.pixel.PixelImageComparator;
 import org.jemmy.image.pixel.Raster;
@@ -55,8 +56,13 @@ public class GlassPixelImageComparator extends PixelImageComparator {
     }
 
     @Override
-    protected WriteableRaster createDiffRaster(Raster raster, Raster raster1) {
-        return new GlassImage((GlassImage)raster);
+    protected WriteableRaster createDiffRaster(Raster raster0, Raster raster1) {
+        Dimension size0 = raster0.getSize();
+        Dimension size1 = raster1.getSize();
+        return new GlassImage((GlassImage)raster0, new Dimension(
+                Math.max(size0.width, size1.width),
+                Math.max(size0.height, size1.height)
+                ));
     }
 
     

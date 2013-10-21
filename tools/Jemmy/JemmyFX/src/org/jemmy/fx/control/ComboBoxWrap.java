@@ -56,7 +56,7 @@ import org.jemmy.timing.State;
 public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
     private final static String COMBO_BOX_STYLE_CLASS = "combo-box-popup";
 
-    private Focus focus = Root.ROOT.getThemeFactory().comboBoxFocuser(this);
+    private Focus focus = ThemeDriverFactory.getThemeFactory().comboBoxFocuser(this);
     private CriteriaSelectable selectable = null;
 
     public ComboBoxWrap(Environment env, T node) {

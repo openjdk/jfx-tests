@@ -43,7 +43,7 @@ public abstract class EventTestTextInput extends EventTestCommon<TextInputContro
     }
     
     @Override
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onAction()
     {
         test(ControlEventsApp.EventTypes.ACTION, new Command() {
@@ -54,8 +54,8 @@ public abstract class EventTestTextInput extends EventTestCommon<TextInputContro
             }
         });
     }
-    
-    @Test(timeout = 30000)
+    /*
+    @Test(timeout = 60000)
     public void onInputMethodTextChanged()
     {
         test(ControlEventsApp.EventTypes.INPUT_METHOD_TEXT_CHANGED, new Command() {
@@ -69,5 +69,5 @@ public abstract class EventTestTextInput extends EventTestCommon<TextInputContro
         });
         
     }
-    
+    */
 }

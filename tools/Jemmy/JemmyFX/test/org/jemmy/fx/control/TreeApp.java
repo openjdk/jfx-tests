@@ -27,7 +27,6 @@ package org.jemmy.fx.control;
 import java.awt.AWTException;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -42,7 +41,8 @@ import javafx.util.Callback;
  *
  * @author shura
  */
-public class TreeApp  extends Application {
+public class TreeApp extends Application {
+
     public static void main(String[] args) throws AWTException {
 //        org.jemmy.fx.Browser.runBrowser();
         launch(args);
@@ -50,14 +50,12 @@ public class TreeApp  extends Application {
 
     private static class TextFieldTreeCell extends TreeCell<String> {
 
-
         private TextField textBox;
 
         public TextFieldTreeCell() {
             setEditable(true);
             textBox = new TextField();
             textBox.setOnKeyReleased(new EventHandler<KeyEvent>() {
-
                 public void handle(KeyEvent t) {
                     if (t.getCode() == KeyCode.ENTER) {
                         commitEdit(textBox.getText());
@@ -74,7 +72,7 @@ public class TreeApp  extends Application {
 
             textBox.setText(getItem());
             textBox.selectAll();
-            
+
             textBox.requestFocus();
 
             setText(null);
@@ -116,7 +114,7 @@ public class TreeApp  extends Application {
     public void start(Stage stage) throws Exception {
         VBox box = new VBox();
         Scene scene = new Scene(box);
-        
+
         TreeItem<String> i0 = new TreeItem<String>("0");
         i0.setExpanded(true);
         TreeItem<String> i00 = new TreeItem<String>("00");
@@ -142,7 +140,7 @@ public class TreeApp  extends Application {
         TreeItem<String> i00d = new TreeItem<String>("00d");
         TreeItem<String> i00e = new TreeItem<String>("00e");
         TreeItem<String> i00f = new TreeItem<String>("00f");
-        i00.getChildren().addAll(i000, i001, i002, i003, i004, 
+        i00.getChildren().addAll(i000, i001, i002, i003, i004,
                 i005, i006, i007, i008, i009, i00a, i00b, i00c, i00d, i00e, i00f);
         TreeItem<String> i010 = new TreeItem<String>("010");
         TreeItem<String> i011 = new TreeItem<String>("011");
@@ -168,39 +166,42 @@ public class TreeApp  extends Application {
         i02.getChildren().addAll(i020, i021, i022, i023, i024, i025, i026, i027, i028, i029);
         TreeItem<String> i0290 = new TreeItem<String>("0290");
         TreeItem<String> iLong = new TreeItem<String>("0looooooooooooooooooooooooooooooooooo00000000000000000000000000000000000000oooooooooooooooooooooooooong");
-        i029.getChildren().addAll(i0290,iLong);
-        
+        i029.getChildren().addAll(i0290, iLong);
+
         final TreeView<String> view = new TreeView<String>(i0);
         view.setEditable(true);
         view.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
-
             public TreeCell<String> call(TreeView<String> p) {
                 return new TextFieldTreeCell();
             }
         });
         view.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         box.getChildren().add(view);
-        
-        final Label lastItem = new Label();
-        lastItem.setId("selection");
-        box.getChildren().add(lastItem);
-        
-        view.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+        final Label selectedItem = new Label();
+        selectedItem.setId("selection");
+        box.getChildren().add(selectedItem);
+
+        view.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent t) {
-                lastItem.setText(view.getSelectionModel().getSelectedItems().get(0).getValue());
+                final TreeItem<String> value = view.getSelectionModel().getSelectedItems().get(0);
+                if (value != null) {
+                    selectedItem.setText(value.getValue());
+                } else {
+                    selectedItem.setText("null");
+                }
             }
         });
-        
+
         stage.setScene(scene);
-        
+
         stage.setWidth(300);
-        stage.setHeight(300);
-        
+        stage.setHeight(500);
+
         stage.show();
-        
+
     }
-    
+
     static class MyTreeItem<T> extends TreeItem<T> {
 
         public MyTreeItem(T t) {
@@ -210,6 +211,5 @@ public class TreeApp  extends Application {
         public MyTreeItem(T t, Node node) {
             super(t, node);
         }
-
     }
 }

@@ -143,6 +143,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
+    
     @Test
     public void testDragEnteredTarget()
     {
@@ -177,6 +178,11 @@ public class SceneEventHandlersTest extends TestBase
                 {
                     System.err.println("Interrupted while drug.");
                 }
+                finally
+                {
+                    scene.mouse().move();
+                    scene.mouse().click();
+                }
             }
         });
     }
@@ -195,6 +201,11 @@ public class SceneEventHandlersTest extends TestBase
                 catch (InterruptedException ex) 
                 {
                     System.err.println("Interrupted while drug.");
+                }
+                finally
+                {
+                    scene.mouse().move();
+                    scene.mouse().click();
                 }
             }
         });
@@ -346,6 +357,10 @@ public class SceneEventHandlersTest extends TestBase
                 {
                     scene.mouse().move(new Point(x, y));
                 }
+                for(; x <= 25; y = x = x + 1)
+                {
+                    scene.mouse().move(new Point(x, y));
+                }
             }
         });
     }
@@ -359,6 +374,10 @@ public class SceneEventHandlersTest extends TestBase
             public void invoke() {
                 int x = 25, y = 25;
                 for(; x >= -25; y = x = x - 1)
+                {
+                    scene.mouse().move(new Point(x, y));
+                }
+                for(; x <= 25; y = x = x + 1)
                 {
                     scene.mouse().move(new Point(x, y));
                 }
@@ -514,43 +533,44 @@ public class SceneEventHandlersTest extends TestBase
         }, SceneEventHandlersApp.HANDLED_STYLE);
     }
     
-    protected void dnd(Wrap from, Point from_point, Wrap to, Point to_point) throws InterruptedException {
-            final int STEPS = 50;
-//        if (!Utils.isGlassRobotAvailable()) {
-//            System.err.println("Use jemmy robot");
-//            from.mouse().move(from_point);
-//            from.mouse().press();
-//            int differenceX = to.toAbsolute(to_point).x - from.toAbsolute(from_point).x;
-//            int differenceY = to.toAbsolute(to_point).y - from.toAbsolute(from_point).y;
-//            Mouse mouse = from.mouse();
-//            for (int i = 0; i <= STEPS; i++) {
-//                mouse.move(new Point(from_point.x + differenceX * i / STEPS, from_point.y + differenceY * i / STEPS));
-//                Thread.sleep(20);
-//            }
-//            from.mouse().release();
-//        } else
-        {
-//            System.out.println("Draging");
-            System.err.println("Use glass robot");
-            Point abs_from_point = new Point(from_point);
-            abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
-            Point abs_to_point = new Point(to_point);
-            abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
-            if (robot == null) {
-                robot = com.sun.glass.ui.Application.GetApplication().createRobot(); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
-            }
-            robot.mouseMove(abs_from_point.x, abs_from_point.y);
-            robot.mousePress(1);
-            int differenceX = abs_to_point.x - abs_from_point.x;
-            int differenceY = abs_to_point.y - abs_from_point.y;
-            for (int i = 0; i <= STEPS; i++) {
-                robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
-                Thread.sleep(20);
-            }
-//            System.out.println("Releasing");
-            robot.mouseRelease(1);
+    protected void dnd(Wrap from, Point from_point, Wrap to, Point to_point) throws InterruptedException 
+    {
+	if(!Utils.isWindows())
+	{
+	    from.drag().dnd(to, to_point);
+	    return;
+	}
+	
+	final int STEPS = 50;
+        System.err.println("Use glass robot");
+        Point abs_from_point = new Point(from_point);
+        abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
+        Point abs_to_point = new Point(to_point);
+        abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
+        if (robot == null) {
+            robot = new GetAction<com.sun.glass.ui.Robot>() {
+                        @Override
+                        public void run(Object... os) throws Exception {
+                            setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
+                        }
+                    }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
         }
-        //Thread.sleep(1000);
+        robot.mouseMove(abs_from_point.x, abs_from_point.y);
+        robot.mousePress(1);
+        int differenceX = abs_to_point.x - abs_from_point.x;
+        int differenceY = abs_to_point.y - abs_from_point.y;
+        for (int i = 0; i <= STEPS; i++) {
+            robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
+            try 
+            {
+                Thread.sleep(20);
+            } 
+            catch (InterruptedException ex) 
+            {
+                System.err.println("Interrupted while drag'n'drop");;
+            }
+        }
+        robot.mouseRelease(1);
     }
     
     private TextControlWrap<Button> actionButton;

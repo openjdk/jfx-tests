@@ -35,12 +35,14 @@ import org.jemmy.interfaces.Selectable;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.samples.SampleBase;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * 
  * @author KAM
  */
+@Ignore("https://javafx-jira.kenai.com/browse/RT-29551")
 public class ComboBoxSample extends SampleBase {
     private static SceneDock scene;
     private static ComboBoxDock comboBox1;

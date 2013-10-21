@@ -23,6 +23,8 @@
  */
 package test.scenegraph.functional.controls.events;
 
+import javafx.scene.control.Tooltip;
+import org.jemmy.action.GetAction;
 import org.jemmy.fx.control.ChoiceBoxDock;
 import org.jemmy.interfaces.Selectable;
 import org.junit.Before;
@@ -61,7 +63,7 @@ public class ChoiceBoxEventsTest extends EventTestHidingPopup<ChoiceBoxDock>
     }
     
     @Override
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onAction()
     {
         test(EventTypes.ACTION, new Command() {
@@ -72,13 +74,15 @@ public class ChoiceBoxEventsTest extends EventTestHidingPopup<ChoiceBoxDock>
                 {
                     if(!state.equals(s.getState()))
                     {
-                        getPrimeNodeDock().asSelectable(String.class).
+                        while (!(state.equals(s.getState()))) {
+                            getPrimeNodeDock().asSelectable(String.class).
                                 selector().select(state);
+                            try { Thread.sleep(300);} catch(Exception e){}
+                        }
                         break;
                     }
                 }
             }
         });
     }
-    
 }

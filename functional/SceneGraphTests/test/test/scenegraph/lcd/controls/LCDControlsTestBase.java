@@ -23,33 +23,22 @@
  */
 package test.scenegraph.lcd.controls;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import javafx.scene.text.Text;
-import org.jemmy.action.AbstractExecutor;
-import org.jemmy.control.Wrap;
-import org.jemmy.env.TestOut;
 import org.jemmy.fx.NodeDock;
-import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.TextDock;
 import org.jemmy.fx.control.ControlDock;
-import org.jemmy.image.AWTImage;
-import org.jemmy.image.AWTRobotCapturer;
 import org.jemmy.image.Image;
-import org.jemmy.image.RoughImageComparator;
 import org.jemmy.lookup.Lookup;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import test.javaclient.shared.JemmyUtils;
 import test.scenegraph.lcd.LcdUtils;
 import test.scenegraph.lcd.PixelsCalc;
 
 /**
  *
- * @author Alexander Petrov
+ * @author Alexander Petrov, updated by Victor Shubov
  */
 public class LCDControlsTestBase {
     public static final int MAX_COLOR_PIXELS_COUNT = 40;
@@ -67,8 +56,8 @@ public class LCDControlsTestBase {
     public void before() {
          if (LcdUtils.isApplicablePlatform()) {
              //prepare env
-            JemmyUtils.initJemmy();
-            JemmyUtils.setJemmyRoughComparator(0.0001);
+             JemmyUtils.initJemmy();
+             JemmyUtils.setJemmyRoughComparator(0.0001);
              this.scene = new SceneDock();
              this.buttonApply = new ControlDock(scene.asParent(), LCDControlsTestApp.BUTTON_APPLY_ID);
         }
@@ -81,37 +70,35 @@ public class LCDControlsTestBase {
             NodeDock rightPaneDock = new NodeDock(scene.asParent(), LCDControlsTestApp.RIGHT_PANE_ID);
 
             buttonApply.mouse().move();
-            List<Image> lcdImages = getAllTextImages(rightPaneDock);
-
-            testImages(lcdImages, LCDControlsTestApp.action.isLCDWork());
-        }
+            
+            // wait until LCD rendered:
+            // here should be a loop: 
+            // check image every 300ms and wait until image become stable
+            try { Thread.sleep(400);} catch(Exception e){}
+            checkAllTextImages(rightPaneDock,LCDControlsTestApp.action.isLCDWork());
+       }
     }
 
-    private List<Image> getAllTextImages(NodeDock dock) {
-        List<Image> value = new LinkedList<Image>();
+    private  void checkAllTextImages(final NodeDock dock, final boolean _lcdWork) {
+         System.out.println("___________________________________ action=" + LCDControlsTestApp.action);
 
         Lookup textLookup = dock.asParent().lookup(Text.class);
         for (int i = 0; i < textLookup.size(); i++) {
-            TextDock text = new TextDock(textLookup, i);
+            final TextDock text = new TextDock(textLookup, i);
+            final String strtext = text.getText();
+            System.out.println("text=" + strtext );
+            if (strtext.length() > 0 )
             try {
-                value.add(text.wrap().getScreenImage());
+                final Image image = text.wrap().getScreenImage();
+                testImage(image, _lcdWork);
             } catch (Exception ex) {
                 System.err.println("Warning: node doesn't visible.");
+                ex.printStackTrace();
             }
         }
-
-        return value;
     }
 
-    private void testImages(List<Image> lcdImages, boolean lcdWork) {
-        Iterator<Image> lcdImagesIterator = lcdImages.iterator();
-
-        while (lcdImagesIterator.hasNext()) {
-            testImage(lcdImagesIterator.next(), lcdWork);
-        }
-    }
-
-    private void testImage(Image lcdImage, boolean lcdWork) {
+    private void testImage(final Image lcdImage, final boolean lcdWork) {
         if(!JemmyUtils.usingGlassRobot()){
             PixelsCalc lcdPixelsCalc = new PixelsCalc();
 
@@ -126,22 +113,29 @@ public class LCDControlsTestBase {
 
     }
 
-    private boolean greenPixelsTest(PixelsCalc calc) {
-        return calc.getGreenPixelCount() < MAX_GREEN_PIXELS_COUNT;
+    private boolean greenPixelsTest(final PixelsCalc calc) {
+        final int greenPixels = calc.getGreenPixelCount();
+        boolean bResult = greenPixels < MAX_GREEN_PIXELS_COUNT;
+        System.out.println(" greenPixelsTest:" + (bResult?"Passed":"FAILED")  +  "  ( actual:" + greenPixels + " MAX_GREEN_PIXELS_COUNT=" + MAX_GREEN_PIXELS_COUNT);
+        return  bResult;
     }
 
-    private boolean lcdTest(PixelsCalc calc, boolean lcd) {
-
+    private boolean lcdTest(final PixelsCalc calc, final boolean lcd) {
+        final int colorPixelCount = calc.getColorPixelCount();
         if (lcd) {
-            if (calc.getColorPixelCount() != 0) {
-                double percent = (double) calc.getColorPixelCount()
-                        / (calc.getColorPixelCount() + calc.getGrayPixelCount());
+            final int greyPixelCount = calc.getGrayPixelCount();
+            final double sumPixelCount = colorPixelCount + greyPixelCount;
+            System.out.println(" colorPixelCount=" + colorPixelCount + " greyPixelCount=" + greyPixelCount);
+            if ( 0 != colorPixelCount) {
+                final double percent = colorPixelCount  / sumPixelCount;
+                System.out.println(" percent = colorPixelCount  / sumPixelCount =" + percent 
+                                 + "[  < " + UPPER_THRESHOLD + " && >" + LOWER_THRESHOLD);
                 return (percent < UPPER_THRESHOLD) && (percent > LOWER_THRESHOLD);
             }
             return false;
         } else {
-            return calc.getColorPixelCount() <= MAX_COLOR_PIXELS_COUNT;
+            System.out.println(" lcd = false, return colorPixelCount=" + colorPixelCount + "<= MAX_COLOR_PIXELS_COUNT" + MAX_COLOR_PIXELS_COUNT);
+            return colorPixelCount <= MAX_COLOR_PIXELS_COUNT;
         }
-
     }
 }

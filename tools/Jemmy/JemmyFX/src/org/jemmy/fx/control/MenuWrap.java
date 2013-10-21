@@ -31,9 +31,7 @@ import org.jemmy.action.GetAction;
 import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
-import org.jemmy.control.MethodProperties;
 import org.jemmy.control.Property;
-import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
 import org.jemmy.input.StringMenuOwner;
 import org.jemmy.interfaces.Parent;
@@ -43,6 +41,9 @@ import org.jemmy.interfaces.Parent;
         encapsulates = {MenuItem.class, MenuItem.class}, name={"asMenuParent"})
 public class MenuWrap<ITEM extends Menu> extends MenuItemWrap<ITEM> {
 
+    public static final String SHOWING_PROPERTY_NAME = "isShowing";
+    public static final String PARENT_SHOWN_PROPERTY_NAME = "parent.shown";
+    
     private StringMenuOwnerImpl menuOwner = null;
     private Parent<MenuItem> parent = null;
 
@@ -85,17 +86,35 @@ public class MenuWrap<ITEM extends Menu> extends MenuItemWrap<ITEM> {
         return menuOwner;
     }
     
-    @Property("isShowing")
+    @Property(SHOWING_PROPERTY_NAME)
     public boolean isShowing() {
         return isShowing(getControl(), getEnvironment());
     }
-    
+
+    @Property(PARENT_SHOWN_PROPERTY_NAME)
+    public boolean isParentShown() {
+        return isParentShown(getControl(), getEnvironment());
+    }
+
     static boolean isShowing(final Menu menu, Environment env) {
         return new GetAction<Boolean>() {
 
             @Override
             public void run(Object... os) throws Exception {
                 setResult(menu.isShowing());
+            }
+        }.dispatch(env);
+    }
+
+    static boolean isParentShown(final Menu menu, Environment env) {
+        return new GetAction<Boolean>() {
+            @Override
+            public void run(Object... os) throws Exception {
+                if (menu.getParentPopup() != null) {
+                    setResult(menu.getParentPopup().isShowing());
+                } else {
+                    setResult(true);
+                }
             }
         }.dispatch(env);
     }

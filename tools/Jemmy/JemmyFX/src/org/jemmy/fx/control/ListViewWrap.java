@@ -37,6 +37,8 @@ import org.jemmy.control.*;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.NodeParent;
 import org.jemmy.fx.NodeWrap;
+import org.jemmy.fx.control.Scrollable2DImpl.EmptyScroll;
+import org.jemmy.fx.control.Scrollable2DImpl.EmptyScroller;
 import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.Any;
@@ -393,58 +395,6 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
                             + "] is " + state;
                 }
             });
-        }
-    }
-
-    private class EmptyScroll extends AbstractScroll {
-
-        @Override
-        public double position() {
-            return ListViewWrap.this.position();
-        }
-
-        @Override
-        public Caret caret() {
-            return emptyScroller;
-        }
-
-        @Override
-        public double maximum() {
-            return ListViewWrap.this.maximum();
-        }
-
-        @Override
-        public double minimum() {
-            return ListViewWrap.this.minimum();
-        }
-
-        @Override
-        public double value() {
-            return position();
-        }
-
-        @Override
-        public Scroller scroller() {
-            return emptyScroller;
-        }
-    }
-
-    private static class EmptyScroller implements Scroller {
-
-        @Override
-        public void to(double value) {
-        }
-
-        @Override
-        public void to(Direction condition) {
-        }
-
-        @Override
-        public void scrollTo(double value) {
-        }
-
-        @Override
-        public void scrollTo(ScrollCondition condition) {
         }
     }
 }

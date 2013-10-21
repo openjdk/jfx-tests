@@ -29,11 +29,10 @@ package test.scenegraph.binding.controls;
  */
 
 
+import client.test.Keywords;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import test.scenegraph.binding.*;
-import com.oracle.jdk.sqe.cc.markup.Covers;
-import com.oracle.jdk.sqe.cc.markup.Covers.Level;
 
 public class HtmlEditorTest extends BindingTestBase {
     @BeforeClass
@@ -50,6 +49,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies prefWidth property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void prefWidth() {
         commonTest(NumberConstraints.prefWidth);
     }
@@ -58,6 +58,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies prefHeight property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void prefHeight() {
         commonTest(NumberConstraints.prefHeight);
     }
@@ -66,6 +67,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies layoutX property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void layoutX() {
         commonTest(NumberConstraints.layoutX);
     }
@@ -74,6 +76,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies layoutY property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void layoutY() {
         commonTest(NumberConstraints.layoutY);
     }
@@ -82,6 +85,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies translateX property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void translateX() {
         commonTest(NumberConstraints.translateX);
     }
@@ -90,6 +94,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies translateY property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void translateY() {
         commonTest(NumberConstraints.translateY);
     }
@@ -98,6 +103,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies scaleX property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void scaleX() {
         commonTest(NumberConstraints.scaleX);
     }
@@ -106,6 +112,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies scaleY property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void scaleY() {
         commonTest(NumberConstraints.scaleY);
     }
@@ -114,6 +121,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies rotate property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void rotate() {
         commonTest(NumberConstraints.rotate);
     }
@@ -122,6 +130,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies blendMode property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void blendMode() {
         commonTest(ObjectConstraints.blendMode);
     }
@@ -130,6 +139,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies clip property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void clip() {
         commonTest(ObjectConstraints.clip);
     }
@@ -138,6 +148,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies effect property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void effect() {
         commonTest(ObjectConstraints.effect);
     }
@@ -146,6 +157,7 @@ public class HtmlEditorTest extends BindingTestBase {
     * This test verifies opacity property for controls.HtmlEditor
     */
     @Test
+    @Keywords(keywords="webkit")
     public void opacity() {
         commonTest(NumberConstraints.opacity);
     }

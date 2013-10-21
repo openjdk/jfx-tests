@@ -27,8 +27,10 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Affine;
@@ -60,7 +62,7 @@ public class AffineApp extends InteroperabilityApp
 	
 	public AffineScene()
 	{
-	    super(new Group(), 800, 600, true);
+	    super(new Group(), 800, 600, false);
 	    
 	    regularAffine.setToIdentity();
 	    manualAffine.setToIdentity();
@@ -78,7 +80,27 @@ public class AffineApp extends InteroperabilityApp
 	    
 	    fxTransRectPane.getChildren().add(fxTranformedRectangle);
 	    manualTransRectPane.getChildren().add(manualTranformedRectangle);
-	    
+
+            VBox all = new VBox();
+	    for(CheckBox cb: boxes)
+            {
+               all.getChildren().add(cb);
+            }
+    
+            //all.getChildren().add(appendRotate7D);
+            HBox hb = new HBox();
+            
+            all.getChildren().add(hb);
+            hb.getChildren().addAll(fxTransRectPane,manualTransRectPane);
+            fxTransRectPane.setMinSize(300,300);
+            fxTransRectPane.setMaxSize(300,300);
+            
+            manualTransRectPane.setMaxSize(300,300);
+            manualTransRectPane.setMinSize(300,300);
+                     
+
+	    setRoot(all);            
+/*            
 	    GridPane all = new GridPane();
 	    ScrollPane sp = new ScrollPane();
 	    FlowPane methodsFlow = new FlowPane(Orientation.VERTICAL, 10, 2);
@@ -112,7 +134,7 @@ public class AffineApp extends InteroperabilityApp
 	    all.add(sp, 0, 0);
 	    all.add(fxTransRectPane, 0, 1);
 	    all.add(manualTransRectPane, 1, 1);
-	    
+*/	    
 	    setRoot(all);
 	    setCamera(new PerspectiveCamera());
             

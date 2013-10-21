@@ -50,6 +50,7 @@ import javafx.stage.Stage;
  * @author alexander_kirov
  */
 public class ModalityWindow {
+    private static final int WND_HEIGHT_IN_SEQUENTIAL_MODE = 135;
 
     protected CheckBox cb = new CheckBox();
 
@@ -193,7 +194,6 @@ public class ModalityWindow {
                     runner.run();
                 }
             });
-
             creationButtonsArray.add(button);
         }
         creationButtons.getChildren().addAll(creationButtonsArray);
@@ -286,13 +286,13 @@ public class ModalityWindow {
                 initialX = 200 * (isApplet ? 1 : 0);
                 initialY = 0;
                 width = 640;
-                height = 113;
+                height = WND_HEIGHT_IN_SEQUENTIAL_MODE;
                 break;
             case HIERARHICAL:
                 initialX = 200 * (isApplet ? 1 : 0);
                 initialY = 0;
                 width = 640;
-                height = 270;
+                height = 300;
                 break;
         }
     }

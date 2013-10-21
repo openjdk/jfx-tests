@@ -126,7 +126,7 @@ public class SliderWrap<T extends Slider> extends ControlWrap<T> implements Scro
 
             @Override
             public Scroller scroller() {
-                return Root.ROOT.getThemeFactory().caret(SliderWrap.this, this);
+                return ThemeDriverFactory.getThemeFactory().caret(SliderWrap.this, this);
             }
         };
     }
@@ -204,7 +204,7 @@ public class SliderWrap<T extends Slider> extends ControlWrap<T> implements Scro
     }
 
     public Shifter shifter() {
-        return Root.ROOT.getThemeFactory().track(this, theScroll);
+        return ThemeDriverFactory.getThemeFactory().track(this, theScroll);
     }
 
     @Override

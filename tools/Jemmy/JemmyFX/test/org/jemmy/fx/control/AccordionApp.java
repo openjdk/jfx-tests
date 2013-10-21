@@ -86,14 +86,14 @@ public class AccordionApp extends Application {
         stage.setScene(scene);
 
         stage.setWidth(250);
-        stage.setHeight(800);
+        stage.setHeight(600);
 
         stage.show();
     }
 
     Pane createTarget() {
         Pane pane = new Pane();
-        pane.setMinSize(200, 700);
+        pane.setMinSize(200, 550);
         CheckBox check = new CheckBox();
         check.setTranslateX(100);
         check.setTranslateY(100);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009-2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -33,7 +33,11 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 //import org.jemmy.fx.Browser;
 
-public class ComboBoxApp  extends Application {
+/**
+ * @author shura
+ */
+public class ComboBoxApp extends Application {
+
     public static void main(String[] args) throws AWTException {
         launch(args);
     }
@@ -72,7 +76,6 @@ public class ComboBoxApp  extends Application {
         Popup popup = new Popup();
         popup.getContent().add(combo);
 
-       
         //box.getChildren().add(combo);
 
         stage.setScene(scene);

@@ -61,17 +61,19 @@ public class ColorPickerEventsTest extends EventTestHidingPopup<ControlDock>
     }
     
     @Override
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onAction()
     {
         test(ControlEventsApp.EventTypes.ACTION, new Command() {
 
             public void invoke() {
                 getPrimeNodeDock().mouse().click();
+                //
+                try { Thread.sleep(300);} catch(Exception e) {}
                 Bounds bounds = getPrimeNodeDock().getBoundsInLocal();
                 double x = bounds.getWidth() / 2;
                 double y = bounds.getHeight() * 2;
-                getPrimeNodeDock().mouse().click(1, new Point(x, y));
+                getPrimeNodeDock().mouse().click(1,new Point(x, y));
             }
         });
     }

@@ -101,16 +101,33 @@ public class ModalityBase extends Utils {
         sceneMouseClickable(name, mouseCounter);
         sceneKeyPressHandle(name, keysCounter);
     }
-
+    
     protected void sceneMouseClickable(final String stageID, int waitingClicks) throws InterruptedException {
-        Wrap<? extends Scene> sceneWrap = getSceneWrap(stageID);
-        Parent<Node> parent = sceneWrap.as(Parent.class, Node.class);
+        final Wrap<? extends Scene> sceneWrap = getSceneWrap(stageID);
+        
+        // this toFront call is to let the test work in applet mode
+        new GetAction() {
 
+            @Override
+            public void run(Object... parameters) throws InterruptedException {
+
+                try {
+                    ((Stage) (sceneWrap.getControl().getWindow())).toFront();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.dispatch(Root.ROOT.getEnvironment());
+        Thread.sleep(sleepConst);
+        
+        Parent<Node> parent = sceneWrap.as(Parent.class, Node.class);
+        
         Wrap<? extends Label> labelWrap = Lookups.byID(parent, stageID + ModalityWindow.MOUSE_COUNTER_ID, Label.class);
 
         int tempCounter = Integer.parseInt(labelWrap.as(Text.class).text());
         doMouseClick(sceneWrap);
-        Thread.sleep(sleepConst);
+        Thread.sleep(sleepConst*4);
         labelWrap.waitProperty(Wrap.TEXT_PROP_NAME, ((Integer) (tempCounter + waitingClicks)).toString());
     }
 

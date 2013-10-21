@@ -23,7 +23,7 @@
  */
 package test.scenegraph.imageops;
 
-import java.awt.image.BufferedImage;
+import client.test.Keywords;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import static junit.framework.Assert.assertTrue;
@@ -36,38 +36,42 @@ import org.junit.Test;
 public class FXImageToBufferedImageTest {
 
     @Test
+    @Keywords(keywords="awt")
     public void testRed() {
-        BufferedImage testImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-        SwingFXUtils.fromFXImage(new Image(ColorComponents.Red.getGoldImagePath()), testImage);
+        java.awt.image.BufferedImage testImage = new java.awt.image.BufferedImage(256, 256, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        SwingFXUtils.fromFXImage(new Image(ColorComponents.Red.getGoldImageInputStream()), testImage);
 
         testImage(testImage, ColorComponents.Red);
     }
 
     @Test
+    @Keywords(keywords="awt")
     public void testGreen() {
-        BufferedImage testImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-        SwingFXUtils.fromFXImage(new Image(ColorComponents.Green.getGoldImagePath()), testImage);
+        java.awt.image.BufferedImage testImage = new java.awt.image.BufferedImage(256, 256, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        SwingFXUtils.fromFXImage(new Image(ColorComponents.Green.getGoldImageInputStream()), testImage);
 
         testImage(testImage, ColorComponents.Green);
     }
 
     @Test
+    @Keywords(keywords="awt")
     public void testBlue() {
-        BufferedImage testImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-        SwingFXUtils.fromFXImage(new Image(ColorComponents.Blue.getGoldImagePath()), testImage);
+        java.awt.image.BufferedImage testImage = new java.awt.image.BufferedImage(256, 256, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        SwingFXUtils.fromFXImage(new Image(ColorComponents.Blue.getGoldImageInputStream()), testImage);
 
         testImage(testImage, ColorComponents.Blue);
     }
 
     @Test
+    @Keywords(keywords="awt")
     public void testOpacity() {
-        BufferedImage testImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-        SwingFXUtils.fromFXImage(new Image(ColorComponents.Opacity.getGoldImagePath()), testImage);
+        java.awt.image.BufferedImage testImage = new java.awt.image.BufferedImage(256, 256, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        SwingFXUtils.fromFXImage(new Image(ColorComponents.Opacity.getGoldImageInputStream()), testImage);
 
         testImage(testImage, ColorComponents.Opacity);
     }
 
-    private void testImage(BufferedImage image, ColorComponentProvider provider) {
+    private void testImage(java.awt.image.BufferedImage image, ColorComponentProvider provider) {
 
         int samePixelsCounter = 0;
         for (int i = 1; i < image.getWidth() - 1; i++) {

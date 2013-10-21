@@ -63,7 +63,7 @@ public class MenuBarWrap<CONTROL extends MenuBar> extends NodeWrap<CONTROL> {
 
     private StringMenuOwnerImpl menuOwner = null;
     private Parent<MenuItem> parent = null;
-    private Focus focus = Root.ROOT.getThemeFactory().menuBarFocuser(this);
+    private Focus focus = ThemeDriverFactory.getThemeFactory().menuBarFocuser(this);
 
     /**
      *

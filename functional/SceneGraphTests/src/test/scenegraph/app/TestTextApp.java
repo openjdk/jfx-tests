@@ -137,15 +137,25 @@ public class TestTextApp extends BasicButtonChooserApp {
         parentBoundsRect.setY(parentBounds.getMinY());
     }
     
-    public TestTextApp() {
-        super(900, 750, "TestText", false);
+    public TestTextApp(final String header) {
+        super(900, 550, header, false);
     }
+    
+    public TestTextApp() {
+        super(900, 550, "TestText", false);
+    }
+    
     
     @Override
     protected TestNode setup() {
+        return prepare( "TestText1");
+    }    
+    
+    public TestNode prepare(final String pagename) {
         TestNode root = new TestNode();
         
         TestNode page = new TestNode() {
+            @Override
             public Node drawNode() {
                 Pane root = new Pane();
                 
@@ -153,37 +163,17 @@ public class TestTextApp extends BasicButtonChooserApp {
 
                 // placeholder for text testing
                 Rectangle testfieldRect = new Rectangle();
-                testfieldRect.setHeight(400);
+                testfieldRect.setHeight(300);
                 testfieldRect.setWidth(500);
-                testfieldRect.setX(10);
-                testfieldRect.setY(10);
                 testfieldRect.setStroke(Color.TRANSPARENT);
                 testfieldRect.setStrokeWidth(2f);
                 testfieldRect.setFill(Color.TRANSPARENT);
 
-                // TODO: wait while ChoiceBox will work
-        /*
-                 * ChoiceBox colorCb1 = new ChoiceBox();
-                 * colorCb1.getItems().add("wqeqewr");
-                 * buttonList.getChildren().add(colorCb1);
-                 */
-                
-                HBox hBox = new HBox(5);
-                /*
-                 * ChoiceBox choiceBox = new ChoiceBox();
-                 * choiceBox.getItems().addAll("aaa", "bbb", "ccc");
-                 * choiceBox.select(0); hBox.getChildren().add(choiceBox);
-                 * buttonList.getChildren().add(hBox);
-                 */
-                
-                
                 ObservableList<String> data = FXCollections.observableArrayList();
                 data.addAll(TestTextApp.LIST_OF_COLORS_NAMES);
                 
                 final ListView<String> listView = new ListView<String>();
                 listView.setItems(data);
-                listView.setLayoutX(25);
-                listView.setLayoutY(40);
                 listView.getSelectionModel().select("Color.BLUE");
                 
                 listView.getSelectionModel().selectedIndexProperty().addListener(new InvalidationListener() {
@@ -221,17 +211,13 @@ public class TestTextApp extends BasicButtonChooserApp {
                 
                 List<String> fontNames = Font.getFontNames();
 
-                // font selection via RadioButtons(tmp, while ChoiceBox is not working)
                 ObservableList<String> fontData = FXCollections.observableArrayList();
                 for (int i = 0; i < fontNames.size(); i++) {
                     fontData.add(fontNames.get(i));
                 }
                 final ListView<String> fontListView = new ListView<String>();
                 fontListView.setItems(fontData);
-                fontListView.setLayoutX(25);
-                fontListView.setLayoutY(40);
                 fontListView.getSelectionModel().selectedIndexProperty().addListener(new InvalidationListener() {
-                    //fontListView.getSelectionModel().selectedIndexModel().addChangeListener(new ValueModelListener() {
                     @Override
                     public void invalidated(Observable ov) {
                         MultipleSelectionModel model = fontListView.getSelectionModel();
@@ -243,8 +229,9 @@ public class TestTextApp extends BasicButtonChooserApp {
                     }
                 });
 
+                VBox ulvb1 = new VBox(1);
                 // TEXT INPUT
-                hBox = new HBox(5);
+                HBox hBox = new HBox(5);
                 final Text labelInputField = new Text("test string:");
                 final TextField textBox = new TextField(INITIAL_TEXT);
                 textBox.setCursor(Cursor.DEFAULT); // Todo: Not work as expected, same with Cursor.TEXT
@@ -259,7 +246,8 @@ public class TestTextApp extends BasicButtonChooserApp {
                 
                 hBox.getChildren().add(labelInputField);
                 hBox.getChildren().add(textBox);
-                buttonList.getChildren().add(hBox);
+                hBox.setMinHeight(23);
+                ulvb1.getChildren().add(hBox);
 
                 // FONT SIZE
                 hBox = new HBox(5);
@@ -277,7 +265,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 
                 hBox.getChildren().add(textFontSize);
                 hBox.getChildren().add(slider1);
-                buttonList.getChildren().add(hBox);
+                ulvb1.getChildren().add(hBox);
 
                 // Stroke Width
                 hBox = new HBox(5);
@@ -297,7 +285,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 
                 hBox.getChildren().add(textStrokeWidth);
                 hBox.getChildren().add(slider2);
-                buttonList.getChildren().add(hBox);
+                ulvb1.getChildren().add(hBox);
 
                 // Opacity
                 hBox = new HBox(5);
@@ -315,7 +303,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 
                 hBox.getChildren().add(textOpacity);
                 hBox.getChildren().add(slider3);
-                buttonList.getChildren().add(hBox);
+                ulvb1.getChildren().add(hBox);
 
                 // Rotation
                 hBox = new HBox(5);
@@ -333,7 +321,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 
                 hBox.getChildren().add(textRotation);
                 hBox.getChildren().add(slider4);
-                buttonList.getChildren().add(hBox);
+                ulvb1.getChildren().add(hBox);
 
                 // Scale
                 hBox = new HBox(5);
@@ -352,7 +340,13 @@ public class TestTextApp extends BasicButtonChooserApp {
                 
                 hBox.getChildren().add(textScale);
                 hBox.getChildren().add(slider5);
-                buttonList.getChildren().add(hBox);
+                ulvb1.getChildren().add(hBox);
+                /*******************************************************/
+                VBox ulvb2 = new VBox(2);
+                HBox uhb = new HBox(40);
+                uhb.getChildren().add(ulvb1);
+                uhb.getChildren().add(ulvb2);
+                buttonList.getChildren().add(uhb);
 
                 // alignment
                 hBox = new HBox(5);
@@ -563,10 +557,10 @@ public class TestTextApp extends BasicButtonChooserApp {
                     }
                 });
 
-                hBox.getChildren().add(cbVisible);
-                hBox.getChildren().add(cbUnderline);
-                hBox.getChildren().add(cbStrikeThrough);
-                buttonList.getChildren().add(hBox);
+                ulvb2.getChildren().add(cbVisible);
+                ulvb2.getChildren().add(cbUnderline);
+                ulvb2.getChildren().add(cbStrikeThrough);
+                //buttonList.getChildren().add(hBox);
 
                 // transformation: shear
                 hBox = new HBox(5);
@@ -626,10 +620,9 @@ public class TestTextApp extends BasicButtonChooserApp {
                         parentBoundsRect.setVisible(!parentBoundsRect.isVisible());
                     }
                 });
-                hBox.getChildren().add(cbLocalBounds);
-                hBox.getChildren().add(cbParentBounds);
-                buttonList.getChildren().add(hBox);
-
+                ulvb2.getChildren().add(cbLocalBounds);
+                ulvb2.getChildren().add(cbParentBounds);
+               //
 
 
                 // FILL MODE
@@ -702,24 +695,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 });
                 buttonList.getChildren().add(hBox);
 
-                // PUT ALL THE THINGS ABOVE TOGETHER
-
-                //        buttonList.getText().add(testText);
-        /*
-                 * super.getText().add(testText); UpdateRectangles();
-                 * super.getText().add(localBoundsRect);
-                 * super.getText().add(parentBoundsRect);
-                 * super.getText().add(buttonList);
-                 */
-                //buttonList.getText().add(testText);
-                //buttonList.getText().add(localBoundsRect);
-        /*
-                 * addSlot("",testText); UpdateRectangles();
-                 * addSlot("",localBoundsRect); addSlot("",parentBoundsRect);
-                 * addSlot("",buttonList);
-                 */
-                //pageContent.getText().add(slot);
-                //.getPageContent()
+                
                 root.getChildren().add(testText);
                 UpdateRectangles();
                 localBoundsRect.setVisible(false);
@@ -729,6 +705,8 @@ public class TestTextApp extends BasicButtonChooserApp {
                 VBox vb1 = new VBox();
                 HBox controlsHolder = new HBox();
                 controlsHolder.getChildren().add(buttonList);
+                
+                controlsHolder.setMaxHeight(200);
                 controlsHolder.getChildren().add(listView);
                 controlsHolder.getChildren().add(fontListView);
                 vb1.getChildren().add(testfieldRect);
@@ -739,7 +717,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 
             }
         };
-        root.add(page, "TestText");
+        root.add(page, pagename);
         this.selectNode(page);
         return root;
     }

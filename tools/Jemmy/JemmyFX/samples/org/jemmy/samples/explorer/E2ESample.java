@@ -13,6 +13,7 @@ import org.jemmy.fx.control.TextInputControlDock;
 import static org.jemmy.interfaces.Keyboard.KeyboardButtons.*;
 import org.jemmy.lookup.LookupCriteria;
 import static org.jemmy.resources.StringComparePolicy.*;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -22,6 +23,7 @@ import org.junit.Test;
  *
  * @author shura
  */
+@Ignore("https://javafx-jira.kenai.com/browse/RT-29551")
 public class E2ESample extends ExplorerSampleBase {
 
     @Test

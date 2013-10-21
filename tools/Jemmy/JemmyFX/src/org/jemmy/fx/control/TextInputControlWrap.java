@@ -24,6 +24,7 @@
  */
 package org.jemmy.fx.control;
 
+import javafx.application.Platform;
 import javafx.scene.control.TextInputControl;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.As;
@@ -36,10 +37,11 @@ import org.jemmy.env.Environment;
 import org.jemmy.fx.ByText;
 import org.jemmy.input.ClickFocus;
 import org.jemmy.input.SelectionText;
-import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.*;
+import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.timing.State;
 
 /**
  * Test support for Java FX text editing controls. Supported operations are:
@@ -270,6 +272,23 @@ public class TextInputControlWrap<T extends TextInputControl> extends ControlWra
         @Override
         public void focus() {
             if (!getProperty(Boolean.class, IS_FOCUSED_PROP_NAME)) {
+                waitState(new State() {
+                    //Wait, until skin has allocated a text input control.
+                    //(sometimes, it is not allocated, but already in the scene)
+                    public Object reached() {
+                        final double square = new GetAction<Double>() {
+                            @Override
+                            public void run(Object... os) throws Exception {
+                                setResult(getControl().getWidth() * getControl().getHeight());
+                            }
+                        }.dispatch(getEnvironment());
+                        if (square > 1) {
+                            return Boolean.TRUE;
+                        } else {
+                            return null;
+                        }
+                    }
+                });
                 super.focus();
             }
             waitProperty(IS_FOCUSED_PROP_NAME, true);

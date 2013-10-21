@@ -73,6 +73,6 @@ public class SplitMenuButtonWrap<CONTROL extends SplitMenuButton> extends MenuBu
 
     @Override
     protected void invokeExpandOrCollapseAction() {
-        Root.ROOT.getThemeFactory().splitMenuButtonExpandCollapseAction(this);
+        ThemeDriverFactory.getThemeFactory().splitMenuButtonExpandCollapseAction(this);
     }
 }

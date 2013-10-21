@@ -73,9 +73,14 @@ public class TableCellItemWrap<DATA extends Object> extends ItemWrap<DATA> imple
      * @param cellItem
      * @param tableViewWrap
      */
-    public TableCellItemWrap(TableViewWrap<? extends TableView> tableViewWrap, 
+    public TableCellItemWrap(TableViewWrap<? extends TableView> tableViewWrap,
             int row, TableColumn column, DATA cellItem, CellEditor<? super DATA> editor) {
-        super(new Point(tableViewWrap.getColumns().indexOf(column), row), cellItem, tableViewWrap, editor);
+        this(tableViewWrap, null, row, column, cellItem, editor);
+    }
+
+    public TableCellItemWrap(TableViewWrap<? extends TableView> tableViewWrap, Class<DATA> dataClass,
+            int row, TableColumn column, DATA cellItem, CellEditor<? super DATA> editor) {
+        super(dataClass, new Point(tableViewWrap.getDataColumns().indexOf(column), row), cellItem, tableViewWrap, editor);
         this.tableViewWrap = tableViewWrap;
         this.row = row;
         this.column = column;
@@ -106,7 +111,7 @@ public class TableCellItemWrap<DATA extends Object> extends ItemWrap<DATA> imple
 
     @Override
     public void show() {
-        tableViewWrap.scrollTo(row, tableViewWrap.getColumns().indexOf(column));
+        tableViewWrap.scrollTo(row, tableViewWrap.getDataColumns().indexOf(column));
     }
 
     /**

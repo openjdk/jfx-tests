@@ -63,7 +63,7 @@ public class ListViewEventsTest extends EventTestCommon<ListViewDock>
                 ControlEventsApp.CONTROL_ID);
     }
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onEditStart()
     {
         test(ControlEventsApp.EventTypes.LIST_VIEW_EDIT_START_EVENT, new Command() {
@@ -77,7 +77,7 @@ public class ListViewEventsTest extends EventTestCommon<ListViewDock>
         });
     }
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onEditCommit()
     {
         test(ControlEventsApp.EventTypes.LIST_VIEW_EDIT_COMMIT_EVENT, new Command() {
@@ -99,7 +99,7 @@ public class ListViewEventsTest extends EventTestCommon<ListViewDock>
         });
     }
     
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onEditCancel()
     {
         test(ControlEventsApp.EventTypes.LIST_VIEW_EDIT_CANCEL_EVENT, new Command() {

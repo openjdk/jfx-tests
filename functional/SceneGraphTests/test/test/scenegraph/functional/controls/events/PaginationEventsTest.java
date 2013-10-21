@@ -67,7 +67,7 @@ public class PaginationEventsTest extends EventTestCommon<ControlDock>
      * action event.
      */
     @Override
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onAction()
     {
         test(ControlEventsApp.EventTypes.ACTION, new Command() {

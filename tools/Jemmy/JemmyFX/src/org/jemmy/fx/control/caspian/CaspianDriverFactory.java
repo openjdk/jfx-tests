@@ -27,21 +27,26 @@ package org.jemmy.fx.control.caspian;
 import com.sun.javafx.scene.control.skin.ScrollBarSkin;
 import com.sun.javafx.scene.control.skin.SliderSkin;
 import javafx.scene.Node;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitMenuButton;
+import org.jemmy.JemmyException;
 import org.jemmy.action.Action;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.NodeWrap;
+import org.jemmy.fx.control.ColorPickerWrap;
 import org.jemmy.fx.control.ComboBoxWrap;
 import org.jemmy.fx.control.MenuBarWrap;
 import org.jemmy.fx.control.SplitMenuButtonWrap;
 import org.jemmy.fx.control.ThemeDriverFactory;
 import org.jemmy.fx.control.TreeNodeWrap;
+import org.jemmy.fx.control.TreeTableItemWrap;
+import org.jemmy.interfaces.Editor;
 import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Parent;
@@ -52,10 +57,10 @@ import org.jemmy.timing.State;
 
 /**
  * Defines control behaviour for Caspian theme.
- * 
+ *
  * Ported from the project JemmyFX, original class 
  * is   org.jemmy.fx.control.caspian.CaspianDriverFactory
- * 
+ *
  * @author shura
  */
 public class CaspianDriverFactory extends ThemeDriverFactory {
@@ -121,11 +126,14 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
     }
 
     @Override
-    public <T> org.jemmy.fx.control.caspian.TreeItem treeItem(Wrap<T> wrap) {
+    public <T> org.jemmy.interfaces.TreeItem treeItem(Wrap<T> wrap, Wrap parentControlWrap) {
         if (wrap instanceof TreeNodeWrap) {
-            return new org.jemmy.fx.control.caspian.TreeItem((TreeNodeWrap)wrap);
+            return new org.jemmy.fx.control.caspian.TreeItem((TreeNodeWrap) wrap, parentControlWrap);
         }
-        return null;
+        if (wrap instanceof TreeTableItemWrap) {
+            return new org.jemmy.fx.control.caspian.TreeTableItem((TreeTableItemWrap) wrap, parentControlWrap);
+        }
+        throw new JemmyException("Unknown type of parameter.");
     }
 
     @Override
@@ -173,21 +181,32 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
         wrap.asParent().lookup(Node.class, new ByStyleClass<Node>("arrow-button")).wrap().mouse().click();
     }
 
+    @Override
+    public Editor colorEditor(final ColorPickerWrap<? extends ColorPicker> colorPickerWrap) {
+        return new ColorEditorImpl(colorPickerWrap);
+    }
+
     abstract class NodeFocus implements Focus {
+
         NodeWrap nodeWrap;
+
         public NodeFocus(NodeWrap nodeWrap) {
             this.nodeWrap = nodeWrap;
         }
+
+        @Override
         public void focus() {
             if (!nodeWrap.isFocused()) {
                 activate();
             }
             nodeWrap.waitState(new State<Boolean>() {
+                @Override
                 public Boolean reached() {
                     return nodeWrap.isFocused();
                 }
             }, true);
         }
+
         abstract protected void activate();
     }
 

@@ -28,6 +28,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import org.jemmy.control.DefaultWrapper;
@@ -42,6 +44,7 @@ import org.jemmy.fx.control.*;
  *
  * @author shura
  */
+@Deprecated
 public class NodeWrapper extends DefaultWrapper {
 
     private static final List<Class<? extends Wrap>> OPERATORS = new ArrayList<Class<? extends Wrap>>();
@@ -64,6 +67,7 @@ public class NodeWrapper extends DefaultWrapper {
         OPERATORS.add(ChoiceBoxWrap.class);
         OPERATORS.add(ComboBoxWrap.class);
         OPERATORS.add(TreeViewWrap.class);
+        OPERATORS.add(TreeTableViewWrap.class);
         OPERATORS.add(TabPaneWrap.class);
         OPERATORS.add(TableViewWrap.class);
         OPERATORS.add(TableCellWrap.class);
@@ -71,8 +75,8 @@ public class NodeWrapper extends DefaultWrapper {
         OPERATORS.add(SeparatorWrap.class);
         OPERATORS.add(TitledPaneWrap.class);
         OPERATORS.add(AccordionWrap.class);
-        //TODO this needs to be rewritten with the API either from profiles or jigsaw
-        if(Root.checkClassPresence("org.w3c.dom.Node")){
+        OPERATORS.add(ColorPickerWrap.class);
+        if(Platform.isSupported(ConditionalFeature.WEB)){
             OPERATORS.add(WebViewWrap.class);
             OPERATORS.add(WebNodeWrap.class);
         }

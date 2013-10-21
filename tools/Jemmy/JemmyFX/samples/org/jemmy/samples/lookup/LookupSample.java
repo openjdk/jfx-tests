@@ -24,6 +24,10 @@
  */
 package org.jemmy.samples.lookup;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import org.jemmy.TimeoutExpiredException;
@@ -166,5 +170,10 @@ public class LookupSample extends LookupSampleBase {
         } catch (TimeoutExpiredException e) {
             //expected
         }
+    }
+    
+    @Test
+    public void dump() throws FileNotFoundException {
+        new SceneDock().asParent().lookup().dump(new PrintStream(new FileOutputStream(System.getProperty("user.dir") + File.separator + "scene.dump")));
     }
 }

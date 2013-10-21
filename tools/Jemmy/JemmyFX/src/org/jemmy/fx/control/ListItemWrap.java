@@ -31,17 +31,19 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.util.Callback;
+import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.*;
 import org.jemmy.dock.DockInfo;
-import org.jemmy.fx.NodeWrap;
 import org.jemmy.fx.Utils;
 import org.jemmy.fx.WindowElement;
+import static org.jemmy.fx.control.TableUtils.getClickPoint;
 import org.jemmy.input.AbstractScroll;
-import org.jemmy.interfaces.Caret.Direction;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.interfaces.*;
@@ -71,7 +73,11 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
      * @param listViewWrap
      */
     public ListItemWrap(DATA data, int index, ListViewWrap<? extends ListView> listViewWrap, CellEditor<? super DATA> editor) {
-        super(index, data, listViewWrap, editor);
+        this(null, data, index, listViewWrap, editor);
+    }
+
+    public ListItemWrap(Class<DATA> dataClass, DATA data, int index, ListViewWrap<? extends ListView> listViewWrap, CellEditor<? super DATA> editor) {
+        super(dataClass, index, data, listViewWrap, editor);
         this.listViewWrap = listViewWrap;
         wElement = new ViewElement<ListView>(ListView.class, listViewWrap.getControl());
     }
@@ -93,6 +99,11 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
     }
 
     @Override
+    public Point getClickPoint() {
+        return TableUtils.getClickPoint(listViewWrap, this);
+    }    
+    
+    @Override
     public Rectangle getScreenBounds() {
         return cellWrap().getScreenBounds();
     }
@@ -106,72 +117,15 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
     public void show() {
         final List<DATA> items = listViewWrap.getItems();
 
-        final long desiredIndex = new GetAction<Long>() {
-
-            @Override
-            public void run(Object... parameters) {
-                int len = items.size();
-
-                for (int i = 0; i < len; i++) {
-                    if (getControl().equals(items.get(i))) {
-                        setResult((long) i);
-                        return;
-                    }
-                }
-            }
-        }.dispatch(getEnvironment());
-
         AbstractScroll scroll1 = Utils.getContainerScroll(listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() == Orientation.VERTICAL);
         if (scroll1 != null) {
-            Caret c = scroll1.caret();
-            Direction direction = new Direction() {
-
-                /**
-                 * @return < 0 to scroll toward decreasing value, > 0 - vice
-                 * versa 0 to stop scrolling NOTE - see implementation
-                 * KnobDragScrollerImpl.to(Direction) which is used in
-                 * ScrollBarWrap better to return constant values (-1 || 0 ||
-                 * +1) to get smooth dragging
-                 */
+            TableUtils.scrollToInSingleDimension((Wrap<? extends Control>) viewWrap, ListCell.class, new Callback<ListCell, Integer>() {
                 @Override
-                public int to() {
-                    final int[] minmax = new int[]{listViewWrap.as(Selectable.class, Object.class).getStates().size(), -1}; //minmax[0] - the least index of visible element. minmax[1] - the most index. 
-                    final List items = listViewWrap.getItems();
-                    listViewWrap.as(Parent.class, Node.class).lookup(ListCell.class,
-                            new LookupCriteria<ListCell>() {
-
-                                public boolean check(ListCell control) {
-                                    int index = items.indexOf(control.getItem());
-                                    if (NodeWrap.isInBounds(getClippedContainerWrap().getControl(), control, getEnvironment(), listViewWrap.getControl().getOrientation() == Orientation.VERTICAL)) {
-                                        if (index >= 0) {
-                                            if (index < minmax[0]) {
-                                                minmax[0] = index;
-                                                //} else if (index > minmax[1]) {//doesn't work, if we have 1 element in list. So rewrite:
-                                            }
-                                            if (index > minmax[1]) {
-                                                minmax[1] = index;
-                                            }
-                                        }
-                                    }
-                                    return true;
-                                }
-                            }).size();
-                    int index = items.indexOf(getControl());
-                    if (index < minmax[0]) {
-                        return -1;
-                    } else if (index > minmax[1]) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
+                public Integer call(ListCell p) {
+                    return items.indexOf(p.getItem());
                 }
-
-                @Override
-                public String toString() {
-                    return "'" + getControl() + "' state at index " + desiredIndex;
-                }
-            };
-            c.to(direction);
+            }, listViewWrap.getItems().indexOf(getControl()), 
+            scroll1.caret(), listViewWrap.vertical());
         }
         AbstractScroll scroll2 = Utils.getContainerScroll(listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() != Orientation.VERTICAL);
         Utils.makeCenterVisible(getClippedContainerWrap(), this, scroll2);

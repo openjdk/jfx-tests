@@ -28,7 +28,6 @@ import javafx.scene.Scene;
 import org.jemmy.action.ActionExecutor;
 import org.jemmy.control.Wrapper;
 import org.jemmy.env.Environment;
-import org.jemmy.fx.control.ThemeDriverFactory;
 import org.jemmy.image.*;
 import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import org.jemmy.image.pixel.RasterComparator;
@@ -73,21 +72,6 @@ public class Root extends AbstractParent<Scene> {
     }
 
     /**
-     * @param className - name of the class to lookup
-     * @return true if class is presented otherwise false
-     */
-    public static boolean checkClassPresence(String className){
-        boolean result = true;
-        try {
-            Class.forName(className);
-        } catch (ClassNotFoundException ex) {
-            result = false;
-        } finally {
-            return result;
-        }
-    }
-
-    /**
      * Use AWT robot for user input simulation.
      * @param env
      */
@@ -100,18 +84,28 @@ public class Root extends AbstractParent<Scene> {
 
     private Root() {
         this.env = new Environment(Environment.getEnvironment());
-        this.env.setPropertyIfNotSet(RasterComparator.class, new PixelEqualityRasterComparator(0));
         String osName = System.getProperty("os.name").toLowerCase();
+        String runtimeName = System.getProperty("java.runtime.name");
+        boolean isEmbedded = runtimeName != null && runtimeName.toLowerCase().contains("embedded");
+        Environment.getEnvironment().setPropertyIfNotSet(RasterComparator.class, new PixelEqualityRasterComparator(0));
         //TODO this needs to be rewritten with the API either from profiles or jigsaw
-        if( ( osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os") ) && checkClassPresence("java.awt.Component")) {
+        
+        String robotType = (String) env.getProperty("javafx.robot");
+        if ( "glass".equals(robotType) ) {
+            useGlassRobot(this.env);
+        } else if ( "awt".equals(robotType) ) {    
+            useAWTRobot(env);
+        } else if( ( osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os") ) && !isEmbedded) {
             useAWTRobot(env);
         } else {
             useGlassRobot(this.env);
         }
         this.env.setProperty(ActionExecutor.class, QueueExecutor.EXECUTOR);
-        this.env.setPropertyIfNotSet(ThemeDriverFactory.class, ThemeDriverFactory.newInstance());
         this.env.initTimeout(QueueExecutor.QUEUE_THROUGH_TIME);
         this.env.initTimeout(QueueExecutor.QUEUE_IDENTIFYING_TIMEOUT);
+        
+        GlassInputFactory.setInitEnvironment(env);
+        GlassImageCapturer.setInitEnvironment(env);
 
         wrapper = new SceneWrapper(env);
         scenes = new SceneList();
@@ -130,22 +124,6 @@ public class Root extends AbstractParent<Scene> {
      */
     public Environment getEnvironment() {
         return env;
-    }
-
-    /**
-     * @param factory
-     * @return
-     */
-    public ThemeDriverFactory setThemeFactory(ThemeDriverFactory factory) {
-        return (ThemeDriverFactory) env.setProperty(ThemeDriverFactory.class, factory);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public ThemeDriverFactory getThemeFactory() {
-        return (ThemeDriverFactory) env.getProperty(ThemeDriverFactory.class);
     }
 
     public <ST extends Scene> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {

@@ -61,7 +61,7 @@ public class ComboBoxEventsTest extends EventTestHidingPopup<ComboBoxDock>
     }
     
     @Override
-    @Test(timeout = 30000)
+    @Test(timeout = 60000)
     public void onAction()
     {
         test(EventTypes.ACTION, new Command() {

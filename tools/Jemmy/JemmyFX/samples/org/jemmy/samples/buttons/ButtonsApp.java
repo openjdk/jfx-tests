@@ -85,7 +85,7 @@ public class ButtonsApp extends Application {
         RadioButton radio3 = new RadioButton("radio3");
         radio3.setToggleGroup(group);
         radio3.setOnAction(radioHandler);
-        HBox radios = new HBox();
+        HBox radios = new HBox(20);
         radios.getChildren().addAll(radio1, radio2, radio3);
         ToggleButton toggle1 = new ToggleButton("toggle1");
         toggle1.setToggleGroup(group);
@@ -96,9 +96,9 @@ public class ButtonsApp extends Application {
         ToggleButton toggle3 = new ToggleButton("toggle3");
         toggle3.setToggleGroup(group);
         toggle3.setOnAction(radioHandler);
-        HBox toggles = new HBox();
+        HBox toggles = new HBox(20);
         toggles.getChildren().addAll(toggle1, toggle2, toggle3);
-        VBox content = new VBox();
+        VBox content = new VBox(20);
         content.getChildren().addAll(btn, twoState, triState, radios, toggles);
         content.getChildren().add(status);
         stage.setScene(new Scene(content));

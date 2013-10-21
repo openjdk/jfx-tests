@@ -23,13 +23,10 @@
  */
 package test.scenegraph.lcd.transparency;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
 import org.jemmy.Dimension;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.ControlDock;
-import org.jemmy.image.AWTImage;
 import org.jemmy.image.GlassImage;
 import org.jemmy.image.Image;
 import org.jemmy.image.pixel.Raster;
@@ -132,39 +129,37 @@ public class TransparencyLCDTestBase {
     }
     
     private int getGreenFromTheMiddleOfIndicator(NodeDock indicator) {
-        
+
         assertTrue(indicator != null);
 
         int greenComponentValue = -1;
-                    
+
         Image image = indicator.wrap().getScreenImage();
-        if (image instanceof AWTImage) {
-
-            BufferedImage bufferedImage = ((AWTImage)image).getTheImage();
-            
-            Color color = new Color(bufferedImage.getRGB(
-                    bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2));
-            
-            greenComponentValue = color.getGreen();
-
-        } else if (image instanceof GlassImage) {
+        if (image instanceof GlassImage) {
 
             GlassImage glassImage = ((GlassImage)image);
-            
+
             Component[] supportedComponents = glassImage.getSupported();
             int idxGreen = asList(supportedComponents).indexOf(Raster.Component.GREEN);
             int compCount = supportedComponents.length;
-            
+
             double[] colors = new double[compCount];
             Dimension size = glassImage.getSize();
             glassImage.getColors(size.width / 2, size.height / 2, colors);
 
             greenComponentValue = (int)(colors[idxGreen] * 0xFF);
 
+        } else if (image instanceof org.jemmy.image.AWTImage) {
+                        
+            int rgb = ((org.jemmy.image.AWTImage)image).getTheImage().getRGB(
+                    ((org.jemmy.image.AWTImage)image).getTheImage().getWidth() / 2, ((org.jemmy.image.AWTImage)image).getTheImage().getHeight() / 2);
+
+            greenComponentValue = (rgb >> 8) & 0xFF;
+
         } else {
             Assert.fail("Unknown image type: " + image.getClass().getName());
         }
-        
+
         return greenComponentValue;
      }
 }

@@ -38,6 +38,6 @@ public class ReadImageBlueTest extends ReadImageTestBase{
 
     @Override
     protected Image getImage() {
-        return new Image(getColorComponentProvider().getGoldImagePath());
+        return new Image(getColorComponentProvider().getGoldImageInputStream());
     }
 }
