@@ -493,7 +493,6 @@ public class FontsApp extends BasicButtonChooserApp {
             }
         });
         return root;
-
     }
 
     public static void main(String args[]) {
