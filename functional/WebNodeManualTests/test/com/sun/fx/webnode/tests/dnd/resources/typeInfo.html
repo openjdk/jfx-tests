@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="draggable.css"/>
+        <script src="functions.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <h3>Test for data types and values contained in dataTransfer object</h3>
+        <ol>
+            <li><span draggable="true" class="draggable" ondragstart="event.dataTransfer.setData('text/plain', 'Test');">text/plain, value: Test</span></li>
+            <li><span draggable="true" class="draggable" ondragstart="event.dataTransfer.setData('test/x-test', 'XTest');">test/x-test, value: XTest</span></li>
+            <li><span draggable="true" class="draggable"
+                      ondragstart="event.dataTransfer.setData('text/plain', 'Test'); event.dataTransfer.setData('test/x-test', 'XTest');">
+                text/plain, value: Test; test/x-test, value: XTest</span></li>
+            <li><img src="tinker.jpg"/> &lt;- image</li>
+            <li><span draggable="true" class="draggable" ondragstart="event.dataTransfer.setData('text/plain', 'Test');">text/plain, value: Test <img src="tinker.jpg"/></span></li>
+            <li><a href="dummy.html">Link to dummy page</a></li>
+            <li>For this case, please drag a file from your OS into drop area.</li>
+            <li>For this case, please drag something else from your OS into drop area :)</li>
+        </ol>
+        <div class="droparea"
+             ondrop="event.preventDefault(); dropMIMEInfo(event);"
+             ondragover="event.preventDefault();"
+             ondragenter="event.preventDefault();">Drop area</div>
+        <div id="info"></div>
+    </body>
+</html>

@@ -24,10 +24,9 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.control.CheckBox;
 import org.jemmy.JemmyException;
+import org.jemmy.action.FutureAction;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.*;
 import org.jemmy.env.Environment;
@@ -39,8 +38,10 @@ import org.jemmy.interfaces.Selector;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @param <T>
  * @author Shura
  */
@@ -55,17 +56,8 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
 
     @Override
     public List<State> getStates() {
-        return new GetAction<List<State>>() {
+        return new FutureAction<>(getEnvironment(),() -> getControl().isAllowIndeterminate() ? triStates : twoStates).get();
 
-            @Override
-            public void run(Object... parameters) {
-                if (getControl().isAllowIndeterminate()) {
-                    setResult(triStates);
-                } else {
-                    setResult(twoStates);
-                }
-            }
-        }.dispatch(getEnvironment());
     }
 
     @Override
@@ -95,7 +87,8 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
          *
          */
         UNDEFINED
-    };
+    }
+
     final static List<Boolean> booleanStates;
     private final static List<State> twoStates;
     private final static List<State> triStates;
@@ -122,48 +115,40 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
             return Boolean.class;
         }
     };
-    private Selector<Boolean> booleanSelector = new Selector<Boolean>() {
-
-        @Override
-        public void select(Boolean state) {
-            stateSelector.select(state ? State.CHECKED : State.UNCHECKED);
-        }
-    };
+    private Selector<Boolean> booleanSelector = state -> stateSelector.select(state ? State.CHECKED : State.UNCHECKED);
 
     static {
-        booleanStates = new ArrayList<Boolean>();
+        booleanStates = new ArrayList<>();
         booleanStates.add(false);
         booleanStates.add(true);
-        twoStates = new ArrayList<State>();
+        twoStates = new ArrayList<>();
         twoStates.add(State.UNCHECKED);
         twoStates.add(State.CHECKED);
-        triStates = new ArrayList<State>();
+        triStates = new ArrayList<>();
         triStates.add(State.UNCHECKED);
         triStates.add(State.UNDEFINED);
         triStates.add(State.CHECKED);
     }
 
     /**
-     *
-     * @param scene
-     * @param nd
+     * @param env
+     * @param node
      */
     public CheckBoxWrap(Environment env, T node) {
         super(env, node);
     }
 
     public static CheckBoxWrap<CheckBox> find(NodeParent parent, LookupCriteria<CheckBox> criteria) {
-        return new CheckBoxWrap<CheckBox>(parent.getEnvironment(),
+        return new CheckBoxWrap<>(parent.getEnvironment(),
                 parent.getParent().lookup(CheckBox.class, criteria).get());
     }
 
     public static CheckBoxWrap<CheckBox> find(NodeParent parent, String text) {
-        return find(parent, new ByText<CheckBox>(text, (StringComparePolicy) parent.getEnvironment().
+        return find(parent, new ByText<>(text, (StringComparePolicy) parent.getEnvironment().
                 getProperty(Root.LOOKUP_STRING_COMPARISON, StringComparePolicy.EXACT)));
     }
 
     /**
-     *
      * @param box
      * @return
      */
@@ -176,7 +161,6 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
     }
 
     /**
-     *
      * @return
      */
     @Property(SELECTED_PROP_NAME)
@@ -197,7 +181,6 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
     }
 
     /**
-     *
      * @return
      */
     @Property(IS_TRI_STATE_PROP_NAME)

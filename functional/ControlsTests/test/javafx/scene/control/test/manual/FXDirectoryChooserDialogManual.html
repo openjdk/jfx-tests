@@ -1,0 +1,79 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h2>Directory chooser manual test</h2>
+
+        <h3>Description</h3>
+
+        JavaFX provide common access to native file and directory choosers. 
+        Directory chooser allows to select a single directory. We will test it.
+
+        <h3>Note</h3>
+
+        There is a "No errors" label in the bottom of the scene. If any error 
+        happens, in the place of this label will be shown an indication about 
+        error, and error will be printed into error output. Please, check this 
+        label, on each step, and fail the test, if you see any exception.
+
+        <h3>Step 1: Open/close case.</h3>
+        <ul><li>Press "Open Dir FX" button to see the directory chooser.</li>
+            <li>Close directory chooser.</li>
+            <li>Check that there are no exceptions, everything works fine,
+                "no dir choosen" changed to message about "null" file.</li>
+        </ul>
+
+        <h3>Step 2: Directory choosing.</h3>
+        <ul><li>Open directory chooser via "Open Dir FX" button.</li>
+            <li>Select any folder you like. And press select.</li>
+            <li>Check that there are no exceptions, everything works fine,
+                result points to the directory you've selected.</li>
+        </ul>
+
+        <h3>Step 3: Selecting of typed in folder name.</h3>
+        <ul><li>Open directory chooser via "Open Dir FX" button.</li>
+            <li>Type name of any folder, which you see in shown area (or 
+                navigate to any location, where folders are present) 
+                in an according field. And press select.</li>
+            <li>Check that there are no exceptions, everything works fine,
+                result points to the directory you've selected.</li>
+        </ul>
+
+        <h3>Step 4: Title property checking.</h3>
+        Directory chooser can have a specified title.
+        <ul><li>Print "Custom title" in a text field for Title.</li>
+            <li>Open directory chooser via "Open Dir FX" button.</li>
+            <li>Check that that title of opened window is "Custom title" (if applicable).</li>
+            <li>Close dialog, and check, that there are no errors.</li>
+        </ul>
+    </body>
+</html>

@@ -23,6 +23,7 @@
  */
 package test.scenegraph.manual;
 
+import client.test.Keywords;
 import client.test.RunUI;
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import com.oracle.jdk.sqe.cc.markup.Covers.Level;
@@ -42,9 +43,10 @@ public class TestText extends TestBase {
 
     @RunUI
     @BeforeClass
+    @Keywords(keywords = "manual_embedded")
     public static void runUI() {
         TestTextApp.main(null);
-        
+
         Root.ROOT.getEnvironment().setOutput(AbstractExecutor.NON_QUEUE_ACTION_OUTPUT, TestOut.getNullOutput());
     }
 }

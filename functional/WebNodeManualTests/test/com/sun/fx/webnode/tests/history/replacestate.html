@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h3>Testing history.replaceState()</h3>
+        <ol>
+            <li>Check that:<br/>
+                Current state is null<br/>
+                Current location ends with "?page=3"<br/>
+            </li>
+            <li>
+                Click "Go back" button. Check that:<br/>
+                Current state is: {"page":1}<br/>
+                Current location ends with "?page=1"<br/>
+            </li>
+            <li>
+                Click "Go back" button. Check that:<br/>
+                Current state is null<br/>
+                Current location ends with "replacestate.html"<br/>
+            </li>
+            <li>
+                Click "Go forward" button. Check that:<br/>
+                Current state is: {"page":1}<br/>
+                Current location ends with "?page=1"<br/>
+            </li>
+            <li>
+                Click "Go forward" button. Check that:<br/>
+                Current state is: {"page":3}<br/>
+                Current location ends with "?page=3"<br/>
+            </li>
+        </ol>
+        If all steps are successful, the test passes.
+    </body>
+</html>

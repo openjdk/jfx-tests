@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="draggable.css"/>
+    </head>
+    <body>
+        <h3>Test for setting drag image and its offset</h3>
+        <ol>
+            <li><span draggable="true" class="draggable"
+              ondragstart="event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.setDragImage(document.getElementById('image'), 0, 0)">Drag this</span></li>
+            <li><span draggable="true" class="draggable"
+              ondragstart="event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.setDragImage(document.getElementById('image'), 100, 100)">Drag this</span></li>
+            <li><span draggable="true" class="draggable"
+              ondragstart="event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.setDragImage(document.getElementById('image'), -100, -100)">Drag this</span></li>
+        </ol>
+        <img src="square.png" id="image"/>
+    </body>
+</html>

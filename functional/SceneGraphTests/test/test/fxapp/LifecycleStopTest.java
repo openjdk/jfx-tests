@@ -51,7 +51,7 @@ public class LifecycleStopTest extends TestBase {
         Assert.assertFalse(LifecycleApp.status.start == -1);
         Assert.assertFalse(LifecycleApp.status.init == -1);
         Assert.assertTrue(LifecycleApp.status.stop == -1);
-        final Wrap<? extends Button> closeBtn = Lookups.byText(scene, "close", Button.class);
+        final Wrap<? extends Button> closeBtn = Lookups.byText(getScene(), "close", Button.class);
         closeBtn.mouse().move();
         closeBtn.mouse().click();
 

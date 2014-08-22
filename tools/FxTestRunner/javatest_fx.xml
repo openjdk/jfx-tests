@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/*
+ * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ */
+-->
+<project name="javatest_utility_entities" default="default" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
+
+    <target name="dojavatest" depends="check-compiled,init-test-basedir">
+        <makejtt testmode="testsuite"/> <!-- aka manual -->
+        <run-javatest testmode="testsuite"/>
+    </target>
+
+    <target name="javatest-automated" depends="check-compiled,copy-and-edit-jtt,init-test-basedir,prepare-policy-file">
+        <property name="javatest.mode.batch" value="false"/>
+
+        <echo message="Tests will be run in UI mode. For batch mode use flag -Djavatest.mode.batch=true"  />
+        <run-javatest testmode="automated"/>
+<!--        <antcall target="cleanup-policy-file"/> -->
+    </target>
+
+    <target name="copy-and-edit-jtt" unless="testbase.readonly"> 
+        <!-- and if testbase.readonly we should have jtt already in place, see -post-compile target -->
+        <makejtt testmode="automated"/>
+    </target>
+    <target name="init-test-basedir">
+        <property name="fxtest.basedir" value="${external.output}/${application.title}/build" /> 
+    </target>
+
+    <macrodef name="makejtt">
+        <attribute name="testmode"/>
+        <sequential>
+            <!-- copy jtt -->
+            <copy overwrite="true" file="${basedir}/javatest_files/@{testmode}.jtt" tofile="${basedir}/${test.sources}/testsuite.jtt" />
+            <replace file="${basedir}/${test.sources}/testsuite.jtt"
+                     token="_CLASSPATH_"
+                     value=""/>
+        </sequential>
+    </macrodef>
+
+    <target name="check-compiled" depends="init">
+        <!-- check that the project compiled already -->
+        <available file="${build.test.classes.dir}" type="dir" property="compiled"/>
+        <fail message="Project ${basedir} is not compiled" unless="compiled"/>
+    </target>
+
+
+
+
+</project>

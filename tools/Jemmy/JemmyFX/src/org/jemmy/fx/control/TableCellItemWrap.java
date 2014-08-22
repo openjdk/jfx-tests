@@ -59,7 +59,7 @@ public class TableCellItemWrap<DATA extends Object> extends ItemWrap<DATA> imple
 
     @ObjectLookup("cell coordinates")
     public static <T> LookupCriteria<T> byCoords(Class<T> type, int row, int column) {
-        return new TableCellItemParent.ByPoint<T>(column, row);
+        return new TableCellItemParent.ByPoint<>(column, row);
     }
     
     private TableViewWrap<? extends TableView> tableViewWrap;
@@ -84,7 +84,7 @@ public class TableCellItemWrap<DATA extends Object> extends ItemWrap<DATA> imple
         this.tableViewWrap = tableViewWrap;
         this.row = row;
         this.column = column;
-        wElement = new ViewElement<TableView>(TableView.class, tableViewWrap.getControl());
+        wElement = new ViewElement<>(TableView.class, tableViewWrap.getControl());
     }
 
     @Property(ITEM_PROP_NAME)

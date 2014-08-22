@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+            var worker = new SharedWorker('sharedWorker1.js');
+            worker.port.addEventListener('message', function(event) {
+                document.getElementById("result").innerHTML = event.data;
+            }, false);
+            worker.port.start();
+            worker.postMessage("Poke!");
+        </script>
+    </head>
+    <body>
+        <div id="result"></div>
+    </body>
+</html>

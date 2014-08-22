@@ -32,8 +32,6 @@ package test.scenegraph.binding.controls;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import test.scenegraph.binding.*;
-import com.oracle.jdk.sqe.cc.markup.Covers;
-import com.oracle.jdk.sqe.cc.markup.Covers.Level;
 
 public class TableViewTest extends BindingTestBase {
     @BeforeClass
@@ -44,14 +42,6 @@ public class TableViewTest extends BindingTestBase {
 
     public static void main(String[] args) {
         runUI();
-    }
-
-    /**
-    * This test verifies selectionModel property for controls.TableView
-    */
-    @Test
-    public void selectionModel() {
-        commonTest(ObjectConstraints.selectionModel);
     }
 
     /**

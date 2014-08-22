@@ -1,0 +1,11 @@
+/* 
+    Document   : minwidth
+    Created on : Jul 5, 2012, 6:30:36 PM
+    Author     : javafx
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.web-view {
+    -fx-min-width: 400;
+}

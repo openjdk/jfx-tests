@@ -1,0 +1,35 @@
+#JT Harness Configuration Interview
+#Tagged (@) values here will be set in 3 steps to support inheritance:
+# 1. from SUITE/javatest_files/automated.jti.base file
+# 2. from ClientTestRunner/javatest_base/automated.jti.base
+# 3. by values setup in ClientTestRunner/javatest_utils.xml
+INTERVIEW=@INTERVIEW@
+LOCALE=en_US
+NAME=default
+QUESTION=epilog
+TESTSUITE=@TESTSUITE@
+WORKDIR=@WORKDIR@
+concurrency.concurrency=1
+excludeList.latestAutoCheck=No
+excludeList.latestAutoCheckInterval=7
+excludeList.latestAutoCheckMode=everyXDays
+excludeList.needExcludeList=No
+javafx=@javafx.home@
+toolkit=default
+pipelineGroup=@pipelineGroup@
+pipeline=
+keywords.keywords.mode=expr
+keywords.needKeywords=No
+name=default
+priorStatus.needStatus=No
+priorStatus.status=
+tests.needTests=No
+tests.tests=
+tests.treeOrFile=tree
+timeout.timeout=@timeout.timeout@
+runmode=desktop
+external.output=@external.output@
+vmOptions=@vmOptions@
+remote=@remote@
+@javaPath=@
+dryrun=@dryrun@

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<ImageView xmlns:fx="http://javafx.com/fxml">
+        <Image url="@java.png"/>
+</ImageView>
+
+
+

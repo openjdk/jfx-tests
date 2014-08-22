@@ -24,8 +24,6 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.control.TreeItem;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
@@ -33,9 +31,11 @@ import org.jemmy.env.Environment;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
-import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
 import org.jemmy.timing.Waiter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Alexander Kirov
@@ -71,7 +71,7 @@ abstract class TreeSelectable<T> implements Selectable<T>, Selector<T> {
         return new GetAction<ArrayList<T>>() {
             @Override
             public void run(Object... parameters) {
-                ArrayList<T> list = new ArrayList<T>();
+                ArrayList<T> list = new ArrayList<>();
                 getAllNodes(list, getRoot());
                 setResult(list); // TODO: stub
             }
@@ -129,14 +129,11 @@ abstract class TreeSelectable<T> implements Selectable<T>, Selector<T> {
     @Override
     @SuppressWarnings("unchecked")
     public void select(final T state) {
-        Wrap<? extends TreeItem> cellItem = asTreeItemParent().lookup(new LookupCriteria<TreeItem>() {
-            @Override
-            public boolean check(TreeItem control) {
+        Wrap<? extends TreeItem> cellItem = asTreeItemParent().lookup(control -> {
                 if (type.isAssignableFrom(TreeItem.class)) {
-                    return control.equals(state);
-                } else {
-                    return control.getValue().equals(state);
-                }
+                return control.equals(state);
+            } else {
+                return control.getValue().equals(state);
             }
         }).wrap(0);
         cellItem.mouse().click();

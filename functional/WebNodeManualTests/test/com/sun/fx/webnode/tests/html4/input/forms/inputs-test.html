@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Input test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        th, td {
+            padding: 0.5em;
+        }
+    </style>
+  </head>
+  <body>
+      <h3>Input controls</h3>
+      <h4>Overall controls</h4>
+      <form style="padding: 0.5em;">
+          Check that the controls in all columns render properly with no artifacts.<br/>
+          Also check that disabled controls cannot be activated, and the contents of the read only controls cannot be changed.<br/>
+          <table>
+              <thead>
+                  <tr>
+                      <th>Control name</th>
+                      <th>Normal state</th>
+                      <th>Readonly state</th>
+                      <th>Disabled state</th>
+                      <th>Zero size</th>
+                      <th>Negative size</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>Text</td>
+                      <td><input type="text" value="I am text"/></td>
+                      <td><input type="text" value="I am text" readonly=""/></td>
+                      <td><input type="text" value="I am text" disabled=""/></td>
+                      <td><input type="text" value="I am text" style="width: 0px; height: 0px"/></td>
+                      <td><input type="text" value="I am text" style="width: -1px; height: -1px"/></td>
+                  </tr>
+                  <tr>
+                      <td>Password</td>
+                      <td><input type="password" value="I am password"/></td>
+                      <td><input type="password" value="I am password" readonly=""/></td>
+                      <td><input type="password" value="I am password" disabled=""/></td>
+                      <td><input type="password" value="I am password" style="width: 0px; height: 0px"/></td>
+                      <td><input type="password" value="I am password" style="width: -1px; height: -1px"/></td>
+                  </tr>
+                  <tr>
+                      <td>Checkbox</td>
+                      <td>
+                          Unchecked: <input type="checkbox"/><br/>
+                          Checked: <input type="checkbox" checked=""/><br/>
+                      </td>
+                      <td>
+                          N/A
+                      </td>
+                      <td>
+                          Unchecked: <input type="checkbox" disabled=""/><br/>
+                          Checked: <input type="checkbox" checked="" disabled=""/><br/>
+                      </td>
+                      <td>
+                          Unchecked: <input type="checkbox" style="width: 0px; height: 0px"/><br/>
+                          Checked: <input type="checkbox" checked="" style="width: 0px; height: 0px"/><br/>
+                      </td>
+                      <td>
+                          Unchecked: <input type="checkbox" style="width: -1px; height: -1px"/><br/>
+                          Checked: <input type="checkbox" checked="" style="width: -1px; height: -1px"/><br/>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>Radio</td>
+                      <td>
+                          Radio 1: <input type="radio" name="radio1"/><br/>
+                          Radio 2: <input type="radio" name="radio1" checked=""/><br/>
+                          Radio 3: <input type="radio" name="radio1"/><br/>
+                      </td>
+                      <td>
+                          N/A
+                      </td>
+                      <td>
+                          Radio 1: <input type="radio" name="radio3" disabled=""/><br/>
+                          Radio 2: <input type="radio" name="radio3" checked="" disabled=""/><br/>
+                          Radio 3: <input type="radio" name="radio3" disabled=""/><br/>
+                      </td>
+                      <td>
+                          Radio 1: <input type="radio" name="radio4" style="width: 0px; height: 0px"/><br/>
+                          Radio 2: <input type="radio" name="radio4" checked="" style="width: 0px; height: 0px"/><br/>
+                          Radio 3: <input type="radio" name="radio4" style="width: 0px; height: 0px"/><br/>
+                      </td>
+                      <td>
+                          Radio 1: <input type="radio" name="radio5" style="width: -1px; height: -1px"/><br/>
+                          Radio 2: <input type="radio" name="radio5" checked="" style="width: -1px; height: -1px"/><br/>
+                          Radio 3: <input type="radio" name="radio5" style="width: -1px; height: -1px"/><br/>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>Hidden</td>
+                      <td><input type="hidden" value="I am text"/></td>
+                      <td>N/A</td>
+                      <td><input type="hidden" value="I am text" disabled=""/></td>
+                      <td><input type="hidden" value="I am text" style="width: 0px; height: 0px"/></td>
+                      <td><input type="hidden" value="I am text" style="width: -1px; height: -1px"/></td>
+                  </tr>
+                  <tr>
+                      <td>File</td>
+                      <td><input type="file"/></td>
+                      <td>N/A</td>
+                      <td><input type="file" disabled=""/></td>
+                      <td><input type="file" style="width: 0px; height: 0px"/></td>
+                      <td><input type="file" style="width: -1px; height: -1px"/></td>
+                  </tr>
+                  <tr>
+                      <td>Image (please do not click on these images)</td>
+                      <td><input type="image" src="./images/sign.png"/></td>
+                      <td>N/A</td>
+                      <td><input type="image" src="./images/sign.png" disabled=""/></td>
+                      <td><input type="image" src="./images/sign.png" style="width: 0px; height: 0px"/></td>
+                      <td><input type="image" src="./images/sign.png" style="width: -1px; height: -1px"/></td>
+                  </tr>
+                  <tr>
+                      <td>Reset</td>
+                      <td><input type="reset"/></td>
+                      <td>N/A</td>
+                      <td><input type="reset" disabled=""/></td>
+                      <td><input type="reset" style="width: 0px; height: 0px"/></td>
+                      <td><input type="reset" style="width: -1px; height: -1px"/></td>
+                  </tr>
+                  <tr>
+                      <td>Submit</td>
+                      <td><input type="submit"/></td>
+                      <td>N/A</td>
+                      <td><input type="submit" disabled=""/></td>
+                      <td><input type="submit" style="width: 0px; height: 0px"/></td>
+                      <td><input type="submit" style="width: -1px; height: -1px"/></td>
+                  </tr>
+                  <tr>
+                      <td>Button</td>
+                      <td><input type="button"/></td>
+                      <td>N/A</td>
+                      <td><input type="button" disabled=""/></td>
+                      <td><input type="button" style="width: 0px; height: 0px"/></td>
+                      <td><input type="button" style="width: -1px; height: -1px"/></td>
+                  </tr>
+              </tbody>
+          </table>
+      </form>
+      <h4>Maxlength property</h4>
+      <form style="padding: 0.5em;">
+          Check that no more then 5 symbols can be typed into the following text fields; if more symbols can be typed this will be a failure:<br/>
+          <input type="text" maxlength="5"/><br/>
+          <input type="password" maxlength="5"/><br/>          
+          Check that the application doesn't crash and the textarea accepts the input normally (maxlength is set to 0 here, but text field should behave as if maxlength is not set):<br/>
+          <input type="text" maxlength="0"/><br/>
+          <input type="password" maxlength="0"/><br/>
+          Check that the application doesn't crash and the textarea accepts the input normally (maxlength is set to -1 here, but text field should behave as if maxlength is not set):<br/>
+          <input type="text" maxlength="-1"/><br/>
+          <input type="password" maxlength="-1"/><br/>
+          Check that the application doesn't crash and no serious visual artifacts are drawn:<br/>
+          <input type="text" style="height: 0px;"/><br/>
+          <input type="password" style="height: 0px;"/><br/>   
+      </form>
+      <h4>Graphical submit buttons</h4>
+      <form action="./scripts/submit_action.html" method="GET">
+          <h4>Button and Input submit</h4>
+          Check that the page with the word "Success" is loaded after clicking the image.<br/>
+          Also check that page URL displayed on that page contains "submit_action.html?" and "value=sent".<br/>
+          <input type="image" src="./images/sign.png"/>
+          <input type="hidden" name="value" value="sent"/>
+      </form>
+      <form action="./scripts/submit_action.html" method="GET">
+          <h4>Disabled Button and Input submit</h4>
+          Check that the browser doesn't leave the page if clicked on the image.<br/>
+          <input type="image" src="./images/sign.png" disabled=""/>
+          <input type="hidden" name="value" value="sent"/>
+      </form>
+      <h4>Submitting checkboxes and radio buttons</h4>
+      <form action="./scripts/submit_action.html" method="GET">
+          <h5>Submitting check boxes with different name</h5>
+          Check any checkboxes, verify that the page with the word "Success" was loaded after submitting the form.<br/>
+          Also check that for every checkbox you've selected there will be the text before checkbox you've selected followed by "=true" in the page URL on that page.<br/>
+          <label for="a1">A</label><input type="checkbox" name="A" value="true" id="a1"/><br/>
+          <label for="b1">B</label><input type="checkbox" name="B" value="true" id="b1"/><br/>
+          <label for="c1">C</label><input type="checkbox" name="C" value="true" id="c1"/><br/>
+          <input type="submit"/>
+      </form>
+      <form action="./scripts/submit_action.html" method="GET">
+          <h5>Submitting check boxes with same names</h5>
+          Check any checkboxes, verify that the page with the word "Success" is loaded after submitting the form.<br/>
+          Also check that for every checkbox you've selected there will be "option=" followed text before checkbox you've selected in the page URL on that page.<br/>
+          <label for="a2">A</label><input type="checkbox" name="option" value="A" id="a2"/><br/>
+          <label for="b2">B</label><input type="checkbox" name="option" value="B" id="b2"/><br/>
+          <label for="c2">C</label><input type="checkbox" name="option" value="C" id="c2"/><br/>
+          <input type="submit"/>
+      </form>
+      <form action="./scripts/submit_action.html" method="GET">
+          <h5>Submitting the disabled checkbox</h5>
+          Check that the page with the word "Success" is loaded after submitting the form.<br/>
+          Also check that page URL on that page doesn't contain "option=AAA" string.<br/>
+          <input type="checkbox" name="option" value="AAA" disabled="" checked=""/><br/>
+          <input type="submit"/>
+      </form>
+      <form action="./scripts/submit_action.html" method="GET">
+          <h5>Submitting radio buttons</h5>
+          Check that the page with the word "Success" is loaded after submitting the form.<br/>
+          Also check the page URL ends up with "submit_action.html?option=" and text before selected radio button.<br/>
+          <label for="a3">A</label><input type="radio" name="option" value="A" id="a3"/><br/>
+          <label for="b3">B</label><input type="radio" name="option" value="B" id="b3"/><br/>
+          <label for="c3">C</label><input type="radio" name="option" value="C" id="c3"/><br/>
+          <input type="submit"/>
+      </form>
+      <form action="./scripts/submit_action.html" method="GET">
+          <h5>Submitting radio buttons with disabled elements</h5>
+          Check that the page with the word "Success" is loaded after submitting the form.<br/>
+          Also check the page URL ends up with "submit_action.html?option=" and text before selected radio button.<br/>
+          Use reset button to change the controls state to default.<br/>
+          <label for="a4">A</label><input type="radio" name="option" value="A" id="a4"/><br/>
+          <label for="b4">B</label><input type="radio" name="option" value="B" id="b4" disabled=""/><br/>
+          <label for="c4">C</label><input type="radio" name="option" value="C" id="c4"/><br/>
+          <input type="submit"/><input type="reset"/>
+      </form>
+      <form action="./scripts/submit_action.html" method="GET">
+          <h5>Submitting radio buttons with disabled active element</h5>
+          Check that the page with the word "Success" is loaded after submitting the form.<br/>
+          Also check that:<ul>
+              <li>the page URL ends up with "submit_action.html" or "submit_action.html?" if you haven't changed the state of controls below (left the disabled radio button checked).</li>
+              <li>the page URL ends up with "submit_action.html?option=" and text before selected radio button if you've changed the state of controls below
+                  (checked another radio button).</li>
+          </ul>
+          Use reset button to change the controls state to default (disabled radio button selected).<br/>
+          <label for="a5">A</label><input type="radio" name="option" value="A" id="a5"/><br/>
+          <label for="b5">B</label><input type="radio" name="option" value="B" id="b5" disabled="" checked=""/><br/>
+          <label for="c5">C</label><input type="radio" name="option" value="C" id="c5"/><br/>
+          <input type="submit"/><input type="reset"/>
+      </form>
+  </body>
+</html>

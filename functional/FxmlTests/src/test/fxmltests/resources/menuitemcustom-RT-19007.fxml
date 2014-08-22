@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.* ?>
+<?import test.fxmltests.app.CustomMenuItem ?>
+<Menu fx:id="file" xmlns:fx="http://javafx.com/fxml" text="File">
+    <CustomMenuItem fx:id="add">
+        <text>Add</text>
+    </CustomMenuItem>
+    <CustomMenuItem fx:id="open">
+        <text>Open</text>
+    </CustomMenuItem>
+</Menu>

@@ -1,0 +1,74 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>MenuBar Use System Menu Test Content</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <p><b>MenuBar Use System Menu Test</b>
+        <p>Notion: This test is targeted for testing System menu bar on MacOS. 
+            It is implemented, by making standart JavaFX menuBar, switching 
+            useSystemMenu option to true/false, to be a system menu bar (grey menu bar on the top of the screen). 
+            On other platforms (like windows, and linux), this option shouldn't 
+            affect anyhow, so just press "PASS".</p>                        
+        <p>This test verifies that MenuBar useSystemMenu property is working correctly for MacOS.
+        <h3>Test case 1</h3>
+        <ul><li>Set useSystemMenu property to "true" by switching "Use system menu bar" toggle button on.</li>
+            <li>Verify that MacOS application menu contains 3 items:  "Menu 0", "Menu 1" and "Menu 2" with 3 levels of submenus.</li>
+            <li>Verify that MenuBar at the left-top corner of test application is invisible.</li>
+        </ul>
+        <p><img src="images/UseSystemMenuBar.png"/></p>
+        <h3>Test case 2</h3>
+        <ul><li>Set useSystemMenu property to "false" by switching "Use system menu bar" toggle button off.</li>
+            <li>Verify that MenuBar and MacOS application menu return into initial state.</li>
+            <li>Repeat Test case 1 and Test case 2 several times.</li>
+        </ul>
+        <p><img src="images/InitialStateMenuBar.png"/></p>
+        <h3>Test case 3</h3>
+        <ul><li>Apply "-fx-use-system-menu-bar = true" CSS style by switching "Use system menu bar (using CSS)" toggle button on.</li>
+            <li>Verify that MacOS application menu contains contains 3 items:  "Menu 0", "Menu 1" and "Menu 2" with 3 levels of submenus as for Test case 1.</li>
+            <li>Verify that MenuBar at the left-top corner of test application is invisible.</li>
+        </ul>
+        <h3>Test case 4</h3>
+        <ul><li>Apply "-fx-use-system-menu-bar = false" by switching "Use system menu bar (using CSS)" toggle button off.</li>
+            <li>Verify that MenuBar and MacOS application menu return into initial state.</li>
+            <li>Repeat Test case 3 and Test case 4 several times.</li>
+        </ul>
+        <h3>Test case 5</h3>
+        <ul><li>Set useSystemMenu property to "true" by switching "Use system menu bar" toggle button on.</li>
+            <li>Verify that MacOS application menu contains contains 3 items:  "Menu 0", "Menu 1" and "Menu 2" with 3 levels of submenus.</li>
+            <li>Apply "-fx-use-system-menu-bar = false" by switching "Use system menu bar (using CSS)" toggle button off.</li>
+            <li>Verify that MenuBar and MacOS application menu return into initial state.</li>
+            <li>Apply "-fx-use-system-menu-bar = true" CSS style by switching "Use system menu bar (using CSS)" toggle button on.</li>
+            <li>Verify that MacOS application menu contains contains 3 items:  "Menu 0", "Menu 1" and "Menu 2" with 3 levels of submenus.</li>
+            <li>Set useSystemMenu property to "false" by switching "Use system menu bar" toggle button off.</li>
+            <li>Verify that MenuBar and MacOS application menu return into initial state.</li>
+        </ul>
+    </body>
+</html>

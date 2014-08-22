@@ -26,7 +26,7 @@ package org.jemmy.fx;
 
 import javafx.stage.Window;
 import org.jemmy.Rectangle;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Wrap;
 import org.jemmy.dock.DefaultParent;
@@ -35,32 +35,30 @@ import org.jemmy.interfaces.Parent;
 
 /**
  * Window could be used as a target for mouse events.
+ *
  * @author shura
  */
 @ControlType(Window.class)
 public class WindowWrap<T extends Window> extends Wrap<T> {
-    
+
     @DefaultParent("all scenes")
     public static <CONTROL extends Window> Parent<? super Window> getRoot(Class<CONTROL> controlType) {
         return Windows.WINDOWS;
     }
-    
+
     public WindowWrap(Environment env, T node) {
         super(env, node);
     }
 
     @Override
     public Rectangle getScreenBounds() {
-        return new GetAction<Rectangle>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                Rectangle res = new Rectangle();
-                res.setLocation((int)getControl().getX(), (int)getControl().getY());
-                res.setSize((int)getControl().getWidth(), (int)getControl().getHeight());
-                setResult(res);
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> {
+            Rectangle res = new Rectangle();
+            res.setLocation((int) getControl().getX(), (int) getControl().getY());
+            res.setSize((int) getControl().getWidth(), (int) getControl().getHeight());
+            return res;
+        }
+        ).get();
     }
-    
+
 }

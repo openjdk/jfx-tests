@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+
+<Group xmlns:fx="http://javafx.com/fxml">
+   <Rectangle fx:id="rectangle1" x="10" y="10" width="320" height="240" fill="#ff0000"/>
+   <Rectangle fx:id="rectangle2" x="10" y="10" width="320" height="240" fill="#ff0000"/>
+</Group>
+
+

@@ -35,14 +35,11 @@ import org.jemmy.interfaces.EditableCellOwner;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
-import org.jemmy.lookup.AbstractLookup;
-import org.jemmy.lookup.ByToStringLookup;
-import org.jemmy.lookup.EqualsLookup;
-import org.jemmy.lookup.Lookup;
-import org.jemmy.lookup.LookupCriteria;
+import org.jemmy.lookup.*;
 import org.jemmy.resources.StringComparePolicy;
-import static org.junit.Assert.*;
 import org.junit.*;
+
+import static org.junit.Assert.*;
 
 /**
  * @author shura
@@ -171,11 +168,7 @@ public class TreeTest {
         p.lookup().size();
         p.setEditor(new TextFieldCellEditor());
 
-        p.lookup(new LookupCriteria<javafx.scene.control.TreeItem>() {
-            public boolean check(javafx.scene.control.TreeItem control) {
-                return control.getValue().equals("012");
-            }
-        }).as(EditableCell.class).edit("lala");
+        p.lookup(control -> control.getValue().equals("012")).as(EditableCell.class).edit("lala");
     }
 
     @Test

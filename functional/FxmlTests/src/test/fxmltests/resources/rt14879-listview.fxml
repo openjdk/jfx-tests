@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.sun.javafx.collections.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+
+
+<ListView xmlns:fx="http://javafx.com/fxml">
+<Label text="t1" fx:id="id1"/>
+<Label text="t2" fx:id="id2"/>
+<Label text="t3" fx:id="id3"/>
+<Label text="t4" fx:id="id4"/>
+<fx:reference source="id1"/>
+<fx:reference source="id1"/>
+</ListView>
+

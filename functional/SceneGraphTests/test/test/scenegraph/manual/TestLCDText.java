@@ -23,6 +23,7 @@
  */
 package test.scenegraph.manual;
 
+import client.test.Keywords;
 import client.test.RunUI;
 import org.jemmy.action.AbstractExecutor;
 import org.jemmy.env.TestOut;
@@ -36,6 +37,7 @@ public class TestLCDText extends TestBase {
 
     @RunUI
     @BeforeClass
+    @Keywords(keywords = "manual_embedded")
     public static void runUI() {
         TestLCDTextApp.main(null);
 

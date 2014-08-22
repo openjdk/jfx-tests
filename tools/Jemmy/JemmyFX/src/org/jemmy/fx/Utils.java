@@ -35,7 +35,6 @@ import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.Caret;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.lookup.Lookup;
-import org.jemmy.lookup.LookupCriteria;
 
 /**
  *
@@ -45,13 +44,8 @@ public class Utils {
 
     public static AbstractScroll getContainerScroll(Parent<Node> parent, final boolean vertical) {
         Lookup<ScrollBar> lookup = parent.lookup(ScrollBar.class,
-                new LookupCriteria<ScrollBar>() {
-                    @Override
-                    public boolean check(ScrollBar control) {
-                        return (control.getOrientation() == Orientation.VERTICAL) == vertical
-                                && control.isVisible();
-                    }
-                });
+                control -> (control.getOrientation() == Orientation.VERTICAL) == vertical
+                        && control.isVisible());
         int count = lookup.size();
         if (count == 0) {
             return null;

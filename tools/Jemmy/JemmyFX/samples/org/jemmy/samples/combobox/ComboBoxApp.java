@@ -25,14 +25,15 @@
 package org.jemmy.samples.combobox;
 
 
-import java.util.Date;
-import java.util.GregorianCalendar;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -59,7 +60,7 @@ public class ComboBoxApp extends Application {
         comboBox1.getItems().setAll("Item 1", "Item 2", Math.PI, new Date());
         comboBox1.getSelectionModel().select(2);
 
-        comboBox2 = new ComboBox<Record>();
+        comboBox2 = new ComboBox<>();
         comboBox2.setConverter(new javafx.util.StringConverter<Record>() {
 
             @Override
@@ -78,13 +79,13 @@ public class ComboBoxApp extends Application {
         }
         comboBox2.getSelectionModel().select(0);
         
-        comboBox3 = new ComboBox<String>();
+        comboBox3 = new ComboBox<>();
         comboBox3.setId("countries-combo");
         comboBox3.setEditable(true);
         comboBox3.getItems().setAll("Russia", "USA", "India", "Switzerland", "Germany");
         comboBox3.getSelectionModel().select(0);
         
-        choiceBox = new ChoiceBox<Integer>();
+        choiceBox = new ChoiceBox<>();
         choiceBox.setId("choice-box");
         for (int year = 1970; year < 2030; year++) {
             choiceBox.getItems().add(year);

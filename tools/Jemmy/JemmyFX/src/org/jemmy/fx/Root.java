@@ -127,11 +127,11 @@ public class Root extends AbstractParent<Scene> {
     }
 
     public <ST extends Scene> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {
-        return new PlainLookup<ST>(env, scenes, wrapper, controlClass, criteria);
+        return new PlainLookup<>(env, scenes, wrapper, controlClass, criteria);
     }
 
     public Lookup<Scene> lookup(LookupCriteria<Scene> criteria) {
-        return new PlainLookup<Scene>(env, scenes, wrapper, Scene.class, criteria);
+        return new PlainLookup<>(env, scenes, wrapper, Scene.class, criteria);
     }
 
     public Class<Scene> getType() {

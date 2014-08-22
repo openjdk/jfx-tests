@@ -24,15 +24,15 @@
  */
 package org.jemmy.samples.listview;
 
-import java.util.Date;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.cell.TextFieldListCell;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+
+import java.util.Date;
 
 /**
  *
@@ -56,7 +56,7 @@ public class ListViewApp extends Application {
         listView1.getItems().setAll("Item 1", "Item 2", Math.PI, new Date());
         listView1.getSelectionModel().select(2);
 
-        listView2 = new ListView<Record>();
+        listView2 = new ListView<>();
         listView2.setId("records-list");
         listView2.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         for (int i = 0; i < LONG_LIST; i++) {
@@ -64,7 +64,7 @@ public class ListViewApp extends Application {
         }
         listView2.getSelectionModel().select(0);
 
-        listView3 = new ListView<String>();
+        listView3 = new ListView<>();
         listView3.setId("countries-list");
         listView3.setEditable(true);
         listView3.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

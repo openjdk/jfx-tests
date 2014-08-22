@@ -1,0 +1,53 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tab Pane animated test</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <p><b>Animated test</b>
+        <p>Notion: This test is targeted for testing of animation in TabPane. 
+            Actions of adding new tab, and removing existing tab can be animated or not. 
+            When you add new tab, and adding is animated, tab should appear smoothly, 
+            if it is not animated - at once. The same about removing.
+            And we need to test switching of animated/not animated actions. For animated case - to check, that it is done well.
+        </p>                        
+        <p>This test verifies that Animated property of tap pane can be switched, and quality animation itself.</p>
+        <h3>Test case.</h3>
+        <ul><li>Change toggle button pressed state to see text "Animated".</li>
+            <li>Testing animated property, check, that animation is done or not done, according to animated property value.</li>
+            <li>Testing animated property, fail test if you see wrong, not smooth, strange animation, or graphical artifacts.</li>
+            <li>Add several tabs at 0, at the end, in the middle (setting according index into text field).</li>
+            <li>Remove tabs in the beginning and in the end, and in the middle.</li>
+            <li>Switch animated property to false, switching the toggle button pressed state.</li>
+            <li>Add several tabs at 0, at the end, in the middle (setting according index into text field).</li>
+            <li>Remove several tabs in the beginning and in the end, and in the middle.</li>            
+        </ul>        
+    </body>
+</html>

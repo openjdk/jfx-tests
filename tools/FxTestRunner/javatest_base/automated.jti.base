@@ -1,0 +1,8 @@
+#Default JT Harness Configuration Interview
+INTERVIEW=client.test.runner.BasicFXInterview
+pipelineGroup=Hardware(Default)
+timeout.timeout=1
+runmode=desktop
+browserPath=firefox
+javawsPath=javaws
+vmOptions=

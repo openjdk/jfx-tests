@@ -24,12 +24,10 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.control.Wrapper;
 import org.jemmy.interfaces.CellOwner;
@@ -38,6 +36,10 @@ import org.jemmy.interfaces.Keyboard.KeyboardModifiers;
 import org.jemmy.interfaces.Mouse.MouseButtons;
 import org.jemmy.interfaces.Showable;
 import org.jemmy.lookup.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TabParent<ITEM extends Tab> extends AbstractParent<ITEM>
         implements CellOwner<ITEM>, ControlList {
@@ -60,7 +62,7 @@ public class TabParent<ITEM extends Tab> extends AbstractParent<ITEM>
 
     @Override
     public <ST extends ITEM> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {
-        return new PlainLookup<ST>(wrap.getEnvironment(),
+        return new PlainLookup<>(wrap.getEnvironment(),
                 this, wrapper, controlClass, criteria);
     }
 
@@ -75,7 +77,7 @@ public class TabParent<ITEM extends Tab> extends AbstractParent<ITEM>
     }
 
     public List<Wrap<? extends ITEM>> select(LookupCriteria<ITEM>... criteria) {
-        List<Wrap<? extends ITEM>> res = new ArrayList<Wrap<? extends ITEM>>();
+        List<Wrap<? extends ITEM>> res = new ArrayList<>();
         KeyboardModifier[] mods = new KeyboardModifier[0];
         for (LookupCriteria<ITEM> cr : criteria) {
             Lookup<ITEM> lu = lookup(cr);
@@ -111,17 +113,9 @@ public class TabParent<ITEM extends Tab> extends AbstractParent<ITEM>
 
     @Override
     public List<ITEM> getControls() {
-        return new GetAction<List<ITEM>>() {
-
-            @Override
-            public void run(Object... parameters) throws Exception {
-                List<ITEM> res = new ArrayList<ITEM>();
-                for (Object item : wrap.getControl().getTabs()) {
-                    res.add((ITEM) item);
-                }
-                setResult(res);
-            }
-        }.dispatch(wrap.getEnvironment());
+        return new FutureAction<>(wrap.getEnvironment(), () ->
+                wrap.getControl().getTabs().stream().map(item -> (ITEM) item).collect(Collectors.toList())
+        ).get();
     }
 
 }

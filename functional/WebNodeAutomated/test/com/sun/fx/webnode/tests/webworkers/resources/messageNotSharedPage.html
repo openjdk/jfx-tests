@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+            function doAfterLoaded() {
+                var worker = new Worker('messageNotSharedWorker.js');
+                var test = document.getElementById('content').innerHTML;
+                worker.addEventListener('message', function(event) {
+                    document.getElementById("result").innerHTML = event.data;
+                    document.getElementById('content').innerHTML = test;
+                }, false);
+                worker.postMessage(test);
+            }
+        </script>
+    </head>
+    <body onload="doAfterLoaded();">
+        <div id="content">alpha</div>
+        <div id="result"></div>
+    </body>
+</html>

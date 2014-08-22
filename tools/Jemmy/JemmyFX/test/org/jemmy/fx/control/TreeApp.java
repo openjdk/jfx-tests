@@ -24,18 +24,19 @@
  */
 package org.jemmy.fx.control;
 
-import java.awt.AWTException;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
+
+import java.awt.*;
 
 /**
  *
@@ -170,11 +171,7 @@ public class TreeApp extends Application {
 
         final TreeView<String> view = new TreeView<String>(i0);
         view.setEditable(true);
-        view.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
-            public TreeCell<String> call(TreeView<String> p) {
-                return new TextFieldTreeCell();
-            }
-        });
+        view.setCellFactory(p -> new TextFieldTreeCell());
         view.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         box.getChildren().add(view);
 
@@ -182,15 +179,13 @@ public class TreeApp extends Application {
         selectedItem.setId("selection");
         box.getChildren().add(selectedItem);
 
-        view.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent t) {
+        view.setOnMouseClicked(t -> {
                 final TreeItem<String> value = view.getSelectionModel().getSelectedItems().get(0);
                 if (value != null) {
                     selectedItem.setText(value.getValue());
                 } else {
                     selectedItem.setText("null");
                 }
-            }
         });
 
         stage.setScene(scene);

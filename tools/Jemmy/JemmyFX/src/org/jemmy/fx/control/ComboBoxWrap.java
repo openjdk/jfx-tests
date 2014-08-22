@@ -24,14 +24,12 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import org.jemmy.action.Action;
+import org.jemmy.action.FutureAction;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.*;
 import org.jemmy.env.Environment;
@@ -39,19 +37,17 @@ import org.jemmy.fx.ByObject;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.Root;
 import org.jemmy.input.SelectionText;
-import org.jemmy.interfaces.Focus;
-import org.jemmy.interfaces.CriteriaSelectable;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Selectable;
-import org.jemmy.interfaces.Selector;
+import org.jemmy.interfaces.*;
 import org.jemmy.lookup.Lookup;
-import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ControlType(ComboBox.class)
-@ControlInterfaces(value={CriteriaSelectable.class, SelectionText.class},
-        name={"asSelectable"},
-        encapsulates={Object.class})
+@ControlInterfaces(value = {CriteriaSelectable.class, SelectionText.class},
+        name = {"asSelectable"},
+        encapsulates = {Object.class})
 @MethodProperties("getValue")
 public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
     private final static String COMBO_BOX_STYLE_CLASS = "combo-box-popup";
@@ -65,21 +61,21 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
 
     @As(Object.class)
     public <T> CriteriaSelectable<T> asSelectable(Class<T> type) {
-        if(selectable == null || !selectable.getType().equals(type)) {
+        if (selectable == null || !selectable.getType().equals(type)) {
             selectable = new ComboSelector<T>(type);
         }
         return selectable;
     }
-    
+
     @As
     public SelectionText asText() {
-        if(getTextField() != null) {
+        if (getTextField() != null) {
             return getTextField().as(SelectionText.class);
         } else {
             return null;
         }
     }
-    
+
     protected Wrap<? extends TextField> getTextField() {
         Lookup lookup = as(Parent.class, Node.class).lookup(TextField.class);
         if (lookup.size() > 0) {
@@ -91,15 +87,9 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
 
     @Property(ChoiceBoxWrap.IS_SHOWING_PROP_NAME)
     public boolean isShowing() {
-        return new GetAction<Boolean>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().isShowing());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<Boolean>(getEnvironment(), () -> getControl().isShowing()).get();
     }
-    
+
     private class ComboSelector<T> extends CriteriaSelectable<T> implements Selector<T> {
 
         private final Class<T> type;
@@ -123,13 +113,9 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
 
         public void select(final T state) {
             if (!isShowing()) {
-                ComboBoxWrap.this.as(Parent.class, Node.class).lookup(new ByStyleClass<Node>("arrow-button")).wrap().mouse().click();
+                ComboBoxWrap.this.as(Parent.class, Node.class).lookup(new ByStyleClass<>("arrow-button")).wrap().mouse().click();
             }
-            Parent<Node> popupContainer = Root.ROOT.lookup(new LookupCriteria<Scene>() {
-                public boolean check(Scene cntrl) {
-                    return Root.ROOT.lookup(new ByObject<Scene>(cntrl)).wrap().as(Parent.class, Node.class).lookup(new ByStyleClass(COMBO_BOX_STYLE_CLASS)).size() == 1;
-                }
-            }).as(Parent.class, Node.class);
+            Parent<Node> popupContainer = Root.ROOT.lookup(cntrl -> Root.ROOT.lookup(new ByObject<>(cntrl)).wrap().as(Parent.class, Node.class).lookup(new ByStyleClass(COMBO_BOX_STYLE_CLASS)).size() == 1).as(Parent.class, Node.class);
 
             Wrap<? extends ListView> list = popupContainer.lookup(ListView.class).wrap();
             list.as(Selectable.class, type).selector().select(state);
@@ -140,7 +126,7 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
 
                         @Override
                         public void run(Object... os) throws Exception {
-                            setResult(type.isInstance(getControl().getValue()) ? 
+                            setResult(type.isInstance(getControl().getValue()) ?
                                     type.cast(getControl().getValue()) : null);
                         }
                     }.dispatch(getEnvironment());
@@ -158,13 +144,7 @@ public class ComboBoxWrap<T extends ComboBox> extends ControlWrap<T> {
         }
 
         public T getState() {
-            Object selected = new GetAction() {
-
-                @Override
-                public void run(Object... os) throws Exception {
-                    setResult(getControl().getSelectionModel().getSelectedItem());
-                }
-            }.dispatch(getEnvironment());
+            Object selected = new FutureAction<>(getEnvironment(), () -> getControl().getSelectionModel().getSelectedItem()).get();
             if (type.isInstance(selected)) {
                 return type.cast(selected);
             } else {

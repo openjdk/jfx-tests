@@ -30,16 +30,6 @@ public class RichTextRealWorldExampleTest extends TestBase {
     }
 
     /**
-     * Test for content height.
-     */
-    @Test
-    public void heightTest() {
-        double etalon = 854;
-        double delta = 1;
-        Assert.assertEquals("Content height has unexpected value!",etalon, getContentHeight(),delta);
-    }
-
-    /**
      * Test for content.
      */
     @Test
@@ -66,15 +56,6 @@ public class RichTextRealWorldExampleTest extends TestBase {
         checkScreenshot("mark2Test");
     }
 
-    private double getContentHeight() {
-        return new GetAction<Double>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(application.getContentHeight());
-            }
-        }.dispatch(Root.ROOT.getEnvironment());
-    }
-
     private void scrollToMark(final int i) {
         new GetAction() {
             @Override
@@ -88,7 +69,7 @@ public class RichTextRealWorldExampleTest extends TestBase {
         new Waiter(Wrap.WAIT_STATE_TIMEOUT).ensureState(new State() {
             public Object reached() {
                 try {
-                    ScreenshotUtils.checkScreenshot("RichTextRealWorldExampleTest-" + testName, scene);
+                    ScreenshotUtils.checkScreenshot("RichTextRealWorldExampleTest-" + testName, getScene());
                     return true;
                 } catch (Throwable t) {
                     return null;

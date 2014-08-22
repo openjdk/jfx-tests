@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+            var worker = new Worker('simpleWorker.js');
+            worker.addEventListener('message', function(event) {
+                document.getElementById("result").innerHTML = event.data;
+            }, false);
+            worker.postMessage();
+        </script>
+    </head>
+    <body>
+        <div id="result"></div>
+    </body>
+</html>

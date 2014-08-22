@@ -24,28 +24,26 @@
  */
 package org.jemmy.samples.treetableview;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Random;
 import javafx.application.Application;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Random;
 
 /**
  * A more complicated case, than TableViewApp and TableViewSample.
@@ -65,42 +63,26 @@ public class TreeTableViewApp extends Application {
     public void start(Stage stage) throws Exception {
         final DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.US);
 
-        TreeTableColumn<Person, String> numberCol = new TreeTableColumn<Person, String>("#");
-        numberCol.setCellValueFactory(new Callback<CellDataFeatures<Person, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(CellDataFeatures<Person, String> p) {
-                return p.getValue().getValue().hierarchyProperty();
-            }
-        });
+        TreeTableColumn<Person, String> numberCol = new TreeTableColumn<>("#");
+        numberCol.setCellValueFactory(p -> p.getValue().getValue().hierarchyProperty());
         numberCol.setPrefWidth(100);
         numberCol.setCellFactory(TextFieldTreeTableCell.<Person>forTreeTableColumn());
 
-        TreeTableColumn<Person, String> firstNameCol = new TreeTableColumn<Person, String>("First Name");
+        TreeTableColumn<Person, String> firstNameCol = new TreeTableColumn<>("First Name");
         firstNameCol.setPrefWidth(150);
         firstNameCol.setEditable(true);
-        firstNameCol.setCellValueFactory(new Callback<CellDataFeatures<Person, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(CellDataFeatures<Person, String> p) {
-                return p.getValue().getValue().firstNameProperty();
-            }
-        });
+        firstNameCol.setCellValueFactory(p -> p.getValue().getValue().firstNameProperty());
         firstNameCol.setCellFactory(TextFieldTreeTableCell.<Person>forTreeTableColumn());
 
-        TreeTableColumn<Person, String> lastNameCol = new TreeTableColumn<Person, String>("Last Name");
+        TreeTableColumn<Person, String> lastNameCol = new TreeTableColumn<>("Last Name");
         lastNameCol.setPrefWidth(150);
         lastNameCol.setEditable(true);
-        lastNameCol.setCellValueFactory(new Callback<CellDataFeatures<Person, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(CellDataFeatures<Person, String> p) {
-                return p.getValue().getValue().lastNameProperty();
-            }
-        });
+        lastNameCol.setCellValueFactory(p -> p.getValue().getValue().lastNameProperty());
         lastNameCol.setCellFactory(TextFieldTreeTableCell.<Person>forTreeTableColumn());
 
-        TreeTableColumn<Person, Date> birthdayCol = new TreeTableColumn<Person, Date>("Birthday");
+        TreeTableColumn<Person, Date> birthdayCol = new TreeTableColumn<>("Birthday");
         birthdayCol.setPrefWidth(250);
-        birthdayCol.setCellValueFactory(new Callback<CellDataFeatures<Person, Date>, ObservableValue<Date>>() {
-            public ObservableValue<Date> call(CellDataFeatures<Person, Date> p) {
-                return p.getValue().getValue().birthdayProperty();
-            }
-        });
+        birthdayCol.setCellValueFactory(p -> p.getValue().getValue().birthdayProperty());
         birthdayCol.setEditable(false);
         birthdayCol.setCellFactory(TextFieldTreeTableCell.<Person, Date>forTreeTableColumn(new StringConverter<Date>() {
             @Override

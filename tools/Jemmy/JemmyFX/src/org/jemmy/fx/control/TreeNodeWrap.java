@@ -31,24 +31,23 @@ import javafx.scene.control.TreeView;
 import javafx.util.Callback;
 import org.jemmy.Point;
 import org.jemmy.Rectangle;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.NodeWrap;
-import org.jemmy.interfaces.Caret.Direction;
+import org.jemmy.interfaces.*;
 import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.EditableCellOwner.EditableCell;
-import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 import static org.jemmy.fx.control.TableUtils.*;
 
 /**
  * This wraps a node that renders the tree's data item
  *
- * @author barbashov, shura
  * @param <DATA>
+ * @author barbashov, shura
  */
 @ControlType(Object.class)
 @ControlInterfaces({org.jemmy.interfaces.TreeItem.class})
@@ -59,8 +58,8 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
     private CellEditor<Object> editor;
 
     public TreeNodeWrap(T item,
-            TreeViewWrap<? extends TreeView> treeViewWrap,
-            CellEditor<Object> editor) {
+                        TreeViewWrap<? extends TreeView> treeViewWrap,
+                        CellEditor<Object> editor) {
         super(treeViewWrap.getEnvironment(), item);
         this.treeViewWrap = treeViewWrap;
         this.editor = editor;
@@ -76,16 +75,13 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
 
     @Override
     public Rectangle getScreenBounds() {
-        return new GetAction<Rectangle>() {
-
-            @Override
-            public void run(Object... parameters) {
-                TreeCell treeCell = treeViewWrap.getTreeCell(getControl());
-                if (treeCell != null) {
-                    setResult(NodeWrap.getScreenBounds(getEnvironment(), treeCell));
-                }
+        return new FutureAction<>(getEnvironment(), () -> {
+            TreeCell treeCell = treeViewWrap.getTreeCell(getControl());
+            if (treeCell != null) {
+                return NodeWrap.getScreenBounds(getEnvironment(), treeCell);
             }
-        }.dispatch(getEnvironment());
+            return null;
+        }).get();
     }
     
     @Override
@@ -133,15 +129,15 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
         return treeViewWrap.as(Parent.class, Node.class).
                 lookup(TreeCell.class, new LookupCriteria<TreeCell>() {
 
-            public boolean check(TreeCell cntrl) {
-                return cntrl.getItem() != null && cntrl.getTreeItem().equals(getControl());
-            }
+                    public boolean check(TreeCell cntrl) {
+                        return cntrl.getItem() != null && cntrl.getTreeItem().equals(getControl());
+                    }
 
-            @Override
-            public String toString() {
-                return "Node for an item " + getControl().toString();
-            }
-        }).wrap();
+                    @Override
+                    public String toString() {
+                        return "Node for an item " + getControl().toString();
+                    }
+                }).wrap();
     }
 
     @Override
@@ -151,47 +147,25 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
 
     @Override
     public void show() {
-        final TreeItem parent = new GetAction<TreeItem>() {
-
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(getControl().getParent());
-            }
-        }.dispatch(getEnvironment());
-        if (parent != null && !new GetAction<Boolean>() {
-
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(parent.isExpanded());
-            }
-        }.dispatch(getEnvironment())) {
-            new TreeItemWrap<TreeItem>(TreeItem.class, parent, treeViewWrap, null).asTreeItem().expand();
+        final TreeItem parent = new FutureAction<>(getEnvironment(), () -> getControl().getParent()).get();
+        if (parent != null && !new FutureAction<>(getEnvironment(), () -> parent.isExpanded()).get()) {
+            new TreeItemWrap<>(TreeItem.class, parent, treeViewWrap, null).asTreeItem().expand();
         }
         scrollTo();
     }
+
     private Wrap<? extends javafx.scene.Parent> clippedContainer;
 
     private Wrap<? extends javafx.scene.Parent> getClippedContainerWrap() {
         if (clippedContainer == null) {
-            clippedContainer = ((Parent<Node>) treeViewWrap.as(Parent.class, Node.class)).lookup(javafx.scene.Parent.class, new LookupCriteria<javafx.scene.Parent>() {
-
-                public boolean check(javafx.scene.Parent control) {
-                    return control.getClass().getName().endsWith("VirtualFlow$ClippedContainer");
-                }
-            }).wrap();
+            clippedContainer = ((Parent<Node>) treeViewWrap.as(Parent.class, Node.class)).lookup(javafx.scene.Parent.class, control -> control.getClass().getName().endsWith("VirtualFlow$ClippedContainer")).wrap();
         }
         return clippedContainer;
     }
 
     private void scrollTo() {
         TableUtils.scrollToInSingleDimension(treeViewWrap, TreeCell.class, 
-                new Callback<TreeCell, Integer>(){
-
-            @Override
-            public Integer call(TreeCell p) {
-                return treeViewWrap.getRow(p.getTreeItem());
-            }
-        }, treeViewWrap.getRow(getControl()), 
+                cell-> treeViewWrap.getRow(cell.getTreeItem()), treeViewWrap.getRow(getControl()), 
         treeViewWrap.as(Scroll.class).caret(), true);
     }
 
@@ -208,24 +182,12 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
 
     @Property(TreeItemWrap.EXPANDED_PROP_NAME)
     public boolean isExpanded() {
-        return new GetAction<Boolean>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().isExpanded());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().isExpanded()).get();
     }
 
     @Property(TreeItemWrap.LEAF_PROP_NAME)
     public boolean isLeaf() {
-        return new GetAction<Boolean>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().isLeaf());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().isLeaf()).get();
     }
 
     public void edit(Object newValue) {

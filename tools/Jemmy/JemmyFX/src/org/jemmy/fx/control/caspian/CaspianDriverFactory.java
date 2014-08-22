@@ -27,15 +27,9 @@ package org.jemmy.fx.control.caspian;
 import com.sun.javafx.scene.control.skin.ScrollBarSkin;
 import com.sun.javafx.scene.control.skin.SliderSkin;
 import javafx.scene.Node;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.Slider;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.*;
+import org.jemmy.action.FutureAction;
 import org.jemmy.JemmyException;
-import org.jemmy.action.Action;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.NodeWrap;
@@ -46,19 +40,14 @@ import org.jemmy.fx.control.SplitMenuButtonWrap;
 import org.jemmy.fx.control.ThemeDriverFactory;
 import org.jemmy.fx.control.TreeNodeWrap;
 import org.jemmy.fx.control.TreeTableItemWrap;
+import org.jemmy.interfaces.*;
 import org.jemmy.interfaces.Editor;
-import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Scroll;
-import org.jemmy.interfaces.Scroller;
-import org.jemmy.interfaces.Shifter;
-import org.jemmy.timing.State;
 
 /**
  * Defines control behaviour for Caspian theme.
- *
- * Ported from the project JemmyFX, original class 
+ * <p/>
+ * Ported from the project JemmyFX, original class
  * is   org.jemmy.fx.control.caspian.CaspianDriverFactory
  *
  * @author shura
@@ -68,7 +57,6 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
     private float dragDelta;
 
     /**
-     *
      * @param dragDelta
      */
     public CaspianDriverFactory(float dragDelta) {
@@ -83,7 +71,6 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
     }
 
     /**
-     *
      * @return
      */
     public float getDragDelta() {
@@ -91,7 +78,6 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
     }
 
     /**
-     *
      * @param dragDelta
      */
     public void setDragDelta(float dragDelta) {
@@ -143,13 +129,7 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
                 @Override
                 protected void activate() {
                     // temporary solution due to bug in MacOS implementation of MenuBar
-                    Action requestFocus = new Action() {
-                        @Override
-                        public void run(Object... parameters) throws Exception {
-                            menuBarWrap.getControl().requestFocus();
-                        }
-                    };
-                    menuBarWrap.getEnvironment().getExecutor().execute(menuBarWrap.getEnvironment(), true, requestFocus);
+                    new FutureAction(menuBarWrap.getEnvironment(), () -> menuBarWrap.getControl().requestFocus());
                 }
             };
         } else {
@@ -170,7 +150,7 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
         return new NodeFocus(comboBoxWrap) {
             @Override
             protected void activate() {
-                comboBoxWrap.as(Parent.class, Node.class).lookup(new ByStyleClass<Node>("arrow-button")).wrap().mouse().click(comboBoxWrap.isShowing() ? 1 : 2);
+                comboBoxWrap.as(Parent.class, Node.class).lookup(new ByStyleClass<>("arrow-button")).wrap().mouse().click(comboBoxWrap.isShowing() ? 1 : 2);
             }
         };
     }
@@ -178,7 +158,7 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
 
     @Override
     public void splitMenuButtonExpandCollapseAction(SplitMenuButtonWrap<? extends SplitMenuButton> wrap) {
-        wrap.asParent().lookup(Node.class, new ByStyleClass<Node>("arrow-button")).wrap().mouse().click();
+        wrap.asParent().lookup(Node.class, new ByStyleClass<>("arrow-button")).wrap().mouse().click();
     }
 
     @Override
@@ -199,12 +179,7 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
             if (!nodeWrap.isFocused()) {
                 activate();
             }
-            nodeWrap.waitState(new State<Boolean>() {
-                @Override
-                public Boolean reached() {
-                    return nodeWrap.isFocused();
-                }
-            }, true);
+            nodeWrap.waitState(()->nodeWrap.isFocused(), true);                
         }
 
         abstract protected void activate();

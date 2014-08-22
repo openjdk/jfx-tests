@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            function doJS() {
+                document.getElementById('jsMagic').style.visibility='visible';
+            }
+        </script>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <div class="user-class">This is green with red background when user CSS is attached</div>
+        <input type="button" onclick="doJS();" value="Show JavaScript magic"/>
+        <span id="jsMagic" style="visibility: hidden;">JavaScript Magic!<input type="button" value="Hide JavaScript magic" onclick="document.getElementById('jsMagic').style.visibility='hidden';"/></span>
+        <br/>
+        <a href="#">This should never change color</a>
+    </body>
+</html>

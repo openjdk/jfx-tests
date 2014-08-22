@@ -1,0 +1,18 @@
+# The presentation name of the test suite
+name=Controls Test Suite (Automated)
+
+# The ID for the test suite
+id=ControlsAutomatedTestSuite
+
+# The jar file containing the test suite's JavaTest plug in classes
+classpath=
+
+# The test finder to use
+finder=client.test.runner.JUnitTestFinder
+
+# The test suite to use
+testsuite=client.test.runner.BasicJcovFXTestSuite
+
+# The configuration interview to use
+interview=client.test.runner.BasicJcovFXInterview
+

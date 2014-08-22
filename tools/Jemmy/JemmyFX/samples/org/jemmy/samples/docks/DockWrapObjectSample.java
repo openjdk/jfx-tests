@@ -28,7 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Labeled;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
@@ -40,10 +40,11 @@ import org.junit.*;
 
 /**
  * This sample shows what is dock, wrap and the wrapped object.
+ *
  * @author shura
  */
 public class DockWrapObjectSample extends SampleBase {
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         startApp(ButtonsApp.class);
@@ -52,23 +53,23 @@ public class DockWrapObjectSample extends SampleBase {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
     /**
      * <code>*Dock</code> classes are the true API classes. Docks should be used
-     * whenever possible. All straightforward operations should be available 
+     * whenever possible. All straightforward operations should be available
      * through docks. If it is not so, please file a feature request.<br/>
      * Dock classes source is generated. They have many different methods which
-     * are all convenience methods. Such methods as lookup constructors, 
+     * are all convenience methods. Such methods as lookup constructors,
      * <code>as*()</code> methods to perform operations and <code>get*()</code>
-     * method to get properties. Please consult other samples to see how to use 
+     * method to get properties. Please consult other samples to see how to use
      * docks.
      */
     @Test
@@ -88,10 +89,10 @@ public class DockWrapObjectSample extends SampleBase {
         //or a control itself
         Labeled theButtonItself = button.control();
     }
-    
+
     /**
-     * Wraps are SPI classes which are not supposed to be used directly. 
-     * Other than some public constants and a few methods of 
+     * Wraps are SPI classes which are not supposed to be used directly.
+     * Other than some public constants and a few methods of
      * <code>org.jemmy.control.Wrap</code>. Wraps
      * "wrap" controls allowing to use them for testing purposes. Wraps
      * contain the code which allows to access the underlying control. Wraps
@@ -111,21 +112,15 @@ public class DockWrapObjectSample extends SampleBase {
         //notice though that directly accessing the object is not a good idea.
         //see next test method on how to deal with the underlying object
     }
-    
+
     /**
-     * It is always dangerous to directly access objects within Java FX 
+     * It is always dangerous to directly access objects within Java FX
      * hierarchy. All the access should be done through event queue. If done
      * otherwise results are unpredictable at the best.
      */
     @Test
     public void object() {
         final LabeledDock button = new LabeledDock(new SceneDock().asParent(), Button.class);
-        double opacity = new GetAction<Double>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(button.control().getOpacity());
-            }
-        }.dispatch(button.wrap().getEnvironment());
+        double opacity = new FutureAction<>(button.wrap().getEnvironment(), () -> button.control().getOpacity()).get();
     }
 }

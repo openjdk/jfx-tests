@@ -25,22 +25,21 @@
 package org.jemmy.fx;
 
 
-import java.awt.AWTException;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.*;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 /**
  *
@@ -79,11 +78,8 @@ public class Controls extends Application {
         Button btn = new Button();
         btn.setText("push me");
         lbl.setText("not yet pushed");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                lbl.setText("button pushed!");
-            }
+        btn.setOnAction(t -> {
+            lbl.setText("button pushed!");
         });
         hBox.getChildren().add(btn);
         hBox.getChildren().add(lbl);
@@ -274,12 +270,7 @@ Stage {
     protected void addMenus(ObservableList list) {
         Menu menu0 = new Menu("menu0");
         MenuItem item0 = new MenuItem("item0");
-        item0.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                lbl.setText("item0 pushed!");
-            }
-        });
+        item0.setOnAction(t -> lbl.setText("item0 pushed!"));
         menu0.getItems().add(item0);
         list.add(menu0);
 
@@ -287,24 +278,14 @@ Stage {
         Menu sub_menu1 = new Menu("sub-menu1");
         Menu sub_sub_menu1 = new Menu("sub-sub-menu1");
         MenuItem item1 = new MenuItem("item1");
-        item1.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                lbl.setText("item1 pushed!");
-            }
-        });
+        item1.setOnAction(t -> lbl.setText("item1 pushed!"));
         sub_menu1.getItems().add(sub_sub_menu1);
         sub_sub_menu1.getItems().add(item1);
         menu1.getItems().add(sub_menu1);
         list.add(menu1);
 
         Menu menu2 = new Menu("menu2");
-        menu2.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                lbl.setText("menu2 pushed!");
-            }
-        });
+        menu2.setOnAction(t -> lbl.setText("menu2 pushed!"));
         list.add(menu2);
     }
 }

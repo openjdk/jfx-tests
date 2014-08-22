@@ -59,44 +59,36 @@ public class KeyboardInputApp extends Application {
         lbl.setId("events");
         final TextArea txt = new TextArea();
         txt.setId("text");
-        txt.addEventHandler(KeyEvent.ANY, new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent t) {
-                if (t.getEventType().equals(KeyEvent.KEY_TYPED)) {
-                    if (!t.isAltDown() && !t.isControlDown() && !t.isMetaDown()) {
-                        lbl.appendText(TYPED + t.getCharacter() + "\n");
-                        System.out.println((int) t.getCharacter().charAt(0));
-                    }
-                } else if (t.getEventType().equals(KeyEvent.KEY_RELEASED)) {
-                        StringBuilder sb = new StringBuilder(PUSHED);
-                        if (t.isAltDown()) {
-                            sb.append(ALT);
-                        }
-                        if (t.isShiftDown()) {
-                            sb.append(SHIFT);
-                        }
-                        if (t.isControlDown()) {
-                            sb.append(CONTROL);
-                        }
-                        if (t.isMetaDown()) {
-                            sb.append(META);
-                        }
-                        sb.append(t.getCode().name());
-                        lbl.appendText(sb.toString() + "\n");
+        txt.addEventHandler(KeyEvent.ANY, t -> {
+            if (t.getEventType().equals(KeyEvent.KEY_TYPED)) {
+                if (!t.isAltDown() && !t.isControlDown() && !t.isMetaDown()) {
+                    lbl.appendText(TYPED + t.getCharacter() + "\n");
+                    System.out.println((int) t.getCharacter().charAt(0));
                 }
+            } else if (t.getEventType().equals(KeyEvent.KEY_RELEASED)) {
+                    StringBuilder sb = new StringBuilder(PUSHED);
+                    if (t.isAltDown()) {
+                        sb.append(ALT);
+                    }
+                    if (t.isShiftDown()) {
+                        sb.append(SHIFT);
+                    }
+                    if (t.isControlDown()) {
+                        sb.append(CONTROL);
+                    }
+                    if (t.isMetaDown()) {
+                        sb.append(META);
+                    }
+                    sb.append(t.getCode().name());
+                    lbl.appendText(sb.toString() + "\n");
             }
         });
         Button clean = new Button("clean");
-        clean.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent t) {
-                System.out.println("lala");
-                lbl.clear();
-                txt.clear();
-                txt.requestFocus();
-            }
+        clean.addEventHandler(ActionEvent.ACTION, t -> {
+            System.out.println("lala");
+            lbl.clear();
+            txt.clear();
+            txt.requestFocus();
         });
         root.getChildren().add(clean);
         root.getChildren().add(txt);

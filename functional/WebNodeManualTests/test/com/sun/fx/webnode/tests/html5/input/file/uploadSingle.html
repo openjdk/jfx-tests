@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h3>Test for uploading single file with FILE input control</h3>
+        <ol>
+            <li>Wait for test page to load.  The application with loaded page should look like below
+                (directory where files were generated can be different):<br/>
+                <img src="images/simple.png"/><br/>
+            </li>
+            <li>Click on "Choose File" button. A modal window with file selection should open.<br/>
+                Go to the directory where files were generated:<br/>
+                <img src="images/generated-in.png"/>
+            </li>
+            <li>Select file "test1.txt", and press "Open" button.<br/>
+                Modal window with file selection should close, and "test1.txt" text should appear next to "Choose File" button.<br/>
+            </li>
+            <li>Click on "Upload" button.<br/>
+                The following text should appear:<br/>
+                Files successfully uploaded:<br/>
+                1: Content-Disposition: form-data; name="test"; filename="test1.txt" Content-Type: text/plain test test1.txt
+            </li>
+        </ol>
+        The test passes if all steps pass.
+    </body>
+</html>

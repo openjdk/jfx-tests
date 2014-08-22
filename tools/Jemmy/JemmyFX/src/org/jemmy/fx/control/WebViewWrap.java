@@ -52,7 +52,6 @@ public class WebViewWrap<CONTROL extends WebView> extends NodeWrap<CONTROL> {
     /**
      *
      * @param env
-     * @param scene
      * @param nd
      */
     @SuppressWarnings("unchecked")

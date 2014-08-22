@@ -24,8 +24,6 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.Collections;
-import java.util.List;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -34,6 +32,9 @@ import org.jemmy.JemmyException;
 import org.jemmy.control.Wrap;
 import org.jemmy.control.Wrapper;
 import org.jemmy.lookup.*;
+
+import java.util.Collections;
+import java.util.List;
 
 abstract class MenuItemParent extends AbstractParent<MenuItem> {
 
@@ -74,13 +75,13 @@ abstract class MenuItemParent extends AbstractParent<MenuItem> {
             if (MenuItem.class.isInstance(control)) {
                 if (Menu.class.isInstance(control)) {
                     return (Wrap<? extends T>) 
-                            new MenuWrap<Menu>(wrap.getEnvironment(), Menu.class.cast(control));
+                            new MenuWrap<>(wrap.getEnvironment(), Menu.class.cast(control));
                 } else if (RadioMenuItem.class.isInstance(control)) {
                     return (Wrap<? extends T>) 
-                            new RadioMenuItemWrap<RadioMenuItem>(wrap.getEnvironment(), RadioMenuItem.class.cast(control));
+                            new RadioMenuItemWrap<>(wrap.getEnvironment(), RadioMenuItem.class.cast(control));
                 } else if (CheckMenuItem.class.isInstance(control)) {
                     return (Wrap<? extends T>) 
-                            new CheckMenuItemWrap<CheckMenuItem>(wrap.getEnvironment(), CheckMenuItem.class.cast(control));
+                            new CheckMenuItemWrap<>(wrap.getEnvironment(), CheckMenuItem.class.cast(control));
                 } else {
                     return (Wrap<? extends T>) new MenuItemWrap(wrap.getEnvironment(), MenuItem.class.cast(control));
                 }

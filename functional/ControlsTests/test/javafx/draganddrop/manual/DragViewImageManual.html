@@ -1,0 +1,54 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <p>This test verifies image, when DnD is done.</p>
+        <p>Test application consists of two windows. The first window has title "Source", the second one has title "Target".</p>
+        <p>Source and Target windows contain "source/target data format" checkboxes (Text, HTML, class, image, etc).</p>
+        <p>When you do a Drag and Drop, you can specify an image, which will be shown near the cursor. This image looks like this : <img src="img/JavaFX.png"/></p>
+        <p>You should choose content type "PLAINTEXT", and do drag and drop : 
+            drag button with mouse from green frame from "Source" window to button in red frame in "Target" window.
+            Image will be shown, or not, depending on the "Use custom drag view" check box selected state.
+            Image must be shown above the cursor (left top corner of image is approximately 100x100 pixels upper and lefter, than cursor).
+            If image appears as expected (or doesn't appear, when it is not expected), and aligned correctly (upper that cursor) press pass, overwise fail.</p>
+        <table style="border: 1px solid black;">
+            <tr>
+                <tr>Testcase</tr>
+                <tr>Select PLAINTEXT as content type on both sides.</tr>
+                <tr>Check check box "Use custom drag view" (selected state).</tr>
+                <tr>Do DnD and check, that image is shown, and that it is above the cursor.</tr>
+                <tr>Uncheck check box "Use custom drag view" (uselected state).</tr>
+                <tr>Do DnD and check, that image is NOT shown.</tr>
+            </tr>
+        </table>
+    </body>
+</html>

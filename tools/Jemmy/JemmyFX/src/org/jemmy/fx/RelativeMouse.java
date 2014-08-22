@@ -30,15 +30,16 @@ import javafx.scene.Node;
 import javafx.stage.Window;
 import org.jemmy.JemmyException;
 import org.jemmy.Point;
+import org.jemmy.action.FutureAction;
 import org.jemmy.action.GetAction;
 import org.jemmy.interfaces.Modifier;
 import org.jemmy.interfaces.Mouse;
 
 
 /**
- * An implementation of mouse which hides node transformation from test code. 
+ * An implementation of mouse which hides node transformation from test code.
  * This uses a real mouse and only transforms coordinates to the actual ones
- * so that <code>(0, 0)</code> is where left-top corner happen to be after 
+ * so that <code>(0, 0)</code> is where left-top corner happen to be after
  * the transformations.
  *
  * @author Sergey Grinev
@@ -55,27 +56,23 @@ class RelativeMouse implements Mouse {
     }
 
     static Boolean isInWindow(final NodeWrap<? extends Node> node, final Point p) {
-        return new GetAction<Boolean>() {
-            @Override
-            public void run(Object... parameters) {
-                Window window = node.getControl().getScene().getWindow();
-                if (Double.isNaN(window.getX())) { // TODO: temporary stub for RT-12736
-                    setResult(true);
-                    return;
-                }
-                Bounds bounds = new BoundingBox(window.getX(), window.getY(), 0, window.getWidth(), window.getHeight(), 0);
-                double x = node.getScreenBounds().getX();
-                double y = node.getScreenBounds().getY();
-                if (p == null) {
-                    x+= node.getClickPoint().getX();
-                    y+= node.getClickPoint().getY();
-                } else {
-                    x+= p.getX();
-                    y+= p.getY();
-                }
-                setResult(bounds.contains(x, y));
+        return new FutureAction<>(node.getEnvironment(), () -> {
+            Window window = node.getControl().getScene().getWindow();
+            if (Double.isNaN(window.getX())) { // TODO: temporary stub for RT-12736
+                return true;
             }
-        }.dispatch(node.getEnvironment());
+            Bounds bounds = new BoundingBox(window.getX(), window.getY(), 0, window.getWidth(), window.getHeight(), 0);
+            double x = node.getScreenBounds().getX();
+            double y = node.getScreenBounds().getY();
+            if (p == null) {
+                x += node.getClickPoint().getX();
+                y += node.getClickPoint().getY();
+            } else {
+                x += p.getX();
+                y += p.getY();
+            }
+            return (bounds.contains(x, y));
+        }).get();
     }
 
     @Override

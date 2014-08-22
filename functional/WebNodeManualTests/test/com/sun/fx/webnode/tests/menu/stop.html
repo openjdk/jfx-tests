@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h3>Testing "Stop Page Loading" item in context menu</h3>
+        <ol>
+            <li>Wait for Page 1 to load. Bold text "Page 1" should appear.</li>
+            <li>Check that an image of a horse near "Horse" text is rendered. This means that the server with test is accessible.</li>
+            <li>Click on "Large document" link. A new page with 10 heavy images will start loading. <span style="color: red">Note: you should perform next 2 steps quickly.</span></li>
+            <li>Right-click in white area to the right of the images. Context menu will appear.</li>
+            <li>Click on "Stop loading" item. Page loading should stop, and the images should also stop loading.</li>
+            <li>Wait some more time to be sure that the page won't continue loading. About 5 minutes should be enough.</li>
+            <li>Scroll the document down. The text at the bottom should say "Test passed".</li>
+        </ol>
+        The test passes if all steps pass.
+    </body>
+</html>

@@ -510,17 +510,10 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
             scroll = new TableTreeScroll(this);
         }
         scroll.checkScrolls();
-        TableUtils.<TreeTableCell>scrollTo(getEnvironment(), this, scroll.hScroll, scroll.vScroll, row, column, new TableUtils.ColumnRowIndexInfoProvider() {
-            @Override
-            int getColumnIndex(IndexedCell cell) {
-                return TreeTableViewWrap.this.getColumnIndex(cell);
-            }
-
-            @Override
-            int getRowIndex(IndexedCell cell) {
-                return TreeTableViewWrap.this.getRowIndex(cell);
-            }
-        }, TreeTableCell.class);
+        TableUtils.<TreeTableCell>scrollTo(getEnvironment(), this, 
+                scroll.hScroll, scroll.vScroll, 
+                row, column, 
+                new TableUtils.TreeTableViewIndexInfoProvider(this), TreeTableCell.class);
     }
 
     Object getRow(final int index) {

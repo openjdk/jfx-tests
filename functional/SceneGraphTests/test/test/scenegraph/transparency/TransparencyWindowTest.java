@@ -23,17 +23,22 @@
  */
 package test.scenegraph.transparency;
 
+import java.util.Arrays;
 import java.util.concurrent.Callable;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import org.jemmy.JemmyException;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.Lookups;
 import org.jemmy.image.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import test.javaclient.shared.JemmyUtils;
+import test.embedded.helpers.Configuration;
+import test.embedded.helpers.GraphicsCheckBoxes;
+import static test.javaclient.shared.JemmyUtils.getRGBColors;
+import static test.javaclient.shared.JemmyUtils.usingGlassRobot;
 import test.javaclient.shared.TestBase;
 import test.scenegraph.stage.PopupTest;
 
@@ -49,6 +54,14 @@ public class TransparencyWindowTest extends TestBase {
         TransparencyWindowApp.main(null);
     }
 
+    private static boolean isTransparencySupported(Node node) {
+        if(Configuration.isEmbedded()) {
+            return GraphicsCheckBoxes.isChecked((Text)node);
+        } else {
+            return ((CheckBox)node).isSelected();
+        }
+    }
+
     /**
      * Show half-transparent popup window and compare colors at popup window &
      * parent window to check
@@ -56,22 +69,61 @@ public class TransparencyWindowTest extends TestBase {
      */
     @Test
     public void PopupTransparency() throws Throwable {
-        Wrap<? extends Button> wrapBtnPopup = Lookups.byID(scene, "BtnShowPopup", Button.class);
+        Wrap<? extends Node> wrapBtnPopup = Lookups.byID(getScene(), "BtnShowPopup", Node.class);
         wrapBtnPopup.mouse().click();
 
         PopupTest.checkStatementWithWaiting("Check transparency", wrapBtnPopup.getEnvironment(), new Callable<String>() {
             public String call() {
-                Wrap<? extends Rectangle> wrapGreenRect = Lookups.byID(scene, "RectGreen", Rectangle.class);
-                Wrap<? extends CheckBox> wrapCheckBox_isSupportedTransparentWindow = Lookups.byID(scene, "TRANSPARENT_WINDOW", CheckBox.class);
+                Wrap<? extends Rectangle> wrapGreenRect = Lookups.byID(getScene(), "RectGreen", Rectangle.class);
+                Wrap<? extends Node> wrapCheckBox_isSupportedTransparentWindow = Lookups.byID(getScene(), "TRANSPARENT_WINDOW", Node.class);
 
-                Image image = scene.getScreenImage();
+                Image image = getScene().getScreenImage();
+                String status = null;
                 try {
-                    JemmyUtils.comparePopUpRGB(image, wrapGreenRect.getControl(), wrapCheckBox_isSupportedTransparentWindow.getControl(), TransparencyWindowApp.smallRectSize);
+                    status = ccomparePopUpRGB(image, wrapGreenRect.getControl(), wrapCheckBox_isSupportedTransparentWindow.getControl(), TransparencyWindowApp.smallRectSize);
                 } catch (JemmyException ex) {
                     return ex.getMessage();
                 }
-                return null;
+                return status;
             }
         });
+        
     }
+    public static String ccomparePopUpRGB(Image image, Rectangle rec, Node chB, int smallRectSize){
+        String status = checkAssert(true,"Internal error: Image is not of proper type AWTImage/GlassImage", usingGlassRobot() ? image instanceof GlassImage : image instanceof AWTImage);
+        if (null != status)
+            return status;
+
+        Object rgbOnPopupAndGreenRect = getRGBColors(image, (int)(rec.getX()) + 1, (int)(rec.getY()) + 1);
+        Object rgbOnPopup = getRGBColors(image, (int)(rec.getX()) - 1, (int)(rec.getY()) + 1);
+        Object rgbOutsidePopup = getRGBColors(image, (int)(rec.getX()) - smallRectSize - 1, (int)(rec.getY()));
+
+        status = checkAssert(true,"Internal Error: Popup is not showed", usingGlassRobot() ? !Arrays.equals((double[]) rgbOnPopup, (double[]) rgbOutsidePopup) : ((Integer) rgbOnPopup).intValue() != ((Integer) rgbOutsidePopup).intValue());
+        if (null != status)
+            return status;
+
+        if (isTransparencySupported(chB)) {
+            // Transparent window is supported
+            status = checkAssert(false,"Transparency is not supported but Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW) == true",
+                    usingGlassRobot() ? Arrays.equals((double[]) rgbOnPopup,(double[]) rgbOnPopupAndGreenRect) : ((Integer) rgbOnPopup).intValue() == ((Integer) rgbOnPopupAndGreenRect).intValue());
+        if (null != status)
+            return status;
+        } else {
+            // Transparent window isn't supported
+            status = checkAssert(true,"Transparency is supported but Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW) == false",
+                    usingGlassRobot() ? Arrays.equals((double[]) rgbOnPopup,(double[]) rgbOnPopupAndGreenRect) : ((Integer) rgbOnPopup).intValue() == ((Integer) rgbOnPopupAndGreenRect).intValue());
+        if (null != status)
+            return status;
+        }
+        return status;
+    }
+    private static String checkAssert(final boolean _expected, final String _msg,final boolean _chk)
+    {
+        String status = null;
+        if (_expected == _chk)
+            return status;
+        else
+            return _msg;
+    }
+    
 }

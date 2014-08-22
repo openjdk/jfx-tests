@@ -49,7 +49,7 @@ public class TextControlWrap<T extends javafx.scene.control.Control> extends Con
 
     @ObjectLookup("text and comparison policy")
     public static <B extends Labeled> LookupCriteria<B> textLookup(Class<B> tp, String text, StringComparePolicy policy) {
-        return new ByText<B>(text, policy);
+        return new ByText<>(text, policy);
     }
     /**
      *

@@ -27,7 +27,7 @@ package org.jemmy.fx.control;
 import javafx.scene.Node;
 import javafx.scene.control.TitledPane;
 import org.jemmy.Rectangle;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Wrap;
@@ -58,9 +58,7 @@ public class TitledPaneWrap<CONTROL extends TitledPane> extends TextControlWrap<
     }
 
     /**
-     *
      * @param env
-     * @param scene
      * @param nd
      */
     @SuppressWarnings("unchecked")
@@ -91,12 +89,7 @@ public class TitledPaneWrap<CONTROL extends TitledPane> extends TextControlWrap<
     }
 
     public void setExpanded(final boolean isExpanded) {
-        if (isExpanded != new GetAction<Boolean>() {
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(getControl().isExpanded());
-            }
-        }.dispatch(getEnvironment())) {
+        if (isExpanded != new FutureAction<>(getEnvironment(), () -> getControl().isExpanded()).get()) {
             final Rectangle initial_rect = new Rectangle(-1, -1);
             if (isAnimated()) {
                 waitAnimationEnd(initial_rect);
@@ -108,6 +101,7 @@ public class TitledPaneWrap<CONTROL extends TitledPane> extends TextControlWrap<
                 public String toString() {
                     return "{" + isExpanded + '}';
                 }
+
                 public Boolean reached() {
                     return getControl().isExpanded();
                 }
@@ -119,33 +113,22 @@ public class TitledPaneWrap<CONTROL extends TitledPane> extends TextControlWrap<
             }
         }
     }
-    
+
     protected void waitAnimationStart(final Rectangle initial_rect) {
-        new Waiter(getEnvironment().getTimeout(ANIMATION_START_TIMEOUT), getEnvironment().getTimeout(ANIMATION_START_CHECK_PERIOD_TIMEOUT)).waitValue(Boolean.TRUE, new State<Boolean>() {
-            public Boolean reached() {
-                return !initial_rect.equals(getScreenBounds());
-            }
-        });
+        new Waiter(getEnvironment().getTimeout(ANIMATION_START_TIMEOUT), getEnvironment().getTimeout(ANIMATION_START_CHECK_PERIOD_TIMEOUT)).waitValue(Boolean.TRUE, () -> !initial_rect.equals(getScreenBounds()));
     }
 
     protected void waitAnimationEnd(final Rectangle initial_rect) {
-        new Waiter(getEnvironment().getTimeout(ANIMATION_TIMEOUT), getEnvironment().getTimeout(ANIMATION_END_CHECK_PERIOD_TIMEOUT)).waitValue(Boolean.TRUE, new State<Boolean>() {
-            public Boolean reached() {
-                Rectangle current_rect = getScreenBounds();
-                Boolean reached = initial_rect.equals(current_rect);
-                initial_rect.setBounds(current_rect);
-                return reached;
-            }
+        new Waiter(getEnvironment().getTimeout(ANIMATION_TIMEOUT), getEnvironment().getTimeout(ANIMATION_END_CHECK_PERIOD_TIMEOUT)).waitValue(Boolean.TRUE, () -> {
+            Rectangle current_rect = getScreenBounds();
+            Boolean reached = initial_rect.equals(current_rect);
+            initial_rect.setBounds(current_rect);
+            return reached;
         });
     }
 
     protected Boolean isAnimated() {
-        return new GetAction<Boolean>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().isAnimated());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().isAnimated()).get();
     }
 
     public Wrap<? extends Node> getTitle() {

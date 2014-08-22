@@ -24,10 +24,9 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.List;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
@@ -36,22 +35,21 @@ import org.jemmy.env.Environment;
 import org.jemmy.input.StringMenuOwner;
 import org.jemmy.interfaces.Parent;
 
+import java.util.List;
+
 @ControlType({Menu.class})
 @ControlInterfaces(value = {Parent.class, StringMenuOwner.class},
-        encapsulates = {MenuItem.class, MenuItem.class}, name={"asMenuParent"})
+        encapsulates = {MenuItem.class, MenuItem.class}, name = {"asMenuParent"})
 public class MenuWrap<ITEM extends Menu> extends MenuItemWrap<ITEM> {
 
     public static final String SHOWING_PROPERTY_NAME = "isShowing";
     public static final String PARENT_SHOWN_PROPERTY_NAME = "parent.shown";
-    
+
     private StringMenuOwnerImpl menuOwner = null;
     private Parent<MenuItem> parent = null;
 
     /**
-     *
      * @param env
-     * @param scene
-     * @param nd
      */
     @SuppressWarnings("unchecked")
     public MenuWrap(Environment env, ITEM item) {
@@ -65,13 +63,7 @@ public class MenuWrap<ITEM extends Menu> extends MenuItemWrap<ITEM> {
 
                 @Override
                 protected List getControls() {
-                    return new GetAction<List<?>>() {
-
-                        @Override
-                        public void run(Object... os) throws Exception {
-                            setResult(getControl().getItems());
-                        }
-                    }.dispatch(getEnvironment());
+                    return new FutureAction<>(getEnvironment(), () -> getControl().getItems()).get();
                 }
             };
         }
@@ -80,12 +72,12 @@ public class MenuWrap<ITEM extends Menu> extends MenuItemWrap<ITEM> {
 
     @As(MenuItem.class)
     public StringMenuOwner<MenuItem> asMenuOwner() {
-        if(menuOwner == null) {
-             menuOwner = new StringMenuOwnerImpl(this, this.as(Parent.class, Menu.class));
+        if (menuOwner == null) {
+            menuOwner = new StringMenuOwnerImpl(this, this.as(Parent.class, Menu.class));
         }
         return menuOwner;
     }
-    
+
     @Property(SHOWING_PROPERTY_NAME)
     public boolean isShowing() {
         return isShowing(getControl(), getEnvironment());
@@ -97,25 +89,16 @@ public class MenuWrap<ITEM extends Menu> extends MenuItemWrap<ITEM> {
     }
 
     static boolean isShowing(final Menu menu, Environment env) {
-        return new GetAction<Boolean>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(menu.isShowing());
-            }
-        }.dispatch(env);
+        return new FutureAction<>(env, menu::isShowing).get();
     }
 
     static boolean isParentShown(final Menu menu, Environment env) {
-        return new GetAction<Boolean>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                if (menu.getParentPopup() != null) {
-                    setResult(menu.getParentPopup().isShowing());
-                } else {
-                    setResult(true);
-                }
+        return new FutureAction<>(env, () -> {
+            if (menu.getParentPopup() != null) {
+                return menu.getParentPopup().isShowing();
+            } else {
+                return true;
             }
-        }.dispatch(env);
+        }).get();
     }
 }

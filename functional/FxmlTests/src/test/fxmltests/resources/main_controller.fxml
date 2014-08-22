@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.* ?>
+<?import javafx.scene.layout.* ?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="test.fxmltests.app.MainController">
+    <Label>
+        Hello world.
+    </Label>
+    <fx:include fx:id="myInclude" source="include_controller.fxml"/>
+</VBox>

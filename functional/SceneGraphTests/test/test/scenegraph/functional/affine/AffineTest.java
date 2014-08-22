@@ -23,12 +23,12 @@
  */
 package test.scenegraph.functional.affine;
 
+import test.embedded.helpers.Configuration;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.CheckBoxDock;
 import org.jemmy.fx.control.CheckBoxWrap;
 import org.jemmy.timing.State;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -54,7 +54,7 @@ public class AffineTest extends TestBase
     {
         super.before();
         
-        sceneDock = new SceneDock(scene);
+        sceneDock = new SceneDock(getScene());
         fxArea = new NodeDock(sceneDock.asParent(), AffineApp.FX_AFFINE_AREA);
         manualArea = new NodeDock(sceneDock.asParent(), AffineApp.MANUAL_AFFINE_AREA);
     }
@@ -121,11 +121,19 @@ public class AffineTest extends TestBase
     
     private void check(String checkBoxId)
     {
+        if(Configuration.isEmbedded()) {
+            checkEmbedded(checkBoxId);
+        } else {
+            checkDesktop(checkBoxId);
+        }
+    }
+    
+    private void checkDesktop(String checkBoxId) {
         CheckBoxDock checkBoxDock = new CheckBoxDock(sceneDock.asParent(), checkBoxId);
         checkBoxDock.selector().select(CheckBoxWrap.State.CHECKED);
         try
         {
-            scene.waitState(new State<Boolean>() {
+            getScene().waitState(new State<Boolean>() {
 
                 public Boolean reached() {
                     return fxArea.wrap().getScreenImage().compareTo(manualArea.wrap().getScreenImage()) == null;
@@ -136,6 +144,17 @@ public class AffineTest extends TestBase
         {
             checkBoxDock.selector().select(CheckBoxWrap.State.UNCHECKED);
         }
+    }
+    
+    private void checkEmbedded(String checkBoxId) {
+        NodeDock dock = new NodeDock(sceneDock.asParent(), checkBoxId);
+        dock.mouse().click();
+        getScene().waitState(new State<Boolean>() {
+
+            public Boolean reached() {
+                return fxArea.wrap().getScreenImage().compareTo(manualArea.wrap().getScreenImage()) == null;
+            }
+        }, true);
     }
     
     private SceneDock sceneDock;

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/*
+ * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ */
+-->
+<project name="javatest_utility_macro" default="default" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
+    <dirname property="jclient.root.dir" file="${ant.file.fxprobe}"/>
+    <import file="nbproject/build-impl.xml"/>
+
+    <macrodef name="run-javatest">
+        <attribute name="testmode"/>
+        <sequential>
+            <echo message="testmode = @{testmode}" />
+            <echo message="Javatest Basedir = ${fxtest.basedir}" />
+            <echo message="external.output = ${external.output}" />
+            
+            <fail message="fxtest.basedir not set" unless="fxtest.basedir" />
+            <property name="workdir" value="${fxtest.basedir}/workdir_@{testmode}"/>
+            <property name="reportdir" value="${fxtest.basedir}/reportdir_@{testmode}"/>
+            <!-- default values -->
+            <property name="javatest.runmode" value="desktop"/>
+            <property name="javatest.pipelineGroup" value="Hardware(Default)"/>
+            <!-- find utils -->
+            <property name="javatest.jar" value="${jclient.root.dir}/../../tools/lib/javatest.jar"/>
+            <property name="HtmlTestRunner.jar" value="${jclient.root.dir}/../../tools/HtmlTestRunner/dist/HtmlTestRunner.jar"/>
+
+            <!-- JTI MAGIC -->
+            
+            <!-- step 0: jti file's names -->
+            <property name="fxsqe.jti.base" value="${jclient.root.dir}/../../tools/FxTestRunner/javatest_base/@{testmode}.jti.base" />
+            <property name="fxsqe.jti.suite-specific" value="${basedir}/javatest_files/@{testmode}.jti" />
+            <property name="jti" value="${fxtest.basedir}/@{testmode}.jti"/>
+
+            <!-- step 1: load properties (non-override rule) in next order: -Dfxsqe.name, fxsqe.jti.suite-specific -->
+            <property file="${fxsqe.jti.base}" prefix="javatest"/>
+
+            <!-- step 2: load filters (override works) in next order: fxsqe.jit.base, fxsqe.jti.suite-specific -->
+            <filter filtersfile="${fxsqe.jti.base}" />
+            <filter filtersfile="${fxsqe.jti.suite-specific}" />
+
+            <!-- step 3: apply run-specific values to filters. Unset values are preloaded in step 1. -->
+            <filter token="runmode" value="${javatest.runmode}"/>
+            <filter token="pipelineGroup" value="${javatest.pipelineGroup}"/>
+            <filter token="browserPath" value="${javatest.browserPath}"/>
+            <filter token="javawsPath" value="${javatest.javawsPath}"/>
+            <filter token="vmOptions" value="${javatest.vmOptions}"/>
+            <filter token="dryrun" value="${javatest.dryrun}"/>
+
+            <!-- step 4: set the rest of filters-->
+
+            <condition property="javafx.home" value="${javafx.rt}">
+            <not>
+                <isset property="javafx.home"/>
+            </not>
+            </condition>
+            <pathconvert targetos="unix" property="javafx.home.converted">
+                <path location="${javafx.home}"/>
+            </pathconvert>
+	    <echo message="debug: javafx.home = ${javafx.home}"/>
+	    <echo message="debug: javafx.home.converted = ${javafx.home.converted}"/>
+
+
+            <condition property="fvalue.javafx.home" value="${javafx.home.remote}" else="${javafx.home.converted}">
+                <isset property="javafx.home.remote"/>
+            </condition>
+            <condition property="fvalue.remote" value="Yes" else="No">
+                <isset property="javafx.home.remote"/>
+            </condition>
+            <condition property="fvalue.javaPath" value="javaPath=java" else="">
+                <isset property="javafx.home.remote"/>
+            </condition>
+
+            <filter token="javafx.home" value="${fvalue.javafx.home}"/>
+            <filter token="remote" value="${fvalue.remote}"/>
+            <filter token="javaPath=" value="${fvalue.javaPath}"/>
+
+            <filter token="TESTSUITE" value="${basedir}/${test.sources}"/>
+            <filter token="WORKDIR" value="${workdir}"/>
+            <filter token="external.output" value="${fxtest.basedir}"/>
+
+            <!-- step 5: copy template with applied filters -->
+            <copy overwrite="true" filtering="true" file="${jclient.root.dir}/../../tools/FxTestRunner/javatest_base/@{testmode}.jti.template" tofile="${jti}"/>
+
+            <!-- step 5: add Vera's tricks -->
+            <antcall target="trickcase1"/>
+            <antcall target="trickcase2"/>
+            <!-- END OF JTI MAGIC -->    
+                
+            <!-- classpath -->
+            <property name="client.test.root" value="${basedir}/${test.sources}"/>
+            <property name="javatest.classpath" value="${jclient.root.dir}/../../tools/FxTestRunner/dist/FxTestRunner.jar:${javatest.jar}:${HtmlTestRunner.jar}:${build.test.classes.dir}:${javac.test.classpath}:${jclient.root.dir}/../../tools/lib/jetty-all.jar:${jclient.root.dir}/../../tools/SharedTestUtilsOpen/dist/SharedTestUtilsOpen.jar:${jclient.root.dir}/../../tools/lib/servlet-api.jar"/>
+            <echo message="classpath=${javatest.classpath}"/>
+
+            <!-- agent / utility mode stuff -->
+            <condition property="javatest.opt" value="-batch" else="">
+                <equals arg1="${javatest.mode.batch}" arg2="true" />
+            </condition>
+            <condition property="javatest.agent.pool" value="-startAgentPool" else="">
+                <isset property="javafx.home.remote"/>
+            </condition>
+
+            <!-- run javatest -->
+       
+            <mkdir dir="${workdir}"/>
+            <!-- update defaults --> 
+
+            <condition property="javatest.debug.jvmargs" value="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5858" else="">
+                <isset property="javatest.debug"/>
+            </condition>
+
+            <property name="javatest.java" value="java"/>        
+
+            <java classpath="${javatest.classpath}"
+                  classname="com.sun.javatest.tool.Main" fork="true" failonerror="false" jvm="${javatest.java}">
+                <jvmarg line="${javatest.debug.jvmargs}"/>
+                <sysproperty key="client.test.root" value="${client.test.root}"/>
+                <sysproperty key="javatest.security.noSecurityManager" value="true"/>
+                <sysproperty key="client.exclude.nodesc" value="${exclude.nodesc}"/>
+                <sysproperty key="client.exclude.desc" value="${exclude.desc}"/>
+                <sysproperty key="javatest.FXProcessCommand.verbose" value="${javatest.FXProcessCommand.verbose}"/>
+                <arg line="-config"/>
+                <arg line="${jti}"/>
+                <arg line="-workdir"/>
+                <arg line="${workdir}"/>
+                <arg line="-testsuite"/>
+                <arg line="${basedir}/${test.sources}"/>
+                <arg line="${javatest.opt}"/>
+                <arg line="${javatest.agent.pool}"/>
+            </java>
+
+            <delete includeEmptyDirs="true" failonerror="false">
+                <fileset dir="${reportdir}"/>
+            </delete>
+            <mkdir dir="${reportdir}"/>
+            <echo message="Writing TXT report"/>
+            <java classpath="${javatest.classpath}"
+                  classname="com.sun.javatest.tool.Main" fork="true" failonerror="false" jvm="${javatest.java}">
+                <sysproperty key="client.test.root" value="${client.test.root}"/>
+                <sysproperty key="javatest.security.noSecurityManager" value="true"/>
+                <sysproperty key="client.exclude.nodesc" value="${exclude.nodesc}"/>
+                <sysproperty key="client.exclude.desc" value="${exclude.desc}"/>
+                <arg line="-config"/>
+                <arg line="${jti}"/>
+                <arg line="-workdir"/>
+                <arg line="${workdir}"/>
+                <arg line="-testsuite"/>
+                <arg line="${basedir}/${test.sources}"/>
+                <arg line="${javatest.opt}"/>
+                <arg line="-writeReport -type txt -filter allTests ${reportdir}"/>
+            </java>
+            <echo message="Writing HTML report"/>
+            <java classpath="${javatest.classpath}"
+                  classname="com.sun.javatest.tool.Main" fork="true" failonerror="false" jvm="${javatest.java}">
+                <sysproperty key="client.test.root" value="${client.test.root}"/>
+                <sysproperty key="javatest.security.noSecurityManager" value="true"/>
+                <sysproperty key="client.exclude.nodesc" value="${exclude.nodesc}"/>
+                <sysproperty key="client.exclude.desc" value="${exclude.desc}"/>
+                <arg line="-config"/>
+                <arg line="${jti}"/>
+                <arg line="-workdir"/>
+                <arg line="${workdir}"/>
+                <arg line="-testsuite"/>
+                <arg line="${basedir}/${test.sources}"/>
+                <arg line="${javatest.opt}"/>
+                <arg line="-writeReport -type html -filter allTests ${reportdir}/html"/>
+            </java>
+
+        </sequential>
+    </macrodef>
+
+	<target name="trickcase1" if="singletest.path">
+        	<echo message="Run single test with name ${singletest.path}" />
+                <replace file="${jti}" token="tests.needTests=No" value="tests.needTests=Yes"/>
+                <replace file="${jti}" token="tests.tests=" value="tests.tests=${singletest.path}"/>
+        </target>
+	<target name="trickcase2" unless="singletest.path" if="testlist.path">
+ 		<echo message="Run tests from file ${testlist.path}" />
+                <replace file="${jti}" token="tests.needTests=No" value="tests.needTests=Yes"/>
+                <replace file="${jti}" token="tests.treeOrFile=tree" value="tests.treeOrFile=file"/>
+                <echo file="${jti}" append="Yes">&#13;&#10;tests.testFile=${testlist.path}&#13;&#10;</echo>
+        </target>
+
+</project>

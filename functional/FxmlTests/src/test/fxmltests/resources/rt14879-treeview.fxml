@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.Text?>
+<?import java.lang.String?>
+
+
+<TreeView xmlns:fx="http://javafx.com/fxml">
+ <TreeItem value="root">
+ <children>
+ <TreeItem value="A1">
+ </TreeItem>
+ <TreeItem value="A3">
+ </TreeItem>
+ <TreeItem value="A2">
+ </TreeItem>
+ </children>
+ </TreeItem>
+</TreeView>
+
+
+

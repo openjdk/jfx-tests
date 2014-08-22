@@ -24,15 +24,14 @@
  */
 package org.jemmy.fx.control.caspian;
 
-import javafx.scene.control.SkinBase;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.layout.StackPane;
 import org.jemmy.JemmyException;
 import org.jemmy.Point;
 import org.jemmy.Vector;
-import org.jemmy.fx.ByStyleClass;
 import org.jemmy.control.Wrap;
+import org.jemmy.fx.ByStyleClass;
 import org.jemmy.input.KnobDragScrollerImpl;
 import org.jemmy.input.ScrollTrack;
 import org.jemmy.interfaces.Parent;
@@ -79,12 +78,12 @@ public class KnobTrackScrollerImpl extends KnobDragScrollerImpl {
     @Override
     protected Wrap<?> getKnob() {
         return skin.lookup(StackPane.class,
-                new ByStyleClass<StackPane>(KnobTrackScrollerImpl.SLIDER_KNOB_STYLECLASS)).wrap();
+                new ByStyleClass<>(KnobTrackScrollerImpl.SLIDER_KNOB_STYLECLASS)).wrap();
     }
 
     public Shifter getTrack() {
         Wrap<?> track = skin.lookup(StackPane.class,
-                new ByStyleClass<StackPane>(KnobTrackScrollerImpl.SLIDER_TRACK_STYLECLASS)).wrap();
+                new ByStyleClass<>(KnobTrackScrollerImpl.SLIDER_TRACK_STYLECLASS)).wrap();
         return new ScrollTrack(track, wrap, isVertical, 0);
     }
 

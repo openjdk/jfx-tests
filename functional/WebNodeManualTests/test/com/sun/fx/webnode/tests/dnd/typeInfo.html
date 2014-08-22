@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h3>Test for retrieving drag information</h3>
+        <ol>
+            <li>Wait for the test page to load.</li>
+            <li>Drag the first element in list (purple rectangle with "text/plain, value: Test" text). Drop it on the drop area. 
+                Check that the following text has appeared below the drop area:<br/>
+                <pre>Type: text/plain<br/>
+                    Value: Test</pre>
+                <pre>event.dataTransfer.files.length = 0</pre>
+            </li>
+            <li>Drag the second element in list (purple rectangle with "test/x-test, value: XTest" text). Drop it on the drop area. 
+                Check that the following text has appeared below the drop area:<br/>
+                <pre>Type: test/x-test<br/>
+                    Value: XTest</pre>
+                <pre>event.dataTransfer.files.length = 0</pre>
+            </li>
+            <li>Drag the third element in list (purple rectangle with "text/plain, value: Test; test/x-test, value: XTest" text). Drop it on the drop area. 
+                Check that the following text has appeared below the drop area (the order of paragraphs is not important):<br/>
+                <pre>Type: test/x-test<br/>
+                    Value: XTest</pre>
+                <pre>Type: text/plain<br/>
+                    Value: Test</pre>
+                <pre>event.dataTransfer.files.length = 0</pre>
+            </li>
+            <li>Drag the fourth element in list (a horse image). Drop it on the drop area.
+                Check that the following text has appeared below the drop area (it might be not the first paragraph):
+                <pre>Type: text/html<br/>
+                    Value: <img src="resources/tinker.jpg"/>
+                </pre>
+            </li>
+        </ol>
+        The test passes if every step passes.
+    </body>
+</html>

@@ -1,0 +1,187 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h2>Directory chooser manual test</h2>
+
+        <h3>Description</h3>
+
+            JavaFX provide common access to native file and directory choosers 
+            (they are different on different Operation Systems, and each can 
+            have its specific). File choosers allow to select file for saving 
+            and opening. We will test it.
+
+        <h3>Note</h3>
+
+        <ul><li>There is a "No errors" label in the bottom of the scene. If any 
+                error happens, in the place of this label will be shown an 
+                indication about error, and error will be printed into error 
+                output, and shown in the tooltip of the label. Please, check 
+                this label, on each step, and fail the test, if you see any 
+                exception.</li>
+            <li>Each of buttons ["Save file FX (modal dialog)", 
+                "Save file with extension FX (modal dialog)", "Open File FX", 
+                "Open File with extension FX", "Open Multiple Files FX", 
+                "Open Multiple Files With extensions FX"] (6 buttons) open a 
+                dialog for file opening or closing. I will call them "FILE DIALOG
+                BUTTONS"</li>
+            <li>If a button has text "(modal dialog)", then a dialog will be 
+                opened as modal window, and will block the window with buttons.</li>
+            <li>If a button has notion "with extensions", it means, that extension
+                "*.extension" will be added for saved or opened files.</li>
+            <li>Save dialogs will save files to open them later with open dialogs,
+                so navigate to a directory, which you have rights to write in. 
+                Remove them after testing is finished.</li>
+        </ul>
+
+        <h3>Step 1: Simple open/close case.</h3>
+        <ul><li>For each FILE DIALOG BUTTON do actions below : </li>
+            <li>Just press the button to open the dialog.</li>
+            <li>Check, that modal dialogs block the underlying window, and non modal don't block.</li>
+            <li>Close appeared dialog.</li>
+            <li>Check, that returned result is <b>null</b>.</li>
+            <li>Check that there are no exceptions, everything works fine</li>
+        </ul>
+
+        <h3>Step 2: Title could be set.</h3>
+        <ul><li>In a text field for Title type "Custom title". It will set a title for file dialog.</li>
+            <li>For each FILE DIALOG BUTTON do actions below : </li>
+            <li>Open a dialog, check that title of file dialog is "Custom title", close the dialog.</li>
+            <li>Check that there are no exceptions, everything works fine</li>
+        </ul>
+
+        <h3>Step 3: Saving files.</h3>
+        <ul><li>Click button "Save file FX (modal dialog)".</li>
+            <li>Type name "file1.extension", and save.</li>
+            <li>Check, that file "file1.extension" was physically created (via file browser, of via terminal).</li>
+            <li>Check, that result of the dialog points to correct location of file "file1.extension".</li>            
+            <li>Click button "Save file with extensions FX (modal dialog)".</li>
+            <li>Navigate, to the place, where previous file was saved.</li>
+            <li>Mac only : press on drop down button, to see the folder content (by default you see minimized version of dialog).</li>
+            <li>If you are NOT ON Mac : shown files should be filtered via "*.extension" extension, so you should see "file1.extension" and folders.</li>
+            <li>If you are ON Mac : you should see "file1.extension", other files and folders.</li>
+            <li>Type file name "file2", and press save.</li>
+            <li>WIN : Check, that result of the dialog points to correct location of file "file2.extension".
+                <ul>
+                    <li>
+                        <strong>Linux</strong>
+                        <p>Check, that result of the dialog points to correct location of file "file2" without extension</p>
+                    </li>
+                    <li>
+                        <strong>Mac</strong>
+                        <p>Check, that result of the dialog points to correct location of file "file2.extension"</p>
+                    </li>
+                </ul>
+            </li>
+            <li>WIN : Check, that file "file2.extension" was physically created in that location.
+                
+                <ul>
+                    <li>
+                        <strong>Linux</strong>
+                        <p>Check, that file "file2" (without extension) was physically created in that location</p>
+                    </li>
+                    <li>
+                        <strong>Mac</strong>
+                        <p>Check, that file "file2.extension" was physically created in that location.</p>
+                    </li>
+                </ul>
+            </li>
+            <li>Open the same dialog again, and navigate to the previous location.</li>
+            <li>Type file name "file1", and press save.</li>
+            <li>WINDOWS only : check, that an alert (warning) about overwriting an existing file is shown.</li>
+            <li>Check, that result of the dialog points to correct location of file "file1.extension".</li>            
+            <li>Check that there are no exceptions, everything works fine.</li>
+        </ul>
+
+        <h3>Step 4: Saving files with predefined name.</h3>
+        <ul><li>Print "file3" in a text field for Initial file name.</li>
+            <li>Click button "Save file with extensions FX (modal dialog)".</li>
+            <li>Check, that name of the file for saving is set to "file3" or "file3.extension".</li>
+            <li>Press save.</li>
+            <li>Check, that result of the dialog points to correct location of file "file3.extension", and that file exists physically.</li>    
+            <li>Check that there are no exceptions, everything works fine.</li>
+        </ul>
+
+        <h3>Step 5: "New Folder" option in a save menu.</h3>
+        <ul><li>Click button "Save file FX (modal dialog)".</li>
+            <li>Mac only : click on drop down button to see the extended form of dialog (by default you see a minimized version of dialog).</li>
+            <li>Check, that "New folder" button is present in a dialog. (in the top left on windows, in the bottom left on the mac), or "Create folder" in linux.<br/>
+Note that on Windows system you have to select the logical drive first. E.g. double click with mouse the 'C:' label and after that the 'New folder' button should appear.</li>
+            <li>Close dialog</li>
+            <li>Click button "Save file with extensions FX (modal dialog)".</li>
+            <li>Check, the same (button about new folder creating exists).</li>    
+        </ul>
+
+        <h3>Opening files.</h3>
+
+        <h3>Step 6. Opening file.</h3>
+        <ul><li>Click button "Open file FX".</li>
+            <li>Navigate to place, where "file*.extension" were saved.</li>
+            <li>Open any of files - file1 or file2, or file3 from previous tests (select it via mouse click on the file).</li>
+            <li>Press open.</li>
+            <li>Check, that result of the dialog points to correct location of that file and extension "*.extension" is added.</li>    
+            <li>Check that there are no exceptions, everything works fine.</li>
+        </ul>
+
+        <h3>Step 7. Opening file with extension.</h3>
+        <ul><li>Click button "Open file with extensions FX".</li>
+            <li>Navigate to place, where "file*.extension" were saved.</li>
+            <li>Windows, Linux : Type file name "file1" | MacOS : select file1.extension.</li>
+            <li>Press open.</li>
+            <li>Check, that result of the dialog points to correct location of file "file1.extension" and correct extension is added to the end.</li>            
+            <li>Click button "Open file with extensions FX".</li>
+            <li>Navigate to place, where "file*.extension" were saved.</li>
+            <li>Check, that files are filtered : only "file*.extension", and some folders (possibly, they are not filtered out) are shown.</li>
+            <li>Select any file from list "file*.extension", and open it</li>
+            <li>Check, that result of the dialog points to correct location of file, which you've opened and correct extension is added to the end.</li>            
+            <li>Check that there are no exceptions, everything works fine.</li>
+        </ul>
+
+        <h3>Step 8. Opening file.</h3>
+        <ul><li>Click button "Open Multiple files FX".</li>
+            <li>Navigate to place, where "file*.extension" were saved.</li>
+            <li>Open files: - file1 and file2, from previous tests (select it via mouse click on the file).</li>
+            <li>Press open.</li>
+            <li>Check, that result of the dialog points to correct location of those files, separated with ";" and extension "*.extension" is added to the each one.</li>    
+            <li>Check that there are no exceptions, everything works fine.</li>
+        </ul>
+
+        <h3>Step 9. Opening file with extension.</h3>
+        <ul><li>Click button "Open Multiple Files With extensions FX".</li>
+            <li>Navigate to place, where "file*.extension" were saved.</li>
+            <li>Check, that only files "file*.extension" are shown (and folders)</li>
+            <li>Select file1 and file2, and press open.</li>
+            <li>Check, that result of the dialog points to correct location of file "file1.extension" and "file2.extension" and correct extension is added to the end.</li>                     
+            <li>Check that there are no exceptions, everything works fine.</li>
+        </ul>
+    </body>
+</html>

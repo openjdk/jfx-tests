@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="draggable.css"/>
+    </head>
+    <body>
+        <h3>Test for drop event</h3>
+        <span draggable="true" class="draggable" ondragstart="event.dataTransfer.setData('text/plain', '1');">Drag me!</span>
+        <div class="droparea"
+             ondrop="event.preventDefault(); this.className += ' opsuccess';"
+             ondragover="event.preventDefault();"
+             ondragenter="event.preventDefault();">Drop area</div>
+    </body>
+</html>

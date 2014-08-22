@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+            var worker = new Worker('closeWorker.js');
+            var shouldBeDone = false;
+            worker.addEventListener('message', function(event) {
+                document.getElementById("content").innerHTML = event.data;
+                if (!shouldBeDone) {
+                    document.getElementById("content").innerHTML = 'alpha';
+                    shouldBeDone = true;
+                }
+            }, false);
+            worker.postMessage();
+            setTimeout(function() {document.getElementById("result").innerHTML = 'done';}, 5000);
+        </script>
+    </head>
+    <body>
+        <div id="result"></div>
+        <div id="content"></div>
+    </body>
+</html>

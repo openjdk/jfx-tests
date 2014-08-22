@@ -28,9 +28,9 @@ import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.lookup.Any;
 import org.jemmy.lookup.EqualsLookup;
-import org.jemmy.lookup.LookupCriteria;
-import static org.junit.Assert.assertEquals;
 import org.junit.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -57,7 +57,7 @@ public class ListTest {
     public void setUp() throws InterruptedException {
         lst = new ListViewDock(new SceneDock().asParent());
         list = lst.asList();
-        list.setEditor(new TextFieldCellEditor<Object>());
+        list.setEditor(new TextFieldCellEditor<>());
     }
 
     @After
@@ -75,7 +75,7 @@ public class ListTest {
     
     @Test
     public void indexLookup() {
-        new ListItemDock(list, lst.asSelectable().getStates().size() - 1, new Any<Object>()).
+        new ListItemDock(list, lst.asSelectable().getStates().size() - 1, new Any<>()).
                 asEditableCell().edit("four");
     }
 
@@ -85,17 +85,12 @@ public class ListTest {
         for(Object i : lst.wrap().getControl().getItems()) {
             if(i.toString().trim().length() > 2) count++;
         }
-        lst.asList().select(new LookupCriteria() {
-
-            public boolean check(Object control) {
-                return ((String)control).trim().length() > 2;
-            }
-        });
+        lst.asList().select(control -> ((String)control).trim().length() > 2);
         assertEquals(count, lst.wrap().getControl().getSelectionModel().getSelectedItems().size());
     }
     
     @Test
     public void cellSelect() throws InterruptedException {
-        new ListItemDock(lst.asList(), 0, new Any<Object>()).asEditableCell().select();
+        new ListItemDock(lst.asList(), 0, new Any<>()).asEditableCell().select();
     }
 }

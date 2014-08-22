@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="draggable.css"/>
+        <script>
+            var i = 0;
+            function parseDrag() {
+                if (i == 1)
+                    document.getElementById("draggable").className += ' opsuccess';
+            }
+        </script>
+    </head>
+    <body>
+        <h3>Test for dragstart and dragend events sequence</h3>
+        <span id="draggable" draggable="true" class="draggable"
+              ondragstart="i = 1; event.dataTransfer.setData('text/plain', '1');"
+              ondrag="parseDrag();">Drag me!</span>
+    </body>
+</html>

@@ -36,7 +36,7 @@ public class RichTextSpecSymbTest extends TestBase {
 
     @Before
     public void lookup() {
-        Parent p = scene.as(Parent.class, Node.class);
+        Parent p = getScene().as(Parent.class, Node.class);
         screenshotArea = p.lookup(Pane.class, new ByID<Pane>(RichTextSpecSymbApp.TESTING_BOX_ID)).wrap();
     }
 
@@ -143,6 +143,9 @@ public class RichTextSpecSymbTest extends TestBase {
         new GetAction() {
             @Override
             public void run(Object... os) throws Exception {
+                if ( null == app ) {
+                    app = RichTextSpecSymbApp.getApplication();
+                }
                 app.generateFor(i);
             }
         }.dispatch(Root.ROOT.getEnvironment());

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.transform.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import java.util.HashMap?>
+
+<GridPane gridLinesVisible="true" xmlns:fx="http://javafx.com/fxml">
+ <children>
+  <Rectangle width="320" height="240" fx:id="rectangle" fill="#ff0000" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+  <Circle radius="10" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+ </children>
+</GridPane>
+
+

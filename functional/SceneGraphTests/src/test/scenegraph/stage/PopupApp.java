@@ -24,14 +24,9 @@
 package test.scenegraph.stage;
 
 import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
@@ -40,8 +35,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
+import test.embedded.helpers.AbstractButton;
+import test.embedded.helpers.AbstractCheckBox;
+import test.embedded.helpers.ButtonBuilderFactory;
+import test.embedded.helpers.CheckBoxBuilderFactory;
+import test.embedded.helpers.OnClickHandler;
 import test.javaclient.shared.InteroperabilityApp;
 import test.javaclient.shared.Utils;
 
@@ -64,9 +64,9 @@ public class PopupApp extends InteroperabilityApp {
     private VBox root;
     
     private static Popup popup;
-    private CheckBox chAutoHide;
-    private CheckBox chConsumeAutoHidingEvents;
-    private CheckBox chHideOnEscape;
+    public  AbstractCheckBox chAutoHide;
+    private AbstractCheckBox chConsumeAutoHidingEvents;
+    private AbstractCheckBox chHideOnEscape;
     private EventCounter evcntKeyOnPopup;
     private EventCounter evcntKeyOnScene;
     private EventCounter evcntMouseOnPopup;
@@ -76,20 +76,25 @@ public class PopupApp extends InteroperabilityApp {
 
         private int counter = 0;
         StringProperty strProp;
+        Text label;
 
-        private EventCounter(StringProperty strProp) {
-            this.strProp = strProp;
+        private EventCounter(Text label) {
+            this.label = label;
         }
 
         private void reset() {
             counter = 0;
-            strProp.setValue(Integer.toString(counter));
+            label.setText(Integer.toString(counter));
         }
 
         public void handle(final Event event) {
             ++counter;
-            strProp.setValue(Integer.toString(counter));
+            label.setText(Integer.toString(counter));
         }
+    }
+    
+    private static void log(String s) {
+        System.err.println(s);
     }
 
 //    @Override
@@ -107,56 +112,85 @@ public class PopupApp extends InteroperabilityApp {
         scene = new Scene(root, 320, 200, Color.WHITE);
 
         FlowPane hbox = new FlowPane();
-        Button btnShowPopup = new Button("Show Popup");
-        btnShowPopup.setId(ID_BTN_SWOW_POPUP);
+        AbstractButton btnShowPopup = ButtonBuilderFactory.newButtonBuilder()
+                .text("Show Popup")
+                .id(ID_BTN_SWOW_POPUP)
+                .setOnClickHandler(new OnClickHandler() {
+                    
+                    @Override
+                    public void onClick() {
+                        
+                        log("=>btnShowPopup clicked");
+                        
+                        initPopup();
+                        boolean autoHide = chAutoHide.isChecked();
+                        log("autoHide=" + autoHide);
+                        popup.setAutoHide(autoHide);
 
-        chAutoHide = new CheckBox("AutoHide");
-        chAutoHide.setId(ID_CHBOX_AUTO_HIDE);
-        chConsumeAutoHidingEvents = new CheckBox("ConsumeAutoHidingEvents");
-        chConsumeAutoHidingEvents.setId(ID_CHBOX_CONSUME_AUTO_HIDING_EVENTS);
-        chHideOnEscape = new CheckBox("HideOnEscape");
-        chHideOnEscape.setId(ID_CHBOX_HIDE_ON_ESCAPE);
+                        
 
-        hbox.getChildren().addAll(btnShowPopup, chAutoHide, chConsumeAutoHidingEvents, chHideOnEscape);
+                        popup.setHideOnEscape(chHideOnEscape.isChecked());
+                        popup.setConsumeAutoHidingEvents(chConsumeAutoHidingEvents.isChecked());
+
+                        popup.show(stage,
+                                stage.getX() + stage.getWidth() / 2 - popup.getWidth() / 2,
+                                stage.getY() + stage.getHeight() - popup.getHeight());
+                            }
+                    
+                })
+                .build();
+
+        chAutoHide = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("AutoHide")
+                .id(ID_CHBOX_AUTO_HIDE)
+                .build();
+        chConsumeAutoHidingEvents = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("ConsumeAutoHidingEvents")
+                .id(ID_CHBOX_CONSUME_AUTO_HIDING_EVENTS)
+                .build();
+        
+        chHideOnEscape = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("HideOnEscape")
+                .id(ID_CHBOX_HIDE_ON_ESCAPE)
+                .build();
+
+        hbox.getChildren().addAll(btnShowPopup.node(), chAutoHide.node(), chConsumeAutoHidingEvents.node(), chHideOnEscape.node());
 
         HBox hboxEventsOnPopup = new HBox();
-        Label lblMousePressOnPopup = new Label("0");
+        Text lblMousePressOnPopup = new Text("0");
         lblMousePressOnPopup.setId(ID_LABEL_MOUSE_PRESS_COUNT_ON_POPUP);
-        Label lblKbdPressOnPopup = new Label("0");
+        
+        Text lblKbdPressOnPopup = new Text("0");
         lblKbdPressOnPopup.setId(ID_LABEL_KEY_PRESS_COUNT_ON_POPUP);
-        hboxEventsOnPopup.getChildren().addAll(new Label("Mouse press on popup: "), lblMousePressOnPopup, new Label("    Key press on popup: "), lblKbdPressOnPopup);
+        
+        Text lblTitle1 = new Text("Mouse press on popup: ");
+        Text lblTitle2 = new Text("    Key press on popup: ");
+
+        
+        hboxEventsOnPopup.getChildren().addAll(lblTitle1, lblMousePressOnPopup, lblTitle2, lblKbdPressOnPopup);
 
         HBox hboxEventsOnScene = new HBox();
-        Label lblMousePressOnScene = new Label("0");
+        Text lblMousePressOnScene = new Text("0");
         lblMousePressOnScene.setId(ID_LABEL_MOUSE_PRESS_COUNT_ON_SCENE);
-        Label lblKbdPressOnScene = new Label("0");
+        
+        Text lblKbdPressOnScene = new Text("0");
         lblKbdPressOnScene.setId(ID_LABEL_KEY_PRESS_COUNT_ON_SCENE);
-        hboxEventsOnScene.getChildren().addAll(new Label("Mouse press on scene: "), lblMousePressOnScene, new Label("    Key press on scene: "), lblKbdPressOnScene);
+
+        
+        Text lblTitle3 = new Text("Mouse press on scene: ");
+        Text lblTitle4 = new Text("    Key press on scene: ");
+
+        hboxEventsOnScene.getChildren().addAll(lblTitle3, lblMousePressOnScene, lblTitle4, lblKbdPressOnScene);
 
         root.getChildren().addAll(hbox, hboxEventsOnPopup, hboxEventsOnScene);
 
-        evcntMouseOnScene = new EventCounter(lblMousePressOnScene.textProperty());
-        evcntKeyOnScene = new EventCounter(lblKbdPressOnScene.textProperty());
-        evcntMouseOnPopup = new EventCounter(lblMousePressOnPopup.textProperty());
-        evcntKeyOnPopup = new EventCounter(lblKbdPressOnPopup.textProperty());
+        evcntMouseOnScene = new EventCounter(lblMousePressOnScene);
+        evcntKeyOnScene = new EventCounter(lblKbdPressOnScene);
+        evcntMouseOnPopup = new EventCounter(lblMousePressOnPopup);
+        evcntKeyOnPopup = new EventCounter(lblKbdPressOnPopup);
 
         scene.addEventHandler(MouseEvent.MOUSE_PRESSED, evcntMouseOnScene);
         scene.addEventHandler(KeyEvent.KEY_PRESSED, evcntKeyOnScene);
-
-        btnShowPopup.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                initPopup();
-
-                popup.setAutoHide(chAutoHide.isSelected());
-                popup.setHideOnEscape(chHideOnEscape.isSelected());
-                popup.setConsumeAutoHidingEvents(chConsumeAutoHidingEvents.isSelected());
-
-                popup.show(stage,
-                        stage.getX() + stage.getWidth() / 2 - popup.getWidth() / 2,
-                        stage.getY() + stage.getHeight() - popup.getHeight());
-            }
-        });
 
         Utils.addBrowser(scene);
         return scene;
@@ -164,6 +198,7 @@ public class PopupApp extends InteroperabilityApp {
 
     private void initPopup() {
         if (popup != null) {
+            log("hiding popup");
             popup.hide();
         }
 
@@ -185,6 +220,7 @@ public class PopupApp extends InteroperabilityApp {
         evcntKeyOnScene.reset();
         evcntMouseOnPopup.reset();
         evcntKeyOnPopup.reset();
+        
     }
 
     public static boolean isPopupShowing() {

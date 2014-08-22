@@ -25,13 +25,10 @@
 package org.jemmy.samples.lookup;
 
 import org.jemmy.control.Wrap;
-import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.Root;
 import org.jemmy.samples.SampleBase;
-import org.jemmy.timing.State;
 import org.junit.After;
 import org.junit.BeforeClass;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -61,11 +58,6 @@ public class LookupSampleBase extends SampleBase {
      */
     protected void assureMouseOver(String text) {
         Root.ROOT.getEnvironment().getWaiter(Wrap.WAIT_STATE_TIMEOUT).
-                ensureValue(text, new State<String>() {
-
-            public String reached() {
-                return LookupApp.mouseOverText;
-            }
-        });
+                ensureValue(text, () -> LookupApp.mouseOverText);
     }
 }

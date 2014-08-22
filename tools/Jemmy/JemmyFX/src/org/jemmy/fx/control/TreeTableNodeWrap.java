@@ -134,13 +134,7 @@ public class TreeTableNodeWrap<T extends TreeItem> extends Wrap<T>
     }
 
     private void scrollTo() {
-        TableUtils.scrollToInSingleDimension(treeTableViewWrap, TreeTableRow.class,
-                new Callback<TreeTableRow, Integer>() {
-            @Override
-            public Integer call(TreeTableRow p) {
-                return treeTableViewWrap.getRow(p.getTreeItem());
-            }
-        }, treeTableViewWrap.getRow(getControl()),
+        TableUtils.scrollToInSingleDimension(treeTableViewWrap, TreeTableRow.class, (TreeTableRow p) -> treeTableViewWrap.getRow(p.getTreeItem()), treeTableViewWrap.getRow(getControl()),
                 treeTableViewWrap.as(Scroll.class).caret(), true);
     }
 

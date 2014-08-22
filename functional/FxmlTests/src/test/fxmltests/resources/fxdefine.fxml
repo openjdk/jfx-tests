@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.sun.javafx.collections.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.paint.Color?>
+
+<VBox  xmlns:fx="http://javafx.com/fxml">
+ <fx:define>
+  <ToggleGroup fx:id="myToggleGroup"/>
+ </fx:define>
+ <children>
+  <RadioButton text="A" toggleGroup="$myToggleGroup"/>
+  <RadioButton text="B" toggleGroup="$myToggleGroup"/>
+  <RadioButton text="C" toggleGroup="$myToggleGroup"/>
+ </children>
+</VBox>

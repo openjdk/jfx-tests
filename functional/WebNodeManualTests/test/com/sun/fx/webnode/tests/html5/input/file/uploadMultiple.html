@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h3>Test for uploading single files with FILE input control with MULTIPLE attribute</h3>
+        <ol>
+            <li>Wait for test page to load.  The application with loaded page should look like below
+                (directory where files were generated can be different):<br/>
+                <img src="images/simple-multiple.png"/><br/>
+            </li>
+            <li>Click on "Choose Files" button. A modal window with file selection should open.<br/>
+                Go to the directory where files were generated:<br/>
+                <img src="images/generated-in.png"/><br/>
+            </li>
+            <li>Select files "test1.txt" and "test2.txt" (e.g., using left mouse button and Control key) and press "Open" button.<br/>
+                Modal window with file selection should close, and the following text should now be next to "Choose Files" button: "2 files".<br/>
+            </li>
+            <li>Click on "Upload" button.<br/>
+                The following text should appear:<br/>
+                Files successfully uploaded:<br/>
+                1: Content-Disposition: form-data; name="test"; filename="test1.txt" Content-Type: text/plain test test1.txt<br/>
+                2: Content-Disposition: form-data; name="test"; filename="test2.txt" Content-Type: text/plain test test2.txt
+            </li>
+        </ol>
+        The test passes if all steps pass.
+    </body>
+</html>

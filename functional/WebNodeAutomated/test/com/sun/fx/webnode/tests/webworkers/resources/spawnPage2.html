@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+            function doWorker() {
+                var worker = new Worker('spawnWorker2.js');
+                worker.addEventListener('message', function(event) {
+                    document.getElementById("result").innerHTML = event.data;
+                }, false);
+                worker.postMessage();
+            }
+        </script>
+    </head>
+    <body onload="doWorker();">
+        <div id="result"></div>
+    </body>
+</html>

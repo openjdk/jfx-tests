@@ -1,0 +1,7 @@
+javafx.scene.web.WebView.minHeight.GET;com.sun.fx.webnode.tests.api.WebView.minHeightPropertyTest.test1(),com.sun.fx.webnode.tests.api.WebView.minHeightPropertyTest.test3();FULL
+javafx.scene.web.WebEngine.document.GET;com.sun.fx.webnode.tests.api.WebEngine.DocumentPropertyTest.test2();FULL
+javafx.scene.web.WebView.maxWidth.GET;com.sun.fx.webnode.tests.api.WebView.maxWidthPropertyTest.test1(),com.sun.fx.webnode.tests.api.WebView.maxWidthPropertyTest.test3();FULL
+javafx.scene.web.WebView.prefHeight.GET;com.sun.fx.webnode.tests.api.WebView.prefHeightPropertyTest.test1(),com.sun.fx.webnode.tests.api.WebView.prefHeightPropertyTest.test3();FULL
+javafx.scene.web.WebView.prefWidth.GET;com.sun.fx.webnode.tests.api.WebView.prefWidthPropertyTest.test1(),com.sun.fx.webnode.tests.api.WebView.prefWidthPropertyTest.test3();FULL
+javafx.scene.web.WebView.maxHeight.GET;com.sun.fx.webnode.tests.api.WebView.maxHeightPropertyTest.test1(),com.sun.fx.webnode.tests.api.WebView.maxHeightPropertyTest.test3();FULL
+javafx.scene.web.WebView.minWidth.GET;com.sun.fx.webnode.tests.api.WebView.minWidthPropertyTest.test1(),com.sun.fx.webnode.tests.api.WebView.minWidthPropertyTest.test3();FULL

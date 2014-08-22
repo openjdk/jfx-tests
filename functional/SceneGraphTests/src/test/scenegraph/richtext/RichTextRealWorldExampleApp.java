@@ -232,10 +232,6 @@ public class RichTextRealWorldExampleApp extends InteroperabilityApp {
         addText(temp);
     }
 
-    public double getContentHeight() {
-        return document.getHeight();
-    }
-
     public void scrollToMark(int i) {
         Assert.assertTrue("Unexpected mark", i >= 0 && i < 3);
         sp.setVvalue(i * sp.getVmax()/2);

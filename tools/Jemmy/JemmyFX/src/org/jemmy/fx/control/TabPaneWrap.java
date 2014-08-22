@@ -24,32 +24,28 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.jemmy.JemmyException;
+import org.jemmy.action.FutureAction;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
-import org.jemmy.fx.NodeWrap;
 import org.jemmy.env.Environment;
+import org.jemmy.fx.NodeWrap;
 import org.jemmy.input.AbstractScroll;
-import org.jemmy.interfaces.ControlInterface;
-import org.jemmy.interfaces.Focus;
+import org.jemmy.interfaces.*;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Selectable;
-import org.jemmy.interfaces.Selector;
-import org.jemmy.interfaces.TypeControlInterface;
-import org.jemmy.timing.State;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ControlType({TabPane.class})
-@ControlInterfaces( value = {Selectable.class,Parent.class}, 
-                    encapsulates = {Tab.class,Tab.class}, 
-                    name= {"asSelectable", "asTabParent"})
+@ControlInterfaces(value = {Selectable.class, Parent.class},
+        encapsulates = {Tab.class, Tab.class},
+        name = {"asSelectable", "asTabParent"})
 public class TabPaneWrap<CONTROL extends TabPane> extends NodeWrap<CONTROL> {
 
     public static final String SELECTED_INDEX_PROP = "selectedIndex";
@@ -116,19 +112,12 @@ public class TabPaneWrap<CONTROL extends TabPane> extends NodeWrap<CONTROL> {
 
     @Override
     public Focus focuser() {
-        return new Focus() {
-            /*TODO We can't simulate user input in order to switch tabs because there is no way to get real node corresponding to Tab.
+        /*TODO We can't simulate user input in order to switch tabs because there is no way to get real node corresponding to Tab.
              * http://javafx-jira.kenai.com/browse/RT-18230
              * So focus is requested and tabs are switched by keyboard*/
-            public void focus() {
-                new GetAction<Void>(){
+        return () -> {
+            new FutureAction<>(getEnvironment(), () -> getControl().requestFocus());
 
-                    @Override
-                    public void run(Object... parameters) throws Exception {
-                        getControl().requestFocus();
-                    }
-                }.dispatch(getEnvironment());
-            }
         };
     }
 
@@ -140,7 +129,7 @@ public class TabPaneWrap<CONTROL extends TabPane> extends NodeWrap<CONTROL> {
 
                 @Override
                 public void run(Object... parameters) {
-                    setResult(new ArrayList<Tab>(getItems()));
+                    setResult(new ArrayList<>(getItems()));
                 }
 
                 @Override
@@ -175,45 +164,23 @@ public class TabPaneWrap<CONTROL extends TabPane> extends NodeWrap<CONTROL> {
                 keyboard().pushKey((selectedIndex < targetIndex) ? KeyboardButtons.RIGHT
                         : KeyboardButtons.LEFT);
             }
-            waitState(new State<Tab>() {
-
-                public Tab reached() {
-                    return getSelectedItem();
-                }
-            }, state);
+            waitState(() -> getSelectedItem(), state);
         }
     }
 
     @Property(SELECTED_INDEX_PROP)
     public int getSelectedIndex() {
-        return new GetAction<Integer>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().getSelectionModel().getSelectedIndex());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().getSelectionModel().getSelectedIndex()).get();
     }
 
     @Property(SELECTED_ITEM_PROP)
     public Tab getSelectedItem() {
-        return new GetAction<Tab>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().getSelectionModel().getSelectedItem());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().getSelectionModel().getSelectedItem()).get();
     }
 
     @Property(ITEMS_PROP)
     public ObservableList<Tab> getItems() {
-        return new GetAction<ObservableList<Tab>>() {
+        return new FutureAction<>(getEnvironment(), () -> getControl().getTabs()).get();
 
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().getTabs());
-            }
-        }.dispatch(getEnvironment());
     }
 }

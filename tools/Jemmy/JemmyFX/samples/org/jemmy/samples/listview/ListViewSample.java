@@ -24,19 +24,19 @@
  */
 package org.jemmy.samples.listview;
 
-import java.util.Date;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.ListItemDock;
 import org.jemmy.fx.control.ListViewDock;
 import org.jemmy.fx.control.TextFieldCellEditor;
 import org.jemmy.interfaces.List;
 import org.jemmy.lookup.Any;
-import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
 import org.jemmy.samples.listview.ListViewApp.Record;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Date;
 
 /**
  * This shows typical set of operations which could be performed of a ListView. 
@@ -77,12 +77,7 @@ public class ListViewSample extends SampleBase {
         //by toString() of the object
         new ListItemDock(listView3.asList(), "man", StringComparePolicy.SUBSTRING).asEditableCell().select();
         //or any other way by creating a custom lookup criteria
-        new ListItemDock(listView1.asList(), new LookupCriteria<Object>() {
-
-            public boolean check(Object cntrl) {
-                return cntrl instanceof Date;
-            }
-        }).asEditableCell().select();
+        new ListItemDock(listView1.asList(), cntrl -> cntrl instanceof Date).asEditableCell().select();
     }
     
     /**
@@ -136,12 +131,7 @@ public class ListViewSample extends SampleBase {
      */
     @Test
     public void selectMultipleItemsByItemsLookupCriteria() {
-        listView3.asList().select(new LookupCriteria<Object>() {
-
-            public boolean check(Object item) {
-                return "USA".equals(item) || "Russia".equals(item) || "Germany".equals(item);
-            }
-        });
+        listView3.asList().select(item -> "USA".equals(item) || "Russia".equals(item) || "Germany".equals(item));
     }
         
     /**
@@ -150,12 +140,7 @@ public class ListViewSample extends SampleBase {
     @Test
     public void lookupForItem() {
         // Looking up using custom criteria on item value
-        ListItemDock listItemDock1 = new ListItemDock(listView3.asList(), new LookupCriteria<Object>() {
-
-            public boolean check(Object item) {
-                return item instanceof String && ((String) item).endsWith("land");
-            }
-        });
+        ListItemDock listItemDock1 = new ListItemDock(listView3.asList(), item -> item instanceof String && ((String) item).endsWith("land"));
         System.out.println("looked up the following item: " + listItemDock1.control());
 
         // Doing almost the same eith a specisal lookup constructor. 
@@ -187,16 +172,11 @@ public class ListViewSample extends SampleBase {
         
         // Getting List interface and setting up cell editor to work with TextFieldCells
         List<Object> asList = listView3.asList();
-        asList.setEditor(new TextFieldCellEditor<Object>());
+        asList.setEditor(new TextFieldCellEditor<>());
         
         // Looking up for the necessary item using the same approach as in 
         // lookupForItem() test
-        ListItemDock listItemDock = new ListItemDock(asList, new LookupCriteria<Object>() {
-
-            public boolean check(Object item) {
-                return item instanceof String && ((String) item).contains("<");
-            }
-        });
+        ListItemDock listItemDock = new ListItemDock(asList, item -> item instanceof String && ((String) item).contains("<"));
         
         // Editing the value
         listItemDock.asEditableCell().edit(value);

@@ -1,0 +1,81 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Scroll event manual testing.</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h2>Scroll events manual testing.</h2>
+
+        <h3>Common description</h3>
+        You will have to do mouse wheel turns using mouse wheel over tested controls which you will have to choose from choice box on the right side.
+
+        There are several types of scroll events: scrolling can be <i>horizontal</i> or <i>vertical</i>(note, that you can do only vertical one, using mouse wheel; horizontal scrolling needs sloping wheel); scroll events can be evaluated in <i>lines</i> of text(when vertical)
+        or evaluated in <i>characters</i>(when horizontal). In both situations it can be evaluated by some number of <i>pixels</i> per 1 mouse wheel turn or per one slope. All these options depend on <b>system preferences</b>.
+        That means that type and conditions of incoming events depend on what you set in mouse options in your operation system preferences. Java has no possibility to change operation systems options
+        about mouse events. So it should be done manually. And it is needed to check, if changing options in OS lead to situation, when scrolling events can be received by JavaFX application according to preferences.
+
+        So test is aimed on checking, whether system preferences about mouse are received by JavaFX properly.
+
+        NOTE 1: The sign of the value is reversed, comparing to the coordinate system (when you scroll down, the content actually needs to go up). So the returned value can be simply added to the content's Y coordinate.
+        NOTE 2 ABOUT MEDIA VIEW: MediaView is present as a transparent rectangle 100x100 pixels, without any movie in it (centered in the left pane), and you cannot see it - it is just like background.
+        <h3>Requirements</h3>
+        <ul>
+            <li>Mouse with wheel (and possibility for horizontal scroll. Note, that shift+"mouse wheel scroll" is not the same as usual horizontal scrolling using mouse wheel sloping) or touch pad with working scrolling</li>
+            <li>Understanding, where mouse preferences can be setup in your Operation System options(It i possible, that not all options can be setup) (For windows 7: Control Panel -> Mouse -> Scrolling and Pointer Options.)</li>
+            <li>Test should be done for Win, MacOS, and not for Linux-like OSs</li>
+        </ul>
+
+        <h3>Step 1:</h3>
+        <ul>
+            <li>In application choose any control from choice box, move mouse over it. Do mouse wheel scrolling or and wheel sloping. You can see appearing different options of incoming events. X,Y, deltaX, deltaY, textDeltaXUnits, textDeltaY units etc.</li>
+            <li>Research possibilities of your operation systems about mouse wheel turning options (For windows 7: Control Panel -> Mouse -> Scrolling and Pointer Options. For Mac: Preferences -> Mouse -> ...)(for horizontal scrolling: number of characters and number of pixels; for vertical scrolling: number of lines and number of pixels; per one wheel turn etc. They can be called speed, acceleration, or somehow else..)
+                You should change that parameters differently.</li>
+        </ul>
+
+        <h3>Step 2:</h3>
+        <ul>
+            <li>(For each control from choiceBox)(For each combination of options in your operation system preferences about mouse events) do: check*, whether setting of some options in OS lead up to changing parameters of incoming scrolling events, and scroll events are coming.</li>
+            * it is an OS-dependent part (in your OS could be very few options about mouse events. Usualy you can set Scrolling speed. Switch it on/off, change its value to maximal and minimal, etc)
+            Notion 1 : for some controls like ListView, ScrollPane, TreeView, TableView, TreeTableView, ScrollBar, events coming is not obligative: they can come, or they not to come. 
+            It works so: when event come, control can use for some action (usually, scrolling), if it can, then it consumes event. Sometimes, control cannot use event : when you are at the top of the list, listView cannot be scrolled up, when you are at the bottom, you cannot scroll down, etc; the same about scrolling in scrollBar - you cannot move bar beyond the border.
+            So event coming should be estimated according to that controls reaction on it, if they didn't come. 
+            If event has come, control shouldn't react on it. 
+            If, event didn't come, control should do smth about that event using.
+
+            Notion 2 : Ubuntu OS, 10.04 and newer, don't support scrolling speed changing, so check just that options, which can be changed, with SystemPreferences -> Mouse UI form.
+        </ul>
+
+        <h3>Step 3:</h3>
+        <ul>
+            <li>Report about found inconsistencies and problems, which you have found about ScrollEvent</li>
+            <li>If you have problems with understanding this test, report about it too.</li>
+        </ul>
+    </body>
+</html>

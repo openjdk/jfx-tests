@@ -1,0 +1,11 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="draggable.css"/>
+    </head>
+    <body>
+        <h3>Test for dragstart and dragend events</h3>
+        <span draggable="true" class="draggable"
+              ondragstart="event.dataTransfer.setData('text/plain', '1'); this.className +=' opstart';"
+              ondragend="this.className += ' opsuccess';">Drag me!</span>
+    </body>
+</html>

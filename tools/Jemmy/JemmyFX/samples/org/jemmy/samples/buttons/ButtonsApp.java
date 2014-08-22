@@ -47,35 +47,15 @@ public class ButtonsApp extends Application {
         final Label status = new Label();
         status.setId("status");
         Button btn = new Button("button");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                status.setText("button pushed");
-            }
-        });
+        btn.setOnAction(t -> status.setText("button pushed"));
         final CheckBox twoState = new CheckBox("two-state");
         twoState.setAllowIndeterminate(false);
-        twoState.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                status.setText("two-state " + (twoState.isSelected() ? "selected" : "unselected"));
-            }
-        });
+        twoState.setOnAction(t -> status.setText("two-state " + (twoState.isSelected() ? "selected" : "unselected")));
         final CheckBox triState = new CheckBox("tri-state");
         triState.setAllowIndeterminate(true);
-        triState.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                status.setText("tri-state " + (triState.isIndeterminate() ? "unknown" : (triState.isSelected() ? "selected" : "unselected")));
-            }
-        });
+        triState.setOnAction(t -> status.setText("tri-state " + (triState.isIndeterminate() ? "unknown" : (triState.isSelected() ? "selected" : "unselected"))));
         ToggleGroup group = new ToggleGroup();
-        EventHandler<ActionEvent> radioHandler = new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                status.setText(((ToggleButton)t.getSource()).getText() + " selected");
-            }
-        };
+        EventHandler<ActionEvent> radioHandler = t -> status.setText(((ToggleButton)t.getSource()).getText() + " selected");
         RadioButton radio1 = new RadioButton("radio1");
         radio1.setToggleGroup(group);
         radio1.setOnAction(radioHandler);

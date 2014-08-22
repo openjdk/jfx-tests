@@ -30,19 +30,15 @@ import javafx.scene.control.Control;
 import javafx.scene.control.ScrollBar;
 import org.jemmy.JemmyException;
 import org.jemmy.Point;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.As;
 import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.dock.Shortcut;
 import org.jemmy.fx.Root;
 import org.jemmy.input.AbstractScroll;
-import org.jemmy.interfaces.Caret;
+import org.jemmy.interfaces.*;
 import org.jemmy.interfaces.Caret.Direction;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Scroll;
-import org.jemmy.interfaces.Scrollable2D;
-import org.jemmy.interfaces.Scroller;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 
@@ -274,17 +270,15 @@ public class Scrollable2DImpl<SCROLL_CONTROL extends ScrollBar> implements Scrol
         }
 
         public boolean check(final SCROLL_BAR control) {
-            boolean correctOrientation = new GetAction<Boolean>() {
-                @Override
-                public void run(Object... parameters) throws Exception {
-                    if (orientation != null) {
-                        setResult(control.getOrientation().equals(orientation));
-                    } else {
-                        //For case, when orientation checking is left for user.
-                        setResult(true);
-                    }
+            boolean correctOrientation = new FutureAction<>(Root.ROOT.getEnvironment(), () -> {
+                if (orientation != null) {
+                    return control.getOrientation().equals(orientation);
+                } else {
+                    //For case, when orientation checking is left for user.
+                    return true;
                 }
-            }.dispatch(Root.ROOT.getEnvironment());
+            }).get();
+
 
             if (correctOrientation && (control.getOpacity() > 0.1) && (control.isVisible()) && (!control.isDisabled())) {
                 return checkFor(control);

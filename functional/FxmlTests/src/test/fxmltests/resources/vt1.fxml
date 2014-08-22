@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <AnchorPane id="AnchorPane" layoutX="204.0" layoutY="218.0" minHeight="85.0" minWidth="328.0" prefHeight="85.0" prefWidth="328.0">
+      <children>
+        <AnchorPane id="AnchorPane" minHeight="84.0" minWidth="327.0" prefHeight="84.0" prefWidth="327.0">
+          <children>
+            <Group id="Group">
+              <children>
+                <SplitPane id="SplitPane" dividerPositions="">
+                  <items>
+                    <Group id="Group">
+                      <children>
+                        <Group id="Group">
+                          <children>
+                            <SplitPane id="SplitPane" dividerPositions="">
+                              <items>
+                                <AnchorPane id="AnchorPane" minHeight="74.0" minWidth="317.0" prefHeight="74.0" prefWidth="317.0">
+                                  <children>
+                                    <SplitPane id="SplitPane" dividerPositions="">
+                                      <items>
+                                        <Group id="Groupnnnnnnnnnnnnnnnnnnnn" fx:id="Groupnnnnnnnnnnnnnnnnnnnn">
+                                          <children>
+                                            <AnchorPane id="AnchorPane" minHeight="70.0" minWidth="313.0" prefHeight="70.0" prefWidth="313.0">
+                                              <children>
+                                                <AnchorPane id="AnchorPane" minHeight="68.0" minWidth="311.0" prefHeight="68.0" prefWidth="311.0">
+                                                  <children>
+                                                    <SplitPane id="SplitPane" dividerPositions="">
+                                                      <items>
+                                                        <Group id="Group">
+                                                          <children>
+                                                            <SplitPane id="SplitPane" dividerPositions="">
+                                                              <items>
+                                                                <CubicCurve id="CubicCurve" controlX1="-50.0" controlX2="50.0" controlY1="-100.0" controlY2="100.0" endX="150.0" fill="DODGERBLUE" startX="-150.0" stroke="BLACK" />
+                                                              </items>
+                                                            </SplitPane>
+                                                          </children>
+                                                        </Group>
+                                                      </items>
+                                                    </SplitPane>
+                                                  </children>
+                                                </AnchorPane>
+                                              </children>
+                                            </AnchorPane>
+                                          </children>
+                                        </Group>
+                                      </items>
+                                    </SplitPane>
+                                  </children>
+                                </AnchorPane>
+                              </items>
+                            </SplitPane>
+                          </children>
+                        </Group>
+                      </children>
+                    </Group>
+                  </items>
+                </SplitPane>
+              </children>
+            </Group>
+          </children>
+        </AnchorPane>
+      </children>
+    </AnchorPane>
+  </children>
+</AnchorPane>

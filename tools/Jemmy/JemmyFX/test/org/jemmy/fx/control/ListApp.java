@@ -24,9 +24,7 @@
  */
 package org.jemmy.fx.control;
 
-import java.awt.AWTException;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
@@ -34,10 +32,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+
+import java.awt.*;
 
 /**
  *
@@ -125,13 +124,11 @@ public class ListApp extends Application {
         public TextFieldListCell() {
             setEditable(true);
             textBox = new TextField();
-            textBox.setOnKeyReleased(new EventHandler<KeyEvent>() {
-                public void handle(KeyEvent t) {
-                    if (t.getCode() == KeyCode.ENTER) {
-                        commitEdit(textBox.getText());
-                    } else if (t.getCode() == KeyCode.ESCAPE) {
-                        cancelEdit();
-                    }
+            textBox.setOnKeyReleased(t -> {
+                if (t.getCode() == KeyCode.ENTER) {
+                    commitEdit(textBox.getText());
+                } else if (t.getCode() == KeyCode.ESCAPE) {
+                    cancelEdit();
                 }
             });
         }

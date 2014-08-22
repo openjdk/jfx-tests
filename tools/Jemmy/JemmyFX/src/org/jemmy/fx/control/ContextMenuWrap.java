@@ -24,11 +24,10 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.List;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
@@ -37,16 +36,19 @@ import org.jemmy.fx.WindowWrap;
 import org.jemmy.input.StringMenuOwner;
 import org.jemmy.interfaces.Parent;
 
+import java.util.List;
+
 /**
  * Context menu is supported in the very same way as menu bar.
  * Please consult <a href="../../samples/menu">samples</a> for more info.
+ *
+ * @author shura
  * @see MenuBarWrap
  * @see ContextMenuDock
- * @author shura
  */
 @ControlType(ContextMenu.class)
 @ControlInterfaces(value = {Parent.class, StringMenuOwner.class},
-encapsulates = {MenuItem.class, MenuItem.class}, name = {"asMenuParent", "asMenuOwner"})
+        encapsulates = {MenuItem.class, MenuItem.class}, name = {"asMenuParent", "asMenuOwner"})
 public class ContextMenuWrap<T extends ContextMenu> extends WindowWrap<T> {
 
     private StringMenuOwnerImpl menuOwner = null;
@@ -57,8 +59,8 @@ public class ContextMenuWrap<T extends ContextMenu> extends WindowWrap<T> {
     }
 
     /**
-     * @see MenuBarWrap#asMenuParent() 
-     * @return 
+     * @return
+     * @see MenuBarWrap#asMenuParent()
      */
     @As(MenuItem.class)
     public Parent<MenuItem> asMenuParent() {
@@ -67,13 +69,7 @@ public class ContextMenuWrap<T extends ContextMenu> extends WindowWrap<T> {
 
                 @Override
                 protected List getControls() {
-                    return new GetAction<List<?>>() {
-
-                        @Override
-                        public void run(Object... os) throws Exception {
-                            setResult(getControl().getItems());
-                        }
-                    }.dispatch(getEnvironment());
+                    return new FutureAction<>(getEnvironment(), () -> getControl().getItems()).get();
                 }
             };
         }
@@ -81,8 +77,8 @@ public class ContextMenuWrap<T extends ContextMenu> extends WindowWrap<T> {
     }
 
     /**
-     * @see MenuBarWrap#asMenuOwner() 
-     * @return 
+     * @return
+     * @see MenuBarWrap#asMenuOwner()
      */
     @As(MenuItem.class)
     public StringMenuOwner<MenuItem> asMenuOwner() {

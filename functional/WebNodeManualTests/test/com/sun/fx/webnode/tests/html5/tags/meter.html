@@ -1,0 +1,132 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            table {
+                padding-bottom: 1em;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Meter element</h3>
+        <table>
+            <tr>
+                <td>
+                    <table>
+                        <!-- low < optimum < high -->
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="0"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="2"></meter></td><td>should look like progress bar filled up to 20% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="3"></meter></td><td>should look like progress bar filled up to 30% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="4"></meter></td><td>should look like progress bar filled up to 40% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="5"></meter></td><td>should look like progress bar filled up to 50% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="6"></meter></td><td>should look like progress bar filled up to 60% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="7"></meter></td><td>should look like progress bar filled up to 70% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="8"></meter></td><td>should look like progress bar filled up to 80% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="10"></meter></td><td>should look like fully filled yellow progress bar</td></tr>
+                    </table>
+                </td>
+                <td>
+                    <table><!-- low < high < optimum -->
+                        <tr><td><meter min="0" max="10" low="3" high="5" optimum="7" value="0"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="5" optimum="7" value="2"></meter></td><td>should look like progress bar filled up to 20% in red</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="5" optimum="7" value="3"></meter></td><td>should look like progress bar filled up to 30% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="5" optimum="7" value="4"></meter></td><td>should look like progress bar filled up to 40% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="5" optimum="7" value="5"></meter></td><td>should look like progress bar filled up to 50% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="5" optimum="7" value="6"></meter></td><td>should look like progress bar filled up to 60% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="5" optimum="7" value="7"></meter></td><td>should look like progress bar filled up to 70% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="5" optimum="7" value="8"></meter></td><td>should look like progress bar filled up to 80% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="5" optimum="7" value="10"></meter></td><td>should look like fully filled green progress bar</td></tr></table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table><!-- optimum < low < high -->
+                        <tr><td><meter min="0" max="10" low="5" high="7" optimum="3" value="0"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="0" max="10" low="5" high="7" optimum="3" value="2"></meter></td><td>should look like progress bar filled up to 20% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="5" high="7" optimum="3" value="3"></meter></td><td>should look like progress bar filled up to 30% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="5" high="7" optimum="3" value="4"></meter></td><td>should look like progress bar filled up to 40% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="5" high="7" optimum="3" value="5"></meter></td><td>should look like progress bar filled up to 50% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="5" high="7" optimum="3" value="6"></meter></td><td>should look like progress bar filled up to 60% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="5" high="7" optimum="3" value="7"></meter></td><td>should look like progress bar filled up to 70% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="5" high="7" optimum="3" value="8"></meter></td><td>should look like progress bar filled up to 80% in red</td></tr>
+                        <tr><td><meter min="0" max="10" low="5" high="7" optimum="3" value="10"></meter></td><td>should look like fully filled red progress bar</td></tr></table>
+                </td>
+                <td>
+                    <table><!-- low < high; optimum = min -->
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="0" value="0"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="0" value="2"></meter></td><td>should look like progress bar filled up to 20% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="0" value="3"></meter></td><td>should look like progress bar filled up to 30% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="0" value="4"></meter></td><td>should look like progress bar filled up to 40% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="0" value="5"></meter></td><td>should look like progress bar filled up to 50% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="0" value="6"></meter></td><td>should look like progress bar filled up to 60% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="0" value="7"></meter></td><td>should look like progress bar filled up to 70% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="0" value="8"></meter></td><td>should look like progress bar filled up to 80% in red</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="0" value="10"></meter></td><td>should look like fully filled red progress bar</td></tr></table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table><!-- low < high; optimum = max -->
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="10" value="0"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="10" value="2"></meter></td><td>should look like progress bar filled up to 20% in red</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="10" value="3"></meter></td><td>should look like progress bar filled up to 30% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="10" value="4"></meter></td><td>should look like progress bar filled up to 40% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="10" value="5"></meter></td><td>should look like progress bar filled up to 50% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="10" value="6"></meter></td><td>should look like progress bar filled up to 60% in yellow</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="10" value="7"></meter></td><td>should look like progress bar filled up to 70% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="10" value="8"></meter></td><td>should look like progress bar filled up to 80% in green</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="10" value="10"></meter></td><td>should look like fully filled green progress bar</td></tr></table>
+                </td>
+                <td>
+                    <table><!-- high < optimum < low -->
+                        <tr><td><meter min="10" max="0" low="3" high="7" optimum="5" value="0"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="10" max="0" low="3" high="7" optimum="5" value="2"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="10" max="0" low="3" high="7" optimum="5" value="3"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="10" max="0" low="3" high="7" optimum="5" value="4"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="10" max="0" low="3" high="7" optimum="5" value="5"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="10" max="0" low="3" high="7" optimum="5" value="6"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="10" max="0" low="3" high="7" optimum="5" value="7"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="10" max="0" low="3" high="7" optimum="5" value="8"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="10" max="0" low="3" high="7" optimum="5" value="10"></meter></td><td>should look like empty progress bar</td></tr></table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table><!-- miscellaneous cases -->
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="-1"></meter></td><td>should look like empty progress bar</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="11"></meter></td><td>should look like fully filled yellow progress bar</td></tr>
+                        <tr><td><meter min="0" max="10" low="3" high="7" optimum="5" value="2.5"></meter></td><td>should look like progress bar filled up to 25% in yellow</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

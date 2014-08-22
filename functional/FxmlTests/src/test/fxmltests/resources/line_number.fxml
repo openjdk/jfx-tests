@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<?language javascript?>
+
+<fx:root type="javafx.scene.layout.VBox" prefHeight="200" prefWidth="200" xmlns:fx="http://javafx.com/fxml">
+    <!-- This is comment -->
+    <!-- 
+        Second comment
+    -->
+    <fx:define>
+        
+    </fx:define>
+    <fx:script>
+        importClass(java.lang.System);
+        function handleButtonAction(event) {
+            System.out.println('You clicked me!');
+        }
+    </fx:script>
+    <TabPane>
+        <Tab text="Test 1">
+            <Rectangle fill="RED" x="10" y="20" height="50" fx:id="sampleId">
+                <width>100</width>
+            </Rectangle>
+        </Tab>
+        <Tab>
+            <Button  GridPane.rowIndex="0" onAction="handleButtonAction(event)">Click me!</Button>
+        </Tab>
+        <Tab>
+            <fx:include source="line_number_include.fxml"/>
+        </Tab>
+        <Tab>
+            <fx:reference source="sampleId"/>
+        </Tab>
+    </TabPane>
+    <fx:define>
+        
+    </fx:define>
+</fx:root>

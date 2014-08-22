@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+
+<TableView xmlns:fx="http://javafx.com/fxml">
+<Text>
+	<String fx:value="aaa"/>
+</Text>
+<Text text="B"/>
+<Text text="C"/>
+</TableView>

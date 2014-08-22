@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import java.net.*?>
+
+<Label id="relative-stylesheet-label" text="[           ]">
+    <stylesheets>
+        <URL value="@stylesheet.css"/>
+    </stylesheets>
+</Label>

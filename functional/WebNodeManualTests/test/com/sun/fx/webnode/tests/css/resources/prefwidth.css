@@ -1,0 +1,12 @@
+/* 
+    Document   : prefwidth
+    Created on : Jul 5, 2012, 6:34:58 PM
+    Author     : javafx
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.web-view {
+    -fx-pref-width: 100;
+}
+

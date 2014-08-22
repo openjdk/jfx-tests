@@ -25,20 +25,24 @@
 package org.jemmy.fx.control;
 
 import com.sun.javafx.scene.control.skin.VirtualFlow;
-import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import org.jemmy.action.GetAction;
-import org.jemmy.control.*;
+import org.jemmy.action.FutureAction;
+import org.jemmy.control.As;
+import org.jemmy.control.ControlInterfaces;
+import org.jemmy.control.ControlType;
+import org.jemmy.control.Property;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.control.Scrollable2DImpl.ScrollsLookupCriteria;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.ByStringLookup;
-import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.timing.DescriptiveLookupCriteria;
+
+import java.util.List;
 
 /**
  * Tree support in JemmyFX is provided through a few different control
@@ -51,25 +55,25 @@ import org.jemmy.resources.StringComparePolicy;
  * themselves the elements of the hierarchy/list or the underlying data held
  * within the tree items.
  *
+ * @param <CONTROL>
+ * @author shura
  * @see #asTreeItemParent()
  * @see #asTreeItemSelectable()
  * @see #asSelectable(java.lang.Class)
  * @see #asItemParent(java.lang.Class)
- * @author shura
- * @param <CONTROL>
  * @see TreeViewDock
  */
 @ControlType({TreeView.class})
 @ControlInterfaces(value = {Selectable.class, EditableCellOwner.class, Tree.class, Selectable.class, Scroll.class, Scrollable2D.class},
-encapsulates = {TreeItem.class, Object.class, Object.class, Object.class},
-name = {"asTreeItemSelectable", "asItemParent"})
+        encapsulates = {TreeItem.class, Object.class, Object.class, Object.class},
+        name = {"asTreeItemSelectable", "asItemParent"})
 public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL> implements Scroll, Selectable<TreeItem>, Focusable {
 
     public static final String SELECTED_INDEX_PROP_NAME = "tree.selected.index";
     public static final String SELECTED_ITEM_PROP_NAME = "tree.selected.item";
     public static final String SHOW_ROOT_PROP_NAME = "show.root";
     public static final String ROOT_PROP_NAME = "root.item";
-    
+
     private TableTreeScroll scroll;
     private Scrollable2D scrollable2D;
     private Selectable selectable;
@@ -79,7 +83,6 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
     private Tree tree;
 
     /**
-     *
      * @param env
      * @param scene
      * @param nd
@@ -99,33 +102,18 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
     @SuppressWarnings("unchecked")
     TreeCell getTreeCell(final TreeItem item) {
         return (TreeCell) as(Parent.class, Node.class).lookup(TreeCell.class,
-                new LookupCriteria<TreeCell>() {
-
-                    @Override
-                    public boolean check(TreeCell cell) {
-                        if (cell.isVisible() && cell.getOpacity() == 1.0) {
-                            if (cell.getTreeItem() == item) {
-                                return true;
-                            }
+                new DescriptiveLookupCriteria<TreeCell>(cell -> {
+                    if (cell.isVisible() && cell.getOpacity() == 1.0) {
+                        if (cell.getTreeItem() == item) {
+                            return true;
                         }
-                        return false;
                     }
-
-                    @Override
-                    public String toString() {
-                        return "Looking for a visible treeCell with the value '" + item + "'";
-                    }
-                }).get(0);
+                    return false;
+                }, () -> "Looking for a visible treeCell with the value '" + item + "'")).get(0);
     }
 
     int getRow(final TreeItem item) {
-        return new GetAction<Integer>() {
-
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(getControl().getRow(item));
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().getRow(item)).get();
     }
 
     /**
@@ -144,7 +132,7 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
     @As(Object.class)
     public <T> Selectable<T> asSelectable(Class<T> type) {
         if (selectable == null || !selectable.getType().equals(type)) {
-            selectable = new TreeViewSelectable<T>(type);
+            selectable = new TreeViewSelectable<>(type);
         }
         return selectable;
     }
@@ -180,7 +168,7 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
     @As(TreeItem.class)
     public <T extends TreeItem> EditableCellOwner<T> asTreeItemParent(Class<T> type) {
         if (itemParent == null) {
-            itemParent = new TreeNodeParent<T>(this, type);
+            itemParent = new TreeNodeParent<>(this, type);
         }
         return itemParent;
     }
@@ -194,10 +182,10 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
      * loaded dynamically on node expand, those dynamically added nodes will not
      * be a part of hierarchy.
      *
-     * @param <T> type of data supported by the tree. If should be consistent
-     * with the data present in the tree, because the tree data may get casted
-     * to this type parameter during lookup operations. That, this must be a
-     * super type for all types present in the tree.
+     * @param <T>  type of data supported by the tree. If should be consistent
+     *             with the data present in the tree, because the tree data may get casted
+     *             to this type parameter during lookup operations. That, this must be a
+     *             super type for all types present in the tree.
      * @param type
      * @return
      * @see #asItemParent()
@@ -205,7 +193,7 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
     @As(Object.class)
     public <T> EditableCellOwner<T> asItemParent(Class<T> type) {
         if (parent == null || !parent.getType().equals(type)) {
-            parent = new TreeItemParent<T>(this, type);
+            parent = new TreeItemParent<>(this, type);
         }
         return parent;
     }
@@ -224,7 +212,7 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
     public <T> Tree<T> asTree(Class<T> type) {
         if (tree == null || !tree.getType().equals(type)) {
             asItemParent(type);
-            tree = new TreeImpl<T>(type, this, parent);
+            tree = new TreeImpl<>(type, this, parent);
         }
         return tree;
     }
@@ -236,24 +224,12 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
      */
     @Property(SELECTED_INDEX_PROP_NAME)
     public int getSelectedIndex() {
-        return new GetAction<Integer>() {
-
-            @Override
-            public void run(Object... parameters) {
-                setResult(Integer.valueOf(getControl().getSelectionModel().getSelectedIndex()));
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().getSelectionModel().getSelectedIndex()).get();
     }
 
     @Property(SELECTED_ITEM_PROP_NAME)
     public TreeItem getSelectedItem() {
-        return new GetAction<TreeItem>() {
-
-            @Override
-            public void run(Object... parameters) {
-                setResult((TreeItem) getControl().getSelectionModel().getSelectedItem());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> (TreeItem) getControl().getSelectionModel().getSelectedItem()).get();
     }
 
     @Override
@@ -278,22 +254,12 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
 
     @Property(SHOW_ROOT_PROP_NAME)
     public boolean isShowRoot() {
-        return new GetAction<Boolean>() {
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(getControl().isShowRoot());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().isShowRoot()).get();
     }
 
     @Property(ROOT_PROP_NAME)
     public TreeItem getRoot() {
-        return new GetAction<TreeItem>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().getRoot());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().getRoot()).get();
     }
 
     @As

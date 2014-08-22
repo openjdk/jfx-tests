@@ -4,35 +4,22 @@
  */
 package org.jemmy.samples.explorer;
 
-import com.sun.javafx.collections.ImmutableObservableList;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 /**
  *
@@ -40,7 +27,7 @@ import javafx.util.StringConverter;
  */
 public class Explorer extends Application {
 
-    private ListView<File> fileView = new ListView<File>();
+    private ListView<File> fileView = new ListView<>();
     private ComboBox<File> parents;
     private TextField location;
     private Button back;
@@ -50,26 +37,22 @@ public class Explorer extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         BorderPane content = new BorderPane();
-        history = new Stack<File>();
+        history = new Stack<>();
         back = new Button("<-");
         back.setDisable(true);
-        back.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                updateCombo(history.pop());
-                back.setDisable(history.isEmpty());
-            }
+        back.setOnAction(t -> {
+            updateCombo(history.pop());
+            back.setDisable(history.isEmpty());
         });
         back.setId("back_btn");
-        parents = new ComboBox<File>();
-        parents.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<File>() {
-            public void changed(ObservableValue<? extends File> ov, File t, File t1) {
-                if (t1 != null) {
-                    if (t != null) {
-                        history.push(t);
-                        back.setDisable(false);
-                    }
-                    refresh(t1);
+        parents = new ComboBox<>();
+        parents.getSelectionModel().selectedItemProperty().addListener((ov, t, t1) -> {
+            if (t1 != null) {
+                if (t != null) {
+                    history.push(t);
+                    back.setDisable(false);
                 }
+                refresh(t1);
             }
         });
         parents.setConverter(new StringConverter<File>() {
@@ -84,18 +67,16 @@ public class Explorer extends Application {
             }
         });
         location = new TextField();
-        location.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent t) {
-                if (t.getCode() == KeyCode.ENTER) {
-                    File entered = new File(location.getText());
-                    if (!entered.exists() || !entered.isDirectory()) {
-                        showError(location.getText());
-                        return;
-                    }
-                    history.push(current);
-                    back.setDisable(false);
-                    updateCombo(entered);
+        location.setOnKeyPressed(t -> {
+            if (t.getCode() == KeyCode.ENTER) {
+                File entered = new File(location.getText());
+                if (!entered.exists() || !entered.isDirectory()) {
+                    showError(location.getText());
+                    return;
                 }
+                history.push(current);
+                back.setDisable(false);
+                updateCombo(entered);
             }
         });
         BorderPane go = new BorderPane();
@@ -103,18 +84,16 @@ public class Explorer extends Application {
         go.setCenter(location);
         go.setRight(parents);
         content.setTop(go);
-        fileView = new ListView<File>();
+        fileView = new ListView<>();
         fileView.setCellFactory(new CellFactory());
-        fileView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent t) {
-                if (t.getButton() == MouseButton.PRIMARY
-                        && t.getClickCount() == 2) {
-                    history.push(current);
-                    back.setDisable(false);
-                    File selection = fileView.getSelectionModel().getSelectedItems().get(0);
-                    if (selection.isDirectory()) {
-                        updateCombo(selection);
-                    }
+        fileView.setOnMouseClicked(t -> {
+            if (t.getButton() == MouseButton.PRIMARY
+                    && t.getClickCount() == 2) {
+                history.push(current);
+                back.setDisable(false);
+                File selection = fileView.getSelectionModel().getSelectedItems().get(0);
+                if (selection.isDirectory()) {
+                    updateCombo(selection);
                 }
             }
         });
@@ -130,7 +109,7 @@ public class Explorer extends Application {
 
     private void updateCombo(File current) {
         refresh(current);
-        List<File> items = new ArrayList<File>();
+        List<File> items = new ArrayList<>();
         do {
             items.add(0, current);
         } while ((current = current.getParentFile()).getParentFile() != null);
@@ -159,12 +138,7 @@ public class Explorer extends Application {
         final Stage st = new Stage();
         st.setTitle("Error");
         st.setScene(new Scene(content));
-        ok.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                st.close();
-            }
-        });
+        ok.setOnAction(t -> st.close());
         st.show();
     }
 

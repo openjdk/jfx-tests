@@ -24,18 +24,18 @@
  */
 package org.jemmy.samples.tableview;
 
-import java.util.Date;
-import java.util.List;
 import org.jemmy.Point;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.TableCellItemDock;
 import org.jemmy.fx.control.TableViewDock;
 import org.jemmy.fx.control.TextFieldCellEditor;
-import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Similar to other compound controls, table could be operated either through
@@ -74,12 +74,7 @@ public class TableViewSample extends SampleBase {
         //by toString() of the object
         new TableCellItemDock(tableView.asTable(), "Ul", StringComparePolicy.SUBSTRING).asEditableCell().select();
         //or any other way by creating a custom lookup criteria
-        new TableCellItemDock(tableView.asTable(), new LookupCriteria<Object>() {
-
-            public boolean check(Object cntrl) {
-                return cntrl instanceof Date;
-            }
-        }).asEditableCell().select();
+        new TableCellItemDock(tableView.asTable(), cntrl -> cntrl instanceof Date).asEditableCell().select();
     }
     
     /**

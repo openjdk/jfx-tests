@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FXML coverage report</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            .coverage {
+                text-align: center;
+                font-size: 250%%;
+                font-weight: bold;
+                border: 0.5em solid red;
+            }
+            
+            .assert-covered {
+                background-color: lightgreen
+            }
+
+            .assert-not-covered {
+                background-color: lightcoral
+            }
+            
+            dt {
+                padding: 2em 3em 1em
+            }
+            
+            dd {
+                padding: 0em 3em 0em
+            }
+        </style>
+    </head>
+    <body>
+        <div class="coverage">FXML Coverage: %.0f%%</div>
+        <dl>
+            %s
+        </dl>
+    </body>
+</html>

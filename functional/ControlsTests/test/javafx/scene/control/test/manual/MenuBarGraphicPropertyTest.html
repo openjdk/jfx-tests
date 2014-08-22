@@ -1,0 +1,65 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>MenuBar graphic property test</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <p><b>MenuBar graphic property test</b>
+        <p>Notion: This test is targeted for testing System menu bar on MacOS. 
+            It is implemented, by making standart JavaFX menuBar, switching 
+            useSystemMenu option to true/false, to be a system menu bar (grey menu bar on the top of the screen). 
+            On other platforms (like windows, and linux), this option shouldn't 
+            affect anyhow, so just press "PASS".</p>                        
+        <p>This test verifies that you can set graphic to some menus or menu items in system menu on MacOS.
+        <ul><li>Definition: "graphic" is a node, which appears on a left side of menu name.
+                In this test case, graphics - are rectangles (blue, red and green).
+                When you do this test, check, that rectangles are shown, or there 
+                is no any rectangles in the menu. Also, check, that when you move 
+                mouse over that menus (or menu items), rectangle is shown correctly, 
+                and menu looks fine.</li>
+        </ul>
+        <h3>Test case. Setting graphic nodes.</h3>
+        <ul><li>Switch on a toggle button "Set graphics".</li>
+            <li>Check, that {"Menu 0 SubMenu 0", "Menu 1", "Menu 2 SubMenu 2"} now have rectangles.</li>
+            <li>Switch off a toggle button "Set graphics".</li>
+            <li>Check, that {"Menu 0 SubMenu 0", "Menu 1", "Menu 2 SubMenu 2"} now DON'T have rectangles.</li>
+            <li>Set useSystemMenu property to "true".</li>
+            <li>Switch on a toggle button "Set graphics".</li>
+            <li>Check, that {"Menu 0 SubMenu 0", "Menu 1", "Menu 2 SubMenu 2"} still DON'T have rectangles (in system menu bar). That is because system menu bar on MacOS doesn't support graphics. Check, that application continue execution.</li>
+            <li>Switch off a toggle button "Set graphics".</li>
+            <li>Check, that {"Menu 0 SubMenu 0", "Menu 1", "Menu 2 SubMenu 2"} still DON'T have rectangles (in system menu bar). Check, that application continue execution.</li>
+            <li>Switch on a toggle button "Set graphics".</li>
+            <li>Set useSystemMenu property to "false".</li>
+            <li>Check, that {"Menu 0 SubMenu 0", "Menu 1", "Menu 2 SubMenu 2"} now have rectangles.</li>
+        </ul>
+        <h3>Notion</h3>
+        <ul><li>You can use "Reset" button to reset testing application.</li></ul>
+    </body>
+</html>

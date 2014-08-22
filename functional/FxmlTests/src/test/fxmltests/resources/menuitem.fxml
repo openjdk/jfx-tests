@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import test.fxmltests.app.MyRootElement2?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.KeyCombination?>
+
+<MenuItem xmlns:fx="http://javafx.com/fxml">
+ <text>open...</text>
+ <accelerator>
+	 <KeyCombination fx:value="Ctrl+N"/>
+ </accelerator>
+</MenuItem>

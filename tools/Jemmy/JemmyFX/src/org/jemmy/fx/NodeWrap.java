@@ -33,6 +33,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.jemmy.JemmyException;
 import org.jemmy.Point;
 import org.jemmy.Rectangle;
+import org.jemmy.action.FutureAction;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.*;
 import org.jemmy.dock.DefaultWrapper;
@@ -45,14 +46,12 @@ import org.xml.sax.SAXException;
 
 /**
  * Test support for JavaFX node. For simplicity, there is no special wrap class
- * around
- * <code>Parent</code> - any node could be treated as a parent for other nodes.
- * If a node is not a
- * <code>Parent</code> the hierarchy will be considered empty.<br/> Check <a
- * href="../samples/lookup">lookup samples</a> and <a
- * href="../samples/input">input samples</a> to get a feeling of what could be
- * done with on this generic level.<br/> All properties common to all nodes are
- * defined on this level.
+ * around <code>Parent</code> - any node could be treated as a parent for other
+ * nodes. If a node is not a <code>Parent</code> the hierarchy will be
+ * considered empty.<br/> Check <a href="../samples/lookup">lookup samples</a>
+ * and <a href="../samples/input">input samples</a> to get a feeling of what
+ * could be done with on this generic level.<br/> All properties common to all
+ * nodes are defined on this level.
  *
  * @param <T>
  * @author shura, mrkam
@@ -74,11 +73,11 @@ import org.xml.sax.SAXException;
 public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
     public static final Wrapper WRAPPER;
-    
+
     static {
         try {
             WRAPPER = new JemmySupportWrapper(NodeWrap.class.getClassLoader(), "support.xml", Root.ROOT.getEnvironment());
-        } catch (ParserConfigurationException|SAXException|IOException ex) {
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
             throw new JemmyException("Unable to load support information", ex);
         }
     }
@@ -163,7 +162,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
 
             @Override
             public void run(Object... parameters) {
-                Bounds rect= nd.localToScreen(nd.getLayoutBounds());
+                Bounds rect = nd.localToScreen(nd.getLayoutBounds());
                 Rectangle res = new Rectangle(rect.getMinX(), rect.getMinY(), rect.getWidth(), rect.getHeight());
                 setResult(res);
             }
@@ -270,29 +269,21 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
     }
 
     static Point convertToAbsoluteLayout(final NodeWrap<? extends Node> node, final Point p) {
-        return new GetAction<Point>() {
-
-            @Override
-            public void run(Object... parameters) {
-                Bounds layout = node.getControl().getLayoutBounds();
-                Bounds toScene = node.getControl().localToScene(layout);
-                Point2D loc = node.getControl().localToScene(layout.getMinX() + p.x, layout.getMinY() + p.y);
-                setResult(new Point(loc.getX() - toScene.getMinX(), loc.getY() - toScene.getMinY()));
-            }
-        }.dispatch(node.getEnvironment());
+        return new FutureAction<>(node.getEnvironment(), () -> {
+            Bounds layout = node.getControl().getLayoutBounds();
+            Bounds toScene = node.getControl().localToScene(layout);
+            Point2D loc = node.getControl().localToScene(layout.getMinX() + p.x, layout.getMinY() + p.y);
+            return new Point(loc.getX() - toScene.getMinX(), loc.getY() - toScene.getMinY());
+        }).get();
     }
 
     static Point convertToLocalLayout(final NodeWrap<? extends Node> node, final Point p) {
-        return new GetAction<Point>() {
-
-            @Override
-            public void run(Object... parameters) {
-                Bounds layout = node.getControl().getLayoutBounds();
-                Bounds toScene = node.getControl().localToScene(layout);
-                Point2D loc = node.getControl().sceneToLocal(toScene.getMinX() + p.x, toScene.getMinY() + p.y);
-                setResult(new Point(loc.getX() - layout.getMinX(), loc.getY() - layout.getMinY()));
-            }
-        }.dispatch(node.getEnvironment());
+        return new FutureAction<>(node.getEnvironment(), () -> {
+            Bounds layout = node.getControl().getLayoutBounds();
+            Bounds toScene = node.getControl().localToScene(layout);
+            Point2D loc = node.getControl().sceneToLocal(toScene.getMinX() + p.x, toScene.getMinY() + p.y);
+            return new Point(loc.getX() - layout.getMinX(), loc.getY() - layout.getMinY());
+        }).get();
     }
 
     /**
@@ -301,19 +292,12 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
      * @return
      */
     public boolean isFocused() {
-        return new GetAction<Boolean>() {
-
-            @Override
-            public void run(Object... parameters) {
-                setResult(getControl().isFocused()
-                        || (as(Parent.class, Node.class).lookup(new LookupCriteria<Node>() {
-
-                    public boolean check(Node node) {
-                        return node.isFocused();
-                    }
-                }).size() > 0));
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(),
+                () -> {
+                    final Parent<Node> par = as(Parent.class, Node.class);
+                    return getControl().isFocused()
+                    || (par.lookup(node -> node.isFocused()).size() > 0);
+                }).get();
     }
 
     /**
@@ -331,7 +315,7 @@ public class NodeWrap<T extends Node> extends Wrap<T> implements Focusable {
         }
         return show;
     }
-    
+
     private class NodeShowable implements Showable, Show {
 
         public Show shower() {

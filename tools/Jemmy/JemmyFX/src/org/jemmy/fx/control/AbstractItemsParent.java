@@ -25,14 +25,11 @@
 package org.jemmy.fx.control;
 
 
-import java.util.List;
 import org.jemmy.control.Wrap;
 import org.jemmy.control.Wrapper;
-import org.jemmy.lookup.AbstractParent;
-import org.jemmy.lookup.ControlList;
-import org.jemmy.lookup.Lookup;
-import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.lookup.PlainLookup;
+import org.jemmy.lookup.*;
+
+import java.util.List;
 
 
 /**
@@ -77,7 +74,7 @@ public abstract class AbstractItemsParent<ITEM extends Object> extends AbstractP
 
     @Override
     public <ST extends ITEM> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {
-        return new PlainLookup<ST>(wrap.getEnvironment(),
+        return new PlainLookup<>(wrap.getEnvironment(),
                                    itemsListCreator, wrapper, controlClass, criteria);
     }
 

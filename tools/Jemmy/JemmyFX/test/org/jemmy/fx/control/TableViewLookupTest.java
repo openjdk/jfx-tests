@@ -31,10 +31,9 @@ import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.interfaces.Table;
 import org.jemmy.lookup.EqualsLookup;
-import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.timing.State;
 import org.junit.*;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Alexander Kouznetsov
@@ -52,7 +51,7 @@ public class TableViewLookupTest /*extends TableViewTestBase*/ {
         AppExecutor.executeNoBlock(TableViewApp.class);
         tableDock = new TableViewDock(new SceneDock().asParent());
         table = tableDock.asTable();
-        table.setEditor(new TextFieldCellEditor<Object>());
+        table.setEditor(new TextFieldCellEditor<>());
     }
 
     @AfterClass
@@ -74,12 +73,10 @@ public class TableViewLookupTest /*extends TableViewTestBase*/ {
         final String D = "D";
 
         Wrap<? extends TableCell> tableCellWrap = tableDock.asParent().
-                lookup(TableCell.class, new LookupCriteria<TableCell>() {
-            public boolean check(TableCell control) {
-                String item = (String) control.getItem();
-                return item != null && item.contains(D);
-            }
-        }).wrap();
+                lookup(TableCell.class, control -> {
+                    String item = (String) control.getItem();
+                    return item != null && item.contains(D);
+                }).wrap();
         assertTrue("tableViewCellsParent.lookup().wrap() returns "
                 + "TableCellWrap",
                 tableCellWrap instanceof TableCellWrap);
@@ -88,27 +85,15 @@ public class TableViewLookupTest /*extends TableViewTestBase*/ {
 
         tableCellWrap.mouse().click();
 
-        tableDock.wrap().waitState(new State() {
-            public Object reached() {
-                return tableDock.getSelection().contains(new Point(0, 4)) ? true : null;
-            }
-        });
+        tableDock.wrap().waitState(() -> tableDock.getSelection().contains(new Point(0, 4)) ? true : null);
     }
 
     @Test
     public void itemLookup() {
         table.lookup(new EqualsLookup("5")).wrap().mouse().click();
-        tableDock.wrap().waitState(new State() {
-            public Object reached() {
-                return tableDock.getSelection().contains(new Point(1, 5)) ? true : null;
-            }
-        });
+        tableDock.wrap().waitState(() -> tableDock.getSelection().contains(new Point(1, 5)) ? true : null);
         new TableCellItemDock(table, new EqualsLookup("Mikhail")).asEditableCell().select();
-        tableDock.wrap().waitState(new State() {
-            public Object reached() {
-                return tableDock.getSelection().contains(new Point(0, 0)) ? true : null;
-            }
-        });
+        tableDock.wrap().waitState(() -> tableDock.getSelection().contains(new Point(0, 0)) ? true : null);
     }
 
     @Test

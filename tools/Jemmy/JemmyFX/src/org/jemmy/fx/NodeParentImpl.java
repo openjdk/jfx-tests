@@ -53,7 +53,7 @@ public class NodeParentImpl extends AbstractParent<Node> {
 
     @Override
     public <ST extends Node> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {
-        return new HierarchyLookup<ST>(env, nodeHierarchy, new WrapperDelegate(NodeWrap.WRAPPER, env), controlClass, criteria);
+        return new HierarchyLookup<>(env, nodeHierarchy, new WrapperDelegate(NodeWrap.WRAPPER, env), controlClass, criteria);
     }
 
     @Override

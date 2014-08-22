@@ -25,11 +25,7 @@ package test.scenegraph.transparency;
 
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -37,26 +33,23 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Popup;
 import test.javaclient.shared.InteroperabilityApp;
 import test.javaclient.shared.Utils;
+import test.embedded.helpers.AbstractButton;
+import test.embedded.helpers.AbstractCheckBox;
+import test.embedded.helpers.ButtonBuilderFactory;
+import test.embedded.helpers.CheckBoxBuilderFactory;
+import test.embedded.helpers.OnClickHandler;
 
 /**
  *
  * @author Taras Ledkov < taras.ledkov@oracle.com >
  */
 public class TransparencyWindowApp extends InteroperabilityApp {
-//public class MouseEventApp extends Application {
 
     public static final int smallRectSize = 10;
-    Scene scene;
+    
     Pane root;
     Rectangle rectGreen;
 
-//    @Override
-//    public void start(Stage stage) throws Exception {
-//        stage.setTitle(this.getClass().getSimpleName());
-//        scene = getScene();
-//        stage.setScene(scene);
-//        stage.show();
-//    }
     @Override
     protected Scene getScene() {
 
@@ -70,44 +63,49 @@ public class TransparencyWindowApp extends InteroperabilityApp {
         rectGreen.setId("RectGreen");
         root.getChildren().add(rectGreen);
 
-        Button btnShowPopup = new Button("Show Popup");
-        btnShowPopup.setId("BtnShowPopup");
+        AbstractButton btnShowPopup = ButtonBuilderFactory.newButtonBuilder()
+                .text("Show Popup")
+                .id("BtnShowPopup")
+                .setOnClickHandler( new OnClickHandler() {
 
+                    @Override
+                    public void onClick() {
+                        Popup popup = new Popup();
+                        popup.setWidth(stage.getWidth());
+                        popup.setHeight(stage.getHeight());
+                        popup.setOpacity(0.5);
 
-        CheckBox chIsSupportedTransparentWindow = new CheckBox("Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW)");
-        chIsSupportedTransparentWindow.setId("TRANSPARENT_WINDOW");
-        chIsSupportedTransparentWindow.setSelected(Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW));
+                        Pane rootPopup = new Pane();
+                        Rectangle rectBg = new Rectangle(0, 0, rectGreen.getWidth() + smallRectSize * 2, rectGreen.getHeight() + smallRectSize * 2);
+                        rectBg.setId("RectPopupBg");
+                        rectBg.setFill(Color.BLUE);
+                        rectBg.setOpacity(0.5);
 
-        hbox.getChildren().addAll(btnShowPopup, chIsSupportedTransparentWindow);
+                        rootPopup.getChildren().add(rectBg);
+                        rootPopup.getChildren().add(new Rectangle(0, 0, smallRectSize, smallRectSize));
+                        rootPopup.getChildren().add(new Rectangle(rectBg.getWidth() - smallRectSize, rectBg.getHeight() - smallRectSize, smallRectSize, smallRectSize));
+                        rootPopup.getChildren().add(new Rectangle(0, rectBg.getHeight() - smallRectSize, smallRectSize, smallRectSize));
+                        rootPopup.getChildren().add(new Rectangle(rectBg.getWidth() - smallRectSize, 0, smallRectSize, smallRectSize));
+
+                        popup.getContent().add(rootPopup);
+
+                        popup.show(stage, 
+                                stage.getX() + scene.getX() + rectGreen.getX() - smallRectSize, 
+                                stage.getY() + scene.getY() + rectGreen.getY() - smallRectSize);
+                            }
+
+                        }
+                ).build();
+
+        AbstractCheckBox chIsSupportedTransparentWindow = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW)")
+                .id("TRANSPARENT_WINDOW")
+                .setChecked(Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW))
+                .build();
+        
+
+        hbox.getChildren().addAll(btnShowPopup.node(), chIsSupportedTransparentWindow.node());
         root.getChildren().add(hbox);
-
-        btnShowPopup.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                Popup popup = new Popup();
-                popup.setWidth(stage.getWidth());
-                popup.setHeight(stage.getHeight());
-                popup.setOpacity(0.5);
-
-                Pane rootPopup = new Pane();
-                Rectangle rectBg = new Rectangle(0, 0, rectGreen.getWidth() + smallRectSize * 2, rectGreen.getHeight() + smallRectSize * 2);
-                rectBg.setId("RectPopupBg");
-                rectBg.setFill(Color.BLUE);
-                rectBg.setOpacity(0.5);
-
-                rootPopup.getChildren().add(rectBg);
-                rootPopup.getChildren().add(new Rectangle(0, 0, smallRectSize, smallRectSize));
-                rootPopup.getChildren().add(new Rectangle(rectBg.getWidth() - smallRectSize, rectBg.getHeight() - smallRectSize, smallRectSize, smallRectSize));
-                rootPopup.getChildren().add(new Rectangle(0, rectBg.getHeight() - smallRectSize, smallRectSize, smallRectSize));
-                rootPopup.getChildren().add(new Rectangle(rectBg.getWidth() - smallRectSize, 0, smallRectSize, smallRectSize));
-
-                popup.getContent().add(rootPopup);
-
-                popup.show(stage, 
-                        stage.getX() + scene.getX() + rectGreen.getX() - smallRectSize, 
-                        stage.getY() + scene.getY() + rectGreen.getY() - smallRectSize);
-            }
-        });
 
         Utils.addBrowser(scene);
         return scene;
@@ -115,6 +113,5 @@ public class TransparencyWindowApp extends InteroperabilityApp {
 
     public static void main(String[] args) {
         Utils.launch(TransparencyWindowApp.class, args);
-        //Application.launch(MouseEventApp.class, args);
     }
 }

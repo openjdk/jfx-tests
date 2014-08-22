@@ -27,16 +27,8 @@ package org.jemmy.fx.control;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableColumn.CellDataFeatures;
-import javafx.scene.control.TreeTableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -66,24 +58,12 @@ public class TreeTableViewApp extends Application {
         additionalDataColumn.setPrefWidth(100);
 
         Callback<TreeTableColumn<Data, String>, TreeTableCell<Data, String>> cellFactory =
-                new Callback<TreeTableColumn<Data, String>, TreeTableCell<Data, String>>() {
-                    public TreeTableCell call(TreeTableColumn p) {
-                        return new EditingCell();
-                    }
-                };
+                p -> new EditingCell();
 
-        additionalDataColumn.setCellValueFactory(new Callback<CellDataFeatures<Data, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(CellDataFeatures<Data, String> p) {
-                return p.getValue().getValue().additionalData;
-            }
-        });
+        additionalDataColumn.setCellValueFactory(p -> p.getValue().getValue().additionalData);
         additionalDataColumn.setCellFactory(cellFactory);
 
-        mainDataColumn.setCellValueFactory(new Callback<CellDataFeatures<Data, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(CellDataFeatures<Data, String> p) {
-                return p.getValue().getValue().mainData;
-            }
-        });
+        mainDataColumn.setCellValueFactory(p -> p.getValue().getValue().mainData);
         mainDataColumn.setCellFactory(cellFactory);
 
         treeTableView.getColumns().setAll(mainDataColumn, additionalDataColumn);

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <script>
+            function parseFiles() {
+                var input = document.getElementById("test");
+                var check = document.getElementById("check");
+                check.innerHTML = "";
+                for (var i = 0; i < input.files.length; i++) {
+                    var stringToAppend = input.files[i].name + " " + input.files[i].size + "<br>";
+                    // Doesn't work anywhere!        
+                    // + input.files[i].getAsDataURL() + "<br><br>";
+                    check.innerHTML += stringToAppend;
+                }
+            }
+        </script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        Page 1<br/>
+        <input type="text"/><br/>
+        <input id="test" type="file" autofocus/><br/>
+        <input type="text"/><br/>
+        <a href="autofocus2.html">To case 2</a>
+    </body>
+</html>

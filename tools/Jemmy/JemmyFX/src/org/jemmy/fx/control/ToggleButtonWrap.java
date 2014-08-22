@@ -54,7 +54,7 @@ import org.jemmy.resources.StringComparePolicy;
 @ControlInterfaces(value={Selectable.class}, encapsulates={Boolean.class})
 public class ToggleButtonWrap<T extends ToggleButton> extends TextControlWrap<T> implements Selectable<Boolean> {
     
-    List<Boolean> stateList = new LinkedList<Boolean>();
+    List<Boolean> stateList = new LinkedList<>();
     Selector<Boolean> selector = new SelectorImpl<ToggleButton, Boolean>(this, this);
 
     /**
@@ -69,12 +69,12 @@ public class ToggleButtonWrap<T extends ToggleButton> extends TextControlWrap<T>
     }
 
     public static ToggleButtonWrap<ToggleButton> find(NodeParent parent, LookupCriteria<ToggleButton> criteria) {
-        return new ToggleButtonWrap<ToggleButton>(parent.getEnvironment(),
+        return new ToggleButtonWrap<>(parent.getEnvironment(),
                 parent.getParent().lookup(ToggleButton.class, criteria).get());
     }
 
     public static ToggleButtonWrap<ToggleButton> find(NodeParent parent, String text) {
-        return find(parent, new ByText<ToggleButton>(text, (StringComparePolicy)parent.getEnvironment().
+        return find(parent, new ByText<>(text, (StringComparePolicy)parent.getEnvironment().
                 getProperty(Root.LOOKUP_STRING_COMPARISON, StringComparePolicy.EXACT)));
     }
 

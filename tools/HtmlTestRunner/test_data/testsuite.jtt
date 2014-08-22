@@ -1,0 +1,20 @@
+# The presentation name of the test suite
+name=Example of manual test suite
+
+# The ID for the test suite
+id=ManualSuiteInHtml
+
+# The jar file containing the test suite's JavaTest plug in classes
+classpath=lib/HtmlTestRunner.jar
+
+# The test finder to use
+finder=htmltestrunner.HtmlTestFinder
+
+# The test script to use
+script=htmltestrunner.TestScript
+
+# The configuration interview to use
+interview=htmltestrunner.Interview
+
+#TestSuite class
+testsuite=htmltestrunner.TestSuite

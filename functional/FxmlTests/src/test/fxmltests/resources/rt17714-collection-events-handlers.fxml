@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.FXCollections?>
+
+<FXCollections fx:controller="test.fxmltests.app.CollectionController" 
+               xmlns:fx="http://javafx.com/fxml" fx:factory="observableArrayList" 
+               onChange="#handleListChangeEvent"/>

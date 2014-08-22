@@ -1,0 +1,2 @@
+postMessage(navigator != null);
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
+-->
+ 
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml">
+    <TextField fx:id="textField"/>
+    <Button text="Click Me" onAction="#doSomething" fx:id="buttonId"/>
+</fx:root>

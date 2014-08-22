@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" id="AnchorPane" prefHeight="200" prefWidth="600.0">
+    <children>
+        <SplitPane dividerPositions="0.23737373737373738" focusTraversable="true" layoutX="0" layoutY="0">
+            <items>
+                <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0"/>
+                <Rectangle x="10" y="0" width="100" height="100" fx:id="rectangle">
+                    <fill><Color fx:constant="YELLOW"/></fill>
+                </Rectangle>
+                <Button fx:id="button" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="28.0" text="Button"/>
+                <AnchorPane fx:id="anchorPane1" prefHeight="90.0" prefWidth="128.0" style="-fx-background-color: #10101010">
+                    <maxHeight><Double fx:constant="NEGATIVE_INFINITY"/></maxHeight>
+                    <minHeight><Double fx:constant="NEGATIVE_INFINITY"/></minHeight>
+                    <minWidth><Double fx:constant="NEGATIVE_INFINITY"/></minWidth>
+                    <maxWidth><Double fx:constant="NEGATIVE_INFINITY"/></maxWidth>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>

@@ -47,11 +47,11 @@ class Windows extends AbstractParent<Window> {
     
 
     public <ST extends Window> Lookup<ST> lookup(Class<ST> type, LookupCriteria<ST> lc) {
-        return new PlainLookup<ST>(env, list, wrapper, type, lc);
+        return new PlainLookup<>(env, list, wrapper, type, lc);
     }
 
     public Lookup<Window> lookup(LookupCriteria<Window> lc) {
-        return new PlainLookup<Window>(env, list, wrapper, Window.class, lc);
+        return new PlainLookup<>(env, list, wrapper, Window.class, lc);
     }
 
     public Class<Window> getType() {

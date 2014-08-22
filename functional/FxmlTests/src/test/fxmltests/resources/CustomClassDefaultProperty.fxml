@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import test.fxmltests.app.CustomClass?>
+<CustomClass xmlns:fx="http://javafx.com/fxml" fx:value="fine!"/>
+

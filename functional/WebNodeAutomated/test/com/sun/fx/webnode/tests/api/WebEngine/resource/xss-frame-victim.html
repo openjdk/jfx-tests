@@ -1,0 +1,10 @@
+<html>
+<body>
+<!-- XSS filter should stop the following line from running -->
+<script>script_ran=true</script>
+<script type='text/javascript'>
+  var success = !window.script_ran;
+ document.write(success);
+</script>
+</body>
+</html>

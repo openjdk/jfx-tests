@@ -24,18 +24,19 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
 import javafx.scene.web.WebView;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.control.Wrapper;
 import org.jemmy.lookup.*;
-import org.jemmy.timing.State;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiConsumer;
 
 public class WebNodeParent<ITEM extends org.w3c.dom.Node> extends AbstractParent<ITEM>
         implements ControlList {
@@ -64,7 +65,7 @@ public class WebNodeParent<ITEM extends org.w3c.dom.Node> extends AbstractParent
 
     @Override
     public <ST extends ITEM> Lookup<ST> lookup(Class<ST> controlClass, LookupCriteria<ST> criteria) {
-        return new PlainLookup<ST>(view.getEnvironment(),
+        return new PlainLookup<>(view.getEnvironment(),
                 this, wrapper, controlClass, criteria);
     }
 
@@ -98,39 +99,30 @@ public class WebNodeParent<ITEM extends org.w3c.dom.Node> extends AbstractParent
 
     @Override
     public List<ITEM> getControls() {
-        view.getEnvironment().getWaiter(WebViewWrap.PAGE_LOADING_TIMEOUT).ensureValue(Worker.State.SUCCEEDED, new State<Worker.State>() {
-            public Worker.State reached() {
-                return new GetAction<Worker.State>() {
-                    @Override
-                    public void run(Object... parameters) throws Exception {
-                        setResult(view.getControl().getEngine().getLoadWorker().getState());
-                    }
-                }.dispatch(view.getEnvironment());
-            }
-        });
 
-        return new GetAction<List<ITEM>>() {
-            protected void addChildren(List<ITEM> list, NodeList childNodes) {
-                for (int i = 0; i < childNodes.getLength(); i++) {
-                    final Node item = childNodes.item(i);
-                    list.add((ITEM) item);
-                    addChildren(list, item.getChildNodes());
-                }
-            }
+        view.getEnvironment().getWaiter(WebViewWrap.PAGE_LOADING_TIMEOUT).ensureValue(Worker.State.SUCCEEDED,
+                () -> new FutureAction<>(view.getEnvironment(), () -> view.getControl().getEngine().getLoadWorker().getState()).get());
 
-            @Override
-            public void run(Object... parameters) throws Exception {
-                List<ITEM> list = new ArrayList<ITEM>();
+        return new FutureAction<>(view.getEnvironment(), () -> {
+            List<ITEM> list = new ArrayList<>();
 
-                final NodeList childNodes;
-                if (node == null) {
-                    childNodes = view.getControl().getEngine().getDocument().getChildNodes();
-                } else {
-                    childNodes = node.getControl().getChildNodes();
-                }
-                addChildren(list, childNodes);
-                setResult(list);
+            NodeList childNodes;
+            if (node == null) {
+                childNodes = view.getControl().getEngine().getDocument().getChildNodes();
+            } else {
+                childNodes = node.getControl().getChildNodes();
             }
-        }.dispatch(view.getEnvironment());
+            addToList(list, childNodes);
+            return list;
+        }).get();
     }
+
+    private void addToList(List<ITEM> list, NodeList children) {
+        for (int i = 0; i < children.getLength(); i++) {
+            final Node item = children.item(i);
+            list.add((ITEM) item);
+            addToList(list, item.getChildNodes());
+        }
+    }
+
 }

@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="draggable.css"/>
+    </head>
+    <body>
+        <h3>Test for addElement method</h3>
+        <span  draggable="true" class="draggable"
+               ondragstart="event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.addElement(document.getElementById('feedback1'));">
+            Drag this (1)
+        </span><br/>
+        <span  draggable="true" class="draggable"
+               ondragstart="event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.addElement(document.getElementById('feedback2'));">
+            Drag this (2)
+        </span><br/>
+        <div style="background-color: red;" id="feedback1">&nbsp;</div>
+        <div style="background-color: blue;" id="feedback2">&nbsp;</div>
+    </body>
+</html>

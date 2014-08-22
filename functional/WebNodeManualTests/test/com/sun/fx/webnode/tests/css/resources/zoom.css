@@ -1,0 +1,12 @@
+/* 
+    Document   : zoom
+    Created on : Nov 13, 2012, 4:08:02 PM
+    Author     : dmitry.ginzburg
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.web-view { 
+    -fx-zoom: 2;
+}
+

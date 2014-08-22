@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2011 Oracle and/or its affiliates. All rights reserved.
+-->
+
+<?import test.fxmltests.app.*?>
+
+<LoadableEntity_18229 fx:id="root" fx:controller="test.fxmltests.app.RT_18229Controller"
+    name1="abc" name2="def" onName1Change="#handleRootName1Change" onName2Change="#handleRootName2Change"
+    xmlns:fx="http://javafx.com/fxml">
+</LoadableEntity_18229>

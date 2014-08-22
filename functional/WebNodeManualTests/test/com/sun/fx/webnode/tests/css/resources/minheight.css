@@ -1,0 +1,12 @@
+/* 
+    Document   : minheight
+    Created on : Jul 5, 2012, 6:21:51 PM
+    Author     : javafx
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.web-view {
+    -fx-min-height: 400;
+}
+

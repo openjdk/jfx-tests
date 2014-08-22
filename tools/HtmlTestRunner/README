@@ -1,0 +1,11 @@
+HtmlTestRunner build guide:
+
+you would need javatest.jar and jh.jar to build this project.
+Visit https://jtharness.java.net/  to read about JT Harness project.
+Please visit JT Harness download page
+at http://download.java.net/jtharness/download.html to obtain latest bundle.
+
+The bundle contains /lib folder with javatest.jar and jh.jar in it.
+Put these files into tools/lib folder.
+Now you are ready to build the HtmlTestRunner project.
+

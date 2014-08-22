@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <span style="color: red;">This test is valid in Windows environment only! Please mark it as pass if you're running it in other environment.</span><br/>
+        Test for -fx-font-smoothing-type style<br/>
+        <ol>
+            <li>Check that LCD font smoothing is enabled by default. There should be some color artifacts visible in the last line of text:<br/><img src="resources/images/lcd.png"/></li>
+            <li>Press "Enable styling" button.</li>
+            <li>Check that LCD font smoothing is now disabled. Color artifacts should disappear, and the last line of text should look like this:<br/><img src="resources/images/gray.png"/></li>
+            <li>Press "Disable styling" button.</li>
+            <li>Check that LCD font smoothing is enabled again. There should be some color artifacts visible in the last line of text:<br/><img src="resources/images/lcd.png"/></li>
+        </ol>
+        Test passes if all the steps pass.
+    </body>
+</html>

@@ -7,7 +7,6 @@ package org.jemmy.fx;
 import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.image.Image;
 import org.jemmy.resources.StringComparePolicy;
-import org.jemmy.timing.State;
 import org.junit.*;
 
 /**
@@ -44,11 +43,6 @@ public class ImageTest {
         final Image beforeClick = button.wrap().getScreenImage();
         beforeClick.save("beforeClick.png");
         button.wrap().mouse().click();
-        button.wrap().waitState(new State<Image>() {
-
-            public Image reached() {
-                return button.wrap().getScreenImage().compareTo(beforeClick);
-            }
-        });
+        button.wrap().waitState(() -> button.wrap().getScreenImage().compareTo(beforeClick));
     }
 }

@@ -1,0 +1,14 @@
+/* 
+    Document   : user
+    Created on : Jun 15, 2012, 7:24:10 PM
+    Author     : Irina Grineva
+*/
+
+root { 
+    display: block;
+}
+
+.user-class {
+    background-color: red;
+    color: green;
+}

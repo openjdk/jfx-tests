@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Labels and access keys test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        th, td {
+            padding: 0.5em;
+        }
+    </style>
+  </head>
+  <body>
+      <h3>Labels and access keys</h3>
+      <h4>Labels</h4>
+      <form>
+          Check that the radio button #2 becomes checked after clicking the label below:<br/>
+          <label for="rb2" style="color: red;">LABEL</label><br/>
+          Check that the radio button #6 becomes checked after clicking the image below:<br/>
+          <label for="rb6"><img src="./images/horse.png"/></label><br/>
+          Radio button 1: <input type="radio" id="rb1" name="radio1"/><br/>
+          Radio button 2: <input type="radio" id="rb2" name="radio1"/><br/>
+          Radio button 3: <input type="radio" id="rb3" name="radio1"/><br/>
+          Radio button 4: <input type="radio" id="rb4" name="radio1"/><br/>
+          <label>Radio button 5 (check that if you click here, radio button #5 becomes checked): <input type="radio" id="rb5" name="radio1"/><br/></label>
+          Radio button 6: <input type="radio" id="rb6" name="radio1"/><br/>
+      </form>
+      
+      <h4>Access keys</h4>
+      Check that after pressing press ALT+J (CMD+J on Mac) the checkbox below becomes checked.<br/>
+      The access key for this checkbox is "J": <input type="checkbox" accesskey="J"/><br/>
+      
+  </body>
+</html>

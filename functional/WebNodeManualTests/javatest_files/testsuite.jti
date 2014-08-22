@@ -1,0 +1,28 @@
+#JT Harness Configuration Interview
+#Thu Oct 21 16:48:38 MSD 2010
+INTERVIEW=client.test.runner.BasicJcovFXInterview
+LOCALE=ru_RU
+NAME=name
+QUESTION=epilog
+TESTSUITE=_TESTSUITE_
+WORKDIR=_WORKDIR_
+concurrency.concurrency=1
+excludeList.latestAutoCheck=No
+excludeList.latestAutoCheckInterval=7
+excludeList.latestAutoCheckMode=everyXDays
+excludeList.needExcludeList=No
+javafx=
+jcov=Yes
+pipelineGroup=Hardware(Default)
+pipeline=
+keywords.keywords.mode=expr
+keywords.needKeywords=No
+name=name1
+priorStatus.needStatus=No
+priorStatus.status=
+tests.needTests=No
+tests.tests=
+tests.treeOrFile=tree
+timeout.timeout=1
+runmode=desktop
+proxy=

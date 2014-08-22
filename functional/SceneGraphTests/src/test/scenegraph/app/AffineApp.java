@@ -4,31 +4,22 @@
  */
 package test.scenegraph.app;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
+import test.embedded.helpers.AbstractCheckBox;
+import test.embedded.helpers.CheckBoxBuilderFactory;
+import test.embedded.helpers.OnClickHandler;
 import javafx.geometry.Point2D;
 import javafx.geometry.Point3D;
-import javafx.geometry.VPos;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.CheckBoxBuilder;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -82,7 +73,7 @@ public class AffineApp extends InteroperabilityApp
 	    manualTransRectPane.getChildren().add(manualTranformedRectangle);
 
             VBox all = new VBox();
-	    for(CheckBox cb: boxes)
+	    for(Node cb: boxes)
             {
                all.getChildren().add(cb);
             }
@@ -138,8 +129,6 @@ public class AffineApp extends InteroperabilityApp
 	    setRoot(all);
 	    setCamera(new PerspectiveCamera());
             
-            appendTransform.setId(AffineAPI.APPEND_TRANSFORM.name());
-            appendMatrix.setId(AffineAPI.APPEND_D_ARR_MATRIX_TYPE_INT.name());
 	}
 	
 	private Group root;
@@ -150,11 +139,14 @@ public class AffineApp extends InteroperabilityApp
 	private Affine regularAffine = new Affine();
 	private AffineManual manualAffine = new AffineManual();
 	
-	private CheckBox append6d = CheckBoxBuilder.create().text("append(double, double, double, double, double, double)").
-                id(AffineAPI.APPEND_6D.name()).onAction(new EventHandler<ActionEvent>() {
+	private AbstractCheckBox append6d = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("append(double, double, double, double, double, double)")
+                .id(AffineAPI.APPEND_6D.name())
+                .setOnClickHandler(new OnClickHandler() {
 
-                    public void handle(ActionEvent t) {
-                        if(append6d.isSelected())
+                    @Override
+                    public void onClick() {
+                        if(append6d.isChecked())
                         {
                             regularAffine.append(1, 0, 10, 0, 1, 10);
                             manualAffine.append(1, 0, 10, 0, 1, 10);
@@ -167,16 +159,19 @@ public class AffineApp extends InteroperabilityApp
                     }
                 }).build();
         
-	private CheckBox append12d = CheckBoxBuilder.create().text("append(double, double, double, double, double, double, double, double, double, double, double, double)").
-                id(AffineAPI.APPEND_12D.name()).onAction(new EventHandler<ActionEvent>() {
+	private AbstractCheckBox append12d = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("append(double, double, double, double, double, double, double, double, double, double, double, double)")
+                .id(AffineAPI.APPEND_12D.name())
+                .setOnClickHandler(new OnClickHandler() {
 
-                    public void handle(ActionEvent t) {
+                    @Override
+                    public void onClick() {
 
                         double angle = Math.PI / 4;
                         double sin = Math.sin(angle);
                         double cos = Math.cos(angle);
 
-                        if(append12d.isSelected())
+                        if(append12d.isChecked())
                         {
                             regularAffine.append(cos, sin, 0, 0, 
                                                  -sin, cos, 0, 0, 
@@ -197,11 +192,14 @@ public class AffineApp extends InteroperabilityApp
                     }
                 }).build();
         
-        private CheckBox appendTransform = CheckBoxBuilder.create().text("append(Transform)").
-                id(AffineAPI.APPEND_TRANSFORM.name()).onAction(new EventHandler<ActionEvent>() {
+        private AbstractCheckBox appendTransform = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("append(Transform)")
+                .id(AffineAPI.APPEND_TRANSFORM.name())
+                .setOnClickHandler(new OnClickHandler() {
 
-                    public void handle(ActionEvent t) {
-                        if(appendTransform.isSelected())
+                    @Override
+                    public void onClick() {
+                        if(appendTransform.isChecked())
                         {
                             regularAffine.append(new Rotate(45));
                             manualAffine.append(new Rotate(45));
@@ -214,10 +212,13 @@ public class AffineApp extends InteroperabilityApp
                     }
                 }).build();
         
-        private CheckBox appendMatrix = CheckBoxBuilder.create().text("append(double[], MatrixType, int)").
-                id(AffineAPI.APPEND_D_ARR_MATRIX_TYPE_INT.name()).onAction(new EventHandler<ActionEvent>() {
+        private AbstractCheckBox appendMatrix =  CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("append(double[], MatrixType, int)").
+                id(AffineAPI.APPEND_D_ARR_MATRIX_TYPE_INT.name())
+                .setOnClickHandler(new OnClickHandler() {
 
-                    public void handle(ActionEvent t) {
+                    @Override
+                    public void onClick() {
                         double angle = Math.PI / 4;
                         double sin = Math.sin(angle);
                         double cos = Math.cos(angle);
@@ -225,7 +226,7 @@ public class AffineApp extends InteroperabilityApp
                         double[] forward = {0, 0, cos, sin, 0, 0, -sin, cos, 0, 0, 0, 0, 1, 0};
                         double[] backward = {0, 0, cos, -sin, 0, 0, sin, cos, 0, 0, 0, 0, 1, 0};
 
-                        if(appendMatrix.isSelected())
+                        if(appendMatrix.isChecked())
                         {
                             regularAffine.append(forward, MatrixType.MT_3D_3x4, 2);
                             manualAffine.append(forward, MatrixType.MT_3D_3x4, 2);
@@ -238,110 +239,128 @@ public class AffineApp extends InteroperabilityApp
                     }
                 }).build();
         
-        private CheckBox appendRotateD = CheckBoxBuilder.create().text("appendRotate(double)").
-                id(AffineAPI.APPEND_ROTATE_D.name()).onAction(new EventHandler<ActionEvent>() {
+        private AbstractCheckBox appendRotateD = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("appendRotate(double)")
+                .id(AffineAPI.APPEND_ROTATE_D.name())
+                .setOnClickHandler(new OnClickHandler() {
 
-            public void handle(ActionEvent t) {
-                if(appendRotateD.isSelected())
-                {
-                    regularAffine.appendRotation(30);
-                    manualAffine.appendRotation(30);
+                @Override
+                public void onClick() {
+                    if(appendRotateD.isChecked())
+                    {
+                        regularAffine.appendRotation(30);
+                        manualAffine.appendRotation(30);
+                    }
+                    else
+                    {
+                        regularAffine.appendRotation(-30);
+                        manualAffine.appendRotation(-30);
+                    }
                 }
-                else
-                {
-                    regularAffine.appendRotation(-30);
-                    manualAffine.appendRotation(-30);
-                }
-            }
         }).build();
         
-        private CheckBox appendRotate3D = CheckBoxBuilder.create().text("appendRotate(double, double, double").
-                id(AffineAPI.APPEND_ROTATE_3D.name()).onAction(new EventHandler<ActionEvent>() {
+        private AbstractCheckBox appendRotate3D = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("appendRotate(double, double, double").
+                id(AffineAPI.APPEND_ROTATE_3D.name())
+                .setOnClickHandler(new  OnClickHandler() {
 
-            public void handle(ActionEvent t) {
-                if(appendRotate3D.isSelected())
-                {
-                    regularAffine.appendRotation(30, 15, 15);
-                    manualAffine.appendRotation(30, 15, 15);
+                @Override
+                public void onClick() {
+                    if(appendRotate3D.isChecked())
+                    {
+                        regularAffine.appendRotation(30, 15, 15);
+                        manualAffine.appendRotation(30, 15, 15);
+                    }
+                    else
+                    {
+                        regularAffine.appendRotation(-30, 15, 15);
+                        manualAffine.appendRotation(-30, 15, 15);
+                    }
                 }
-                else
-                {
-                    regularAffine.appendRotation(-30, 15, 15);
-                    manualAffine.appendRotation(-30, 15, 15);
-                }
-            }
         }).build();
         
-        private CheckBox appendRotateDPoint2D = CheckBoxBuilder.create().text("append(double, Point2D)").
-                id(AffineAPI.APPEND_ROTATE_D_POINT2D.name()).onAction(new EventHandler<ActionEvent>() {
+        private AbstractCheckBox appendRotateDPoint2D = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("append(double, Point2D)")
+                .id(AffineAPI.APPEND_ROTATE_D_POINT2D.name())
+                .setOnClickHandler(new  OnClickHandler() {
 
-            public void handle(ActionEvent t) {
-                if(appendRotateDPoint2D.isSelected())
-                {
-                    regularAffine.appendRotation(30, new Point2D(22, 22));
-                    manualAffine.appendRotation(30, new Point2D(22, 22));
+                @Override
+                public void onClick() {
+                    if(appendRotateDPoint2D.isChecked())
+                    {
+                        regularAffine.appendRotation(30, new Point2D(22, 22));
+                        manualAffine.appendRotation(30, new Point2D(22, 22));
+                    }
+                    else
+                    {
+                        regularAffine.appendRotation(-30, new Point2D(22, 22));
+                        manualAffine.appendRotation(-30, new Point2D(22, 22));
+                    }
                 }
-                else
-                {
-                    regularAffine.appendRotation(-30, new Point2D(22, 22));
-                    manualAffine.appendRotation(-30, new Point2D(22, 22));
-                }
-            }
         }).build();
         
-        private CheckBox appendRotate7D = CheckBoxBuilder.create().text("append(double, double, double, double, double, double, double)").
-                id(AffineAPI.APPEND_ROTATE_7D.name()).onAction(new EventHandler<ActionEvent>() {
+        private AbstractCheckBox appendRotate7D = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("append(double, double, double, double, double, double, double)")
+                .id(AffineAPI.APPEND_ROTATE_7D.name())
+                .setOnClickHandler(new  OnClickHandler() {
 
-            public void handle(ActionEvent t) {
-                if(appendRotate7D.isSelected())
-                {
-                    regularAffine.appendRotation(15, 0, 0, 0, 10, 10, 10);
-                    manualAffine.appendRotation(15, 0, 0, 0, 10, 10, 10);
+                @Override
+                public void onClick() {
+                    if(appendRotate7D.isChecked())
+                    {
+                        regularAffine.appendRotation(15, 0, 0, 0, 10, 10, 10);
+                        manualAffine.appendRotation(15, 0, 0, 0, 10, 10, 10);
+                    }
+                    else
+                    {
+                        regularAffine.appendRotation(-15, 0, 0, 0, 10, 10, 10);
+                        manualAffine.appendRotation(-15, 0, 0, 0, 10, 10, 10);
+                    }
                 }
-                else
-                {
-                    regularAffine.appendRotation(-15, 0, 0, 0, 10, 10, 10);
-                    manualAffine.appendRotation(-15, 0, 0, 0, 10, 10, 10);
-                }
-            }
         }).build();
         
-        private CheckBox appendRotate4DPoint3D = CheckBoxBuilder.create().text("append(double, double, double, double, Point3D)").
-                id(AffineAPI.APPEND_ROTATE_4D_POINT3D.name()).onAction(new EventHandler<ActionEvent>() {
+        private AbstractCheckBox appendRotate4DPoint3D = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("append(double, double, double, double, Point3D)")
+                .id(AffineAPI.APPEND_ROTATE_4D_POINT3D.name())
+                .setOnClickHandler(new  OnClickHandler() {
 
-            public void handle(ActionEvent t) {
-                if(appendRotate4DPoint3D.isSelected())
-                {
-                    regularAffine.appendRotation(15, 0, 0, 0, new Point3D(10, 10, 10));
-                    manualAffine.appendRotation(15, 0, 0, 0, new Point3D(10, 10, 10));
+                @Override
+                public void onClick() {
+                    if(appendRotate4DPoint3D.isChecked())
+                    {
+                        regularAffine.appendRotation(15, 0, 0, 0, new Point3D(10, 10, 10));
+                        manualAffine.appendRotation(15, 0, 0, 0, new Point3D(10, 10, 10));
+                    }
+                    else
+                    {
+                        regularAffine.appendRotation(-15, 0, 0, 0, new Point3D(10, 10, 10));
+                        manualAffine.appendRotation(-15, 0, 0, 0, new Point3D(10, 10, 10));
+                    }
                 }
-                else
-                {
-                    regularAffine.appendRotation(-15, 0, 0, 0, new Point3D(10, 10, 10));
-                    manualAffine.appendRotation(-15, 0, 0, 0, new Point3D(10, 10, 10));
-                }
-            }
         }).build();
         
-        private CheckBox appendRotateD2Point3D = CheckBoxBuilder.create().text("append(double, Point3D, Point3D)").
-                id(AffineAPI.APPEND_ROTATE_D_2POINT3D.name()).onAction(new EventHandler<ActionEvent>() {
+        private AbstractCheckBox appendRotateD2Point3D = CheckBoxBuilderFactory.newCheckboxBuilder()
+                .text("append(double, Point3D, Point3D)").
+                id(AffineAPI.APPEND_ROTATE_D_2POINT3D.name())
+                .setOnClickHandler(new  OnClickHandler() {
 
-            public void handle(ActionEvent t) {
-                if(appendRotateD2Point3D.isSelected())
-                {
-                    regularAffine.appendRotation(15, new Point3D(0, 0, 0), new Point3D(10, 10, 10));
-                    manualAffine.appendRotation(15, new Point3D(0, 0, 0), new Point3D(10, 10, 10));
+                @Override
+                public void onClick() {
+                    if(appendRotateD2Point3D.isChecked())
+                    {
+                        regularAffine.appendRotation(15, new Point3D(0, 0, 0), new Point3D(10, 10, 10));
+                        manualAffine.appendRotation(15, new Point3D(0, 0, 0), new Point3D(10, 10, 10));
+                    }
+                    else
+                    {
+                        regularAffine.appendRotation(-15, new Point3D(0, 0, 0), new Point3D(10, 10, 10));
+                        manualAffine.appendRotation(-15, new Point3D(0, 0, 0), new Point3D(10, 10, 10));
+                    }
                 }
-                else
-                {
-                    regularAffine.appendRotation(-15, new Point3D(0, 0, 0), new Point3D(10, 10, 10));
-                    manualAffine.appendRotation(-15, new Point3D(0, 0, 0), new Point3D(10, 10, 10));
-                }
-            }
         }).build();
         
-        private CheckBox[] boxes = new CheckBox[]{append6d, append12d, appendTransform, appendMatrix, appendRotateD, 
-                appendRotate3D, appendRotateDPoint2D, appendRotate7D, appendRotate4DPoint3D, appendRotateD2Point3D};
+        private Node[] boxes = new Node[]{append6d.node(), append12d.node(), appendTransform.node(), appendMatrix.node(), appendRotateD.node(), 
+                appendRotate3D.node(), appendRotateDPoint2D.node(), appendRotate7D.node(), appendRotate4DPoint3D.node(), appendRotateD2Point3D.node()};
 	
     }
     

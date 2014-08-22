@@ -23,6 +23,7 @@
  */
 package test.scenegraph.manual;
 
+import client.test.Keywords;
 import test.scenegraph.app.InterpolatorApp;
 import client.test.RunUI;
 import org.jemmy.action.AbstractExecutor;
@@ -39,6 +40,7 @@ public class Interpolator extends TestBase {
 
     @RunUI
     @BeforeClass
+    @Keywords(keywords = "manual_embedded")
     public static void runUI() {
         InterpolatorApp.main(null);
 

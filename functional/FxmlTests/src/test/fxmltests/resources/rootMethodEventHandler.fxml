@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import test.fxmltests.app.MyRootElement2?>
+<?import javafx.scene.control.*?>
+
+<MyRootElement2 fx:controller="test.fxmltests.app.MyRootElement2" xmlns:fx="http://javafx.com/fxml">
+ <children>
+  <Button text="Click Me!" onAction="#handleButtonAction"/>
+ </children>
+</MyRootElement2>
+

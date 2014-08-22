@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="draggable.css"/>
+        <script>
+            function dropInfo() {
+                document.getElementById("info").innerHTML = "Success";
+                setTimeout(clearInfo, 5000);
+            }
+            
+            function clearInfo() {
+                document.getElementById("info").innerHTML = "";
+            }
+        </script>
+    </head>
+    <body>
+        <h3>Test for dropzone attribute</h3>
+        <table style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Drag effects</th>
+                    <th>Dropzones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><div draggable="true" class="draggable">Default (all)</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='all';">All</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='none';">None</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='copy';">Copy</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='move';">Move</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='link';">Link</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='copymove';">CopyMove</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='copylink';">CopyLink</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='linkmove';">LinkMove</div>
+                    </td>
+                    <td>
+                        <div dropzone="copy" class="droparea"
+                            ondrop="event.preventDefault(); dropInfo();"
+                            ondragover="event.preventDefault();"
+                            ondragenter="event.preventDefault();">Copy</div>
+                        <div dropzone="move" class="droparea"
+                            ondrop="event.preventDefault(); dropInfo();"
+                            ondragover="event.dataTransfer.dropEffect='move'; event.preventDefault();"
+                            ondragenter="event.preventDefault();">Move</div>
+                        <div dropzone="link" class="droparea"
+                            ondrop="event.preventDefault(); dropInfo();"
+                            ondragover="event.dataTransfer.dropEffect='link'; event.preventDefault();"
+                            ondragenter="event.preventDefault();">Link</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <span id="info" style="color: green;">
+        </span>
+    </body>
+</html>

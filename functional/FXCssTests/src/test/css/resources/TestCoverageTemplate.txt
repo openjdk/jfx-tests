@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test coverage</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <table border="1">
+            <tr>
+                <th>Caspian</th>
+                <th>Reference</th>
+                <th>Covered</th>
+            </tr>
+            %s
+        </table>
+        <p><b>Caspian coverage rate: %s%%</b></p>
+        <p><b>Reference coverage rate: %s%%</b></p>
+    </body>
+</html>

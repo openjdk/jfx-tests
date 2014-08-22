@@ -79,7 +79,7 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
     public ListItemWrap(Class<DATA> dataClass, DATA data, int index, ListViewWrap<? extends ListView> listViewWrap, CellEditor<? super DATA> editor) {
         super(dataClass, index, data, listViewWrap, editor);
         this.listViewWrap = listViewWrap;
-        wElement = new ViewElement<ListView>(ListView.class, listViewWrap.getControl());
+        wElement = new ViewElement<>(ListView.class, listViewWrap.getControl());
     }
 
     /**
@@ -95,7 +95,7 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
     @Override
     public Wrap<? extends ListCell> cellWrap() {
         return listViewWrap.as(Parent.class, Node.class).lookup(ListCell.class,
-                new ListItemByObjectLookup<DATA>(getControl())).wrap(0);
+                new ListItemByObjectLookup<>(getControl())).wrap(0);
     }
 
     @Override
@@ -119,12 +119,7 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
 
         AbstractScroll scroll1 = Utils.getContainerScroll(listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() == Orientation.VERTICAL);
         if (scroll1 != null) {
-            TableUtils.scrollToInSingleDimension((Wrap<? extends Control>) viewWrap, ListCell.class, new Callback<ListCell, Integer>() {
-                @Override
-                public Integer call(ListCell p) {
-                    return items.indexOf(p.getItem());
-                }
-            }, listViewWrap.getItems().indexOf(getControl()), 
+            TableUtils.scrollToInSingleDimension((Wrap<? extends Control>) viewWrap, ListCell.class, p -> items.indexOf(p.getItem()), listViewWrap.getItems().indexOf(getControl()), 
             scroll1.caret(), listViewWrap.vertical());
         }
         AbstractScroll scroll2 = Utils.getContainerScroll(listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() != Orientation.VERTICAL);
@@ -138,12 +133,7 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
 
     private Wrap<? extends javafx.scene.Parent> getClippedContainerWrap() {
         if (clippedContainer == null) {
-            clippedContainer = ((Parent<Node>) listViewWrap.as(Parent.class, Node.class)).lookup(javafx.scene.Parent.class, new LookupCriteria<javafx.scene.Parent>() {
-
-                public boolean check(javafx.scene.Parent control) {
-                    return control.getClass().getName().endsWith("VirtualFlow$ClippedContainer");
-                }
-            }).wrap();
+            clippedContainer = ((Parent<Node>) listViewWrap.as(Parent.class, Node.class)).lookup(javafx.scene.Parent.class, control -> control.getClass().getName().endsWith("VirtualFlow$ClippedContainer")).wrap();
         }
         return clippedContainer;
     }
@@ -163,7 +153,7 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
             @Override
             @SuppressWarnings("unchecked")
             public void run(Object... parameters) {
-                final List<Long> res = new LinkedList<Long>();
+                final List<Long> res = new LinkedList<>();
 
                 listViewWrap.as(Parent.class, Node.class).lookup(
                         ListCell.class, new LookupCriteria<ListCell>() {

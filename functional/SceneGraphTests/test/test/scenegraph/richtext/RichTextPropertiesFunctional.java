@@ -50,7 +50,7 @@ public abstract class RichTextPropertiesFunctional extends TestBase {
     private RichTextPropertiesApp application = null;
 
     protected void lookup() {
-        Parent p = scene.as(Parent.class, Node.class);
+        Parent p = getScene().as(Parent.class, Node.class);
         screenshotArea = p.lookup(Pane.class, new ByID<Pane>(RichTextPropertiesApp.PANE_ID)).wrap();
         application = RichTextPropertiesApp.getApplication();
     }

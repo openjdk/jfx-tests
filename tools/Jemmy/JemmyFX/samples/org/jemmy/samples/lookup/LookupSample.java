@@ -159,12 +159,7 @@ public class LookupSample extends LookupSampleBase {
         SceneDock scene = new SceneDock();
 
         try {
-            NodeDock node = new NodeDock(scene.asParent(), new LookupCriteria<Node>() {
-
-                public boolean check(Node cntrl) {
-                    return false;
-                }
-            });
+            NodeDock node = new NodeDock(scene.asParent(), cntrl -> false);
             System.out.println("This node could never be found " + node);
             fail("Should not get here!");
         } catch (TimeoutExpiredException e) {

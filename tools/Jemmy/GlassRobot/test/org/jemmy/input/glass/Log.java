@@ -26,7 +26,6 @@ package org.jemmy.input.glass;
 
 import org.jemmy.TimeoutExpiredException;
 import org.jemmy.fx.control.TextInputControlDock;
-import org.jemmy.timing.State;
 
 /**
  *
@@ -48,15 +47,11 @@ class Log {
         try {
             System.out.println("Waiting for:");
             System.out.println(sb.toString());
-            txt.wrap().waitState(new State<String>() {
-
-                @Override
-                public String reached() {
-                    if (txt.asSelectionText().text().contains(sb.toString())) {
-                        return sb.toString();
-                    } else {
-                        return null;
-                    }
+            txt.wrap().waitState(() -> {
+                if (txt.asSelectionText().text().contains(sb.toString())) {
+                    return sb.toString();
+                } else {
+                    return null;
                 }
             });
         } catch (TimeoutExpiredException e) {
@@ -67,19 +62,15 @@ class Log {
     }
 
     void checkLines(final int lines) {
-        txt.wrap().waitState(new State<Boolean>() {
-
-            @Override
-            public Boolean reached() {
-                int i = 0;
-                int c = 0;
-                String text = txt.asSelectionText().text();
-                while ((i = text.indexOf("\n", i)) > -1) {
-                    c++;
-                    i++;
-                }
-                return c == lines;
+        txt.wrap().waitState(() -> {
+            int i = 0;
+            int c = 0;
+            String text = txt.asSelectionText().text();
+            while ((i = text.indexOf("\n", i)) > -1) {
+                c++;
+                i++;
             }
+            return c == lines;
         });
     }
 }

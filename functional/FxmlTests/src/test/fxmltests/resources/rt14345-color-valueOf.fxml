@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml">
+    
+    <HBox>
+        <Rectangle fx:id="red_rectangle" width="30" height="30" fill="red"/>
+        <Rectangle fx:id="green_rectangle" width="30" height="30" fill="#00af33"/>
+        <Rectangle fx:id="linear_gradient_rectangle_1" width="30" height="30" fill="linear-gradient(from 0% 0% to 100% 100%, yellow 0%, black 100%)"/>
+        <Rectangle fx:id="linear_gradient_rectangle_2" width="30" height="30" fill="linear-gradient(from 0px 0px to 30px 30px, orange 0% , white 30%, blue 100%)"/>
+        <Rectangle fx:id="radial_gradient_rectangle_1" width="30" height="30" fill="radial-gradient(center 50% 50%, radius 50%,  cyan, violet 75%, magenta)"/>
+        <Rectangle fx:id="radial_gradient_rectangle_2" width="30" height="30" fill="radial-gradient(center 15px 15px, radius 15px, gold 0%, silver 75%)"/>
+    </HBox>
+    
+</AnchorPane>

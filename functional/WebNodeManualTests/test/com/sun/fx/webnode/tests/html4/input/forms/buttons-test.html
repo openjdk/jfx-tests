@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Buttons test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        th, td {
+            padding: 0.5em;
+        }
+    </style>
+  </head>
+  <body>
+      <form name="buttons">
+          <h3>Buttons</h3>
+          <h4>Button and Input elements rendering</h4>
+          Input-based buttons should look the same as Button-based buttons:<br/>
+          <table style="padding: 0.5em;">
+              <thead>
+                  <tr>
+                    <th>Button type</th>
+                    <th>Input element</th>
+                    <th>Button element</th>
+                  </tr>
+              </thead>
+              <tbody>
+              <tr>
+                  <td>Push button:</td>
+                  <td><input type="button" value="I am push button"/></td>
+                  <td><button type="button">I am push button</button></td>
+              </tr>
+              <tr>
+                  <td>Push button (disabled):</td>
+                  <td><input type="button" value="I am push button" disabled=""/></td>
+                  <td><button type="button" disabled="">I am push button</button></td>
+              </tr>
+              <tr>
+                  <td>Reset button:</td>
+                  <td><input type="reset" value="I am reset button"/></td>
+                  <td><button type="reset">I am reset button</button></td>
+              </tr>
+              <tr>
+                  <td>Reset button (disabled):</td>
+                  <td><input type="reset" value="I am reset button" disabled=""/></td>
+                  <td><button type="reset" disabled="">I am reset button</button></td>
+              </tr>
+              <tr>
+                  <td>Submit button:</td>
+                  <td><input type="submit" value="I am submit button"/></td>
+                  <td><button type="submit">I am submit button</button></td>
+              </tr>
+              <tr>
+                  <td>Submit button (disabled):</td>
+                  <td><input type="submit" value="I am submit button" disabled=""/></td>
+                  <td><button type="submit" disabled="">I am submit button</button></td>
+              </tr>
+              </tbody>
+          </table>
+      </form>
+      <form>
+          <h4>Fancy Button element usage</h4>
+          The Pony image should be visible; the background under pony should be transparent and normal button color (like of the buttons above) should be seen through it:<br/>
+          <button type="submit">I love ponies! <img src="images/pony.png"/></button>
+      </form>
+      <form>
+          <h4>Button and Input reset</h4>
+          Edit the text field below; then check that the "Default value" text is placed into the text box after clicking on the reset buttons (edit text field before trying every button; both buttons should work).<br/>
+          <div style="padding: 0.5em;"><label for="tobereset">Change this text:&nbsp;</label><input type="text" value="Default value" id="tobereset"/><br/></div>
+          <input type="reset" value="Input reset"/><button type="reset">Button reset</button>
+      </form>
+      <form action="./scripts/submit_action.html" method="GET">
+          <h4>Button and Input submit</h4>
+          Check that the page with the word "Success" is loaded after clicking on any of submit buttons (both buttons should work).<br/>
+          Also check that page URL displayed on that page ends with "submit_action.html?parameter=sent".<br/>
+          <input type="submit" value="Input submit"/><button type="submit">Button submit</button>
+          <input type="hidden" name="parameter" value="sent"/>
+      </form>
+      <form action="./scripts/submit_action.html" method="GET">
+          <h4>Disabled Button and Input submit</h4>
+          Check that the browser doesn't leave the page if clicked on any of the buttons below (none of disabled submit buttons should work).<br/>
+          <input type="submit" value="Input submit" disabled=""/><button type="submit" disabled="">Button submit</button>
+          <input type="hidden" name="parameter" value="sent"/>
+      </form>
+  </body>
+</html>

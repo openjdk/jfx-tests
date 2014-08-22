@@ -30,11 +30,11 @@ import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.fx.control.TextInputControlDock;
+import org.jemmy.interfaces.Keyboard;
+import org.junit.*;
+
 import static org.jemmy.input.glass.KeyboardInputApp.PUSHED;
 import static org.jemmy.input.glass.KeyboardInputApp.TYPED;
-import org.jemmy.interfaces.Keyboard;
-import org.jemmy.timing.State;
-import org.junit.*;
 
 /**
  *
@@ -93,27 +93,9 @@ public class KeyboardTest {
         log.checkEvent(TYPED, "e");
         log.checkLines(16);
         txt.asSelectionText().select("te");
-        txt.wrap().waitState(new State<String>() {
-
-            @Override
-            public String reached() {
-                return txt.asSelectionText().selection();
-            }
-        }, "te");
-        txt.wrap().waitState(new State<String>() {
-
-            @Override
-            public String reached() {
-                return txt.asSelectionText().selection();
-            }
-        }, "te");
+        txt.wrap().waitState(() -> txt.asSelectionText().selection(), "te");
+        txt.wrap().waitState(() -> txt.asSelectionText().selection(), "te");
         txt.asSelectionText().clear();
-        txt.wrap().waitState(new State<String>() {
-
-            @Override
-            public String reached() {
-                return txt.asSelectionText().text();
-            }
-        }, "");
+        txt.wrap().waitState(() -> txt.asSelectionText().text(), "");
     }
 }

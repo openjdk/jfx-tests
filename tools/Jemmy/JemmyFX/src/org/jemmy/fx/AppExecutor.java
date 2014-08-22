@@ -64,25 +64,22 @@ public class AppExecutor {
      * @param parameters
      */
     public void execute(final String... parameters) {
-        execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Class[] argTypes = new Class[] { String[].class };
-                    Method main = mainClass.getMethod("main", argTypes);
-                    //String[] mainArgs = Arrays.copyOfRange(parameters, 1, parameters.length);
-                    main.invoke(null, (Object)parameters);
-                } catch (IllegalAccessException ex) {
-                    throw new JemmyException("Unable to execute " + mainClass.getName(), ex);
-                } catch (IllegalArgumentException ex) {
-                    throw new JemmyException("Unable to execute " + mainClass.getName(), ex);
-                } catch (InvocationTargetException ex) {
-                    throw new JemmyException("Unable to execute " + mainClass.getName(), ex);
-                } catch (NoSuchMethodException ex) {
-                    throw new JemmyException("Unable to execute " + mainClass.getName(), ex);
-                } catch (SecurityException ex) {
-                    throw new JemmyException("Unable to execute " + mainClass.getName(), ex);
-                }
+        execute(() -> {
+            try {
+                Class[] argTypes = new Class[] { String[].class };
+                Method main = mainClass.getMethod("main", argTypes);
+                //String[] mainArgs = Arrays.copyOfRange(parameters, 1, parameters.length);
+                main.invoke(null, (Object)parameters);
+            } catch (IllegalAccessException ex) {
+                throw new JemmyException("Unable to execute " + mainClass.getName(), ex);
+            } catch (IllegalArgumentException ex) {
+                throw new JemmyException("Unable to execute " + mainClass.getName(), ex);
+            } catch (InvocationTargetException ex) {
+                throw new JemmyException("Unable to execute " + mainClass.getName(), ex);
+            } catch (NoSuchMethodException ex) {
+                throw new JemmyException("Unable to execute " + mainClass.getName(), ex);
+            } catch (SecurityException ex) {
+                throw new JemmyException("Unable to execute " + mainClass.getName(), ex);
             }
         });
     }
@@ -119,11 +116,8 @@ public class AppExecutor {
      * @param parameters Application parameters
      */
     public static void executeNoBlock(final Class<? extends Application> program, final String... parameters) {
-        new Thread(new Runnable() {
-
-            public void run() {
-                execute(program, parameters);
-            }
+        new Thread(() -> {
+            execute(program, parameters);
         }).start();
     }
 

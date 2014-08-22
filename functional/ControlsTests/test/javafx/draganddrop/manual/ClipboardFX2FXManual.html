@@ -1,0 +1,66 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h2>Clipboard from FX to FX transfer test</h2>
+
+        <h3>Step 1: Install runtime</h3>
+        <ul><li>If you had runtime installed from <b>other</b> FX sdk remove it through Windows Control Panel.</li>
+            <li>Otherwise please install runtime: go to <i><b>SDKROOT</b></i> and execute <i>javafx-2.0-beta-windows-i586.exe</i></li>            
+        </ul>
+        N.B.: note that you can install new runtime just once for each sdk version testing.
+        <h3>Step 2: Run apps</h3>
+        Run two commands from console from basedir of ControlsTests
+        <ul>
+            <li><pre>java -jar content/source.jar lightgreen onlySource</pre></li>
+            <li><pre>java -jar content/source.jar lightgray onlyTarget</pre></li>
+        </ul>
+        You should see two windows: with title "Source" and another (target) stage with description of current run mode (rendering, build, etc).
+        <h3>Step 3: Verify Data formats</h3>
+        <ul>
+            <li>
+                In each window choose the  "Custom(bytes)", "Custom(string)", "Custom(class)" data formats.
+            </li>
+            <li>Click "Put to clipboard" and then "paste from clipboard" buttons</li>
+            <li>Verify transfered content. You should see in transfered section of Target window:
+                <ul>
+                    <li>bytes: "1, 2, 3, 4"</li>
+                    <li>customString: "Hello Custom String!"</li>
+                    <li>customClass: "Class{ clazz=Class{ clazz=null, i=100, d=100.9}, i=10, d=10.9}"</li>
+                </ul>
+            </li>
+        </ul>
+        In case of successfull verification press pass, otherwise fail.
+        <br>
+        Don't pay attention on lines between content descriptions on the right side of the scene. They are needed only for convenient view.
+    </body>
+</html>

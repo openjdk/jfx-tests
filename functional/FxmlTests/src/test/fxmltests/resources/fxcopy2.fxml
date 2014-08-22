@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.sun.javafx.collections.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.paint.Color?>
+
+<ArrayList xmlns:fx="http://javafx.com/fxml">
+<Label fx:id="id1" text="txt1"/>
+<fx:copy source="id1" text="txt2"/>
+<fx:copy source="id1" text="txt3"/>
+</ArrayList>
+

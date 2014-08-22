@@ -26,10 +26,7 @@ package org.jemmy.samples.text;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -55,16 +52,10 @@ public class TextApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         text = new Text();
-        EventHandler<KeyEvent> textUpdate = new EventHandler<KeyEvent>() {
-
-            public void handle(final KeyEvent t) {
-                Platform.runLater(new Runnable() {
-
-                    public void run() {
-                        updateText((TextInputControl) t.getSource());
-                    }
-                });
-            }
+        EventHandler<KeyEvent> textUpdate = t -> {
+            Platform.runLater(() -> {
+                updateText((TextInputControl) t.getSource());
+            });
         };
         singleLine = new TextField();
         singleLine.addEventHandler(KeyEvent.KEY_TYPED, textUpdate);
@@ -73,11 +64,8 @@ public class TextApp extends Application {
         multiLine.addEventHandler(KeyEvent.KEY_TYPED, textUpdate);
         reset();
         Button reset = new Button("Reset");
-        reset.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                reset();
-            }
+        reset.setOnAction(t -> {
+            reset();
         });
         VBox content = new VBox();
         content.getChildren().add(reset);

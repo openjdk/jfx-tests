@@ -1,0 +1,3 @@
+postMessage(XMLHttpRequest != null);
+
+

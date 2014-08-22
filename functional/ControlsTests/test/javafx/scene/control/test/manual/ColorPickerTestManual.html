@@ -1,0 +1,50 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Color Picker manual test.</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h2>Color Picker manual test.</h2>
+
+        <h3>The only step : </h3>
+        Custom color popup - is a popup, where you can select custom color. 
+        This window is resizable. And contains many controls. 
+        It is needed to check, that it is not broken during resizing, and all tabs are shown correctly.
+        <ul><li>Click on ColorPicker button.</li>
+            <li>Click on "Custom color..." hyperlink. Now, you see "Custom colors ..." dialog.</li>   
+            <li>Having selected each of 3 tabs : "Web", "HSB", "RGB", try to resize dialog.</li>
+            <li>Resize it to be fully compressed, and very extended.</li>
+            <li>Check, that it resizes proportionally, without large gaps between controls and check, 
+                that it still functioning (responses on button clicks, 
+                fields receive focus, focus traversing on tab and arrows works).</li>
+        </ul>
+        <p>Note that the main rectangle (in the upper left corner) will always remain square. Therefore there may be empty space below it.</p>
+    </body>
+</html>

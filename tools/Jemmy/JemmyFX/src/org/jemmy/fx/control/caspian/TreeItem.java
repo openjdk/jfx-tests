@@ -31,27 +31,18 @@ import org.jemmy.control.Wrap;
 import org.jemmy.fx.control.TreeNodeWrap;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Scrollable2D;
-import org.jemmy.lookup.LookupCriteria;
+import org.jemmy.timing.DescriptiveState;
 import org.jemmy.timing.State;
 
 /**
- *
  * @author shura
  */
 public class TreeItem implements org.jemmy.interfaces.TreeItem<javafx.scene.control.TreeItem> {
 
     private TreeNodeWrap<? extends javafx.scene.control.TreeItem> wrap;
     private Wrap<? extends TreeView> treeViewWrap;
-    State<Boolean> expandedState = new State<Boolean>() {
-        public Boolean reached() {
-            return wrap.isExpanded();
-        }
+    State<Boolean> expandedState = new DescriptiveState<>(()->wrap.isExpanded(), () -> "Wait a node <" + wrap + "> to be expanded/collapsed");
 
-        @Override
-        public String toString() {
-            return "a node to be expanded/collapsed";
-        }
-    };
 
     public TreeItem(Wrap<? extends javafx.scene.control.TreeItem> wrap, Wrap<? extends TreeView> treeViewWrap) {
         if (!(wrap instanceof TreeNodeWrap)) {
@@ -63,11 +54,8 @@ public class TreeItem implements org.jemmy.interfaces.TreeItem<javafx.scene.cont
     }
 
     private Wrap<? extends Node> findPointer(Wrap<?> skin) {
-        return skin.as(Parent.class, Node.class).lookup(StackPane.class, new LookupCriteria<StackPane>() {
-            public boolean check(StackPane cntrl) {
-                return cntrl.getChildren().size() == 0;
-            }
-        }).wrap();
+        final Parent<Node> parent = skin.as(Parent.class, Node.class);
+        return parent.lookup(StackPane.class, cntrl -> cntrl.getChildren().size() == 0).wrap();
     }
 
     public void expand() {

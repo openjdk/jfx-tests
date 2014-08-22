@@ -47,13 +47,10 @@ public class LookupApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         final Label mouseOverLabel = new Label();
-        EventHandler<MouseEvent> mouseOverHandler = new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent t) {
-                if(t.getSource() instanceof Label) {
-                    mouseOverText = Label.class.cast(t.getSource()).getText();
-                    mouseOverLabel.setText(mouseOverText);
-                }
+        EventHandler<MouseEvent> mouseOverHandler = t -> {
+            if(t.getSource() instanceof Label) {
+                mouseOverText = Label.class.cast(t.getSource()).getText();
+                mouseOverLabel.setText(mouseOverText);
             }
         };
         GridPane buttonGrid = new GridPane();

@@ -5,10 +5,6 @@
 package org.jemmy.fx;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,12 +26,7 @@ public class TwoSceneApp extends Application {
         createScene(new Stage(), 1);
         final Text txt = new Text("not clicked");
         Rectangle r = new Rectangle(100, 100);
-        r.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent> () {
-
-            public void handle(MouseEvent t) {
-                txt.setText("clicked");
-            }
-        });
+        r.addEventHandler(MouseEvent.MOUSE_CLICKED, t -> {txt.setText("clicked");});
         VBox content = new VBox();
         content.getChildren().addAll(r, txt);
         noFocus.setScene(new Scene(content));
@@ -54,12 +45,7 @@ public class TwoSceneApp extends Application {
     private void createScene(Stage stage, int index) {
         final Label lbl = new Label("not pushed");
         Button btn = new Button("button");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent t) {
-                lbl.setText("pushed");
-            }
-        });
+        btn.setOnAction(t -> lbl.setText("pushed"));
         //btn
         VBox content = new VBox();
         content.getChildren().addAll(btn, lbl);

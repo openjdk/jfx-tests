@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="draggable.css"/>
+    </head>
+    <body>
+        <h3>Test for preventing default effect of drop event</h3>
+        <img src="tinker.jpg"/><br/>
+        Drag the image to the droppable areas below:<br/>
+        <ol>
+            <li><div class="droparea"
+             ondrop="event.preventDefault(); this.className += ' opsuccess';"
+             ondragover="event.preventDefault();"
+             ondragenter="event.preventDefault();">Drop area</div></li>
+            <li><div class="droparea"
+             ondrop="this.className += ' opsuccess'; event.preventDefault();"
+             ondragover="event.preventDefault();"
+             ondragenter="event.preventDefault();">Drop area</div></li>
+            <li><div class="droparea"
+             ondrop="this.className += ' opsuccess'; return false;"
+             ondragover="event.preventDefault();"
+             ondragenter="event.preventDefault();">Drop area</div></li>
+        </ol>
+    </body>
+</html>

@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="draggable.css"/>
+    </head>
+    <body>
+        <h3>Test for default behavior when dragging and dropping link</h3>
+        <a href="dummy.html">Link to dummy HTML page</a><br/>
+        <input type="text"/><br/>
+        <div class="droparea"
+             ondragover="event.preventDefault();"
+             ondragenter="event.preventDefault();">Drop area</div>
+    </body>
+</html>

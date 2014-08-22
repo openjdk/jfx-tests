@@ -25,7 +25,7 @@ package test.scenegraph.app;
 
 import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.CubicCurve;
@@ -137,7 +137,7 @@ public class ShapesApp extends BasicButtonChooserApp {
 
             private void addSlot(String name, Pane field) {
                 VBox slot = new VBox();
-                slot.getChildren().addAll(new Label(name), field);
+                slot.getChildren().addAll(new Text(name), field);
                 slot.setTranslateX(shiftX);
                 slot.setTranslateY(shiftY);
                 int stepX = SLOTSIZEX + 1;

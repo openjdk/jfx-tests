@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Forms test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        th, td {
+            padding: 0.5em;
+        }
+    </style>
+  </head>
+  <body>
+      <h3>Form submission</h3>
+      <h4>Post and get</h4>
+      <form action="./scripts/submit_action.html" method="GET" style="padding: 0.5em;">
+          Check that the page with the word "Success" on it has loaded after pushing "Submit with GET" button.<br/>
+          Make sure that the page URL on that page ends up with "submit_action.html?parameter=sent"<br/>
+          <input type="hidden" name="parameter" value="sent"/>
+          <input type="submit" value="Submit with GET"/>
+      </form>
+      <!--<form action="./scripts/submit_action.html" method="POST" style="padding: 0.5em;">-->
+      <form action="./scripts/submit_action.html" method="POST" style="padding: 0.5em;">
+          Check that the page with the word "Success" on it has loaded after pushing "Submit with POST" button.<br/>
+          Make sure that the page URL on that page ends up with "submit_action.html"<br/>
+          <input type="hidden" name="parameter" value="sent"/>
+          <input type="submit" value="Submit with POST"/>
+      </form>
+      <h4>Successful controls</h4>      
+      <form action="./scripts/submit_action.html" method="GET" style="padding: 0.5em;">
+          Check that the page with the word "Success" on it has loaded after pushing on "Submit" button.<br/>
+          Make sure that the page URL on that page ends up with "submit_action.html?name=Rainbow+Pony&amp;Ponies=Power" or
+          "submit_action.html?Ponies=Power&amp;name=Rainbow+Pony"<br/>
+          <table>
+              <thead>
+                  <tr>
+                      <th>Control state</th>
+                      <th>Control</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>Control disabled, should not be successful</td>
+                      <td><input type="checkbox" name="watermellons" value="juicy" disabled="" checked=""/></td>
+                  </tr>
+                  <tr>
+                      <td>Control read only, should be successful</td>
+                      <td><input type="text" name="name" value="Rainbow Pony" readonly=""/></td>
+                  </tr>
+                  <tr>
+                      <td>Control invisible, should be successful</td>
+                      <td><input type="text" name="Ponies" value="Power" style="visibility: hidden;"/></td>
+                  </tr>
+                  <tr>
+                      <td>Control is reset button, should not be successful</td>
+                      <td><input type="reset" name="Reset" value="Bad Button"/></td>
+                  </tr>
+              </tbody>
+          </table>
+          <input type="submit" value="Submit"/>
+      </form>
+      <h4>Successful submit control</h4>
+      <form action="./scripts/submit_action.html" method="GET" style="padding: 0.5em;">
+          Check that the page with the word "Success" on it has loaded after pushing any of buttons below.<br/>
+          Make sure that the page URL on that page ends up with "submit_action.html?submit=" and the text on the button you've clicked.<br/>
+          <input type="submit" value="One" name="submit"/>
+          <input type="submit" value="Two" name="submit"/>
+      </form>
+      <h4>Form fieldset and legend</h4>
+      Check that the following form in green border is rendered properly, with no artifacts. You do not have to press the buttons.<br/>
+      <form style="padding: 0.5em; border: 1px solid greenyellow;">
+          <fieldset>
+              <label>Some text here...</label><br/>
+              <input type="text"/><input type="button" value="I am button!"/><br/>
+          </fieldset>
+          <fieldset style="border: red 1px solid;">
+              <legend>This should be in red border:</legend>
+              <label>Some text here...</label><br/>
+              <input type="text"/><input type="button" value="I am button!"/><br/>
+          </fieldset>
+          <label>Some other text...</label><br/>
+          <input type="submit"/><input type="reset"/>
+      </form>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+# The presentation name of the test suite
+name=WebNode manual test suite
+
+# The ID for the test suite
+id=WebNodeManual
+
+# The jar file containing the test suite's JavaTest plug in classes
+classpath=_CLASSPATH_
+
+# The test finder to use
+finder=client.test.runner.RunUITestFinder
+
+# The test suite to use
+testsuite=client.test.runner.BasicJcovFXTestSuite
+
+# The configuration interview to use
+interview=client.test.runner.BasicJcovFXInterview

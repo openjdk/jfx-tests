@@ -1,0 +1,406 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Select test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        th, td {
+            padding: 0.5em;
+        }
+    </style>
+  </head>
+  <body>
+      <h3>Select controls</h3>
+      <h4>Overall select</h4>
+      Check that the controls in all columns render properly with no artifacts.<br/>
+      Also check that state of disabled controls cannot be changed.<br/>
+      <table>
+          <thead>
+              <tr>
+                  <th></th>
+                  <th>Normal</th>
+                  <th>Disabled</th>
+                  <th>Pre-selected<br/>option C</th>
+                  <th>Disabled pre-selected</th>
+                  <th>Multiple pre-selected<br/>options B, C</th>
+                  <th>Zero sized</th>
+                  <th>Negative sized</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>Single select</td>
+                  <td>
+                      <select>
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select disabled="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select>
+                          <option>A</option>
+                          <option>B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select disabled="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select>
+                          <option>A</option>
+                          <option selected="">B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select style="width: 0px; height: 0px;">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select style="width: -1px; height: -1px;">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+              </tr>
+              <tr>
+                  <td>Single select, multiline</td>
+                  <td>
+                      <select size="3">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3" disabled="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3">
+                          <option>A</option>
+                          <option>B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3" disabled="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3">
+                          <option>A</option>
+                          <option selected="">B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3" style="width: 0px; height: 0px;">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3" style="width: -1px; height: -1px;">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+              </tr>
+              <tr>
+                  <td>Multiple select</td>
+                  <td>
+                      <select multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select disabled="" multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select disabled="" multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select multiple="">
+                          <option>A</option>
+                          <option selected="">B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select style="width: 0px; height: 0px;" multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select style="width: -1px; height: -1px;" multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+              </tr>
+              <tr>
+                  <td>Multiple select, multiline</td>
+                  <td>
+                      <select size="3" multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3" disabled="" multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3" multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3" disabled="" multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3" multiple="">
+                          <option>A</option>
+                          <option selected="">B</option>
+                          <option selected="">C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3" style="width: 0px; height: 0px;" multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select size="3" style="width: -1px; height: -1px;" multiple="">
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                      </select>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      
+      <h4>Optgroup</h4>
+      Check that the controls below are rendered properly with no artifacts.<br/>
+      Also check that disabled controls cannot be activated.<br/>
+      <select>
+          <optgroup label="group">
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+          </optgroup>
+          <option>D</option>
+          <option>E</option>
+      </select>
+      <select disabled="">
+          <optgroup label="group">
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+          </optgroup>
+          <option>D</option>
+          <option>E</option>
+      </select>
+      <select size="5">
+          <optgroup label="group">
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+          </optgroup>
+          <option>D</option>
+          <option>E</option>
+      </select>
+      <select size="5" disabled="">
+          <optgroup label="group">
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+          </optgroup>
+          <option>D</option>
+          <option>E</option>
+      </select>
+      
+      <h4>Disabled options</h4>
+      Check that the control below is rendered properly with no artifacts.<br/>
+      Also check that you can select all options but B (B cannot be selected).<br/>
+      <select size="5">
+          <option>A</option>
+          <option disabled="">B</option>
+          <option>C</option>
+          <option>D</option>
+          <option>E</option>
+      </select>
+      
+      <h4>Select submission</h4>
+      <h5>Submitting single line select</h5>
+      Check that the page with the word "Success" is loaded after submitting the form.<br/>
+      Also check that the page URL on that page ends with "selected=C" string.<br/>
+      <form action="./scripts/submit_action.html" method="GET">
+          <select name="selected">
+              <option>A</option>
+              <option>B</option>
+              <option selected="">C</option>
+              <option>D</option>
+              <option>E</option>
+          </select><br/>
+          <input type="submit"/>
+      </form>
+      
+      <h5>Submitting select with multiple lines selected</h5>
+      Check that the page with the word "Success" is loaded after submitting the form.<br/>
+      Also check that the page URL on that page contains "selected=B" and "selected=C" strings.<br/>
+      <form action="./scripts/submit_action.html" method="GET">
+          <select multiple="" name="selected">
+              <option>A</option>
+              <option selected="">B</option>
+              <option selected="">C</option>
+              <option>D</option>
+              <option>E</option>
+          </select><br/>
+          <input type="submit"/>
+      </form>
+      
+      <h5>Submitting single line select with multiple lines selected</h5>
+      Check that the page with the word "Success" is loaded after submitting the form.<br/>
+      Also check that the page URL on that page contains "selected=B" or "selected=C" string. The application should not crash.<br/>
+      <form action="./scripts/submit_action.html" method="GET">
+          <select name="selected">
+              <option>A</option>
+              <option selected="">B</option>
+              <option selected="">C</option>
+              <option>D</option>
+              <option>E</option>
+          </select><br/>
+          <input type="submit"/>
+      </form>
+      
+      <h5>Submitting disabled select</h5>
+      Check that the page with the word "Success" is loaded after submitting the form.<br/>
+      Also check that the page URL on that page ends up with "submit_action.html" or "submit_action.html?"<br/>
+      <form action="./scripts/submit_action.html" method="GET">
+          <select multiple="" disabled="" name="selected">
+              <option>A</option>
+              <option selected="">B</option>
+              <option selected="">C</option>
+              <option>D</option>
+              <option>E</option>
+          </select><br/>
+          <input type="submit"/>
+      </form>
+  </body>
+</html>

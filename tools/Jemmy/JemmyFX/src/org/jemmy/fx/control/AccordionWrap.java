@@ -5,57 +5,61 @@
 
 package org.jemmy.fx.control;
 
-import java.util.ArrayList;
-import java.util.List;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.*;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.ByObject;
 import org.jemmy.interfaces.*;
-import org.jemmy.lookup.LookupCriteria;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Wrapper for Accordion control. There are two ways to deal with the accordion:
- * though <code>Selectable</code> control interface or by finding an 
+ * though <code>Selectable</code> control interface or by finding an
  * <code>TitledPane</code> (such as through <code>TitledPaneDock</code>) and
  * causing that to expand or collapse. Please see sample code for more info:
  * <a href="../../samples/accordion/AccordionSample.java"><code>AccordionSample</code></a>
+ *
  * @see AccordionDock
  * @see TitledPaneDock
  */
 @ControlType(Accordion.class)
 @ControlInterfaces(value = {Selectable.class, Selectable.class},
-                   encapsulates = {String.class, TitledPane.class},
-                   name= {"asTitleSelectable", "asTitledPaneSelectable"})
+        encapsulates = {String.class, TitledPane.class},
+        name = {"asTitleSelectable", "asTitledPaneSelectable"})
 
 public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTROL> {
-    
+
     /**
      * A property name to get selected <code>TitlePane</code>.
-     * @see #getProperty(java.lang.String) 
-     * @see #waitProperty(java.lang.String, java.lang.Object) 
+     *
+     * @see #getProperty(java.lang.String)
+     * @see #waitProperty(java.lang.String, java.lang.Object)
      */
     public static final String SELECTED_TITLED_PANE_PROP = "selectedTitledPane";
     /**
      * A property name to get title of the selected <code>TitlePane</code>.
-     * @see #getProperty(java.lang.String) 
-     * @see #waitProperty(java.lang.String, java.lang.Object) 
+     *
+     * @see #getProperty(java.lang.String)
+     * @see #waitProperty(java.lang.String, java.lang.Object)
      */
     public static final String SELECTED_TITLE_PROP = "selectedTitle";
     /**
      * A property name to get a list of <code>TitlePane</code>s.
-     * @see #getProperty(java.lang.String) 
-     * @see #waitProperty(java.lang.String, java.lang.Object) 
+     *
+     * @see #getProperty(java.lang.String)
+     * @see #waitProperty(java.lang.String, java.lang.Object)
      */
     public static final String ITEMS_PROP = "titledPanes";
     /**
      * A property name to get a list of titles of <code>TitlePane</code>s.
-     * @see #getProperty(java.lang.String) 
-     * @see #waitProperty(java.lang.String, java.lang.Object) 
+     *
+     * @see #getProperty(java.lang.String)
+     * @see #waitProperty(java.lang.String, java.lang.Object)
      */
     public static final String TITLES_PROP = "titles";
 
@@ -64,6 +68,7 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
 
     /**
      * Wraps an accordion.
+     *
      * @param env
      * @param nd
      */
@@ -73,9 +78,10 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
     }
 
     /**
-     * Allow using an accordion as a Selectable. This instance works with the 
+     * Allow using an accordion as a Selectable. This instance works with the
      * title panes.
-     * @return 
+     *
+     * @return
      */
     @As(TitledPane.class)
     public Selectable<TitledPane> titlePaneSelectable() {
@@ -83,9 +89,10 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
     }
 
     /**
-     * Allow using an accordion as a Selectable. This instance works with strings - 
+     * Allow using an accordion as a Selectable. This instance works with strings -
      * the title pane titles.
-     * @return 
+     *
+     * @return
      */
     @As(String.class)
     public Selectable<String> stringSelectable() {
@@ -93,70 +100,52 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
     }
 
     /**
-     * Gets a list of title panes assigned to this accordion through the event 
+     * Gets a list of title panes assigned to this accordion through the event
      * queue.
+     *
      * @return
      */
     @Property(ITEMS_PROP)
     public List<TitledPane> getItems() {
-        return new GetAction<ObservableList<TitledPane>>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().getPanes());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().getPanes()).get();
     }
 
     /**
-     * Gets a list of titles of title panes assigned to this accordion through 
+     * Gets a list of titles of title panes assigned to this accordion through
      * the event queue.
+     *
      * @return
      */
     @Property(TITLES_PROP)
     public List<String> getTitles() {
-        return new GetAction<List<String>>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                ArrayList<String> list = new ArrayList<String>();
-                for (TitledPane pane : getItems()) {
-                    list.add(pane.getText());
-                }
-                setResult(list);
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<List<String>>(getEnvironment(), () -> getItems().stream().map(pane -> pane.getText()).collect(Collectors.toList())).get();
     }
 
     /**
      * Gets a selected title pane through event queue
+     *
      * @return
      */
     @Property(SELECTED_TITLED_PANE_PROP)
     public TitledPane getSelectedItem() {
-        return new GetAction<TitledPane>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().getExpandedPane());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<TitledPane>(getEnvironment(), () -> getControl().getExpandedPane()).get();
     }
 
     /**
      * Gets a title of a selected title pane through event queue
+     *
      * @return
      */
     @Property(SELECTED_TITLE_PROP)
     public String getSelectedTitle() {
-        return new GetAction<String>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                TitledPane pane = getControl().getExpandedPane();
-                if (pane != null) {
-                    setResult(pane.getText());
-                } else {
-                    setResult(null);
-                }
+        return new FutureAction<String>(getEnvironment(), () -> {
+            TitledPane pane = getControl().getExpandedPane();
+            if (pane != null) {
+                return pane.getText();
+            } else {
+                return null;
             }
-        }.dispatch(getEnvironment());
+        }).get();
     }
 
     private class TitledPaneSelectable implements Selectable<TitledPane>, Selector<TitledPane> {
@@ -214,15 +203,12 @@ public class AccordionWrap<CONTROL extends Accordion> extends ControlWrap<CONTRO
 
         public void select(final String state) {
             if (getState() == null ? state != null : !getState().equals(state)) {
+                final Parent<Node> parent = AccordionWrap.this.as(Parent.class, Node.class);
                 if (state == null) {
-                    Wrap<? extends TitledPane> titled_pane = AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap();
+                    Wrap<? extends TitledPane> titled_pane = parent.lookup(TitledPane.class, new ByObject(getSelectedItem())).wrap();
                     titled_pane.as(Collapsible.class).collapse();
                 } else {
-                    Wrap<? extends TitledPane> titled_pane = AccordionWrap.this.as(Parent.class, Node.class).lookup(TitledPane.class, new LookupCriteria<TitledPane>() {
-                        public boolean check(TitledPane cntrl) {
-                            return cntrl.getText().equals(state);
-                        }
-                    }).wrap();
+                    Wrap<? extends TitledPane> titled_pane = parent.lookup(TitledPane.class, cntrl -> cntrl.getText().equals(state)).wrap();
                     titled_pane.as(Expandable.class).expand();
                 }
             }

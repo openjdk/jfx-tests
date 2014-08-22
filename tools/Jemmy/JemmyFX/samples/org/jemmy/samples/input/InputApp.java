@@ -24,10 +24,6 @@
  */
 package org.jemmy.samples.input;
 
-import java.text.DecimalFormat;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -45,6 +41,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import java.text.DecimalFormat;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This small FX app is used in input JemmyFX samples. It displays two mouse 
@@ -67,7 +68,7 @@ public class InputApp extends Application {
     public static final String DRAGGED = "DRAGGED ";
     public static final String MOVED = "MOVED ";
     public static final String SCROLL = "SCROLL ";
-    public static final List<Event> events = Collections.synchronizedList(new LinkedList<Event>());
+    public static final List<Event> events = Collections.synchronizedList(new LinkedList<>());
 
     public static void main(String[] args) {
 
@@ -126,96 +127,35 @@ public class InputApp extends Application {
 
         root.getChildren().add(targets);
 
-        EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+        EventHandler<MouseEvent> mouseHandler = t -> {
 
-            @Override
-            public void handle(MouseEvent t) {
-
-                if (!ignoreMotion.isSelected()
-                        || !(t.getEventType().equals(MouseEvent.MOUSE_MOVED)
-                        || t.getEventType().equals(MouseEvent.MOUSE_DRAGGED))) {
-
-                    events.add(t);
-
-                    StringBuilder sb = new StringBuilder(((Node) t.getSource()).getId() + " ");
-
-                    if (t.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-
-                        sb.append(PRESSED);
-
-                    } else if (t.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
-
-                        sb.append(RELEASED);
-
-                    } else if (t.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-
-                        sb.append(CLICKED);
-
-                    } else if (t.getEventType().equals(MouseEvent.MOUSE_MOVED)) {
-
-                        sb.append(MOVED);
-
-                    } else if (t.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
-
-                        sb.append(DRAGGED);
-
-                    } else {
-
-                        return;
-
-                    }
-
-                    sb.append(coords(t.getX(), t.getY()));
-
-                    if (t.isAltDown()) {
-
-                        sb.append(ALT);
-
-                    }
-
-                    if (t.isShiftDown()) {
-
-                        sb.append(SHIFT);
-
-                    }
-
-                    if (t.isControlDown()) {
-
-                        sb.append(CONTROL);
-
-                    }
-
-                    if (t.isMetaDown()) {
-
-                        sb.append(META);
-
-                    }
-
-                    sb.append(t.getButton()).append(" ").append(t.getClickCount()).append("\n");
-
-                    lbl.appendText(sb.toString());
-
-                }
-
-            }
-        };
-
-        target1.addEventHandler(MouseEvent.ANY, mouseHandler);
-
-        target2.addEventHandler(MouseEvent.ANY, mouseHandler);
-
-        EventHandler<ScrollEvent> scrollHandler = new EventHandler<ScrollEvent>() {
-
-            @Override
-            public void handle(ScrollEvent t) {
+            if (!ignoreMotion.isSelected()
+                    || !(t.getEventType().equals(MouseEvent.MOUSE_MOVED)
+                    || t.getEventType().equals(MouseEvent.MOUSE_DRAGGED))) {
 
                 events.add(t);
 
                 StringBuilder sb = new StringBuilder(((Node) t.getSource()).getId() + " ");
 
-                if (t.getEventType().equals(ScrollEvent.SCROLL)) {
+                if (t.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
 
-                    sb.append(SCROLL);
+                    sb.append(PRESSED);
+
+                } else if (t.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
+
+                    sb.append(RELEASED);
+
+                } else if (t.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+
+                    sb.append(CLICKED);
+
+                } else if (t.getEventType().equals(MouseEvent.MOUSE_MOVED)) {
+
+                    sb.append(MOVED);
+
+                } else if (t.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
+
+                    sb.append(DRAGGED);
 
                 } else {
 
@@ -223,7 +163,7 @@ public class InputApp extends Application {
 
                 }
 
-                sb.append(coords(t.getDeltaX(), t.getDeltaY()));
+                sb.append(coords(t.getX(), t.getY()));
 
                 if (t.isAltDown()) {
 
@@ -249,11 +189,64 @@ public class InputApp extends Application {
 
                 }
 
-                sb.append("\n");
+                sb.append(t.getButton()).append(" ").append(t.getClickCount()).append("\n");
 
                 lbl.appendText(sb.toString());
 
             }
+
+        };
+
+        target1.addEventHandler(MouseEvent.ANY, mouseHandler);
+
+        target2.addEventHandler(MouseEvent.ANY, mouseHandler);
+
+        EventHandler<ScrollEvent> scrollHandler = t -> {
+
+            events.add(t);
+
+            StringBuilder sb = new StringBuilder(((Node) t.getSource()).getId() + " ");
+
+            if (t.getEventType().equals(ScrollEvent.SCROLL)) {
+
+                sb.append(SCROLL);
+
+            } else {
+
+                return;
+
+            }
+
+            sb.append(coords(t.getDeltaX(), t.getDeltaY()));
+
+            if (t.isAltDown()) {
+
+                sb.append(ALT);
+
+            }
+
+            if (t.isShiftDown()) {
+
+                sb.append(SHIFT);
+
+            }
+
+            if (t.isControlDown()) {
+
+                sb.append(CONTROL);
+
+            }
+
+            if (t.isMetaDown()) {
+
+                sb.append(META);
+
+            }
+
+            sb.append("\n");
+
+            lbl.appendText(sb.toString());
+
         };
 
         target1.addEventHandler(ScrollEvent.ANY, scrollHandler);
@@ -262,57 +255,54 @@ public class InputApp extends Application {
 
         Scene scene = new Scene(root);
 
-        scene.addEventFilter(KeyEvent.ANY, new EventHandler<KeyEvent>() {
+        scene.addEventFilter(KeyEvent.ANY, t -> {
 
-            public void handle(KeyEvent t) {
+            events.add(t);
 
-                events.add(t);
+            if (t.getEventType().equals(KeyEvent.KEY_TYPED)) {
 
-                if (t.getEventType().equals(KeyEvent.KEY_TYPED)) {
+                if (!t.isAltDown() && !t.isControlDown() && !t.isMetaDown()) {
 
-                    if (!t.isAltDown() && !t.isControlDown() && !t.isMetaDown()) {
-
-                        lbl.appendText(TYPED + t.getCharacter() + "\n");
-
-                    }
-
-                } else if (t.getEventType().equals(KeyEvent.KEY_RELEASED)
-                        || t.getEventType().equals(KeyEvent.KEY_PRESSED)) {
-
-                    StringBuilder sb = new StringBuilder(t.getEventType().
-                            equals(KeyEvent.KEY_PRESSED) ? PRESSED : RELEASED);
-
-                    if (t.isAltDown()) {
-
-                        sb.append(ALT);
-
-                    }
-
-                    if (t.isShiftDown()) {
-
-                        sb.append(SHIFT);
-
-                    }
-
-                    if (t.isControlDown()) {
-
-                        sb.append(CONTROL);
-
-                    }
-
-                    if (t.isMetaDown()) {
-
-                        sb.append(META);
-
-                    }
-
-                    sb.append(t.getCode().name());
-
-                    lbl.appendText(sb.toString() + "\n");
+                    lbl.appendText(TYPED + t.getCharacter() + "\n");
 
                 }
 
+            } else if (t.getEventType().equals(KeyEvent.KEY_RELEASED)
+                    || t.getEventType().equals(KeyEvent.KEY_PRESSED)) {
+
+                StringBuilder sb = new StringBuilder(t.getEventType().
+                        equals(KeyEvent.KEY_PRESSED) ? PRESSED : RELEASED);
+
+                if (t.isAltDown()) {
+
+                    sb.append(ALT);
+
+                }
+
+                if (t.isShiftDown()) {
+
+                    sb.append(SHIFT);
+
+                }
+
+                if (t.isControlDown()) {
+
+                    sb.append(CONTROL);
+
+                }
+
+                if (t.isMetaDown()) {
+
+                    sb.append(META);
+
+                }
+
+                sb.append(t.getCode().name());
+
+                lbl.appendText(sb.toString() + "\n");
+
             }
+
         });
 
         stage.setScene(scene);

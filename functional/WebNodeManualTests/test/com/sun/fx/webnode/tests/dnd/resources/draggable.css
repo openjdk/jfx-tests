@@ -1,0 +1,26 @@
+/* 
+    Document   : draggable
+    Created on : 07.09.2012, 23:37:31
+    Author     : Trinity
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.draggable { 
+    border: 1px black dotted;
+    background-color: lavender;
+}
+
+.droparea {
+    border: 1px black solid;
+    background-color: lightgoldenrodyellow;
+    line-height: 2em;
+}
+
+.opstart {
+    background-color: lightpink;
+}
+
+.opsuccess {
+    background-color: lightgreen;
+}

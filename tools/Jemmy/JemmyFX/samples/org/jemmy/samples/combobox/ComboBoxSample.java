@@ -25,43 +25,42 @@
 package org.jemmy.samples.combobox;
 
 
-import java.util.Date;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.ChoiceBoxDock;
 import org.jemmy.fx.control.ComboBoxDock;
 import org.jemmy.interfaces.Keyboard;
 import org.jemmy.interfaces.Selectable;
-import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.samples.SampleBase;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.Date;
+
 /**
- * 
  * @author KAM
  */
-@Ignore("https://javafx-jira.kenai.com/browse/RT-29551")
+//@Ignore("https://javafx-jira.kenai.com/browse/RT-29551")
 public class ComboBoxSample extends SampleBase {
     private static SceneDock scene;
     private static ComboBoxDock comboBox1;
     private static ComboBoxDock comboBox2;
     private static ComboBoxDock comboBox3;
     private static ChoiceBoxDock choiceBox;
-    
+
     @BeforeClass
     public static void launch() throws InterruptedException {
         // Running the test application
         startApp(ComboBoxApp.class);
-        
+
         // Obtaining a Dock for scene
         scene = new SceneDock();
 
         /**
-        * Looking up for Combo and Choice boxes. The best option is to do that 
-        * by id.
-        */
+         * Looking up for Combo and Choice boxes. The best option is to do that
+         * by id.
+         */
         comboBox1 = new ComboBoxDock(scene.asParent(), "combo");
         comboBox2 = new ComboBoxDock(scene.asParent(), "records-combo");
         comboBox3 = new ComboBoxDock(scene.asParent(), "countries-combo");
@@ -77,21 +76,16 @@ public class ComboBoxSample extends SampleBase {
         comboBox1.selector().select("Item 1");
         choiceBox.selector().select(1984);
     }
-    
+
     /**
      * Selecting an item by criteria.
      */
     @Test
     public void selectItemByCriteria() {
         //the below calls select an item and wait for the selection to take effect
-        comboBox1.asSelectable().select(new LookupCriteria() {
-
-            public boolean check(Object cntrl) {
-                return cntrl.toString().contains("2");
-            }
-        });
+        comboBox1.asSelectable().select(cntrl -> cntrl.toString().contains("2"));
     }
-    
+
     /**
      * Getting what item is selected.
      */
@@ -105,7 +99,7 @@ public class ComboBoxSample extends SampleBase {
     }
 
     /**
-     * Selecting an item by item index. 
+     * Selecting an item by item index.
      */
     @Test
     public void selectItemByIndex() {
@@ -113,11 +107,11 @@ public class ComboBoxSample extends SampleBase {
         // TODO: The API is insufficient in this area http://javafx-jira.kenai.com/browse/JMY-143
         // so we just obtain the item from the list of all items
         Object item = comboBox2.asSelectable().getStates().get(itemIndex);
-        
+
         // and select it
         comboBox2.selector().select(item);
     }
-    
+
     /**
      * Getting selected item index.
      */
@@ -126,17 +120,10 @@ public class ComboBoxSample extends SampleBase {
         // TODO: The API is insufficient in this area http://javafx-jira.kenai.com/browse/JMY-143
         // so we need to access ComboBox object directly as described in 
         // accessComboBoxDirectly() method.
-        int selectedIndex = new GetAction<Integer>() {
-
-            @Override
-            public void run(Object... args) throws Exception {
-                setResult(comboBox2.control().getSelectionModel().getSelectedIndex());
-            }
-        }.dispatch(comboBox2.wrap().getEnvironment());
-        
+        int selectedIndex = new FutureAction<>(comboBox2.wrap().getEnvironment(), () -> comboBox2.control().getSelectionModel().getSelectedIndex()).get();
         System.out.println("Selected item index in comboBox2 = " + selectedIndex);
     }
-        
+
     /**
      * Selecting an item of specific type
      */
@@ -149,7 +136,7 @@ public class ComboBoxSample extends SampleBase {
         System.out.println("d = " + d);
         selectable.selector().select(selectable.getStates().get(0));
     }
-    
+
     /**
      * Entering a value into editable ComboBox
      */
@@ -160,7 +147,7 @@ public class ComboBoxSample extends SampleBase {
         comboBox3.type(value);
         comboBox3.keyboard().pushKey(Keyboard.KeyboardButtons.ENTER);
     }
-    
+
     /**
      * Getting ComboBox value
      */

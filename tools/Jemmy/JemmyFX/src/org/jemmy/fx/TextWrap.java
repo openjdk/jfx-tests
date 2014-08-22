@@ -59,7 +59,7 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
     @ObjectLookup("text and comparison policy")
     public static <B extends Text> LookupCriteria<B> textLookup(Class<B> tp, String text, 
         StringComparePolicy policy) {
-        return new ByText<B>(text, policy);
+        return new ByText<>(text, policy);
     }
     /**
      * Wraps a text.
@@ -79,7 +79,7 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
      * @see TextDock
      */
     public static TextWrap<Text> find(NodeParent parent, LookupCriteria<Text> criteria) {
-        return new TextWrap<Text>(parent.getEnvironment(),
+        return new TextWrap<>(parent.getEnvironment(),
                 parent.getParent().lookup(Text.class, criteria).get());
     }
 
@@ -92,7 +92,7 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
      * @see TextDock
      */
     public static TextWrap<Text> find(NodeParent parent, String text) {
-        return find(parent, new ByText<Text>(text, (StringComparePolicy)parent.getEnvironment().
+        return find(parent, new ByText<>(text, (StringComparePolicy)parent.getEnvironment().
                 getProperty(Root.LOOKUP_STRING_COMPARISON, StringComparePolicy.EXACT)));
     }
 

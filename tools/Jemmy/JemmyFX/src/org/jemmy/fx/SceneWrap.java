@@ -31,7 +31,7 @@ import javafx.stage.Window;
 import org.jemmy.JemmyException;
 import org.jemmy.Rectangle;
 import org.jemmy.action.Action;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.*;
 import org.jemmy.dock.DefaultParent;
 import org.jemmy.dock.DefaultWrapper;
@@ -41,8 +41,6 @@ import org.jemmy.env.Environment;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Show;
 import org.jemmy.interfaces.Showable;
-import org.jemmy.interfaces.TypeControlInterface;
-import org.jemmy.lookup.Any;
 import org.jemmy.lookup.ControlList;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
@@ -50,14 +48,14 @@ import org.jemmy.timing.State;
 
 /**
  * Support for Java FX scene. A scene could be found within top-level hierarchy
- * represented by <code>Root</code> class, using standard lookup approaches such 
- * as by a title, or by implementing a custom lookup criteria. Besides that a 
+ * represented by <code>Root</code> class, using standard lookup approaches such
+ * as by a title, or by implementing a custom lookup criteria. Besides that a
  * scene could be brought to front.<br>
  * You could find more on lookup in a <a href="../samples/lookup/LookupSample.java">lookup sample</a>
- * @see Root
  *
  * @param <T>
  * @author shura
+ * @see Root
  * @see SceneDock
  */
 @ControlType(Scene.class)
@@ -69,8 +67,8 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
      * Should a scene be already found, this creates a <code>Wrap</code> around it.
      *
      * @param <TP>
-     * @param env an Environment to assign to the wrap.
-     * @param type in case a class implementing scene is known
+     * @param env     an Environment to assign to the wrap.
+     * @param type    in case a class implementing scene is known
      * @param control the scene itself
      * @return
      */
@@ -82,25 +80,25 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
     }
 
     /**
-     * Creates a lookup criteria which compare scene title with a text sample according 
+     * Creates a lookup criteria which compare scene title with a text sample according
      * to comparison rules.
      *
-     * @param <B> in case a class implementing scene is known
-     * @param tp in case a class implementing scene is known
-     * @param title expected title or a portion of it
+     * @param <B>    in case a class implementing scene is known
+     * @param tp     in case a class implementing scene is known
+     * @param title  expected title or a portion of it
      * @param policy how to compare
      * @return
      */
     @ObjectLookup("title and comparison policy")
     public static <B extends Scene> LookupCriteria<B> titleLookup(Class<B> tp, String title, StringComparePolicy policy) {
-        return new ByTitleSceneLookup<B>(title, policy);
+        return new ByTitleSceneLookup<>(title, policy);
     }
 
     /**
-     * This returns a parent which would be used for scene lookup when no other 
+     * This returns a parent which would be used for scene lookup when no other
      * parent specified, which is, basically, always.
      *
-     * @param <CONTROL> required by contract
+     * @param <CONTROL>   required by contract
      * @param controlType required by contract
      * @return a <code>ControlList</code> build around <code>Window.imple_getWindows()</code> - Root#ROOT
      * @see Root#ROOT
@@ -110,13 +108,14 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
     public static <CONTROL extends Scene> Parent<? super Scene> getRoot(Class<CONTROL> controlType) {
         return Root.ROOT;
     }
+
     private Parent parent = null;
     private Showable showable = null;
 
     /**
      * Wraps a scene.
      *
-     * @param env an environment specific for this wrap.
+     * @param env  an environment specific for this wrap.
      * @param node the scene.
      */
     public SceneWrap(Environment env, Scene node) {
@@ -131,26 +130,20 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
     /**
      * An utility method to get scene bounds.
      *
-     * @param env Used to post code through the FX event queue.
+     * @param env   Used to post code through the FX event queue.
      * @param scene the scene
      * @return Absolute screen coordinates
      */
     public static Rectangle getScreenBounds(final Environment env, final Scene scene) {
-        GetAction<Rectangle> bounds = new GetAction<Rectangle>() {
-
-            @Override
-            public void run(Object... parameters) {
-                Rectangle sceneBounds = getSceneBounds(env, scene);
-                Window window = scene.getWindow();
-                if (Double.isNaN(window.getX())) {
-                    throw new JemmyException("Unable to obtain containers's window coordinates in " + this.getClass().getName());
-                }
-                sceneBounds.translate((int) window.getX(), (int) window.getY());
-                setResult(sceneBounds);
+        return new FutureAction<>(env, () -> {
+            Rectangle sceneBounds = getSceneBounds(env, scene);
+            Window window = scene.getWindow();
+            if (Double.isNaN(window.getX())) {
+                throw new JemmyException("Unable to obtain containers's window coordinates in " + SceneWrap.class.getName());
             }
-        };
-        env.getExecutor().execute(env, true, bounds);
-        return bounds.getResult();
+            sceneBounds.translate((int) window.getX(), (int) window.getY());
+            return sceneBounds;
+        }).get();
     }
 
     /**
@@ -176,17 +169,12 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
 
     @Property("isShowing")
     public boolean isShowing() {
-        return new GetAction<Boolean>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().getWindow().isShowing());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().getWindow().isShowing()).get();
     }
 
     /**
      * Turns the scene into a parent for nodes for further lookup.
+     *
      * @return an implementation of <code>Parent&lt;Node&gt;</code>
      */
     @As(Node.class)
@@ -198,7 +186,7 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
     }
 
     /**
-     * Turns a scene into a Showable. The wrapped scene will be shown using API 
+     * Turns a scene into a Showable. The wrapped scene will be shown using API
      * calls.
      *
      * @return
@@ -231,23 +219,11 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
     }
 
     private static boolean isFocused(final Scene scene, Environment env) {
-        return new GetAction<Boolean>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(scene.getWindow().isFocused());
-            }
-        }.dispatch(env);
+        return new FutureAction<>(env, () -> scene.getWindow().isFocused()).get();
     }
 
     private static boolean isStageInstance(final Scene scene, Environment env) {
-        return new GetAction<Boolean>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(scene.getWindow() instanceof Stage);
-            }
-        }.dispatch(env);
+        return new FutureAction<>(env, () -> scene.getWindow() instanceof Stage).get();
     }
 
     private class SceneShowable implements Showable, Show {

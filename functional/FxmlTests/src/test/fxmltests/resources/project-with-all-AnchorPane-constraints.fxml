@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="Project" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <AnchorPane>
+      <children>
+        <Slider id="slider" value="75.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="3.0" />
+      </children>
+    </AnchorPane>
+  </children>
+</AnchorPane>

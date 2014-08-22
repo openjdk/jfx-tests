@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.* ?>
+<MenuBar fx:id="menuBar" xmlns:fx="http://javafx.com/fxml">
+    <Menu  text="File">
+        <MenuItem fx:id="add">
+            <text>Add</text>
+        </MenuItem>
+        <MenuItem fx:id="open">
+            <text>Open</text>
+        </MenuItem>
+    </Menu>
+</MenuBar>

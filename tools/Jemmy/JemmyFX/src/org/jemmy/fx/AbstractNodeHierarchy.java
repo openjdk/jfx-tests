@@ -24,17 +24,19 @@
  */
 package org.jemmy.fx;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.env.Environment;
 import org.jemmy.lookup.ControlHierarchy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * This is an SPI class encapsulating functionality needed to implement 
+ * This is an SPI class encapsulating functionality needed to implement
  * <code>Hierarchy</code> of nodes. It is reused in different containers.
+ *
  * @author shura, andrey
  */
 public abstract class AbstractNodeHierarchy implements ControlHierarchy {
@@ -44,43 +46,30 @@ public abstract class AbstractNodeHierarchy implements ControlHierarchy {
     public AbstractNodeHierarchy(Environment env) {
         this.env = env;
     }
-   
+
 
     public List<?> getChildren(final Object subParent) {
-        GetAction<List<?>> children = new GetAction<List<?>>() {
-
-            @Override
-            public void run(Object... parameters) {
-                if (subParent instanceof Parent) {
-                    setResult(new ArrayList(Parent.class.cast(subParent).getChildrenUnmodifiable()));
-                } else {
-                    setResult(null);
-                }
+        return new FutureAction<>(env, () -> {
+            if (subParent instanceof Parent) {
+                return new ArrayList(Parent.class.cast(subParent).getChildrenUnmodifiable());
+            } else {
+                return null;
             }
-        };
-        env.getExecutor().execute(env, true, children);
-        return children.getResult();
+        }).get();
     }
 
     public Object getParent(final Object child) {
-        GetAction<Object> childAction = new GetAction<Object>() {
-
-            @Override
-            public void run(Object... parameters) {
-                if (!(child instanceof Node)) {
-                    setResult(null);
-                    return;
-                }
-                Node nd = Node.class.cast(child);
-                if (nd.getParent() != null) {
-                    setResult(nd.getParent());
-                } else {
-                    setResult(nd.getScene());
-                }
+        return new FutureAction<>(env, () -> {
+            if (!(child instanceof Node)) {
+                return null;
             }
-        };
-        env.getExecutor().execute(env, true, childAction);
-        return childAction.getResult();
+            Node nd = Node.class.cast(child);
+            if (nd.getParent() != null) {
+                return nd.getParent();
+            } else {
+                return nd.getScene();
+            }
+        }).get();
     }
 
 }

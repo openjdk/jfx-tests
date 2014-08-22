@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Textarea test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        th, td {
+            padding: 0.5em;
+        }
+    </style>
+  </head>
+  <body>
+      <h3>Textarea controls</h3>
+      <h4>Overall textarea</h4>
+      Check that the controls in all columns render properly with no artifacts.<br/>
+      Also check that disabled controls cannot be activated, and contents of disabled and readonly controls cannot be changed.<br/>
+      Also check that all textareas below in all states can be resized.<br/>
+      <table>
+          <thead>
+              <tr>
+                  <th>Normal</th>
+                  <th>Read only</th>
+                  <th>Disabled</th>
+                  <th>Zero sized</th>
+                  <th>Negative sized</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td><textarea>I love ponies.</textarea></td>
+                  <td><textarea readonly="">I love ponies.</textarea></td>
+                  <td><textarea disabled="">I love ponies.</textarea></td>
+                  <td><textarea style="width: 0px; height: 0px;">I love ponies.</textarea></td>
+                  <td><textarea style="width: -1px; height: -1px;">I love ponies.</textarea></td>
+              </tr>
+          </tbody>
+      </table>
+      
+      <h4>Textarea cols and rows attributes</h4>
+      Check that textareas below are rendered properly.
+      
+      <h5>2 cols x 2 rows, exrta content, with scrollbar</h5>
+      <textarea cols="2" rows="2">I love ponies.</textarea><br/>
+      
+      <h5>2 rows, same size as textarea above, no scrollbar</h5>
+      <textarea cols="2" rows="2">12</textarea><br/>
+      
+      <h5>1 cols x 1 rows, extra content, with scrollbar (scrollbar might be very small due to size restrictions; check that it becomes a normal one when textarea is resized)</h5>
+      <textarea cols="1" rows="1">I love ponies.</textarea><br/>
+      
+      <h5>0 cols x 0 rows, extra content (check that the textarea is rendered well with no artifacts; textarea can be of default, non-zero size and this is not a failure)</h5>
+      <textarea cols="0" rows="0">I love ponies.</textarea><br/>
+      
+      <h5>-1 cols x -1 rows, extra content (check that the textarea is rendered well with no artifacts; textarea can be of default, non-zero size and this is not a failure)</h5>
+      <textarea cols="-1" rows="-1">I love ponies.</textarea><br/>
+      
+      <h4>Submitting the textarea</h4>
+      Check that after submitting the form below a new page is loaded with "Success" on it.<br/>
+      Also check that if you haven't changed any of form fields, the page URL on that page contains strings "A=A" and "B=B", but not "C=C".<br/>
+      You can use the reset button to reset the form if you've changed anything on it.
+      <form action="./scripts/submit_action.html" method="GET">
+          <table>
+              <tr>
+                  <td>Normal:</td>
+                  <td><textarea name="A">A</textarea></td>
+              </tr>
+              <tr>
+                  <td>Read only:</td>
+                  <td><textarea name="B" readonly="">B</textarea></td>
+              </tr>
+              <tr>
+                  <td>Disabled:</td>
+                  <td><textarea name="C" disabled="">C</textarea></td>
+              </tr>
+          </table><br/>
+          <input type="submit"/><input type="reset"/>
+      </form>
+      
+  </body>
+</html>

@@ -23,7 +23,6 @@
  */
 package test.scenegraph.imageops;
 
-import client.test.Keywords;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelReader;
@@ -40,7 +39,6 @@ public abstract class ReadImageTestBase {
     protected abstract Image getImage();
 
     @Test
-    @Keywords(keywords="awt")
     public void readSinglyColor(){
         ColorComponentProvider provider = getColorComponentProvider();
         
@@ -87,7 +85,6 @@ public abstract class ReadImageTestBase {
     }
     
     @Test
-    @Keywords(keywords="awt")
     public void readBlockColor(){
         ColorComponentProvider provider = getColorComponentProvider();
         

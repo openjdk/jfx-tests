@@ -24,10 +24,11 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.List;
 import javafx.scene.control.ListView;
 import org.jemmy.control.Wrap;
 import org.jemmy.lookup.LookupCriteria;
+
+import java.util.List;
 
 /**
  *
@@ -58,13 +59,13 @@ public class ListItemParent<ITEM> extends ItemParent<ITEM, Integer>
 
     @Override
     protected <DT extends ITEM> Wrap<? extends DT> wrap(Class<DT> type, ITEM item, Integer aux) {
-        return new ListItemWrap<DT>((DT)item, aux, listViewOp, getEditor());
+        return new ListItemWrap<>((DT)item, aux, listViewOp, getEditor());
     }
 
     public List<Wrap<? extends ITEM>> select(final int... index) {
         LookupCriteria<ITEM>[] criteria = new LookupCriteria[index.length];
         for (int i = 0; i < index.length; i++) {
-            criteria[i] = new ByIndex<ITEM>(index[i]);
+            criteria[i] = new ByIndex<>(index[i]);
         }
         return super.select(criteria);
     }

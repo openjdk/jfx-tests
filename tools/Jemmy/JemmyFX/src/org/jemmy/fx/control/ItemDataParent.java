@@ -24,13 +24,9 @@
  */
 package org.jemmy.fx.control;
 
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
 import org.jemmy.control.Wrap;
 import org.jemmy.interfaces.ControlInterface;
 import org.jemmy.interfaces.EditableCellOwner;
-import org.jemmy.interfaces.EditableCellOwner.CellEditor;
 import org.jemmy.interfaces.Keyboard.KeyboardModifier;
 import org.jemmy.interfaces.Keyboard.KeyboardModifiers;
 import org.jemmy.interfaces.Mouse.MouseButtons;
@@ -39,7 +35,11 @@ import org.jemmy.interfaces.TypeControlInterface;
 import org.jemmy.lookup.Any;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.timing.State;
+import org.jemmy.timing.DescriptiveState;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 abstract class ItemDataParent<ITEM, AUX> implements EditableCellOwner<AUX> {
 
@@ -105,7 +105,7 @@ abstract class ItemDataParent<ITEM, AUX> implements EditableCellOwner<AUX> {
     }
 
     public List<Wrap<? extends AUX>> select(LookupCriteria<AUX>... criteria) {
-        List<Wrap<? extends AUX>> res = new ArrayList<Wrap<? extends AUX>>();
+        List<Wrap<? extends AUX>> res = new ArrayList<>();
         KeyboardModifier[] mods = new KeyboardModifier[0];
         for (LookupCriteria<AUX> cr : criteria) {
             Lookup<AUX> lu = lookup(cr);
@@ -142,10 +142,10 @@ abstract class ItemDataParent<ITEM, AUX> implements EditableCellOwner<AUX> {
             getAux().clear();
             for (int i = 0; i < prev.getFound().size(); i++) {
                 ST aux = getType().cast(prev.getAux().get(i));
-                if (getType().isInstance(prev.getAux().get(i)) && 
+                if (getType().isInstance(prev.getAux().get(i)) &&
                         lc.check(aux) &&
                         (!(lc instanceof ItemCriteria) ||
-                        ((ItemCriteria<ITEM, AUX>)lc).checkItem(prev.getFound().get(i)))) {
+                                ((ItemCriteria<ITEM, AUX>) lc).checkItem(prev.getFound().get(i)))) {
                     getFound().add(prev.getFound().get(i));
                     getAux().add(aux);
                 }
@@ -154,18 +154,10 @@ abstract class ItemDataParent<ITEM, AUX> implements EditableCellOwner<AUX> {
 
         public Lookup<? extends ST> wait(final int i) {
             owner.getEnvironment().getWaiter(Lookup.WAIT_CONTROL_TIMEOUT).
-                    ensureState(new State() {
-
-                public Object reached() {
-                    refresh();
-                    return (getFound().size() >= i) ? true : null;
-                }
-
-                @Override
-                public String toString() {
-                    return "wait for " + i + " items found";
-                }
-            });
+                    ensureState(new DescriptiveState<Boolean>(() -> {
+                        refresh();
+                        return (getFound().size() >= i) ? true : null;
+                    }, () -> "wait for " + i + " items found"));
             return this;
         }
 
@@ -225,7 +217,7 @@ abstract class ItemDataParent<ITEM, AUX> implements EditableCellOwner<AUX> {
         }
 
     }
-    
+
     interface ItemCriteria<ITEM, DATA> extends LookupCriteria<DATA> {
         public boolean checkItem(ITEM item);
     }

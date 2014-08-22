@@ -1,0 +1,23 @@
+#JT Harness Configuration Interview
+#Thu Jul 02 23:18:13 MSD 2009
+CHECKSUM=77d496a75fc0a1bc
+INTERVIEW=htmltestrunner.Interview
+LOCALE=en_US
+NAME=default value
+QUESTION=hello.epilog
+TESTSUITE=/home/shura/Tools/HtmlTestRunner/test_data
+WORKDIR=/home/shura/Tools/HtmlTestRunner/test_data/workdir
+hello.concurrency.concurrency=1
+hello.default\ value=
+hello.excludeList.latestAutoCheck=No
+hello.excludeList.latestAutoCheckInterval=7
+hello.excludeList.latestAutoCheckMode=everyXDays
+hello.excludeList.needExcludeList=No
+hello.keywords.keywords.mode=expr
+hello.keywords.needKeywords=No
+hello.priorStatus.needStatus=No
+hello.priorStatus.status=
+hello.tests.needTests=No
+hello.tests.tests=
+hello.tests.treeOrFile=tree
+hello.timeout.timeout=1

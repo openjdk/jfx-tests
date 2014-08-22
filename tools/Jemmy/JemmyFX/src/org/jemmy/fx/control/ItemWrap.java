@@ -39,6 +39,7 @@ import org.jemmy.interfaces.Show;
 import org.jemmy.interfaces.Showable;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
+import org.jemmy.timing.DescriptiveLookupCriteria;
 
 /**
  * A few compound Java FX controls could be used as a parent for objects, which
@@ -50,40 +51,20 @@ import org.jemmy.resources.StringComparePolicy;
  * @author shura
  */
 @ControlType(Object.class)
-@DockInfo(name="org.jemmy.fx.control.ItemDock", multipleCriteria=false)
+@DockInfo(name = "org.jemmy.fx.control.ItemDock", multipleCriteria = false)
 public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implements Showable, Show, EditableCell<DATA> {
 
     public static final String ITEM_PROP_NAME = "item";
 
     @ObjectLookup("object")
     public static <T> LookupCriteria<T> byObject(Class<T> type, final Object data) {
-        return new LookupCriteria<T> () {
-
-            public boolean check(T control) {
-                return control.equals(data);
-            }
-
-            @Override
-            public String toString() {
-                return "an element which is equals to " + data.toString();
-            }
-        };
+        return new DescriptiveLookupCriteria<>(control -> control.equals(data), () -> "an element which is equals to " + data.toString());
     }
 
     @ObjectLookup("toString and comparison policy")
     public static <T> LookupCriteria<T> byToString(Class<T> type, final String data,
-            final StringComparePolicy policy) {
-        return new LookupCriteria<T> () {
-
-            public boolean check(T control) {
-                return policy.compare(data, control.toString());
-            }
-
-            @Override
-            public String toString() {
-                return "an element which is equals to " + data.toString();
-            }
-        };
+                                                   final StringComparePolicy policy) {
+        return new DescriptiveLookupCriteria<>(control -> policy.compare(data, control.toString()), () -> "an element which is equals to " + data.toString());
     }
 
     protected Wrap<?> viewWrap;
@@ -92,10 +73,9 @@ public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implement
     private final Object item;
 
     /**
-     *
-     * @param env
+     * @param item
      * @param data
-     * @param viewWrap
+     * @param editor
      */
     public ItemWrap(Object item, DATA data, Wrap<?> listViewWrap, CellEditor<? super DATA> editor) {
         super(listViewWrap.getEnvironment(), data);
@@ -103,10 +83,10 @@ public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implement
         this.editor = editor;
         this.item = item;
     }
-    
+
     public ItemWrap(Class<DATA> dataClass, Object item, DATA data, Wrap<?> listViewWrap, CellEditor<? super DATA> editor) {
         this(item, data, listViewWrap, editor);
-        this.dataClass = dataClass;        
+        this.dataClass = dataClass;
     }
 
     public Object getItem() {
@@ -139,6 +119,7 @@ public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implement
     /**
      * There is a node associated with every piece of data. This node could serve
      * as a parent.
+     *
      * @return
      * @see #cellWrap()
      */

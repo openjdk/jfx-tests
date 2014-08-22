@@ -1,0 +1,148 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h2>Stage parameters test</h2>
+
+        <h3>Description</h3>
+
+        Stage - is a window, which is provided by operation system for an 
+        application. It can be in different states : maximised, iconified, 
+        fullscreen, and other, and also has paramteres : x, y, width, height.
+        Some parameters you can change, and some of them you can only observe 
+        for changes. We will test changing the changable parameters and check, 
+        that we are notified about changable parameters.
+
+        <h3>Note</h3>
+
+        You can see text fields, which contain actual value of the property, 
+        which is mentioned on the left side from the text field. You can see 
+        previous values, in tooltip, related to each textfield.
+        
+        During different manupilations with window, check please, that scene 
+        doesn't blink, doesn't become black, doesn't disappear.
+
+        <h3>Step 1: Fullscreen.</h3>
+        <ul><li>Track "fullscreen" property value, while doing the next manipulation</li>
+            <li>Click on toggle button "Fullscreen state : false",</li>
+            <li>Verify, that scene is in fullscreen mode, and property is set to true.</li>
+            <li>Unselect the toggle button, and verify the property value is set to false.</li>
+        </ul>
+        
+        <h3>Step 2: Position.</h3>
+        <ul><li>Track "x" and "y" property values, while doing the next manipulation</li>
+            <li>Change scene location, and check that x and y are changing correspondingly.</li>
+            <li>If you have several screens, move from one screen to another.</li>
+            <li>Note : x and y could be negative, depending on which of few monitors is the leading one.</li>
+        </ul>
+        
+        <h3>Step 3: Resizing.</h3>
+        <ul><li>Track "width" and "height" properties, while doing the next manipulation</li>
+            <li>Resize scene , and check that width and height are changing correspondingly.</li>
+        </ul>
+        
+        <h3>Step 4: Iconification.</h3>
+        
+        Iconified - it is when application is collapsed on a task bar 
+        (in windows or linux), or to the dock in mac os. ]
+        
+        <ul><li>Check, that "iconified" property, is false.</li>
+            <li>Collapse scene ("_" button in the top right corner of stage in 
+                windows, "-" round button on mac), and expand it back.</li>
+            <li>Check, that value is set to false, still.</li>
+            <li>Look at the history of values, and check, that it was set to true.
+                (to look at history - move mouse on a text field, to see a tooltip;
+                you cannot see directly, when it is true, because it is true, when scene is iconified).</li>
+            <li>Only for Mac: (mac supports applications collapse on CMD+H keys combinations). 
+                Press CMD+H, check that application would hide. Look at history of values and check
+	      that no additional 'true/false' pair appreared.
+</li>
+        </ul>
+        
+        <h3>Step 5: Maximization.</h3>
+        
+            Maximized - it is when application stage is as huge as possible 
+            (use "+" on mac, or rectangular button on windows in the top right corner of the stage)
+            
+        <ul><li>Check taht "maximized" property is false.</li>
+            <li>Maximize stage, and check, that value of property is changed to true.</li>
+            <li>Shrink stage, and check, that value is set to false back.</li>
+        </ul>
+            
+        <h3>Step 6: Focused.</h3>
+        <ul><li>During this step check, that "focused" property is true, when stage is in focus.</li>
+            <li>Focus a stage of some other application, and check, that value is set to false.</li>
+            <li>Focus stage with testing scene again, and check, that value is set to true.</li>
+        </ul>
+        
+        <h3>How to change properties' values.</h3>
+        
+        You can see buttons "unbinded". They allow to bind/unbind
+        values of slider (valueProperty - double values), textField (textProperty - string values), toggleButton 
+        (selectedProperty - boolean properties), with double, string, boolean properties of tested subject (now - a stage).
+        
+        BIDI - corresponds to a bidirectional binding, UNIDI - corresponds to a unidirectional binding.
+        
+        We will use a bidirectional binding (Toggle buttons after BIDI labels).
+        
+        Select all 3 the most right "unbinded"  toggle buttons, so that they change value to "binded".
+        
+        <h3>Step 7: Title.</h3>
+        <ul><li>Check "title" property's value during this step, and 
+                actual title of the stage,</li>
+            <li>Change title to "Custom title" (type text into text field, 
+                when it is binded).</li>
+            <li>Check, that property changed, and stage title is changed.</li>
+        </ul>
+        
+        <h3>Step 8: Resizable.</h3>
+        <ul><li>Check, that "resizable" property is true by default.</li>
+            <li>Change value to false, using according toggle button between 
+                "BIDI" and "binded" texts.</li>
+            <li>Try to resize stage. You cannot be able to do that.</li>
+            <li>Change value back to true.</li>
+            <li>Try to resize stage. You must able to do that, and check, that 
+                width and height are also changing.</li>
+        </ul>
+        
+        <h3>Step 9: Opacity.</h3>
+        <ul><li>Looking on the text field related to "opacity" property, check, 
+                that it is equal to 1.0.</li>
+            <li>When property of slider is "binded" move slider, and check, that
+                opacity is changing in range [0..1].</li>
+            <li>Check, that stage is changing opacity, and value of property is changing.</li>
+            <li>Note, that when you move slider to values more than 1.0, or less 
+                than 0.0, exception "java.lang.IllegalArgumentException: Alpha 
+                should be in the range [0f..1f]" is thrown. - it is normal.</li>
+        </ul>
+    </body>
+</html>

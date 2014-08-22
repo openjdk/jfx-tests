@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+
+<TabPane xmlns:fx="http://javafx.com/fxml">
+   <Tab text="tab1"/>
+   <Tab text="tab2"/>
+   <Tab text="tab3"/>
+</TabPane>
+
+

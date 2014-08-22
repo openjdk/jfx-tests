@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<Bu tton>
+ <properties foo="123" bar="456"/>
+</Button>

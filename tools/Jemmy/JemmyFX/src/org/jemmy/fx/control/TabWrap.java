@@ -28,7 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.jemmy.Rectangle;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
@@ -45,12 +45,12 @@ import org.jemmy.timing.State;
 
 @ControlType({Tab.class})
 @ControlInterfaces(value = {Parent.class, Cell.class},
-encapsulates = {Node.class})
+        encapsulates = {Node.class})
 public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
         implements Close, Closer, Cell<Tab> {
 
-    public final static String DISABLED_PROP_NAME = "disabled";    
-    
+    public final static String DISABLED_PROP_NAME = "disabled";
+
     @Override
     @SuppressWarnings("unchecked")
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>> INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
@@ -63,20 +63,19 @@ public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
 
     @ObjectLookup("id")
     public static <B extends Tab> LookupCriteria<B> idLookup(Class<B> tp, String id) {
-        return new ByIDTab<B>(id);
+        return new ByIDTab<>(id);
     }
 
     @ObjectLookup("text")
     public static <B extends Tab> LookupCriteria<B> textLookup(Class<B> tp, String id, StringComparePolicy policy) {
-        return new ByTextTab<B>(id, policy);
+        return new ByTextTab<>(id, policy);
     }
+
     private TabPaneWrap<? extends TabPane> pane;
 
     /**
-     *
-     * @param env
-     * @param scene
-     * @param nd
+     * @param tab
+     * @param pane
      */
     @SuppressWarnings("unchecked")
     public TabWrap(TabPaneWrap<? extends TabPane> pane, CONTROL tab) {
@@ -108,12 +107,8 @@ public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
     public void close() {
         checkNotDisabledState(getControl(), getEnvironment());
         select();
-        pane.as(Parent.class, Node.class).lookup(Node.class, new LookupCriteria<Node>() {
-
-            public boolean check(Node node) {
-                return node.getStyleClass().contains("tab-close-button") && node.isVisible();
-            }
-        }).wrap().mouse().click();
+        final Parent<Node> parent = pane.as(Parent.class, Node.class);
+        parent.lookup(Node.class, node -> node.getStyleClass().contains("tab-close-button") && node.isVisible()).wrap().mouse().click();
     }
 
     public Close closer() {
@@ -122,23 +117,12 @@ public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
 
     @Property("getContent")
     public Node getContent() {
-        return new GetAction<Node>() {
-
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(getControl().getContent());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().getContent()).get();
     }
-    
+
     @Property(DISABLED_PROP_NAME)
     public boolean isDisabled() {
-        return new GetAction<Boolean>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().isDisabled());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().isDisabled()).get();
     }
 
     @Property(TEXT_PROP_NAME)
@@ -147,16 +131,12 @@ public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
     }
 
     private static String getText(final Tab tab, Environment env) {
-        return new GetAction<String>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(tab.getText());
-            }
-        }.dispatch(env);
+        return new FutureAction<>(env, () -> tab.getText()).get();
     }
 
     /**
      * @author Andrey Nazarov
+     * @param <T>
      */
     public static class ByTooltipTab<T extends Tab> extends ByStringLookup<T> {
 
@@ -202,12 +182,7 @@ public class TabWrap<CONTROL extends Tab> extends Wrap<CONTROL>
         env.getWaiter(WAIT_STATE_TIMEOUT).ensureValue(true, new State<Boolean>() {
             @Override
             public Boolean reached() {
-                if (!new GetAction<Boolean>() {
-                    @Override
-                    public void run(Object... os) throws Exception {
-                        setResult(tab.isDisabled());
-                    }
-                }.dispatch(env)) {
+                if (!new FutureAction<>(env, tab::isDisabled).get()) {
                     return Boolean.TRUE;
                 }
                 return null;

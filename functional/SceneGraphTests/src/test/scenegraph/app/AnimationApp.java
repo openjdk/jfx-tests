@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2014, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -32,15 +32,10 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableDoubleValue;
 import javafx.beans.value.WritableIntegerValue;
 import javafx.beans.value.WritableLongValue;
@@ -54,10 +49,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import test.embedded.helpers.AbstractButton;
+import test.embedded.helpers.ButtonBuilderFactory;
+import test.embedded.helpers.OnClickHandler;
 import test.javaclient.shared.BasicButtonChooserApp;
 import test.javaclient.shared.TestNode;
 
@@ -619,25 +616,91 @@ public class AnimationApp extends BasicButtonChooserApp {
 
 
     class StdButtons {
+        
+        
 
-        final Button buttonStart = new Button("Start") {{
-                setId(getText());
-            }};
-        Button buttonStop = new Button("Stop") {{
-                setId(getText());
-            }};
-        Button buttonPause = new Button("Pause") {{
-                setId(getText());
-            }};
-        Button buttonRestart = new Button("Restart") {{
-                setId(getText());
-            }};
-        Button buttonCuepoint = new Button("PlayFromCuepoint") {{
-                setId(getText());
-            }};
-        Button buttonDuration = new Button("PlayFromDuration") {{
-                setId(getText());
-            }};
+        final AbstractButton buttonStart = ButtonBuilderFactory.newButtonBuilder().text("Start").id("Start")
+                .setOnClickHandler(
+                    new OnClickHandler() {
+
+                        @Override
+                        public void onClick() {
+                            timeline.play();
+                        }
+                        
+                    }
+                )
+                .build();
+        
+        final AbstractButton buttonStop = ButtonBuilderFactory.newButtonBuilder().text("Stop").id("Stop")
+                .setOnClickHandler(
+                    new OnClickHandler() {
+
+                        @Override
+                        public void onClick() {
+                            timeline.stop();
+                        }
+                        
+                    }
+                )
+                .build();
+
+        final AbstractButton buttonPause = ButtonBuilderFactory.newButtonBuilder().text("Pause").id("Pause")
+                .setOnClickHandler(
+                    new OnClickHandler() {
+
+                        @Override
+                        public void onClick() {
+                            //stop timeline
+                            timeline.pause();
+                            try { Thread.sleep(50); } catch (Exception e) { }
+                            currentState.setText(timeline.getStatus().toString());
+                        }
+                        
+                    }
+                )
+                .build();
+        
+        final AbstractButton buttonRestart = ButtonBuilderFactory.newButtonBuilder().text("Restart").id("Restart")
+                .setOnClickHandler(
+                    new OnClickHandler() {
+
+                        @Override
+                        public void onClick() {
+                            timeline.playFromStart();
+                        }
+                        
+                    }
+                )
+                .build();
+        
+        final AbstractButton buttonCuepoint = ButtonBuilderFactory.newButtonBuilder().text("PlayFromCuepoint").id("PlayFromCuepoint")
+                .setOnClickHandler(
+                    new OnClickHandler() {
+
+                        @Override
+                        public void onClick() {
+                            timeline.playFrom(cuepointName);
+                        }
+                        
+                    }
+                )
+                .build();
+
+        final AbstractButton buttonDuration = ButtonBuilderFactory.newButtonBuilder().text("PlayFromDuration").id("PlayFromDuration")
+                .setOnClickHandler(
+                    new OnClickHandler() {
+
+                        @Override
+                        public void onClick() {
+                            timeline.playFrom(new Duration(1000));
+                        }
+                        
+                    }
+                )
+                .build();
+        
+        
 
         StdButtons(ObservableList<Node> _sn) {
             addButtonsToSequence(_sn);
@@ -647,57 +710,12 @@ public class AnimationApp extends BasicButtonChooserApp {
             Pane p = new TilePane();
             p.setMinWidth(160);
             p.setPrefWidth(240);
-            p.getChildren().addAll(buttonStop, buttonStart, buttonPause, buttonRestart,
-                    buttonCuepoint, buttonDuration);
+            p.getChildren().addAll(buttonStop.node(), buttonStart.node(), buttonPause.node(), buttonRestart.node(),
+                    buttonCuepoint.node(), buttonDuration.node());
             _sn.add(p);
         }
 
         StdButtons() {
-            buttonStart.setOnAction(new EventHandler<ActionEvent>() {
-
-                public void handle(ActionEvent t) {
-                    //start timeline
-                    timeline.play();
-                }
-            });
-            buttonCuepoint.setOnAction(new EventHandler<ActionEvent>() {
-
-                public void handle(ActionEvent t) {
-                    //start timeline
-                    timeline.playFrom(cuepointName);
-                }
-            });
-
-            buttonStop.setOnAction(new EventHandler<ActionEvent>() {
-
-                public void handle(ActionEvent t) {
-                    //stop timeline
-                    timeline.stop();
-                }
-            });
-            buttonPause.setOnAction(new EventHandler<ActionEvent>() {
-
-                public void handle(ActionEvent t) {
-                    //stop timeline
-                    timeline.pause();
-                    try { Thread.sleep(50); } catch (Exception e) { }
-                    currentState.setText(timeline.getStatus().toString());
-                }
-            });
-            buttonRestart.setOnAction(new EventHandler<ActionEvent>() {
-
-                public void handle(ActionEvent t) {
-                    //stop timeline
-                    timeline.playFromStart();
-                }
-            });
-            buttonDuration.setOnAction(new EventHandler<ActionEvent>() {
-
-                public void handle(ActionEvent t) {
-                    //stop timeline
-                    timeline.playFrom(new Duration(1000));
-                }
-            });
         }
     }
 

@@ -25,22 +25,17 @@
 
 package org.jemmy.fx.control;
 
-import java.awt.AWTException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.LabelBuilder;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 /**
  * This small FX app is used in Accordion JemmyFX samples. It displays an Accordion control that contains two titled panes.
@@ -76,10 +71,8 @@ public class AccordionApp extends Application {
         box.getChildren().add(accordion);
 
         Button reset = new Button("Reset");
-        reset.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                reset();
-            }
+        reset.setOnAction(t -> {
+            reset();
         });
         box.getChildren().add(reset);
 

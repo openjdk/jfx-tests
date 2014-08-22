@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import test.fxmltests.app.MyRootElement?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:controller="test.fxmltests.app.MyRootElement" xmlns:fx="http://javafx.com/fxml">
+ <children>
+  <Button fx:id="button" text="Click Me!" onAction="#handleButtonAction"/>
+ </children>
+</VBox>
+

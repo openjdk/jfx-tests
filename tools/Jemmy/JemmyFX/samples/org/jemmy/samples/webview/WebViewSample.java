@@ -25,13 +25,11 @@
 
 package org.jemmy.samples.webview;
 
-import javafx.scene.web.WebView;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.WebNodeDock;
 import org.jemmy.fx.control.WebViewDock;
 import org.jemmy.fx.control.WebViewWrap.ByAttribute;
 import org.jemmy.fx.control.WebViewWrap.ByName;
-import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.samples.SampleBase;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -55,11 +53,7 @@ public class WebViewSample extends SampleBase {
     public void parent() {
 
         // finding the WebView wrap
-        WebViewDock web_view = new WebViewDock(scene.asParent(), new LookupCriteria<WebView>() {
-            public boolean check(WebView cntrl) {
-                return true;
-            }
-        });
+        WebViewDock web_view = new WebViewDock(scene.asParent(), cntrl -> true);
 
         // WebViewWrap as parent for org.w3c.dom.Node
         // ByName() lookup criteria

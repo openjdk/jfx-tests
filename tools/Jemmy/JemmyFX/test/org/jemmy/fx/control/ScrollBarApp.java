@@ -24,20 +24,20 @@
  */
 package org.jemmy.fx.control;
 
-import java.awt.AWTException;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Shear;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 /**
  *
@@ -70,11 +70,8 @@ public class ScrollBarApp extends Application {
         hLabel.setLayoutX(80);
         hLabel.setLayoutY(10);
         hLabel.setId("h");
-        hScroll.valueProperty().addListener(new ChangeListener<Number>() {
-
-            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-                hLabel.setText(t.toString());
-            }
+        hScroll.valueProperty().addListener((ov, t, t1) -> {
+            hLabel.setText(t.toString());
         });
         box.getChildren().add(hLabel);
 
@@ -93,11 +90,8 @@ public class ScrollBarApp extends Application {
         vLabel.setLayoutX(80);
         vLabel.setLayoutY(20);
         vLabel.setId("v");
-        vScroll.valueProperty().addListener(new ChangeListener<Number>() {
-
-            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-                vLabel.setText(t.toString());
-            }
+        vScroll.valueProperty().addListener((ov, t, t1) -> {
+            vLabel.setText(t.toString());
         });
         box.getChildren().add(vLabel);
 
@@ -117,11 +111,8 @@ public class ScrollBarApp extends Application {
         rdLabel.setLayoutX(80);
         rdLabel.setLayoutY(30);
         rdLabel.setId("rd");
-        rdScroll.valueProperty().addListener(new ChangeListener<Number>() {
-
-            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-                rdLabel.setText(t.toString());
-            }
+        rdScroll.valueProperty().addListener((ov, t, t1) -> {
+            rdLabel.setText(t.toString());
         });
         box.getChildren().add(rdLabel);
 
@@ -141,11 +132,8 @@ public class ScrollBarApp extends Application {
         ldLabel.setLayoutX(80);
         ldLabel.setLayoutY(40);
         ldLabel.setId("ld");
-        ldScroll.valueProperty().addListener(new ChangeListener<Number>() {
-
-            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-                ldLabel.setText(t.toString());
-            }
+        ldScroll.valueProperty().addListener((ov, t, t1) -> {
+            ldLabel.setText(t.toString());
         });
         box.getChildren().add(ldLabel);
 
@@ -164,14 +152,11 @@ public class ScrollBarApp extends Application {
         public TextFieldListCell() {
             setEditable(true);
             textBox = new TextField();
-            textBox.setOnKeyReleased(new EventHandler<KeyEvent>() {
-
-                public void handle(KeyEvent t) {
-                    if (t.getCode() == KeyCode.ENTER) {
-                        commitEdit(textBox.getText());
-                    } else if (t.getCode() == KeyCode.ESCAPE) {
-                        cancelEdit();
-                    }
+            textBox.setOnKeyReleased(t -> {
+                if (t.getCode() == KeyCode.ENTER) {
+                    commitEdit(textBox.getText());
+                } else if (t.getCode() == KeyCode.ESCAPE) {
+                    cancelEdit();
                 }
             });
         }

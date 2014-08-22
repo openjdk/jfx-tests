@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h3>Test for FILE input controls accepting different file types</h3>
+        <ol>
+            <li>Wait for test page to load. The application with loaded page should look like below
+                (directory where files were generated can be different):<br/>
+                <img src="images/accept.png"/><br/>
+                Click on the first "Choose File" button. A modal window with file selection should open.<br/>
+                Go to the directory where files were generated:<br/>
+                    <img src="images/generated-in.png"/><br/>
+                You should be able to see the following files there:<ul>
+                        <li>test.png</li>
+                        <li>test.jpg</li>
+                        <li>test1.txt</li>
+                        <li>test2.txt</li>
+                        <li>testveryveryverylongname.txt</li>
+                    </ul>
+                Click on "Cancel" button.
+            </li>
+            <li>Click on the second "Choose File" button.<br/>
+                A modal window with file selection should open.<br/>
+                Go to the directory where files were generated.<br/>
+                You should see the following files there: <b>test.png, test.jpg</b>.<br/>
+                You should <b>not</b> see the following files there:<ul>
+                        <li>test1.txt</li>
+                        <li>test2.txt</li>
+                        <li>testveryveryverylongname.txt</li>
+                    </ul>
+                Click on "Cancel" button.
+            </li>
+            <li>Click on the third "Choose File" button.<br/>
+                A modal window with file selection should open.<br/>
+                Go to the directory where files were generated.<br/>
+                You should see the following files there: <ul>
+                        <li>test1.txt</li>
+                        <li>test2.txt</li>
+                        <li>testveryveryverylongname.txt</li>
+                </ul>
+                You should <b>not</b> see files <b>test.png, test.jpg</b>.<br/>
+                Click on "Cancel" button.
+            </li>
+            <li>Click on the fourth "Choose File" button.<br/>
+                A modal window with file selection should open.<br/>
+                Go to the directory where files were generated.<br/>
+                You should see the following file there: <b>test.png</b>.<br/>
+                You should <b>not</b> see the following files there:<ul>
+                        <li>test.jpg</li>    
+                        <li>test1.txt</li>
+                        <li>test2.txt</li>
+                        <li>testveryveryverylongname.txt</li>
+                    </ul>
+                Click on "Cancel" button.
+            </li>
+            <li>Click on the fifth "Choose File" button.<br/>
+                A modal window with file selection should open.<br/>
+                Go to the directory where files were generated.<br/>
+                You should see the following files there: <ul>
+                        <li>test.png</li>
+                        <li>test1.txt</li>
+                        <li>test2.txt</li>
+                        <li>testveryveryverylongname.txt</li>
+                </ul>
+                You should <b>not</b> see file <b>test.jpg</b>.<br/>
+            </li>
+        </ol>
+        The test passes if all steps pass.
+    </body>
+</html>

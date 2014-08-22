@@ -56,17 +56,17 @@ public enum TestCollections {
     Rotate(RotateTestAction.generate(new double[]{
         0, 45, 90, 180, 250, 360, 370
     })),
-    Bloom(EffectTestAction.generate(new Bloom(), false)),
-    BoxBlur(EffectTestAction.generate(new BoxBlur(), false)),
-    ColorAdjust(EffectTestAction.generate(new ColorAdjust(), false)),
+    Bloom(EffectTestAction.generate(new Bloom(), true)),
+    BoxBlur(EffectTestAction.generate(new BoxBlur(), true)),
+    ColorAdjust(EffectTestAction.generate(new ColorAdjust(), true)),
     //ColorInput(EffectTestAction.generate(new ColorInput(50, 50, 100, 100, Color.GREEN), false))
-    DisplacementMap(EffectTestAction.generate(new DisplacementMap(), false)),
+    DisplacementMap(EffectTestAction.generate(new DisplacementMap(), true)),
     DropShadow(EffectTestAction.generate(new DropShadow(BlurType.THREE_PASS_BOX, Color.BLACK, 10.0, 0.0, 0.0, 0.0), true)),
-    GaussianBlur(EffectTestAction.generate(new GaussianBlur(), false)),
-    Glow(EffectTestAction.generate(new Glow(), false)),
-    InnerShadow(EffectTestAction.generate(new InnerShadow(), false)),
-    Lighting(EffectTestAction.generate(new Lighting(), false)),
-    MotionBlur(EffectTestAction.generate(new MotionBlur(), false)),
+    GaussianBlur(EffectTestAction.generate(new GaussianBlur(), true)),
+    Glow(EffectTestAction.generate(new Glow(), true)),
+    InnerShadow(EffectTestAction.generate(new InnerShadow(), true)),
+    Lighting(EffectTestAction.generate(new Lighting(), true)),
+    MotionBlur(EffectTestAction.generate(new MotionBlur(), true)),
     PerspectiveTransform(EffectTestAction.generate(
             PerspectiveTransformBuilder.create()
             .ulx(10.0)
@@ -78,9 +78,9 @@ public enum TestCollections {
             .llx(10.0)
             .lly(90.0)
             .build(), false)),
-    Reflection(EffectTestAction.generate(new Reflection(), false)),
-    SepiaTone(EffectTestAction.generate(new SepiaTone(), false)),
-    Shadow(EffectTestAction.generate(new Shadow(), false))
+    Reflection(EffectTestAction.generate(new Reflection(), true)),
+    SepiaTone(EffectTestAction.generate(new SepiaTone(), true)),
+    Shadow(EffectTestAction.generate(new Shadow(), true))
     ;
     
     private TestAction[] actions;

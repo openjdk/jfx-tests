@@ -1,0 +1,12 @@
+<?language javascript?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml">
+    <fx:script source="external-script.js"/>
+
+    <children>
+        <Button text="Click Me!" onAction="handleButtonAction(event);" id="button_external_script"/>
+    </children>
+</VBox>

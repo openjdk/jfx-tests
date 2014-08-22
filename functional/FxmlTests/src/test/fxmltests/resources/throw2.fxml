@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.transform.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import java.util.HashMap?>
+<?import test.fxmltests.app.CustomEntity?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml">
+ <children>
+  <Rectangle  x="10" y="10" width="320" height="240" fill="#ff0000" />
+  <Button text="Click Me!" fx:onAction="#hanleButtonAction"/>
+  <Rectangle width="320" height="240" fx:zzzid="rectangle" fill="#ff0000">
+   <GridPane.rowIndex>1</GridPane.rowIndex>
+  </Rectangle>
+  <Circle radius="10">
+   <GridPane.rowIndex>0</GridPane.rowIndex>
+   <GridPane.columnIndex>0</GridPane.columnIndex>
+  </Circle>
+ </children>
+</GridPane>
+
+

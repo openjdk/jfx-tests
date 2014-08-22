@@ -24,14 +24,12 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import org.jemmy.JemmyException;
+import org.jemmy.action.FutureAction;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.*;
 import org.jemmy.env.Environment;
@@ -45,21 +43,26 @@ import org.jemmy.lookup.Any;
 import org.jemmy.lookup.EqualsLookup;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
-import org.jemmy.timing.State;
+import org.jemmy.timing.DescriptiveState;
 import org.jemmy.timing.Waiter;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * List support in JemmyFX is provided through a few different control interfaces.
  * Namely, these are <code>List</code>, <code>Parent</code> and <code>Selectable</code>.
- * @see #asItemParent(java.lang.Class) 
- * @see #asSelectable(java.lang.Class) 
+ *
+ * @param <CONTROL>
  * @author shura, Alexander Kouznetsov <mrkam@mail.ru>
- * @param <CONTROL> 
+ * @see #asItemParent(java.lang.Class)
+ * @see #asSelectable(java.lang.Class)
  * @see ListViewDock
  */
 @ControlType({ListView.class})
 @ControlInterfaces(value = {org.jemmy.interfaces.List.class, Selectable.class, Scroll.class},
-encapsulates = {Object.class, Object.class})
+        encapsulates = {Object.class, Object.class})
 public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
         implements Scroll, Selectable<Object> {
 
@@ -69,9 +72,7 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
     private Selectable<Object> objectSelectable = new ListViewSelectable<Object>(Object.class);
 
     /**
-     *
      * @param env
-     * @param scene
      * @param nd
      */
     @SuppressWarnings("unchecked")
@@ -83,7 +84,6 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
      * Look for a certain node and create an ListViewWrap for it.
      *
      * @param parent
-     * @param type
      * @param criteria
      * @deprecated Use Docks
      */
@@ -96,34 +96,23 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
      * @deprecated Use Docks
      */
     public static ListViewWrap<ListView> find(NodeParent parent, final Object item, final int itemIndex) {
-        return find(parent, new LookupCriteria<ListView>() {
-
-            @Override
-            public boolean check(ListView control) {
-                return control.getItems().get(itemIndex).equals(item);
-            }
-        });
+        return find(parent, control -> control.getItems().get(itemIndex).equals(item));
     }
 
     /**
      * @deprecated Use Docks
      */
     public static ListViewWrap<ListView> find(NodeParent parent) {
-        return find(parent, new Any<ListView>());
+        return find(parent, new Any<>());
     }
 
     @SuppressWarnings("unchecked")
     private void checkScroll() {
         if (scroll == null) {
             final boolean vertical = vertical();
-            Lookup<ScrollBar> lookup = as(Parent.class, Node.class).lookup(ScrollBar.class,
-                    new LookupCriteria<ScrollBar>() {
-
-                        @Override
-                        public boolean check(ScrollBar control) {
-                            return (control.getOrientation() == Orientation.VERTICAL) == vertical;
-                        }
-                    });
+            final Parent<Node> parent = as(Parent.class, Node.class);
+            Lookup<ScrollBar> lookup = parent.lookup(ScrollBar.class,
+                    control -> (control.getOrientation() == Orientation.VERTICAL) == vertical);
             int count = lookup.size();
             if (count == 0) {
                 scroll = null;
@@ -139,22 +128,18 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
 
     /**
      * Is the list vertical?
+     *
      * @return
      */
     @Property(ScrollBarWrap.VERTICAL_PROP_NAME)
     public boolean vertical() {
-        return new GetAction<Boolean>() {
-
-            @Override
-            public void run(Object... parameters) {
-                setResult(getControl().getOrientation() == Orientation.VERTICAL);
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<Boolean>(getEnvironment(), () -> getControl().getOrientation() == Orientation.VERTICAL).get();
     }
 
-    /** 
+    /**
      * In case direct scrolling is needed. Scroller value is within (0, 1) range.
-     * @return 
+     *
+     * @return
      */
     @As
     public Scroll asScroll() {
@@ -168,50 +153,39 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
     /**
      * Select a value in the list. Should more complicated lookup cases be needed,
      * use <code>asItemParent(Class)</code>.
+     *
      * @param <T>
      * @param type
-     * @return 
-     * @see #asItemParent(java.lang.Class) 
+     * @return
+     * @see #asItemParent(java.lang.Class)
      */
     @As(Object.class)
     public <T extends Object> Selectable<T> asSelectable(Class<T> type) {
-        return new ListViewSelectable<T>(type);
+        return new ListViewSelectable<>(type);
     }
 
     /**
      * Allows to perform lookup within the list view by criteria formulated
      * in terms of user data stored in the list.
-     * @return 
-     * @see #asItemParent(java.lang.Class) 
+     *
+     * @return
+     * @see #asItemParent(java.lang.Class)
      * @see ListItemWrap
      */
     @As(Object.class)
     public <T extends Object> org.jemmy.interfaces.List<T> asItemParent(Class<T> type) {
-        return new ListItemParent<T>(this, type);
+        return new ListItemParent<>(this, type);
     }
 
     long getSelectedIndex() {
-        return new GetAction<Long>() {
-
-            @Override
-            public void run(Object... parameters) {
-                setResult(new Long(getControl().getSelectionModel().getSelectedIndex()));
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<Long>(getEnvironment(), () -> new Long(getControl().getSelectionModel().getSelectedIndex())).get();
     }
 
     /**
-     *
      * @return
      */
     public Object getSelectedItem() {
-        return new GetAction<Object>() {
-
-            @Override
-            public void run(Object... parameters) {
-                setResult(getControl().getSelectionModel().getSelectedItem());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<Object>(getEnvironment(), () -> getControl().getSelectionModel().getSelectedItem()).get();
     }
 
     @Override
@@ -304,13 +278,7 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
 
     @Property("items")
     public List getItems() {
-        return new GetAction<List<?>>() {
-
-            @Override
-            public void run(Object... parameters) throws Exception {
-                setResult(getControl().getItems());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<List<?>>(getEnvironment(), () -> getControl().getItems()).get();
     }
 
     /**
@@ -326,7 +294,7 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
         }
 
         ArrayList<ITEM> createResult(Iterator<? extends Object> it) {
-            ArrayList<ITEM> res = new ArrayList<ITEM>();
+            ArrayList<ITEM> res = new ArrayList<>();
             while (it.hasNext()) {
                 Object obj = it.next();
                 if (itemType.isAssignableFrom(obj.getClass())) {
@@ -376,25 +344,19 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
         @SuppressWarnings("unchecked")
         public void select(final ITEM state) {
 
-            Wrap<ITEM> cellItem = as(Parent.class, itemType).lookup(new EqualsLookup<ITEM>(state)).wrap(0);
+            Wrap<ITEM> cellItem = as(Parent.class, itemType).lookup(new EqualsLookup<>(state)).wrap(0);
             cellItem.mouse().click();
 
-            new Waiter(WAIT_STATE_TIMEOUT).waitValue(state, new State<ITEM>() {
+            new Waiter(WAIT_STATE_TIMEOUT).waitValue(state, new DescriptiveState<>(() -> {
 
-                @Override
-                public ITEM reached() {
-                    Object selected = getSelectedItem();
-                    return selected == null ? null
-                            : (itemType.isAssignableFrom(selected.getClass())
-                            ? itemType.cast(selected) : null);
-                }
+                Object selected = getSelectedItem();
+                return selected == null ? null
+                        : (itemType.isAssignableFrom(selected.getClass())
+                        ? itemType.cast(selected) : null);
+            }, () -> "Checking that selected item [" + getSelectedItem()
+                    + "] is " + state));
 
-                @Override
-                public String toString() {
-                    return "Checking that selected item [" + getSelectedItem()
-                            + "] is " + state;
-                }
-            });
+
         }
     }
 }

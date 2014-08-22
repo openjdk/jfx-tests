@@ -33,10 +33,10 @@ import javafx.scene.text.Text;
 import org.jemmy.control.Wrap;
 import org.jemmy.interfaces.Parent;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -58,13 +58,13 @@ public class LookupTest {
 
     @Test
     public void scenes() {
-        assertEquals(50, Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<Scene>("title0")).get(0).getWindow().getX(), .0);
-        assertEquals(200, Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<Scene>("title1")).get(0).getWindow().getX(), .0);
+        assertEquals(50, Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<>("title0")).get(0).getWindow().getX(), .0);
+        assertEquals(200, Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<>("title1")).get(0).getWindow().getX(), .0);
     }
 
     @Test
     public void circle() {
-        Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<Scene>("title0")).
+        Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<>("title0")).
                 as(Parent.class, Node.class).
                 lookup(Ellipse.class).wait(1);
     }
@@ -72,7 +72,7 @@ public class LookupTest {
     @Test
     public void square() {
         Wrap<? extends Group> group = Root.ROOT.
-                lookup(Scene.class, new ByTitleSceneLookup<Scene>("title1")).wrap().
+                lookup(Scene.class, new ByTitleSceneLookup<>("title1")).wrap().
                 as(Parent.class, Node.class).
                 lookup(Group.class).wrap();
         group.as(Parent.class, Node.class).
@@ -81,7 +81,7 @@ public class LookupTest {
 
     @Test
     public void byId() {
-        Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<Scene>("title1")).
+        Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<>("title1")).
                 as(Parent.class, Node.class).lookup(Rectangle.class,
                 new ByID<Rectangle>("rect1")).wrap();
     }
@@ -89,7 +89,7 @@ public class LookupTest {
     @Test
     public void byTitle() {
         Wrap<? extends Scene> scene = Root.ROOT.
-                lookup(Scene.class, new ByTitleSceneLookup<Scene>("title1")).wrap();
+                lookup(Scene.class, new ByTitleSceneLookup<>("title1")).wrap();
 
         Wrap<? extends Scene> scene2 = Root.ROOT.lookup(Scene.class).wrap(0);
         assertEquals(scene.getControl(), scene2.getControl());
@@ -97,7 +97,7 @@ public class LookupTest {
 
     @Test
     public void ByText() {
-        Wrap<? extends Text> w = Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<Scene>("title1")).as(Parent.class, Node.class).
+        Wrap<? extends Text> w = Root.ROOT.lookup(Scene.class, new ByTitleSceneLookup<>("title1")).as(Parent.class, Node.class).
                 lookup(Text.class, new ByText("text1")).wrap();
         w.as(org.jemmy.interfaces.Text.class).text();
     }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h3>Testing history.forward()</h3>
+        <ol>
+            <li>Check that the following text can be found on the screen:<br/>
+                Current index: 0<br/>
+                Current number of entries: 1<br/>
+                Page 1<br/>
+            </li>
+            <li>
+                Click "Next page" link. Check that the following text can be found on the screen:<br/>
+                Current index: 1<br/>
+                Current number of entries: 2<br/>
+                Page 2<br/>
+            </li>
+            <li>
+                Click "Go back" button. Check that the following text can be found on the screen:<br/>
+                Current index: 0<br/>
+                Current number of entries: 2<br/>
+                Page 1<br/>
+            </li>
+            <li>
+                Click "Go forward" button. Check that the following text can be found on the screen:<br/>
+                Current index: 1<br/>
+                Current number of entries: 2<br/>
+                Page 2<br/>
+            </li>
+        </ol>
+        If all steps are successful, the test passes.
+    </body>
+</html>

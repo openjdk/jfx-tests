@@ -1,0 +1,48 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Date Picker manual test.</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h2>Date Picker manual test.</h2>
+
+        <h3>The only step : </h3>
+        Date picker allows to select date in popup - it has localization and chronology.
+        It is needed to check, that for all available chronologies (in comboBox) date picker works properly, 
+        rendered properly, don't have defects, which can be seen by user during interaction 
+        (some strange movements, resizes, rendering atrifacts during/after usage).
+        <ul><li>Having selected each item (chronology) from comboBox (the second control) try the following steps : </li>
+            <li>Select some date from date picker.</li>   
+            <li>In popup do several times each of next: select previous month, next month, previous year, next year, select some date, check, that it is shown correctly.</li>
+            <li>Reopen popup and check, that still the same date month is shown, and selected item is highlighted.</li>
+            <li>The Home key on the keyboard can be used to go to Today - that is navigation to the current date.</li>            
+        </ul>
+    </body>
+</html>

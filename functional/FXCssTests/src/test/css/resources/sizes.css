@@ -1,0 +1,18 @@
+.MIN_WIDTH {
+    -fx-min-width : 100;
+}
+.MAX_WIDTH {
+    -fx-max-width : 50;
+}
+.MIN_HEIGHT {
+    -fx-min-height:  100;
+}
+.MAX_HEIGHT {
+    -fx-max-height : 50;
+}
+.PREF_WIDTH {
+    -fx-pref-width : 100;
+}
+.PREF_HEIGHT {
+    -fx-pref-height : 100;
+}

@@ -1,0 +1,62 @@
+.cell{
+    -fx-text-fill: blue;
+}
+.cell:even {
+    -fx-background-color: rgb(0,0,255,0.1);
+}
+.cell:odd {
+    -fx-background-color: rgb(255,255,255,0.1);
+}
+.with-background *.tab-content-area,
+.with-background .titled-pane > *.content,
+.with-background.titled-pane > *.content,
+.with-background .titled-pane > *.content,
+.with-background *.track,
+.with-background *.track-background,
+.with-background.split-menu-button .label {
+    -fx-background-color: rgba(0,0,128,0.2);
+}
+
+ScrollPane > * {
+    -fx-background-color: rgba(0,0,128,0.2);
+}
+
+.with-background.tool-bar .split-menu-button .label {
+    -fx-background-color: rgba(0,0,128,0.2);
+}
+
+.with-background *.track {
+    -fx-background-color: rgba(0,0,128,0);
+}
+
+.with-background.slider .track {
+    -fx-background-color: rgba(0,0,128,0.2);
+}
+
+.with-background .bar,.with-background .indicator{
+    -fx-background-color: rgba(0,128,128,0.4);
+}
+
+.bullet {
+    -fx-page-information-visible:false;
+}
+
+.axis {
+    -fx-tick-labels-visible: false;
+}
+
+.tree-indent .tree-cell{
+    -fx-indent:30;
+}
+
+.cell-size .cell {
+    -fx-cell-size:40;
+}
+
+.color-picker {
+    -fx-color-label-visible:false;
+}
+
+.with-fx-size .column-header {
+    -fx-size:40;
+}

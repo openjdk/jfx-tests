@@ -27,18 +27,12 @@ package org.jemmy.fx.control;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -90,26 +84,12 @@ public class TableViewApp extends Application {
         lastNameCol.setEditable(true);
         
         Callback<TableColumn<Person, String>, TableCell<Person, String>> cellFactory =
-           new Callback<TableColumn<Person, String>, TableCell<Person, String>>() {
-                public TableCell call(TableColumn p) {
-                    return new EditingCell();
-                }
-        };
+                p -> new EditingCell();
 
-        lastNameCol.setCellValueFactory(new Callback<CellDataFeatures<Person, String>, ObservableValue<String>>() {
-
-            public ObservableValue<String> call(CellDataFeatures<Person, String> p) {
-                return ((Person) p.getValue()).lastNameProperty();
-            }
-        });
+        lastNameCol.setCellValueFactory(p -> ((Person) p.getValue()).lastNameProperty());
         lastNameCol.setCellFactory(cellFactory);
 
-        firstNameCol.setCellValueFactory(new Callback<CellDataFeatures<Person, String>, ObservableValue<String>>() {
-
-            public ObservableValue<String> call(CellDataFeatures<Person, String> p) {
-                return ((Person) p.getValue()).firstNameProperty();
-            }
-        });
+        firstNameCol.setCellValueFactory(p -> ((Person) p.getValue()).firstNameProperty());
         firstNameCol.setCellFactory(cellFactory);
 
         tableView.getColumns().setAll(firstNameCol, lastNameCol);
@@ -120,28 +100,22 @@ public class TableViewApp extends Application {
         final Label label = new Label("selected");
         //label.textProperty().bind(tableView.getSelectionModel().getSelectedCells());
 
-        tableView.getSelectionModel().getSelectedCells().addListener(new ListChangeListener() {
-
-            public void onChanged(Change change) {
-                final ObservableList list = change.getList();
-                if (list.isEmpty()) {
-                    label.setText("selected = nothing");
-                } else {
-                    final TablePosition cell = (TablePosition) list.get(list.size() - 1);
-                    label.setText("selected = " + cell.getColumn() + ", " + cell.getRow());
-                }
+        tableView.getSelectionModel().getSelectedCells().addListener((ListChangeListener) change -> {
+            final ObservableList list = change.getList();
+            if (list.isEmpty()) {
+                label.setText("selected = nothing");
+            } else {
+                final TablePosition cell = (TablePosition) list.get(list.size() - 1);
+                label.setText("selected = " + cell.getColumn() + ", " + cell.getRow());
             }
         });
 
         tableView.setEditable(true);
 
         Button removeButton = new Button("Remove scrollbars");
-        removeButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent t) {
-                tableView.getItems().retainAll(FXCollections.observableArrayList(
-                        tableView.getItems().subList(0, 8)));
-            }
+        removeButton.setOnMouseClicked(t -> {
+            tableView.getItems().retainAll(FXCollections.observableArrayList(
+                    tableView.getItems().subList(0, 8)));
         });
 
         VBox vBox = new VBox();
@@ -203,15 +177,11 @@ public class TableViewApp extends Application {
         private void createTextBox() {
             textBox = new TextField(getItem());
             textBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-            textBox.setOnKeyReleased(new EventHandler<KeyEvent>() {
-
-                @Override
-                public void handle(KeyEvent t) {
-                    if (t.getCode() == KeyCode.ENTER) {
-                        commitEdit(textBox.getText());
-                    } else if (t.getCode() == KeyCode.ESCAPE) {
-                        cancelEdit();
-                    }
+            textBox.setOnKeyReleased(t -> {
+                if (t.getCode() == KeyCode.ENTER) {
+                    commitEdit(textBox.getText());
+                } else if (t.getCode() == KeyCode.ESCAPE) {
+                    cancelEdit();
                 }
             });
         }

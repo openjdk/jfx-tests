@@ -24,14 +24,16 @@
  */
 package org.jemmy.fx.control;
 
+import java.util.function.Function;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.IndexedCell;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TreeTableCell;
 import javafx.util.Callback;
-import org.jemmy.JemmyException;
 import org.jemmy.Point;
 import org.jemmy.Rectangle;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.FXClickFocus;
@@ -41,12 +43,11 @@ import org.jemmy.interfaces.Caret;
 import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.lookup.Lookup;
-import org.jemmy.lookup.LookupCriteria;
 
 /**
  * @author Alexander Kirov
  */
-class TableUtils {
+public class TableUtils {
 
     public Focus focuser(Wrap<? extends Node> wrap) {
         final Rectangle bounds = wrap.getScreenBounds();
@@ -69,39 +70,14 @@ class TableUtils {
              * better to return constant values (-1 || 0 || +1) to get smooth
              * dragging
              */
+            final javafx.scene.Parent clippedContainer = getClippedContainerControl(controlWrap);
+
             @Override
             public int to() {
-                final int[] minmax = new int[]{Integer.MAX_VALUE, -1};
-                controlWrap.as(Parent.class, Node.class).lookup(itemClass, new LookupCriteria<T>() {
-                    @Override
-                    public boolean check(T cntrl) {
-                        final Parent as = controlWrap.as(Parent.class, Node.class);
-                        final Wrap<? extends javafx.scene.Parent> clippedContainerWrap = TableUtils.getClippedContainerWrap(as);
-                        final javafx.scene.Parent control = clippedContainerWrap.getControl();
-                        boolean checkIndices = false;
-//                        try {
-                            checkIndices = NodeWrap.isInBounds(control, cntrl, controlWrap.getEnvironment(), isVertical);
-//                        } catch (JemmyException ex) {                            
-//                            return true;
-//                        }
-                        if (checkIndices) {
-                            int index = indexCallback.call(cntrl);
-                            if (index >= 0) {
-                                if (index < minmax[0]) {
-                                    minmax[0] = index;
-                                }
-                                if (index > minmax[1]) {
-                                    minmax[1] = index;
-                                }
-                            }
-                        }
-
-                        return true;
-                    }
-                }).size();
-                if (targetControlIndex < minmax[0]) {
+                Bounds visibleBounds = shown1dImpl(controlWrap, clippedContainer, indexCallback, itemClass, isVertical);
+                if (targetControlIndex < visibleBounds.getBegin()) {
                     return -1;
-                } else if (targetControlIndex > minmax[1]) {
+                } else if (targetControlIndex > visibleBounds.getEnd()) {
                     return 1;
                 } else {
                     return 0;
@@ -113,6 +89,50 @@ class TableUtils {
                 return "'" + controlWrap.getControl() + "' state at index " + targetControlIndex;
             }
         });
+    }
+
+    public static <CellClass extends Node> Bounds shown1d(
+            final Wrap<? extends Control> controlWrap,
+            final Callback<CellClass, Integer> indexCallback,
+            final Class<CellClass> itemClass,
+            final boolean isVertical) {
+
+        return shown1dImpl(controlWrap, getClippedContainerControl(controlWrap), indexCallback, itemClass, isVertical);
+    }
+
+    /**
+     * Extracted for optimization purpose - we don't need to find clipped
+     * container each time.
+     * 
+     * @parameter clippedContainerWrap - precomputed wrap of clipped container.
+     */
+    private static <CellClass extends Node> Bounds shown1dImpl(
+            final Wrap<? extends Control> controlWrap,
+            final javafx.scene.Parent clippedContainer,
+            final Callback<CellClass, Integer> indexCallback,
+            final Class<CellClass> itemClass,
+            final boolean isVertical) {
+        final int[] minmax = new int[]{Integer.MAX_VALUE, -1};
+        final Parent<Node> parent = controlWrap.as(Parent.class, Node.class);
+        parent.lookup(itemClass, cntrl -> {
+            boolean checkIndices;
+            checkIndices = NodeWrap.isInBounds(clippedContainer, cntrl, controlWrap.getEnvironment(), isVertical);
+            if (checkIndices) {
+                int index = indexCallback.call(cntrl);
+                if (index >= 0) {
+                    if (index < minmax[0]) {
+                        minmax[0] = index;
+                    }
+                    if (index > minmax[1]) {
+                        minmax[1] = index;
+                    }
+                }
+            }
+
+            return true;
+        }).size();
+
+        return new Bounds(minmax[0], minmax[1]);
     }
 
     /**
@@ -128,36 +148,33 @@ class TableUtils {
             AbstractScroll vScroll,
             final int row,
             final int column,
-            final ColumnRowIndexInfoProvider infoProvider,
+            final Function<CellClass, Point> infoProvider,
             final Class<CellClass> cellType) {
 
+        final Rectangle actuallyVisibleArea = getActuallyVisibleArea(wrap);
         if (vScroll != null) {
-            vScroll.caret().to(new Caret.Direction() {
-                public int to() {
-                    int[] shown = shown(env, wrap, infoProvider, cellType);
-                    if (shown[1] > row) {
-                        return -1;
-                    }
-                    if (shown[3] < row) {
-                        return 1;
-                    }
-                    return 0;
+            vScroll.caret().to(() -> {
+                int[] shown = shown(env, wrap, infoProvider, cellType, actuallyVisibleArea);
+                if (shown[1] > row) {
+                    return -1;
                 }
+                if (shown[3] < row) {
+                    return 1;
+                }
+                return 0;
             });
         }
 
         if (hScroll != null) {
-            hScroll.caret().to(new Caret.Direction() {
-                public int to() {
-                    int[] shown = shown(env, wrap, infoProvider, cellType);
-                    if (shown[0] > column) {
-                        return -1;
-                    }
-                    if (shown[2] < column) {
-                        return 1;
-                    }
-                    return 0;
+            hScroll.caret().to(() -> {
+                int[] shown = shown(env, wrap, infoProvider, cellType, actuallyVisibleArea);
+                if (shown[0] > column) {
+                    return -1;
                 }
+                if (shown[2] < column) {
+                    return 1;
+                }
+                return 0;
             });
         }
         return null;
@@ -169,41 +186,45 @@ class TableUtils {
      * @return {minColumn, minRow, maxColumn, maxRow} of cells that are fully
      * visible in the list.
      */
-    static <CellClass extends IndexedCell> int[] shown(
+    public static <CellClass extends IndexedCell> int[] shown(
             Environment env,
             final Wrap<? extends Control> wrap,
-            final ColumnRowIndexInfoProvider infoProvider,
+            final Function<CellClass, Point> infoProvider,
             final Class<CellClass> cellType) {
 
         final Rectangle actuallyVisibleArea = getActuallyVisibleArea(wrap);
 
-        return new GetAction<int[]>() {
-            @Override
-            @SuppressWarnings("unchecked")
-            public void run(Object... parameters) {
-                final int[] res = new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE, -1, -1};
+        return shown(env, wrap, infoProvider, cellType, actuallyVisibleArea);
+    }
 
-                wrap.as(Parent.class, Node.class).lookup(cellType, new LookupCriteria<CellClass>() {
-                    @Override
-                    public boolean check(CellClass control) {
-                        if (control.isVisible() && control.getOpacity() == 1.0) {
-                            Rectangle bounds = NodeWrap.getScreenBounds(wrap.getEnvironment(), control);
-                            int column = infoProvider.getColumnIndex(control);
-                            int row = infoProvider.getRowIndex(control);
-                            if (actuallyVisibleArea.contains(bounds) && row >= 0 && column >= 0) {
-                                res[0] = Math.min(res[0], column);
-                                res[1] = Math.min(res[1], row);
-                                res[2] = Math.max(res[2], column);
-                                res[3] = Math.max(res[3], row);
-                            }
-                        }
-                        return false;
+    private static <CellClass extends IndexedCell> int[] shown(
+            Environment env, 
+            final Wrap<? extends Control> wrap, 
+            final Function<CellClass, Point> infoProvider, 
+            final Class<CellClass> cellType, 
+            final Rectangle actuallyVisibleArea) {
+        return new FutureAction<>(env, () -> {
+            final int[] res = new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE, -1, -1};
+
+            final Parent<Node> parent = wrap.as(Parent.class, Node.class);
+            parent.lookup(cellType, control -> {
+                if (control.isVisible() && control.getParent().isVisible() && control.getOpacity() == 1.0) {
+                    Rectangle bounds = NodeWrap.getScreenBounds(wrap.getEnvironment(), control);
+                    Point cellCoord = infoProvider.apply(control);
+                    int column = cellCoord.x;
+                    int row = cellCoord.y;
+                    if (actuallyVisibleArea.contains(bounds) && row >= 0 && column >= 0) {
+                        res[0] = Math.min(res[0], column);
+                        res[1] = Math.min(res[1], row);
+                        res[2] = Math.max(res[2], column);
+                        res[3] = Math.max(res[3], row);
                     }
-                }).size();
+                }
+                return false;
+            }).size();
 
-                setResult(res);
-            }
-        }.dispatch(env);
+            return res;
+        }).get();
     }
 
     /**
@@ -251,12 +272,13 @@ class TableUtils {
     }
 
     static private Wrap<? extends javafx.scene.Parent> getParentWrap(Parent<Node> parent, final String className) {
-        return parent.lookup(javafx.scene.Parent.class, new LookupCriteria<javafx.scene.Parent>() {
-            @Override
-            public boolean check(javafx.scene.Parent control) {
-                return control.getClass().getName().endsWith(className);
-            }
-        }).wrap();
+        return parent.lookup(javafx.scene.Parent.class, control -> control.getClass().getName().endsWith(className)).wrap();
+    }
+
+    static private javafx.scene.Parent getClippedContainerControl(Wrap<? extends Control> controlWrap) {
+        final Parent<Node> parent = controlWrap.as(Parent.class, Node.class);
+        final Wrap<? extends javafx.scene.Parent> clippedContainerWrap = getClippedContainerWrap(parent);
+        return clippedContainerWrap.getControl();
     }
 
     /**
@@ -271,7 +293,7 @@ class TableUtils {
     }
 
     /**
-     * Special for TableView, and TreeTableView, as the last column contains 
+     * Special for TableView, and TreeTableView, as the last column contains
      * empty not clickable space.
      */
     private static Rectangle constructClickableArea(Wrap<?> wrap) {
@@ -290,10 +312,55 @@ class TableUtils {
     private static final String VIRTIAL_FLOW_CLASS_NAME = "VirtualFlow";
     private static final String CLIPPED_CONTAINER_CLASS_NAME = "VirtualFlow$ClippedContainer";
 
-    static abstract class ColumnRowIndexInfoProvider {
+    public final static class TableViewIndexInfoProvider implements Function<TableCell, Point> {
 
-        abstract int getColumnIndex(IndexedCell cell);
+        TableViewWrap theWrap;
 
-        abstract int getRowIndex(IndexedCell cell);
+        public TableViewIndexInfoProvider(TableViewWrap wrap) {
+            this.theWrap = wrap;
+        }
+
+        @Override
+        public Point apply(TableCell t) {
+            return new Point(theWrap.getColumnIndex(t), theWrap.getRowIndex(t));
+        }
+    }
+
+    public final static class TreeTableViewIndexInfoProvider implements Function<TreeTableCell, Point> {
+
+        TreeTableViewWrap theWrap;
+
+        public TreeTableViewIndexInfoProvider(TreeTableViewWrap wrap) {
+            this.theWrap = wrap;
+        }
+
+        @Override
+        public Point apply(TreeTableCell t) {
+            return new Point(theWrap.getColumnIndex(t), theWrap.getRowIndex(t));
+        }
+    }
+    
+    public static class Bounds {
+
+        private final int begin;
+        private final int end;
+
+        public Bounds(int begin, int end) {
+            this.begin = begin;
+            this.end = end;
+        }
+        
+        public int getBegin() {
+            return begin;
+        }
+        
+        public int getEnd() {
+            return end;
+        }
+        
+        @Override
+        public String toString() {
+            return "Bounds : begin <" + begin + ">, end <" + end + ">.";
+        }
     }
 }

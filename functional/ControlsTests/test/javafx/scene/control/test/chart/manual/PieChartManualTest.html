@@ -1,0 +1,77 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>PieChart animation and rendering test.</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <p><b>PieChart animation tests</b>
+        <p>All charts could be animated, or not (it is switched with a "animated"
+            property). The aim of this test is to check animation of chart, and 
+            common rendering. When it is animated, actions like adding, 
+            removing and changing data values, will be done with animation (it 
+            takes time about 700 ms), or without it (immediately).</p>                              
+        <h3>Test case 1 : animated</h3>
+        <ul><li>If it is not true, switch "animated" property to "true"</li>
+            <li>Remove all the data (use corresponding button) - data will be removed from index 0.</li>
+            <li>Add some data several times (use corresponding button) - data will be added at index 0.</li>
+            <li>Change data items (use corresponding button) - value of data item at index 0 should change (randomly : increase or decrease).</li>
+        </ul>
+        <h3>Test case 2 :  not animated</h3>
+        <ul><li>If it is not false, switch "animated" property to "false"</li>
+            <li>Remove all the data (use according button).</li>
+            <li>Add some data several times (use according button).</li>
+            <li>Change data items (use according button).</li>
+        </ul>
+        <h3>Test case 3 :  common rendering</h3>
+        <ul><li>Try to rotate chart, changing "start angle property"</li>
+            <li>Try to change rotation direction, changing "clockwise" property</li>
+            <li>Try to change chart sizes, changing "prefWidth" and "prefHeight" properties</li>
+            <li>Try to change header, changing a "title" property</li>
+            <li>Try to change sides of title and legend, changing "titleSide" and "legendSide" properties</li>
+            <li>Try to hide and show legend, changing "legendVisible" property</li>
+        </ul>
+        <h3>Please, note</h3>
+        <h5>Some cases, when part of charts (legend, labels) can disappear - that is normal behavior.</h5>
+        <ul> 
+            <li>Legend could disappear, when there is no enough space</li>
+            <li>Some labels could disappear, when there is not enough of space for their allocation</li>
+            <li>All labels could disappear, when there is not enough space</li>
+        </ul>
+        <h5>Comments on testing : </h5>
+        <ul>            
+            <li>About animation : it is expected, that animation behaves itself smoothly. It is expected, that there are no jumps, there are no rendering artifacts during animation, and it behaves itself correctly.</li>
+            <li>Please, verify rendering at each step: no overlapping content, no graphical artifacts, etc.</li>
+        </ul>
+        <h3>Help</h3>
+        <ul><li>To add, change, or remove data, use according buttons - changing will be done at index 0.</li>
+            <li>To change a property value, you can use according control (TextField for String properties, ToggleButton for boolean properties, ChoiceBox for enums, Slider for double properties). To change a value, set it using some of mentioned control and switch on binding (press toggle button "unbinded" to change its state to "binded").</li>
+            <li>You can use Reset button to start again. The whole scene will be dropped.</li></ul>
+    </body>
+</html>

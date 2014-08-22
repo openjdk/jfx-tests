@@ -24,13 +24,14 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import org.jemmy.Rectangle;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.*;
 import org.jemmy.dock.ObjectLookup;
 import org.jemmy.env.Environment;
@@ -42,13 +43,15 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.timing.State;
 
+import java.util.List;
+
 /**
  * This represents a single menu item within menu hierarchy. It could be looked
  * up starting from a menu bar, a menu button or a context menu.
  *
- * @see MenuBarWrap
- * @author shura
  * @param <ITEM>
+ * @author shura
+ * @see MenuBarWrap
  */
 @ControlType(MenuItem.class)
 @MethodProperties({"getId", "getStyle", "getText", "getUserData"})
@@ -73,15 +76,15 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
      * Looking for a MenuItem by text content is the most logical approach.
      *
      * @param <B>
-     * @param tp Text subclass
-     * @param text a text sample
+     * @param tp     Text subclass
+     * @param text   a text sample
      * @param policy defines how to compare
      * @return
      */
     @ObjectLookup("text and comparison policy")
     public static <B extends MenuItem> LookupCriteria<B> textLookup(Class<B> tp, String text,
-            StringComparePolicy policy) {
-        return new ByText<B>(text, policy);
+                                                                    StringComparePolicy policy) {
+        return new ByText<>(text, policy);
     }
 
     /**
@@ -89,24 +92,23 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
      * and the most reliable approach.
      *
      * @param <B>
-     * @param tp Node type
-     * @param id expected node id
+     * @param tp  Node type
+     * @param id  expected node id
      * @return
      * @see ByID
      */
     @ObjectLookup("id")
     public static <B extends MenuItem> LookupCriteria<B> idLookup(Class<B> tp, String id) {
-        return new ByID<B>(id);
+        return new ByID<>(id);
     }
+
     private Wrap<?> placeholder = null;
     private MenuShowable menuShowable = new MenuShowable();
     private final Wrapper wrapper;
 
     /**
-     *
      * @param env
      * @param item
-     * @param parentWrap
      */
     public MenuItemWrap(Environment env, ITEM item) {
         super(env, item);
@@ -143,12 +145,7 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
     }
 
     private Menu getParentMenu(final MenuItem item) {
-        return new GetAction<Menu>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(item.getParentMenu());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), item::getParentMenu).get();
     }
 
     private Wrap<? extends Node> findWrap(final MenuItem item) {
@@ -226,11 +223,7 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
             if (parent != null) {
                 expand(parent);
                 getEnvironment().getTimeout(BEFORE_CLICK_TO_EXPAND_SLEEP).sleep();
-                waitState(new State<Boolean>() {
-                    public Boolean reached() {
-                        return MenuWrap.isParentShown(menu, getEnvironment());
-                    }
-                }, true);
+                waitState(() -> MenuWrap.isParentShown(menu, getEnvironment()), true);
             }
             Wrap<? extends Node> mWrap = findWrap(menu);
             if (mWrap.getControl() instanceof MenuButton) {

@@ -27,6 +27,7 @@ package org.jemmy.samples.images;
 import javafx.scene.control.Button;
 import org.jemmy.TimeoutExpiredException;
 import org.jemmy.env.Environment;
+import org.jemmy.env.Timeout;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.LabeledDock;
@@ -73,6 +74,8 @@ public class ImagesSample extends SampleBase {
     private ToggleButtonDock radio;
     private ToggleButtonDock toggle;
     private LabeledDock button;
+    private String WAIT_BEFORE_DIFF = "wait.before.diff";
+    final private Timeout BEFORE_DIFF_TIMEOUT = new Timeout(WAIT_BEFORE_DIFF, 500); //wait for redraw
 
     /**
      * Let's find a radio and a toggle, save their images and use a reference
@@ -114,6 +117,7 @@ public class ImagesSample extends SampleBase {
         } catch (TimeoutExpiredException e) {
         }
         toggle.mouse().click();
+        BEFORE_DIFF_TIMEOUT.sleep();
         try {
             toggle.waitImage(TOGGLE_PNG, "default.1." + TOGGLE_RES_PNG, "default.1." + TOGGLE_DIFF_PNG);
             throw new IllegalStateException("images are expected to be different!");
@@ -158,6 +162,7 @@ public class ImagesSample extends SampleBase {
         //should not be ok as more than a half of images is off
         toggle.mouse().click();
         button.mouse().click();
+        BEFORE_DIFF_TIMEOUT.sleep();
         try {
             toggle.waitImage(TOGGLE_PNG, "relaxed." + TOGGLE_RES_PNG, "relaxed." + TOGGLE_DIFF_PNG);
             throw new IllegalStateException("images are expected to be different!");
@@ -193,7 +198,8 @@ public class ImagesSample extends SampleBase {
         //should not be as some color are too far away
         radio.mouse().click();
         button.mouse().click();
-        try {
+        BEFORE_DIFF_TIMEOUT.sleep();
+        try {            
             radio.waitImage(RADIO_PNG, "distance.1." + RADIO_RES_PNG, "distance.1." + RADIO_DIFF_PNG);
             throw new IllegalStateException("images are expected to be different!");
         } catch (TimeoutExpiredException e) {
@@ -211,7 +217,7 @@ public class ImagesSample extends SampleBase {
     @Test
     public void compareDirectly() {
         //load images to compare
-        Image reference =  Root.ROOT.getEnvironment().getImageLoader().load(RADIO_PNG);
+        Image reference = Root.ROOT.getEnvironment().getImageLoader().load(RADIO_PNG);
         radio.mouse().click();
         button.mouse().click();
         Image selected = radio.wrap().getScreenImage();
@@ -220,8 +226,8 @@ public class ImagesSample extends SampleBase {
         //org.jemmy.image.ImageComparator implementations could be platform dependent
         PixelImageComparator imageComparator;
         if (reference instanceof GlassImage) {
-            imageComparator = new GlassPixelImageComparator(rasterComparator);        
-        } else if(reference instanceof AWTImage) {
+            imageComparator = new GlassPixelImageComparator(rasterComparator);
+        } else if (reference instanceof AWTImage) {
             imageComparator = new BufferedImageComparator(rasterComparator);
         } else {
             //something unknown at the time of writing the sample

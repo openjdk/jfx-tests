@@ -28,7 +28,6 @@ import javafx.scene.control.Label;
 import org.jemmy.fx.FXRelativeCoordinateLookup;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.SceneDock;
-import org.jemmy.lookup.LookupCriteria;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,12 +49,7 @@ public class CoorinateLookupSample extends LookupSampleBase {
 
         //let's find the central label (1,1)and then some others which placed 
         //this or that way related to the center one
-        center = new NodeDock(scene.asParent(), Label.class, new LookupCriteria<Label>() {
-
-            public boolean check(Label cntrl) {
-                return cntrl.getText().equals("(1,1)");
-            }
-        });
+        center = new NodeDock(scene.asParent(), Label.class, cntrl -> cntrl.getText().equals("(1,1)"));
         before();
     }
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<Label NotExists.field="0">
+    <NotExistsProperty.field>Sample Unknown Static Property</NotExistsProperty.field>
+</Label>

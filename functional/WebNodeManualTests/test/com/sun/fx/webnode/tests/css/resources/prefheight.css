@@ -1,0 +1,12 @@
+/* 
+    Document   : prefheight
+    Created on : Jul 5, 2012, 6:42:54 PM
+    Author     : javafx
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.web-view {
+    -fx-pref-height: 100;
+}
+

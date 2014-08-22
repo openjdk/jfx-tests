@@ -45,7 +45,7 @@ class TreeItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
 
     @Override
     protected <DT extends AUX> Wrap<? extends DT> wrap(Class<DT> type, TreeItem item, AUX aux) {
-        return new TreeItemWrap<DT>(type, item, treeViewWrap, getEditor());
+        return new TreeItemWrap<>(type, item, treeViewWrap, getEditor());
     }
 
     @Override
@@ -58,38 +58,10 @@ class TreeItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
     }
 
     private void refresh(TreeItem<? extends AUX> parent) {
-        getFound().add((TreeItem<AUX>) parent);
-        getAux().add((AUX) parent.getValue());
+        getFound().add(parent);
+        getAux().add( parent.getValue());
         for (TreeItem<? extends AUX> si : parent.getChildren()) {
             refresh(si);
         }
     }
-//    @Override
-//    protected TreeItem getValue(TreeItem item) {
-//        return item;
-//    }
-//    @Override
-//    public <DT extends T> Wrap<? extends DT> wrap(Class<DT> type, TreeItem item, T aux) {
-//        return new TreeItemWrap<DT>(type, item, treeViewWrap, getEditor());
-//    }
-//    @Override
-//    protected <DT extends TreeItem> Wrap<? extends DT> wrap(Class<DT> type, TreeItem item, T aux) {
-//        if(get)
-//        return new TreeItemWrap<DT>(type, item, treeViewWrap, getEditor());
-//    }
-//    @Override
-//    protected T getValue(TreeItem item) {
-//        throw new UnsupportedOperationException("Not supported yet.");
-//    }
-//
-//    @Override
-//    protected <DT extends T> Wrap<? extends DT> wrap(Class<DT> type, TreeItem item, AUX aux) {
-//        throw new UnsupportedOperationException("Not supported yet.");
-//    }
-//
-//    @Override
-//    protected T getValue(TreeItem item) {
-//        throw new UnsupportedOperationException("Not supported yet.");
-//    }
-//
 }

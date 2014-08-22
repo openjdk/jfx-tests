@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Copyright (c) 2010-2012, Oracle and/or its affiliates. All rights reserved.
-  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+<!-- 
+/*
+ * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ */
 -->
 <!--
     Run this project to prepare a full shipping build of all tests and auxiliary tools.
@@ -10,9 +31,23 @@
     <import file="detect_javafx.xml"/>
 
     <target name="all" depends="find-javafx">
+        <ant antfile="tools/TestMarkup/build.xml" target="compile" inheritAll="false"/>
+        <ant antfile="tools/SharedTestUtilsOpen/build.xml" target="compile" inheritAll="false"/>
+        <ant antfile="tools/FxTestRunner/build.xml" target="compile-test" inheritAll="false"/>
+        <ant antfile="tools/FxTestRunner/build.xml" target="jar" inheritAll="false"/>  
         <runtarget targetname="compile-test"/>
         <runtarget targetname="jar"/>
+        <ant antfile="functional/ControlsTests/build.xml" target="dist-plugin" inheritAll="false"/>
+        <ant antfile="functional/ControlsLeakTests/build.xml" target="compile" inheritAll="false"/>
+        <ant antfile="functional/ControlsLeakTests/build.xml" target="compile-test" inheritAll="false"/>
+        <ant antfile="functional/ControlsLeakTests/build.xml" target="jar" inheritAll="false"/>
+        <ant antfile="functional/ControlsLeakTests/build.xml" target="dist-plugin" inheritAll="false"/>
     </target>
+
+    <target name="compile" depends="find-javafx">
+        <runtarget targetname="compile"/>
+    </target>
+
 
     <target name="clean">
         <runtarget targetname="clean"/>
@@ -20,21 +55,18 @@
 
     <macrodef name="runtarget">
         <attribute name="targetname" default="jar"/>
-	<sequential/>
-        <!--sequential>
-            <ant antfile="SharedTestUtils/build.xml" target="@{targetname}" inheritAll="false"/> 
-            <ant antfile="ClientTestRunner/build.xml" target="@{targetname}" inheritAll="false"/>
-            <ant antfile="GlassTests/build.xml" target="@{targetname}" inheritAll="false"/>
-            <ant antfile="ControlsTests/build.xml" target="@{targetname}" inheritAll="false"/>
-            <ant antfile="WebNodeAutomated/build.xml" target="@{targetname}" inheritAll="false"/> 
-            <ant antfile="RenderingTests/build.xml" target="@{targetname}" inheritAll="false"/> 
-            <ant antfile="SceneGraphTests/build.xml" target="@{targetname}" inheritAll="false"/> 
-			<ant antfile="EmbeddedTests/build.xml" target="@{targetname}" inheritAll="false"/> 
-            <ant antfile="FXCssTests/build.xml" target="@{targetname}" inheritAll="false"/>
-            <ant antfile="FxmlTests/build.xml" target="@{targetname}" inheritAll="false"/> 
-            <ant antfile="JavaFXCompatibility/build.xml" target="@{targetname}" inheritAll="false"/> 
-            <ant antfile="WebNodeManualTests/build.xml" target="@{targetname}" inheritAll="false"/> 
-        </sequential-->
+        <sequential>
+            <ant antfile="tools/TestMarkup/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="tools/SharedTestUtilsOpen/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="tools/FxTestRunner/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="functional/SceneGraphTests/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="functional/FxmlTests/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="functional/WebNodeAutomated/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="functional/WebNodeManualTests/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="functional/ControlsTests/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="functional/3DTests/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="functional/FXCssTests/build.xml" target="@{targetname}" inheritAll="false"/>
+        </sequential>
     </macrodef>
 
 </project>

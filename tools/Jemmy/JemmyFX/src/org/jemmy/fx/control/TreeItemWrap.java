@@ -86,9 +86,8 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
 
     /**
      *
-     * @param env
      * @param item
-     * @param TreeViewWrap
+     * @param treeViewWrap
      */
     TreeItemWrap(Class<DATA> dataClass, TreeItem<DATA> item,
             TreeViewWrap<? extends TreeView> treeViewWrap,
@@ -96,7 +95,7 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
         super(dataClass, item, item.getValue(), treeViewWrap, editor);
         this.treeViewWrap = treeViewWrap;
         theWrap = new TreeNodeWrap(item, treeViewWrap, editor);
-        wElement = new ViewElement<TreeView>(TreeView.class, 
+        wElement = new ViewElement<>(TreeView.class,
                 treeViewWrap.getControl());
     }
 
@@ -190,7 +189,7 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
     public <T extends TreeItem> EditableCellOwner<T> asTreeItemParent(Class<T> type) {
         asTreeItem().expand();
         if (itemParent == null) {
-            itemParent = new TreeNodeParent<T>(treeViewWrap, type, getItem());
+            itemParent = new TreeNodeParent<>(treeViewWrap, type, getItem());
         }
         return itemParent;
     }
@@ -210,7 +209,7 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
     public <T> EditableCellOwner<T> asItemParent(Class<T> type) {
         asTreeItem().expand();
         if (parent == null || !parent.getType().equals(type)) {
-            parent = new TreeItemParent<T>(treeViewWrap, getItem(), type);
+            parent = new TreeItemParent<>(treeViewWrap, getItem(), type);
         }
         return parent;
     }

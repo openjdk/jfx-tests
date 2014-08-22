@@ -47,7 +47,7 @@ class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA> implements o
 
     @Override
     protected <DT extends DATA> Wrap<? extends DT> wrap(Class<DT> type, Point item, DATA aux) {
-        return new TableCellItemWrap<DT>(tableViewOp,
+        return new TableCellItemWrap<>(tableViewOp,
                 item.getY(),
                 tableViewOp.getColumn(item.getX()), (DT) item, getEditor());
     }
@@ -65,7 +65,7 @@ class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA> implements o
     public List<Wrap<? extends DATA>> select(Point... point) {
         LookupCriteria<DATA>[] criteria = new LookupCriteria[point.length];
         for (int i = 0; i < point.length; i++) {
-            criteria[i] = new ByPoint<DATA>(point[i]);
+            criteria[i] = new ByPoint<>(point[i]);
         }
         return super.select(criteria);
     }

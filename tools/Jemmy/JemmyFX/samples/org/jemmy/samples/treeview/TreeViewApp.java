@@ -24,24 +24,22 @@
  */
 package org.jemmy.samples.treeview;
 
-import java.text.DateFormat;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Random;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
+
+import java.text.DateFormat;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Random;
 
 /**
  * A more complicated case, than TableViewApp and TableViewSample.
@@ -61,16 +59,12 @@ public class TreeViewApp extends Application {
     public void start(Stage stage) throws Exception {
         final DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.US);
 
-        final TreeView<Data> treeView = new TreeView<Data>();
+        final TreeView<Data> treeView = new TreeView<>();
         treeView.setEditable(true);
         treeView.setId(TREE_VIEW_ID);
         treeView.setRoot(new TreeItem(new Data("0")));
         addContent(treeView.getRoot(), 2, 4, "0");
-        treeView.setCellFactory(new Callback<TreeView<Data>, TreeCell<Data>>() {
-            public TreeCell<Data> call(TreeView<Data> p) {
-                return new TextFieldTreeCell();
-            }
-        });
+        treeView.setCellFactory(p -> new TextFieldTreeCell());
         VBox vBox = new VBox();
         vBox.getChildren().setAll(treeView);
 
@@ -98,14 +92,12 @@ public class TreeViewApp extends Application {
         public TextFieldTreeCell() {
             setEditable(true);
             textBox = new TextField();
-            textBox.setOnKeyReleased(new EventHandler<KeyEvent>() {
-                public void handle(KeyEvent t) {
-                    if (t.getCode() == KeyCode.ENTER) {
-                        getItem().setValue(textBox.getText());
-                        commitEdit(getItem());
-                    } else if (t.getCode() == KeyCode.ESCAPE) {
-                        cancelEdit();
-                    }
+            textBox.setOnKeyReleased(t -> {
+                if (t.getCode() == KeyCode.ENTER) {
+                    getItem().setValue(textBox.getText());
+                    commitEdit(getItem());
+                } else if (t.getCode() == KeyCode.ESCAPE) {
+                    cancelEdit();
                 }
             });
         }

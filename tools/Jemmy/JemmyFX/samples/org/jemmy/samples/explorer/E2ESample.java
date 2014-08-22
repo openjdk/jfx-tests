@@ -42,12 +42,7 @@ public class E2ESample extends ExplorerSampleBase {
 
         //there is supposed to be the "result" subdir which, in turn,
         //contains log of this test execution
-        new ListItemDock(list.asList(), new LookupCriteria() {
-
-            public boolean check(Object cntrl) {
-                return cntrl.toString().endsWith("results");
-            }
-        }).mouse().click(2);
+        new ListItemDock(list.asList(), cntrl -> cntrl.toString().endsWith("results")).mouse().click(2);
 
         //now let's get back to JavaFX project, where we started by selecting
         //"JavaFX" in the ChoiseBox

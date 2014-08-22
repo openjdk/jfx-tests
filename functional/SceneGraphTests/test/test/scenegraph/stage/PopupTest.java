@@ -28,9 +28,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.stage.PopupWindow;
 import org.jemmy.Point;
 import org.jemmy.action.GetAction;
@@ -41,6 +41,7 @@ import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.Lookups;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
+import org.jemmy.fx.TextDock;
 import org.jemmy.fx.control.CheckBoxDock;
 import org.jemmy.fx.control.CheckBoxWrap;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
@@ -48,6 +49,8 @@ import org.jemmy.timing.State;
 import org.jemmy.timing.Waiter;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import test.embedded.helpers.Configuration;
+import test.embedded.helpers.GraphicsCheckBoxes;
 import test.javaclient.shared.TestBase;
 
 /**
@@ -72,7 +75,7 @@ public class PopupTest extends TestBase {
         checkPopupShowing(true);
         pressEscOnPopup();
         checkPopupShowing(false);
-        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+        checkStatementWithWaiting("", getScene().getEnvironment(), new Callable<String>() {
             public String call() {
                 return checkEventsCounts("Close by ESC (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 0, 0, 1);
             }
@@ -82,7 +85,7 @@ public class PopupTest extends TestBase {
         checkPopupShowing(true);
         clickMouseOutsidePopup();
         checkPopupShowing(false);
-        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+        checkStatementWithWaiting("", getScene().getEnvironment(), new Callable<String>() {
             public String call() {
                 return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 0, 0, 0);
             }
@@ -97,7 +100,7 @@ public class PopupTest extends TestBase {
         checkPopupShowing(true);
         clickMouseOutsidePopup();
         checkPopupShowing(false);
-        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+        checkStatementWithWaiting("", getScene().getEnvironment(), new Callable<String>() {
             public String call() {
                 return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 1, 0, 1);
             }
@@ -112,7 +115,7 @@ public class PopupTest extends TestBase {
         checkPopupShowing(true);
         pressEscOnPopup();
         checkPopupShowing(false);
-        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+        checkStatementWithWaiting("", getScene().getEnvironment(), new Callable<String>() {
             public String call() {
                 return checkEventsCounts("Close by ESC (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 0, 0, 1);
             }
@@ -125,7 +128,7 @@ public class PopupTest extends TestBase {
         checkPopupShowing(true);
         pressEscOnPopup();
         checkPopupShowing(false);
-        checkStatementWithWaiting("Popup must be hided", scene.getEnvironment(), new Callable<String>() {
+        checkStatementWithWaiting("Popup must be hided", getScene().getEnvironment(), new Callable<String>() {
             public String call() {
                 return checkEventsCounts("Close by ESC (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 0, 1, 0, 1);
             }
@@ -135,7 +138,7 @@ public class PopupTest extends TestBase {
         checkPopupShowing(true);
         clickMouseOutsidePopup();
         checkPopupShowing(false);
-        checkStatementWithWaiting("Popup must be hided", scene.getEnvironment(), new Callable<String>() {
+        checkStatementWithWaiting("Popup must be hided", getScene().getEnvironment(), new Callable<String>() {
             public String call() {
                 return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 0, 0, 0);
             }
@@ -150,7 +153,7 @@ public class PopupTest extends TestBase {
         checkPopupShowing(true);
         clickMouseOutsidePopup();
         checkPopupShowing(false);
-        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+        checkStatementWithWaiting("", getScene().getEnvironment(), new Callable<String>() {
             public String call() {
                 return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 1, 0, 1);
             }
@@ -165,7 +168,7 @@ public class PopupTest extends TestBase {
         checkPopupShowing(true);
         pressEscOnPopup();
         checkPopupShowing(false);
-        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+        checkStatementWithWaiting("", getScene().getEnvironment(), new Callable<String>() {
             public String call() {
                 return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 1, 0, 1);
             }
@@ -180,7 +183,7 @@ public class PopupTest extends TestBase {
         checkPopupShowing(true);
         pressEscOnPopup();
         checkPopupShowing(true);
-        checkStatementWithWaiting("", scene.getEnvironment(), new Callable<String>() {
+        checkStatementWithWaiting("", getScene().getEnvironment(), new Callable<String>() {
             public String call() {
                 return checkEventsCounts("Close by mouse click (autoHide=true, consumeAutoHidingEvents = true, hideOnEscape = true);", 1, 1, 0, 1);
             }
@@ -188,18 +191,15 @@ public class PopupTest extends TestBase {
     }
 
     private void showPopup(boolean autoHide, boolean consumeAutoHidingEvents, boolean hideOnEscape) throws InterruptedException {
-        CheckBoxDock dockCbAutoHide = new CheckBoxDock(new SceneDock(scene).asParent(), PopupApp.ID_CHBOX_AUTO_HIDE);
-        CheckBoxDock dockCbConsumeAutoHidingEvents = new CheckBoxDock(new SceneDock(scene).asParent(), PopupApp.ID_CHBOX_CONSUME_AUTO_HIDING_EVENTS);
-        CheckBoxDock dockCbHideOnEscape = new CheckBoxDock(new SceneDock(scene).asParent(), PopupApp.ID_CHBOX_HIDE_ON_ESCAPE);
+        
+        if(Configuration.isEmbedded()) {
+            setupControlsEmbedded(autoHide, consumeAutoHidingEvents, hideOnEscape);
+        } else {
+            setupControlsDesktop(autoHide, consumeAutoHidingEvents, hideOnEscape);
+        }
+        
 
-        dockCbAutoHide.asSelectable().selector().select(autoHide ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
-        //System.out.println(dockCbAutoHide.wrap().getControl().isFocused());
-        dockCbConsumeAutoHidingEvents.asSelectable().selector().select(consumeAutoHidingEvents ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
-        //System.out.println(dockCbConsumeAutoHidingEvents.wrap().getControl().isFocused());
-        dockCbHideOnEscape.asSelectable().selector().select(hideOnEscape ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
-        //System.out.println(dockCbHideOnEscape.wrap().getControl().isFocused());
-
-        Wrap<? extends Button> wrapBtnPopup = Lookups.byID(scene, PopupApp.ID_BTN_SWOW_POPUP, Button.class);
+        Wrap<? extends Node> wrapBtnPopup = Lookups.byID(getScene(), PopupApp.ID_BTN_SWOW_POPUP, Node.class);
         wrapBtnPopup.mouse().click();
         try {
             Thread.sleep(delayMs);
@@ -207,12 +207,44 @@ public class PopupTest extends TestBase {
             e.printStackTrace();
         }
     }
+    
+    private void setupControlsDesktop(boolean autoHide, boolean consumeAutoHidingEvents, boolean hideOnEscape) {
+        CheckBoxDock dockCbAutoHide = new CheckBoxDock(new SceneDock(getScene()).asParent(), PopupApp.ID_CHBOX_AUTO_HIDE);
+        CheckBoxDock dockCbConsumeAutoHidingEvents = new CheckBoxDock(new SceneDock(getScene()).asParent(), PopupApp.ID_CHBOX_CONSUME_AUTO_HIDING_EVENTS);
+        CheckBoxDock dockCbHideOnEscape = new CheckBoxDock(new SceneDock(getScene()).asParent(), PopupApp.ID_CHBOX_HIDE_ON_ESCAPE);
+
+        dockCbAutoHide.asSelectable().selector().select(autoHide ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
+        dockCbConsumeAutoHidingEvents.asSelectable().selector().select(consumeAutoHidingEvents ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
+        dockCbHideOnEscape.asSelectable().selector().select(hideOnEscape ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
+    }
+    
+    private void setupControlsEmbedded(boolean autoHide, boolean consumeAutoHidingEvents, boolean hideOnEscape) {
+        TextDock dockCbAutoHide = new TextDock(new SceneDock(getScene()).asParent(), PopupApp.ID_CHBOX_AUTO_HIDE);
+        TextDock dockCbConsumeAutoHidingEvents = new TextDock(new SceneDock(getScene()).asParent(), PopupApp.ID_CHBOX_CONSUME_AUTO_HIDING_EVENTS);
+        TextDock dockCbHideOnEscape = new TextDock(new SceneDock(getScene()).asParent(), PopupApp.ID_CHBOX_HIDE_ON_ESCAPE);
+        
+        Text cbAutoHide = dockCbAutoHide.control();
+        Text cbConsumeAutoHidingEvents = dockCbConsumeAutoHidingEvents.control();
+        Text cbHideOnEscape = dockCbHideOnEscape.control();
+
+        if(!GraphicsCheckBoxes.isChecked(cbAutoHide) && autoHide) {
+            dockCbAutoHide.mouse().click();
+        }
+        
+        if(!GraphicsCheckBoxes.isChecked(cbConsumeAutoHidingEvents) && consumeAutoHidingEvents) {
+            dockCbConsumeAutoHidingEvents.mouse().click();
+        }
+        
+        if(!GraphicsCheckBoxes.isChecked(cbHideOnEscape) && hideOnEscape) {
+            dockCbHideOnEscape.mouse().click();
+        }
+    }
 
     private String checkEventsCounts(String msg, int nMousePressOnScene, int nKeyPressOnScene, int nMousePressOnPopup, int nKeyPressOnPopup) {
-        Wrap<? extends Label> wrapLblMousePressOnScene = Lookups.byID(scene, PopupApp.ID_LABEL_MOUSE_PRESS_COUNT_ON_SCENE, Label.class);
-        Wrap<? extends Label> wrapLblKeyPressOnScene = Lookups.byID(scene, PopupApp.ID_LABEL_KEY_PRESS_COUNT_ON_SCENE, Label.class);
-        Wrap<? extends Label> wrapLblMousePressOnPopup = Lookups.byID(scene, PopupApp.ID_LABEL_MOUSE_PRESS_COUNT_ON_POPUP, Label.class);
-        Wrap<? extends Label> wrapLblKeyPressOnPopup = Lookups.byID(scene, PopupApp.ID_LABEL_KEY_PRESS_COUNT_ON_POPUP, Label.class);
+        Wrap<? extends Text> wrapLblMousePressOnScene = Lookups.byID(getScene(), PopupApp.ID_LABEL_MOUSE_PRESS_COUNT_ON_SCENE, Text.class);
+        Wrap<? extends Text> wrapLblKeyPressOnScene = Lookups.byID(getScene(), PopupApp.ID_LABEL_KEY_PRESS_COUNT_ON_SCENE, Text.class);
+        Wrap<? extends Text> wrapLblMousePressOnPopup = Lookups.byID(getScene(), PopupApp.ID_LABEL_MOUSE_PRESS_COUNT_ON_POPUP, Text.class);
+        Wrap<? extends Text> wrapLblKeyPressOnPopup = Lookups.byID(getScene(), PopupApp.ID_LABEL_KEY_PRESS_COUNT_ON_POPUP, Text.class);
 
         if (nMousePressOnScene != Integer.parseInt(wrapLblMousePressOnScene.getControl().getText())) {
             return msg + " MOUSE_PRESSED count on scene check failed";
@@ -235,7 +267,7 @@ public class PopupTest extends TestBase {
             Thread.sleep(3000);
         }
         try {
-            scene.waitState(new State() {
+            getScene().waitState(new State() {
                 public Object reached() {
                     if (expectedShowing == isPopupShowing()) {
                         return true;
@@ -261,7 +293,7 @@ public class PopupTest extends TestBase {
     }
 
     private void clickMouseOutsidePopup() {
-        scene.mouse().click(1, new Point(scene.getScreenBounds().width - 10, scene.getScreenBounds().height - 10));
+        getScene().mouse().click(1, new Point(getScene().getScreenBounds().width - 10, getScene().getScreenBounds().height - 10));
     }
 
     private void pressEscOnPopup() {

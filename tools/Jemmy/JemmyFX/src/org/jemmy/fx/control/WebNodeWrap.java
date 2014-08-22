@@ -24,27 +24,26 @@
  */
 package org.jemmy.fx.control;
 
-import netscape.javascript.JSObject;
 import javafx.scene.web.WebView;
+import netscape.javascript.JSException;
+import netscape.javascript.JSObject;
 import org.jemmy.Rectangle;
-import org.jemmy.action.GetAction;
-import org.jemmy.control.As;
-import org.jemmy.control.ControlInterfaces;
-import org.jemmy.control.ControlType;
-import org.jemmy.control.Property;
-import org.jemmy.control.Wrap;
+import org.jemmy.action.FutureAction;
+import org.jemmy.control.*;
 import org.jemmy.dock.DockInfo;
 import org.jemmy.fx.Root;
-import org.jemmy.interfaces.*;
+import org.jemmy.interfaces.Parent;
+import org.jemmy.interfaces.Show;
+import org.jemmy.interfaces.Showable;
 import org.w3c.dom.NodeList;
 
 @ControlType({org.w3c.dom.Node.class})
 @DockInfo(name = "org.jemmy.fx.control.WebNodeDock")
-@ControlInterfaces( value = {Parent.class},
-                    encapsulates = {org.w3c.dom.Node.class},
-                    name= {"asWebNodeParent"})
+@ControlInterfaces(value = {Parent.class},
+        encapsulates = {org.w3c.dom.Node.class},
+        name = {"asWebNodeParent"})
 public class WebNodeWrap<CONTROL extends org.w3c.dom.Node> extends Wrap<CONTROL>
-                                                           implements Showable, Show {
+        implements Showable, Show {
 
     public static final String WEB_NODE_PATH_PROP_NAME = "webnode.path";
 
@@ -53,10 +52,8 @@ public class WebNodeWrap<CONTROL extends org.w3c.dom.Node> extends Wrap<CONTROL>
     protected JSObject bounds;
 
     /**
-     *
-     * @param env
-     * @param scene
-     * @param nd
+     * @param node
+     * @param pane
      */
     @SuppressWarnings("unchecked")
     public WebNodeWrap(WebViewWrap<? extends WebView> pane, CONTROL node) {
@@ -75,25 +72,31 @@ public class WebNodeWrap<CONTROL extends org.w3c.dom.Node> extends Wrap<CONTROL>
 
     @Override
     public Rectangle getScreenBounds() {
-        return new GetAction<Rectangle>() {
-            @Override
-            public void run(Object... parameters) throws Exception {
-                if (bounds == null) {
-                    if (path.isEmpty()) {
-                        getPath(getControl());
-                    }
-                    bounds = (JSObject)view.getControl().getEngine().executeScript("document" + path + ".getBoundingClientRect()");
-                }
-               
-                Integer right = (Integer)bounds.getMember("right");
-                Integer top = (Integer)bounds.getMember("top");
-                Integer bottom = (Integer)bounds.getMember("bottom");
-                Integer left = (Integer)bounds.getMember("left");
 
-                Rectangle rect = view.getScreenBounds();
-                setResult(new Rectangle(rect.x + left, rect.y + top, right - left, bottom - top));
+        return new FutureAction<>(Root.ROOT.getEnvironment(), () -> {
+            if (bounds == null) {
+                if (path.isEmpty()) {
+                    getPath(getControl());
+                }
+                bounds = (JSObject) view.getControl().getEngine().executeScript("document" + path + ".getBoundingClientRect()");
             }
-        }.dispatch(Root.ROOT.getEnvironment());
+
+            Integer right = getIntegerMember(bounds, "right");
+            Integer top = getIntegerMember(bounds, "top");
+            Integer bottom = getIntegerMember(bounds, "bottom");
+            Integer left = getIntegerMember(bounds, "left");
+
+            Rectangle rect = view.getScreenBounds();
+            return new Rectangle(rect.x + left, rect.y + top, right - left, bottom - top);
+        }).get();
+    }
+
+    private Integer getIntegerMember(JSObject bounds, String member) throws JSException {
+        final Object value = bounds.getMember(member);
+        if (value instanceof Double) {
+            return (int) Math.round((Double) value);
+        }
+        return (Integer) bounds.getMember(member);
     }
 
     @Property(WEB_NODE_PATH_PROP_NAME)
@@ -110,7 +113,7 @@ public class WebNodeWrap<CONTROL extends org.w3c.dom.Node> extends Wrap<CONTROL>
             return;
         }
         final NodeList childNodes = parentNode.getChildNodes();
-        for (int i = 0 ; i < childNodes.getLength(); i++) {
+        for (int i = 0; i < childNodes.getLength(); i++) {
             if (childNodes.item(i).equals(node)) {
                 path = ".childNodes[" + i + "]" + path;
                 getPath(parentNode);
@@ -124,15 +127,12 @@ public class WebNodeWrap<CONTROL extends org.w3c.dom.Node> extends Wrap<CONTROL>
     }
 
     public void show() {
-        new GetAction() {
-            @Override
-            public void run(Object... parameters) throws Exception {
-                if (path.isEmpty()) {
-                    getPath(getControl());
-                }
-                String script = "document" + path + ".scrollIntoView(false)";
-                view.getControl().getEngine().executeScript(script);
+        new FutureAction(Root.ROOT.getEnvironment(), () -> {
+            if (path.isEmpty()) {
+                getPath(getControl());
             }
-        }.dispatch(Root.ROOT.getEnvironment());
+            String script = "document" + path + ".scrollIntoView(false)";
+            view.getControl().getEngine().executeScript(script);
+        });
     }
 }

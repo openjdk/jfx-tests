@@ -57,7 +57,7 @@ public class GlassInputFactory implements ControlInterfaceFactory {
                 new Integer(Integer.MAX_VALUE).toString());
         Environment.getEnvironment().setPropertyIfNotSet(
                 GlassInputFactory.ROBOT_MOUSE_STEP_DELAY_PROPERTY,
-                new Integer(20).toString());
+                new Integer(10).toString());
 
     }
     GlassInputMap map;
@@ -74,6 +74,14 @@ public class GlassInputFactory implements ControlInterfaceFactory {
         env = e;
     }
 
+    public static void setRobot(Robot r) {
+    	robot = r;
+    }
+    
+    public static boolean robotInitialized() {
+        return (null != robot);
+    }
+    
     public static Robot getRobot() {
         if (robot == null) {
             robot = Environment.getEnvironment().getWaiter(WAIT_FACTORY).ensureState(new State<Robot>() {

@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="draggable.css"/>
+        <script src="functions.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <h3>Test for drag and drop effects</h3>
+        <table style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Drag effects</th>
+                    <th>Drop effects</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><div draggable="true" class="draggable">Default (All, doesn't work in FF!)</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='all';">All</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='none';">None</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='copy';">Copy</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='move';">Move</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='link';">Link</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='copymove';">CopyMove</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='copylink';">CopyLink</div>
+                        <div draggable="true" class="draggable" ondragstart="clearInfo(); event.dataTransfer.setData('text/plain', '1'); event.dataTransfer.effectAllowed='linkmove';">LinkMove</div>
+                    </td>
+                    <td>
+                        <div class="droparea"
+                            ondrop="event.preventDefault(); dropInfo();"
+                            ondragover="event.preventDefault();"
+                            ondragenter="event.preventDefault();">Default</div>
+                            <div class="droparea"
+                            ondrop="event.preventDefault(); dropInfo();"
+                            ondragover="event.dataTransfer.dropEffect='none'; event.preventDefault();"
+                            ondragenter="event.preventDefault();">None</div>
+                            <div class="droparea"
+                            ondrop="event.preventDefault(); dropInfo();"
+                            ondragover="event.dataTransfer.dropEffect='copy'; event.preventDefault();"
+                            ondragenter="event.preventDefault();">Copy</div>
+                            <div class="droparea"
+                            ondrop="event.preventDefault(); dropInfo();"
+                            ondragover="event.dataTransfer.dropEffect='move'; event.preventDefault();"
+                            ondragenter="event.preventDefault();">Move</div>
+                            <div class="droparea"
+                            ondrop="event.preventDefault(); dropInfo();"
+                            ondragover="event.dataTransfer.dropEffect='link'; event.preventDefault();"
+                            ondragenter="event.preventDefault();">Link</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <span id="info" style="color: green;">
+        </span>
+    </body>
+</html>

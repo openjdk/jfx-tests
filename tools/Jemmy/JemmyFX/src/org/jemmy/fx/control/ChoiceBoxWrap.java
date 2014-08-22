@@ -24,15 +24,11 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
 import javafx.stage.PopupWindow;
-import org.jemmy.action.Action;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
@@ -43,14 +39,15 @@ import org.jemmy.fx.Root;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
-import org.jemmy.lookup.LookupCriteria;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- *
  * @author shura
  */
 @ControlType(ChoiceBox.class)
-@ControlInterfaces(value=Selectable.class, encapsulates=Object.class)
+@ControlInterfaces(value = Selectable.class, encapsulates = Object.class)
 public class ChoiceBoxWrap<T extends ChoiceBox> extends ControlWrap<T> {
 
     public static final String IS_SHOWING_PROP_NAME = "isShowing";
@@ -62,7 +59,7 @@ public class ChoiceBoxWrap<T extends ChoiceBox> extends ControlWrap<T> {
 
     @As(Object.class)
     public <T> Selectable<T> asSelectable(Class<T> type) {
-        if(selectable == null || !selectable.getType().equals(type)) {
+        if (selectable == null || !selectable.getType().equals(type)) {
             selectable = new ChoiceSelector(type);
         }
         return selectable;
@@ -70,13 +67,7 @@ public class ChoiceBoxWrap<T extends ChoiceBox> extends ControlWrap<T> {
 
     @Property(IS_SHOWING_PROP_NAME)
     public boolean isShowing() {
-        return new GetAction<Boolean>() {
-
-            @Override
-            public void run(Object... os) throws Exception {
-                setResult(getControl().isShowing());
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().isShowing()).get();
     }
 
     private class ChoiceSelector<T> implements Selectable<T>, Selector<T> {
@@ -86,18 +77,7 @@ public class ChoiceBoxWrap<T extends ChoiceBox> extends ControlWrap<T> {
 
         public ChoiceSelector(Class<T> type) {
             this.type = type;
-            getEnvironment().getExecutor().execute(getEnvironment(), true,
-                    new Action() {
-
-                        @Override
-                        public void run(Object... os) throws Exception {
-                            for (Object t : getControl().getItems()) {
-                                if (ChoiceBoxWrap.ChoiceSelector.this.type.isInstance(t)) {
-                                    states.add(ChoiceBoxWrap.ChoiceSelector.this.type.cast(t));
-                                }
-                            }
-                        }
-                    });
+            new FutureAction<>(getEnvironment(), () -> getControl().getItems().stream().filter(t -> ChoiceBoxWrap.ChoiceSelector.this.type.isInstance(t)).forEach(t -> states.add(ChoiceBoxWrap.ChoiceSelector.this.type.cast(t))));
         }
 
         public List<T> getStates() {
@@ -105,13 +85,7 @@ public class ChoiceBoxWrap<T extends ChoiceBox> extends ControlWrap<T> {
         }
 
         public T getState() {
-            Object selected = new GetAction() {
-
-                @Override
-                public void run(Object... os) throws Exception {
-                    setResult(getControl().getSelectionModel().getSelectedItem());
-                }
-            }.dispatch(getEnvironment());
+            Object selected = new FutureAction<>(getEnvironment(), () -> getControl().getSelectionModel().getSelectedItem()).get();
             if (type.isInstance(selected)) {
                 return type.cast(selected);
             } else {
@@ -124,20 +98,19 @@ public class ChoiceBoxWrap<T extends ChoiceBox> extends ControlWrap<T> {
                 mouse().click();
             }
             Parent<Node> popupContainer =
-                    Root.ROOT.lookup(new ByWindowType<Scene>(PopupWindow.class)).as(Parent.class, Node.class);
+                    Root.ROOT.lookup(new ByWindowType<>(PopupWindow.class)).as(Parent.class, Node.class);
 
             // TODO: figure out what to do with duplicate strings
-            popupContainer.lookup(Node.class, new LookupCriteria<Node>() {
-                public boolean check(Node cntrl) {
-                    MenuItem item = (MenuItem)cntrl.getProperties().get(MenuItem.class);
-                    if (item == null) {
-                        return false;
-                    };
-                    if (!item.getText().contentEquals(state.toString())) {
-                        return false;
-                    }
-                    return true;
+            popupContainer.lookup(Node.class, cntrl -> {
+                MenuItem item = (MenuItem) cntrl.getProperties().get(MenuItem.class);
+                if (item == null) {
+                    return false;
                 }
+                ;
+                if (!item.getText().contentEquals(state.toString())) {
+                    return false;
+                }
+                return true;
             }).wrap().mouse().click();
         }
 

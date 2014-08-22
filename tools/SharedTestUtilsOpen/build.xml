@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2010-2011, Oracle and/or its affiliates. All rights reserved.
+  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+-->
+<project name="SharedTestUtilsOpen" default="default" basedir=".">
+    <description>Builds, tests, and runs the project SharedTestUtilsOpen.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+    <target name="-pre-init" unless="no.need.to.find.java.fx">
+        <ant antfile="../../detect_javafx-nb.xml" inheritall="true">
+            <property name="basedir" location="${basedir}/../.."/>
+            <property name="property.file" value="${basedir}/nbproject/private/private.properties"/>
+        </ant>
+    </target>
+</project>

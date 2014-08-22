@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+            function onError(e) {
+                document.getElementById('result').textContent = [
+                    'ERROR: Line ', e.lineno, ' in ', e.filename, ': ', e.message].join('');
+            }
+
+            var worker = new Worker('errorWorker.js');
+            worker.addEventListener('error', onError, false);
+            worker.postMessage(); // Start worker without a message.
+        </script>
+    </head>
+    <body>
+        <div id="result"></div>
+    </body>
+</html>

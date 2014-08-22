@@ -1,0 +1,19 @@
+FxTestRunner build guide.
+
+Read about Jetty http server here http://www.eclipse.org/jetty/
+and here   http://wiki.eclipse.org/Jetty/Tutorial/Jetty_HelloWorld
+You need to obtain "aggregate build" of Jetty.
+Download latest jetty-all.jar here: http://repo1.maven.org/maven2/org/eclipse/jetty/aggregate/jetty-all/
+
+Put jetty-all.jar into tools/lib
+
+
+Read about Jemmy framework at https://jemmy.java.net/
+Download and build source code of Jemmy v2.
+(Also you can download latest jemmy.jar here: https://java.net/projects/jemmy/downloads/download/jemmy.jar )
+
+Put jemmy.jar into tools/lib
+
+Also, you would need jcov.jar to run "jcov" configuration.
+Visit https://wiki.openjdk.java.net/display/CodeTools/jcov to read about JCov project.
+Put JCov jars into tools/lib folder, update test suite project files.

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.pane.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml">
+   <Rectangle fx:id="rectangle1" x="0" y="0" width="30" height="24" fill="#ff0000"/>
+   <Rectangle fx:id="rectangle1" x="0" y="0" width="30" height="24" fill="#00ff00"/>
+   <Rectangle fx:id="rectangle1" x="0" y="0" width="30" height="24" fill="#0000ff"/>
+</VBox>
+
+

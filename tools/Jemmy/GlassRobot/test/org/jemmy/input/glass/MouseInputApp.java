@@ -24,10 +24,8 @@
  */
 package org.jemmy.input.glass;
 
-import java.text.DecimalFormat;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -38,6 +36,8 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+
+import java.text.DecimalFormat;
 
 /**
  *
@@ -64,85 +64,73 @@ public class MouseInputApp extends Application {
         txt.setId("text");
         txt.getTransforms().add(new Scale(3, 3, 0, 0));
         Button clean = new Button("clean");
-        clean.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent t) {
-                lbl.clear();
-                txt.requestFocus();
-            }
+        clean.addEventHandler(ActionEvent.ACTION, t -> {
+            lbl.clear();
+            txt.requestFocus();
         });
         final CheckBox ignoreMotion = new CheckBox("ignore motion");
         root.getChildren().add(clean);
         root.getChildren().add(ignoreMotion);
         root.getChildren().add(lbl);
         root.getChildren().add(txt);
-        txt.addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent t) {
-                if (!ignoreMotion.isSelected()
-                        || !(t.getEventType().equals(MouseEvent.MOUSE_MOVED)
-                        || t.getEventType().equals(MouseEvent.MOUSE_DRAGGED))) {
-                    StringBuilder sb = new StringBuilder();
-                    if (t.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-                        sb.append(KeyboardInputApp.PRESSED);
-                    } else if (t.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
-                        sb.append(KeyboardInputApp.RELEASED);
-                    } else if (t.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-                        sb.append(CLICKED);
-                    } else if (t.getEventType().equals(MouseEvent.MOUSE_MOVED)) {
-                        sb.append(MOVED);
-                        System.out.println(t.getClass().getName());
-                    } else if (t.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
-                        sb.append(DRAGGED);
-                    } else {
-                        return;
-                    }
-                    sb.append(coords(t.getX(), t.getY()));
-                    if (t.isAltDown()) {
-                        sb.append(KeyboardInputApp.ALT);
-                    }
-                    if (t.isShiftDown()) {
-                        sb.append(KeyboardInputApp.SHIFT);
-                    }
-                    if (t.isControlDown()) {
-                        sb.append(KeyboardInputApp.CONTROL);
-                    }
-                    if (t.isMetaDown()) {
-                        sb.append(KeyboardInputApp.META);
-                    }
-                    sb.append(t.getButton()).append(" ").append(t.getClickCount()).append("\n");
-                    lbl.appendText(sb.toString());
+        txt.addEventHandler(MouseEvent.ANY, t -> {
+            if (!ignoreMotion.isSelected()
+                    || !(t.getEventType().equals(MouseEvent.MOUSE_MOVED)
+                    || t.getEventType().equals(MouseEvent.MOUSE_DRAGGED))) {
+                StringBuilder sb = new StringBuilder();
+                if (t.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+                    sb.append(KeyboardInputApp.PRESSED);
+                } else if (t.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
+                    sb.append(KeyboardInputApp.RELEASED);
+                } else if (t.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+                    sb.append(CLICKED);
+                } else if (t.getEventType().equals(MouseEvent.MOUSE_MOVED)) {
+                    sb.append(MOVED);
+                    System.out.println(t.getClass().getName());
+                } else if (t.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
+                    sb.append(DRAGGED);
+                } else {
+                    return;
                 }
+                sb.append(coords(t.getX(), t.getY()));
+                if (t.isAltDown()) {
+                    sb.append(KeyboardInputApp.ALT);
+                }
+                if (t.isShiftDown()) {
+                    sb.append(KeyboardInputApp.SHIFT);
+                }
+                if (t.isControlDown()) {
+                    sb.append(KeyboardInputApp.CONTROL);
+                }
+                if (t.isMetaDown()) {
+                    sb.append(KeyboardInputApp.META);
+                }
+                sb.append(t.getButton()).append(" ").append(t.getClickCount()).append("\n");
+                lbl.appendText(sb.toString());
             }
         });
-        txt.addEventHandler(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-
-            @Override
-            public void handle(ScrollEvent t) {
-                    StringBuilder sb = new StringBuilder();
-                    if (t.getEventType().equals(ScrollEvent.SCROLL)) {
-                        sb.append(SCROLL);
-                    } else {
-                        return;
-                    }
-                    sb.append(coords(t.getDeltaX(), t.getDeltaY()));
-                    if (t.isAltDown()) {
-                        sb.append(KeyboardInputApp.ALT);
-                    }
-                    if (t.isShiftDown()) {
-                        sb.append(KeyboardInputApp.SHIFT);
-                    }
-                    if (t.isControlDown()) {
-                        sb.append(KeyboardInputApp.CONTROL);
-                    }
-                    if (t.isMetaDown()) {
-                        sb.append(KeyboardInputApp.META);
-                    }
-                    sb.append("\n");
-                    lbl.appendText(sb.toString());
-            }
+        txt.addEventHandler(ScrollEvent.ANY, t -> {
+                StringBuilder sb = new StringBuilder();
+                if (t.getEventType().equals(ScrollEvent.SCROLL)) {
+                    sb.append(SCROLL);
+                } else {
+                    return;
+                }
+                sb.append(coords(t.getDeltaX(), t.getDeltaY()));
+                if (t.isAltDown()) {
+                    sb.append(KeyboardInputApp.ALT);
+                }
+                if (t.isShiftDown()) {
+                    sb.append(KeyboardInputApp.SHIFT);
+                }
+                if (t.isControlDown()) {
+                    sb.append(KeyboardInputApp.CONTROL);
+                }
+                if (t.isMetaDown()) {
+                    sb.append(KeyboardInputApp.META);
+                }
+                sb.append("\n");
+                lbl.appendText(sb.toString());
         });
         Scene scene = new Scene(root);
         stage.setScene(scene);

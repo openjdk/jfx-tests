@@ -28,7 +28,6 @@ import java.util.Map;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -49,7 +48,7 @@ import test.javaclient.shared.Utils;
 public class EventsApp extends BasicButtonChooserApp {
     
     public static void main(String args[]) {
-        test.javaclient.shared.Utils.launch(EventsApp.class, args);
+        Utils.launch(EventsApp.class, args);
     }
 
     public EventsApp() {
@@ -224,7 +223,7 @@ public class EventsApp extends BasicButtonChooserApp {
 
     private void addSlot(String name, Node field) {
         VBox slot = new VBox();
-        slot.getChildren().addAll(new Label(name), field);
+        slot.getChildren().addAll(new Text(name), field);
         slot.setTranslateX(shiftX);
         slot.setTranslateY(shiftY);
         int stepX = SLOTSIZEX + 1;

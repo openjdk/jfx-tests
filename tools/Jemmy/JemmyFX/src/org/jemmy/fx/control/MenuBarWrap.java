@@ -24,41 +24,40 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.List;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import org.jemmy.action.Action;
-import org.jemmy.action.GetAction;
+import org.jemmy.action.FutureAction;
 import org.jemmy.control.As;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.NodeWrap;
-import org.jemmy.fx.Root;
 import org.jemmy.input.StringMenuOwner;
 import org.jemmy.interfaces.Collapsible;
 import org.jemmy.interfaces.Focus;
-import org.jemmy.interfaces.MenuOwner;
 import org.jemmy.interfaces.Parent;
+
+import java.util.List;
 
 /**
  * Menu is supported in two different form.<br/>
  * One is by using <code>MenuOwner</code> control interface. There you could
- * perform basic menu pushing or selecting. Select operation returns a wrap, 
+ * perform basic menu pushing or selecting. Select operation returns a wrap,
  * which you could pass into a constructor of a dock or use directly.<br/>
  * The other approach is to use MenuItemDock which allows advanced lookup and
  * more input operations.<br/>
  * Please consult <a href="../../samples/menu">samples</a> for more info.
+ *
+ * @param <CONTROL>
+ * @author shura
  * @see MenuItemWrap
  * @see StringMenuOwner
  * @see MenuBarDock
- * @author shura
- * @param <CONTROL> 
  */
 @ControlType({MenuBar.class})
 @ControlInterfaces(value = {Parent.class, StringMenuOwner.class, Collapsible.class},
-encapsulates = {MenuItem.class, MenuItem.class}, name = {"asMenuParent", "asMenuOwner"})
+        encapsulates = {MenuItem.class, MenuItem.class}, name = {"asMenuParent", "asMenuOwner"})
 public class MenuBarWrap<CONTROL extends MenuBar> extends NodeWrap<CONTROL> {
 
     private StringMenuOwnerImpl menuOwner = null;
@@ -66,9 +65,7 @@ public class MenuBarWrap<CONTROL extends MenuBar> extends NodeWrap<CONTROL> {
     private Focus focus = ThemeDriverFactory.getThemeFactory().menuBarFocuser(this);
 
     /**
-     *
      * @param env
-     * @param scene
      * @param nd
      */
     @SuppressWarnings("unchecked")
@@ -78,15 +75,16 @@ public class MenuBarWrap<CONTROL extends MenuBar> extends NodeWrap<CONTROL> {
 
     /**
      * Turns into a parent which you could use to look for menu items within. <br/>
-     * Notice that the lookup is performed through the whole hierarchy. You only 
-     * need to specify criteria for a single menu item no matter how deep in the 
+     * Notice that the lookup is performed through the whole hierarchy. You only
+     * need to specify criteria for a single menu item no matter how deep in the
      * hierarchy it resides. <br/>
-     * Notice also that menus are sometimes dynamic - that is, 
+     * Notice also that menus are sometimes dynamic - that is,
      * sub-items are only loaded when a parent is expanded. If a node is not loaded,
-     * this lookup would not find it. You need to find a parent node in question, 
+     * this lookup would not find it. You need to find a parent node in question,
      * expand it, and use it as a root for further search.
-     * @see MenuWrap#asMenuParent() 
-     * @return 
+     *
+     * @return
+     * @see MenuWrap#asMenuParent()
      */
     @As(MenuItem.class)
     public Parent<MenuItem> asMenuParent() {
@@ -95,13 +93,7 @@ public class MenuBarWrap<CONTROL extends MenuBar> extends NodeWrap<CONTROL> {
 
                 @Override
                 protected List getControls() {
-                    return new GetAction<List<?>>() {
-
-                        @Override
-                        public void run(Object... os) throws Exception {
-                            setResult(getControl().getMenus());
-                        }
-                    }.dispatch(getEnvironment());
+                    return new FutureAction<>(getEnvironment(),()-> getControl().getMenus()).get();
                 }
             };
         }
@@ -110,7 +102,8 @@ public class MenuBarWrap<CONTROL extends MenuBar> extends NodeWrap<CONTROL> {
 
     /**
      * Allows to perform simple push and selection operations on the menu.
-     * @return 
+     *
+     * @return
      */
     @As(MenuItem.class)
     public StringMenuOwner<MenuItem> asMenuOwner() {
@@ -119,29 +112,18 @@ public class MenuBarWrap<CONTROL extends MenuBar> extends NodeWrap<CONTROL> {
         }
         return menuOwner;
     }
+
     private Collapsible collapsible = null;
 
     /**
      * Collapses ass the sub-menus.
-     * @return 
+     *
+     * @return
      */
     @As
     public Collapsible asCollapsible() {
         if (collapsible == null) {
-            collapsible = new Collapsible() {
-
-                public void collapse() {
-                    getEnvironment().getExecutor().execute(getEnvironment(), true, new Action() {
-
-                        @Override
-                        public void run(Object... os) throws Exception {
-                            for (Menu m : getControl().getMenus()) {
-                                m.hide();
-                            }
-                        }
-                    });
-                }
-            };
+            collapsible = () -> new FutureAction<>(getEnvironment(),() -> getControl().getMenus().stream().forEach(m -> m.hide()));
         }
         return collapsible;
     }

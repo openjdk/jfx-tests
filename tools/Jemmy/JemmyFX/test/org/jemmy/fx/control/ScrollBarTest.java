@@ -24,14 +24,13 @@
  */
 package org.jemmy.fx.control;
 
-import org.jemmy.timing.State;
-import java.awt.AWTException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.interfaces.Scroll;
 import org.junit.*;
-import static org.junit.Assert.*;
+
+import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,14 +44,11 @@ public class ScrollBarTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        new Thread(new Runnable() {
-
-            public void run() {
-                try {
-                    ScrollBarApp.main(new String[0]);
-                } catch (AWTException ex) {
-                    Logger.getLogger(ScrollBarApp.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        new Thread(() -> {
+            try {
+                ScrollBarApp.main(new String[0]);
+            } catch (AWTException ex) {
+                Logger.getLogger(ScrollBarApp.class.getName()).log(Level.SEVERE, null, ex);
             }
         }).start();
         scene = new SceneDock();
@@ -71,12 +67,9 @@ public class ScrollBarTest {
     }
 
     private void checkLabel(final LabeledDock ld, final double value, final double error) {
-        ld.wrap().waitState(new State() {
-
-            public Object reached() {
-                double v = Double.parseDouble(ld.getText());
-                return (Math.abs(v - value) <= error) ? value : null;
-            }
+        ld.wrap().waitState(() -> {
+            double v = Double.parseDouble(ld.getText());
+            return (Math.abs(v - value) <= error) ? value : null;
         });
     }
 

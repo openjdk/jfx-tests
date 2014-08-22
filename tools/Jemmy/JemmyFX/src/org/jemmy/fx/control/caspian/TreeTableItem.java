@@ -33,7 +33,7 @@ import org.jemmy.control.Wrap;
 import org.jemmy.fx.control.TreeTableItemWrap;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Scrollable2D;
-import org.jemmy.lookup.LookupCriteria;
+import org.jemmy.timing.DescriptiveState;
 import org.jemmy.timing.State;
 
 /**
@@ -44,16 +44,8 @@ public class TreeTableItem implements org.jemmy.interfaces.TreeItem<javafx.scene
     private TreeTableItemWrap wrap;
     private Wrap<? extends TreeTableView> treeTableViewWrap;
     private static final String TREE_DISCLOSURE_NODE_STYLECLASS = "tree-disclosure-node";
-    State<Boolean> expandedState = new State<Boolean>() {
-        public Boolean reached() {
-            return wrap.isExpanded();
-        }
 
-        @Override
-        public String toString() {
-            return "Wait a node <" + wrap + "> to be expanded/collapsed";
-        }
-    };
+    State<Boolean> expandedState = new DescriptiveState<>(() -> wrap.isExpanded(), () -> "Wait a node <" + wrap + "> to be expanded/collapsed");
 
     public TreeTableItem(Wrap wrap, Wrap parentControlWrap) {
         if (!(wrap instanceof TreeTableItemWrap)) {
@@ -64,11 +56,8 @@ public class TreeTableItem implements org.jemmy.interfaces.TreeItem<javafx.scene
     }
 
     private Wrap<? extends Node> findPointer(Wrap<?> skin) {
-        return skin.as(Parent.class, Node.class).lookup(StackPane.class, new LookupCriteria<StackPane>() {
-            public boolean check(StackPane cntrl) {
-                return cntrl.getStyleClass().contains(TREE_DISCLOSURE_NODE_STYLECLASS);
-            }
-        }).wrap();
+        final Parent<Node> parent = skin.as(Parent.class, Node.class);
+        return parent.lookup(StackPane.class, cntrl -> cntrl.getStyleClass().contains(TREE_DISCLOSURE_NODE_STYLECLASS)).wrap();
     }
 
     public void expand() {

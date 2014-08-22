@@ -27,20 +27,14 @@ package org.jemmy.fx.control;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Slider;
 import org.jemmy.action.GetAction;
-import org.jemmy.fx.NodeParent;
-import org.jemmy.fx.Root;
-import org.jemmy.control.ControlType;
 import org.jemmy.control.ControlInterfaces;
+import org.jemmy.control.ControlType;
 import org.jemmy.control.MethodProperties;
 import org.jemmy.control.Property;
 import org.jemmy.env.Environment;
+import org.jemmy.fx.NodeParent;
 import org.jemmy.input.AbstractScroll;
-import org.jemmy.interfaces.Caret;
-import org.jemmy.interfaces.ControlInterface;
-import org.jemmy.interfaces.Scroll;
-import org.jemmy.interfaces.Scroller;
-import org.jemmy.interfaces.Shiftable;
-import org.jemmy.interfaces.Shifter;
+import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
@@ -59,8 +53,8 @@ public class SliderWrap<T extends Slider> extends ControlWrap<T> implements Scro
 
     /**
      *
-     * @param scene
-     * @param nd
+     * @param env
+     * @param node
      */
     public SliderWrap(Environment env, T node) {
         super(env, node);
@@ -132,17 +126,11 @@ public class SliderWrap<T extends Slider> extends ControlWrap<T> implements Scro
     }
 
     public static SliderWrap<Slider> find(NodeParent parent, LookupCriteria<Slider> criteria) {
-        return new SliderWrap<Slider>(parent.getEnvironment(), parent.getParent().lookup(Slider.class, criteria).get());
+        return new SliderWrap<>(parent.getEnvironment(), parent.getParent().lookup(Slider.class, criteria).get());
     }
 
     public static SliderWrap<Slider> find(NodeParent parent, final boolean vertical) {
-        return find(parent, new LookupCriteria<Slider>() {
-
-            @Override
-            public boolean check(Slider control) {
-                return (control.getOrientation() == Orientation.VERTICAL) == vertical;
-            }
-        });
+        return find(parent, control -> (control.getOrientation() == Orientation.VERTICAL) == vertical);
     }
 
     /**

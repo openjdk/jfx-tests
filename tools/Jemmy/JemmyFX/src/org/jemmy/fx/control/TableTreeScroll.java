@@ -38,7 +38,6 @@ import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Scroll;
 import org.jemmy.interfaces.Scroller;
 import org.jemmy.lookup.Lookup;
-import org.jemmy.lookup.LookupCriteria;
 
 /**
  * @author Alexander Kirov
@@ -47,13 +46,13 @@ class TableTreeScroll implements Scroll {
 
     private AbstractScroll emptyScroll = new EmptyScroll();
     private Scroller emptyScroller = new EmptyScroller();
-    protected AbstractScroll hScroll, vScroll;    
+    protected AbstractScroll hScroll, vScroll;
     private Wrap<? extends Control> control;
-    
+
     public TableTreeScroll(Wrap<? extends Control> control) {
         this.control = control;
     }
-    
+
     /**
      * In case direct scrolling is needed. Scroller value is in the interval
      * from 0 to 1.
@@ -76,14 +75,10 @@ class TableTreeScroll implements Scroll {
      * @return
      */
     private AbstractScroll getScroll(final boolean vertical) {
-        Lookup<ScrollBar> lookup = control.as(Parent.class, Node.class).lookup(ScrollBar.class,
-                new LookupCriteria<ScrollBar>() {
-                    @Override
-                    public boolean check(ScrollBar control) {
-                        return (control.getOrientation() == Orientation.VERTICAL) == vertical
-                                && control.isVisible();
-                    }
-                });
+        final Parent<Node> parent = control.as(Parent.class, Node.class);
+        Lookup<ScrollBar> lookup = parent.lookup(ScrollBar.class,
+                control -> (control.getOrientation() == Orientation.VERTICAL) == vertical
+                        && control.isVisible());
         int count = lookup.size();
         if (count == 0) {
             return null;

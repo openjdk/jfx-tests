@@ -1,0 +1,11 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="draggable.css"/>
+    </head>
+    <body>
+        <h3>Test for dragover event</h3>
+        <span draggable="true" class="draggable" ondragstart="event.dataTransfer.setData('text/plain', '1');">Drag me!</span>
+        <div class="droparea"
+             ondragover="this.className += ' opsuccess';">Drag area</div>
+    </body>
+</html>

@@ -47,8 +47,7 @@ public class Consts {
         new DropShadow(),
         new GaussianBlur(),
         new Glow(),
-        new Lighting(),
-        null
+        new Lighting()
     };
     final static FloatMap MAP_WAVES = new FloatMap();
     final static FloatMap MAP_WAVES_2 = new FloatMap();

@@ -1,0 +1,61 @@
+<!--
+/*
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Titled Pane animated test</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <p><b>Animated test</b>
+        <p>Notion: This test is targeted for testing of animation in TitledPane. 
+            A titled pane has a property "animated", which is boolean (true/false). 
+            Only two things could be animated in TitledPane : arrow rotation (when titled
+            pane is collapsed or expanded) and content appearing (for expansion/collapsing too).
+            If titled pane is animated (animated == true), content should appear smoothly, 
+            and arrow should rotate smoothly. If titled pane is not animated (animated == false), 
+            content should appear immediately, and arrow should rotate immediately. 
+            When content is shown, arrow points down, when content is not shown, arrow points to the right.
+            And we need to test it.
+        </p>                        
+        <p>This test verifies that Animated property of titled pane affects, and animated is done properly.</p>
+        <h3>Test case</h3>
+        <ul><li>Press toggle button "unbinded" to change its value to "binded".</li>
+            <li>Switch animated property to true.</li>
+            <li>Expand and collapse a titled pane. Check, that arrow rotates <i>smoothly</i>, and content is expanded and collapsed <i>smoothly</i>.</li>
+            <li>Switch animated property to false.</li>
+            <li>Expand and collapse a titled pane. Check, that arrow rotates <i>immediately</i>, and content is expanded and collapsed <i>immediately</i>.</li>
+        </ul>
+        <h3>Help</h3>
+        <h4>How to change property value.</h4>
+        You see a toggle button on the right side of application, 
+        which can be switched to true/false. 
+        This toggle button changes value of according property (animated), 
+        if it is <i>binded</i> (binded toggle button is selected). In a text field 
+        you can observe the current value of the property.
+    </body>
+</html>

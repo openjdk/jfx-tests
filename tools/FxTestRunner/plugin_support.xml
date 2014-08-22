@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/*
+ * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation. Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ */
+-->
+<project name="plugin_utility" default="default" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
+
+    <!-- ============================================================== -->
+    <!--                          plugin support                        -->
+    <!-- ============================================================== -->
+<!--    <target name="dist-plugin" depends="check-javafx-home, check-compiled" unless="testbase.readonly">  -->
+    <target name="dist-plugin" depends="check-compiled" unless="testbase.readonly">
+        <basename property="suitename" file="${basedir}"/>
+        
+
+
+        <echo message="debug: ant-javafx.jar = ${javafx.home}/../lib/ant-javafx.jar"/>
+
+        <condition property="file.reference.ant-javafx.jar" value="${javafx.home}/../lib/ant-javafx.jar" else="${javafx.rt}/../lib/ant-javafx.jar">
+    	    <isset property="javafx.home"/>
+        </condition>
+        <echo message="debug: file.reference.ant-javafx.jar = ${file.reference.ant-javafx.jar}"/>
+
+        <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+                 uri="javafx:com.sun.javafx.tools.ant"
+                 classpath="${file.reference.ant-javafx.jar}"/>
+
+        <jar destfile="${dist.dir}/${suitename}-web.jar">
+            <fileset dir="${build.classes.dir}"/>
+            <fileset dir="${build.test.classes.dir}"/>
+            <manifest>
+                <attribute name="Implementation-Vendor" value="Oracle"/>
+                <attribute name="Implementation-Title" value="FXSQE Plugin Test"/>
+                <attribute name="Implementation-Version" value="1.0"/>
+            </manifest>
+        </jar>
+
+	<jar destfile="../../tools/FxTestRunner/dist/FxTestRunner.jar"  update="true" >
+	  <manifest>
+	    <attribute name="Permissions" value="sandbox"/>
+	  </manifest>
+	</jar>
+
+        <fx:deploy width="1400" height="900"
+                   outdir="${basedir}/dist-plugin" outfile="JavaClientPluginTest">
+            <info title="FXSQE Plugin Test"/>
+            <!--<fx:application mainClass="test.scenegraph.debug.PluginValidatorApp"/>-->
+            <fx:application mainClass="client.test.runner.JNLPJUnitTestRunner" name="PluginTestRunner" />
+            <fx:resources>
+                <fx:fileset dir="dist">
+                    <include name="${suitename}-web.jar"/>
+                </fx:fileset>
+                <fx:fileset dir="../../tools/SharedTestUtilsOpen/dist/">
+                    <include name="SharedTestUtilsOpen.jar"/>
+                </fx:fileset>
+                <fx:fileset dir="../../tools/FxTestRunner/dist/">
+                    <include name="FxTestRunner.jar"/>
+                </fx:fileset>
+                <fx:fileset dir="../../tools/Jemmy/GlassImage/dist/">
+                    <include name="GlassImage.jar"/>
+                </fx:fileset>
+                <fx:fileset dir="../../tools/Jemmy/GlassRobot/dist/">
+                    <include name="GlassRobot.jar"/>
+                </fx:fileset>
+                <fx:fileset dir="../../tools/Jemmy/jemmy_core/">
+                    <include name="JemmyCore.jar"/>
+                    <include name="JemmyBrowser.jar"/>
+                    <include name="JemmyAWTInput.jar"/>
+                    <include name="junit.jar"/>
+                </fx:fileset>
+                <fx:fileset dir="../../tools/Jemmy/JemmyFXBrowser/dist/">
+                    <include name="JemmyFXBrowser.jar" />
+                </fx:fileset>
+                <fx:fileset dir="../../tools/Jemmy/JemmyFX/dist/">
+                    <include name="JemmyFX.jar" />
+                </fx:fileset>
+                <fx:fileset dir="../../tools/lib/">
+                    <include name="jemmy.jar" />
+                    <include name="JemmyAWT.jar"/>
+                </fx:fileset>
+            </fx:resources>
+        </fx:deploy>
+        
+        <!-- this target appeared due to fx:deploy creating plugin refererring to http://java.com/js/dtjava.js which doesn't work for 2.2 -->
+        <echo message="jclient.root.dir = ${jclient.root.dir}"/>
+        <copy todir="${basedir}/dist-plugin" overwrite="true">
+            <fileset dir="${jclient.root.dir}/../../tools/FxTestRunner/plugin_files"/>
+        </copy>        
+
+    </target>
+    <target name="javatest.plugin.mac" if="isMac">
+        <property name="javatest.plugin.java.home" value="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/"/>
+        <property name="javatest.javawsPath" value="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/javaws"/>
+    </target>
+
+    <target name="-load-suite-id">
+        <condition property="jttfiletmp" value="${basedir}/javatest_files/${javatest.testmode}.jtt" else="${basedir}/javatest_files/automated.jtt">
+            <available file="${basedir}/javatest_files/${javatest.testmode}.jtt" type="file" />
+        </condition>
+        <condition property="jttfile" value="${jttfiletmp}" else="${basedir}/testsuite.jtt">
+            <available file="${jttfiletmp}" type="file"/>
+        </condition>
+
+        <echo message="suite id file: ${jttfile}" />
+
+        <loadproperties srcFile="${jttfile}" prefix="suite">
+            <filterchain>
+                <linecontains>
+                    <contains value="id"/>
+                </linecontains>
+            </filterchain>
+        </loadproperties>
+        <echo message="suite id: ${suite.id}" />
+    </target>
+
+
+    <target name="notify-about-used-java" unless="javatest.plugin.java.home" if="${javatest.copy.policy}"/>
+
+    <target name="prepare-policy-file" depends="javatest.plugin.mac,notify-about-used-java,-load-suite-id" if="${javatest.copy.policy}">
+        <copy overwrite="true" file="${javatest.plugin.java.home}/lib/security/java.policy"
+              tofile="${fxtest.basedir}/java.policy.fxsqe.bak"/>
+
+        <copy overwrite="true" file="${jclient.root.dir}/../../tools/FxTestRunner/src/java-plugin.policy" tofile="${fxtest.basedir}/java-plugin.${suite.id}.policy" />
+
+        <pathconvert targetos="unix" property="user.home.converted">
+            <path location="${user.home}"/>
+        </pathconvert>
+        <pathconvert targetos="unix" property="jclient.root.dir.converted">
+            <path location="${jclient.root.dir}"/>
+        </pathconvert>
+        <replace file="${fxtest.basedir}/java-plugin.${suite.id}.policy" token="__USERDIR__" value="${user.home.converted}"/>
+        <replace file="${fxtest.basedir}/java-plugin.${suite.id}.policy" token="__JAVACLIENTDIR__" value="${jclient.root.dir.converted}"/>
+
+        <echo message="N.B.: if next command is failing, please, manually append content of java-plugin.policy to ${javatest.plugin.java.home}/lib/security/java.policy before starting the suite."/>
+        <echo message="      And add next option to suite run -Djavatest.copy.policy=false"/>
+        <concat destfile="${javatest.plugin.java.home}/lib/security/java.policy" append="true">
+            <fileset file="${fxtest.basedir}/java-plugin.${suite.id}.policy" />
+        </concat>
+
+        <antcall target="external-sign-jars">
+            <param name="jars.dir.to.sign" value="${basedir}/dist-plugin"/>
+        </antcall>
+        <antcall target="external-import-fxsqetrusted-to-all-jdk-cacerts">
+        </antcall>
+
+    </target>
+
+<!-- fake targets -->
+    <target name="external-import-fxsqetrusted-to-all-jdk-cacerts" if="${jarsigner.defined}">
+        <echo message=" call to import-fxsqetrusted-to-all-jdk-cacerts"/>
+        <antcall target="import-fxsqetrusted-to-all-jdk-cacerts">
+        </antcall>
+    </target>
+    <target name="external-sign-jars" if="${jarsigner.defined}">
+        <echo message=" call to sign-jars"/>
+        <antcall target="sign-jars">
+        </antcall>
+    </target>
+<!-- fake targets -->
+
+</project>

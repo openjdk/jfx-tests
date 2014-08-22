@@ -26,7 +26,6 @@ package org.jemmy.fx.control;
 
 
 import javafx.geometry.Orientation;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
@@ -35,14 +34,8 @@ import org.jemmy.control.MethodProperties;
 import org.jemmy.control.Property;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.NodeParent;
-import org.jemmy.fx.Root;
 import org.jemmy.input.AbstractScroll;
-import org.jemmy.interfaces.Caret;
-import org.jemmy.interfaces.ControlInterface;
-import org.jemmy.interfaces.Scroll;
-import org.jemmy.interfaces.Scroller;
-import org.jemmy.interfaces.Shiftable;
-import org.jemmy.interfaces.Shifter;
+import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 
 
@@ -62,8 +55,8 @@ public class ScrollBarWrap<T extends ScrollBar> extends ControlWrap<T> implement
 
     /**
      *
-     * @param scene
-     * @param nd
+     * @param env
+     * @param node
      */
     public ScrollBarWrap(Environment env, T node) {
         super(env, node);
@@ -135,7 +128,7 @@ public class ScrollBarWrap<T extends ScrollBar> extends ControlWrap<T> implement
     }
 
     public static ScrollBarWrap<ScrollBar> find(NodeParent parent, LookupCriteria<ScrollBar> criteria) {
-        return new ScrollBarWrap<ScrollBar>(parent.getEnvironment(), parent.getParent().lookup(ScrollBar.class, criteria).get());
+        return new ScrollBarWrap<>(parent.getEnvironment(), parent.getParent().lookup(ScrollBar.class, criteria).get());
     }
 
     public static ScrollBarWrap<ScrollBar> find(NodeParent parent, final boolean vertical) {

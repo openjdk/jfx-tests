@@ -24,8 +24,6 @@
  */
 package org.jemmy.fx.control;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
@@ -33,51 +31,40 @@ import javafx.scene.Scene;
 import javafx.scene.control.ToolBar;
 import org.jemmy.JemmyException;
 import org.jemmy.Point;
+import org.jemmy.action.FutureAction;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.ControlInterfaces;
 import org.jemmy.control.ControlType;
-import org.jemmy.control.MethodProperties;
 import org.jemmy.control.Property;
-import org.jemmy.fx.NodeWrap;
-import org.jemmy.fx.SceneWrap;
 import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
-import org.jemmy.interfaces.ControlInterface;
-import org.jemmy.interfaces.Focus;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Selectable;
-import org.jemmy.interfaces.Selector;
-import org.jemmy.interfaces.TypeControlInterface;
-import org.jemmy.lookup.LookupCriteria;
+import org.jemmy.fx.NodeWrap;
+import org.jemmy.fx.SceneWrap;
+import org.jemmy.interfaces.*;
 import org.jemmy.timing.State;
 import org.jemmy.timing.Waiter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ControlType({ToolBar.class})
-@ControlInterfaces(value={Selectable.class}, encapsulates=Node.class)
+@ControlInterfaces(value = {Selectable.class}, encapsulates = Node.class)
 public class ToolBarWrap<CONTROL extends ToolBar> extends NodeWrap<CONTROL> {
     public static final String VERTICAL_PROP_NAME = "vertical";
 
     private Selectable<Node> objectSelectable = new ToolBarSelectable();
 
-    private Focus focus = new Focus() {
-        public void focus() {
-            if (!isFocused()) {
-                mouse().click(1, new Point(1, 1));
-            }
-            waitState(focusedState, true);
+    private State<Boolean> focusedState = this::isFocused;
+    
+    private Focus focus = () -> {
+        if (!isFocused()) {
+            mouse().click(1, new Point(1, 1));
         }
-    };
-
-    private State<Boolean> focusedState = new State<Boolean>() {
-        public Boolean reached() {
-            return isFocused();
-        }
+        waitState(focusedState, true);
     };
 
     /**
-     *
      * @param env
-     * @param scene
      * @param nd
      */
     @SuppressWarnings("unchecked")
@@ -86,42 +73,31 @@ public class ToolBarWrap<CONTROL extends ToolBar> extends NodeWrap<CONTROL> {
     }
 
     public Node getSelectedItem() {
-        return new GetAction<Node>() {
-
-            @Override
-            public void run(Object... parameters) {
-                for (Node item : getToolBar().getItems()) {
-                    if (item.isFocused()) {
-                        setResult(item);
-                    }
+        return new FutureAction<>(getEnvironment(), () -> {
+            for (Node item : getToolBar().getItems()) {
+                if (item.isFocused()) {
+                    return item;
                 }
             }
-        }.dispatch(getEnvironment());
+            return null;
+        }).get();
     }
 
     public Integer getSelectedItemIndex() {
-        return new GetAction<Integer>() {
-
-            @Override
-            public void run(Object... parameters) {
-                ObservableList<Node> list = getToolBar().getItems();
-                for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).isFocused()) {
-                        setResult(i);
-                    }
+        return new FutureAction<>(getEnvironment(), () -> {
+            ObservableList<Node> list = getToolBar().getItems();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).isFocused()) {
+                    return i;
                 }
             }
-        }.dispatch(getEnvironment());
+            return null;
+        }).get();
     }
 
     @Property(ToolBarWrap.VERTICAL_PROP_NAME)
     public boolean vertical() {
-        return new GetAction<Boolean>() {
-            @Override
-            public void run(Object... parameters) {
-                setResult(getControl().getOrientation() == Orientation.VERTICAL);
-            }
-        }.dispatch(getEnvironment());
+        return new FutureAction<>(getEnvironment(), () -> getControl().getOrientation() == Orientation.VERTICAL).get();
     }
 
     @Override
@@ -158,7 +134,7 @@ public class ToolBarWrap<CONTROL extends ToolBar> extends NodeWrap<CONTROL> {
     @Override
     @SuppressWarnings("unchecked")
     public <TYPE, INTERFACE extends TypeControlInterface<TYPE>>
-           INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
+    INTERFACE as(Class<INTERFACE> interfaceClass, Class<TYPE> type) {
         if (Selectable.class.equals(interfaceClass)) {
             return (INTERFACE) new ToolBarSelectable();
         }
@@ -177,8 +153,9 @@ public class ToolBarWrap<CONTROL extends ToolBar> extends NodeWrap<CONTROL> {
             return new GetAction<ArrayList<Node>>() {
                 @Override
                 public void run(Object... parameters) {
-                    setResult(new ArrayList<Node>(getToolBar().getItems()));
+                    setResult(new ArrayList<>(getToolBar().getItems()));
                 }
+
                 @Override
                 public String toString() {
                     return "Fetching all data items from " + ToolBarSelectable.this;
@@ -201,47 +178,22 @@ public class ToolBarWrap<CONTROL extends ToolBar> extends NodeWrap<CONTROL> {
         }
 
         public void select(final Node state) {
-            final Scene selected_scene = new GetAction<Scene>() {
-                    @Override
-                    public void run(Object... parameters) {
-                        setResult(state.getScene());
-                    }
-                }.dispatch(getEnvironment());
+            final Scene selected_scene = new FutureAction<Scene>(getEnvironment(), state::getScene).get();
             if (selected_scene != scene) {
                 Boolean visible = false;
                 if (selected_scene != null) {
-                    visible = new GetAction<Boolean>() {
-                        @Override
-                        public void run(Object... parameters) {
-                            setResult(selected_scene.getWindow().isShowing());
-                        }
-                    }.dispatch(getEnvironment());
+                    visible = new FutureAction<Boolean>(getEnvironment(), () -> selected_scene.getWindow().isShowing()).get();
                 }
                 if (!visible) {
-                    Wrap<Node> expandMenu = as(Parent.class, Node.class).lookup(new LookupCriteria<Node>() {
-                        @Override
-                        public boolean check(Node control) {
-                            return control.getClass().getName().contentEquals("com.sun.javafx.scene.control.skin.ToolBarSkin$ToolBarOverflowMenu");
-                        }
-                    }).wrap(0);
+                    Wrap<Node> expandMenu = as(Parent.class, Node.class).lookup(control -> control.getClass().getName().contentEquals("com.sun.javafx.scene.control.skin.ToolBarSkin$ToolBarOverflowMenu")).wrap(0);
                     expandMenu.mouse().click();
                 }
-                Scene new_selected_scene = new GetAction<Scene>() {
-                    @Override
-                    public void run(Object... parameters) {
-                        setResult(state.getScene());
-                    }
-                }.dispatch(getEnvironment());
+                Scene new_selected_scene = new FutureAction<Scene>(getEnvironment(), state::getScene).get();
                 if (new_selected_scene == null) {
                     throw new JemmyException("The menu bar can not be expanded", getControl());
                 }
                 Wrap<? extends Scene> popup_scene_wrap = new SceneWrap(getEnvironment(), new_selected_scene);
-                Wrap<Node> item = popup_scene_wrap.as(Parent.class, Node.class).lookup(new LookupCriteria<Node>() {
-                    @Override
-                    public boolean check(Node control) {
-                        return control.equals(state);
-                    }
-                }).wrap(0);
+                Wrap<Node> item = popup_scene_wrap.as(Parent.class, Node.class).lookup(control -> control.equals(state)).wrap(0);
                 item.mouse().click();
             } else {
                 Boolean found = new GetAction<Boolean>() {
@@ -269,6 +221,7 @@ public class ToolBarWrap<CONTROL extends ToolBar> extends NodeWrap<CONTROL> {
                 public Node reached() {
                     return getSelectedItem();
                 }
+
                 @Override
                 public String toString() {
                     return "Checking that selected item [" + getSelectedItem()
