@@ -25,6 +25,7 @@
 
 package com.sun.fx.webnode.tests.bridge;
 
+import java.util.concurrent.CountDownLatch;
 import com.sun.fx.webnode.tests.commonUtils.BridgeTestClass;
 import com.sun.fx.webnode.tests.commonUtils.ToolkitInitializer;
 import javafx.application.Platform;
@@ -40,16 +41,26 @@ import org.junit.Test;
 public class BridgeSimpleTest extends BridgeTestClass {
 
     @BeforeClass
-    public static void init(){
+    public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
+    }
+
+    private static void printResult(Object resultObject, CountDownLatch lock) {
+        Platform.runLater(new Runnable() {
+            public void run() {
+           	System.out.println("resultObject: " + resultObject);
+           	lock.countDown();
+            }
+        });
     }
 
     /**
      * Test for JavaScript integer to java.lang.Integer conversion.
      */
     @Test(timeout=10000)
-    public void testInteger(){
+    public void testInteger() throws InterruptedException {
         resultObject = null;
+        
         Platform.runLater(new Runnable() {
             public void run() {
                 initWebEngine();
@@ -61,7 +72,10 @@ public class BridgeSimpleTest extends BridgeTestClass {
                 return (resultObject != null);
             }
         });
-        System.out.println(resultObject);
+
+        final CountDownLatch lock = new CountDownLatch(1);
+        printResult(resultObject, lock);
+        lock.await();
         Assert.assertTrue(resultObject instanceof java.lang.Integer);
         Assert.assertEquals(4, ((java.lang.Integer)resultObject).intValue());
     }
@@ -70,7 +84,7 @@ public class BridgeSimpleTest extends BridgeTestClass {
      * Test for JavaScript double to java.lang.Double conversion.
      */
     @Test(timeout=10000)
-    public void testDouble(){
+    public void testDouble() throws InterruptedException {
         resultObject = null;
         Platform.runLater(new Runnable() {
             public void run() {
@@ -83,7 +97,10 @@ public class BridgeSimpleTest extends BridgeTestClass {
                 return (resultObject != null);
             }
         });
-        System.out.println(resultObject);
+
+        final CountDownLatch lock = new CountDownLatch(1);
+        printResult(resultObject, lock);
+        lock.await();
         Assert.assertTrue(resultObject instanceof java.lang.Double);
         Assert.assertEquals(1.5, ((java.lang.Double)resultObject).doubleValue(), 0.0000001);
     }
@@ -92,7 +109,7 @@ public class BridgeSimpleTest extends BridgeTestClass {
      * Test for JavaScript string to java.lang.String conversion.
      */
     @Test(timeout=10000)
-    public void testString(){
+    public void testString() throws InterruptedException {
         resultObject = null;
         Platform.runLater(new Runnable() {
             public void run() {
@@ -105,7 +122,10 @@ public class BridgeSimpleTest extends BridgeTestClass {
                 return (resultObject != null);
             }
         });
-        System.out.println(resultObject);
+
+        final CountDownLatch lock = new CountDownLatch(1);
+        printResult(resultObject, lock);
+        lock.await();
         Assert.assertTrue(resultObject instanceof java.lang.String);
         Assert.assertEquals((java.lang.String)resultObject, "testme");
     }
@@ -114,7 +134,7 @@ public class BridgeSimpleTest extends BridgeTestClass {
      * Test for JavaScript boolean to java.lang.Boolean conversion.
      */
     @Test(timeout=10000)
-    public void testBoolean(){
+    public void testBoolean() throws InterruptedException {
         resultObject = null;
         Platform.runLater(new Runnable() {
             public void run() {
@@ -127,7 +147,10 @@ public class BridgeSimpleTest extends BridgeTestClass {
                 return (resultObject != null);
             }
         });
-        System.out.println(resultObject);
+
+        final CountDownLatch lock = new CountDownLatch(1);
+        printResult(resultObject, lock);
+        lock.await();
         Assert.assertTrue(resultObject instanceof java.lang.Boolean);
         Assert.assertTrue(((java.lang.Boolean)resultObject).booleanValue());
     }
@@ -136,7 +159,7 @@ public class BridgeSimpleTest extends BridgeTestClass {
      * Test for JavaScript null to Java null conversion.
      */
     @Test(timeout=10000)
-    public void testNull(){
+    public void testNull() throws InterruptedException {
         resultObject = new Object();
         Platform.runLater(new Runnable() {
             public void run() {
@@ -150,14 +173,17 @@ public class BridgeSimpleTest extends BridgeTestClass {
             }
         });
 
-        System.out.println(resultObject);
+        final CountDownLatch lock = new CountDownLatch(1);
+        printResult(resultObject, lock);
+        lock.await();
+        Assert.assertNull(resultObject);
     }
 
     /**
      * Test for JavaScript undefined to UNDEFINED conversion.
      */
     @Test(timeout=10000)
-    public void testUndefined(){
+    public void testUndefined() throws InterruptedException {
         resultObject = null;
         Platform.runLater(new Runnable() {
             public void run() {
@@ -171,7 +197,9 @@ public class BridgeSimpleTest extends BridgeTestClass {
             }
         });
 
-        System.out.println(resultObject);
+        final CountDownLatch lock = new CountDownLatch(1);
+        printResult(resultObject, lock);
+        lock.await();
         Assert.assertEquals(UNDEFINED, resultObject);
     }
 
@@ -179,7 +207,7 @@ public class BridgeSimpleTest extends BridgeTestClass {
      * Test for JavaScript object to JSObject conversion.
      */
     @Test(timeout=10000)
-    public void testJSObject(){
+    public void testJSObject() throws InterruptedException {
         resultObject = null;
         Platform.runLater(new Runnable() {
             public void run() {
@@ -193,7 +221,9 @@ public class BridgeSimpleTest extends BridgeTestClass {
             }
         });
 
-        System.out.println(resultObject);
+        final CountDownLatch lock = new CountDownLatch(1);
+        printResult(resultObject, lock);
+        lock.await();
         Assert.assertTrue(resultObject instanceof JSObject);
     }
 
@@ -201,7 +231,7 @@ public class BridgeSimpleTest extends BridgeTestClass {
      * Test for JavaScript DOM object to JSNode conversion.
      */
     @Test(timeout=10000)
-    public void testDOMObject(){
+    public void testDOMObject() throws InterruptedException {
         resultObject = null;
         Platform.runLater(new Runnable() {
             public void run() {
@@ -215,7 +245,9 @@ public class BridgeSimpleTest extends BridgeTestClass {
             }
         });
 
-        System.out.println(resultObject);
+        final CountDownLatch lock = new CountDownLatch(1);
+        printResult(resultObject, lock);
+        lock.await();
         Assert.assertTrue(resultObject instanceof org.w3c.dom.Node);
     }
 }
