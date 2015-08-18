@@ -112,23 +112,6 @@ public class LineNumberTest extends TestBase {
     }
 
     /**
-     * testing LoadListener#beginUnknownTypeElement
-     */
-    @Test
-    public void testUnknownTypeElement() {
-        testCommon(LineNumberApp.Pages.unknownTypePage.name(), null, false, false);
-        new Waiter(new Timeout("", WAITER_TIMEOUT)).ensureValue(true, new State<Boolean>() {
-            @Override
-            public Boolean reached() {
-                return LineNumberApp.beginUnknowStaticElementMatrix.length == LineNumberApp.beginUnknowStaticElement.size();
-            }
-        });
-        for (int i = 0; i < LineNumberApp.beginUnknowStaticElementMatrix.length; i++) {
-            Assert.assertEquals(LineNumberApp.beginUnknowStaticElementMatrix[i], LineNumberApp.beginUnknowStaticElement.get(i));
-        }
-    }
-
-    /**
      * testing LoadListener#beginIncludeElement
      */
     @Test
@@ -212,23 +195,6 @@ public class LineNumberTest extends TestBase {
     }
 
     /**
-     * testing LoadListener#beginUnknownStaticPropertyElement
-     */
-    @Test
-    public void testBeginUnknownStaticPropertyElement() {
-        testCommon(LineNumberApp.Pages.unknownPropertyPage.name(), null, false, false);
-        new Waiter(new Timeout("", WAITER_TIMEOUT)).ensureValue(true, new State<Boolean>() {
-            @Override
-            public Boolean reached() {
-                return LineNumberApp.beginUnknowStaticPropertyElementMatrix.length == LineNumberApp.beginUnknowStaticPropertyElement.size();
-            }
-        });
-        for (int i = 0; i < LineNumberApp.beginUnknowStaticPropertyElementMatrix.length; i++) {
-            Assert.assertEquals(LineNumberApp.beginUnknowStaticPropertyElementMatrix[i], LineNumberApp.beginUnknowStaticPropertyElement.get(i));
-        }
-    }
-
-    /**
      * testing LoadListener#beginScriptElement
      */
     @Test
@@ -293,23 +259,6 @@ public class LineNumberTest extends TestBase {
         });
         for (int i = 0; i < LineNumberApp.readPropertyAttributeMatrix.length; i++) {
             Assert.assertEquals(LineNumberApp.readPropertyAttributeMatrix[i], LineNumberApp.readPropertyAttribute.get(i));
-        }
-    }
-
-    /**
-     * testing LoadListener#readUnknownStaticPropertyAttribute
-     */
-    @Test
-    public void testReadUnknownStaticPropertyAttribute() {
-        testCommon(LineNumberApp.Pages.unknownPropertyPage.name(), null, false, false);
-        new Waiter(new Timeout("", WAITER_TIMEOUT)).ensureValue(true, new State<Boolean>() {
-            @Override
-            public Boolean reached() {
-                return LineNumberApp.readUnknownStaticPropertyMatrix.length == LineNumberApp.readUnknownStaticProperty.size();
-            }
-        });
-        for (int i = 0; i < LineNumberApp.readUnknownStaticPropertyMatrix.length; i++) {
-            Assert.assertEquals(LineNumberApp.readUnknownStaticPropertyMatrix[i], LineNumberApp.readUnknownStaticProperty.get(i));
         }
     }
 
