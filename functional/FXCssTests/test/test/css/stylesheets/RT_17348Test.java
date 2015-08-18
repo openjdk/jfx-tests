@@ -27,18 +27,17 @@ package test.css.stylesheets;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByID;
 import org.jemmy.fx.Root;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.timing.State;
-import org.jemmy.timing.Waiter;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -64,7 +63,7 @@ public class RT_17348Test {
         Assert.assertNotNull(pane.getControl().backgroundProperty().get());
         Assert.assertEquals(pane.getControl().backgroundProperty().get(), new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
         Assert.assertNotSame(pane.getControl().backgroundProperty().get(), new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        Wrap<? extends Button> button = sceneParent.lookup(Button.class).wrap();
+        Wrap<? extends Text> button = sceneParent.lookup(Text.class).wrap();
         button.mouse().click();
         pane.waitState(new State() {
             @Override

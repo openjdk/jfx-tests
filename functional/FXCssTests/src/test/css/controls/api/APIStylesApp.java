@@ -85,8 +85,6 @@ public class APIStylesApp extends BasicButtonChooserApp {
             innerPane.setPrefSize(page.slotWidth - page.INNER_PANE_SHIFT, page.slotHeight - ControlPage.INNER_PANE_SHIFT);
             innerPane.setMaxSize(page.slotWidth - page.INNER_PANE_SHIFT, page.slotHeight - page.INNER_PANE_SHIFT);
             innerPane.getChildren().add(control);
-            // This line need from to workaround RT-25567, but it's removed features for RT-24635
-            stylePage.setStyle(control);
             if (showButtons) {
                 stylePage.setStyle(control);
             }

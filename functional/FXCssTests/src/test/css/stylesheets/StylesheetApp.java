@@ -26,14 +26,14 @@ package test.css.stylesheets;
 
 import com.sun.javafx.runtime.VersionInfo;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBoxBuilder;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import test.javaclient.shared.Utils;
 
@@ -60,12 +60,12 @@ public class StylesheetApp extends Application {
         Pane golden = new Pane();
         golden.setId(EXAMPLE_ID);
         golden.setMinSize(WIDTH, 120);
-        Button button  = new Button("Change CSS");
+        Text button  = new Text("Change CSS");
         final Scene scene = new Scene(pane, HEIGHT, WIDTH);
-        button.setOnAction(new EventHandler<ActionEvent>() {
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(ActionEvent t) {
+            public void handle(MouseEvent t) {
                 styleIndex = styleIndex == 0 ? 1 : 0;
                 scene.getStylesheets().set(0, styles[styleIndex]);
             }
