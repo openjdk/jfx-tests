@@ -491,6 +491,7 @@ public enum ControlsFactory implements NodeFactory {
             table.getColumns().setAll(column1, column2);
             table.setPrefHeight(100);
             table.setPrefWidth(100);
+            table.setMinHeight(Control.USE_PREF_SIZE);
             table.setFocusTraversable(false);
             return table;
         }
@@ -530,6 +531,7 @@ public enum ControlsFactory implements NodeFactory {
             treeTable.getColumns().setAll(column1, column2);
             treeTable.setPrefHeight(100);
             treeTable.setPrefWidth(100);
+            treeTable.setMinHeight(Control.USE_PREF_SIZE);
             treeTable.setFocusTraversable(false);
             return treeTable;
         }
