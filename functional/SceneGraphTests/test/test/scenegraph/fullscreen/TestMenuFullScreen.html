@@ -5,32 +5,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
     <head>
-        <title>Animation fullscreen test</title>
+        <title>Mac OS X fullscreen test</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <p><b>LCD Text Test</b>
-        <p>This test verify animation on enter/exit full screen mode for resizable window.
+        <p>This test verifies that menus work properly in Mac OS X native full screen mode.
         <p>Test workflow:
         <ul>
-            <li> Only for Mac OS X 10.7 or higher! In other platform test pass!
-            <li> Enter to native full screen mode(button in top right corner)
-            <li> Try show and hide "Menu1". You must see appropriate messages at the bottom of window.
-            <li> Click on "Menu Item 1" in "Menu1". You must see appropriate messages at the bottom of window.
-            <li> Press 'Ctrl + M'. You must see appropriate messages at the bottom of window.
-            <li> Press "Use system menu" button.
-            <li> Try show and hide "Menu1". You must see appropriate messages at the bottom of window.
-            <li> Click on "Menu Item 1" in "Menu1". You must see appropriate messages at the bottom of window.
-            <li> Press 'Ctrl + M'. You must see appropriate messages at the bottom of window.    
-            <li> Exit from native full screen mode(button in top right corner)
+            <li> Only for Mac OS X 10.7 or higher! Please mark the test as PASS on other platforms.
+            <li> Enter native full screen mode.
+            <li> Try to show and hide 'Menu1'. Messages 'Menu 1 shown' and 'Menu 1 hidden' should be added to text area.
+            <li> Click on 'Menu Item 1' in 'Menu1'. Messages 'Menu 1 shown', 'Menu 1 hidden' and 'Menu Item 1 Action' should be added to text area.
+            <li> Press 'Ctrl + M'. Message 'Menu Item 1 Action' should be added to text area.
+            <li> Press 'Use system menu' button.
+            <li> Try to show and hide 'Menu1'. Messages 'Menu 1 shown' and 'Menu 1 hidden' should be added to text area.
+            <li> Click on 'Menu Item 1' in 'Menu1'. Messages 'Menu 1 shown', 'Menu 1 hidden' and 'Menu Item 1 Action' should be added to text area.
+            <li> Press 'Ctrl + M'. Message 'Menu Item 1 Action' should be added to text area.
+            <li> Exit native full screen mode.
             <li> There should be no errors.
         </ul>
-<p>
-<h2>Hint:</h2>
-<p>
-<pre>
-    <p>Enter to native full screen:<br>
-            <img src="fsmode.jpg" style="border:1px dotted black;" 
-                alt="Enter to full screen mode"/>
+
+	<p>To enter native full screen mode:<br>
+		<img src="fsmode.jpg" alt="Enter native full screen mode"/>
+	</p>
     </body>
 </html>

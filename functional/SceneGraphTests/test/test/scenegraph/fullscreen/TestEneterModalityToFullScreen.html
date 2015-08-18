@@ -5,31 +5,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
     <head>
-        <title>Animation fullscreen test</title>
+        <title>Mac OS X fullscreen test</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <p><b>LCD Text Test</b>
-        <p>This test verify enter modality window to Mac OS X native full screen mode.
+        <p>This test verifies modal window enters and exits Mac OS X native full screen mode properly.
         <p>Test workflow:
          <ul>
-            <li> Only for Mac OS X 10.7 or higher! In other platform test pass!
-            <li> Click on button "Show modality window"
-            <li> Enter modality window to native full screen mode(button in top right corner)
-            <li> New window must be opened in native full screen mode. 
-            <li> Exit from native full screen mode(button in top right corner)
-            <li> You should see a modal window in normal mode(you should see the first window)
-            <li> Close modality window.
+            <li> Only for Mac OS X 10.7 or higher! Please mark the test as PASS on other platforms.
+            <li> Click "Show modality window" button.
+            <li> Switch the modal window to native full screen mode. Modal window should switch to native full screen mode successfully. 
+            <li> Exit native full screen mode.
+            <li> You should see the modal window in normal mode; you should see the first window behind it.
+            <li> Close the modal window.
             <li> You should see the first window in normal mode.
             <li> There should be no errors.
         </ul>   
 
-<p>
-<h2>Hint:</h2>
-<p>
-<pre>
-    <p>Enter to native full screen:<br>
-            <img src="fsmode.jpg" style="border:1px dotted black;" 
-                alt="Enter to full screen mode"/>
+	<p>To enter native full screen mode:<br>
+		<img src="fsmode.jpg" alt="Enter native full screen mode"/>
+	</p>
     </body>
 </html>
