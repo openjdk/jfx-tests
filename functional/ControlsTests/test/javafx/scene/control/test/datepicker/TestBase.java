@@ -191,26 +191,7 @@ public class TestBase extends UtilTestFunctions {
                 }
 
                 public boolean check(Scene cntrl) {
-//                    System.out.println("cntrl.getWidth() " + cntrl.getWidth());
-//                    System.out.println("cntrl.getHeight() " + cntrl.getHeight());
-//                    System.out.println("shift = " + shift);
-//                    System.out.println("heightAddition = " + heightAddition);
-//                    System.out.println("widthAddition = " + widthAddition);
-//                    System.out.println("POPUP_MIN_EXPECTED_WIDTH + shift + widthAddition = " + (POPUP_MIN_EXPECTED_WIDTH + shift + widthAddition));
-//                    System.out.println("POPUP_MAX_EXPECTED_WIDTH + shift + widthAddition = " + (POPUP_MAX_EXPECTED_WIDTH + shift + widthAddition));
-//                    System.out.println("POPUP_MIN_EXPECTED_HEIGHT + heightAddition = " + (POPUP_MIN_EXPECTED_HEIGHT + heightAddition));
-//                    System.out.println("POPUP_MAX_EXPECTED_HEIGHT + heightAddition = " + (POPUP_MAX_EXPECTED_HEIGHT + heightAddition));
-//                    System.out.println("(cntrl.getWidth() >= POPUP_MIN_EXPECTED_WIDTH + shift + widthAddition) = " + (cntrl.getWidth() >= POPUP_MIN_EXPECTED_WIDTH + shift + widthAddition));
-//                    System.out.println("(cntrl.getWidth() <= POPUP_MAX_EXPECTED_WIDTH + shift + widthAddition) = " + (cntrl.getWidth() <= POPUP_MAX_EXPECTED_WIDTH + shift + widthAddition));
-//                    System.out.println("(cntrl.getHeight() >= POPUP_MIN_EXPECTED_HEIGHT + heightAddition) = " + (cntrl.getHeight() >= POPUP_MIN_EXPECTED_HEIGHT + heightAddition));
-//                    System.out.println("(cntrl.getHeight() <= POPUP_MAX_EXPECTED_HEIGHT + heightAddition) = " + (cntrl.getHeight() <= POPUP_MAX_EXPECTED_HEIGHT + heightAddition));
-                    if ((cntrl.getWidth() >= POPUP_MIN_EXPECTED_WIDTH + shift + widthAddition)
-                            && (cntrl.getWidth() <= POPUP_MAX_EXPECTED_WIDTH + shift + widthAddition)
-                            && (cntrl.getHeight() >= POPUP_MIN_EXPECTED_HEIGHT + heightAddition)
-                            && (cntrl.getHeight() <= POPUP_MAX_EXPECTED_HEIGHT + heightAddition)) {
-                        return true;
-                    }
-                    return false;
+                    return cntrl.lookup(".date-picker-popup") != null;
                 }
             }).wrap();
         } catch (Exception e) {
