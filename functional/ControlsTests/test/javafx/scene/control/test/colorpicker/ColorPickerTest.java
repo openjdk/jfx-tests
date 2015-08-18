@@ -37,7 +37,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.test.PopupMenuTest;
+import javafx.scene.control.test.mix.PopupMenuTest;
 import static javafx.scene.control.test.colorpicker.ColorPickerApp.predefinedColors;
 import static javafx.scene.control.test.colorpicker.TestBase.testedControl;
 import javafx.scene.control.test.utils.ptables.AbstractPropertyController.SettingType;

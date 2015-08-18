@@ -31,7 +31,7 @@ import javafx.scene.control.Labeled;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.test.MenuItemTest;
+import javafx.scene.control.test.mix.MenuItemTest;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByText;
 import org.jemmy.fx.control.MenuItemWrap;

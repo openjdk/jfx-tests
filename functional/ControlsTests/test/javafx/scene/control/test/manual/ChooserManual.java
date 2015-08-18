@@ -24,6 +24,7 @@
  */
 package javafx.scene.control.test.manual;
 
+import client.test.Keywords;
 import client.test.RunUI;
 import client.test.StopUI;
 import javafx.scene.control.test.chooser.AWTChooser;
@@ -32,6 +33,7 @@ import javafx.scene.control.test.chooser.FXChooser;
 /**
  * @author Andrey Glushchenko
  */
+@Keywords(keywords = "manual_embedded")
 public class ChooserManual {
     static Process process;
     @RunUI

@@ -118,7 +118,18 @@
             <li>Open the same dialog again, and navigate to the previous location.</li>
             <li>Type file name "file1", and press save.</li>
             <li>WINDOWS only : check, that an alert (warning) about overwriting an existing file is shown.</li>
-            <li>Check, that result of the dialog points to correct location of file "file1.extension".</li>            
+            <li>Check, that result of the dialog points to correct location of file.
+                <ul>
+                    <li>
+                        <strong>Linux</strong>
+                        <p>Check, that result of the dialog points to correct location of file "file1" without extension</p>
+                    </li>
+                    <li>
+                        <strong>Mac</strong>
+                        <p>Check, that result of the dialog points to correct location of file "file1.extension"</p>
+                    </li>
+                </ul>
+            </li>            
             <li>Check that there are no exceptions, everything works fine.</li>
         </ul>
 
@@ -127,7 +138,18 @@
             <li>Click button "Save file with extensions FX (modal dialog)".</li>
             <li>Check, that name of the file for saving is set to "file3" or "file3.extension".</li>
             <li>Press save.</li>
-            <li>Check, that result of the dialog points to correct location of file "file3.extension", and that file exists physically.</li>    
+            <li>WIN : Check, that result of the dialog points to correct location of file "file3.extension" and that file exists physically.
+                <ul>
+                    <li>
+                        <strong>Linux</strong>
+                        <p>Check, that result of the dialog points to correct location of file "file3" without extension</p>
+                    </li>
+                    <li>
+                        <strong>Mac</strong>
+                        <p>Check, that result of the dialog points to correct location of file "file3.extension"</p>
+                    </li>
+                </ul>
+            </li>
             <li>Check that there are no exceptions, everything works fine.</li>
         </ul>
 
@@ -148,7 +170,7 @@ Note that on Windows system you have to select the logical drive first. E.g. dou
             <li>Navigate to place, where "file*.extension" were saved.</li>
             <li>Open any of files - file1 or file2, or file3 from previous tests (select it via mouse click on the file).</li>
             <li>Press open.</li>
-            <li>Check, that result of the dialog points to correct location of that file and extension "*.extension" is added.</li>    
+            <li>Check, that result of the dialog points to correct location of that file and extension "*.extension" is added for all platforms except LINUX.</li>    
             <li>Check that there are no exceptions, everything works fine.</li>
         </ul>
 

@@ -206,4 +206,13 @@ public class XYChartBase extends ChartBase {
     public void cssHorizontalZeroLineVisible() throws InterruptedException {
         testCommon(XYChartCSS.CSSHorizontalZeroLineVisible.name(), null, true, true, XYChartBaseApp.BOOL.length);
     }
+    
+    /**
+     * Test for RT-38221: [LineChart] Javafx 8 Line Chart does not plot data in order
+     */
+    @ScreenshotCheck
+    @Test(timeout = 300000)
+    public void testPlotDataOrder() throws InterruptedException {
+        testCommon(Pages.PlotDataOrder.name(), null, true, true, XYChartBaseApp.BOOL.length);
+}
 }

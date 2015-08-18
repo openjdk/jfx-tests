@@ -24,11 +24,13 @@
  */
 package javafx.scrollEvent.manual;
 
+import client.test.Keywords;
 import client.test.RunUI;
 
 /**
  * @author Alexander Kirov
  */
+@Keywords(keywords = "manual_embedded")
 public class ScrollEventManual {
 
     @RunUI

@@ -24,12 +24,14 @@
  */
 package javafx.stage.manual;
 
+import client.test.Keywords;
 import client.test.RunUI;
 import javafx.scene.control.test.windows.NewStageApp;
 
 /**
  * @author Alexander Kirov
  */
+@Keywords(keywords = "manual_embedded")
 public class StageTestManual {
 
     @RunUI

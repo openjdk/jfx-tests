@@ -23,8 +23,9 @@
  * questions.
  */
 
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
+import javafx.scene.control.test.SplitMenuButtonApp;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;

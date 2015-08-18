@@ -63,6 +63,8 @@ import test.javaclient.shared.Utils;
 import static javafx.commons.Consts.*;
 import javafx.scene.control.TableColumn;
 import java.util.Comparator;
+import java.util.concurrent.CountDownLatch;
+import javafx.application.Platform;
 import javafx.scene.control.TreeTableColumn;
 import org.jemmy.env.Timeout;
 import org.jemmy.timing.Waiter;
@@ -383,6 +385,7 @@ public class TestBase extends UtilTestFunctions {
     }
     
     class Helper extends ApplicationInteractionFunctions {
+
         {
             testedControl = TestBase.testedControl;
         }
@@ -507,7 +510,37 @@ public class TestBase extends UtilTestFunctions {
         });
     }
     
-    double getColumnWidth(final int index) {
+    protected void setColumnTextSync(final int index, final String text) {
+	assert !Platform.isFxApplicationThread();        
+	CountDownLatch latch = new CountDownLatch(1);
+        Platform.runLater(() -> {
+                if (isTableTests) {
+                    TableView table = (TableView) testedControl.getControl();
+                    ((TableColumn) table.getColumns().get(index)).setText(text);
+                } else {
+                    TreeTableView treeTable = (TreeTableView) testedControl.getControl();
+                    ((TreeTableColumn) treeTable.getColumns().get(index)).setText(text);
+                }
+            latch.countDown();
+        });
+        try {
+            latch.await();
+        } catch (InterruptedException ex) {
+            System.out.println("Exception while awaiting text to set: " + ex);
+        }
+    }
+
+    protected String getColumnText(final int index) {
+        if (isTableTests) {
+            TableView table = (TableView) testedControl.getControl();
+            return ((TableColumn) table.getColumns().get(index)).getText();
+        } else {
+            TreeTableView treeTable = (TreeTableView) testedControl.getControl();
+            return ((TreeTableColumn) treeTable.getColumns().get(index)).getText();
+        }
+    }
+
+    protected double getColumnWidth(final int index) {
         return new Helper().getCellWrap(index, 0).getScreenBounds().getWidth();
     }
 }

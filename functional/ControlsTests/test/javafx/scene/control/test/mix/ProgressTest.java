@@ -23,10 +23,11 @@
  * questions.
  */
 
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
 import client.test.Smoke;
+import javafx.scene.control.test.ProgressApp;
 import javafx.scene.control.test.ProgressApp.Pages;
 import org.junit.BeforeClass;
 import org.junit.Test;

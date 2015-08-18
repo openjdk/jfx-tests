@@ -22,11 +22,12 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
 import client.test.Smoke;
-import javafx.scene.control.test.SliderApp.Pages;
+import javafx.scene.control.test.ScrollBarApp.Pages;
+import javafx.scene.control.test.scrollbar.ScrollBarApp;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,21 +35,12 @@ import test.javaclient.shared.FilteredTestRunner;
 import test.javaclient.shared.TestBase;
 
 @RunWith(FilteredTestRunner.class)
-public class SliderTest extends TestBase {
+public class ScrollBarTest extends TestBase {
 
     //@RunUI
     @BeforeClass
     public static void runUI() {
-        SliderApp.main(null);
-    }
-
-    /**
-     * Test for Slider default constructor
-     */
-    @ScreenshotCheck
-    @Test(timeout = 300000)
-    public void defaultConstructorTest() throws InterruptedException {
-        testCommon(Pages.DefaultConstructor.name());
+        ScrollBarApp.main(null);
     }
 
     /**
@@ -61,59 +53,68 @@ public class SliderTest extends TestBase {
     }
 
     /**
-     * Test for Slider setLabelFormatter API
+     * Test for ScrollBar setAdjustValue API
      */
     @ScreenshotCheck
     @Test(timeout = 300000)
-    public void labelFormatterTest() throws InterruptedException {
-        testCommon(Pages.LabelFormatter.name());
+    public void adjustValueHorizontalTest() throws InterruptedException {
+        testCommon(Pages.AdjustValueHorizontal.name());
     }
 
     /**
-     * Test for Slider setMajorTickUnit API
+     * Test for ScrollBar setAdjustValue API
      */
     @ScreenshotCheck
     @Test(timeout = 300000)
-    public void majorTickUnitTest() throws InterruptedException {
-        testCommon(Pages.MajorTickUnit.name());
+    public void adjustValueVerticalTest() throws InterruptedException {
+        testCommon(Pages.AdjustValueVertical.name());
     }
 
     /**
-     * Test for Slider setMinorTickCount API
+     * Test for ScrollBar decrement API
      */
     @ScreenshotCheck
     @Test(timeout = 300000)
-    public void minorTickCountTest() throws InterruptedException {
-        testCommon(Pages.MinorTickCount.name());
+    public void decrementTest() throws InterruptedException {
+        testCommon(Pages.Decrement.name());
     }
 
     /**
-     * Test for Slider setValue, setMin, setMax API
+     * Test for ScrollBar increment API
+     */
+    @ScreenshotCheck
+    @Test(timeout = 300000)
+    public void incrementTest() throws InterruptedException {
+        testCommon(Pages.Increment.name());
+    }
+
+    /**
+     * Test for ScrollBar setValue, setMin, setMax API
      */
     @ScreenshotCheck
     @Smoke
     @Test(timeout = 300000)
     public void positionVerticalTest() throws InterruptedException {
-        testCommon(Pages.PositionsVertical.name());
+        testCommon(Pages.PositionsHorizontal.name());
     }
 
     /**
-     * Test for Slider setValue, setMin, setMax API
+     * Test for ScrollBar setValue, setMin, setMax API
      */
     @ScreenshotCheck
     @Smoke
     @Test(timeout = 300000)
     public void positionHorizontalTest() throws InterruptedException {
-        testCommon(Pages.PositionsHorizontal.name());
+        testCommon(Pages.PositionsVertical.name());
     }
 
     /**
-     * Test for default sizes
+     * Test for ScrollBar setVisibleAmount API
      */
     @ScreenshotCheck
     @Test(timeout = 300000)
-    public void noSizesTest() throws InterruptedException {
-        testCommon(Pages.NoSizes.name());
+    public void visibleAmountTest() throws InterruptedException {
+        testCommon(Pages.VisibleAmount.name());
     }
 
     protected void testCommon(String name) {

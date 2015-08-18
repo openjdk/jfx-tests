@@ -22,7 +22,7 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
 import client.test.Smoke;
@@ -36,6 +36,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.test.MenuBarApp;
 import javafx.util.StringConverter;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
@@ -49,6 +50,7 @@ import org.jemmy.interfaces.Keyboard.KeyboardModifiers;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.timing.State;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -56,7 +58,6 @@ import org.junit.runner.RunWith;
 import test.javaclient.shared.FilteredTestRunner;
 import test.javaclient.shared.Utils;
 import test.javaclient.shared.screenshots.ScreenshotUtils;
-import static org.junit.Assert.*;
 
 @RunWith(FilteredTestRunner.class)
 public class MenuBarTest extends MenuTestBase {

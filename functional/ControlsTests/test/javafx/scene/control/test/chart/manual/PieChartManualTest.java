@@ -24,6 +24,7 @@
  */
 package javafx.scene.control.test.chart.manual;
 
+import client.test.Keywords;
 import client.test.RunUI;
 import org.junit.Ignore;
 
@@ -31,6 +32,7 @@ import org.junit.Ignore;
  * @author Alexander Kirov
  */
 @Ignore
+@Keywords(keywords = "manual_embedded")
 public class PieChartManualTest {
 
     @RunUI

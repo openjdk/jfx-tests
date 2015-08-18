@@ -22,7 +22,7 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
 import client.test.Smoke;
@@ -34,6 +34,8 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.test.ContextMenuApp;
+import javafx.scene.control.test.ControlsTestBase;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByID;

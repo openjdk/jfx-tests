@@ -22,7 +22,7 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
 import client.test.Smoke;
@@ -37,6 +37,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.test.SplitPaneApp;
 import javafx.scene.control.test.SplitPaneApp.Pages;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;

@@ -34,7 +34,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.control.test.TreeViewTest;
+import javafx.scene.control.test.mix.TreeViewTest;
 import javafx.scene.control.test.util.BooleanPropertyChanger;
 import javafx.scene.control.test.util.PropertyHelper;
 import javafx.scene.control.test.cellapps.CheckBoxTreeItemApp;

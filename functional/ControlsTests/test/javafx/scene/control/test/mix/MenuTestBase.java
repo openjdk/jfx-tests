@@ -23,12 +23,13 @@
  * questions.
  */
 
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.test.ControlsTestBase;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.Root;

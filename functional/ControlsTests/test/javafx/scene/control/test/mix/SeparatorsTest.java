@@ -22,10 +22,11 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
 import client.test.Smoke;
+import javafx.scene.control.test.SeparatorApp;
 import javafx.scene.control.test.SeparatorApp.Pages;
 import javafx.scene.control.test.SeparatorApp.SeparatorsPages;
 import org.junit.BeforeClass;

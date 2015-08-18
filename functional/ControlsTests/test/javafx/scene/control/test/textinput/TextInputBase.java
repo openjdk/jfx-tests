@@ -42,7 +42,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.test.Change;
-import javafx.scene.control.test.PopupMenuTest;
+import javafx.scene.control.test.mix.PopupMenuTest;
 import javafx.scene.control.test.textinput.TextInputBaseApp.Pages;
 import javafx.scene.control.test.textinput.TextInputChanger.TextInputControlWrapInterface;
 import javafx.scene.control.test.textinput.TextInputChanger.TextInputPages;

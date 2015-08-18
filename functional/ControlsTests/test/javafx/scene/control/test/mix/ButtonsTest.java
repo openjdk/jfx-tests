@@ -22,33 +22,35 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
-import org.junit.runner.RunWith;
-import test.javaclient.shared.FilteredTestRunner;
-import org.jemmy.fx.Root;
-import org.jemmy.action.GetAction;
 import client.test.Smoke;
-import test.javaclient.shared.Utils;
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import com.oracle.jdk.sqe.cc.markup.Covers.Level;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.test.Buttons;
+import static javafx.scene.control.test.Buttons.ButtonsScene.*;
+import javafx.scene.control.test.ControlsTestBase;
 import javafx.scene.text.Text;
+import org.jemmy.action.GetAction;
+import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByID;
 import org.jemmy.fx.ByText;
-import org.jemmy.control.Wrap;
+import org.jemmy.fx.Root;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Parent;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import test.javaclient.shared.FilteredTestRunner;
 import test.javaclient.shared.TestUtil;
-import static org.junit.Assert.*;
-import static javafx.scene.control.test.Buttons.ButtonsScene.*;
+import test.javaclient.shared.Utils;
 
 /**
  *

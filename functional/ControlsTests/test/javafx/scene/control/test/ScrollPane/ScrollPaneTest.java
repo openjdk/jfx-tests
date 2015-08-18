@@ -253,6 +253,14 @@ public class ScrollPaneTest extends TestBase {
         Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, false) == null);
     }
 
+    @Test(timeout = 300000)
+    @Covers(value = {"javafx.scene.control.ScrollPane.prefViewportWidth.GET", "javafx.scene.control.ScrollPane.prefViewportWidth.DEFAULT"}, level = Level.FULL)
+    public void checkMinViewPortWidthSetTest() throws InterruptedException {
+        Assert.assertEquals((new ScrollPane()).prefViewportWidthProperty().getValue(), 0, commonComparePrecision);
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.minViewportWidth, 600);
+        checkTextFieldValue(Properties.width, 600, 20);
+    }
+    
     @Smoke
     @Test(timeout = 300000)//Property affecting is verified in other test.
     @Covers(value = {"javafx.scene.control.ScrollPane.pannable.GET", "javafx.scene.control.ScrollPane.pannable.DEFAULT"}, level = Level.FULL)

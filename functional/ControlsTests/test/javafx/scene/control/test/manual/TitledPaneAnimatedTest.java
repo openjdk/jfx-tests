@@ -24,6 +24,7 @@
  */
 package javafx.scene.control.test.manual;
 
+import client.test.Keywords;
 import client.test.RunUI;
 
 /**
@@ -34,6 +35,7 @@ import client.test.RunUI;
  *
  * @author Alexander Kirov
  */
+@Keywords(keywords = "manual_embedded")
 public class TitledPaneAnimatedTest {
 
     @RunUI

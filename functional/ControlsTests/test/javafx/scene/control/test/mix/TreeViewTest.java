@@ -22,7 +22,7 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
 import client.test.Smoke;
@@ -46,6 +46,7 @@ import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
+import javafx.scene.control.test.ControlsTestBase;
 import javafx.scene.control.test.treetable.TreeTableAsOldTreeApp;
 import javafx.scene.control.test.treeview.TreeViewApp;
 import javafx.scene.control.test.treeview.TreeViewApp.Data;

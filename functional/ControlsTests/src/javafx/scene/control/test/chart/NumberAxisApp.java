@@ -22,20 +22,22 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package javafx.scene.control.test.chart;
 
 import javafx.scene.Node;
 import javafx.scene.chart.Axis;
+import javafx.scene.chart.Chart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ScatterChart;
 import test.javaclient.shared.TestNode;
 import test.javaclient.shared.Utils;
 
 public class NumberAxisApp extends ValueAxisApp {
     public enum Pages {
-        Constructors, ForceZeroInRange, TickUnit
+        Constructors, ForceZeroInRange, TickUnit, UpperBoundOverflow
     }
 
+    protected static final double TOO_LARGE_VALUE = 73529411764706d;
     protected static final Double[] TICK_UNIT_D = {5.0, 10.0, 30.0};
     protected static final String[] TICK_UNIT_S = {"5", "10", "30"};
     protected static final int CONSTRUCTORS = 3;
@@ -85,6 +87,8 @@ public class NumberAxisApp extends ValueAxisApp {
         setupDoubleNoAutoRanging(Pages.TickUnit.name(), TICK_UNIT_D);
 
         setupNumberAxisCSSPages();
+
+        setupUpperBoundOverflow(Pages.UpperBoundOverflow.name(), TOO_LARGE_VALUE);
 
         return rootTestNode;
     }
@@ -198,5 +202,21 @@ public class NumberAxisApp extends ValueAxisApp {
 
     public static void main(String[] args) {
         Utils.launch(NumberAxisApp.class, args);
+    }
+    
+    private void setupUpperBoundOverflow(String name, double d) {
+        pageSetup(Pages.UpperBoundOverflow.name(), new TestNode(name) {
+            @Override
+            public Node drawNode() {
+                NumberAxis y = new NumberAxis();
+                NumberAxis x = new NumberAxis();
+                y.setUpperBound(d);
+                x.setUpperBound(5);
+                Chart chart = new ScatterChart(x, y);
+                chart.maxWidthProperty().set(300);
+                chart.maxHeightProperty().set(200);
+                return chart;
+            }
+        });
     }
 }

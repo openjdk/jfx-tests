@@ -26,6 +26,7 @@ package javafx.scene.control.test.treetable;
 
 import client.test.Smoke;
 import java.util.Comparator;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.commons.SortValidator;
@@ -41,7 +42,7 @@ import org.jemmy.action.GetAction;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Test;
 import static javafx.scene.control.test.treetable.TreeTableAsOldTableApp.*;
 
@@ -131,4 +132,25 @@ public class TreeTableAsTableTest extends TableViewTest {
         String msg = validator.getFailureReason();
         assertTrue(msg, result);
     }
+    
+    
+    /**
+     * RT-38739 create test for RT-38172
+     * RT-38172: ClassCastException after TreeTableColumn setText
+     */
+    @Test(timeout = 300000)
+    public void testSetTextException() {
+        AtomicBoolean exceptionThrown = new AtomicBoolean(false);
+        Thread.UncaughtExceptionHandler h = (Thread th, Throwable ex) -> {
+            exceptionThrown.set(exceptionThrown.get() | (ex instanceof ClassCastException));
+        };
+        Thread.UncaughtExceptionHandler prevHandler = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler(h);
+        String originalText = getColumnText(0);
+        setColumnTextSync(0, "Whatever");
+        setColumnTextSync(0, "Nevermind");
+        setColumnTextSync(0, originalText);
+        Thread.setDefaultUncaughtExceptionHandler(prevHandler);
+        assertFalse("There should be no exception during setText", exceptionThrown.get());
+    }    
 }

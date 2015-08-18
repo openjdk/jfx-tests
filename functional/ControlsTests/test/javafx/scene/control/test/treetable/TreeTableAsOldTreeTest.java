@@ -25,7 +25,7 @@
 package javafx.scene.control.test.treetable;
 
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.test.TreeViewTest;
+import javafx.scene.control.test.mix.TreeViewTest;
 import org.jemmy.fx.control.TreeTableNodeWrap;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;

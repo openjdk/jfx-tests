@@ -22,7 +22,7 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
 import client.test.Smoke;
@@ -32,6 +32,7 @@ import javafx.collections.ObservableList;
 import javafx.commons.SortValidator;
 import javafx.scene.Node;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.test.AccordionApp;
 import javafx.scene.control.test.AccordionApp.Pages;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;

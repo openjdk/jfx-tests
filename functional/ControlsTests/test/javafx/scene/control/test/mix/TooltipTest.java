@@ -23,43 +23,45 @@
  * questions.
  */
 
-package javafx.scene.control.test;
+package javafx.scene.control.test.mix;
 
-import test.javaclient.shared.FilteredTestRunner;
-import org.junit.runner.RunWith;
 import client.test.ScreenshotCheck;
 import client.test.Smoke;
-import javafx.scene.control.OverrunStyle;
-import javafx.scene.text.TextAlignment;
-import org.jemmy.interfaces.Selectable;
-import javafx.scene.control.ContentDisplay;
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import com.oracle.jdk.sqe.cc.markup.Covers.Level;
-import org.junit.After;
-import org.jemmy.input.SelectionText;
-import javafx.scene.control.TextField;
-import javafx.stage.PopupWindow;
-import javafx.scene.control.ToggleButton;
-import org.jemmy.fx.ByID;
-import org.jemmy.fx.Root;
-import org.jemmy.interfaces.Parent;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import org.jemmy.control.Wrap;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.test.ControlsTestBase;
+import javafx.scene.control.test.TooltipApp;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.PopupWindow;
 import javafx.stage.Window;
 import org.jemmy.action.GetAction;
+import org.jemmy.control.Wrap;
+import org.jemmy.fx.ByID;
 import org.jemmy.fx.ByWindowType;
+import org.jemmy.fx.Root;
 import org.jemmy.fx.control.CheckBoxWrap;
 import org.jemmy.fx.control.TextControlWrap;
+import org.jemmy.input.SelectionText;
+import org.jemmy.interfaces.Parent;
+import org.jemmy.interfaces.Selectable;
+import org.junit.After;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import test.javaclient.shared.FilteredTestRunner;
 
 @RunWith(FilteredTestRunner.class)
 public class TooltipTest extends ControlsTestBase {

@@ -163,6 +163,7 @@ public class TestBase extends UtilTestFunctions {
 
     static protected enum Properties {
 
-        fitToWidth, fitToHeight, vmax, vmin, vvalue, hmax, hmin, hvalue, pannable, prefViewportWidth, prefViewportHeight, hbarPolicy, vbarPolicy, prefWidth, prefHeight
+        fitToWidth, fitToHeight, vmax, vmin, vvalue, hmax, hmin, hvalue, pannable, prefViewportWidth, prefViewportHeight, hbarPolicy, vbarPolicy, prefWidth, prefHeight,
+        minViewportWidth, width
     };
 }
