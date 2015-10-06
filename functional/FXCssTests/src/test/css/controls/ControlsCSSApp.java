@@ -102,7 +102,9 @@ public class ControlsCSSApp extends BasicButtonChooserApp {
         if (control instanceof Text) {
             control.relocate(0, 0); // workaround RT-24670
         }
-        style.setStyle(control);
+        if (showButtons) {
+            style.setStyle(control);
+        }
         pageWithSlot.add(new StyleTestNode(style, control, innerPane));
     }
 

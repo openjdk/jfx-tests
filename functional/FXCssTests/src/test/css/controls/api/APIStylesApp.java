@@ -85,7 +85,9 @@ public class APIStylesApp extends BasicButtonChooserApp {
             innerPane.setPrefSize(page.slotWidth - page.INNER_PANE_SHIFT, page.slotHeight - ControlPage.INNER_PANE_SHIFT);
             innerPane.setMaxSize(page.slotWidth - page.INNER_PANE_SHIFT, page.slotHeight - page.INNER_PANE_SHIFT);
             innerPane.getChildren().add(control);
-            stylePage.setStyle(control);
+            if (showButtons) {
+                stylePage.setStyle(control);
+            }
             rootNode.add(new TestNodeLeaf(stylePage.name().replace("_", "-"), innerPane));
         }
     }
