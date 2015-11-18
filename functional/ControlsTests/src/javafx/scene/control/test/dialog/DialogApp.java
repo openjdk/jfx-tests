@@ -25,7 +25,8 @@
 package javafx.scene.control.test.dialog;
 
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -38,7 +39,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceDialog;
@@ -48,6 +48,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -72,12 +73,12 @@ public class DialogApp extends InteroperabilityApp {
     public static void main(String[] args) {
         Utils.launch(DialogApp.class, args);
     }
-    
+
     @Override
     public Scene getScene() {
         return new DialogScene();
     }
-    
+
     public class DialogScene extends Scene {
 
         private ButtonType lastResult;
@@ -119,27 +120,27 @@ public class DialogApp extends InteroperabilityApp {
         final Text checkBoxSelection = new Text();
         int counter, last_counter;
         ArrayList<ToggleButton> selectedButtons = new ArrayList<>();
-        
+
         public DialogScene() {
             super(new Pane(), 1200, 500);
             initialize();
         }
-        
+
         protected void initialize() {
             Utils.addBrowser(this);
-            
+
             GridPane grid = new GridPane();
             grid.setPadding(new Insets(10, 10, 10, 10));
             grid.setHgap(10);
             grid.setVgap(10);
-            
+
             int row = 0;
 
             // *******************************************************************
             // Information Dialog
             // *******************************************************************
             grid.add(createLabel("Information Dialog: "), 0, row);
-            
+
             final Button showInformationDialogButton = new Button(BUTTON_SHOW_INFO_TEXT);
             showInformationDialogButton.setOnAction((ActionEvent e) -> {
                 Alert dlg = createAlert(Alert.AlertType.INFORMATION);
@@ -154,7 +155,7 @@ public class DialogApp extends InteroperabilityApp {
                 dlg.setOnHidden(evt -> System.out.println(evt));
                 showDialog(dlg);
             });
-            
+
             final Button showInformationDialogTwoButtonsButton = new Button(BUTTON_SHOW_INFO_TWO_BUTTONS_TEXT);
             showInformationDialogTwoButtonsButton.setOnAction((ActionEvent e) -> {
                 Alert dlg = createAlert(Alert.AlertType.INFORMATION);
@@ -164,42 +165,42 @@ public class DialogApp extends InteroperabilityApp {
                 dlg.getButtonTypes().add(ButtonType.NEXT);
                 showDialog(dlg);
             });
-            
+
             grid.add(new HBox(10, showInformationDialogButton, showInformationDialogTwoButtonsButton), 1, row);
-            
+
             row++;
 
             // *******************************************************************
             // Confirmation Dialog
             // *******************************************************************
             grid.add(createLabel("Confirmation Dialog: "), 0, row);
-            
+
             final CheckBox cbShowCancel = new CheckBox(CHECKBOX_SHOW_CANCEL_TEXT);
             cbShowCancel.setSelected(true);
-            
+
             final Button showConfirmationDialogButton = new Button(BUTTON_SHOW_CONFIRM_TEXT);
             showConfirmationDialogButton.setOnAction(e -> {
                 Alert dlg = createAlert(Alert.AlertType.CONFIRMATION);
                 dlg.setTitle("You do want dialogs right?");
                 String optionalMasthead = "Just Checkin'";
                 dlg.getDialogPane().setContentText("I was a bit worried that you might not want them, so I wanted to double check.");
-                
+
                 if (!cbShowCancel.isSelected()) {
                     dlg.getDialogPane().getButtonTypes().remove(ButtonType.CANCEL);
                 }
-                
+
                 configureSampleDialog(dlg, optionalMasthead, null);
                 showDialog(dlg);
             });
             grid.add(new HBox(10, showConfirmationDialogButton, cbShowCancel), 1, row);
-            
+
             row++;
 
             // *******************************************************************
             // Warning Dialog
             // *******************************************************************
             grid.add(createLabel("Warning Dialog: "), 0, row);
-            
+
             final Button showWarningDialogButton = new Button(BUTTON_SHOW_WARNING_TEXT);
             showWarningDialogButton.setOnAction(e -> {
                 Alert dlg = createAlert(Alert.AlertType.WARNING);
@@ -210,14 +211,14 @@ public class DialogApp extends InteroperabilityApp {
                 showDialog(dlg);
             });
             grid.add(new HBox(10, showWarningDialogButton), 1, row);
-            
+
             row++;
 
             // *******************************************************************
             // Error Dialog
             // *******************************************************************
             grid.add(createLabel("Error Dialog: "), 0, row);
-            
+
             final Button showErrorDialogButton = new Button(BUTTON_SHOW_ERROR_TEXT);
             showErrorDialogButton.setOnAction(e -> {
                 Alert dlg = createAlert(Alert.AlertType.ERROR);
@@ -228,14 +229,14 @@ public class DialogApp extends InteroperabilityApp {
                 showDialog(dlg);
             });
             grid.add(new HBox(10, showErrorDialogButton), 1, row);
-            
+
             row++;
 
             // *******************************************************************
             // NONE Dialog
             // *******************************************************************
             grid.add(createLabel("NONE Type Dialog: "), 0, row);
-            
+
             final Button showNoneDialogButton = new Button(BUTTON_SHOW_NONE_TEXT);
             showNoneDialogButton.setOnAction(e -> {
                 Alert dlg = createAlert(Alert.AlertType.NONE);
@@ -246,14 +247,14 @@ public class DialogApp extends InteroperabilityApp {
                 showDialog(dlg);
             });
             grid.add(new HBox(10, showNoneDialogButton), 1, row);
-            
+
             row++;
 
             // *******************************************************************
             // Input Dialog (with masthead)
             // *******************************************************************
             grid.add(createLabel("Text Field Dialog: "), 0, row);
-            
+
             final Button showTextFieldDialogButton = new Button(BUTTON_SHOW_TEXT_FIELD_TEXT);
             showTextFieldDialogButton.setOnAction(e -> {
                 TextInputDialog dlg = new TextInputDialog("");
@@ -265,7 +266,7 @@ public class DialogApp extends InteroperabilityApp {
             });
             grid.add(new HBox(10, showTextFieldDialogButton), 1, row);
             row++;
-            
+
             grid.add(createLabel("Initial Value Set Dialog: "), 0, row);
             final Button showInitialValueSetDialogButton = new Button(BUTTON_SHOW_INITIAL_VALUE_TEXT);
             showInitialValueSetDialogButton.setOnAction(e -> {
@@ -278,13 +279,15 @@ public class DialogApp extends InteroperabilityApp {
             });
             grid.add(new HBox(10, showInitialValueSetDialogButton), 1, row);
             row++;
-            
+
             grid.add(createLabel("Set Choices Dialog (<10): "), 0, row);
             final Button showChoicesLessTenDialogButton = new Button(BUTTON_SHOW_CHOICE_LT_TEN_TEXT);
             showChoicesLessTenDialogButton.setOnAction(e -> {
                 ChoiceDialog<String> dlg = new ChoiceDialog<String>("Jonathan",
                         "Matthew", "Jonathan", "Ian", "Sue", "Hannah");
                 dlg.setTitle("Name Guess");
+                List<ButtonType> existing = dlg.getDialogPane().getButtonTypes();
+                existing.addAll(getSelectedTypes(existing));
                 String optionalMasthead = "Name Guess";
                 dlg.getDialogPane().setContentText("Pick a name?");
                 configureSampleDialog(dlg, optionalMasthead, null);
@@ -292,7 +295,7 @@ public class DialogApp extends InteroperabilityApp {
             });
             grid.add(new HBox(10, showChoicesLessTenDialogButton), 1, row);
             row++;
-            
+
             grid.add(createLabel("Set Choices (>=10) Dialog: "), 0, row);
             final Button showChoicesGreaterTenDialogButton = new Button(BUTTON_SHOW_CHOICE_GT_TEN_TEXT);
             showChoicesGreaterTenDialogButton.setOnAction(e -> {
@@ -301,6 +304,8 @@ public class DialogApp extends InteroperabilityApp {
                         "Hannah", "Julia", "Denise", "Stephan",
                         "Sarah", "Ron", "Ingrid");
                 dlg.setTitle("Name Guess");
+                List<ButtonType> existing = dlg.getDialogPane().getButtonTypes();
+                existing.addAll(getSelectedTypes(existing));
                 String optionalMasthead = "Name Guess";
                 dlg.getDialogPane().setContentText("Pick a name?");
                 configureSampleDialog(dlg, optionalMasthead, null);
@@ -308,35 +313,37 @@ public class DialogApp extends InteroperabilityApp {
             });
             grid.add(new HBox(10, showChoicesGreaterTenDialogButton), 1, row);
             row++;
-            
+
             grid.add(createLabel("Dialog With Expandable Content:"), 0, row);
             final Button showExpandable = new Button(BUTTON_SHOW_EXP_TEXT);
             showExpandable.setOnAction(new EventHandler<ActionEvent>() {
-                
+
                 @Override
                 public void handle(ActionEvent event) {
                     Alert dlg = createAlert(Alert.AlertType.INFORMATION);
                     dlg.setTitle("Dialog With Expandable Conent");
                     dlg.getDialogPane().setContentText(CONTENT_TEXT);
-                    dlg.getDialogPane().setExpandableContent((Node) expContentGroup.getSelectedToggle().getUserData());
+                    Toggle selected = expContentGroup.getSelectedToggle();
+                    dlg.getDialogPane().setExpandableContent(
+                            selected == null ? null : (Node) selected.getUserData());
                     configureSampleDialog(dlg, OPTIONAL_MASTERHEAD_TEXT, null);
                     showDialog(dlg);
                 }
             });
             grid.add(new HBox(10, showExpandable), 1, row);
             row++;
-            
-                        
+
             grid.add(createLabel("Dialog With Custom Content:"), 0, row);
             final Button showCustom = new Button(BUTTON_SHOW_CUSTOM_TEXT);
             showCustom.setOnAction(new EventHandler<ActionEvent>() {
-                
+
                 @Override
                 public void handle(ActionEvent event) {
                     Alert dlg = createAlert(Alert.AlertType.INFORMATION);
                     dlg.setTitle("Dialog With Custom Content");
                     dlg.getDialogPane().setContentText(CONTENT_TEXT);
-                    dlg.getDialogPane().setContent((Node) expContentGroup.getSelectedToggle().getUserData());
+                    Toggle selected = expContentGroup.getSelectedToggle();
+                    dlg.getDialogPane().setContent(selected == null ? null : (Node) selected.getUserData());
                     configureSampleDialog(dlg, OPTIONAL_MASTERHEAD_TEXT, null);
                     showDialog(dlg);
                 }
@@ -364,23 +371,28 @@ public class DialogApp extends InteroperabilityApp {
             list.setPrefSize(splitPane.getPrefWidth(), splitPane.getPrefHeight());
             list.getChildren().add(splitPane);
         }
-        
+
         private Alert createAlert(Alert.AlertType type) {
             Alert dlg;
             Window owner = cbSetOwner.isSelected() ? stage : null;
-            ArrayList<ButtonType> types = new ArrayList<>();
-            for (ToggleButton tb : selectedButtons) {
-                if (tb.isSelected()) {
-                    types.add((ButtonType) tb.getUserData());
-                }
-            }
-            
+            List<ButtonType> types = getSelectedTypes(Collections.emptyList());
             dlg = types.isEmpty() ? new Alert(type, "") : new Alert(type, "", types.toArray(new ButtonType[types.size()]));
             dlg.initModality(modalityCombobox.getValue());
             dlg.initOwner(owner);
             return dlg;
         }
-        
+
+        private List<ButtonType> getSelectedTypes(List<ButtonType> alreadySelected) {
+            List<ButtonType> types = new ArrayList<>();
+            for (ToggleButton tb : selectedButtons) {
+                if (tb.isSelected()) {
+                    types.add((ButtonType) tb.getUserData());
+                }
+            }
+            types.removeAll(alreadySelected);
+            return types;
+        }
+
         private void configureSampleDialog(Dialog<?> dlg, String masthead, StageStyle style) {
             dlg.getDialogPane().setHeaderText(cbShowMasthead.isSelected() ? masthead : null);
             if (cbCustomGraphic.isSelected()) {
@@ -392,7 +404,7 @@ public class DialogApp extends InteroperabilityApp {
                 dlg.initStyle((StageStyle) styleGroup.getSelectedToggle().getUserData());
             }
         }
-        
+
         private void showDialog(Dialog<?> dlg) {
             if (cbCloseDialogAutomatically.isSelected()) {
                 new Thread(() -> {
@@ -405,10 +417,10 @@ public class DialogApp extends InteroperabilityApp {
                     Platform.runLater(() -> dlg.close());
                 }).start();
             }
-            
+
             if (cbUseBlocking.isSelected()) {
                 dlg.showAndWait().ifPresent(new Consumer<Object>() {
-                    
+
                     public void accept(Object result) {
                         System.out.println("Result is " + result);
                         lastResult = (ButtonType) result;
@@ -419,7 +431,7 @@ public class DialogApp extends InteroperabilityApp {
             } else {
                 dlg.show();
                 dlg.resultProperty().addListener(new InvalidationListener() {
-                    
+
                     public void invalidated(Observable o) {
                         System.out.println("Result is: " + dlg.getResult());
                         lastResult = (ButtonType) dlg.getResult();
@@ -430,13 +442,13 @@ public class DialogApp extends InteroperabilityApp {
                 System.out.println("This println is _after_ the show method - we're non-blocking!");
             }
         }
-        
+
         private Node getControlPanel() {
             GridPane grid = new GridPane();
             grid.setVgap(10);
             grid.setHgap(10);
             grid.setPadding(new Insets(30, 30, 0, 30));
-            
+
             int row = 0;
 
             // stage style
@@ -446,17 +458,17 @@ public class DialogApp extends InteroperabilityApp {
                 //if (s == StageStyle.UNDECORATED || s == StageStyle.TRANSPARENT) {
                 //    tb.setUserData(StageStyle.DECORATED);
                 //} else {
-                
+
                 tb.setUserData(s);
                 //}
                 tb.setToggleGroup(styleGroup);
-                
+
                 styleHBox.getChildren().add(tb);
             }
             grid.add(createLabel("Style: ", "property"), 0, row);
             grid.add(styleHBox, 1, row);
             row++;
-            
+
             // expandable content
             ToggleButton buttonToggleButton = new ToggleButton(TOGGLE_BUTTON_TEXT);
             buttonToggleButton.setUserData(new Button("Button"));
@@ -468,7 +480,7 @@ public class DialogApp extends InteroperabilityApp {
             inputToggleButton.setUserData(new TextField("Text Field"));
             inputToggleButton.setToggleGroup(expContentGroup);
             ToggleButton nothingToggleButton = new ToggleButton(TOGGLE_NOTHING_TEXT);
-            nothingToggleButton.setToggleGroup(expContentGroup);            
+            nothingToggleButton.setToggleGroup(expContentGroup);
             grid.add(createLabel("Style: ", "property"), 0, row);
             grid.add(new HBox(buttonToggleButton, labelToggleButton, inputToggleButton, nothingToggleButton), 1, row);
             row++;
@@ -536,13 +548,13 @@ public class DialogApp extends InteroperabilityApp {
             grid.add(createLabel("Use custom graphic: ", "property"), 0, row);
             grid.add(cbCustomGraphic, 1, row);
             row++;
-            
+
             return grid;
         }
-        
+
         private Node createLabel(String text, String... styleclass) {
             Label label = new Label(text);
-            
+
             if (styleclass == null || styleclass.length == 0) {
                 label.setFont(Font.font(13));
             } else {
@@ -550,13 +562,13 @@ public class DialogApp extends InteroperabilityApp {
             }
             return label;
         }
-        
+
         private TextField createTextField(String id) {
             TextField textField = new TextField();
             textField.setId(id);
             GridPane.setHgrow(textField, Priority.ALWAYS);
             return textField;
         }
-        
+
     }
 }

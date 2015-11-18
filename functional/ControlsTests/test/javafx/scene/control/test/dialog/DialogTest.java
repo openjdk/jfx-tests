@@ -29,6 +29,7 @@ import com.sun.glass.ui.Robot;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
@@ -49,6 +50,7 @@ import org.jemmy.fx.SceneDock;
 import org.jemmy.image.Image;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Parent;
+import org.jemmy.resources.StringComparePolicy;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -66,8 +68,11 @@ import test.javaclient.shared.screenshots.ImagesManager;
 @RunWith(FilteredTestRunner.class)
 public class DialogTest extends ControlsTestBase {
 
+    private static final int DEFAULT_DELAY = 1000;
+
     public DialogTest() {
     }
+
     public static ButtonType[] types = {ButtonType.APPLY, ButtonType.CANCEL, ButtonType.CLOSE, ButtonType.FINISH, ButtonType.NEXT, ButtonType.NO, ButtonType.OK, ButtonType.PREVIOUS, ButtonType.YES};
     public static String[] content = {TOGGLE_BUTTON_TEXT, TOGGLE_LABEL_TEXT, TOGGLE_INPUT_TEXT};
 
@@ -101,6 +106,19 @@ public class DialogTest extends ControlsTestBase {
     public void tearDown() {
     }
 
+    private void deselectButtons() {
+        for (ButtonType b : types) {
+            Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class,
+                    new ByText<ToggleButton>(b.getText(), StringComparePolicy.EXACT)).wrap();
+            click(addButton, InputType.MOUSE);
+        }
+    }
+
+    private void addButton(String button) {
+        Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(button, StringComparePolicy.EXACT)).wrap();
+        click(addButton, InputType.MOUSE);
+    }
+
     @Test(timeout = 300000)
     public void informationAlertBasicTest() throws Throwable {
         Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_INFO_TEXT)).wrap();
@@ -108,7 +126,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("informationAlertBasicTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -123,7 +141,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("informationAlertWithMastheadTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -137,7 +155,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("confirmationAlertBasicTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -152,7 +170,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("confirmationAlertWithMastheadTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -166,7 +184,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("warningAlertBasicTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -181,7 +199,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("warningAlertWithMastheadTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -195,7 +213,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("errorAlertBasicTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -210,7 +228,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("errorAlertWithMastheadTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -223,20 +241,16 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
+                addButton(b.getText());
                 Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_INFO_TEXT)).wrap();
                 click(button, InputType.MOUSE);
-                Thread.sleep(1000);
-                checkScreenshot("informationAlertBasicWithButtonsTest" + b + "Test", scene);
+                Thread.sleep(DEFAULT_DELAY);
+                checkScreenshot("informationAlertBasicWithButtonsTest" + s + "_" + b + "Test", scene);
                 closeDialogWindowByClickingButton();
-                Thread.sleep(1000);
+                Thread.sleep(DEFAULT_DELAY);
                 throwScreenshotError();
             }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            deselectButtons();
         }
     }
 
@@ -246,20 +260,16 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
+                addButton(b.getText());
                 Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_CONFIRM_TEXT)).wrap();
                 click(button, InputType.MOUSE);
-                Thread.sleep(1000);
-                checkScreenshot("confirmationAlertBasicWithButtonsTest" + b.getText() + "Test", scene);
+                Thread.sleep(DEFAULT_DELAY);
+                checkScreenshot("confirmationAlertBasicWithButtonsTest" + s + "_" + b + "Test", scene);
                 closeDialogWindowByClickingButton();
-                Thread.sleep(1000);
+                Thread.sleep(DEFAULT_DELAY);
                 throwScreenshotError();
             }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            deselectButtons();
         }
     }
 
@@ -269,20 +279,16 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
+                addButton(b.getText());
                 Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_WARNING_TEXT)).wrap();
                 click(button, InputType.MOUSE);
-                Thread.sleep(1000);
-                checkScreenshot("warningAlertBasicWithButtonsTest" + b + "Test", scene);
+                Thread.sleep(DEFAULT_DELAY);
+                checkScreenshot("warningAlertBasicWithButtonsTest" + s + "_" + b + "Test", scene);
                 closeDialogWindowByClickingButton();
-                Thread.sleep(1000);
+                Thread.sleep(DEFAULT_DELAY);
                 throwScreenshotError();
             }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            deselectButtons();
         }
     }
 
@@ -292,20 +298,16 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-                Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_ERROR_TEXT)).wrap();
+                addButton(b.getText());
+                Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_ERROR_TEXT, StringComparePolicy.EXACT)).wrap();
                 click(button, InputType.MOUSE);
-                Thread.sleep(1000);
-                checkScreenshot("errorAlertBasicWithButtonsTest" + b + "Test", scene);
+                Thread.sleep(DEFAULT_DELAY);
+                checkScreenshot("errorAlertBasicWithButtonsTest" + s + "_" + b + "Test", scene);
                 closeDialogWindowByClickingButton();
-                Thread.sleep(1000);
+                Thread.sleep(DEFAULT_DELAY);
                 throwScreenshotError();
             }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            deselectButtons();
         }
     }
 
@@ -316,7 +318,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("textInputDialogBasicTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -330,7 +332,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("textInputWithInitialValueDialogBasicTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -344,7 +346,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("setChoiceDialogLtTenBasicTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -358,7 +360,7 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             click(button, InputType.MOUSE);
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULT_DELAY);
             checkScreenshot("setChoiceDialogGtTenBasicTest" + s.toString() + "Test", scene);
             closeDialogWindowByClickingButton();
             throwScreenshotError();
@@ -371,19 +373,15 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
+                addButton(b.getText());
                 Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_INFO_TEXT)).wrap();
                 click(button, InputType.MOUSE);
                 closeDialogWindowByClickingButton(b.getText());
                 Wrap<? extends Node> resultField = parent.lookup(TextField.class, new ByID<TextField>(RESULT_FIELD_ID)).wrap();
                 resultField.waitProperty(Wrap.TEXT_PROP_NAME, b.getText());
-                Thread.sleep(1000);
+                Thread.sleep(DEFAULT_DELAY);
             }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            deselectButtons();
         }
     }
 
@@ -393,19 +391,13 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
+                addButton(b.getText());
                 Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_CONFIRM_TEXT)).wrap();
                 click(button, InputType.MOUSE);
                 closeDialogWindowByClickingButton(b.getText());
-                Wrap<? extends Node> resultField = parent.lookup(TextField.class, new ByID<TextField>(RESULT_FIELD_ID)).wrap();
-                resultField.waitProperty(Wrap.TEXT_PROP_NAME, b.getText());
-                Thread.sleep(1000);
+                Thread.sleep(DEFAULT_DELAY);
             }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            deselectButtons();
         }
     }
 
@@ -415,19 +407,15 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
+                addButton(b.getText());
                 Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_WARNING_TEXT)).wrap();
                 click(button, InputType.MOUSE);
                 closeDialogWindowByClickingButton(b.getText());
                 Wrap<? extends Node> resultField = parent.lookup(TextField.class, new ByID<TextField>(RESULT_FIELD_ID)).wrap();
                 resultField.waitProperty(Wrap.TEXT_PROP_NAME, b.getText());
-                Thread.sleep(1000);
+                Thread.sleep(DEFAULT_DELAY);
             }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            deselectButtons();
         }
     }
 
@@ -437,19 +425,15 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
+                addButton(b.getText());
                 Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_ERROR_TEXT)).wrap();
                 click(button, InputType.MOUSE);
                 closeDialogWindowByClickingButton(b.getText());
                 Wrap<? extends Node> resultField = parent.lookup(TextField.class, new ByID<TextField>(RESULT_FIELD_ID)).wrap();
                 resultField.waitProperty(Wrap.TEXT_PROP_NAME, b.getText());
-                Thread.sleep(1000);
+                Thread.sleep(DEFAULT_DELAY);
             }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            deselectButtons();
         }
     }
 
@@ -458,20 +442,10 @@ public class DialogTest extends ControlsTestBase {
         for (StageStyle s : StageStyle.values()) {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-                Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_TEXT_FIELD_TEXT)).wrap();
-                click(button, InputType.MOUSE);
-                closeDialogWindowByClickingButton(b.getText());
-                Wrap<? extends Node> resultField = parent.lookup(TextField.class, new ByID<TextField>(RESULT_FIELD_ID)).wrap();
-                resultField.waitProperty(Wrap.TEXT_PROP_NAME, b.getText());
-                Thread.sleep(1000);
-            }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_TEXT_FIELD_TEXT)).wrap();
+            click(button, InputType.MOUSE);
+            Thread.sleep(DEFAULT_DELAY);
+            closeDialogWindowByClickingButton("OK");
         }
     }
 
@@ -480,20 +454,10 @@ public class DialogTest extends ControlsTestBase {
         for (StageStyle s : StageStyle.values()) {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-                Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_INITIAL_VALUE_TEXT)).wrap();
-                click(button, InputType.MOUSE);
-                closeDialogWindowByClickingButton(b.getText());
-                Wrap<? extends Node> resultField = parent.lookup(TextField.class, new ByID<TextField>(RESULT_FIELD_ID)).wrap();
-                resultField.waitProperty(Wrap.TEXT_PROP_NAME, b.getText());
-                Thread.sleep(1000);
-            }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_INITIAL_VALUE_TEXT)).wrap();
+            click(button, InputType.MOUSE);
+            Thread.sleep(DEFAULT_DELAY);
+            closeDialogWindowByClickingButton("OK");
         }
     }
 
@@ -503,19 +467,13 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
+                addButton(b.getText());
                 Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_CHOICE_LT_TEN_TEXT)).wrap();
                 click(button, InputType.MOUSE);
                 closeDialogWindowByClickingButton(b.getText());
-                Wrap<? extends Node> resultField = parent.lookup(TextField.class, new ByID<TextField>(RESULT_FIELD_ID)).wrap();
-                resultField.waitProperty(Wrap.TEXT_PROP_NAME, b.getText());
                 Thread.sleep(1000);
             }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            deselectButtons();
         }
     }
 
@@ -525,19 +483,13 @@ public class DialogTest extends ControlsTestBase {
             Wrap<? extends Node> styleToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(s.toString())).wrap();
             click(styleToggleButton, InputType.MOUSE);
             for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
+                addButton(b.getText());
                 Wrap<? extends Node> button = parent.lookup(Button.class, new ByText<Button>(BUTTON_SHOW_CHOICE_GT_TEN_TEXT)).wrap();
                 click(button, InputType.MOUSE);
                 closeDialogWindowByClickingButton(b.getText());
-                Wrap<? extends Node> resultField = parent.lookup(TextField.class, new ByID<TextField>(RESULT_FIELD_ID)).wrap();
-                resultField.waitProperty(Wrap.TEXT_PROP_NAME, b.getText());
-                Thread.sleep(1000);
+                Thread.sleep(DEFAULT_DELAY);
             }
-            for (ButtonType b : types) {
-                Wrap<? extends Node> addButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(b.getText())).wrap();
-                click(addButton, InputType.MOUSE);
-            }
+            deselectButtons();
         }
     }
 
@@ -551,11 +503,11 @@ public class DialogTest extends ControlsTestBase {
                 Wrap<? extends Node> contentToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(c)).wrap();
                 click(contentToggleButton, InputType.MOUSE);
                 click(button, InputType.MOUSE);
-                Thread.sleep(1000);
+                Thread.sleep(DEFAULT_DELAY);
                 SceneDock sd = new SceneDock();
                 click(sd.asParent().lookup(Hyperlink.class, new ByText<Hyperlink>("Show Details")).wrap(), InputType.MOUSE);
-                checkScreenshot("alertWithExpandableContentTest" + s.toString() + "Test", scene);
-                Thread.sleep(1000);
+                // checkScreenshot("alertWithExpandableContentTest" + s + "_" + c + "Test", scene);
+                Thread.sleep(DEFAULT_DELAY);
                 closeDialogWindowByClickingButton("OK");
                 throwScreenshotError();
             }
@@ -572,10 +524,10 @@ public class DialogTest extends ControlsTestBase {
                 Wrap<? extends Node> contentToggleButton = parent.lookup(ToggleButton.class, new ByText<ToggleButton>(c)).wrap();
                 click(contentToggleButton, InputType.MOUSE);
                 click(button, InputType.MOUSE);
-                Thread.sleep(1000);
+                Thread.sleep(DEFAULT_DELAY);
                 SceneDock sd = new SceneDock();
-                checkScreenshot("ialertWithExpandableContentTest" + s.toString() + "Test", scene);
-                Thread.sleep(1000);
+                checkScreenshot("alertWithCustomContentTest" + s + "_" + c + "Test", scene);
+                Thread.sleep(DEFAULT_DELAY);
                 closeDialogWindowByClickingButton("OK");
                 throwScreenshotError();
             }
