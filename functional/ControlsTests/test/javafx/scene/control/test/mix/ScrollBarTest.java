@@ -47,7 +47,7 @@ public class ScrollBarTest extends TestBase {
      * Test for Slider constructor
      */
     @ScreenshotCheck
-    @Test(timeout = 300000)
+    @Test(timeout = 3000000)
     public void constructorTest() throws InterruptedException {
         testCommon(Pages.Constructor.name());
     }
