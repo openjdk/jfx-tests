@@ -27,7 +27,7 @@ import client.test.RunUI;
 
 public class PropsAndXReferenceTestManual {
 
-    @RunUI("doclettest2.html")
+    @RunUI("docletTest2.html")
     public static void runUI() {
         //stub
     }
