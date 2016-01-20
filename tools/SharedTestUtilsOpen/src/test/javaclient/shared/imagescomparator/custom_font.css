@@ -1,4 +1,4 @@
-.root , .table-header { /*TODO class table-header is workaround for RT-16854*/
+.table-header { /*TODO class table-header is workaround for RT-16854*/
     -fx-font: 12 ArialW7;
 }
 .chart-title {
