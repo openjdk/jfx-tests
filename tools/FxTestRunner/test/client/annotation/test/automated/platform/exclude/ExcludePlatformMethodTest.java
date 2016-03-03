@@ -26,7 +26,7 @@ package client.annotation.test.automated.platform.exclude;
 
 import client.test.ExcludePlatformMethod;
 import client.test.Platforms;
-import com.sun.javafx.Utils;
+import com.sun.javafx.util.Utils;
 import org.junit.Assert;
 import org.junit.Test;
 

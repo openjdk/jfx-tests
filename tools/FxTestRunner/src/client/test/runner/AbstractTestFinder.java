@@ -29,7 +29,7 @@ import client.test.ExcludePlatformType;
 import client.test.OnlyPlatformMethod;
 import client.test.OnlyPlatformType;
 import client.test.Platforms;
-import com.sun.javafx.Utils;
+import com.sun.javafx.util.Utils;
 import htmltestrunner.ExtensionTestFinder;
 import java.lang.reflect.Method;
 
