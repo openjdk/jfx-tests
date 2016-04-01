@@ -11,8 +11,8 @@ classpath=_CLASSPATH_
 finder=client.test.runner.RunUITestFinder
 
 # The test suite to use
-testsuite=client.test.runner.BasicFXTestSuite
+testsuite=client.test.runner.BasicJcovFXTestSuite
 
 # The configuration interview to use
-interview=client.test.runner.BasicFXInterview
+interview=client.test.runner.BasicJcovFXInterview
 

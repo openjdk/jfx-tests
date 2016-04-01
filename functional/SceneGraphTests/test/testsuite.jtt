@@ -1,18 +1,18 @@
 # The presentation name of the test suite
-name=SceneGraph Manual Tests
+name=SceneGraph automated tests
 
 # The ID for the test suite
-id=SceneGraphManualTests
+id=SceneGraphAutomated
 
 # The jar file containing the test suite's JavaTest plug in classes
-classpath=
+classpath=_CLASSPATH_
 
 # The test finder to use
-finder=client.test.runner.RunUITestFinder
+finder=client.test.runner.JUnitTestFinder
 
 # The test suite to use
-testsuite=client.test.runner.BasicFXTestSuite
+testsuite=client.test.runner.BasicJcovFXTestSuite
 
 # The configuration interview to use
-interview=client.test.runner.BasicFXInterview
+interview=client.test.runner.BasicJcovFXInterview
 
