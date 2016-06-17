@@ -97,14 +97,7 @@ public class SceneEventHandlersTest extends TestBase
 
             @Override
             public void invoke() {
-                try 
-                {
-                    dnd(dragSource, dragSource.getClickPoint(), getScene(), getScene().getClickPoint());
-                } 
-                catch (InterruptedException ex) 
-                {
-                    System.err.println("Interrupted while drug.");
-                }
+                dnd(dragSource, dragSource.getClickPoint(), getScene(), getScene().getClickPoint());
             }
         });
     }
@@ -116,14 +109,7 @@ public class SceneEventHandlersTest extends TestBase
 
             @Override
             public void invoke() {
-                try 
-                {
-                    dnd(dragSource, dragSource.getClickPoint(), getScene(), getScene().getClickPoint());
-                } 
-                catch (InterruptedException ex) 
-                {
-                    System.err.println("Interrupted while drug.");
-                }
+                dnd(dragSource, dragSource.getClickPoint(), getScene(), getScene().getClickPoint());
             }
         });
     }
@@ -135,14 +121,7 @@ public class SceneEventHandlersTest extends TestBase
 
             @Override
             public void invoke() {
-                try 
-                {
                     dnd(dragSource, dragSource.getClickPoint(), getScene(), getScene().getClickPoint());
-                } 
-                catch (InterruptedException ex) 
-                {
-                    System.err.println("Interrupted while drug.");
-                }
             }
         });
     }
@@ -154,15 +133,7 @@ public class SceneEventHandlersTest extends TestBase
 
             @Override
             public void invoke() {
-                try 
-                {
                     dnd(dragSource, dragSource.getClickPoint(), getScene(), getScene().getClickPoint());
-                    //EventTestCommon.dnd(dragSource, getScene());
-                }
-                catch (InterruptedException ex) 
-                {
-                    System.err.println("Interrupted while drug.");
-                }
             }
         });
     }
@@ -498,19 +469,7 @@ public class SceneEventHandlersTest extends TestBase
 
             @Override
             public void invoke() {
-                try 
-                {
-                    dndout(dragSource, dragSource.getClickPoint(), getScene(), getScene().getClickPoint());
-                } 
-                catch (InterruptedException ex) 
-                {
-                    System.err.println("Interrupted while drug.");
-                }
-                finally
-                {
-                    getScene().mouse().move();
-                    getScene().mouse().click();
-                }
+                dnd(dragSource, dragSource.getClickPoint(), getScene(), getScene().getClickPoint());
             }
         });
     }
@@ -522,19 +481,7 @@ public class SceneEventHandlersTest extends TestBase
 
             @Override
             public void invoke() {
-                try 
-                {
-                    dndout(dragSource, dragSource.getClickPoint(), getScene(), getScene().getClickPoint());
-                } 
-                catch (InterruptedException ex) 
-                {
-                    System.err.println("Interrupted while drug.");
-                }
-                finally
-                {
-                    getScene().mouse().move();
-                    getScene().mouse().click();
-                }
+                dnd(dragSource, dragSource.getClickPoint(), getScene(), getScene().getClickPoint());
             }
         });
     }
@@ -546,14 +493,7 @@ public class SceneEventHandlersTest extends TestBase
 
             @Override
             public void invoke() {
-                try 
-                {
-                    dnd(dragSource, dragSource.getClickPoint(), dropTarget, dropTarget.getClickPoint());
-                } 
-                catch (InterruptedException ex) 
-                {
-                    System.err.println("Interrupted while drug.");
-                }
+                dnd(dragSource, dragSource.getClickPoint(), dropTarget, dropTarget.getClickPoint());
             }
         });
     }
@@ -592,119 +532,6 @@ public class SceneEventHandlersTest extends TestBase
                 return lb.getControl().getStyle();
             }
         }, SceneEventHandlersApp.HANDLED_STYLE);
-    }
-    
-    protected void dnd(Wrap from, Point from_point, Wrap to, Point to_point) throws InterruptedException 
-    {
-	if(!Utils.isWindows())
-	{
-	    from.drag().dnd(to, to_point);
-	    return;
-	}
-	
-	// final int STEPS = 50;
-        System.err.println("Use glass robot");
-        final Point abs_from_point = new Point(from_point);
-        abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
-        final Point abs_to_point = new Point(to_point);
-        abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
-        
-        if (robot == null) {
-            robot = new GetAction<com.sun.glass.ui.Robot>() {
-                        @Override
-                        public void run(Object... os) throws Exception {
-                            setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
-                        }
-                    }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
-        }
-	
-        new GetAction<Object>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                robot.mouseMove(abs_from_point.x, abs_from_point.y);
-                robot.mousePress(1);
-            }
-        }.dispatch(Root.ROOT.getEnvironment());        
-       
-        try {Thread.sleep(500);}catch(Exception e){}
-        
-        final int differenceX = abs_to_point.x - abs_from_point.x;
-        final int differenceY = abs_to_point.y - abs_from_point.y;
-        final int STEPS = differenceX > differenceY ? differenceX : differenceY;
-        for (int i = 0; (i <= STEPS) /* && (!gotEvent())*/; i++) {
-            final int tmpi = i;
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    robot.mouseMove(abs_from_point.x + differenceX * tmpi / STEPS, abs_from_point.y + differenceY * tmpi / STEPS);
-                }
-            }.dispatch(Root.ROOT.getEnvironment());        
-        }
-        new GetAction<Object>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                robot.mouseRelease(1);
-            }
-        }.dispatch(Root.ROOT.getEnvironment());        
-        try {Thread.sleep(500);}catch(Exception e){}
-        
-    }
-    
-    protected void dndout(Wrap from, Point from_point, Wrap to, Point to_point) throws InterruptedException 
-    {
-	if(!Utils.isWindows())
-	{
-	    from.drag().dnd(to, to_point);
-	    return;
-	}
-	
-	// final int STEPS = 50;
-        System.err.println("Use glass robot");
-        final Point abs_from_point = new Point(from_point);
-        abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
-        final Point abs_to_point = new Point(to_point);
-        abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
-        
-        if (robot == null) {
-            robot = new GetAction<com.sun.glass.ui.Robot>() {
-                        @Override
-                        public void run(Object... os) throws Exception {
-                            setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
-                        }
-                    }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
-        }
-	
-        new GetAction<Object>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                robot.mouseMove(abs_from_point.x, abs_from_point.y);
-                robot.mousePress(1);
-            }
-        }.dispatch(Root.ROOT.getEnvironment());        
-       
-        try {Thread.sleep(500);}catch(Exception e){}
-        
-        final int differenceX = abs_to_point.x - abs_from_point.x;
-        final int differenceY = abs_to_point.y - abs_from_point.y;
-        final int STEPS = differenceX > differenceY ? differenceX : differenceY;
-        for (int i = 0; (i <= STEPS) /* && (!gotEvent())*/; i++) {
-            final int tmpi = i;
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    robot.mouseMove(abs_from_point.x + differenceX * tmpi / STEPS, abs_from_point.y + differenceY * tmpi / STEPS);
-                }
-            }.dispatch(Root.ROOT.getEnvironment());        
-        }
-
-        new GetAction<Object>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                robot.mouseRelease(1);
-            }
-        }.dispatch(Root.ROOT.getEnvironment());        
-        try {Thread.sleep(500);}catch(Exception e){}
-        
     }
     
     private TextControlWrap<Button> actionButton;

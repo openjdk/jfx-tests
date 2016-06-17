@@ -24,7 +24,11 @@
 
 package test.javaclient.shared;
 
+import com.sun.glass.ui.Application;
+import com.sun.glass.ui.Robot;
 import java.io.File;
+import java.util.concurrent.Semaphore;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -57,10 +61,14 @@ import static test.javaclient.shared.TestUtil.isEmbedded;
 public class TestBase extends TestBaseBase {
 
     private static boolean isTest = false;
+    protected static Robot robot = null;
     
     static {
         Utils.initializeAwt();
-    }
+        if (Utils.isMacOS()) {
+            JemmyUtils.runInOtherJVM(true);
+        }
+    }            
 
     @BeforeClass
     public static void setUpClass() {
@@ -355,5 +363,64 @@ public class TestBase extends TestBaseBase {
     @After
     public void after() {
         TestUtil.slow(1000);
+    }
+
+    protected void dnd(final Wrap from, final Wrap to) {
+        Point fromPoint = from.getClickPoint();
+        Point toPoint = to.getClickPoint();
+        if (from.getControl() == to.getControl()) {
+            //If "from" control is the same as "to" control, drag is performed within a control
+            //from top-left corner to bottom-right corner.
+            double width = from.getScreenBounds().width / 3;
+            double height = from.getScreenBounds().height / 3;
+            fromPoint.move((int) (fromPoint.x - width), (int) (fromPoint.y - height));
+            toPoint.move((int) (toPoint.x + width), (int) (toPoint.y + height));
+        }
+        dnd(from, fromPoint, to, toPoint);
+    }
+
+    protected void dnd(Wrap from, Point fromPoint, Wrap to, Point toPoint) {
+        try {
+            if (!Utils.isWindows()) {
+                System.err.println("Use jemmy robot");
+                from.drag().dnd(fromPoint, to, toPoint);
+            } else {
+                System.err.println("Use Glass robot");                
+                dndRobot(from, fromPoint, to, toPoint);
+            }
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            System.err.println("Error while DnD: " + ex);
+        }
+    }
+
+    private void dndRobot(Wrap from, Point fromPoint, Wrap to, Point toPoint) throws InterruptedException {
+        Point absFromPoint = new Point(fromPoint);
+        Point absToPoint = new Point(toPoint);
+        absFromPoint.translate((int) from.getScreenBounds().getX(), (int) from.getScreenBounds().getY());
+        absToPoint.translate((int) to.getScreenBounds().getX(), (int) to.getScreenBounds().getY());
+        Semaphore s = new Semaphore(0);
+        Platform.runLater(() -> {
+            if (robot == null) {
+                robot = Application.GetApplication().createRobot();
+            }
+            robot.mouseMove(absFromPoint.x, absFromPoint.y);
+            robot.mousePress(Robot.MOUSE_LEFT_BTN);
+            final int STEPS = 50;
+            int dx = absToPoint.x - absFromPoint.x;
+            int dy = absToPoint.y - absFromPoint.y;
+            for (int i = 0; i <= STEPS; i++) {
+                robot.mouseMove(absFromPoint.x + dx * i / STEPS, absFromPoint.y + dy * i / STEPS);
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException ex) {
+                    System.err.println("Error while dragging: " + ex);
+                    ex.printStackTrace();
+                }
+            }
+            robot.mouseRelease(Robot.MOUSE_LEFT_BTN);
+            s.release();
+        });
+        s.acquire();
     }
 }

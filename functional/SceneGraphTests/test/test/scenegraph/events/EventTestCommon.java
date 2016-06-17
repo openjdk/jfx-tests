@@ -34,6 +34,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import org.jemmy.Point;
+import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.NodeDock;
@@ -49,7 +50,6 @@ import org.jemmy.timing.State;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import test.javaclient.shared.JemmyUtils;
 import test.javaclient.shared.TestBase;
 import test.javaclient.shared.Utils;
 import test.scenegraph.app.ControlEventsApp;
@@ -94,7 +94,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         public void invoke() {
             NodeDock dragTarget = new NodeDock(tabDock.asParent(),
                     ControlEventsApp.DRAG_TARGET_ID);
-            dnd(primeDock, dragTarget);
+            dnd(primeDock.wrap(), dragTarget.wrap());
         }
     };
     
@@ -204,7 +204,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                 for(;( x >= - ControlEventsApp.INSETS / 2) && (!gotEvent()); x--)
                 {
                     primeDock.mouse().move(new Point(x, y));
-                }
+    }
                 primeDock.mouse().release();
             }
         });
@@ -297,42 +297,14 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     @Test(timeout = 60000)
     public void onMouseDragReleased()
     {
-        test(EventTypes.MOUSE_DRAG_RELEASED, new Command() {
-
-            public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = bounds.getWidth() + ControlEventsApp.INSETS / 2;
-                double y = bounds.getHeight() / 2;
-                primeDock.mouse().move(new Point(x, y));
-                primeDock.mouse().press();
-                for(;( x >= 5 ) && (!gotEvent()); x--)
-                {
-                    primeDock.mouse().move(new Point(x, y));
-                }
-                primeDock.mouse().release();
-            }
-        });
+        test(EventTypes.MOUSE_DRAG_RELEASED, dragFromOutside);
     }
     
     // * Drags mouse over tested node starting outside of one.
     @Test(timeout = 60000)
     public void onMouseDragEntered()
     {
-        test(EventTypes.MOUSE_DRAG_ENTERED, new Command() {
-
-            public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = bounds.getWidth() + ControlEventsApp.INSETS / 2;
-                double y = bounds.getHeight() / 2;
-                primeDock.mouse().move(new Point(x, y));
-                primeDock.mouse().press();
-                for(;( x >= - ControlEventsApp.INSETS / 2) && (!gotEvent()); x--)
-                {
-                    primeDock.mouse().move(new Point(x, y));
-                }
-                primeDock.mouse().release();
-            }
-        });
+        test(EventTypes.MOUSE_DRAG_ENTERED, dragFromOutside);
     }
 
     
@@ -340,7 +312,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             public void invoke() {
                 final NodeDock dragSource = new NodeDock(tabDock.asParent(), 
                         ControlEventsApp.DRAG_FIELD_ID);
-                dnd(dragSource, primeDock);
+                dnd(dragSource.wrap(), primeDock.wrap());
     
 }};
     
@@ -376,65 +348,31 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     @Test(timeout = 60000)
     public void onMouseDragExited()
     {
-        test(EventTypes.MOUSE_DRAG_EXITED, new Command() {
-
-            public void invoke() {
-                Bounds bounds = primeDock.getBoundsInLocal();
-                double x = bounds.getWidth() + ControlEventsApp.INSETS / 2;
-                double y = bounds.getHeight() / 2;
-                primeDock.mouse().move(new Point(x, y));
-                primeDock.mouse().press();
-                for(;( x >= -30 ) && (!gotEvent()); x--)
-                {
-                    primeDock.mouse().move(new Point(x, y));
-                }
-                primeDock.mouse().release();
-            }
-        });
+        test(EventTypes.MOUSE_DRAG_EXITED, dragFromOutside);
     }
-    
+        
+    Command dragFromOutside = new Command() {
+
+        public void invoke() {
+            final Bounds bounds = primeDock.getBoundsInParent();
+            final Wrap wrap = primeDock.wrap();
+            final Point insidePoint = wrap.getClickPoint();
+            final Point outsidePoint = new Point(
+                    bounds.getMinX() - 10, bounds.getMinY() - 10);
+            dnd(sceneDock.wrap(), outsidePoint, primeDock.wrap(), insidePoint);
+        }
+    };
     // * Moves mouse out of tested node.
     // * Event should come to tested node.
     Command dragControlAndExitCommand = new Command() {
 
         public void invoke() {
-
-            final Point p1 = primeDock.wrap().getClickPoint();
-            final double pointOutX = p1.x - primeDock.wrap().getScreenBounds().getWidth() / 2 - 14;//.getWidth() / 2 - 1;
-            
-            final Mouse m = primeDock.mouse();
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    m.move(new Point(p1.x -4 ,p1.y));
-                    m.press();
-                }
-            }.dispatch(Root.ROOT.getEnvironment());
-            try {Thread.sleep(50);}catch(InterruptedException e){}
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    m.move(p1);
-                 //   m.press();
-                }
-            }.dispatch(Root.ROOT.getEnvironment());
-            try {Thread.sleep(50);}catch(InterruptedException e){}
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    m.move(new Point(p1.x+4,p1.y));
-                //   m.press();
-                }
-            }.dispatch(Root.ROOT.getEnvironment());
-            try {Thread.sleep(50);}catch(InterruptedException e){}
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    p1.setLocation(pointOutX, p1.y);
-                    m.move(p1);
-                    m.release();
-                }
-            }.dispatch(Root.ROOT.getEnvironment());
+            final Bounds bounds = primeDock.getBoundsInParent();            
+            final Wrap wrap = primeDock.wrap();
+            final Point insidePoint = wrap.getClickPoint();
+            final Point outsidePoint = new Point(
+                    bounds.getMinX() - 10, bounds.getMinY() - 10);
+            dnd(primeDock.wrap(), insidePoint, sceneDock.wrap(), outsidePoint);
         }
     };
     
@@ -442,34 +380,12 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     Command startDragOnControl = new Command() {
 
         public void invoke() {
-
-            final Point p1 = primeDock.wrap().getClickPoint();
-            final double pointOutX = p1.x - primeDock.wrap().getScreenBounds().getWidth() / 2 - 14;//.getWidth() / 2 - 1;
-            
-            final Mouse m = primeDock.mouse();
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    m.move(new Point(p1.x -4 ,p1.y));
-                    m.press();
-                }
-            }.dispatch(Root.ROOT.getEnvironment());
-            try {Thread.sleep(500);}catch(InterruptedException e){}
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    m.move(new Point(p1.x+4,p1.y));
-                //   m.press();
-                }
-            }.dispatch(Root.ROOT.getEnvironment());
-            try {Thread.sleep(500);}catch(InterruptedException e){}
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    p1.setLocation(pointOutX, p1.y);
-                    m.release();
-                }
-            }.dispatch(Root.ROOT.getEnvironment());
+            final Bounds bounds = primeDock.getBoundsInParent();            
+            final Wrap wrap = primeDock.wrap();
+            final Point insidePoint = wrap.getClickPoint();
+            final Point outsidePoint = new Point(
+                    bounds.getMinX() - 10, bounds.getMinY() - 10);
+            dnd(primeDock.wrap(), insidePoint, sceneDock.wrap(), outsidePoint);
         }
     };
     
@@ -478,7 +394,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             public void invoke() {
                 final NodeDock dragSource = new NodeDock(tabDock.asParent(), 
                         ControlEventsApp.DRAG_FIELD_ID);
-                dndd(dragSource, primeDock);
+                dnd(dragSource.wrap(), primeDock.wrap());
     
 }};
     
@@ -574,11 +490,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         EventTypes.DRAG_EXITED));
     
     protected final void test(final EventTypes eventType, Command command) {
-        
-        if (Utils.isWindows8() && bannedEvents.contains(eventType)) {
-                    Assert.assertTrue(false); // fail the test until the bug in robot is not fixed
-        }
-        
+               
         selectTab();
         setEventType(eventType);
         if (selectEventType()) {
@@ -679,159 +591,10 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     {
         return tabDock;
     }
-    
-    // Workaround to make drag'n'drop work
-    protected void dnd(final NodeDock _ndFrom, final NodeDock _ndTo) {
-        final Wrap from = _ndFrom.wrap();
-        final Wrap to = _ndTo.wrap();
-      
-        dnd(from, to);
-    }
-    
-    
-    
-    protected void dnd(final Wrap from, final Wrap to) 
-    {
-        final Point to_point = to.getClickPoint();
-        //final Point from_point = from.getClickPoint();
-	if(!Utils.isWindows())
-	{
-	    from.drag().dnd(to, to_point);
-	    return;
-	}
-	
-        System.err.println("Use glass robot");
-        final Point abs_from_point = from.getClickPoint(); //new Point(from_point);
-        abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
-        Point abs_to_point = new Point(to_point);
-        abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
-        if (robot == null) {
-            robot = new GetAction<com.sun.glass.ui.Robot>() {
-                        @Override
-                        public void run(Object... os) throws Exception {
-                            setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
-                        }
-                    }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
-        }
-
-        new GetAction<Object>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                robot.mouseMove(abs_from_point.x, abs_from_point.y);
-                robot.mousePress(1);
-            }
-        }.dispatch(Root.ROOT.getEnvironment());        
-        
-        final int differenceX = abs_to_point.x - abs_from_point.x;
-        final int differenceY = abs_to_point.y - abs_from_point.y;
-        final int STEPS = differenceX > differenceY ? differenceX : differenceY;
-        for (int i = 0; (i <= STEPS) && (!gotEvent()); i++) {
-
-            final int tmpi = i;
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    robot.mouseMove(abs_from_point.x + differenceX * tmpi / STEPS, abs_from_point.y + differenceY * tmpi / STEPS);
-                }
-            }.dispatch(Root.ROOT.getEnvironment());        
-            //robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
-            
-        }
-
-        new GetAction<Object>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                robot.mouseRelease(1);
-            }
-        }.dispatch(Root.ROOT.getEnvironment());        
-    }
-    
-    protected void dndd(final NodeDock _ndFrom, final NodeDock _ndTo) {
-        final Wrap from = _ndFrom.wrap();
-        final Wrap to = _ndTo.wrap();
        
-        dndd(from, to);
-    }
-    
-    protected void dndd(final Wrap from, final Wrap to) 
-    {
-        final Point to_point = to.getClickPoint();
-        //final Point from_point = from.getClickPoint();
-	if(!Utils.isWindows())
-	{
-	    from.drag().dnd(to, to_point);
-	    return;
-	}
-        if (robot == null) {
-        System.err.println("Use glass robot");
-            robot = new GetAction<com.sun.glass.ui.Robot>() {
-                        @Override
-                        public void run(Object... os) throws Exception {
-                            setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
-                        }
-                    }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
-        }
-	
-        final Point abs_from_point = from.getClickPoint(); //new Point(from_point);
-        abs_from_point.translate((int)from.getScreenBounds().getX(), (int)from.getScreenBounds().getY());
-        Point abs_to_point = new Point(to_point);
-        abs_to_point.translate((int)to.getScreenBounds().getX(), (int)to.getScreenBounds().getY());
-        
-        new GetAction<Object>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                robot.mouseMove(abs_from_point.x, abs_from_point.y);
-                robot.mousePress(1);
-            }
-        }.dispatch(Root.ROOT.getEnvironment());        
-       
-        try {Thread.sleep(500);}catch(Exception e){}
-        
-        final int differenceX = abs_to_point.x - abs_from_point.x;
-        final int differenceY = abs_to_point.y - abs_from_point.y;
-        final int STEPS = differenceX > differenceY ? differenceX : differenceY;
-        for (int i = 0; (i <= STEPS) && (!gotEvent()); i++) {
-            final int tmpi = i;
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    robot.mouseMove(abs_from_point.x + differenceX * tmpi / STEPS, abs_from_point.y + differenceY * tmpi / STEPS);
-                }
-            }.dispatch(Root.ROOT.getEnvironment());        
-        }
-        try {Thread.sleep(500);}catch(Exception e){}
-        for (int i = STEPS; (i >=0) && (!gotEvent()); i--) {
-            final int tmpi = i;
-            new GetAction<Object>() {
-                @Override
-                public void run(Object... os) throws Exception {
-                    robot.mouseMove(abs_from_point.x + differenceX * tmpi / STEPS, abs_from_point.y + differenceY * tmpi / STEPS);
-                }
-            }.dispatch(Root.ROOT.getEnvironment());        
-        }
-
-        new GetAction<Object>() {
-            @Override
-            public void run(Object... os) throws Exception {
-                robot.mouseRelease(1);
-            }
-        }.dispatch(Root.ROOT.getEnvironment());        
-        try {Thread.sleep(500);}catch(Exception e){}
-    }
-    
-
-    static Robot robot = null;
-    static 
-    {
-        if (Utils.isMacOS()) 
-        {
-            JemmyUtils.runInOtherJVM(true);
-        }
-    }
-    
     private SceneDock sceneDock;
     private TabDock tabDock;
-    private T primeDock; 
+    public T primeDock; 
     private LabeledDock eventRadio;
     private Controls control;
     private EventTypes eventType;
