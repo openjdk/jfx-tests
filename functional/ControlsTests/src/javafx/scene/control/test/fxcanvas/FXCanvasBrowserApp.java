@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2016, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,6 +24,7 @@
  */
 package javafx.scene.control.test.fxcanvas;
 
+import java.util.concurrent.Semaphore;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
@@ -68,12 +69,12 @@ public class FXCanvasBrowserApp {
         browser = new WebView();
         browser.getEngine().getLoadWorker().stateProperty().addListener(
                 new ChangeListener<State>() {
-                    public void changed(ObservableValue ov, State oldState, State newState) {
-                        if (newState == State.SUCCEEDED) {
-                            successLabel.setText(SUCCESS_MESSAGE);
-                        }
-                    }
-                });
+            public void changed(ObservableValue ov, State oldState, State newState) {
+                if (newState == State.SUCCEEDED) {
+                    successLabel.setText(SUCCESS_MESSAGE);
+                }
+            }
+        });
         fxCanvas.setScene(createScene());
 
         shell.pack();
@@ -101,7 +102,7 @@ public class FXCanvasBrowserApp {
             }
         });
         browser.setId(CONTENT_ID);
-        
+
         successLabel = new Label();
         successLabel.setId(SUCCESS_LABEL_ID);
 
@@ -114,20 +115,29 @@ public class FXCanvasBrowserApp {
         return scene;
     }
 
+    public static void startAndWaitShell() throws InterruptedException {
+        Semaphore shellWaiter = new Semaphore(0);
+        OtherThreadRunner.invokeOnMainThread(() -> {
+            Display display = new Display();
+            Shell shell = new FXCanvasBrowserApp().shell;
+            shellWaiter.release();
+            while (!shell.isDisposed() && OtherThreadRunner.isRunning()) {
+                if (!display.readAndDispatch()) {
+                    display.sleep();
+                }
+            }
+            display.dispose();
+        });
+        shellWaiter.acquire();
+    }
+
     public static void main(String[] args) {
         System.setProperty("proxyHost", "www-proxy.ru.oracle.com");
         System.setProperty("proxyPort", "80");
-        OtherThreadRunner.invokeOnMainThread(new Runnable() {
-            public void run() {
-                Display display = new Display();
-                Shell shell = new FXCanvasBrowserApp().shell;
-                while (!shell.isDisposed() && OtherThreadRunner.isRunning()) {
-                    if (!display.readAndDispatch()) {
-                        display.sleep();
-                    }
-                }
-                display.dispose();
-            }
-        });
+        try {
+            startAndWaitShell();
+        } catch (InterruptedException ex) {
+            System.err.printf("Failed to start SWT application: %s.\n", ex);
+        }
     }
 }

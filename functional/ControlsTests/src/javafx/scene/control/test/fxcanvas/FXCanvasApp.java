@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2016, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,6 +24,7 @@
  */
 package javafx.scene.control.test.fxcanvas;
 
+import java.util.concurrent.Semaphore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -259,18 +260,27 @@ public class FXCanvasApp {
         }
     }
 
-    public static void main(String[] args) {
-        OtherThreadRunner.invokeOnMainThread(new Runnable() {
-            public void run() {
-                Display display = new Display();
-                Shell shell = new FXCanvasApp().shell;
-                while (!shell.isDisposed() && OtherThreadRunner.isRunning()) {
-                    if (!display.readAndDispatch()) {
-                        display.sleep();
-                    }
+    public static void startAndWaitShell() throws InterruptedException {
+        Semaphore shellWaiter = new Semaphore(0);
+        OtherThreadRunner.invokeOnMainThread(() -> {
+            Display display = new Display();
+            Shell shell = new FXCanvasApp().shell;
+            shellWaiter.release();
+            while (!shell.isDisposed() && OtherThreadRunner.isRunning()) {
+                if (!display.readAndDispatch()) {
+                    display.sleep();
                 }
-                display.dispose();
             }
+            display.dispose();
         });
+        shellWaiter.acquire();
+    }
+
+    public static void main(String[] args) {
+        try {
+            startAndWaitShell();
+        } catch (InterruptedException ex) {
+            System.err.printf("Failed to start SWT application: %s.\n", ex);
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2016, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,6 +24,7 @@
  */
 package javafx.scene.control.test.fxcanvas;
 
+import java.util.concurrent.Semaphore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Rectangle;
@@ -41,7 +42,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import test.javaclient.shared.OtherThreadRunner;
 import test.javaclient.shared.Utils;
-//import test.javaclient.shared.Utils;
 
 public class FXCanvasScrollApp {
 
@@ -111,11 +111,13 @@ public class FXCanvasScrollApp {
         return scene;
     }
 
-    public static void main(String[] args) {
+    public static void startAndWaitShell() throws InterruptedException {
+        Semaphore shellWaiter = new Semaphore(0);
         OtherThreadRunner.invokeOnMainThread(new Runnable() {
             public void run() {
                 Display display = new Display();
                 Shell shell = new FXCanvasScrollApp().shell;
+                shellWaiter.release();
                 while (!shell.isDisposed() && OtherThreadRunner.isRunning()) {
                     if (!display.readAndDispatch()) {
                         display.sleep();
@@ -124,5 +126,14 @@ public class FXCanvasScrollApp {
                 display.dispose();
             }
         });
+        shellWaiter.acquire();
+    }
+
+    public static void main(String[] args) {
+        try {
+            startAndWaitShell();
+        } catch (InterruptedException ex) {
+            System.err.printf("Failed to start SWT application: %s.\n", ex);
+        }
     }
 }
