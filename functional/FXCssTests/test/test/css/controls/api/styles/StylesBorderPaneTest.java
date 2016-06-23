@@ -115,7 +115,8 @@ public class StylesBorderPaneTest extends BaseStyleNodeTest {
         Assert.assertTrue(styleNames.contains("-fx-background-radius"));
         Map<String, CssMetaData> styles = getStyles();
         CssMetaData data = styles.get("-fx-background-radius");
-        Assert.assertArrayEquals((Insets[])data.getInitialValue(getControl()), new Insets[]{new Insets(0.0, 0.0, 0.0, 0.0)});
+        Assert.assertArrayEquals((CornerRadii[])data.getInitialValue(getControl()), 
+                new CornerRadii[]{new CornerRadii(0.0)});
     }
     
     @Test
