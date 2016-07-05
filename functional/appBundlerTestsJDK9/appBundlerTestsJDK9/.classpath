@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/ant-javafx.jar" sourcepath="C:/Users/rbgangad.ORADEV/Desktop/rt/modules/fxpackager"/>
+	<classpathentry kind="lib" path="lib/testng-6.8.jar" sourcepath="C:/Users/rbgangad.ORADEV/Downloads/testng-6.8.5-sources.jar/testng-6.8.5-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

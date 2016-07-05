@@ -1,0 +1,17 @@
+package com.shape.test;
+import com.shape.serviceprovider.circle.Circle;
+
+/**
+ * @author Ramesh BG
+ *
+ */
+public class LimitModsMainClass {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Circle circle = new Circle();
+		System.out.println(circle);
+	}
+}

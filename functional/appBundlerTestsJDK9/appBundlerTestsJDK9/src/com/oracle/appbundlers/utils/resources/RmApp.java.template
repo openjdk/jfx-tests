@@ -1,0 +1,16 @@
+package testapp;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.IOException;
+
+public class %APP_NAME% {
+    public static void main(String[] args) throws IOException {
+        // remove all files passed as parameters
+        for (String arg : args) {
+            Path path = Paths.get(arg);
+            Files.deleteIfExists(path);
+        }
+    }
+}

@@ -1,0 +1,8 @@
+<component:version-file>
+        <name>appBundler</name>
+        <version>8.0/r01</version>
+        <release>8.0</release>
+        <build>r01</build>
+        <date>12/05/2014</date>
+        <comment>App Bundler Test Suite</comment>
+</component:version-file>

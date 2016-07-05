@@ -1,0 +1,23 @@
+package com.shape.serviceinterface;
+import java.util.Iterator;
+import java.util.ServiceLoader;
+import com.shape.serviceinterface.Shape;
+
+/**
+ * @author rbgangad
+ *
+ */
+public class ShapeMainClass {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		ServiceLoader<Shape> serviceLoader = ServiceLoader.load(Shape.class);
+		Iterator<Shape> iterator = serviceLoader.iterator();
+		while (iterator.hasNext()) {
+			Shape shape = (Shape) iterator.next();
+			System.out.println(shape);
+		}
+	}
+}

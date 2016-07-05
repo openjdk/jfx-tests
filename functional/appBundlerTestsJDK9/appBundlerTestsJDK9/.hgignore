@@ -1,0 +1,10 @@
+dist
+build
+nbproject/private
+.*\.iml
+\.idea
+.*\.orig
+.*\.rej
+lib
+out
+packager.jar

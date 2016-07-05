@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="6" total="6" passed="0">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="4137" started-at="2016-07-05T10:03:38Z" finished-at="2016-07-05T10:03:42Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="4137" started-at="2016-07-05T10:03:38Z" finished-at="2016-07-05T10:03:42Z">
+      <class name="com.oracle.appbundlers.tests.functionality.SecondLauncherTest">
+        <test-method status="PASS" signature="setupApplication()[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="setupApplication" is-config="true" duration-ms="942" started-at="2016-07-05T15:33:38Z" finished-at="2016-07-05T15:33:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupApplication -->
+        <test-method status="PASS" signature="saveTestMethod(java.lang.reflect.Method)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="saveTestMethod" is-config="true" duration-ms="1" started-at="2016-07-05T15:33:39Z" finished-at="2016-07-05T15:33:39Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.oracle.appbundlers.tests.functionality.TestBase.runTest(com.oracle.appbundlers.utils.BundlingManager) throws java.lang.Exception]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saveTestMethod -->
+        <test-method status="FAIL" signature="runTest(com.oracle.appbundlers.utils.BundlingManager)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="runTest" duration-ms="813" started-at="2016-07-05T15:33:39Z" data-provider="getBundlers" finished-at="2016-07-05T15:33:40Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[windows.app-ant]]>
+              </value>
+            </param>
+          </params>
+          <exception class="java.io.IOException">
+            <message>
+              <![CDATA[Process finished with not zero exit code]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.io.IOException: Process finished with not zero exit code
+	at com.oracle.appbundlers.utils.AntBundlingManager.execute(AntBundlingManager.java:465)
+	at com.oracle.appbundlers.utils.BundlingManager.execute(BundlingManager.java:48)
+	at com.oracle.appbundlers.tests.functionality.TestBase.runTest(TestBase.java:206)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.io.IOException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runTest -->
+        <test-method status="PASS" signature="saveTestMethod(java.lang.reflect.Method)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="saveTestMethod" is-config="true" duration-ms="0" started-at="2016-07-05T15:33:40Z" finished-at="2016-07-05T15:33:40Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.oracle.appbundlers.tests.functionality.TestBase.runTest(com.oracle.appbundlers.utils.BundlingManager) throws java.lang.Exception]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saveTestMethod -->
+        <test-method status="FAIL" signature="runTest(com.oracle.appbundlers.utils.BundlingManager)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="runTest" duration-ms="211" started-at="2016-07-05T15:33:40Z" data-provider="getBundlers" finished-at="2016-07-05T15:33:40Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[windows.app-java-api]]>
+              </value>
+            </param>
+          </params>
+          <exception class="com.oracle.tools.packager.ConfigException">
+            <message>
+              <![CDATA[This copy of ant-javafx.jar does not support Windows.]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.oracle.tools.packager.ConfigException: This copy of ant-javafx.jar does not support Windows.
+	at com.oracle.tools.packager.windows.WinAppBundler.doValidate(WinAppBundler.java:160)
+	at com.oracle.tools.packager.windows.WinAppBundler.validate(WinAppBundler.java:138)
+	at com.oracle.appbundlers.utils.JavaApiBundlingManager.validate(JavaApiBundlingManager.java:28)
+	at com.oracle.appbundlers.tests.functionality.TestBase.validate(TestBase.java:301)
+	at com.oracle.appbundlers.tests.functionality.TestBase.runTest(TestBase.java:190)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.oracle.tools.packager.ConfigException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runTest -->
+        <test-method status="FAIL" signature="runTest(com.oracle.appbundlers.utils.BundlingManager)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="runTest" duration-ms="743" started-at="2016-07-05T15:33:40Z" data-provider="getBundlers" finished-at="2016-07-05T15:33:41Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[exe-ant]]>
+              </value>
+            </param>
+          </params>
+          <exception class="java.io.IOException">
+            <message>
+              <![CDATA[Process finished with not zero exit code]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.io.IOException: Process finished with not zero exit code
+	at com.oracle.appbundlers.utils.AntBundlingManager.execute(AntBundlingManager.java:465)
+	at com.oracle.appbundlers.utils.BundlingManager.execute(BundlingManager.java:48)
+	at com.oracle.appbundlers.tests.functionality.TestBase.runTest(TestBase.java:206)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.io.IOException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runTest -->
+        <test-method status="PASS" signature="saveTestMethod(java.lang.reflect.Method)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="saveTestMethod" is-config="true" duration-ms="0" started-at="2016-07-05T15:33:40Z" finished-at="2016-07-05T15:33:40Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.oracle.appbundlers.tests.functionality.TestBase.runTest(com.oracle.appbundlers.utils.BundlingManager) throws java.lang.Exception]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saveTestMethod -->
+        <test-method status="FAIL" signature="runTest(com.oracle.appbundlers.utils.BundlingManager)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="runTest" duration-ms="216" started-at="2016-07-05T15:33:41Z" data-provider="getBundlers" finished-at="2016-07-05T15:33:41Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[exe-java-api]]>
+              </value>
+            </param>
+          </params>
+          <exception class="com.oracle.tools.packager.ConfigException">
+            <message>
+              <![CDATA[This copy of ant-javafx.jar does not support Windows.]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.oracle.tools.packager.ConfigException: This copy of ant-javafx.jar does not support Windows.
+	at com.oracle.tools.packager.windows.WinAppBundler.doValidate(WinAppBundler.java:160)
+	at com.oracle.tools.packager.windows.WinAppBundler.validate(WinAppBundler.java:138)
+	at com.oracle.tools.packager.windows.WinExeBundler.validate(WinExeBundler.java:224)
+	at com.oracle.appbundlers.utils.JavaApiBundlingManager.validate(JavaApiBundlingManager.java:28)
+	at com.oracle.appbundlers.tests.functionality.TestBase.validate(TestBase.java:301)
+	at com.oracle.appbundlers.tests.functionality.TestBase.runTest(TestBase.java:190)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.oracle.tools.packager.ConfigException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runTest -->
+        <test-method status="PASS" signature="saveTestMethod(java.lang.reflect.Method)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="saveTestMethod" is-config="true" duration-ms="0" started-at="2016-07-05T15:33:41Z" finished-at="2016-07-05T15:33:41Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.oracle.appbundlers.tests.functionality.TestBase.runTest(com.oracle.appbundlers.utils.BundlingManager) throws java.lang.Exception]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saveTestMethod -->
+        <test-method status="PASS" signature="saveTestMethod(java.lang.reflect.Method)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="saveTestMethod" is-config="true" duration-ms="0" started-at="2016-07-05T15:33:41Z" finished-at="2016-07-05T15:33:41Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.oracle.appbundlers.tests.functionality.TestBase.runTest(com.oracle.appbundlers.utils.BundlingManager) throws java.lang.Exception]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saveTestMethod -->
+        <test-method status="FAIL" signature="runTest(com.oracle.appbundlers.utils.BundlingManager)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="runTest" duration-ms="732" started-at="2016-07-05T15:33:41Z" data-provider="getBundlers" finished-at="2016-07-05T15:33:42Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[msi-ant]]>
+              </value>
+            </param>
+          </params>
+          <exception class="java.io.IOException">
+            <message>
+              <![CDATA[Process finished with not zero exit code]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.io.IOException: Process finished with not zero exit code
+	at com.oracle.appbundlers.utils.AntBundlingManager.execute(AntBundlingManager.java:465)
+	at com.oracle.appbundlers.utils.BundlingManager.execute(BundlingManager.java:48)
+	at com.oracle.appbundlers.tests.functionality.TestBase.runTest(TestBase.java:206)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.io.IOException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runTest -->
+        <test-method status="FAIL" signature="runTest(com.oracle.appbundlers.utils.BundlingManager)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="runTest" duration-ms="198" started-at="2016-07-05T15:33:42Z" data-provider="getBundlers" finished-at="2016-07-05T15:33:42Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[msi-java-api]]>
+              </value>
+            </param>
+          </params>
+          <exception class="com.oracle.tools.packager.ConfigException">
+            <message>
+              <![CDATA[This copy of ant-javafx.jar does not support Windows.]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.oracle.tools.packager.ConfigException: This copy of ant-javafx.jar does not support Windows.
+	at com.oracle.tools.packager.windows.WinAppBundler.doValidate(WinAppBundler.java:160)
+	at com.oracle.tools.packager.windows.WinMsiBundler.validate(WinMsiBundler.java:285)
+	at com.oracle.appbundlers.utils.JavaApiBundlingManager.validate(JavaApiBundlingManager.java:28)
+	at com.oracle.appbundlers.tests.functionality.TestBase.validate(TestBase.java:301)
+	at com.oracle.appbundlers.tests.functionality.TestBase.runTest(TestBase.java:190)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.oracle.tools.packager.ConfigException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runTest -->
+        <test-method status="PASS" signature="saveTestMethod(java.lang.reflect.Method)[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="saveTestMethod" is-config="true" duration-ms="0" started-at="2016-07-05T15:33:42Z" finished-at="2016-07-05T15:33:42Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.oracle.appbundlers.tests.functionality.TestBase.runTest(com.oracle.appbundlers.utils.BundlingManager) throws java.lang.Exception]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saveTestMethod -->
+        <test-method status="PASS" signature="cleanUp()[pri:0, instance:com.oracle.appbundlers.tests.functionality.SecondLauncherTest@442675e1]" name="cleanUp" is-config="true" duration-ms="19" started-at="2016-07-05T15:33:42Z" finished-at="2016-07-05T15:33:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cleanUp -->
+      </class> <!-- com.oracle.appbundlers.tests.functionality.SecondLauncherTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

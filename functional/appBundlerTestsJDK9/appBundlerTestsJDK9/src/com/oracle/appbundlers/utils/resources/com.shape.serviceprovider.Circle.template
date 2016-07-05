@@ -1,0 +1,15 @@
+package com.shape.serviceprovider.circle;
+
+import com.shape.serviceinterface.Shape;
+
+public class Circle implements Shape {
+
+	
+	public String createShape() {
+		return toString();
+	}
+	
+	public String toString() {
+		return "This is Circle";
+	}
+}

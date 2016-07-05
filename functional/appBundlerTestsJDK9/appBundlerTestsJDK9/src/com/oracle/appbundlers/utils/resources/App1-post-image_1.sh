@@ -1,0 +1,1 @@
+echo 'pass' > /tmp/result

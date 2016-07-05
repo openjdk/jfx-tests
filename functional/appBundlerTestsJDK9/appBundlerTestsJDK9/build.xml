@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<!-- By default, only the Clean and Build commands use this build script. -->
+<!-- Commands such as Run, Debug, and Test only use this build script if -->
+<!-- the Compile on Save feature is turned off for the project. -->
+<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
+<!-- in the project's Project Properties dialog box.-->
+<project name="appBundlerTests" default="default" basedir="." xmlns:unless="ant:unless">
+    <description>Builds, tests, and runs the project appBundlerTests.</description>
+    <import file="nbproject/build-impl.xml"/>
+    <property name="aurora.sentinel" value="http://aurora.ru.oracle.com/feeder-gw/central/system"/>
+
+    <condition property="resultsDirectory" value="results/">
+    <not>  
+        <isset property="resultsDirectory"/>
+    </not>
+    </condition>
+
+    <target name="copy-packager-jars">
+        <copy todir="lib">
+            <fileset file="${java.home}/lib/ant-javafx.jar">
+                <present targetdir="lib" present="srconly"/>
+            </fileset>
+        </copy>
+    	<!--
+    	   no need to copy packager.jar jar files as it is already exists 
+    	-->
+        <!--<copy todir="lib">
+            <fileset file="${java.home}/lib/packager.jar">
+                <present targetdir="lib" present="srconly"/>
+            </fileset>
+        </copy>
+        <copy todir="src/com/oracle/appbundlers/utils/resources">
+            <fileset file="lib/packager.jar"/>
+        </copy>-->
+    </target>
+
+    <target name="-post-clean">
+        <delete>
+            <fileset dir="lib" includes="ant-javafx.jar,packager.jar"/>
+        </delete>
+    </target>
+
+    <target name="-pre-compile" depends="copy-packager-jars" />
+    <!--
+
+    There exist several targets which are by default empty and which can be 
+    used for execution of your tasks. These targets are usually executed 
+    before and after some main targets. They are: 
+
+      -pre-init:                 called before initialization of project properties
+      -post-init:                called after initialization of project properties
+      -pre-compile:              called before javac compilation
+      -post-compile:             called after javac compilation
+      -pre-compile-single:       called before javac compilation of single file
+      -post-compile-single:      called after javac compilation of single file
+      -pre-compile-test:         called before javac compilation of JUnit tests
+      -post-compile-test:        called after javac compilation of JUnit tests
+      -pre-compile-test-single:  called before javac compilation of single JUnit test
+      -post-compile-test-single: called after javac compilation of single JUunit test
+      -pre-jar:                  called before JAR building
+      -post-jar:                 called after JAR building
+      -post-clean:               called after cleaning build products
+
+    (Targets beginning with '-' are not intended to be called on their own.)
+
+    Example of inserting an obfuscator after compilation could look like this:
+
+        <target name="-post-compile">
+            <obfuscate>
+                <fileset dir="${build.classes.dir}"/>
+            </obfuscate>
+        </target>
+
+    For list of available properties check the imported
+    nbproject/build-impl.xml file. 
+
+
+    Another way to customize the build is by overriding existing main targets.
+    The targets of interest are: 
+
+      -init-macrodef-javac:     defines macro for javac compilation
+      -init-macrodef-junit:     defines macro for junit execution
+      -init-macrodef-debug:     defines macro for class debugging
+      -init-macrodef-java:      defines macro for class execution
+      -do-jar:                  JAR building
+      run:                      execution of project 
+      -javadoc-build:           Javadoc generation
+      test-report:              JUnit report generation
+
+    An example of overriding the target for project execution could look like this:
+
+        <target name="run" depends="appBundlerTests-impl.jar">
+            <exec dir="bin" executable="launcher.exe">
+                <arg file="${dist.jar}"/>
+            </exec>
+        </target>
+
+    Notice that the overridden target depends on the jar target and not only on 
+    the compile target as the regular run target does. Again, for a list of available 
+    properties which you can use, check the target you are overriding in the
+    nbproject/build-impl.xml file. 
+
+    -->
+    <target name="aurora-prepare">
+        <get src="${aurora.sentinel}/parser-system.jar" dest="lib/parser-system.jar"/>
+        <get src="${aurora.sentinel}/parser-jre.jar" dest="lib/parser-jre.jar"/>
+        <get src="${aurora.sentinel}/parser-jfx.jar" dest="lib/parser-jfx.jar"/>
+        <get src="${aurora.sentinel}/manual-submit.jar" dest="lib/manual-submit.jar"/>
+
+        <mkdir dir="${resultsDirectory}"/>
+
+        <mkdir dir="${resultsDirectory}/xml-system"/>
+        <mkdir dir="${resultsDirectory}/xml-jre"/>
+        <mkdir dir="${resultsDirectory}/xml-jfx"/>
+
+        <java fork="true" jar="lib/parser-system.jar" dir="${resultsDirectory}/xml-system"/>
+        <java fork="true" jar="lib/parser-jre.jar" dir="${resultsDirectory}/xml-jre"/>
+        <java fork="true" jar="lib/parser-jfx.jar" dir="${resultsDirectory}/xml-jfx"/>
+
+        <property name="java.version" value="${ant.java.version}" />
+        <script language="javascript">
+            //First line of java -version output.
+            var version = project.getProperty("java.version");
+            project.setProperty("java.version", version.replaceAll(".*1.([0-9]*).*_([0-9]+).*", "$1u$2"));
+        </script>
+        <echo message="${java.version}" />
+             
+        <propertyfile file="${resultsDirectory}/component_info.txt">
+            <entry  key="test_component" value="deployment/bundlers"/>
+            <entry  key="test_harness" value="testng"/>
+            <entry  key="test_suitename" value="appBundler"/>
+            <entry  key="testbase_location" value="http://shaman.ru.oracle.com/hg/index.cgi/appBundlerTests"/>
+            <entry  key="testbase_name" value="appBundler"/>
+            <entry  key="testbase_version" value="${java.version}"/>
+        </propertyfile>
+        
+        <copy file="build/test/results/testng-results.xml" todir="${resultsDirectory}" verbose="true"/>
+    </target>
+    
+    <target name="aurora-submit" depends="aurora-prepare">
+        <java fork="true" jar="lib/manual-submit.jar" dir="${resultsDirectory}">
+            <arg line="-address=http://aurora.ru.oracle.com"/>
+            <arg line="-batch ManualSubmit"/>
+            <arg line="-userName 0"/>
+            <arg line="-resultsDirectory ."/>
+        </java>
+    </target>
+		
+    <target name="run-single-test-method">
+        <fail unless="class-name" message="Please, specify the class containing tests methods.${line.separator}
+For example -Dclass-name=com.oracle.appbundlers.tests.functionality.SimpleExecutablesTest" />
+        <echo unless:set="installation-package-type">You may want to specify the type of the package:${line.separator}
+-Dinstallation-package-type=${line.separator}
+[win_app     | exe | msi |${line.separator}
+ linux_app   | deb | rpm |${line.separator}
+ mac_app     | dmg | pkg ]${line.separator}</echo>
+            
+        <echo unless:set="packager-interface">You may want to cpecify the way of creating the package:${line.separator}
+-Dpackager-interface=[ant | cli | java_api] </echo>
+            
+        <property name="run.jvmargs" value="-Dtest-run-mode=single-method -Dinstallation-package-type=${installation-package-type} -Dpackager-interface=${packager-interface} -Dmanual-only=${manual-only}" />
+        
+        <antcall target="-do-compile-single">
+            <param  name="javac.includes" value="${class-name}" />
+        </antcall>
+        
+        <antcall target="test-single-method">
+            <param  name="test.class" value="${class-name}" />
+            <param  name="test.method" value="runTest" />
+            <param  name="javac.includes" value="${class-name}" />
+            <param  name="test.includes" value="${class-name}" />
+        </antcall>
+    </target>
+
+    <target name="test-manual">
+        <property name="run.jvmargs" value="-Dmanual-only=true" />
+        <antcall target="test">
+            <param name="manual-only" value="true" />
+        </antcall>
+    </target>
+</project>

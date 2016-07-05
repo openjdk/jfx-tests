@@ -1,0 +1,5 @@
+module com.shape.serviceprovider.circle {
+	requires com.shape.serviceinterface;
+	provides com.shape.serviceinterface.Shape with com.shape.serviceprovider.circle.Circle;
+	exports com.shape.serviceprovider.circle;
+}

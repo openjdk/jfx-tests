@@ -1,0 +1,42 @@
+package %PACKAGE_NAME%;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import jdk.packager.services.UserJvmOptionsService;
+
+public class %CLASS_NAME% {
+
+    public static void changeUserOptions(String userJvmAction) {
+
+        UserJvmOptionsService ujo = UserJvmOptionsService.getUserJVMDefaults();
+
+        switch (userJvmAction) {
+            case "USER_JVM_OPTIONS_CLEAR_ALL":
+                println("[UserFriendlyJvmOptionsTest]:Options will be cleared");
+                ujo.setUserJVMOptions(new HashMap<String, String>());
+                break;
+            case "USER_JVM_OPTIONS_SET_PREDEFINED":
+                println("[UserFriendlyJvmOptionsTest]: Predefined options will be set: {-Xmx777m, -Xms256m}");
+                Map<String, String> userJVMOptions = ujo.getUserJVMOptions();
+                userJVMOptions.put("-Xmx", "777m");
+                userJVMOptions.put("-Xms", "256m");
+                ujo.setUserJVMOptions(userJVMOptions);
+                break;
+            default:
+                println("[UserFriendlyJvmOptionsTest]:No options supplied. Not changing user JVM options");
+        }
+    }
+
+    public static void println (String str) {
+        System.out.println (str);
+    }
+    
+    public static void appendClassNameToPrint(String str) {
+    
+     StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+     String className = stackTrace[1].getClassName();
+     println(str);
+     println(className);
+    }
+}

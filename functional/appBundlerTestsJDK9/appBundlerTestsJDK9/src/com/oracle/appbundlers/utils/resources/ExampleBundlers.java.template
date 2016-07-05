@@ -1,0 +1,44 @@
+package testapp;
+
+import com.oracle.tools.packager.Bundler;
+import com.oracle.tools.packager.BundlerParamInfo;
+import com.oracle.tools.packager.Bundlers;
+import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
+
+/**
+ * @author Dmitry Ginzburg &lt;dmitry.x.ginzburg@oracle.com&gt;
+ */
+public class ExampleBundlers implements Bundlers {
+    List<Bundler> bundlers = new ArrayList<>();
+
+    @Override
+    public Collection<Bundler> getBundlers() {
+        return bundlers;
+    }
+
+    @Override
+    public Collection<Bundler> getBundlers(String type) {
+        return null;
+    }
+
+    @Override
+    public Collection<BundlerParamInfo> getStandardParameters() {
+        return null;
+    }
+
+    @Override
+    public void loadDefaultBundlers() {
+        bundlers.add(null);
+    }
+
+    @Override
+    public void loadBundlersFromServices(ClassLoader cl) {
+    }
+
+    @Override
+    public void loadBundler(Bundler bundler) {
+    }
+    
+}

@@ -1,0 +1,5 @@
+package com.shape.serviceinterface;
+
+public interface Shape {
+	String createShape();
+}

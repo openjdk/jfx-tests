@@ -1,0 +1,78 @@
+package %PACKAGE_NAME%;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import java.util.Map.Entry;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+import java.util.List;
+
+public class %APP_NAME% extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        %PRINTLN% ("Hello World initialized!");
+        String userJvmAction = "If music be the food of love";
+
+        for (String arg : getParameters().getRaw()) {
+            %PRINTLN% ("Argument: " + arg);
+
+            if ("USER_JVM_OPTIONS_CLEAR_ALL".equals(arg) ||
+                "USER_JVM_OPTIONS_SET_PREDEFINED".equals(arg)) {
+                    userJvmAction = arg;
+            }
+        }
+        
+        /*USER_FRIENDLY_API_TEST*/
+
+        StackPane root = new StackPane();
+
+        Scene scene = new Scene(root, 300, 250);
+
+        primaryStage.setTitle("Hello World!");
+        primaryStage.setScene(scene);
+        primaryStage.setOnShown(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                try {
+                    for (Entry<Object, Object> entry : System.getProperties().entrySet()) {
+                        String propertyName = entry.getKey().toString();
+                        if (propertyName.startsWith("%PREFIX%")
+                            || "app.preferences.id".equals(propertyName)
+                            || "sun.boot.class.path".equals(propertyName))
+                        {
+                            %PRINTLN% ("-D" + propertyName + "=" + entry.getValue());
+                        }
+                    }
+                    %PRINTLN% ("%PASS_STRING%");
+                    %PRINTLN% ("JREVersion: " + System.getProperty("java.runtime.version"));
+
+                   RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
+                   List<String> aList = bean.getInputArguments();
+
+                   for (String prop : aList) {
+                     %PRINTLN% (prop);
+                   }
+                   
+                   long totalMemory = Runtime.getRuntime().totalMemory();
+                   System.out.println("value of total memory from RuntimeMXBean Calculation is "+totalMemory/(1024*1024));
+
+                } finally {
+                    Platform.exit();
+                }
+            }
+        });
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
