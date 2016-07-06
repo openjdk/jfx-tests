@@ -36,8 +36,6 @@ public class SecondLauncherTest extends TestBase {
     private static final List<String> jvmOptions;
     private static final Map<String, String> jvmProperties;
     private static final Map<String, String> userJvmOptions;
-    private static final String MAIN_APP_NAME = "SQE-TEST-APP";
-    private static final String SECOND_APP_NAME = "SQE-ninja";
 
     @Override
     protected BundlerUtils[] getBundlerUtils() {
@@ -62,11 +60,6 @@ public class SecondLauncherTest extends TestBase {
     }
 
     @Override
-    public String getResultingAppName() {
-        return MAIN_APP_NAME;
-    }
-
-    @Override
     protected BundlingManagers[] getBundlingManagers() {
         return new BundlingManagers[] { BundlingManagers.ANT,
                 BundlingManagers.JAVA_API };
@@ -76,11 +69,19 @@ public class SecondLauncherTest extends TestBase {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
 
-            additionalParams.put(APP_NAME, MAIN_APP_NAME);
-
+            additionalParams.put(APP_NAME,
+                    SecondLauncherTest.this.getResultingAppName());
+            String appClass = String.join("/",
+                    this.currentParameter.getApp().getMainModuleName(),
+                    this.currentParameter.getApp().getMainClass());
+            additionalParams.put(MAIN_MODULE, appClass);
             Map<String, Object> launcherParams = new HashMap<>();
-            launcherParams.put(APP_NAME, SECOND_APP_NAME);
-            launcherParams.put(APPLICATION_CLASS, APP2_FULLNAME);
+            launcherParams.put(APP_NAME,
+                    SecondLauncherTest.this.getSecondaryLauncherName());
+            if (this.currentParameter.getApp().isAppContainsModules()) {
+                launcherParams.put(MAIN_MODULE, this.currentParameter.getApp()
+                        .getModuleTempSources().get(0).getModuleName());
+            }
             launcherParams.put(JVM_OPTIONS, jvmOptions);
             launcherParams.put(JVM_PROPERTIES, jvmProperties);
             launcherParams.put(USER_JVM_OPTIONS, userJvmOptions);
@@ -99,7 +100,7 @@ public class SecondLauncherTest extends TestBase {
             Map<String, Object> verifiedOptions = new HashMap<>(
                     getAdditionalParams().getAdditionalParams());
             verifiedOptions.put(SECOND_LAUNCHER_OUTPUT_CONTAINS,
-                    new Pair<>(SECOND_APP_NAME, PASS_2));
+                    new Pair<>(getSecondaryLauncherName(), PASS_2));
             verifiedOptions.put(OUTPUT_CONTAINS, PASS_1);
 
             List<String> expectedJvmProps = jvmProperties.entrySet()
@@ -108,14 +109,14 @@ public class SecondLauncherTest extends TestBase {
                     .collect(toList());
 
             verifiedOptions.put(SECOND_LAUNCHER_MULTI_OUTPUT_CONTAINS,
-                    new Pair<>(SECOND_APP_NAME, expectedJvmProps));
+                    new Pair<>(getSecondaryLauncherName(), expectedJvmProps));
             verifiedOptions.put(SECOND_LAUNCHER_MULTI_OUTPUT_CONTAINS,
-                    new Pair<>(SECOND_APP_NAME, jvmOptions));
+                    new Pair<>(getSecondaryLauncherName(), jvmOptions));
             final List<String> usrJvmOpts = userJvmOptions.entrySet().stream()
                     .map(entry -> entry.getKey() + entry.getValue())
                     .collect(toList());
             verifiedOptions.put(SECOND_LAUNCHER_MULTI_OUTPUT_CONTAINS,
-                    new Pair<>(SECOND_APP_NAME, usrJvmOpts));
+                    new Pair<>(getSecondaryLauncherName(), usrJvmOpts));
 
             return verifiedOptions;
         };
@@ -126,5 +127,9 @@ public class SecondLauncherTest extends TestBase {
             throws IOException {
         this.currentParameter.setAdditionalParams(getAdditionalParams());
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
+    }
+
+    private String getSecondaryLauncherName() {
+        return String.join("", getResultingAppName(), "SecondaryLauncher");
     }
 }

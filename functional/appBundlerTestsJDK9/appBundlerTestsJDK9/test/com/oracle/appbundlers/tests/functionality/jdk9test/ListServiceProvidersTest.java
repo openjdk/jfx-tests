@@ -19,8 +19,7 @@ import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;
 
 /**
  * @author Ramesh BG
- * @TODO complete this testcase check whether all service providers are listed
- *       and override getVerifiedOptions and include output in this method.
+ *
  */
 public class ListServiceProvidersTest extends ModuleTestBase {
 

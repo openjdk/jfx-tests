@@ -14,6 +14,7 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
+import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
@@ -40,7 +41,8 @@ public class NamedModuleWithMinimumModulesTest extends ModuleTestBase {
         return () -> {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put(ADD_MODS, COM_GREETINGS_MODULE_CUM_PACKAGE_NAME);
-            hashMap.put(MODULEPATH, getApp().getModulePath());
+            hashMap.put(MODULEPATH, ((GenericModuleParameters) this.currentParameter)
+                    .getModulePath());
             return hashMap;
         };
     }

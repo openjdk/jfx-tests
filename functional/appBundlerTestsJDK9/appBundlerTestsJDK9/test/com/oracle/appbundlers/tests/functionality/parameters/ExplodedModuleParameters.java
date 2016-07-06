@@ -44,4 +44,9 @@ public class ExplodedModuleParameters extends GenericModuleParameters {
                 JMODS_PATH_IN_JDK, app.getExplodedModsDir().toString()));
         return requireNonNull(getBasicParamsFunctionalInterface(), basicParams);
     }
+
+    @Override
+    public String getModulePath() {
+        return app.getExplodedModsDir().toString();
+    }
 }

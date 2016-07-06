@@ -11,6 +11,7 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
+import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
@@ -18,18 +19,16 @@ import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;
 
 /**
  * @author Ramesh BG
- * @TODO complete this test case aim of this test case is to limit modules to
- *       only some modules so service provider lookup is stopped for only
- *       specified modules. Error:: [STDOUT]:
- *       jdk.tools.jlink.plugin.PluginException:
- *       java.lang.module.ResolutionException: Module com.s hape not found
+ *
  */
 public class LimitModuleTest extends ModuleTestBase {
 
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(MODULEPATH, getApp().getModulePath());
+            hashMap.put(MODULEPATH,
+                    ((GenericModuleParameters) this.currentParameter)
+                            .getModulePath());
             /*
              * Do not include Rectangle module name for Limit Mods
              */
@@ -45,8 +44,7 @@ public class LimitModuleTest extends ModuleTestBase {
                 COM_SHAPE_TEST_LIMITMODSMAINCLASS,
                 SourceFactory.get_com_shape_serviceinterface_module(),
                 SourceFactory.get_com_shape_serviceprovider_circle_module(),
-                SourceFactory
-                        .get_com_shape_serviceprovider_rectangle_module(),
+                SourceFactory.get_com_shape_serviceprovider_rectangle_module(),
                 SourceFactory.get_com_shape_test_module());
     }
 

@@ -40,7 +40,12 @@ public class ModularJarParameters extends GenericModuleParameters {
                         app.getModularJarFileList().stream().map(Path::toFile)
                                 .collect(toSet())));
         basicParams.put(MODULEPATH, String.join(File.pathSeparator,
-                JMODS_PATH_IN_JDK, " " + app.getModularJarsDir().toString()));
+                JMODS_PATH_IN_JDK, app.getModularJarsDir().toString()));
         return requireNonNull(getBasicParamsFunctionalInterface(), basicParams);
+    }
+
+    @Override
+    public String getModulePath() {
+        return app.getModularJarsDir().toString();
     }
 }

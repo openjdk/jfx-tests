@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParams;
+import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.tools.packager.RelativeFileSet;
 import com.sun.javafx.tools.packager.bundlers.BundleParams;
@@ -29,9 +30,10 @@ public class MainModuleTest extends ModuleTestBase {
                     new RelativeFileSet(app.getJarDir().toFile(),
                             app.getJarFilesList().stream().map(Path::toFile)
                                     .collect(toSet())));
-            params.put(MODULEPATH, currentParameter.getApp().getModulePath());
+            params.put(MODULEPATH, ((GenericModuleParameters) this.currentParameter).getModulePath());
             params.put(APP_NAME, getResultingAppName());
-            params.put(MAIN_MODULE, COM_GREETINGS_MODULE_CUM_PACKAGE_NAME);
+            params.put(MAIN_MODULE,
+                    app.getMainModuleName() + "/" + app.getMainClass());
             return params;
         };
     }

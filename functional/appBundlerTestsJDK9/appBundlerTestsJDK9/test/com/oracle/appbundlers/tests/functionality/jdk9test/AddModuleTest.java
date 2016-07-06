@@ -11,13 +11,11 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
+import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 
 /**
  * @author Ramesh BG Aim: add all modules available in application mods dir and
- *         check the same in java -listmods output. [STDOUT]: Bundler EXE
- *         Installer failed because of jdk.tools.jlink.plugin.PluginException:
- *         java.lang. module.ResolutionException: Module
- *         custom.util;com.greetings not found
+ *         check the same in java -listmods output.
  */
 public class AddModuleTest extends ModuleTestBase {
 
@@ -26,8 +24,9 @@ public class AddModuleTest extends ModuleTestBase {
             Map<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put(ADD_MODS, AddModuleTest.this.getParameters().getApp()
                     .addAllModules());
-            hashMap.put(MODULEPATH, AddModuleTest.this.getParameters().getApp()
-                    .getModulePath());
+            hashMap.put(MODULEPATH,
+                    ((GenericModuleParameters) this.currentParameter)
+                            .getModulePath());
             return hashMap;
         };
     }

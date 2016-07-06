@@ -45,6 +45,7 @@ import org.w3c.dom.Element;
 import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;
 import com.oracle.tools.packager.ConfigException;
 import com.oracle.tools.packager.RelativeFileSet;
+import com.oracle.tools.packager.StandardBundlerParam;
 import com.oracle.tools.packager.UnsupportedPlatformException;
 import com.sun.javafx.tools.packager.bundlers.BundleParams;
 
@@ -174,7 +175,7 @@ public class AntBundlingManager extends BundlingManager {
                     /*
                      * @TODO need to implement below ramesh
                      */
-                    // = APP_RESOURCES.fetchFrom(params);
+//                    relFileSet = APP_RESOURCES.fetchFrom(params);
                     e.setAttribute("dir",
                             relFileSet.getBaseDirectory().getAbsolutePath());
                     e.setAttribute("includes", file);
@@ -231,6 +232,14 @@ public class AntBundlingManager extends BundlingManager {
                                         keyVal.getValue());
                                 break;
                             }
+
+                            case MAIN_MODULE:
+                                launcherEl.setAttribute(MAIN_MODULE, (String) keyVal.getValue());
+                            break;
+
+                            case APPLICATION_CLASS:
+                                launcherEl.setAttribute(APPLICATION_CLASS, (String) keyVal.getValue());
+
                             default:
                                 launcherEl.appendChild(
                                         createBundleArgumentEntry(document,
@@ -318,7 +327,7 @@ public class AntBundlingManager extends BundlingManager {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private String getValueAsString(Object value) {
         String actualValue = null;
         if (value instanceof String) {

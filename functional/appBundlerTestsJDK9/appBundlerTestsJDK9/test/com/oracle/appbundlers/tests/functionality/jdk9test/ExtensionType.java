@@ -11,5 +11,5 @@ import com.oracle.appbundlers.utils.Constants;
  *
  */
 public enum ExtensionType implements Constants {
-    NormalJar/*, ModularJar, ExplodedModules, Jmods*/;
+    NormalJar, ModularJar, ExplodedModules, Jmods;
 }

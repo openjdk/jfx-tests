@@ -13,6 +13,7 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
+import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
@@ -42,7 +43,9 @@ public class NamedModuleBundledWithMinimumModulesAnd3rdPartyModulesTest
             hashMap.put(APPLICATION_CLASS,
                     COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME);
 
-            hashMap.put(MODULEPATH, getApp().getModulePath());
+            hashMap.put(MODULEPATH,
+                    ((GenericModuleParameters) this.currentParameter)
+                            .getModulePath());
             hashMap.put(ADD_MODS, getApp().addAllModules());
             return hashMap;
         };

@@ -13,7 +13,8 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.Additional
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 
 /**
- * @author Ramesh BG aim of this testcase is to check for executables available
+ * @author Ramesh BG
+ *         aim of this testcase is to check for executables available
  *         in bin directory when "-stripexecutables false" is passed to
  *         javapackager.
  */

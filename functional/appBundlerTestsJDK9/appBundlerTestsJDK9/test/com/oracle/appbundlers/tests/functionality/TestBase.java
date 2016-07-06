@@ -89,9 +89,9 @@ public abstract class TestBase implements Constants {
 
         {
             put(ExtensionType.NormalJar, new NormalJarParameters());
-        /*    put(ExtensionType.ModularJar, new ModularJarParameters());
+            put(ExtensionType.ModularJar, new ModularJarParameters());
             put(ExtensionType.ExplodedModules, new ExplodedModuleParameters());
-            put(ExtensionType.Jmods, new JmodParameters());*/
+            put(ExtensionType.Jmods, new JmodParameters());
         }
     };
 
@@ -110,13 +110,13 @@ public abstract class TestBase implements Constants {
     // method block: should be overridden in some tests
     // all these implementations are just "default-values"
     protected BundlerUtils[] getBundlerUtils() {
-//        return BundlerUtils.values();
-        return new BundlerUtils[] { BundlerUtils.EXE};
+        return BundlerUtils.values();
+//        return new BundlerUtils[] { BundlerUtils.EXE};
     }
 
     protected BundlingManagers[] getBundlingManagers() {
-//        return BundlingManagers.values();
-        return new BundlingManagers[] { BundlingManagers.CLI};
+        return BundlingManagers.values();
+//        return new BundlingManagers[] { BundlingManagers.CLI};
     }
 
     /**

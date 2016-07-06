@@ -12,12 +12,14 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
+import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 
 /**
- * @author Ramesh BG Example 7 in chris list Example 7: Named Module App + all
+ * @author Ramesh BG
+ *         Example 7 in chris list Example 7: Named Module App + all
  *         modules -appClass HelloWorld -BmainJar=hello.world.jar -addmods
  *         ALL_MODULEPATH
  */
@@ -41,7 +43,8 @@ public class NamedModuleBundledWithAllModules extends ModuleTestBase {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put(ADD_MODS, ALL_MODULEPATH);
-            hashMap.put(MODULEPATH, getApp().getModulePath());
+            hashMap.put(MODULEPATH, ((GenericModuleParameters) this.currentParameter)
+                    .getModulePath());
             return hashMap;
         };
     }

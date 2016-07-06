@@ -22,7 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.oracle.appbundlers.utils.AppWrapper;
-import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.windows.Registry;
 import com.oracle.appbundlers.utils.windows.Registry.Query;
@@ -98,7 +97,7 @@ public class WinMsiBundlerUtils extends WinAbstractBundlerUtils {
     @Override
     public String install(AppWrapper app, String applicationTitle)
             throws IOException {
-        String msiPath = findByExtension(app.getWorkDir(), "msi",
+        String msiPath = findByExtension(app.getBundlesDir(), "msi",
                 ROOT_DIRECTORY_DEPTH).toString();
         try {
             LOG.log(Level.INFO, "Installing {0}.", msiPath);

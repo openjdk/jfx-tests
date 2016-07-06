@@ -41,8 +41,8 @@ public class NormalJarParameters extends Parameters {
         setApp(new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                 COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
                 SourceFactory
-                        .get_com_greetings_unnamed_module_depends_on_test_app_util_unnamed_module(),
-                SourceFactory.get_test_app_util_unnamed_module()));
+                        .get_com_greetings_app_unnamed_module()
+                ));
     }
 
     public NormalJarParameters() {

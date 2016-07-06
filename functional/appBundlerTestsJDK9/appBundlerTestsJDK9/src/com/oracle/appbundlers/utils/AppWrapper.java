@@ -222,11 +222,7 @@ public class AppWrapper implements Constants {
                     .map(path -> path.toAbsolutePath().toString())
                     .collect(joining(File.pathSeparator)));
         }
-        /*
-         * TODO add if neccessary but not here. this is required for
-         * UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest.java
-         * check with chris once.
-         */
+
         if (paramsForCompilation != null) {
             argsList.add(this.paramsForCompilation);
         }
@@ -619,19 +615,14 @@ public class AppWrapper implements Constants {
                 .collect(Collectors.toList());
     }
 
-    public String getModulePath() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Constants.JMODS_PATH_IN_JDK);
-        stringBuilder.append(Constants.SPACE);
-        stringBuilder.append(File.pathSeparator);
-        stringBuilder.append(getExplodedModsDir().toString());
-        return stringBuilder.toString();
-    }
-
     public String getMainModuleName() {
         List<Source> collect = sources.stream()
                 .filter((source) -> source.isMainModule())
                 .collect(Collectors.toList());
         return !collect.isEmpty() ? collect.get(0).getModuleName() : null;
+    }
+
+    public boolean isAppContainsModules() {
+        return !getModuleTempSources().isEmpty();
     }
 }

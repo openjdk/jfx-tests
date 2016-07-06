@@ -117,7 +117,6 @@ public class ConsoleBundlingManager extends BundlingManager {
 
     private List<String> command(File file,
             List<Pair<String, Collection<String>>> toConsole) {
-        System.out.println("toConsole Parameters are ");
         List<String> command = new ArrayList<>();
         String bundlerType = getBundler().getBundleType();
         if (!file.getName().equals("bundles")) {
@@ -223,20 +222,6 @@ public class ConsoleBundlingManager extends BundlingManager {
                         Arrays.asList(value.toString())));
             }
         }
-        /*
-         * Do not include appclass here because appclass and classpath
-         * combination is used for unnamed modules not for named modules. For
-         * Named Modules -m module name is used.
-         *
-         * @TODO move -appclass to appropriate location in source code.
-         */
-
-        // if (!params.containsKey("-appclass")) {
-        // String mainClass = StandardBundlerParam.MAIN_CLASS.fetchFrom(params);
-        // System.out.println("Params after fetching are "+params);
-        // key2Value.add(new Pair<>("-appclass", Arrays.asList(mainClass)));
-        // System.out.println("key2value parameters are "+key2Value);
-        // }
         return key2Value;
     }
 

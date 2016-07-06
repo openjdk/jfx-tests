@@ -40,9 +40,6 @@ public class ServiceHintTest extends TestBase {
             final String description = "Caramba service!";
             Map<String, Object> additionalParams = new HashMap<>();
             additionalParams.put(DESCRIPTION, description);
-            /*
-             * @TODO change text "Service Hint" to "daemon"
-             */
             additionalParams.put(SERVICE_HINT, true);
             additionalParams.put(START_ON_INSTALL, true);
             additionalParams.put(RUN_AT_STARTUP, true);

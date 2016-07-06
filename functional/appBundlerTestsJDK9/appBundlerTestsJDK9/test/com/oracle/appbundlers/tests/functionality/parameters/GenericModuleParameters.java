@@ -44,4 +44,7 @@ public abstract class GenericModuleParameters extends Parameters {
                 app.getMainModuleName() + "/" + app.getMainClass());
         return basicParams;
     }
+
+    public abstract String getModulePath();
+
 }

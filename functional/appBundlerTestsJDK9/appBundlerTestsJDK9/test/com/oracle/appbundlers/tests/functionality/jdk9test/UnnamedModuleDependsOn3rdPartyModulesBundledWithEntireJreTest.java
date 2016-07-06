@@ -14,6 +14,7 @@ import java.util.Map;
 import com.oracle.appbundlers.tests.functionality.TestBase;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
+import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
@@ -23,10 +24,6 @@ import com.oracle.appbundlers.utils.Utils;
  *         JRE + 3rd party modules -srcfiles hello.world.jar -appClass
  *         HelloWorld -BmainJar=hello.world.jar -addmods 3rd.party -modulepath
  *         <path to 3rd party JARs>
- * @TODO complete this testcase by including module directory TestCase is
- *       pending for verification part and working fine, check with chris
- *       whether this approach is correct.
- *
  */
 public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
         extends TestBase {
@@ -60,7 +57,8 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(MODULEPATH, getApp().getModulePath());
+            hashMap.put(MODULEPATH, ((GenericModuleParameters) this.currentParameter)
+                    .getModulePath());
             hashMap.put(APPLICATION_CLASS,
                     COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME);
             hashMap.put(ADD_MODS, getApp().addAllModules());
@@ -81,6 +79,6 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
     @Override
     public boolean isTestCaseApplicableForExtensionType(
             ExtensionType extensionType) {
-        return ExtensionType.NormalJar == extensionType;
+        return ExtensionType.NormalJar != extensionType;
     }
 }

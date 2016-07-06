@@ -12,9 +12,6 @@ import java.io.File;
  */
 public interface Constants {
     String MENU_HINT = "menuHint";
-    /*
-     * @TODO change text "Service Hint" to "daemon"
-     */
     String SERVICE_HINT = "daemon";
     String START_ON_INSTALL = "startOnInstall";
     String RUN_AT_STARTUP = "runAtStartup";

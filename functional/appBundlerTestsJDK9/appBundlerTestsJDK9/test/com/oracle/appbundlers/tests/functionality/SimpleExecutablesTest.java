@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
 
@@ -41,14 +40,5 @@ public class SimpleExecutablesTest extends TestBase {
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
-        this.currentParameter.setAdditionalParams(getAdditionalParams());
-    }
-
-    public AdditionalParams getAdditionalParams() {
-        return () -> {
-          Map<String, Object> additionalParams = new HashMap<>();
-          additionalParams.put(STRIP_NATIVE_COMMANDS, false);
-          return additionalParams;
-        };
     }
 }

@@ -44,4 +44,9 @@ public class JmodParameters extends GenericModuleParameters {
                 JMODS_PATH_IN_JDK, app.getJmodsDir().toString()));
         return requireNonNull(getBasicParamsFunctionalInterface(), basicParams);
     }
+
+    @Override
+    public String getModulePath() {
+        return app.getJmodsDir().toString();
+    }
 }
