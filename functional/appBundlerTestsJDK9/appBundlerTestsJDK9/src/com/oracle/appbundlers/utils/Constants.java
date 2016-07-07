@@ -24,13 +24,7 @@ public interface Constants {
     String TITLE = "Title";
     String MENU_GROUP = "win.menuGroup";
     String DESCRIPTION = "description";
-    /*
-     * changed from "Main Jar" to "mainJar"
-     */
     String MAIN_JAR = "mainJar";
-    /*
-     * changed from "Main Jar Classpath" to "classpath"
-     */
     String CLASSPATH = "classpath";
     String ICON = "icon";
     String IDENTIFIER = "identifier";
@@ -66,14 +60,10 @@ public interface Constants {
     String FA_CONTENT_TYPE = "fileAssociation.contentType";
     String FILE_ASSOCIATIONS = "fileAssociations";
     String APP_NAME = "name";
-    // String MAIN_CLASS = "applicationClass";
     String SECONDARY_LAUNCHERS = "secondaryLaunchers";
-    String ADD_MODS = "addmods";
-    String LIMIT_MODS = "limitmods";
-    String DETECT_MODS = "detectmods";
-    String MODULEPATH = "modulepath";
-    String APPMODULEPATH = "appmodulepath";
-    // String APP_RESOURCES="Resources";
+    String ADD_MODS = "add-modules";
+    String LIMIT_MODS = "limit-modules";
+    String MODULEPATH = "module-path";
     String STRIP_NATIVE_COMMANDS = "strip-native-commands";
     String SPACE = " ";
     char QUOTE = '\"';
@@ -138,7 +128,7 @@ public interface Constants {
     String CUSTOM_UTIL_UNNAMED_MODULE_PACKAGE_STATEMENT = "testapp.util";
     String INSTALLDIR_CHOOSER = "installdirChooser";
     String CUSTOM_UTIL_APPEND_CLASS_NAME_PRINT_METHOD = "testapp.Util.appendClassNameToPrint";
-    String MAIN_MODULE = "m";
+    String MAIN_MODULE = "module";
     String APP1_NAME = "App1";
     String APP_RESOURCES = "appResources";
     String COPYRIGHT_VALUE = "Copyright (c) 2011, 2016 Oracle and/or its affiliates. All rights reserved.";
@@ -158,7 +148,6 @@ public interface Constants {
     String MODULAR_JARS_DIR = "modjars";
     String APP1_FULLNAME = packageName + "." + APP1_NAME;
     String APP2_FULLNAME = packageName + "." + APP2_NAME;
-
-
+    String DOUBLE_HYPHEN ="--";
     String RUNTIME = "runtime";
 }

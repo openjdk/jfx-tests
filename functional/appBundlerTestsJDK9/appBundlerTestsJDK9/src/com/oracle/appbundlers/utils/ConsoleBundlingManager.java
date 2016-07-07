@@ -59,14 +59,18 @@ public class ConsoleBundlingManager extends BundlingManager {
             put("App Name", "-name");
             put("Title", "-title");
             put(VENDOR, "-vendor");
-            put(ADD_MODS, "-" + ADD_MODS);
-            put(MODULEPATH, "-" + MODULEPATH);
-            put(APPMODULEPATH, "-" + APPMODULEPATH);
-            put(DETECT_MODS, "-" + DETECT_MODS);
-            put(LIMIT_MODS, "-" + LIMIT_MODS);
-            put(STRIP_NATIVE_COMMANDS, "-" + STRIP_NATIVE_COMMANDS);
             put(SERVICE_HINT, "-" + SERVICE_HINT);
-            put(MAIN_MODULE, "-" + MAIN_MODULE);
+
+            /*
+             * JDK 9 CLI GNU style parameters
+             */
+            put(ADD_MODS, DOUBLE_HYPHEN + ADD_MODS);
+            put(LIMIT_MODS, DOUBLE_HYPHEN + LIMIT_MODS);
+            put(MODULEPATH, DOUBLE_HYPHEN + MODULEPATH);
+            put(MAIN_MODULE, DOUBLE_HYPHEN + MAIN_MODULE);
+            put(STRIP_NATIVE_COMMANDS, DOUBLE_HYPHEN + STRIP_NATIVE_COMMANDS);
+
+
             List<String> list = Arrays.asList(LICENSE_FILE, IDENTIFIER, VERSION,
                     ICON, EMAIL, COPYRIGHT, LICENSE_TYPE, CATEGORY,
                     SHORTCUT_HINT, MENU_HINT, SYSTEM_WIDE, JVM_OPTIONS,
@@ -138,9 +142,7 @@ public class ConsoleBundlingManager extends BundlingManager {
                 command.add(key + "=" + value.stream().collect(joining(" ")));
             } else if (RAW_OPTIONS.equals(key)) {
                 value.stream().forEach(option -> command.add(option));
-            } else if (("-" + DETECT_MODS).equals(key)) {
-                command.add(key);
-            } else if (("-" + STRIP_NATIVE_COMMANDS).equals(key)) {
+            } else if ((DOUBLE_HYPHEN + STRIP_NATIVE_COMMANDS).equals(key)) {
                 command.add(key);
             } else {
                 command.add(key);
