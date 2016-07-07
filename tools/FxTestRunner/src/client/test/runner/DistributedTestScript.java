@@ -80,12 +80,12 @@ public class DistributedTestScript extends TestScript {
      * @throws Fault
      */
     @Override
-    protected String[] tdCmdArgs(TestDescription td, String resultDir) throws IOException, Fault {
+    protected String[] tdCmdArgs(TestDescription td, String resultDir, int port) throws IOException, Fault {
         String id = env.lookup(BasicFXInterview.TESTSUITE_ID)[0];
         String host = env.lookup(BasicFXInterview.JAVATEST_HOSTNAME)[0];
         String verbose = Boolean.getBoolean("javatest.FXProcessCommand.verbose") ? "-v" : "";
 //        String[] args = super.tdCmdArgs(td, id + File.separator + td.getRootRelativePath());
-        String[] args = super.tdCmdArgs(td, workdirPath + File.separator + td.getParameter("testName"));
+        String[] args = super.tdCmdArgs(td, workdirPath + File.separator + td.getParameter("testName"), port);
         
         String[] ret = {
             "-mapArgs",

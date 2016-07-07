@@ -49,6 +49,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.runner.RunWith;
@@ -60,7 +62,8 @@ import test.javaclient.shared.Utils;
  * @author shura, mrkam, Sergey Grinev, Victor Shubov
  */
 public class TestScript extends htmltestrunner.TestScript {
-
+    
+    private static final int FORCED_TERMINATION_TIMEOUT = 5000;
     private static final boolean verbose = true; //TODO: use real logger
     private volatile Process process = null;
     private volatile ServerSocket cmdServer = null;
@@ -80,7 +83,7 @@ public class TestScript extends htmltestrunner.TestScript {
     protected synchronized Status getStatus() {
         return super.getStatus();
     }
-
+    
     @Override
     protected void before(TestDescription description, String resultDir) throws Throwable {
         String testClassName = td.getParameter(RunUITestFinder.UNIT_TEST_CLASS_NAME);
@@ -93,12 +96,12 @@ public class TestScript extends htmltestrunner.TestScript {
         if (needToRun(testClassName, testName, runMode)) {
 
             try {
-                startServer();
+                int masterPort = startServer();
 
                 if (runMode.equals(BasicFXInterview.RUN_MODE_DESKTOP)
                         || runMode.equals(BasicFXInterview.RUN_MODE_DESKTOP_SWING_INTEROPERABILITY)
                         || runMode.equals(BasicFXInterview.RUN_MODE_DESKTOP_SWT_INTEROPERABILITY)) {
-                    runTd(description, resultDir);
+                    runTd(description, resultDir, masterPort);
                 } else {
                     runPlugin(td, resultDir, BasicFXInterview.RUN_MODE_JNLP.equals(runMode));
                 }
@@ -131,7 +134,8 @@ public class TestScript extends htmltestrunner.TestScript {
                 commandStream.close();
                 interrupt(Status.error(e.toString()));
             }
-
+            
+            Semaphore s = new Semaphore(0);
             resultThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -139,7 +143,7 @@ public class TestScript extends htmltestrunner.TestScript {
                         System.err.println("Waiting for exit");
                         ObjectInputStream ois = new ObjectInputStream(cmdSocket.getInputStream());
                         status = (TestRunner.Status) ois.readObject();
-
+                        
                         Status jtStatus;
                         System.err.println("Process returned status " + status);
                         if (status == null) {
@@ -157,7 +161,7 @@ public class TestScript extends htmltestrunner.TestScript {
                         ex.printStackTrace(System.err);
                         interrupt(Status.error(CtrUtils.stackTraceToString(ex)));
                     } finally {
-
+                        
                         //finalize
                         try {
                             commandStream.close();
@@ -191,10 +195,19 @@ public class TestScript extends htmltestrunner.TestScript {
 //                        jemmyProcess.destroy();
 //                    }
                         System.out.println("DONE");
+                        s.release();
                     }
                 }
             }, "I'm waiting for test's result");
             resultThread.start();
+            try {
+                s.acquire();
+            } catch (InterruptedException ex) {
+                System.out.println("Interrupt from test runner: " + ex);
+                resultThread.interrupt();
+                process.destroyForcibly();
+                process.waitFor(FORCED_TERMINATION_TIMEOUT, TimeUnit.MILLISECONDS);
+            }            
         }
     }
 
@@ -287,7 +300,7 @@ public class TestScript extends htmltestrunner.TestScript {
      * @throws IOException
      * @throws Fault
      */
-    protected String[] tdCmdArgs(TestDescription td, String resultDir) throws IOException, Fault {
+    protected String[] tdCmdArgs(TestDescription td, String resultDir, int port) throws IOException, Fault {
         String testClassName = td.getParameter(RunUITestFinder.UNIT_TEST_CLASS_NAME);
 
         boolean isJunit = Boolean.parseBoolean(td.getParameter(RunUITestFinder.TYPE_JUNIT));
@@ -305,7 +318,7 @@ public class TestScript extends htmltestrunner.TestScript {
         }
         String javaExec = pathStr.toString();
 
-
+        
         String proxy = lookup(BasicFXInterview.PROXY_PARAM_NAME, "");
         String jvmProxyHost = "";
         String jvmProxyPort = "";
@@ -334,7 +347,7 @@ public class TestScript extends htmltestrunner.TestScript {
 //            jvmArgImageUtils = "-Dimageutils.outputpath=" + externaloutput + File.separator;
 //        }
         String jvmArgImageUtils = "-Dimageutils.outputpath=" + resultDir + File.separator;
-        
+
         String jvmArgNoDesc = "";
         if (Boolean.parseBoolean(td.getParameter(RunUITestFinder.NO_DESCRIPTION))) {
             jvmArgNoDesc = "-Djavatest.mode.nodesc=true";
@@ -383,6 +396,7 @@ public class TestScript extends htmltestrunner.TestScript {
         command = addToArray(command, additionalOptions);
         command = addToArray(command, jvmArgNoDesc, jvmProxyHost, jvmProxyPort, jvmInterop, swtTestOpt);
         command = addToArray(command, jvmArgClientTestRoot);
+        command = addToArray(command, "-DmasterPort=" + port);        
         command = addToArray(command, "-classpath", System.getProperty("java.class.path"));
 //        command = addToArray(command, "-Xdebug", "-Xnoagent", "-Djava.compiler=NONE", "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5858");
         command = addToArray(command, isJunit ? JUnit2TestRunner.class.getName() : TestRunner.class.getName(), testClassName);
@@ -408,27 +422,29 @@ public class TestScript extends htmltestrunner.TestScript {
         process = Runtime.getRuntime().exec(deleteEmptyElements(command));
     }
 
-    private void startServer() throws IOException {
-        System.out.println("Starting server at " + CommonTestRunnerWorker.PORT);
+    private int startServer() throws IOException {
+        System.out.println("Starting server." );
         int iRetryCount = 3;
         boolean bindDone = false;
         while ( (iRetryCount > 0) && (false==bindDone) ) {
             iRetryCount = iRetryCount - 1;
-            
+
             try {
-                cmdServer = new ServerSocket(CommonTestRunnerWorker.PORT);
+                cmdServer = new ServerSocket(0);
+                System.out.println("Started server at port " + cmdServer.getLocalPort());
                 bindDone = true;
             } catch (java.net.BindException be) {
                 bindDone = false;
                 System.out.println("  === bind exception ===");
-                Socket socket = new Socket( "127.0.0.1", CommonTestRunnerWorker.PORT);
+                Socket socket = new Socket("127.0.0.1", cmdServer.getLocalPort());
                 commandStream = new ObjectOutputStream(socket.getOutputStream());
                 sendCommand(CommandType.ABORT);
                 try {Thread.sleep(100);} catch(Exception e){}
-            }
-        
+                }
+
         }// retry loop end
         cmdServer.setSoTimeout(60000); // we need to be generous for plugin mode, it gets to "download" runnable
+        return cmdServer.getLocalPort();
     }
 
     private void waitForConnection() throws IOException {
@@ -481,8 +497,8 @@ public class TestScript extends htmltestrunner.TestScript {
         return result;
     }
 
-    private void runTd(TestDescription td, String resultDir) throws IOException, InterruptedException, Fault {
-        String[] command = tdCmdArgs(td, resultDir);
+    private void runTd(TestDescription td, String resultDir, int port) throws IOException, InterruptedException, Fault {
+        String[] command = tdCmdArgs(td, resultDir, port);
         dumpProcessExecution(resultDir, command, null);
         doRunTd(command);
         System.out.println("Logs: " + resultDir + File.separator);
@@ -522,7 +538,8 @@ public class TestScript extends htmltestrunner.TestScript {
     private static final String pluginPath = "./dist-plugin/";
     private static final String pluginFile = "JavaClientPluginTest";
 
-    private void runPlugin(TestDescription td, String resultDir, boolean isJnlp) throws IOException, Fault {
+    private void runPlugin(TestDescription td, String resultDir, boolean isJnlp)
+            throws IOException, Fault {
         String testClassName = td.getParameter(RunUITestFinder.UNIT_TEST_CLASS_NAME);
         String testName = td.getParameter(RunUITestFinder.TEST_NAME);
 
@@ -688,7 +705,7 @@ public class TestScript extends htmltestrunner.TestScript {
     public Thread getProcessKiller() {
         return new ProcessKiller(5000L, process, cmdServer, cmdSocket);
     }
-    
+
     private class ProcessKiller extends Thread {
 
         long sleepTime;

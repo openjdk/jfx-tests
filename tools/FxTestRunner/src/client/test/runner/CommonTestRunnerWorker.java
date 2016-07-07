@@ -45,7 +45,7 @@ import test.javaclient.shared.screenshots.ImagesManager;
  */
 public class CommonTestRunnerWorker {
 
-    static final int PORT = 56179;
+    static final int DEFAULT_PORT = 56179;
 
     private final JUnitCore core = new JUnitCore();
     private Abstract2TestRunner testRunner;
@@ -77,6 +77,9 @@ public class CommonTestRunnerWorker {
         }
     }, "exit waiter");
 
+    static int getTestPort() {
+        return Integer.valueOf(System.getProperty("masterPort", String.valueOf(DEFAULT_PORT)));
+    }
     /**
      *
      * @throws Throwable
@@ -184,8 +187,9 @@ public class CommonTestRunnerWorker {
 
         testStart = System.nanoTime();
         try {
-            report("Looking for server at host " + host + ", port " + PORT + "...");
-            socket = new Socket(host, PORT);
+            int port = getTestPort();
+            report("Looking for server at host " + host + ", port " + port + "...");
+            socket = new Socket(host, port);
             ObjectInputStream readerStream = new ObjectInputStream(socket.getInputStream());
             report("Connected");
 
