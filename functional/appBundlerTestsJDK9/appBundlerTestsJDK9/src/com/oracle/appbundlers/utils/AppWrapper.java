@@ -255,11 +255,9 @@ public class AppWrapper implements Constants {
             argsList.add("-mp");
             argsList.add(getExplodedModsDir().toString());
             argsList.add("-d");
-            argsList.add(getExplodedModsDir().toString() + File.separator
-                    + source.getModuleName());
+            argsList.add(String.join(File.separator, getExplodedModsDir().toString(), source.getModuleName()));
             Files.walkFileTree(
-                    Paths.get(getSrcDir() + File.separator
-                            + source.getModuleName()),
+                    Paths.get(String.join(File.separator, getSrcDir().toString() , source.getModuleName())),
                     new SimpleFileVisitor<Path>() {
                         public FileVisitResult visitFile(Path file,
                                 BasicFileAttributes attr) {

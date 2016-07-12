@@ -25,7 +25,7 @@
             </fileset>
         </copy>
     	<!--
-    	   no need to copy packager.jar jar files as it is already exists 
+    	   no need to copy packager.jar jar files as it exists already in javapackager product
     	-->
         <!--<copy todir="lib">
             <fileset file="${java.home}/lib/packager.jar">
@@ -129,24 +129,31 @@
         <echo message="${java.version}" />
              
         <propertyfile file="${resultsDirectory}/component_info.txt">
-            <entry  key="test_component" value="deployment/bundlers"/>
+            <entry  key="test_component" value="appBundlerTestsJDK9"/>
             <entry  key="test_harness" value="testng"/>
-            <entry  key="test_suitename" value="appBundler"/>
-            <entry  key="testbase_location" value="http://shaman.ru.oracle.com/hg/index.cgi/appBundlerTests"/>
-            <entry  key="testbase_name" value="appBundler"/>
+            <entry  key="test_suitename" value="appBundlerTestsJDK9"/>
+            <entry  key="testbase_location" value="http://hg.openjdk.java.net/openjfx/9-dev/tests/functional/appBundlerTestsJDK9/appBundlerTestsJDK9"/>
+            <entry  key="testbase_name" value="appBundlerTestsJDK9"/>
             <entry  key="testbase_version" value="${java.version}"/>
         </propertyfile>
         
         <copy file="build/test/results/testng-results.xml" todir="${resultsDirectory}" verbose="true"/>
     </target>
+	
+	<!-- merge from JDK8 -->
     
     <target name="aurora-submit" depends="aurora-prepare">
-        <java fork="true" jar="lib/manual-submit.jar" dir="${resultsDirectory}">
-            <arg line="-address=http://aurora.ru.oracle.com"/>
-            <arg line="-batch ManualSubmit"/>
-            <arg line="-userName 0"/>
-            <arg line="-resultsDirectory ."/>
-        </java>
+        <property name="aurora.param.stid" value=""/>
+	<property name="aurora.merge.plan" value="ST_ID_PASS_WINS"/>
+	<java fork="true" jar="lib/manual-submit.jar" dir="${resultsDirectory}">
+		<arg line="-address=http://aurora.ru.oracle.com"/>
+		<arg line="-batch ManualSubmit"/>
+		<arg line="-userName 0"/>
+		<arg line="-resultDirectory ."/>
+		<arg line="${aurora.param.stid}"/>
+		<arg line="-ext.mergePlan=${aurora.merge.plan}"/>
+		<jvmarg line="-Djava.net.preferIPv4Stack=true"/>
+	</java>
     </target>
 		
     <target name="run-single-test-method">
@@ -158,7 +165,7 @@ For example -Dclass-name=com.oracle.appbundlers.tests.functionality.SimpleExecut
  linux_app   | deb | rpm |${line.separator}
  mac_app     | dmg | pkg ]${line.separator}</echo>
             
-        <echo unless:set="packager-interface">You may want to cpecify the way of creating the package:${line.separator}
+        <echo unless:set="packager-interface">You may want to specify the way of creating the package:${line.separator}
 -Dpackager-interface=[ant | cli | java_api] </echo>
             
         <property name="run.jvmargs" value="-Dtest-run-mode=single-method -Dinstallation-package-type=${installation-package-type} -Dpackager-interface=${packager-interface} -Dmanual-only=${manual-only}" />
