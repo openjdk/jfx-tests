@@ -4,19 +4,14 @@
  */
 package com.oracle.appbundlers.tests.functionality.parameters;
 
-import static java.util.stream.Collectors.toSet;
-
 import java.io.File;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.appbundlers.utils.AppWrapper;
-import com.oracle.tools.packager.RelativeFileSet;
-import com.sun.javafx.tools.packager.bundlers.BundleParams;
+import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
 
 /**
  * @author Ramesh BG
@@ -33,13 +28,10 @@ public class JmodParameters extends GenericModuleParameters {
     public JmodParameters() {
     }
 
-    public Map<String, Object> getBasicParams(AppWrapper app) throws Exception {
+    @Override
+    public Map<String, Object> getBasicParams() throws Exception {
         Map<String, Object> basicParams = new HashMap<String, Object>();
         basicParams.putAll(super.getBasicParams());
-        basicParams.put(BundleParams.PARAM_APP_RESOURCES,
-                new RelativeFileSet(app.getJmodsDir().toFile(),
-                        app.getJmodFileList().stream().map(Path::toFile)
-                                .collect(toSet())));
         basicParams.put(MODULEPATH, String.join(File.pathSeparator,
                 JMODS_PATH_IN_JDK, app.getJmodsDir().toString()));
         return requireNonNull(getBasicParamsFunctionalInterface(), basicParams);
@@ -48,5 +40,10 @@ public class JmodParameters extends GenericModuleParameters {
     @Override
     public String getModulePath() {
         return app.getJmodsDir().toString();
+    }
+
+    @Override
+    public ExtensionType getExtension() {
+        return ExtensionType.Jmods;
     }
 }

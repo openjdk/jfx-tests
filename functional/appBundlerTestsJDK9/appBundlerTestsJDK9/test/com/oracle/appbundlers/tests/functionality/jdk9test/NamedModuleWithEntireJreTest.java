@@ -42,12 +42,10 @@ public class NamedModuleWithEntireJreTest extends ModuleTestBase {
     protected AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(APPLICATION_CLASS,
-                    COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME);
             hashMap.put(MODULEPATH,
                     ((GenericModuleParameters) this.currentParameter)
                             .getModulePath());
-            hashMap.put(ADD_MODS, getApp().addAllModules());
+            hashMap.put(ADD_MODS, this.currentParameter.getApp().addAllModules());
             return hashMap;
         };
     }

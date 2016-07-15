@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
+import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
@@ -40,9 +41,7 @@ public class NormalJarParameters extends Parameters {
     public void initializeDefaultApp() throws IOException {
         setApp(new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                 COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
-                SourceFactory
-                        .get_com_greetings_app_unnamed_module()
-                ));
+                SourceFactory.get_com_greetings_app_unnamed_module()));
     }
 
     public NormalJarParameters() {
@@ -68,5 +67,10 @@ public class NormalJarParameters extends Parameters {
                 .fetchFrom(basicParams);
         basicParams.put(APPLICATION_CLASS, mainClass);
         return requireNonNull(getBasicParamsFunctionalInterface(), basicParams);
+    }
+
+    @Override
+    public ExtensionType getExtension() {
+        return ExtensionType.NormalJar;
     }
 }

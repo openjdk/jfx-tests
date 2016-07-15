@@ -116,12 +116,12 @@ public class FileAssociationTest extends TestBase {
     }
 
     @Override
-    protected void prepareApp(AppWrapper app) throws IOException, ExecutionException {
+    protected void prepareApp(AppWrapper app, ExtensionType extension) throws IOException, ExecutionException {
         final String makeJavacReadClassesFromRtJar = "-XDignore.symbol.file=true";
-        app.preinstallApp();
+        app.preinstallApp(extension);
         app.writeSourcesToAppDirectory();
         app.compileApp(new String[] { makeJavacReadClassesFromRtJar });
-        app.jarApp();
+        app.jarApp(extension);
     }
 
     @Override

@@ -10,14 +10,25 @@ import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.OUTPU
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import com.oracle.appbundlers.tests.functionality.TestBase;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
+import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
+import com.oracle.tools.packager.ConfigException;
+
+import javafx.util.Pair;
 
 /**
  * @author Ramesh BG Example 3 in chris list Example 3: Unnamed Module + Entire
@@ -27,6 +38,8 @@ import com.oracle.appbundlers.utils.Utils;
  */
 public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
         extends TestBase {
+
+    private static final Logger LOG = Logger.getLogger(UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest.class.getName());
 
     protected AppWrapper getApp() throws IOException {
         return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
@@ -61,7 +74,7 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
                     .getModulePath());
             hashMap.put(APPLICATION_CLASS,
                     COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME);
-            hashMap.put(ADD_MODS, getApp().addAllModules());
+            hashMap.put(ADD_MODS, this.currentParameter.getApp().addAllModules());
             return hashMap;
         };
     }
@@ -80,5 +93,74 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
     public boolean isTestCaseApplicableForExtensionType(
             ExtensionType extensionType) {
         return ExtensionType.NormalJar != extensionType;
+    }
+
+    @Override
+    protected void prepareApp(AppWrapper app, ExtensionType extension)
+            throws IOException, ExecutionException {
+        app.preinstallApp(extension);
+        app.writeSourcesToAppDirectory();
+        app.compileApp();
+        app.jarApp(extension);
+    }
+
+    @Test(dataProvider = "getBundlers")
+    public void runTest(BundlingManager bundlingManager) throws Exception {
+        /*
+         * change the implementation
+         * @TODO
+         * Need to implement the following in this testcase.
+         * normal jar file depending on modular jar
+         * normal jar file depending on jmod
+         * normal jar file depending on exploded mods
+         */
+        for (ExtensionType extension : ExtensionType.values()) {
+            this.currentParameter = intermediateToParametersMap
+                    .get(extension);
+
+            if (!isTestCaseApplicableForExtensionType(extension)) {
+                continue;
+            }
+
+            Map<String, Object> allParams = getAllParams(extension);
+            String testName = this.getClass().getName() + "::"
+                    + testMethod.getName() + "$" + bundlingManager.toString();
+            this.bundlingManager = bundlingManager;
+            LOG.log(Level.INFO, "Starting test \"{0}\".", testName);
+            try {
+                validate();
+                if (isConfigExceptionExpected(bundlingManager.getBundler())) {
+                    Assert.fail(
+                            "ConfigException is expected, but isn't thrown");
+                }
+            } catch (ConfigException ex) {
+                if (isConfigExceptionExpected(bundlingManager.getBundler())) {
+                    return;
+                } else {
+                    LOG.log(Level.SEVERE, "Configuration error: {0}.",
+                            new Object[] { ex });
+                    throw ex;
+                }
+            }
+
+            try {
+                bundlingManager.execute(allParams,
+                        this.currentParameter.getApp());
+                String path = bundlingManager.install(
+                        this.currentParameter.getApp(), getResultingAppName(),
+                        false);
+                LOG.log(Level.INFO, "Installed at: {0}", path);
+
+                Pair<TimeUnit, Integer> tuple = getDelayAfterInstall();
+                tuple.getKey().sleep(tuple.getValue());
+                AppWrapper app2 = this.currentParameter.getApp();
+                this.currentParameter.getVerifiedOptions().forEach(
+                        (name, value) -> bundlingManager.verifyOption(name,
+                                value, app2, getResultingAppName()));
+            } finally {
+                uninstallApp(extension);
+                LOG.log(Level.INFO, "Finished test: {0}", testName);
+            }
+        }
     }
 }

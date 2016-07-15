@@ -40,8 +40,7 @@ public abstract class GenericModuleParameters extends Parameters {
     @Override
     public Map<String, Object> getBasicParams() throws Exception {
         Map<String, Object> basicParams = new HashMap<String, Object>();
-        basicParams.put(MAIN_MODULE,
-                app.getMainModuleName() + "/" + app.getMainClass());
+        basicParams.put(MAIN_MODULE, String.join("/", app.getMainModuleName(), app.getMainClass()));
         return basicParams;
     }
 

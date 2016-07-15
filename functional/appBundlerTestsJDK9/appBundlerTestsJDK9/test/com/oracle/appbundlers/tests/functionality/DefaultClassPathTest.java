@@ -48,9 +48,9 @@ public class DefaultClassPathTest extends TestBase {
     }
 
     @Override
-    protected void prepareApp(AppWrapper app)
+    protected void prepareApp(AppWrapper app, ExtensionType extension)
             throws IOException, ExecutionException {
-        app.preinstallApp();
+        app.preinstallApp(extension);
         app.writeSourcesToAppDirectory();
         app.compileApp();
         app.jarApp(Collections.emptyList(), true);

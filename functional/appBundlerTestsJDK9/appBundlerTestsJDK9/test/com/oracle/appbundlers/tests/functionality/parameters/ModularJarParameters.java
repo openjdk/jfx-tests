@@ -4,18 +4,14 @@
  */
 package com.oracle.appbundlers.tests.functionality.parameters;
 
-import static java.util.stream.Collectors.toSet;
-
 import java.io.File;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.tools.packager.RelativeFileSet;
-import com.sun.javafx.tools.packager.bundlers.BundleParams;
+import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
 
 /**
  * @author Ramesh BG
@@ -35,10 +31,6 @@ public class ModularJarParameters extends GenericModuleParameters {
     public Map<String, Object> getBasicParams() throws Exception {
         Map<String, Object> basicParams = new HashMap<String, Object>();
         basicParams.putAll(super.getBasicParams());
-        basicParams.put(BundleParams.PARAM_APP_RESOURCES,
-                new RelativeFileSet(app.getModularJarsDir().toFile(),
-                        app.getModularJarFileList().stream().map(Path::toFile)
-                                .collect(toSet())));
         basicParams.put(MODULEPATH, String.join(File.pathSeparator,
                 JMODS_PATH_IN_JDK, app.getModularJarsDir().toString()));
         return requireNonNull(getBasicParamsFunctionalInterface(), basicParams);
@@ -47,5 +39,10 @@ public class ModularJarParameters extends GenericModuleParameters {
     @Override
     public String getModulePath() {
         return app.getModularJarsDir().toString();
+    }
+
+    @Override
+    public ExtensionType getExtension() {
+        return ExtensionType.ModularJar;
     }
 }

@@ -94,14 +94,14 @@ public class AppBundlersSampleGUI extends Application implements Constants {
                 );
                 System.out.println(
                         "Writing app to app directory: " + app.getWorkDir());
-                app.preinstallApp();
+//                app.preinstallApp();
                 app.writeSourcesToAppDirectory();
                 app.compileApp();
-                try {
-                    app.jarApp();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
+//                try {
+//                    app.jarApp();
+//                } catch (Exception e1) {
+//                    e1.printStackTrace();
+//                }
 
                 System.out
                         .println("Building app with app the suitable Bundlers");

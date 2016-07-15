@@ -49,9 +49,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.oracle.appbundlers.tests.BundlerProvider;
-import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
-import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParams;
-import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
 import com.oracle.appbundlers.tests.functionality.parameters.ExplodedModuleParameters;
 import com.oracle.appbundlers.tests.functionality.parameters.JmodParameters;
@@ -95,13 +92,6 @@ public abstract class TestBase implements Constants {
         }
     };
 
-    /*
-     * Functional Interface References
-     */
-    protected AdditionalParams additionalParams;
-    protected BasicParams basicParams;
-    protected VerifiedOptions verifiedOptions;
-
     private static final Logger LOG = Logger
             .getLogger(TestBase.class.getName());
 
@@ -111,12 +101,10 @@ public abstract class TestBase implements Constants {
     // all these implementations are just "default-values"
     protected BundlerUtils[] getBundlerUtils() {
         return BundlerUtils.values();
-//        return new BundlerUtils[] { BundlerUtils.EXE};
     }
 
     protected BundlingManagers[] getBundlingManagers() {
         return BundlingManagers.values();
-//        return new BundlingManagers[] { BundlingManagers.CLI};
     }
 
     /**
@@ -130,13 +118,12 @@ public abstract class TestBase implements Constants {
         return false;
     }
 
-    protected void prepareApp(final AppWrapper app)
+    protected void prepareApp(final AppWrapper app, ExtensionType extension)
             throws IOException, ExecutionException {
-        app.preinstallApp();
+        app.preinstallApp(extension);
         app.writeSourcesToAppDirectory();
         app.compileApp();
-        app.jarApp();
-        app.createJmod();
+        app.jarApp(extension);
     }
 
     @BeforeClass
@@ -158,12 +145,12 @@ public abstract class TestBase implements Constants {
         }
     }
 
-    private void initializeAndPrepareApp()
-            throws Exception {
+    private void initializeAndPrepareApp() throws Exception {
         if (this.currentParameter.getApp() == null) {
             this.currentParameter.initializeDefaultApp();
         }
-        prepareApp(this.currentParameter.getApp());
+        prepareApp(this.currentParameter.getApp(),
+                this.currentParameter.getExtension());
     }
 
     @BeforeMethod
@@ -173,15 +160,15 @@ public abstract class TestBase implements Constants {
 
     @Test(dataProvider = "getBundlers")
     public void runTest(BundlingManager bundlingManager) throws Exception {
-        for (ExtensionType intermediate : ExtensionType.values()) {
+        for (ExtensionType extension : ExtensionType.values()) {
             this.currentParameter = intermediateToParametersMap
-                    .get(intermediate);
+                    .get(extension);
 
-            if (!isTestCaseApplicableForExtensionType(intermediate)) {
+            if (!isTestCaseApplicableForExtensionType(extension)) {
                 continue;
             }
 
-            Map<String, Object> allParams = getAllParams(intermediate);
+            Map<String, Object> allParams = getAllParams(extension);
             String testName = this.getClass().getName() + "::"
                     + testMethod.getName() + "$" + bundlingManager.toString();
             this.bundlingManager = bundlingManager;
@@ -217,7 +204,7 @@ public abstract class TestBase implements Constants {
                         (name, value) -> bundlingManager.verifyOption(name,
                                 value, app2, getResultingAppName()));
             } finally {
-                uninstallApp(intermediate);
+                uninstallApp(extension);
                 LOG.log(Level.INFO, "Finished test: {0}", testName);
             }
         }
@@ -228,7 +215,7 @@ public abstract class TestBase implements Constants {
         return true;
     }
 
-    private void uninstallApp(ExtensionType intermediate) throws Exception {
+    protected void uninstallApp(ExtensionType intermediate) throws Exception {
         if (bundlingManager != null) {
             String appName = bundlingManager
                     .getAppName(getAllParams(intermediate));

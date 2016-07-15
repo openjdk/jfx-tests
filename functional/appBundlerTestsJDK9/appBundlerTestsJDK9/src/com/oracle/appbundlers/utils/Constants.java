@@ -47,7 +47,7 @@ public interface Constants {
     String MAC_CATEGORY = "mac.category";
     String MAC_CF_BUNDLE_NAME = "mac.CFBundleName";
     String SIGNING_KEY_USER = "mac.signing-key-user-name";
-    String LinuxDebBundler_BUNDLE_NAME = "";
+    String LinuxDebBundler_BUNDLE_NAME = "linux.bundleName";
     String MAINTAINER = "";
     String LinuxRpmBundler_BUNDLE_NAME = "linux.bundleName";
     String MSI_SYSTEM_WIDE = "systemWide";
@@ -104,8 +104,7 @@ public interface Constants {
     String COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME = "com.greetings.App1";
     String COM_GREETINGS_APP2_QUALIFIED_CLASS_NAME = "com.greetings.App2";
     String COM_GREETINGS_JAR_NAME = "com.greetings";
-    String JMODS_PATH_IN_JDK = System.getProperty("java.home") + File.separator
-            + "jmods";
+    String JMODS_PATH_IN_JDK = String.join(File.separator, System.getProperty("java.home"), "jmods");
     String COM_GREETINGS_MODULE_INFO_TEMPLATE = "com.greetings.module.info.template";
     String SYSTEM_OUT_PRINTLN = "System.out.println";
     String COM_GREETINGS_MODULE_CUM_PACKAGE_NAME = "com.greetings";
@@ -127,7 +126,7 @@ public interface Constants {
     String CUSTOM_UTIL_UNNAMED_MODULE_FULLY_QUALIFIED_CLASS_NAME = "testapp.util.Util";
     String CUSTOM_UTIL_UNNAMED_MODULE_PACKAGE_STATEMENT = "testapp.util";
     String INSTALLDIR_CHOOSER = "installdirChooser";
-    String CUSTOM_UTIL_APPEND_CLASS_NAME_PRINT_METHOD = "testapp.Util.appendClassNameToPrint";
+    String CUSTOM_UTIL_APPEND_CLASS_NAME_PRINT_METHOD = "testapp.util.Util.appendClassNameToPrint";
     String MAIN_MODULE = "module";
     String APP1_NAME = "App1";
     String APP_RESOURCES = "appResources";
@@ -141,9 +140,9 @@ public interface Constants {
      */
     String BUNDLES = "bundles";
     String SOURCE = "src";
-    String CLASSES = "build" + File.separator + "classes";
+    String BIN = "bin";
     String JARS = "jars";
-    String EXPLODED_MODS_DIR_IN_SRC = "explodedmods";
+    String EXPLODED_MODS_DIR = "explodedmods";
     String JMODS_DIR = "jmods";
     String MODULAR_JARS_DIR = "modjars";
     String APP1_FULLNAME = packageName + "." + APP1_NAME;

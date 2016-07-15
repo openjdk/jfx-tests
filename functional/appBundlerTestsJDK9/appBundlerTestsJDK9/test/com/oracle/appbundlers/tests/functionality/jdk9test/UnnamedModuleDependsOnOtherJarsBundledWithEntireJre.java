@@ -34,6 +34,7 @@ public class UnnamedModuleDependsOnOtherJarsBundledWithEntireJre
     protected AppWrapper getApp() throws IOException {
         return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                 COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
+                SourceFactory.get_test_app_util_unnamed_module(),
                 SourceFactory.get_com_greetings_app_unnamed_module(
                         new HashMap<String, String>() {
                             /**
@@ -45,8 +46,8 @@ public class UnnamedModuleDependsOnOtherJarsBundledWithEntireJre
                                 put(PRINTLN_STATEMENT,
                                         CUSTOM_UTIL_APPEND_CLASS_NAME_PRINT_METHOD);
                             }
-                        }),
-                SourceFactory.get_test_app_util_unnamed_module());
+                        })
+                );
     }
 
     protected VerifiedOptions getVerifiedOptions() {

@@ -77,10 +77,10 @@ public class BundlerLoadingTest {
 //                fullName,
 //                new Source(fullName, implClass + ".java.template", implClass)
 //        );
-        app.cleanupApp();
-        app.preinstallApp();
-        app.writeSourcesToAppDirectory();
-        app.compileApp();
+//        app.cleanupApp();
+//        app.preinstallApp();
+//        app.writeSourcesToAppDirectory();
+//        app.compileApp();
 //        app.jarApp(Arrays.asList(new Pair<>(interfaceClass, fullName)));
         return app;
     }

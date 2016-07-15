@@ -43,6 +43,8 @@ import java.util.zip.ZipEntry;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
+import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
+
 import javafx.util.Pair;
 
 /**
@@ -58,7 +60,7 @@ public class AppWrapper implements Constants {
     private final String mainJar;
     private final String mainClass;
 
-    private String paramsForCompilation;
+    private String paramsForJarsCompilation;
 
     public AppWrapper(Path workDir, String mainClass, Source... source) {
         this.workDir = workDir;
@@ -77,7 +79,7 @@ public class AppWrapper implements Constants {
     public AppWrapper(Path workDir, String mainClass,
             String paramsForCompilation, Source... source) {
         this(workDir, mainClass, source);
-        this.paramsForCompilation = paramsForCompilation;
+        this.paramsForJarsCompilation = paramsForCompilation;
     }
 
     /**
@@ -94,24 +96,22 @@ public class AppWrapper implements Constants {
         return mainClass.substring(mainClass.lastIndexOf('.') + 1);
     }
 
-    public void preinstallApp() throws IOException {
+    public void preinstallApp(ExtensionType extension) throws IOException {
         Utils.createDir(getSrcDir());
         Utils.createDir(getBundlesDir());
+        Utils.createDir(getBinDir());
 
         if (!getJarTempSources().isEmpty()) {
             Utils.createDir(getJarDir());
-            Utils.createDir(getClassesDir());
         }
 
         if (!getModuleTempSources().isEmpty()) {
-            createEachModuleDirInModsDir();
-            Utils.createDir(getExplodedModsDir());
-            Utils.createDir(getJmodsDir());
-            Utils.createDir(getModularJarsDir());
+            Utils.createDir(
+                    Paths.get(getModulePathBasedOnExtension(extension)));
         }
     }
 
-    public List<Source> getJarTempSources() {
+    private List<Source> getJarTempSources() {
         return sources.stream().filter((source) -> !source.isModule())
                 .collect(Collectors.toList());
     }
@@ -136,7 +136,7 @@ public class AppWrapper implements Constants {
         return getWorkDir().resolve(BUNDLES);
     }
 
-    public Path getSrcDir() {
+    private Path getSrcDir() {
         return getWorkDir().resolve(SOURCE);
     }
 
@@ -144,16 +144,12 @@ public class AppWrapper implements Constants {
         return getWorkDir().resolve(JARS);
     }
 
-    public Path getClassesDir() {
-        return getWorkDir().resolve(CLASSES);
+    private Path getBinDir() {
+        return getWorkDir().resolve(BIN);
     }
 
     public Path getMainJarFile() {
         return getJarDir().resolve(mainJar + ".jar");
-    }
-
-    public void cleanupApp() {
-        Utils.tryRemoveRecursive(getWorkDir());
     }
 
     public void writeSourcesToAppDirectory() throws IOException {
@@ -167,14 +163,17 @@ public class AppWrapper implements Constants {
         }
     }
 
-    public int compileApp(Path... classpath) throws IOException {
-        return compileApp(new String[0], classpath);
+    public int compileApp(ExtensionType extension, Path... classpath)
+            throws IOException {
+        return compileApp(new String[0], extension, classpath);
     }
 
-    public int compileApp(String[] javacOptions, Path... classpath)
-            throws IOException {
-        int resultForModule = compileAppForModules(javacOptions, classpath);
-        int resultForJar = compileAppForJars(javacOptions, classpath);
+    private int compileApp(String[] javacOptions, ExtensionType extension,
+            Path... classpath) throws IOException {
+        int resultForModule = compileAppForModules(javacOptions, extension,
+                classpath);
+        int resultForJar = compileAppForJars(javacOptions, extension,
+                classpath);
         int result = 0;
         if (resultForJar < 0 || resultForModule < 0) {
             result = -1;
@@ -182,8 +181,17 @@ public class AppWrapper implements Constants {
         return result;
     }
 
-    public int compileAppForJars(String[] javacOptions, Path... classpath)
+    public int compileApp(Path... classpath) throws IOException {
+        return compileApp(new String[0], classpath);
+    }
+
+    public int compileApp(String[] javacOptions, Path... classpath)
             throws IOException {
+        return compileApp(javacOptions, null, classpath);
+    }
+
+    private int compileAppForJars(String[] javacOptions,
+            ExtensionType extension, Path[] classpath) throws IOException {
         if (getJarTempSources().isEmpty()) {
             return 0;
         }
@@ -198,8 +206,12 @@ public class AppWrapper implements Constants {
         }
 
         argsList.add("-d");
-        argsList.add(getClassesDir().toString());
+        argsList.add(getBinDir().toString());
+
+        int result = 0;
         for (Source tempSource : getJarTempSources()) {
+            List<String> newArgs = new ArrayList<String>();
+            newArgs.addAll(argsList);
             String string = getSrcDir() + File.separator
                     + tempSource.getPackageName().replace(".", File.separator);
             Path path = Paths.get(string);
@@ -209,34 +221,45 @@ public class AppWrapper implements Constants {
                         BasicFileAttributes attr) {
 
                     if (file.toString().endsWith(".java")) {
-                        argsList.add(file.toString());
+                        newArgs.add(file.toString());
                     }
                     return FileVisitResult.CONTINUE;
                 }
             });
+
+            newArgs.add("-classpath");
+            if (classpath.length != 0) {
+                newArgs.add(Stream.of(classpath)
+                        .map(eachPath -> eachPath.toAbsolutePath().toString())
+                        .collect(joining(File.pathSeparator)));
+            } else {
+                newArgs.add(getBinDir().toString());
+            }
+
+            if (paramsForJarsCompilation != null) {
+                newArgs.add(this.paramsForJarsCompilation);
+            }
+
+            if (extension != null) {
+                newArgs.add("-mp");
+                newArgs.add(String.join(File.pathSeparator, getModulePathBasedOnExtension(extension), JMODS_PATH_IN_JDK));
+            }
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            System.out.println(
+                    "====================COMPILATION STARTS===========================");
+            System.out.println("compilation command for jars is " + newArgs);
+            result = compiler.run(System.in, outputStream, System.err,
+                    newArgs.toArray(new String[newArgs.size()]));
+            System.out.println(
+                    "===================COMPILATION ENDS===============================");
+            System.out.println();
         }
-
-        if (classpath.length != 0) {
-            argsList.add("-classpath");
-            argsList.add(Stream.of(classpath)
-                    .map(path -> path.toAbsolutePath().toString())
-                    .collect(joining(File.pathSeparator)));
-        }
-
-        if (paramsForCompilation != null) {
-            argsList.add(this.paramsForCompilation);
-        }
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.out.println("compilation command for jars is " + argsList);
-        int result = compiler.run(System.in, outputStream, System.err,
-                argsList.toArray(new String[argsList.size()]));
-
         return result;
     }
 
-    public int compileAppForModules(String[] javacOptions, Path... classpath)
-            throws IOException {
+    private int compileAppForModules(String[] javacOptions,
+            ExtensionType extension, Path... classpath) throws IOException {
         if (getModuleTempSources().isEmpty()) {
             return 0;
         }
@@ -253,11 +276,13 @@ public class AppWrapper implements Constants {
             }
 
             argsList.add("-mp");
-            argsList.add(getExplodedModsDir().toString());
+            argsList.add(String.join(File.pathSeparator, getBinDir().toString(), JMODS_PATH_IN_JDK));
             argsList.add("-d");
-            argsList.add(String.join(File.separator, getExplodedModsDir().toString(), source.getModuleName()));
+            argsList.add(String.join(File.separator, getBinDir().toString(),
+                    source.getModuleName()));
             Files.walkFileTree(
-                    Paths.get(String.join(File.separator, getSrcDir().toString() , source.getModuleName())),
+                    Paths.get(String.join(File.separator,
+                            getSrcDir().toString(), source.getModuleName())),
                     new SimpleFileVisitor<Path>() {
                         public FileVisitResult visitFile(Path file,
                                 BasicFileAttributes attr) {
@@ -274,19 +299,23 @@ public class AppWrapper implements Constants {
                         .collect(joining(File.pathSeparator)));
             }
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            System.out
-                    .println("compilation command for modules is " + argsList);
+            System.out.println(
+                    "====================COMPILATION STARTS===========================");
+            System.out.println(
+                    "compilation command for " + extension + " is " + argsList);
+
             int tempResult = compiler.run(System.in, outputStream, System.err,
                     argsList.toArray(new String[argsList.size()]));
             if (tempResult != 0) {
                 result = tempResult;
             }
-            // TODO: Improve output?
             String out = outputStream.toString();
             if (!out.trim().isEmpty()) {
                 LOG.log(Level.INFO, out);
             }
-
+            System.out.println(
+                    "===================COMPILATION ENDS===============================");
+            System.out.println();
         }
         return result;
     }
@@ -345,7 +374,7 @@ public class AppWrapper implements Constants {
 
     private void add(JarOutputStream jarStream, Set<Source> sources)
             throws IOException {
-        Path classesDir = getClassesDir();
+        Path classesDir = getBinDir();
         for (Source src : sources) {
             Path packageDir = classesDir
                     .resolve(src.getPackageName().replace('.', '/'));
@@ -363,21 +392,13 @@ public class AppWrapper implements Constants {
         }
     }
 
-    public Path getExplodedModsDir() {
-        return getWorkDir().resolve(EXPLODED_MODS_DIR_IN_SRC);
-    }
-
-    private void createEachModuleDirInModsDir() throws IOException {
-        for (Source source : getModuleTempSources()) {
-            String directoryToCreate = String.join(File.separator,
-                    getExplodedModsDir().toString(), source.getModuleName());
-            Utils.createDir(Paths.get(directoryToCreate));
-        }
-    }
-
     public List<Source> getModuleTempSources() {
         return sources.stream().filter((source) -> source.isModule())
                 .collect(Collectors.toList());
+    }
+
+    public Path getExplodedModsDir() {
+        return getBinDir();
     }
 
     public Path getJmodsDir() {
@@ -419,9 +440,24 @@ public class AppWrapper implements Constants {
         }
     }
 
-    public void jarApp() throws IOException, ExecutionException {
-        createSimpleJar(Collections.emptyList(), false);
-        createModularJar(Collections.emptyList(), false);
+    public void jarApp(ExtensionType extension)
+            throws IOException, ExecutionException {
+        switch (extension) {
+        case NormalJar:
+            createSimpleJar(Collections.emptyList(), false);
+            break;
+        case ModularJar:
+            createModularJar(Collections.emptyList(), false);
+            break;
+        case ExplodedModules: /******************************************
+                               * bin directory itself is exploded modules
+                               * directory
+                               ******************************************/
+            break;
+        case Jmods:
+            createJmod();
+            break;
+        }
     }
 
     public void jarApp(List<Pair<String, String>> services,
@@ -430,23 +466,28 @@ public class AppWrapper implements Constants {
         createModularJar(services, crossClassPath);
     }
 
-    public void createJmod() throws IOException, ExecutionException {
+    private void createJmod() throws IOException, ExecutionException {
         for (Source source : getModuleTempSources()) {
             List<String> command = new ArrayList<String>();
             command.add("jmod");
             command.add("create");
             command.add("--class-path");
-            command.add(getModularJarsDir() + File.separator + source.getJarName()
-                    + ".jar");
+            command.add(getBinDir().toString() + File.separator
+                    + source.getModuleName());
             command.add("--main-class");
             command.add(source.getFullName());
             command.add(getJmodsDir() + File.separator + source.getModuleName()
                     + ".jmod");
+            System.out.println(
+                    "=========================JMOD CREATION STARTS=========================");
             Utils.runCommand(command, CONFIG_INSTANCE.getInstallTimeout());
+            System.out.println(
+                    "=========================JMOD CREATION ENDS===========================");
+            System.out.println();
         }
     }
 
-    public void createModularJar(List<Pair<String, String>> services,
+    private void createModularJar(List<Pair<String, String>> services,
             boolean crossClassPath) throws IOException, ExecutionException {
 
         if (getModuleTempSources().isEmpty()) {
@@ -579,11 +620,15 @@ public class AppWrapper implements Constants {
                 }
                 command.add("-C");
                 String moduleAbsouleDirectoryPath = String.join(File.separator,
-                        getExplodedModsDir().toString(),
-                        source.getModuleName());
+                        getBinDir().toString(), source.getModuleName());
                 command.add(moduleAbsouleDirectoryPath);
                 command.add(".");
+                System.out.println(
+                        "====================MODULAR JAR CREATION STARTS==================");
                 Utils.runCommand(command, CONFIG_INSTANCE.getInstallTimeout());
+                System.out.println(
+                        "====================MODULAR JAR CREATION ENDS====================");
+                System.out.println();
             }
         }
     }
@@ -622,5 +667,21 @@ public class AppWrapper implements Constants {
 
     public boolean isAppContainsModules() {
         return !getModuleTempSources().isEmpty();
+    }
+
+    private String getModulePathBasedOnExtension(ExtensionType extension) {
+        if (extension == null) {
+            throw new NullPointerException("Extension cannot be null");
+        }
+        switch (extension) {
+        case ModularJar:
+            return getModularJarsDir().toString();
+        case ExplodedModules:
+            return getExplodedModsDir().toString();
+        case Jmods:
+            return getJmodsDir().toString();
+        default:
+            return getJarDir().toString();
+        }
     }
 }

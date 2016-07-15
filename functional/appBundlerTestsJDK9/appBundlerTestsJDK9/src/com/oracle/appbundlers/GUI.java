@@ -111,15 +111,15 @@ public class GUI extends Application implements Constants {
                 }));
                 System.out.println(
                         "Writing app to app directory: " + app.getWorkDir());
-                app.preinstallApp();
-                app.writeSourcesToAppDirectory();
-                app.compileApp();
-                try {
-                    app.jarApp();
-                } catch (Exception e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+//                app.preinstallApp();
+//                app.writeSourcesToAppDirectory();
+//                app.compileApp();
+//                try {
+//                    app.jarApp();
+//                } catch (Exception e1) {
+//                    // TODO Auto-generated catch block
+//                    e1.printStackTrace();
+//                }
 
                 System.out
                         .println("Building app with app the suitable Bundlers");
