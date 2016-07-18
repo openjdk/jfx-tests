@@ -12,10 +12,6 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
-import com.oracle.appbundlers.utils.AppWrapper;
-import com.oracle.appbundlers.utils.SourceFactory;
-import com.oracle.appbundlers.utils.Utils;
 
 /**
  * @author Ramesh BG
@@ -28,13 +24,12 @@ public class NamedModuleBundledWithAllModules extends ModuleTestBase {
     protected VerifiedOptions getVerifiedOptions() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(APPCLASS, COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME);
             hashMap.put(OUTPUT_CONTAINS, HELLO_WORLD_OUTPUT);
             /*
              * TODO verificator needs to check ALL_MODULES in output currently
              * ALL_MODULEPATH is not working.
              */
-            hashMap.put(ADD_MODS, ALL_MODULEPATH);
+            hashMap.put(ADD_MODS, ALL_MODULE_PATH);
             return hashMap;
         };
     }
@@ -42,17 +37,9 @@ public class NamedModuleBundledWithAllModules extends ModuleTestBase {
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(ADD_MODS, ALL_MODULEPATH);
-            hashMap.put(MODULEPATH, ((GenericModuleParameters) this.currentParameter)
-                    .getModulePath());
+            hashMap.put(ADD_MODS, ALL_MODULE_PATH);
             return hashMap;
         };
-    }
-
-    public AppWrapper getApp() throws IOException {
-        return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
-                    COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
-            SourceFactory.get_com_greetings_module());
     }
 
     @Override
@@ -61,7 +48,6 @@ public class NamedModuleBundledWithAllModules extends ModuleTestBase {
         if(ExtensionType.NormalJar != intermediate) {
             currentParameter.setAdditionalParams(getAdditionalParams());
             currentParameter.setVerifiedOptions(getVerifiedOptions());
-            currentParameter.setApp(getApp());
         }
     }
 }

@@ -13,7 +13,6 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
@@ -42,9 +41,6 @@ public class NamedModuleWithEntireJreTest extends ModuleTestBase {
     protected AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(MODULEPATH,
-                    ((GenericModuleParameters) this.currentParameter)
-                            .getModulePath());
             hashMap.put(ADD_MODS, this.currentParameter.getApp().addAllModules());
             return hashMap;
         };

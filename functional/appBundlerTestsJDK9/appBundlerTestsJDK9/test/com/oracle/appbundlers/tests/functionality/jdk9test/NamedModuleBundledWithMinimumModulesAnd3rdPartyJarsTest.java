@@ -13,7 +13,6 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
@@ -39,11 +38,6 @@ public class NamedModuleBundledWithMinimumModulesAnd3rdPartyJarsTest
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(APPLICATION_CLASS,
-                    COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME);
-            hashMap.put(MODULEPATH,
-                    ((GenericModuleParameters) this.currentParameter)
-                            .getModulePath());
             hashMap.put(ADD_MODS, getApp().addAllModules());
             return hashMap;
         };
@@ -52,8 +46,8 @@ public class NamedModuleBundledWithMinimumModulesAnd3rdPartyJarsTest
     protected AppWrapper getApp() throws IOException {
         return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                 COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
-                SourceFactory.get_custom_util_module(), SourceFactory
-                        .get_com_greetings_module_depends_on_custom_util_module());
+                SourceFactory.get_test_app_util_unnamed_module(), SourceFactory
+                        .get_com_greetings_module());
     }
 
     @Override

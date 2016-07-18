@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.SourceFactory;
@@ -22,16 +21,6 @@ import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;
  *
  */
 public class ListServiceProvidersTest extends ModuleTestBase {
-
-    public AdditionalParams getAdditionalParams() {
-        return () -> {
-            Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(MODULEPATH, getApp().getModularJarsDir());
-            hashMap.put(APPLICATION_CLASS,
-                    COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS);
-            return hashMap;
-        };
-    }
 
     public AppWrapper getApp() throws IOException {
 
@@ -62,9 +51,8 @@ public class ListServiceProvidersTest extends ModuleTestBase {
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
         if (intermediate != ExtensionType.NormalJar) {
-            currentParameter.setAdditionalParams(getAdditionalParams());
-            currentParameter.setVerifiedOptions(getVerifiedOptions());
-            currentParameter.setApp(getApp());
+            this.currentParameter.setApp(getApp());
+            this.currentParameter.setVerifiedOptions(getVerifiedOptions());
         }
     }
 }

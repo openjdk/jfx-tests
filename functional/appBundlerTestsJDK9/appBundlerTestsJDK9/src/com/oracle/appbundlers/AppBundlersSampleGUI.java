@@ -4,29 +4,23 @@
  */
 package com.oracle.appbundlers;
 
-import static java.util.stream.Collectors.toSet;
-
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import com.oracle.appbundlers.tests.functionality.parameters.ExplodedModuleParameters;
+import com.oracle.appbundlers.tests.functionality.parameters.JmodParameters;
+import com.oracle.appbundlers.tests.functionality.parameters.ModularJarParameters;
+import com.oracle.appbundlers.tests.functionality.parameters.NormalJarParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.Constants;
-import com.oracle.appbundlers.utils.Source;
-import com.oracle.appbundlers.utils.Utils;
 import com.oracle.tools.packager.Bundlers;
 import com.oracle.tools.packager.ConfigException;
-import com.oracle.tools.packager.RelativeFileSet;
 import com.oracle.tools.packager.UnsupportedPlatformException;
 import com.sun.javafx.tools.packager.Log;
-import com.sun.javafx.tools.packager.bundlers.BundleParams;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -45,16 +39,18 @@ public class AppBundlersSampleGUI extends Application implements Constants {
     private final Logger LOG = Logger
             .getLogger(AppBundlersSampleGUI.class.getName());
 
+    private AppWrapper app;
+
+    private Map<String, Object> params;
+
     @Override
     public void start(Stage primaryStage) {
-        final CheckBox fxAppCheckBox = new CheckBox("JavaFX App");
-        final CheckBox utilClassCheckBox = new CheckBox("Utility class used");
+        final CheckBox fxAppCheckBox = new CheckBox("Java App");
         final Button buildButton = new Button("Build application");
         final CheckBox verbose = new CheckBox("Verbose output/Debug");
 
         final VBox root = new VBox();
-        root.getChildren().addAll(fxAppCheckBox, utilClassCheckBox, verbose,
-                buildButton);
+        root.getChildren().addAll(fxAppCheckBox, verbose, buildButton);
         root.setPadding(new Insets(10, 10, 10, 10));
         root.setSpacing(5);
 
@@ -66,63 +62,25 @@ public class AppBundlersSampleGUI extends Application implements Constants {
                     Log.setLogger(new Log.Logger(true));
                     Log.setDebug(true);
                 }
-                String workDir = "test"
-                        + (fxAppCheckBox.isSelected() ? "Fx" : "") + "App"
-                        + (utilClassCheckBox.isSelected() ? "WithUtil" : "");
-                String outputCommand = utilClassCheckBox.isSelected()
-                        ? "testapp.util.Util.println" : SYSTEM_OUT_PRINTLN;
-                @SuppressWarnings("serial")
-                AppWrapper app = new AppWrapper(Utils.getTempSubDir(workDir),
-                        "testapp.App1",
-                        new Source("testapp.App1", FXAPP_JAVA_TEMPLATE, workDir,
-                                new HashMap<String, String>() {
-                    {
-                        put(PRINTLN_STATEMENT, outputCommand);
-                        put(APP_NAME_REPLACEMENT_STATEMENT, "App1");
-                        put(PASS_STRING_REPLACEMENT_STATEMENT, PASS_1);
-                    }
-                }), new Source("testapp.App2", FXAPP_JAVA_TEMPLATE, workDir,
-                        new HashMap<String, String>() {
-                    {
-                        put(PRINTLN_STATEMENT, outputCommand);
-                        put(APP_NAME_REPLACEMENT_STATEMENT, "App2");
-                        put(PASS_STRING_REPLACEMENT_STATEMENT, "PASS_2");
-                    }
-                })
-                // ,new TempSource("testapp.util.Util", "Util.java.template",
-                // CUSTOM_UTIL_CLASS_SIMPLE_NAME)
-                );
-                System.out.println(
-                        "Writing app to app directory: " + app.getWorkDir());
-//                app.preinstallApp();
-                app.writeSourcesToAppDirectory();
-                app.compileApp();
-//                try {
-//                    app.jarApp();
-//                } catch (Exception e1) {
-//                    e1.printStackTrace();
-//                }
+                createParametersAndExecuteAppBundler(new NormalJarParameters());
+                createParametersAndExecuteAppBundler(
+                        new ExplodedModuleParameters());
+                createParametersAndExecuteAppBundler(
+                        new ModularJarParameters());
+                createParametersAndExecuteAppBundler(new JmodParameters());
+            } finally {
+                Platform.exit();
+            }
+        });
 
-                System.out
-                        .println("Building app with app the suitable Bundlers");
-                Map<String, Object> params = new HashMap<>();
-                params.put(BundleParams.PARAM_APP_RESOURCES,
-                        new RelativeFileSet(app.getJarDir().toFile(),
-                                app.getJarFilesList().stream().map(Path::toFile)
-                                        .collect(toSet())));
-                params.put(MAIN_JAR,
-                        new RelativeFileSet(app.getJarDir()
-                                .toFile(),
-                        new HashSet<>(
-                                Arrays.asList(app.getMainJarFile().toFile()))));
-                params.put(CLASSPATH, app.getJarFilesList().stream()
-                        .map(Path::getFileName).map(Path::toString)
-                        .collect(Collectors.joining(File.pathSeparator)));
+        primaryStage.setTitle("AppBundlers Sample GUI");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 
-                System.out.println(params);
-
-                Bundlers.createBundlersInstance().getBundlers().stream()
-                        .filter((bundler) -> {
+    private void executeAppBundler() {
+        Bundlers.createBundlersInstance().getBundlers().stream()
+                .filter((bundler) -> {
                     try {
                         bundler.validate(params);
                         return true;
@@ -148,17 +106,6 @@ public class AppBundlersSampleGUI extends Application implements Constants {
                             app.getBundlesDir().toFile());
                     LOG.log(Level.INFO, "Finished with result: {0}", result);
                 });
-            } catch (IOException ex) {
-                LOG.log(Level.SEVERE, "Failed to create application files: {0}",
-                        ex.getMessage());
-            } finally {
-                Platform.exit();
-            }
-        });
-
-        primaryStage.setTitle("AppBundlers Sample GUI");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     /**
@@ -169,4 +116,34 @@ public class AppBundlersSampleGUI extends Application implements Constants {
         launch(args);
     }
 
+    private void createParametersAndExecuteAppBundler(
+            com.oracle.appbundlers.tests.functionality.parameters.Parameters parameters) {
+        try {
+            parameters.initializeDefaultApp();
+            this.app = parameters.getApp();
+            System.out.println(
+                    "Writing app to app directory: " + app.getWorkDir());
+            this.app.preinstallApp(parameters.getExtension());
+            this.app.writeSourcesToAppDirectory();
+            this.app.compileApp();
+            this.app.jarApp(parameters.getExtension());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map<String, Object> basicParams = null;
+        Map<String, Object> additionalParams = null;
+        try {
+            basicParams = parameters.getBasicParams();
+            additionalParams = parameters.getAdditionalParams();
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+
+        this.params = new HashMap<>();
+        this.params.putAll(basicParams);
+        this.params.putAll(additionalParams);
+
+        executeAppBundler();
+    }
 }

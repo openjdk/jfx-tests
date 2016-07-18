@@ -156,7 +156,6 @@ public class ConsoleBundlingManager extends BundlingManager {
     @SuppressWarnings("unchecked")
     private List<Pair<String, Collection<String>>> toConsole(
             Map<String, Object> params) {
-        System.out.println("toConsole method entry parameters are " + params);
         List<Pair<String, Collection<String>>> key2Value = new ArrayList<>();
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             String key = entry.getKey();

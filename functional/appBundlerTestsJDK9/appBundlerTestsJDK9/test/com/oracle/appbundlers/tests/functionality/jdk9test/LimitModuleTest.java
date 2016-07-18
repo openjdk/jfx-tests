@@ -11,7 +11,6 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
@@ -26,15 +25,11 @@ public class LimitModuleTest extends ModuleTestBase {
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(MODULEPATH,
-                    ((GenericModuleParameters) this.currentParameter)
-                            .getModulePath());
             /*
              * Do not include Rectangle module name for Limit Mods
              */
             hashMap.put(LIMIT_MODS,
                     COM_SHAPE_SERVICEPROVIDER_CIRCLE_MODULENAME);
-            hashMap.put(APPLICATION_CLASS, COM_SHAPE_TEST_LIMITMODSMAINCLASS);
             return hashMap;
         };
     }

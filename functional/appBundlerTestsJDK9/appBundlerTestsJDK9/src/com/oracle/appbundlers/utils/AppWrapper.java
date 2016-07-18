@@ -97,9 +97,7 @@ public class AppWrapper implements Constants {
     }
 
     public void preinstallApp(ExtensionType extension) throws IOException {
-        Utils.createDir(getSrcDir());
-        Utils.createDir(getBundlesDir());
-        Utils.createDir(getBinDir());
+        createSrcBundleAndBinDirs();
 
         if (!getJarTempSources().isEmpty()) {
             Utils.createDir(getJarDir());
@@ -110,6 +108,21 @@ public class AppWrapper implements Constants {
                     Paths.get(getModulePathBasedOnExtension(extension)));
         }
     }
+
+    private void createSrcBundleAndBinDirs() throws IOException {
+        Utils.createDir(getSrcDir());
+        Utils.createDir(getBundlesDir());
+        Utils.createDir(getBinDir());
+    }
+
+    public void preinstallApp(ExtensionType[] extensionArray) throws IOException {
+        createSrcBundleAndBinDirs();
+
+        for (ExtensionType extension : extensionArray) {
+            Utils.createDir(Paths.get(getModulePathBasedOnExtension(extension)));
+        }
+    }
+
 
     private List<Source> getJarTempSources() {
         return sources.stream().filter((source) -> !source.isModule())
@@ -190,6 +203,14 @@ public class AppWrapper implements Constants {
         return compileApp(javacOptions, null, classpath);
     }
 
+    public int compileAndCreateExtensionEndProduct(ExtensionType extension, Path... classpath) throws IOException, ExecutionException  {
+        int resultForModule = compileAppForModules(new String[0], extension, classpath);
+        jarApp(extension);
+        compileAppForJars(new String[0], extension, classpath);
+        jarApp(ExtensionType.NormalJar);
+        return resultForModule;
+    }
+
     private int compileAppForJars(String[] javacOptions,
             ExtensionType extension, Path[] classpath) throws IOException {
         if (getJarTempSources().isEmpty()) {
@@ -212,20 +233,7 @@ public class AppWrapper implements Constants {
         for (Source tempSource : getJarTempSources()) {
             List<String> newArgs = new ArrayList<String>();
             newArgs.addAll(argsList);
-            String string = getSrcDir() + File.separator
-                    + tempSource.getPackageName().replace(".", File.separator);
-            Path path = Paths.get(string);
-            Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult visitFile(Path file,
-                        BasicFileAttributes attr) {
 
-                    if (file.toString().endsWith(".java")) {
-                        newArgs.add(file.toString());
-                    }
-                    return FileVisitResult.CONTINUE;
-                }
-            });
 
             newArgs.add("-classpath");
             if (classpath.length != 0) {
@@ -243,7 +251,25 @@ public class AppWrapper implements Constants {
             if (extension != null) {
                 newArgs.add("-mp");
                 newArgs.add(String.join(File.pathSeparator, getModulePathBasedOnExtension(extension), JMODS_PATH_IN_JDK));
+            } else {
+                newArgs.add("-mp");
+                newArgs.add(getBinDir().toString());
             }
+
+            String string = getSrcDir() + File.separator
+                    + tempSource.getPackageName().replace(".", File.separator);
+            Path path = Paths.get(string);
+            Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file,
+                        BasicFileAttributes attr) {
+
+                    if (file.toString().endsWith(".java")) {
+                        newArgs.add(file.toString());
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+            });
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             System.out.println(

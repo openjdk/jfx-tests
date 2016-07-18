@@ -145,7 +145,7 @@ public abstract class TestBase implements Constants {
         }
     }
 
-    private void initializeAndPrepareApp() throws Exception {
+    protected void initializeAndPrepareApp() throws Exception {
         if (this.currentParameter.getApp() == null) {
             this.currentParameter.initializeDefaultApp();
         }
@@ -160,10 +160,10 @@ public abstract class TestBase implements Constants {
 
     @Test(dataProvider = "getBundlers")
     public void runTest(BundlingManager bundlingManager) throws Exception {
-        for (ExtensionType extension : ExtensionType.values()) {
+        for (ExtensionType extension : getExtensionArray()) {
             this.currentParameter = intermediateToParametersMap
                     .get(extension);
-
+            System.out.println("Extension "+extension+" bundling manager is "+bundlingManager);
             if (!isTestCaseApplicableForExtensionType(extension)) {
                 continue;
             }
@@ -203,7 +203,9 @@ public abstract class TestBase implements Constants {
                 this.currentParameter.getVerifiedOptions().forEach(
                         (name, value) -> bundlingManager.verifyOption(name,
                                 value, app2, getResultingAppName()));
-            } finally {
+            }
+
+            finally {
                 uninstallApp(extension);
                 LOG.log(Level.INFO, "Finished test: {0}", testName);
             }
@@ -213,6 +215,10 @@ public abstract class TestBase implements Constants {
     public boolean isTestCaseApplicableForExtensionType(
             ExtensionType extension) {
         return true;
+    }
+
+    public ExtensionType[] getExtensionArray() {
+        return ExtensionType.values();
     }
 
     protected void uninstallApp(ExtensionType intermediate) throws Exception {

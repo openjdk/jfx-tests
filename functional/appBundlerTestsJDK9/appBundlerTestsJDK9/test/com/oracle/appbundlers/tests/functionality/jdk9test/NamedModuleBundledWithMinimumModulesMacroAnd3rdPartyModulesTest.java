@@ -13,10 +13,6 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
-import com.oracle.appbundlers.utils.AppWrapper;
-import com.oracle.appbundlers.utils.SourceFactory;
-import com.oracle.appbundlers.utils.Utils;
 
 /**
  * @author Ramesh BG Example 10 in chris list Example 10: Named Module, Minimum
@@ -41,21 +37,9 @@ public class NamedModuleBundledWithMinimumModulesMacroAnd3rdPartyModulesTest
     protected AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(APPLICATION_CLASS,
-                    COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME);
-            hashMap.put(MODULEPATH,
-                    ((GenericModuleParameters) this.currentParameter)
-                            .getModulePath());
             hashMap.put(ADD_MODS, MINIMUM_MODULES);
             return hashMap;
         };
-    }
-
-    protected AppWrapper getApp() throws IOException {
-        return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
-                COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
-                SourceFactory.get_custom_util_module(), SourceFactory
-                        .get_com_greetings_module_depends_on_custom_util_module());
     }
 
     @Override
@@ -64,7 +48,6 @@ public class NamedModuleBundledWithMinimumModulesMacroAnd3rdPartyModulesTest
         if (ExtensionType.NormalJar != intermediate) {
             this.currentParameter.setAdditionalParams(getAdditionalParams());
             this.currentParameter.setVerifiedOptions(getVerifiedOptions());
-            this.currentParameter.setApp(getApp());
         }
     }
 }

@@ -98,7 +98,7 @@ public interface Constants {
     String COM_SHAPE_SERVICEPROVIDER_RECTANGLE_CLASS_NAME = "com.shape.serviceprovider.rectangle.Rectangle";
     String COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS_TEMPLATE = "com.shape.serviceinterface.ShapeMainClass.template";
     String RECTANGLE_OUTPUT = "This is Rectangle";
-    String ALL_MODULEPATH = "ALL_MODULEPATH";
+    String ALL_MODULE_PATH = "ALL-MODULE-PATH";
     String MINIMUM_MODULES = "MINIMUM_MODULES";
     String FXAPP_JAVA_TEMPLATE = "FXApp.java.template";
     String COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME = "com.greetings.App1";

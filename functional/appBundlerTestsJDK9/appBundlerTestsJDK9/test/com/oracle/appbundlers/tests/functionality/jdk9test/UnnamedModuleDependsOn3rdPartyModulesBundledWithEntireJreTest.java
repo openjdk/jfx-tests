@@ -6,29 +6,26 @@ package com.oracle.appbundlers.tests.functionality.jdk9test;
 
 import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.CHECK_MODULE_IN_JAVA_EXECUTABLE;
 import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.OUTPUT_CONTAINS;
+import static java.util.stream.Collectors.toSet;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import java.util.stream.Collectors;
 
 import com.oracle.appbundlers.tests.functionality.TestBase;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
+import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
-import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
-import com.oracle.tools.packager.ConfigException;
-
-import javafx.util.Pair;
+import com.oracle.tools.packager.RelativeFileSet;
+import com.sun.javafx.tools.packager.bundlers.BundleParams;
 
 /**
  * @author Ramesh BG Example 3 in chris list Example 3: Unnamed Module + Entire
@@ -39,12 +36,11 @@ import javafx.util.Pair;
 public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
         extends TestBase {
 
-    private static final Logger LOG = Logger.getLogger(UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest.class.getName());
-
     protected AppWrapper getApp() throws IOException {
         return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                 COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
                 "-XaddExports:custom.util/testapp.util=ALL-UNNAMED",
+                SourceFactory.get_custom_util_module(),
                 SourceFactory.get_com_greetings_app_unnamed_module(
                         new HashMap<String, String>() {
                             private static final long serialVersionUID = 2076100253408663958L;
@@ -53,8 +49,7 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
                                 put(PRINTLN_STATEMENT,
                                         CUSTOM_UTIL_PRINTLN_STATEMENT);
                             }
-                        }),
-                SourceFactory.get_custom_util_module());
+                        }));
     }
 
     public VerifiedOptions getVerifiedOptions() {
@@ -70,97 +65,72 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(MODULEPATH, ((GenericModuleParameters) this.currentParameter)
-                    .getModulePath());
-            hashMap.put(APPLICATION_CLASS,
-                    COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME);
-            hashMap.put(ADD_MODS, this.currentParameter.getApp().addAllModules());
+            hashMap.put(ADD_MODS,
+                    this.currentParameter.getApp().addAllModules());
             return hashMap;
         };
     }
 
     @Override
-    public void overrideParameters(ExtensionType intermediate)
-            throws IOException {
-        if (ExtensionType.NormalJar == intermediate) {
-            this.currentParameter.setAdditionalParams(getAdditionalParams());
-            this.currentParameter.setVerifiedOptions(getVerifiedOptions());
-            this.currentParameter.setApp(getApp());
+    protected void prepareTestEnvironment() throws Exception {
+        for (ExtensionType intermediate : ExtensionType.getModuleTypes()) {
+            this.currentParameter = this.intermediateToParametersMap
+                    .get(intermediate);
+            overrideParameters(intermediate);
+            initializeAndPrepareApp();
         }
     }
 
     @Override
-    public boolean isTestCaseApplicableForExtensionType(
-            ExtensionType extensionType) {
-        return ExtensionType.NormalJar != extensionType;
+    public void overrideParameters(ExtensionType intermediate)
+            throws IOException {
+        this.currentParameter.setApp(getApp());
+        this.currentParameter.setBasicParams(getBasicParams());
+        this.currentParameter.setAdditionalParams(getAdditionalParams());
+        this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 
     @Override
     protected void prepareApp(AppWrapper app, ExtensionType extension)
             throws IOException, ExecutionException {
-        app.preinstallApp(extension);
+        app.preinstallApp(
+                new ExtensionType[] { extension, ExtensionType.NormalJar });
         app.writeSourcesToAppDirectory();
-        app.compileApp();
-        app.jarApp(extension);
+        app.compileAndCreateExtensionEndProduct(extension);
     }
 
-    @Test(dataProvider = "getBundlers")
-    public void runTest(BundlingManager bundlingManager) throws Exception {
+    @Override
+    protected void initializeAndPrepareApp() throws Exception {
+        prepareApp(this.currentParameter.getApp(),
+                this.currentParameter.getExtension());
+    }
+
+    public BasicParams getBasicParams() throws IOException {
         /*
-         * change the implementation
-         * @TODO
-         * Need to implement the following in this testcase.
-         * normal jar file depending on modular jar
-         * normal jar file depending on jmod
-         * normal jar file depending on exploded mods
+         * there is no main module in this test since unnamed module depending
+         * on named module via -XaddExports
          */
-        for (ExtensionType extension : ExtensionType.values()) {
-            this.currentParameter = intermediateToParametersMap
-                    .get(extension);
+        return (AppWrapper app) -> {
+            Map<String, Object> basicParams = new HashMap<String, Object>();
+            basicParams.put(BundleParams.PARAM_APP_RESOURCES,
+                    new RelativeFileSet(
+                            this.currentParameter.getApp().getJarDir().toFile(),
+                            app.getJarFilesList().stream().map(Path::toFile)
+                                    .collect(toSet())));
+            basicParams.put(APPLICATION_CLASS,
+                    this.currentParameter.getApp().getMainClass());
+            basicParams.put(CLASSPATH,
+                    this.currentParameter.getApp().getJarFilesList().stream()
+                            .map(Path::getFileName).map(Path::toString)
+                            .collect(Collectors.joining(File.pathSeparator)));
+            basicParams.put(MODULEPATH, String.join(File.pathSeparator,
+                    JMODS_PATH_IN_JDK, ((GenericModuleParameters) this.currentParameter).getModulePath()));
+            return basicParams;
+        };
+    }
 
-            if (!isTestCaseApplicableForExtensionType(extension)) {
-                continue;
-            }
-
-            Map<String, Object> allParams = getAllParams(extension);
-            String testName = this.getClass().getName() + "::"
-                    + testMethod.getName() + "$" + bundlingManager.toString();
-            this.bundlingManager = bundlingManager;
-            LOG.log(Level.INFO, "Starting test \"{0}\".", testName);
-            try {
-                validate();
-                if (isConfigExceptionExpected(bundlingManager.getBundler())) {
-                    Assert.fail(
-                            "ConfigException is expected, but isn't thrown");
-                }
-            } catch (ConfigException ex) {
-                if (isConfigExceptionExpected(bundlingManager.getBundler())) {
-                    return;
-                } else {
-                    LOG.log(Level.SEVERE, "Configuration error: {0}.",
-                            new Object[] { ex });
-                    throw ex;
-                }
-            }
-
-            try {
-                bundlingManager.execute(allParams,
-                        this.currentParameter.getApp());
-                String path = bundlingManager.install(
-                        this.currentParameter.getApp(), getResultingAppName(),
-                        false);
-                LOG.log(Level.INFO, "Installed at: {0}", path);
-
-                Pair<TimeUnit, Integer> tuple = getDelayAfterInstall();
-                tuple.getKey().sleep(tuple.getValue());
-                AppWrapper app2 = this.currentParameter.getApp();
-                this.currentParameter.getVerifiedOptions().forEach(
-                        (name, value) -> bundlingManager.verifyOption(name,
-                                value, app2, getResultingAppName()));
-            } finally {
-                uninstallApp(extension);
-                LOG.log(Level.INFO, "Finished test: {0}", testName);
-            }
-        }
+    @Override
+    public ExtensionType[] getExtensionArray() {
+        return ExtensionType.getModuleTypes();
     }
 }
