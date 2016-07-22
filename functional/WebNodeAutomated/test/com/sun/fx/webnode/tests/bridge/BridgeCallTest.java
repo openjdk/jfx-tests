@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2016 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -48,24 +48,20 @@ public class BridgeCallTest extends BridgeTestClass  {
      * Test for simple JSObject.call call.
      * Also ensures proper result conversion for an array to JSObject with index.
      */
-    @Test(timeout=10000)
-    public void testCallArrayResult(){
-        Platform.runLater(new Runnable() {
-            public void run() {
-                initWebEngine();
-                JSObject stringO = getString(engine);
-                Object []args = {SPLIT_SMB};
-                resultObject = stringO.call("split", args);
-                System.out.println(resultObject);
-            }
+    @Test(timeout = 10000)
+    public void testCallArrayResult() {
+        Platform.runLater(() -> {
+            initWebEngine();
+            JSObject stringO = getString(engine);
+            Object[] args = {SPLIT_SMB};
+            JSObject splitResult = (JSObject) stringO.call("split", args);
+            resultObject = new Object[]{splitResult.getSlot(0), splitResult.getSlot(1)};
+            System.out.println(resultObject);
         });
-        doWait(new Tester() {
-            public boolean isPassed() {
-                return (resultObject != null);
-            }
-        });
-        Assert.assertEquals(TEST_STR_SPLIT[0], ((JSObject)resultObject).getSlot(0));
-        Assert.assertEquals(TEST_STR_SPLIT[1], ((JSObject)resultObject).getSlot(1));
+        doWait(() -> (resultObject != null));
+        Object[] result = (Object[]) resultObject;
+        Assert.assertEquals(TEST_STR_SPLIT[0], result[0]);
+        Assert.assertEquals(TEST_STR_SPLIT[1], result[1]);
     }
 
     /**
