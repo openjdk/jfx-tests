@@ -201,13 +201,10 @@ public class RichTextDifferentCasesApp extends BasicButtonChooserApp {
         @Override
         protected void prepareCase(TextFlow tf) {
             tf.getChildren().add(new Rectangle(60, 10));
-            Rectangle rect = new Rectangle();
-            rect.setHeight(FLOW_HEIGHT / 2 - 30);
-            rect.setWidth(30);
-            rect.setFill(Color.AQUA);
+            Rectangle rect = new Rectangle(30, FLOW_HEIGHT / 2, Color.AQUA);
             rect.setStroke(Color.BLUE);
+            tf.getChildren().add(new Text("\n"));            
             tf.getChildren().add(rect);
-            tf.getChildren().add(new Text("\n"));
         }
     }
 
