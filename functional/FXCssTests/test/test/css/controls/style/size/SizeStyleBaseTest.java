@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2016 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -41,8 +41,7 @@ import org.junit.Before;
 import org.junit.Test;
 import test.css.controls.api.SizeStyleApp;
 import test.javaclient.shared.TestBase;
-import test.javaclient.shared.screenshots.ImagesManager;
-import test.javaclient.shared.screenshots.ScreenshotUtils;
+import test.javaclient.shared.screenshots.GoldenImageManager;
 
 /**
  *
@@ -187,9 +186,9 @@ abstract public class SizeStyleBaseTest extends TestBase {
                     return true;
                 }
                 else {
-                    String cssStyleImage = ImagesManager.getInstance().getScreenshotPath(getPageName() + testName + "_css");
-                    String apiImage = ImagesManager.getInstance().getScreenshotPath(getPageName() + testName + "_api");
-                    String diffPath   = ImagesManager.getInstance().getScreenshotPath(getPageName() + testName + "_diff");
+                    String cssStyleImage = GoldenImageManager.getScreenshotPath(getPageName() + testName + "_css");
+                    String apiImage = GoldenImageManager.getScreenshotPath(getPageName() + testName + "_api");
+                    String diffPath   = GoldenImageManager.getScreenshotPath(getPageName() + testName + "_diff");
                     testedImage.save(cssStyleImage);
                     goldenImage.save(apiImage);
                     testedImage.compareTo(goldenImage).save(diffPath);

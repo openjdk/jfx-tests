@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2016, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -30,15 +30,12 @@ import java.io.File;
 import java.util.concurrent.Semaphore;
 import javafx.application.Platform;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 import org.jemmy.Point;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
-import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.Lookups;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.Root;
@@ -48,9 +45,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import test.javaclient.shared.screenshots.ImagesManager;
 import test.javaclient.shared.screenshots.ScreenshotUtils;
 import static test.javaclient.shared.TestUtil.isEmbedded;
+import test.javaclient.shared.screenshots.GoldenImageManager;
 
 /**
  * Base class for scenegraph tests. Provides jemmy initialization, scene finding
@@ -266,7 +263,7 @@ public class TestBase extends TestBaseBase {
         if (shoots) {
             //verify screenshot
             String testName = new StringBuilder(getName()).append("-").append(toplevel_name).append(innerlevel_name).append("-").append("additional").toString();
-            String pathToGoldenScreenshot = ImagesManager.getInstance().lookupGoldenScreenshot(testName);
+            String pathToGoldenScreenshot = GoldenImageManager.getScreenshotPath(testName);
             if (!(new File(pathToGoldenScreenshot)).exists()) {
                 testName = new StringBuilder(getName()).append("-").append(toplevel_name).append(innerlevel_name).toString();
             }
@@ -290,8 +287,8 @@ public class TestBase extends TestBaseBase {
         String filename = prefixForFilename + getNameForScreenShot(toplevel_name, innerlevel_name);
         org.jemmy.image.Image imageJemmy = (null == noda) ? getScene().getScreenImage() : noda.getScreenImage();
 
-        String resName = ImagesManager.getInstance().getScreenshotPath(filename);
-        String res2Name = ImagesManager.getInstance().getScreenshotPath(filename + "-2");
+        String resName = GoldenImageManager.getScreenshotPath(filename);
+        String res2Name = GoldenImageManager.getScreenshotPath(filename + "-2");
 
         imageJemmy.save(resName);
 
@@ -301,7 +298,7 @@ public class TestBase extends TestBaseBase {
         //org.jemmy.image.Image sceneImageJemmy2 = scene.getScreenImage();
         //sceneImageJemmy2.save(ImagesManager.getInstance().getScreenshotPath(filename + "2"));
 
-        String diffName = ImagesManager.getInstance().getScreenshotPath(filename + "-diff");
+        String diffName = GoldenImageManager.getScreenshotPath(filename + "-diff");
         boolean scenesEqual = true;
         try {
             if (null == noda) {

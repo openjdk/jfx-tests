@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2016, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -32,14 +32,11 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.jemmy.TimeoutExpiredException;
 import org.jemmy.control.Wrap;
-import org.jemmy.env.Timeout;
 import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.Root;
-import org.jemmy.image.Image;
 import org.jemmy.timing.State;
-import org.jemmy.timing.Waiter;
 import test.javaclient.shared.description.TreeNode;
-import test.javaclient.shared.screenshots.ImagesManager;
+import test.javaclient.shared.screenshots.GoldenImageManager;
 
 /**
  * Utility methods
@@ -127,9 +124,9 @@ public class TestUtil {
      * @param oneToWaitForWrap wrap for object can be not yet placed on UI
      */
     public static void compareScreenshots(String testName, final Wrap existingWrap, final Wrap oneToWaitForWrap) {
-        String existingName = ImagesManager.getInstance().getScreenshotPath(testName + "-existing"); //= RESULT_PATH + testName + "-diff.png";
-        String waitingForName = ImagesManager.getInstance().getScreenshotPath(testName + "-waitingFor");
-        String diffName = ImagesManager.getInstance().getScreenshotPath(testName + "-diff"); //= RESULT_PATH + testName + IMAGE_POSTFIX;
+        String existingName = GoldenImageManager.getScreenshotPath(testName + "-existing"); //= RESULT_PATH + testName + "-diff.png";
+        String waitingForName = GoldenImageManager.getScreenshotPath(testName + "-waitingFor");
+        String diffName = GoldenImageManager.getScreenshotPath(testName + "-diff"); //= RESULT_PATH + testName + IMAGE_POSTFIX;
         String OUTPUT = oneToWaitForWrap.getClass().getName() + ".OUTPUT";
         try {
             oneToWaitForWrap.waitState(new State<Object>() {

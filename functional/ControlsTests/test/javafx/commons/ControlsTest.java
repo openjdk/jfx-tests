@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2016 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -45,8 +45,7 @@ import org.jemmy.image.pixel.RasterComparator;
 import org.jemmy.timing.State;
 import org.jemmy.timing.Waiter;
 import org.junit.Assert;
-import test.javaclient.shared.screenshots.ImagesManager;
-
+import test.javaclient.shared.screenshots.GoldenImageManager;
 /**
  *
  * @author Dmitry Zinkevich <dmitry.zinkevich@oracle.com>
@@ -121,17 +120,17 @@ public class ControlsTest extends ControlsBase {
                     System.out.println(ex.getMessage());
                     Image imgTranslucent = testedControl.getScreenImage();
                     
-                    String screenshotPath = ImagesManager.getInstance().getScreenshotPath(String.format("%s_img_opacity40", nodeName));
+                    String screenshotPath = GoldenImageManager.getScreenshotPath(String.format("%s_img_opacity40", nodeName));
                     imgOpacity40.save(screenshotPath);
                     
-                    screenshotPath = ImagesManager.getInstance().getScreenshotPath(String.format("%s_control_opacity40", nodeName));
+                    screenshotPath = GoldenImageManager.getScreenshotPath(String.format("%s_control_opacity40", nodeName));
                     imgTranslucent.save(screenshotPath);
 
                     Image diff = Environment.getEnvironment().getProperty(ImageComparator.class).compare(imgOpacity40, imgTranslucent);
                     
                     Assert.assertTrue(diff != null);
                     
-                    screenshotPath = ImagesManager.getInstance().getScreenshotPath(String.format("%s_diff", nodeName));
+                    screenshotPath = GoldenImageManager.getScreenshotPath(String.format("%s_diff", nodeName));
                     diff.save(screenshotPath);
                 }
                 setPropertyBySlider(settingType, TestedProperties.opacity, 1);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2016 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -37,7 +37,7 @@ import org.junit.runner.Request;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
-import test.javaclient.shared.screenshots.ImagesManager;
+import test.javaclient.shared.screenshots.GoldenImageManager;
 
 /**
  *
@@ -202,12 +202,16 @@ public class CommonTestRunnerWorker {
                         testClassName = trc.param;
                         break;
                     case SET_BASEDIR:
-                        //TODO: this design is a bit flawed as we introducing backward
-                        //dependency on SharedTestUtils here.
-                        ImagesManager.getInstance().setBaseDir(trc.param);
+                        //Looks like method is required for some remote invocation and could be
+                        //used later if it will be decided to run jnlp-mode again. 
+                        //So commenting instead of removing.      
+                        //GoldenImageManager.setBaseDir(trc.param);
                         break;
                     case SET_ABSOLUTE_DIR:
-                        ImagesManager.getInstance().setAbsoluteDir(trc.param);
+                        //Looks like method is required for some remote invocation and could be
+                        //used later if it will be decided to run jnlp-mode again. 
+                        //So commenting instead of removing.                              
+                        //GoldenImageManager.setAbsoluteDir(trc.param);
                         break;
                     case SET_TEST_NAME:
                         testName = trc.param;

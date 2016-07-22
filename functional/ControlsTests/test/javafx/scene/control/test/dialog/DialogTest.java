@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2016 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -59,8 +59,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import test.javaclient.shared.FilteredTestRunner;
 import test.javaclient.shared.TestUtil;
-import test.javaclient.shared.screenshots.ImagesManager;
-
+import test.javaclient.shared.screenshots.GoldenImageManager;
 /**
  *
  * @author Alexander Vorobyev
@@ -593,7 +592,7 @@ public class DialogTest extends ControlsTestBase {
     protected void saveSceneImage(String fileName) {
         Image sceneImage;
         sceneImage = scene.getScreenImage();
-        sceneImage.save(ImagesManager.getInstance().getScreenshotPath(fileName));
+        sceneImage.save(GoldenImageManager.getScreenshotPath(fileName));
     }
 
     protected boolean requestFocusByKeyboard(final Wrap<? extends Node> wrap) {

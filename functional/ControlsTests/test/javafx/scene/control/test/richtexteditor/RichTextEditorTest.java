@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  */
 package javafx.scene.control.test.richtexteditor;
@@ -46,7 +46,7 @@ import org.junit.runner.RunWith;
 import test.javaclient.shared.FilteredTestRunner;
 import test.javaclient.shared.JemmyUtils;
 import test.javaclient.shared.Utils;
-import test.javaclient.shared.screenshots.ImagesManager;
+import test.javaclient.shared.screenshots.GoldenImageManager;
 import test.javaclient.shared.screenshots.ScreenshotUtils;
 
 @RunWith(FilteredTestRunner.class)
@@ -876,7 +876,7 @@ public class RichTextEditorTest extends ControlsTestBase {
                 }
             }, readResource(getHTMLName(html) + ".html"));
         } finally {
-            Writer out = new OutputStreamWriter(new FileOutputStream(ImagesManager.getInstance().getHTMLPath(html)));
+            Writer out = new OutputStreamWriter(new FileOutputStream(GoldenImageManager.getGoldenPath(html, ".html")));
             try {
                 out.write("Found : " + htmlEditor.getControl().getHtmlText() + "\n");
                 out.write("Expected : " + readResource(getHTMLName(html) + ".html") + "\n");
@@ -895,7 +895,7 @@ public class RichTextEditorTest extends ControlsTestBase {
                 }
             }, readResource(getHTMLName(html) + ".html"));
         } finally {
-            Writer out = new OutputStreamWriter(new FileOutputStream(ImagesManager.getInstance().getHTMLPath(html)));
+            Writer out = new OutputStreamWriter(new FileOutputStream(GoldenImageManager.getGoldenPath(html, ".html")));
             try {
                 out.write(getClipboardHTML());
             } finally {
