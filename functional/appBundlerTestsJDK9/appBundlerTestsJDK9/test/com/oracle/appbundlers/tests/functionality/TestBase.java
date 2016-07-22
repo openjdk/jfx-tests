@@ -49,7 +49,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.oracle.appbundlers.tests.BundlerProvider;
-import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
 import com.oracle.appbundlers.tests.functionality.parameters.ExplodedModuleParameters;
 import com.oracle.appbundlers.tests.functionality.parameters.JmodParameters;
 import com.oracle.appbundlers.tests.functionality.parameters.ModularJarParameters;
@@ -60,6 +59,7 @@ import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.BundlingManagers;
 import com.oracle.appbundlers.utils.Constants;
+import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.PackageTypeFilter;
 import com.oracle.appbundlers.utils.PackagerApiFilter;
 import com.oracle.appbundlers.utils.Utils;
@@ -92,7 +92,7 @@ public abstract class TestBase implements Constants {
         }
     };
 
-    private static final Logger LOG = Logger
+    protected static final Logger LOG = Logger
             .getLogger(TestBase.class.getName());
 
     protected Method testMethod = null;
@@ -163,7 +163,6 @@ public abstract class TestBase implements Constants {
         for (ExtensionType extension : getExtensionArray()) {
             this.currentParameter = intermediateToParametersMap
                     .get(extension);
-            System.out.println("Extension "+extension+" bundling manager is "+bundlingManager);
             if (!isTestCaseApplicableForExtensionType(extension)) {
                 continue;
             }

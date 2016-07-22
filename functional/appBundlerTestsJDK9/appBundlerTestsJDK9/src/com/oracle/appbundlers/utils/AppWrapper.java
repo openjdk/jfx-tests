@@ -43,8 +43,6 @@ import java.util.zip.ZipEntry;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
-import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
-
 import javafx.util.Pair;
 
 /**
@@ -251,9 +249,6 @@ public class AppWrapper implements Constants {
             if (extension != null) {
                 newArgs.add("-mp");
                 newArgs.add(String.join(File.pathSeparator, getModulePathBasedOnExtension(extension), JMODS_PATH_IN_JDK));
-            } else {
-                newArgs.add("-mp");
-                newArgs.add(getBinDir().toString());
             }
 
             String string = getSrcDir() + File.separator
@@ -328,7 +323,7 @@ public class AppWrapper implements Constants {
             System.out.println(
                     "====================COMPILATION STARTS===========================");
             System.out.println(
-                    "compilation command for " + extension + " is " + argsList);
+                    "compilation command for modules is " + argsList);
 
             int tempResult = compiler.run(System.in, outputStream, System.err,
                     argsList.toArray(new String[argsList.size()]));

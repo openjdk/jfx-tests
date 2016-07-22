@@ -25,8 +25,8 @@ import org.testng.annotations.AfterMethod;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
 import com.oracle.appbundlers.utils.BundlerUtils;
+import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.Utils;
 
 /**

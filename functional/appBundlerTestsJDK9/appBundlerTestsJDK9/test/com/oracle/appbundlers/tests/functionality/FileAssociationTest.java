@@ -19,10 +19,10 @@ import java.util.concurrent.TimeUnit;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.BundlingManagers;
+import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.Source;
 import com.oracle.appbundlers.utils.Utils;
 

@@ -12,6 +12,7 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
+import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
  * @author Ramesh BG

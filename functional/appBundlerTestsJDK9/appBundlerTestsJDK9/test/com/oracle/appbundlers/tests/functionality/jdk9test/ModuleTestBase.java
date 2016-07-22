@@ -1,6 +1,7 @@
 package com.oracle.appbundlers.tests.functionality.jdk9test;
 
 import com.oracle.appbundlers.tests.functionality.TestBase;
+import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
  * @author Ramesh BG

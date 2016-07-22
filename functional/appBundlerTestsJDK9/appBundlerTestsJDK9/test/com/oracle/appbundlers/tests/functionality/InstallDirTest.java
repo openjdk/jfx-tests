@@ -19,9 +19,9 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParams;
-import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
+import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.tools.packager.RelativeFileSet;
 import com.oracle.tools.packager.StandardBundlerParam;
 

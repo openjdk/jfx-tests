@@ -16,7 +16,7 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
+import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
  * @author Dmitry Ginzburg &lt;dmitry.x.ginzburg@oracle.com&gt;

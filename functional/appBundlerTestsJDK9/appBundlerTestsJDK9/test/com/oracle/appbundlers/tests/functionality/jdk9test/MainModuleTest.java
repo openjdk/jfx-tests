@@ -14,6 +14,7 @@ import java.util.Map;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParams;
 import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
+import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.tools.packager.RelativeFileSet;
 import com.sun.javafx.tools.packager.bundlers.BundleParams;
 

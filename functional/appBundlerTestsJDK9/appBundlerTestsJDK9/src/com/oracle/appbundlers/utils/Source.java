@@ -182,7 +182,7 @@ public class Source {
                 .entrySet();
         Iterator<Entry<String, String>> iterator = entrySet.iterator();
         while (iterator.hasNext()) {
-            Map.Entry<java.lang.String, java.lang.String> entry = (Map.Entry<java.lang.String, java.lang.String>) iterator
+            Map.Entry<java.lang.String, java.lang.String> entry = iterator
                     .next();
             String fileNameInFullPath = entry.getValue();
             int lastIndexOf = fileNameInFullPath.lastIndexOf('.');

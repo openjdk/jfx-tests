@@ -13,6 +13,10 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
+import com.oracle.appbundlers.utils.AppWrapper;
+import com.oracle.appbundlers.utils.ExtensionType;
+import com.oracle.appbundlers.utils.SourceFactory;
+import com.oracle.appbundlers.utils.Utils;
 
 /**
  * @author Ramesh BG Example 9 in chris list. Example 9: Named Module, Minimum
@@ -39,6 +43,13 @@ public class NamedModuleBundledWithMinimumModulesAnd3rdPartyModulesTest
             hashMap.put(ADD_MODS, this.currentParameter.getApp().addAllModules());
             return hashMap;
         };
+    }
+
+    protected AppWrapper getApp() throws IOException {
+        return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
+                COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
+                SourceFactory.get_custom_util_module(),
+                SourceFactory.get_com_greetings_module());
     }
 
     @Override

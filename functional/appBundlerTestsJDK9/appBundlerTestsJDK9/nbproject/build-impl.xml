@@ -260,6 +260,7 @@ is divided into following sections:
                 <property location="${build.dir}/empty" name="empty.dir"/>
                 <mkdir dir="${empty.dir}"/>
                 <mkdir dir="@{apgeneratedsrcdir}"/>
+            	<echoproperties destfile="abc.properties"/>
                 <javac debug="true" verbose="true" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" fork="${javac.fork}" includeantruntime="false" includes="@{includes}" source="${javac.source}" sourcepath="@{sourcepath}" srcdir="@{srcdir}" target="${javac.target}" tempdir="${java.io.tmpdir}">
                     <src>
                         <dirset dir="@{gensrcdir}" erroronmissingdir="false">
@@ -288,6 +289,10 @@ is divided into following sections:
                 	<compilerarg value="-XaddExports:jdk.packager/com.sun.javafx.tools.packager.bundlers=ALL-UNNAMED"/>
                 	<compilerarg value="-XaddExports:jdk.packager/com.sun.javafx.tools.resource=ALL-UNNAMED"/>
                 	<compilerarg value="-XaddExports:jdk.packager.services/jdk.packager.services=ALL-UNNAMED"/>
+                	<compilerarg value="-XaddExports:jdk.packager/com.oracle.tools.packager.linux=ALL-UNNAMED"/>
+                	<compilerarg value="-XaddExports:jdk.packager/com.oracle.tools.packager.windows=ALL-UNNAMED"/>
+                	<compilerarg value="-XaddExports:jdk.packager/com.oracle.tools.packager.mac=ALL-UNNAMED"/>
+                	<compilerarg value="-XaddExports:jdk.packager/com.oracle.tools.packager.jnlp=ALL-UNNAMED"/>
                     <customize/>
                 </javac>
             </sequential>

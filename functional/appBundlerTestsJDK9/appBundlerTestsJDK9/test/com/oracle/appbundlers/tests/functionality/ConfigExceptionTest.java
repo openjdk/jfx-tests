@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
-import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
 import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.BundlingManagers;
+import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.tools.packager.Bundler;
 
 /**

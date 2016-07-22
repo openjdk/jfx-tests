@@ -20,9 +20,9 @@ import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import com.oracle.appbundlers.tests.functionality.TestBase;
-import com.oracle.appbundlers.tests.functionality.jdk9test.ExtensionType;
 import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.Config;
+import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
  * @author Dmitry.Ermashov@oracle.com;

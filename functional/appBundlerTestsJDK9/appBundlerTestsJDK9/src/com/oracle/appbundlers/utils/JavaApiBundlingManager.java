@@ -30,7 +30,6 @@ public class JavaApiBundlingManager extends BundlingManager {
 
     @Override
     public File execute(Map<String, Object> params, File file) {
-        System.out.println("Bundler is " + getBundler().getClass());
         return getBundler().execute(params, file);
     }
 

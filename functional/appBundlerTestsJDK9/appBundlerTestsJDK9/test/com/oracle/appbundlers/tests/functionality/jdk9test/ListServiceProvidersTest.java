@@ -12,6 +12,7 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.AppWrapper;
+import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;

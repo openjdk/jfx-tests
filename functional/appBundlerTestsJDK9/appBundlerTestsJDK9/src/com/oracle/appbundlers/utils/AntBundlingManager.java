@@ -45,7 +45,6 @@ import org.w3c.dom.Element;
 import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;
 import com.oracle.tools.packager.ConfigException;
 import com.oracle.tools.packager.RelativeFileSet;
-import com.oracle.tools.packager.StandardBundlerParam;
 import com.oracle.tools.packager.UnsupportedPlatformException;
 import com.sun.javafx.tools.packager.bundlers.BundleParams;
 
@@ -65,7 +64,7 @@ public class AntBundlingManager extends BundlingManager {
             put(APPLICATION_CLASS, new Location("fx:application", "mainClass"));
             put(IDENTIFIER, new Location("fx:application", "id"));
             put(VERSION, new Location("fx:application", "version"));
-            put(APP_NAME_REPLACEMENT_STATEMENT,
+            put(APP_NAME,
                     new Location("fx:application", "name"));
             put(VENDOR, new Location("fx:info", "vendor"));
             put(TITLE, new Location("fx:info", "title"));
@@ -172,10 +171,7 @@ public class AntBundlingManager extends BundlingManager {
                     String file = (String) value;
                     Element e = document.createElement("fx:fileset");
                     RelativeFileSet relFileSet = null;
-                    /*
-                     * @TODO need to implement below ramesh
-                     */
-//                    relFileSet = APP_RESOURCES.fetchFrom(params);
+                    relFileSet = com.oracle.tools.packager.StandardBundlerParam.APP_RESOURCES.fetchFrom(params);
                     e.setAttribute("dir",
                             relFileSet.getBaseDirectory().getAbsolutePath());
                     e.setAttribute("includes", file);
@@ -238,7 +234,8 @@ public class AntBundlingManager extends BundlingManager {
                             break;
 
                             case APPLICATION_CLASS:
-                                launcherEl.setAttribute(APPLICATION_CLASS, (String) keyVal.getValue());
+                                launcherEl.setAttribute(location.attribute, (String) keyVal.getValue());
+                            break;
 
                             default:
                                 launcherEl.appendChild(
@@ -313,6 +310,7 @@ public class AntBundlingManager extends BundlingManager {
                 case MAIN_MODULE:
                     if(value instanceof String) {
                         parentEl.setAttribute(MAIN_MODULE, ((String) value).split("/")[0]);
+                        parentEl.setAttribute("mainClass", ((String) value).split("/")[1]);
                     }
                     break;
                 default:
