@@ -35,7 +35,7 @@ public class ModalityWithChoiceBoxTest extends ModalityBase{
     public void setUp() {
         setUpTyped(WindowsRenderType.LIST);
     }
-    
+
     @Test
     public void case1Test() throws InterruptedException {
         createSubstageByChoiceBox("stage0", ModalityWindow.TestCase.APPAPP, true);

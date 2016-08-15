@@ -38,7 +38,7 @@ public class Report {
     protected CoverageStorage coverage;
 
     /**
-     * 
+     *
      * @param template Full list of features to be covered.
      * @param coverage Actual coverage.
      */

@@ -37,7 +37,7 @@ import test.javaclient.shared.JemmyUtils;
  */
 public class ImageDuplicateExtractor {
 
-    private File rootFolder;    
+    private File rootFolder;
     private static FileFilter DEFAULT_FOLDERS_FILTER = new FileFilter() {
 
         public boolean accept(File file) {
@@ -64,8 +64,8 @@ public class ImageDuplicateExtractor {
         System.exit(0);
     }
 
-    private void run() {       
-            compareFolders(rootFolder);        
+    private void run() {
+            compareFolders(rootFolder);
     }
 
     private static void usage() {
@@ -121,7 +121,7 @@ public class ImageDuplicateExtractor {
             final File fileForDeletion = new File(folder, name);
             if (!fileForDeletion.delete()) {
                 System.err.println("Warning: cannot delete duplicate " + fileForDeletion);
-            } 
+            }
         }
     }
 

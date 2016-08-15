@@ -40,7 +40,7 @@ public class EnvironmentTest extends WorkerTestClass {
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for accessing navigator opject.
      */
@@ -55,7 +55,7 @@ public class EnvironmentTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("true");
     }
-    
+
     /**
      * Test for accessing location object.
      */
@@ -70,7 +70,7 @@ public class EnvironmentTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("true");
     }
-    
+
     /**
      * Test for modifying location object (should be unmodifiable).
      */
@@ -85,7 +85,7 @@ public class EnvironmentTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("true", true);
     }
-    
+
     /**
      * Test for accessing XMLHttpRequest prototype from a worker.
      */
@@ -100,7 +100,7 @@ public class EnvironmentTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("true");
     }
-    
+
     /**
      * Test for using setTimeout/clearTimeout methods from a worker.
      */
@@ -115,7 +115,7 @@ public class EnvironmentTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("alpha");
     }
-    
+
     /**
      * Test for using setInterval/clearInterval methods from a worker.
      */
@@ -130,7 +130,7 @@ public class EnvironmentTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("alpha");
     }
-    
+
     /**
      * Test for using importScripts() method from a worker.
      */
@@ -145,7 +145,7 @@ public class EnvironmentTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("Success");
     }
-    
+
     /**
      * Test for using importScripts() method from a worker.
      */
@@ -160,7 +160,7 @@ public class EnvironmentTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("Success");
     }
-    
+
     /**
      * Test for using importScripts() method from a worker while imported
      * script's origin differs from worker's one.
@@ -180,7 +180,7 @@ public class EnvironmentTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("Success");
     }
-    
+
     /**
      * Test for using AppCache from a worker.
      * http://javafx-jira.kenai.com/browse/RT-9775

@@ -65,7 +65,7 @@ public class TextFieldApp extends TextInputBaseApp {
 
         return rootTestNode;
     }
-    
+
     protected Object createObject() {
         return createObject(350 / 4, 20);
     }

@@ -90,8 +90,8 @@ public class TestBase extends TableListCommonTests {
 
     @After
     public void tearDown() {
-        //It is needed in cases, when in process of testing, fail happened when 
-        //shift button was pressed and was not released because of test fail 
+        //It is needed in cases, when in process of testing, fail happened when
+        //shift button was pressed and was not released because of test fail
         //between press and release.
         scene.keyboard().pushKey(KeyboardButtons.SHIFT);
 
@@ -337,7 +337,7 @@ public class TestBase extends TableListCommonTests {
             public void run(Object... parameters) throws Exception {
                 Lookup lookup = testedControl.as(Parent.class, Node.class).lookup(new LookupCriteria<Node>() {
                     public boolean check(Node row) {
-                        return ListCell.class.isAssignableFrom(row.getClass()) 
+                        return ListCell.class.isAssignableFrom(row.getClass())
                                 && ((ListCell) row).isFocused()
                                 && ((ListCell) row).isVisible();
                     }

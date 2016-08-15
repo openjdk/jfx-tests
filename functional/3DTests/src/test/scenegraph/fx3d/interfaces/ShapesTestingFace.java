@@ -41,7 +41,7 @@ public interface ShapesTestingFace {
     public abstract void setSpecularMap(boolean bln);
 
     public abstract void setAndUpdateDiffuseMap(boolean bln);
-    
+
     public abstract void setNullMaterial(boolean bln);
 
     public abstract void setAndUpdateBumpMap(boolean bln);
@@ -53,7 +53,7 @@ public interface ShapesTestingFace {
     public abstract String materialToString();
 
     public abstract void materialConstruct1();
-    
+
     public abstract void setVisible(boolean bln);
 
     public abstract void materialConstruct2();

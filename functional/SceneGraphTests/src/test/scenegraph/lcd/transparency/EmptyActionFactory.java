@@ -32,6 +32,6 @@ import javafx.scene.Node;
 public abstract class EmptyActionFactory implements Factory{
 
     public void action(Node node){
-        
+
     }
 }

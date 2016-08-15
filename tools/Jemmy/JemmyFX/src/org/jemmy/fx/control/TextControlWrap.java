@@ -55,7 +55,7 @@ public class TextControlWrap<T extends javafx.scene.control.Control> extends Con
      *
      */
     public static final String SELECTED_PROP_NAME = "selected";
-    
+
     /**
      *
      * @param scene

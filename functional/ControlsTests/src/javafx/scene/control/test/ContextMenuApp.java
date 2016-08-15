@@ -220,19 +220,19 @@ public class ContextMenuApp extends InteroperabilityApp {
                     showing.setSelected(false);
                 }
             });
-            
+
             last_selected_box.getChildren().add(prompt_showing);
             last_selected_box.getChildren().add(showing);
 
             HBox last_selected_action_box = new HBox(5);
             controls.getChildren().add(last_selected_action_box);
-            
+
             Label prompt_last_selected_action = new Label(LAST_SELECTED_ACTION_ID);
             lastSelectedAction = new Label();
             lastSelectedAction.setId(LAST_SELECTED_ACTION_ID);
             last_selected_action_box.getChildren().add(prompt_last_selected_action);
             last_selected_action_box.getChildren().add(lastSelectedAction);
-            
+
             Label error = new Label();
             error.setId(ERROR_ID);
             controls.getChildren().add(error);

@@ -43,22 +43,22 @@ import test.scenegraph.app.*;
 public class ButtonsValidator {
     public static void main(String args[]) throws Throwable {
         test.javaclient.shared.Utils.launch(EffectsApp.class, args);
-        
+
         Thread.sleep(500);
         Root.ROOT.getEnvironment().setOutput(AbstractExecutor.NON_QUEUE_ACTION_OUTPUT, TestOut.getNullOutput());
-        
+
         final Wrap<? extends Scene> scene = TestUtil.getScene();
 
         Random gen = new Random();
         for (int i = 0; i < 10000; i++) {
             EffectsApp.Pages page = EffectsApp.Pages.values()[gen.nextInt(EffectsApp.Pages.values().length)];
-            //for (LayoutApp.Pages page : LayoutApp.Pages.values()) 
+            //for (LayoutApp.Pages page : LayoutApp.Pages.values())
             {
                 Wrap<? extends Text> label = Lookups.byID(scene, page.name(), Text.class);
                 label.mouse().click();
                 Thread.sleep(50);
                 int timeout = 500;
-                
+
                 while (!AbstractApp2.currentPage.equals(page.name()) && timeout-- > 0) {
                     Thread.sleep(10);
                 }

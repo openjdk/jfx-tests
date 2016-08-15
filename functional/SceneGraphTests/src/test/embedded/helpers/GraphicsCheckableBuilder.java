@@ -32,12 +32,12 @@ import javafx.scene.text.Text;
  * @author akulyakh
  */
 class GraphicsCheckableBuilder implements CheckBoxBuilder {
-    
+
     private String caption;
     private String id;
     private OnClickHandler handler;
     private boolean checked;
-    
+
     public GraphicsCheckableBuilder() {
     }
 
@@ -63,11 +63,11 @@ class GraphicsCheckableBuilder implements CheckBoxBuilder {
     public AbstractCheckBox build() {
         Text text = new Text(caption);
         text.setId(id);
-        
+
         GraphicsCheckBox graphicsCb = new GraphicsCheckBox(text);
         graphicsCb.setChecked(checked);
         graphicsCb.setOnMouseClicked(handler);
-        
+
         return graphicsCb;
     }
 
@@ -76,5 +76,5 @@ class GraphicsCheckableBuilder implements CheckBoxBuilder {
         this.checked = checked;
         return this;
     }
-    
+
 }

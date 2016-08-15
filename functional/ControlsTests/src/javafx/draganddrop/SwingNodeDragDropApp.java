@@ -54,7 +54,7 @@ public class SwingNodeDragDropApp extends Application {
 
     public static Throwable dragDropException;
     public static String dropResult;
-    
+
     private void createSwingContent(SwingNode swingNode) {
         SwingUtilities.invokeLater(() -> {
             JPanel root = new JPanel();

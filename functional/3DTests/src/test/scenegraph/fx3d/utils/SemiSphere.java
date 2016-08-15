@@ -40,7 +40,7 @@ public class SemiSphere{
     public SemiSphere(){
         this(1,120,120);
     }
-    
+
     public SemiSphere(double rad,int divX,int divY) {
         this.rad = rad;
         dmb = new SemiSphereBuilder(divX,divY);
@@ -56,7 +56,7 @@ public class SemiSphere{
     public MeshView getMesh() {
         return mv;
     }
-        
+
     private class SemiSphereBuilder extends DefaultMeshBuilder {
         public SemiSphereBuilder(int divX,int divY){
             this.divX = divX;

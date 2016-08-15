@@ -41,13 +41,13 @@ import test.scenegraph.app.ControlEventsApp.Controls;
  */
 public class ListViewEventsTest extends EventTestCommon<ListViewDock>
 {
-    
+
     @BeforeClass
     public static void rinUI()
     {
         ControlEventsApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -55,14 +55,14 @@ public class ListViewEventsTest extends EventTestCommon<ListViewDock>
         super.before();
         setControl(Controls.LIST_VIEW);
     }
-    
+
     @Override
     protected ListViewDock findPrimeDock()
     {
-        return new ListViewDock(getActiveTabDock().asParent(), 
+        return new ListViewDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
-    
+
     @Test(timeout = 60000)
     public void onEditStart()
     {
@@ -76,7 +76,7 @@ public class ListViewEventsTest extends EventTestCommon<ListViewDock>
             }
         });
     }
-    
+
     @Test(timeout = 60000)
     public void onEditCommit()
     {
@@ -98,7 +98,7 @@ public class ListViewEventsTest extends EventTestCommon<ListViewDock>
             }
         });
     }
-    
+
     @Test(timeout = 60000)
     public void onEditCancel()
     {
@@ -120,5 +120,5 @@ public class ListViewEventsTest extends EventTestCommon<ListViewDock>
             }
         });
     }
-    
+
 }

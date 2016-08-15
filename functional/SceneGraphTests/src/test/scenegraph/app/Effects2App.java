@@ -359,8 +359,8 @@ public class Effects2App extends BasicButtonChooserApp {
         }
 
     }
- 
- 
+
+
     private class slotWithTextNode extends TestNode {
         final Effect e;
         Group group;
@@ -443,7 +443,7 @@ public class Effects2App extends BasicButtonChooserApp {
         List<NamedEffect> getNamedEffectList() {
             List<NamedEffect> nes = new ArrayList<NamedEffect>();
             nes.add(new NamedEffect("default", new Lighting()));
-            nes.add(new NamedEffect("distant light", LightingBuilder.create().light(new Distant() 
+            nes.add(new NamedEffect("distant light", LightingBuilder.create().light(new Distant()
             {{ setAzimuth(90f); setElevation(50);}}).build()));
             nes.add(new NamedEffect("point light", LightingBuilder.create().light(new Point(
                     70, 120, 10, Color.WHITE)).build()));
@@ -763,7 +763,7 @@ public class Effects2App extends BasicButtonChooserApp {
                         }};
                     }
                 };
- * 
+ *
  */
     }
 }

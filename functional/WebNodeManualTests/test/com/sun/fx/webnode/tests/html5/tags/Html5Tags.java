@@ -37,5 +37,5 @@ public class Html5Tags {
     public static void meter(){
         WebNodeLauncher.run(Html5Tags.class.getResource("meter.html").toExternalForm());
     }
-    
+
 }

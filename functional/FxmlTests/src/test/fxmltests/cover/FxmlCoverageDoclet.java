@@ -42,9 +42,9 @@ import java.util.logging.Logger;
  *
  * @author Aleksand Sakharuk
  */
-public class FxmlCoverageDoclet 
+public class FxmlCoverageDoclet
 {
-    
+
     public static boolean start(RootDoc root)
     {
         ClassDoc[] classes = root.classes();
@@ -67,29 +67,29 @@ public class FxmlCoverageDoclet
         System.out.println(String.format("Coverage: %.2f", (double) testedAsserts.size() / allAsserts.size()));
         return true;
     }
-    
-    private static void readAllAsserts(String path) 
+
+    private static void readAllAsserts(String path)
     {
         File f = new File(path);
-        if (!f.exists()) 
+        if (!f.exists())
         {
             System.err.println("Can't find file " + path);
             return;
         }
-        try 
+        try
         {
             Scanner scanner = new Scanner(f);
-            while (scanner.hasNextLine()) 
+            while (scanner.hasNextLine())
             {
                 allAsserts.add(SpecAssert.valueOf(scanner.nextLine().trim()));
             }
-        } 
-        catch (FileNotFoundException ex) 
+        }
+        catch (FileNotFoundException ex)
         {
             ex.printStackTrace();
         }
     }
-    
+
     private static void genReport()
     {
         String mainHtml = readFile("/test/fxmltests/resources/FxmlCoverReport.html");
@@ -113,7 +113,7 @@ public class FxmlCoverageDoclet
         {
             report.delete();
         }
-        try 
+        try
         {
             report.createNewFile();
             FileWriter writer = new FileWriter(report);
@@ -125,26 +125,26 @@ public class FxmlCoverageDoclet
             {
                 writer.close();
             }
-        } 
-        catch (IOException ex) 
+        }
+        catch (IOException ex)
         {
             ex.printStackTrace();
         }
     }
-    
+
     public static String readFile(String relativePath)
     {
         File f = null;
-        try 
+        try
         {
             f = new File(FxmlCoverageDoclet.class.getResource(relativePath).toURI());
-        } 
-        catch (URISyntaxException ex) 
+        }
+        catch (URISyntaxException ex)
         {
             ex.printStackTrace();
         }
         String text = "";
-        try 
+        try
         {
             Scanner scanner = new Scanner(f);
             while(scanner.hasNextLine())
@@ -152,19 +152,19 @@ public class FxmlCoverageDoclet
                 text += scanner.nextLine() + "\n";
             }
             scanner.close();
-        } 
-        catch (FileNotFoundException ex) 
+        }
+        catch (FileNotFoundException ex)
         {
             ex.printStackTrace();
         }
         return text;
     }
-    
+
     private static HashMap<String, String> testedAsserts = new HashMap<String, String>();
     private static LinkedHashSet<SpecAssert> allAsserts = new LinkedHashSet<SpecAssert>();
     private static String allAssertsPath;
-    
+
     public static final String TESTABLE_ASSERT_TAG = "testableAssertId";
     public static final String ALL_ASSERTS = "allasserts";
-    
+
 }

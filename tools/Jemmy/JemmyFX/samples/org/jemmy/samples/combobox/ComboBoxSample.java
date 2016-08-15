@@ -118,7 +118,7 @@ public class ComboBoxSample extends SampleBase {
     @Test
     public void getSelectedIndex() {
         // TODO: The API is insufficient in this area http://javafx-jira.kenai.com/browse/JMY-143
-        // so we need to access ComboBox object directly as described in 
+        // so we need to access ComboBox object directly as described in
         // accessComboBoxDirectly() method.
         int selectedIndex = new FutureAction<>(comboBox2.wrap().getEnvironment(), () -> comboBox2.control().getSelectionModel().getSelectedIndex()).get();
         System.out.println("Selected item index in comboBox2 = " + selectedIndex);
@@ -129,7 +129,7 @@ public class ComboBoxSample extends SampleBase {
      */
     @Test
     public void selectItemByTypeAndIndex() {
-        // TODO: Doesn't work yet due to http://javafx-jira.kenai.com/browse/JMY-144     
+        // TODO: Doesn't work yet due to http://javafx-jira.kenai.com/browse/JMY-144
         Selectable<Date> selectable = comboBox1.wrap().as(Selectable.class, Date.class);
         Date d = selectable.getStates().get(0);
         System.out.println("selectable.getStates() = " + selectable.getStates());

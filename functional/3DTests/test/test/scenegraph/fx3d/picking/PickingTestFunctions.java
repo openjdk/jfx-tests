@@ -77,8 +77,8 @@ public abstract class PickingTestFunctions extends FX3DTestBase implements Picki
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
-    
+
+
 
     protected double getDistanceExpectedValue(double funVal, double x, double y) {
         System.out.println(funVal + " " + x + " " + y + " " + getZTranslation() + " " + getCameraZeroPositionError());

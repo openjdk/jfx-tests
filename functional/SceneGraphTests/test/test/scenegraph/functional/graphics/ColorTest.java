@@ -29,7 +29,7 @@ import test.scenegraph.app.ColorApp;
 import test.javaclient.shared.TestBase;
 
 public class ColorTest extends TestBase {
-    
+
     @BeforeClass
     public static void runUI() {
         ColorApp.main(null);

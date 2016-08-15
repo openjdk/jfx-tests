@@ -49,7 +49,7 @@ public class FXActiveAgentCommand extends Command {
         String tag = null;
         boolean localizeArgs = false;
 
-        // analyse options  
+        // analyse options
         int i = 0;
         for (; i < args.length && args[i].startsWith("-"); i++) {
             if ((args[i].equals("-cp") || args[i].equals("-classpath"))
@@ -87,13 +87,13 @@ public class FXActiveAgentCommand extends Command {
 
             if (classPath != null)
                 t.setClassPath(classPath);
-            
+
             if (executeMain) {
                 out.println("Executing main " + cmdClass + "' via "
                         + t.getConnection().getName());
                 return t.executeMain(tag, cmdClass, cmdArgs, localizeArgs,
                         err, out);
-                
+
             }
             else {
                 out.println("Executing command '" + cmdClass + "' via "

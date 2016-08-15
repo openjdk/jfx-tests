@@ -97,7 +97,7 @@ public class BubbleChartApp extends XYChartBaseApp {
     }
 
     protected Chart createObject(Axis x_axis, Axis y_axis, double width, double height) {
-        
+
         Series s1 = new Series( FXCollections.observableArrayList(
                     new XYChart.Data(3, 4, 0.5),
                     new XYChart.Data(1, 5, 0.2),

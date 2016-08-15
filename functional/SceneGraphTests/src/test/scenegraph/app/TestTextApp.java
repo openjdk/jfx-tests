@@ -61,7 +61,7 @@ import test.javaclient.shared.TestNode;
  * @author shubov, Andrey Glushchenko
  */
 public class TestTextApp extends BasicButtonChooserApp {
-    
+
     public static final String VISIBLE_CB = "visible";
     public static final String INITIAL_TEXT = "JavaFX";
     public static final Color LIST_OF_COLORS[] = {
@@ -129,36 +129,36 @@ public class TestTextApp extends BasicButtonChooserApp {
         localBoundsRect.setWidth(localBounds.getWidth());
         localBoundsRect.setX(localBounds.getMinX());
         localBoundsRect.setY(localBounds.getMinY());
-        
+
         final Bounds parentBounds = testText.getBoundsInParent();
         parentBoundsRect.setHeight(parentBounds.getHeight());
         parentBoundsRect.setWidth(parentBounds.getWidth());
         parentBoundsRect.setX(parentBounds.getMinX());
         parentBoundsRect.setY(parentBounds.getMinY());
     }
-    
+
     public TestTextApp(final String header) {
         super(900, 550, header, false);
     }
-    
+
     public TestTextApp() {
         super(900, 550, "TestText", false);
     }
-    
-    
+
+
     @Override
     protected TestNode setup() {
         return prepare( "TestText1");
-    }    
-    
+    }
+
     public TestNode prepare(final String pagename) {
         TestNode root = new TestNode();
-        
+
         TestNode page = new TestNode() {
             @Override
             public Node drawNode() {
                 Pane root = new Pane();
-                
+
                 VBox buttonList = new VBox(5);
 
                 // placeholder for text testing
@@ -171,11 +171,11 @@ public class TestTextApp extends BasicButtonChooserApp {
 
                 ObservableList<String> data = FXCollections.observableArrayList();
                 data.addAll(TestTextApp.LIST_OF_COLORS_NAMES);
-                
+
                 final ListView<String> listView = new ListView<String>();
                 listView.setItems(data);
                 listView.getSelectionModel().select("Color.BLUE");
-                
+
                 listView.getSelectionModel().selectedIndexProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -208,7 +208,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 parentBoundsRect.setStroke(Color.LIME);
                 parentBoundsRect.setStrokeWidth(2f);
                 parentBoundsRect.setFill(Color.TRANSPARENT);
-                
+
                 List<String> fontNames = Font.getFontNames();
 
                 ObservableList<String> fontData = FXCollections.observableArrayList();
@@ -243,7 +243,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 hBox.getChildren().add(labelInputField);
                 hBox.getChildren().add(textBox);
                 hBox.setMinHeight(23);
@@ -262,7 +262,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 hBox.getChildren().add(textFontSize);
                 hBox.getChildren().add(slider1);
                 ulvb1.getChildren().add(hBox);
@@ -282,7 +282,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 hBox.getChildren().add(textStrokeWidth);
                 hBox.getChildren().add(slider2);
                 ulvb1.getChildren().add(hBox);
@@ -291,7 +291,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 hBox = new HBox(5);
                 final Text textOpacity = new Text("Opacity");
                 final Slider slider3 = new Slider(0, 1, 1);
-                
+
                 slider3.valueProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -300,7 +300,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 hBox.getChildren().add(textOpacity);
                 hBox.getChildren().add(slider3);
                 ulvb1.getChildren().add(hBox);
@@ -309,7 +309,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 hBox = new HBox(5);
                 final Text textRotation = new Text("Rotation");
                 final Slider slider4 = new Slider(0, 360, 0);
-                
+
                 slider4.valueProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -318,7 +318,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 hBox.getChildren().add(textRotation);
                 hBox.getChildren().add(slider4);
                 ulvb1.getChildren().add(hBox);
@@ -327,7 +327,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 hBox = new HBox(5);
                 final Text textScale = new Text("Scale");
                 final Slider slider5 = new Slider(0.5f, 100, 1);
-                
+
                 slider5.valueProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -337,7 +337,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 hBox.getChildren().add(textScale);
                 hBox.getChildren().add(slider5);
                 ulvb1.getChildren().add(hBox);
@@ -353,7 +353,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 final Text textAlignment = new Text("text alignment: ");
                 hBox.getChildren().add(textAlignment);
                 final ToggleGroup tgrAlignment = new ToggleGroup();
-                
+
                 RadioButton rba1 = new RadioButton(TextAlignment.LEFT.toString());
                 rba1.setToggleGroup(tgrAlignment);
                 hBox.getChildren().add(rba1);
@@ -366,7 +366,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 RadioButton rba4 = new RadioButton(TextAlignment.JUSTIFY.toString());
                 rba4.setToggleGroup(tgrAlignment);
                 hBox.getChildren().add(rba4);
-                
+
                 tgrAlignment.selectedToggleProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -383,7 +383,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 final Text textOrigin = new Text("text origin: ");
                 hBox.getChildren().add(textOrigin);
                 final ToggleGroup tgrOrigin = new ToggleGroup();
-                
+
                 RadioButton rbb1 = new RadioButton(VPos.TOP.toString());
                 rbb1.setToggleGroup(tgrOrigin);
                 hBox.getChildren().add(rbb1);
@@ -393,18 +393,18 @@ public class TestTextApp extends BasicButtonChooserApp {
                 RadioButton rbb3 = new RadioButton(VPos.BASELINE.toString());
                 rbb3.setToggleGroup(tgrOrigin);
                 hBox.getChildren().add(rbb3);
-                
+
                 tgrOrigin.selectedToggleProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
                         String xx = ((RadioButton) tgrOrigin.getSelectedToggle()).getText().toString();
                         VPos to = VPos.valueOf(xx);
                         testText.setTextOrigin(to);
-                        
+
                         UpdateRectangles();
                     }
                 });
-                
+
                 buttonList.getChildren().add(hBox);
 
                 // text effects (shadows)
@@ -412,11 +412,11 @@ public class TestTextApp extends BasicButtonChooserApp {
                 final Text txtLabelShadow = new Text("shadow: ");
                 hBox.getChildren().add(txtLabelShadow);
                 final ToggleGroup tgrShadow = new ToggleGroup();
-                
+
                 RadioButton rbs1 = new RadioButton("no shadow");
                 rbs1.setToggleGroup(tgrShadow);
                 hBox.getChildren().add(rbs1);
-                
+
                 rbs1.selectedProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -425,12 +425,12 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 rbs1.setSelected(true);
                 RadioButton rbs2 = new RadioButton("shadow");
                 rbs2.setToggleGroup(tgrShadow);
                 hBox.getChildren().add(rbs2);
-                
+
                 rbs2.selectedProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -439,11 +439,11 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 RadioButton rbs3 = new RadioButton("drop shadow");
                 rbs3.setToggleGroup(tgrShadow);
                 hBox.getChildren().add(rbs3);
-                
+
                 rbs3.selectedProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -452,11 +452,11 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 RadioButton rbs4 = new RadioButton("inner shadow");
                 rbs4.setToggleGroup(tgrShadow);
                 hBox.getChildren().add(rbs4);
-                
+
                 rbs4.selectedProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -465,14 +465,14 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 buttonList.getChildren().add(hBox);
 
                 // shadow: offsetX
                 hBox = new HBox(5);
                 final Text txtShadowOffsetX = new Text("shadow offset x");
                 final Slider sliderSOX = new Slider(0, 100, 1);
-                
+
                 sliderSOX.valueProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -482,7 +482,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 hBox.getChildren().add(txtShadowOffsetX);
                 hBox.getChildren().add(sliderSOX);
                 buttonList.getChildren().add(hBox);
@@ -491,7 +491,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 hBox = new HBox(5);
                 final Text txtShadowOffsetY = new Text("shadow offset y");
                 final Slider sliderSOY = new Slider(0, 100, 1);
-                
+
                 sliderSOY.valueProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -509,7 +509,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 hBox = new HBox(5);
                 final Text txtShadowRadius = new Text("shadow radius");
                 final Slider sliderSR = new Slider(0, 100, 1);
-                
+
                 sliderSR.valueProperty().addListener(new InvalidationListener() {
                     @Override
                     public void invalidated(Observable ov) {
@@ -575,7 +575,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 hBox.getChildren().add(txtShearTransformation);
                 hBox.getChildren().add(sliderST);
                 buttonList.getChildren().add(hBox);
@@ -630,7 +630,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 final Text txtLabelFillMode = new Text("FillMode: ");
                 hBox.getChildren().add(txtLabelFillMode);
                 final ToggleGroup tgrFillMode = new ToggleGroup();
-                
+
                 RadioButton rbf1 = new RadioButton("FILL");
                 rbf1.setToggleGroup(tgrFillMode);
                 hBox.getChildren().add(rbf1);
@@ -656,7 +656,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                         UpdateRectangles();
                     }
                 });
-                
+
                 RadioButton rbf3 = new RadioButton("FILL+STROKE");
                 rbf3.setToggleGroup(tgrFillMode);
                 hBox.getChildren().add(rbf3);
@@ -676,7 +676,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 final Text boundsType = new Text("bounds type: ");
                 hBox.getChildren().add(boundsType);
                 final ToggleGroup tgrBdsType = new ToggleGroup();
-                
+
                 RadioButton rbt1 = new RadioButton(TextBoundsType.LOGICAL.toString());
                 rbt1.setToggleGroup(tgrBdsType);
                 rbt1.setSelected(true);
@@ -695,7 +695,7 @@ public class TestTextApp extends BasicButtonChooserApp {
                 });
                 buttonList.getChildren().add(hBox);
 
-                
+
                 root.getChildren().add(testText);
                 UpdateRectangles();
                 localBoundsRect.setVisible(false);
@@ -705,23 +705,23 @@ public class TestTextApp extends BasicButtonChooserApp {
                 VBox vb1 = new VBox();
                 HBox controlsHolder = new HBox();
                 controlsHolder.getChildren().add(buttonList);
-                
+
                 controlsHolder.setMaxHeight(200);
                 controlsHolder.getChildren().add(listView);
                 controlsHolder.getChildren().add(fontListView);
                 vb1.getChildren().add(testfieldRect);
                 vb1.getChildren().add(controlsHolder);
                 root.getChildren().add(vb1);
-                
+
                 return root;
-                
+
             }
         };
         root.add(page, pagename);
         this.selectNode(page);
         return root;
     }
-    
+
     public static void main(String[] args) {
         test.javaclient.shared.Utils.launch(TestTextApp.class, args);
     }

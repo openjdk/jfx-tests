@@ -18,7 +18,7 @@ import org.junit.BeforeClass;
  */
 public class ExplorerSampleBase extends SampleBase {
 
-    
+
     static SceneDock scene;
     static ListViewDock list;
     @BeforeClass
@@ -38,7 +38,7 @@ public class ExplorerSampleBase extends SampleBase {
 
     @After
     public void tearDown() {
-        
+
     }
 
 }

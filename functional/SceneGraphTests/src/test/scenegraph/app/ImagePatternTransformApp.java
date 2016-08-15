@@ -42,31 +42,31 @@ import test.scenegraph.app.ImagePatternApp.Shapes;
  */
 public class ImagePatternTransformApp extends BasicButtonChooserApp
 {
-    
+
     public ImagePatternTransformApp()
     {
         super(800, 600, "ImagePatternTransforms", false);
     }
-    
-    public static void main(String[] args) 
+
+    public static void main(String[] args)
     {
         Utils.launch(ImagePatternTransformApp.class, args);
     }
 
     @Override
-    protected TestNode setup() 
+    protected TestNode setup()
     {
         final TestNode root = new TestNode();
         PageWithSlots page;
         image = new Image(getClass().getResourceAsStream("/test/scenegraph/resources/square.png"));
-        
+
         for(Shapes shape: Shapes.values())
         {
             page = new PageWithSlots(shape.toString(), 800, 600);
             page.setSlotSize(200, 200);
             root.add(page);
             Shape sh;
-            
+
             for(TransformCommand tc: TransformCommand.values())
             {
                 sh = shape.getShape();
@@ -77,33 +77,33 @@ public class ImagePatternTransformApp extends BasicButtonChooserApp
                 page.add(leaf);
             }
         }
-        
+
         return root;
     }
-    
+
     private Image image;
-    
+
     public enum TransformCommand
     {
-        
+
         TRANSLATE(new Translate(15, 20)),
         SCALE(new Scale(1.1, 0.9)),
         ROTATE(new Translate(80, 0), new Rotate(45)),
         SHEAR(new Shear(0.1, 0.2)),
         AFFINE(new Translate(30, 10), Transform.affine(0.2, 0.8, .9, 0.1, 1, 0.1))
         ;
-        
+
         private TransformCommand(Transform... transforms)
         {
             this.transforms = transforms;
         }
-        
+
         public void transformShape(Shape shape)
         {
             shape.getTransforms().addAll(transforms);
         }
-        
+
         private Transform[] transforms;
     }
-    
+
 }

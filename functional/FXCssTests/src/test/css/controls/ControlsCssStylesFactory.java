@@ -101,7 +101,7 @@ public class ControlsCssStylesFactory {
     public static Set<String> getRules() {
         return props2Impls.keySet();
     }
-    
+
     final private static Map<String, CssStyle[]> props2Impls = new HashMap();
     final private static String CSS_RED_RECTANGLE = ControlsCSSApp.class.getResource("/test/css/resources/red-rectangle.png").toExternalForm();
     final private static String CSS_GREEN_RECTANGLE = ControlsCSSApp.class.getResource("/test/css/resources/green-rectangle.png").toExternalForm();
@@ -195,7 +195,7 @@ public class ControlsCssStylesFactory {
         props2Impls.put("-fx-vpos", StyleArrayFactory.fromEnum(AlignmentCssStyle.class, "-fx-vpos", VPos.values()));
         props2Impls.put("-fx-alignment", StyleArrayFactory.fromEnum(AlignmentCssStyle.class, "-fx-alignment", Pos.values()));
         props2Impls.put("-fx-text-overrun", StyleArrayFactory.fromEnum(OverrunCssStyle.class, "-fx-text-overrun", OverrunStyle.values()));
-        
+
         props2Impls.put("-fx-vbar-policy", getBarPoliciesStyles("-fx-vbar-policy"));
         props2Impls.put("-fx-hbar-policy", getBarPoliciesStyles("-fx-hbar-policy"));
         props2Impls.put("-fx-orientation", StyleArrayFactory.fromEnum(CssStyle.class, "-fx-orientation", Orientation.values()));
@@ -808,7 +808,7 @@ public class ControlsCssStylesFactory {
                     ((ScrollBar) control).setValue(1d);
                 }
             }
-                        
+
                     }});
         props2Impls.put("-fx-pref-rows", new CssStyle[]{
                     new CssStyle("PREF-ROWS",
@@ -1055,7 +1055,7 @@ public class ControlsCssStylesFactory {
                 rec.setStyle("-fx-translate-z:0");
                 rec.toFront();
             }
-                        
+
                     }});
         props2Impls.put("-fx-image", new CssStyle[]{
                     new CssStyle("IMAGE",

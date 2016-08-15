@@ -57,16 +57,16 @@ public class MnemonicsTestBase  extends ControlsTestBase {
     static final String MNEMONIC_UNDERLINE_STYLE_CLASS = "mnemonic-underline";
 
     static boolean isLinux;
-    
+
     //If test is run on Linux this modifier is used to invoke mnemonics
     //along with the key assigned to the control.
     static Keyboard.KeyboardModifiers[] mod;
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         scene = Root.ROOT.lookup().wrap();
         sceneAsParent = scene.as(Parent.class, Node.class);
-        
+
         isLinux = Utils.isLinux();
         mod = isLinux ? new Keyboard.KeyboardModifiers[]{Keyboard.KeyboardModifiers.ALT_DOWN_MASK} : new Keyboard.KeyboardModifiers[]{};
     }

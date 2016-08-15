@@ -59,16 +59,16 @@ public class TouchScrollPaneAndTextApp extends InteroperabilityApp {
     @Override
     protected Scene getScene() {
         scene = new Scene(root, 320, 200, Color.WHITE);
-        
+
         VBox vb = new VBox();
-        
+
         vb.setPrefSize(250, 150);
-        
+
         TextArea textArea = new TextArea();
         ScrollPane scrollPane = new ScrollPane();
 
         for (int i = 0; i < 100; ++i) {
-            textArea.setText(textArea.getText() + 
+            textArea.setText(textArea.getText() +
                     "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\n");
         }
 

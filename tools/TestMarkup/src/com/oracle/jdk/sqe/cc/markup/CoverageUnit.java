@@ -32,16 +32,16 @@ import java.util.List;
  * @author shura
  */
 public class CoverageUnit {
-    
+
     String feature;
     ArrayList<String> sourceUnits = new ArrayList<String>();
     Level level;
 
     /**
-     * 
+     *
      * @param feature covered feature
      * @param sourceUnit covering source unit (such as test class or test method)
-     * @param level 
+     * @param level
      */
     private CoverageUnit(String feature, Level level) {
         this.feature = feature;
@@ -56,7 +56,7 @@ public class CoverageUnit {
     public CoverageUnit(String feature) {
         this(feature, Level.TEMPLATE);
     }
-    
+
     public String getFeature() {
         return feature;
     }
@@ -87,5 +87,5 @@ public class CoverageUnit {
             }
         }
     }
-    
+
 }

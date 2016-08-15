@@ -77,7 +77,7 @@ public class TreeTableViewApp extends Application {
         //Down change scene sizes.
         //uncomment on https://javafx-jira.kenai.com/browse/RT-31123 fix
         //Scene scene = new Scene(vBox, 200, 200);
-        
+
         Scene scene = new Scene(vBox, 600, 600);
 
         stage.setScene(scene);
@@ -170,7 +170,7 @@ public class TreeTableViewApp extends Application {
             this.mainData = new SimpleStringProperty(mainData);
             this.additionalData = new SimpleStringProperty(additionalData);
         }
-        
+
         @Override
         public String toString() {
             return "Main data <" + mainData.getValue() + "> additional data <" + additionalData.getValue() + ">.";

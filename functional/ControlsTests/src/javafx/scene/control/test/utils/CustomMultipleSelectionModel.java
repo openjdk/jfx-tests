@@ -47,7 +47,7 @@ public class CustomMultipleSelectionModel<T> extends MultipleSelectionModel {
     private ObservableList items;
     private final int nbits = 128;
     private List<String> loggedItems;
-    
+
     public Collection<String> getCalledMethods() {
         return loggedItems;
     }

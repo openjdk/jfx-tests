@@ -69,16 +69,16 @@ public class Shape2Test extends TestBase {
 
     /**
  * test Circle
- * 
+ *
  */
     @Test
     public void Circle_INTERSECT() throws InterruptedException {
         testCommon(Circle.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test Circle
- * 
+ *
  */
     @Test
     public void Circle_SUBTRACT() throws InterruptedException {
@@ -86,7 +86,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Circle
- * 
+ *
  */
     @Test
     public void Circle_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -94,7 +94,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Circle
- * 
+ *
  */
     @Test
     public void Circle_UNION() throws InterruptedException {
@@ -102,25 +102,25 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Circle
- * 
+ *
  */
     @Test
     public void Circle_UNION_WT_TRANSFORM() throws InterruptedException {
         testCommon(Circle.name(), Effects.UN_WT_TRANSF.name());
     }
-    
+
         /**
  * test Arc
- * 
+ *
  */
     @Test
     public void Arc_INTERSECT() throws InterruptedException {
         testCommon(Arc.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test Arc
- * 
+ *
  */
     @Test
     public void Arc_SUBTRACT() throws InterruptedException {
@@ -128,7 +128,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Arc
- * 
+ *
  */
     @Test
     public void Arc_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -136,7 +136,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Arc
- * 
+ *
  */
     @Test
     public void Arc_UNION() throws InterruptedException {
@@ -148,20 +148,20 @@ public class Shape2Test extends TestBase {
     @Test
     public void Arc_UNION_WT_TRANSFORM() throws InterruptedException {
         testCommon(Arc.name(), Effects.UN_WT_TRANSF.name());
-    }   
-    
+    }
+
             /**
  * test CubicCurve
- * 
+ *
  */
     @Test
     public void CubicCurve_INTERSECT() throws InterruptedException {
         testCommon(CubicCurve.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test CubicCurve
- * 
+ *
  */
     @Test
     public void CubicCurve_SUBTRACT() throws InterruptedException {
@@ -169,7 +169,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test CubicCurve
- * 
+ *
  */
     @Test
     public void CubicCurve_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -177,7 +177,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test CubicCurve
- * 
+ *
  */
     @Test
     public void CubicCurve_UNION() throws InterruptedException {
@@ -190,20 +190,20 @@ public class Shape2Test extends TestBase {
     public void CubicCurve_UNION_WT_TRANSFORM() throws InterruptedException {
         testCommon(CubicCurve.name(), Effects.UN_WT_TRANSF.name());
     }
-    
-       
+
+
             /**
  * test Ellipse
- * 
+ *
  */
     @Test
     public void Ellipse_INTERSECT() throws InterruptedException {
         testCommon(Ellipse.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test Ellipse
- * 
+ *
  */
     @Test
     public void Ellipse_SUBTRACT() throws InterruptedException {
@@ -211,7 +211,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Ellipse
- * 
+ *
  */
     @Test
     public void Ellipse_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -219,7 +219,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Ellipse
- * 
+ *
  */
     @Test
     public void Ellipse_UNION() throws InterruptedException {
@@ -232,19 +232,19 @@ public class Shape2Test extends TestBase {
     public void Ellipse_UNION_WT_TRANSFORM() throws InterruptedException {
         testCommon(Ellipse.name(), Effects.UN_WT_TRANSF.name());
     }
-    
+
               /**
  * test Line
- * 
+ *
  */
     @Test
     public void Line_INTERSECT() throws InterruptedException {
         testCommon(Line.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test Line
- * 
+ *
  */
     @Test
     public void Line_SUBTRACT() throws InterruptedException {
@@ -252,7 +252,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Line
- * 
+ *
  */
     @Test
     public void Line_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -260,7 +260,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Line
- * 
+ *
  */
     @Test
     public void Line_UNION() throws InterruptedException {
@@ -273,19 +273,19 @@ public class Shape2Test extends TestBase {
     public void Line_UNION_WT_TRANSFORM() throws InterruptedException {
         testCommon(Ellipse.name(), Effects.UN_WT_TRANSF.name());
     }
-       
+
               /**
  * test Polygon
- * 
+ *
  */
     @Test
     public void Polygon_INTERSECT() throws InterruptedException {
         testCommon(Polygon.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test Polygon
- * 
+ *
  */
     @Test
     public void Polygon_SUBTRACT() throws InterruptedException {
@@ -293,7 +293,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Polygon
- * 
+ *
  */
     @Test
     public void Polygon_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -301,7 +301,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Polygon
- * 
+ *
  */
     @Test
     public void Polygon_UNION() throws InterruptedException {
@@ -314,19 +314,19 @@ public class Shape2Test extends TestBase {
     public void Polygon_UNION_WT_TRANSFORM() throws InterruptedException {
         testCommon(Polygon.name(), Effects.UN_WT_TRANSF.name());
     }
-    
+
                   /**
  * test Polyline
- * 
+ *
  */
     @Test
     public void Polyline_INTERSECT() throws InterruptedException {
         testCommon(Polyline.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test Polyline
- * 
+ *
  */
     @Test
     public void Polyline_SUBTRACT() throws InterruptedException {
@@ -334,7 +334,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Polyline
- * 
+ *
  */
     @Test
     public void Polyline_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -342,7 +342,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Polyline
- * 
+ *
  */
     @Test
     public void Polyline_UNION() throws InterruptedException {
@@ -355,19 +355,19 @@ public class Shape2Test extends TestBase {
     public void Polyline_UNION_WT_TRANSFORM() throws InterruptedException {
         testCommon(Polyline.name(), Effects.UN_WT_TRANSF.name());
     }
-        
+
                   /**
  * test QuadCurve
- * 
+ *
  */
     @Test
     public void QuadCurve_INTERSECT() throws InterruptedException {
         testCommon(QuadCurve.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test QuadCurve
- * 
+ *
  */
     @Test
     public void QuadCurve_SUBTRACT() throws InterruptedException {
@@ -375,7 +375,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test QuadCurve
- * 
+ *
  */
     @Test
     public void QuadCurve_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -383,7 +383,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test QuadCurve
- * 
+ *
  */
     @Test
     public void QuadCurve_UNION() throws InterruptedException {
@@ -396,19 +396,19 @@ public class Shape2Test extends TestBase {
     public void QuadCurve_UNION_WT_TRANSFORM() throws InterruptedException {
         testCommon(QuadCurve.name(), Effects.UN_WT_TRANSF.name());
     }
-            
+
                   /**
  * test Rectangle
- * 
+ *
  */
     @Test
     public void Rectangle_INTERSECT() throws InterruptedException {
         testCommon(Rectangle.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test Rectangle
- * 
+ *
  */
     @Test
     public void Rectangle_SUBTRACT() throws InterruptedException {
@@ -416,7 +416,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Rectangle
- * 
+ *
  */
     @Test
     public void Rectangle_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -424,7 +424,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test Rectangle
- * 
+ *
  */
     @Test
     public void Rectangle_UNION() throws InterruptedException {
@@ -437,19 +437,19 @@ public class Shape2Test extends TestBase {
     public void Rectangle_UNION_WT_TRANSFORM() throws InterruptedException {
         testCommon(Rectangle.name(), Effects.UN_WT_TRANSF.name());
     }
-    
+
                       /**
  * test ShapeIntersectBevel
- * 
+ *
  */
     @Test
     public void ShapeIntersectBevel_INTERSECT() throws InterruptedException {
         testCommon(ShapeIntersectBevel.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test ShapeIntersectBevel
- * 
+ *
  */
     @Test
     public void ShapeIntersectBevel_SUBTRACT() throws InterruptedException {
@@ -457,7 +457,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test ShapeIntersectBevel
- * 
+ *
  */
     @Test
     public void ShapeIntersectBevel_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -465,7 +465,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test ShapeIntersectBevel
- * 
+ *
  */
     @Test
     public void ShapeIntersectBevel_UNION() throws InterruptedException {
@@ -478,19 +478,19 @@ public class Shape2Test extends TestBase {
     public void ShapeIntersectBevel_UNION_WT_TRANSFORM() throws InterruptedException {
         testCommon(ShapeIntersectBevel.name(), Effects.UN_WT_TRANSF.name());
     }
-    
+
                       /**
  * test ShapeIntersectRound
- * 
+ *
  */
     @Test
     public void ShapeIntersectRound_INTERSECT() throws InterruptedException {
         testCommon(ShapeIntersectRound.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test ShapeIntersectRound
- * 
+ *
  */
     @Test
     public void ShapeIntersectRound_SUBTRACT() throws InterruptedException {
@@ -498,7 +498,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test ShapeIntersectRound
- * 
+ *
  */
     @Test
     public void ShapeIntersectRound_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -506,7 +506,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test ShapeIntersectRound
- * 
+ *
  */
     @Test
     public void ShapeIntersectRound_UNION() throws InterruptedException {
@@ -521,16 +521,16 @@ public class Shape2Test extends TestBase {
     }
                           /**
  * test ShapeIntersect
- * 
+ *
  */
     @Test
     public void ShapeIntersect_INTERSECT() throws InterruptedException {
         testCommon(ShapeIntersect.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
- * test ShapeIntersect 
- * 
+ * test ShapeIntersect
+ *
  */
     @Test
     public void ShapeIntersect_SUBTRACT() throws InterruptedException {
@@ -538,7 +538,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test ShapeIntersect
- * 
+ *
  */
     @Test
     public void ShapeIntersect_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -546,7 +546,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test ShapeIntersect
- * 
+ *
  */
     @Test
     public void ShapeIntersect_UNION() throws InterruptedException {
@@ -559,19 +559,19 @@ public class Shape2Test extends TestBase {
     public void ShapeIntersect_UNION_WT_TRANSFORM() throws InterruptedException {
         testCommon(ShapeIntersect.name(), Effects.UN_WT_TRANSF.name());
     }
-    
+
                               /**
  * test ShapeSubtract
- * 
+ *
  */
     @Test
     public void ShapeSubtract_INTERSECT() throws InterruptedException {
         testCommon(ShapeSubtract.name(), Effects.INTERSECT.name());
     }
-    
+
        /**
  * test ShapeSubtract
- * 
+ *
  */
     @Test
     public void ShapeSubtract_SUBTRACT() throws InterruptedException {
@@ -579,7 +579,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test ShapeSubtract
- * 
+ *
  */
     @Test
     public void ShapeSubtract_SUBTRACT_WT_DASH() throws InterruptedException {
@@ -587,7 +587,7 @@ public class Shape2Test extends TestBase {
     }
        /**
  * test ShapeSubtract
- * 
+ *
  */
     @Test
     public void ShapeSubtract_UNION() throws InterruptedException {

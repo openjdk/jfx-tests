@@ -40,16 +40,16 @@ import org.jemmy.interfaces.Text;
  * @author shura
  */
 public class TextFieldCellEditor<ITEM> implements CellEditor<ITEM> {
-    
+
     public static final Timeout BETWEEN_CLICKS_TIMEOUT = new Timeout("sleep.between.click", 1000);
-    
+
     static {
         Root.ROOT.getEnvironment().setTimeout(BETWEEN_CLICKS_TIMEOUT);
     }
 
     public void edit(Wrap<? extends ITEM> item, ITEM newValue) {
         if(!item.is(Parent.class, Node.class)) {
-            throw new IllegalStateException(item.getClass().getName() + 
+            throw new IllegalStateException(item.getClass().getName() +
                     " would need to be a parent for editing");
         }
         item.as(Showable.class).shower().show();
@@ -60,7 +60,7 @@ public class TextFieldCellEditor<ITEM> implements CellEditor<ITEM> {
         field.as(Text.class).type(newValue.toString());
         field.keyboard().pushKey(KeyboardButtons.ENTER);
     }
-    
+
     protected void initializeEditing(Wrap<?> cell) {
         cell.mouse().click();
         cell.getEnvironment().getTimeout(BETWEEN_CLICKS_TIMEOUT).sleep();

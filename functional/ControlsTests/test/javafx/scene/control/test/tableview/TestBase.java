@@ -311,7 +311,7 @@ public class TestBase extends UtilTestFunctions {
             Collection<Point> selected;
             Point helperFocus;
             Point focus;
-            
+
             public Object reached() {
                 helper_selected = selectionHelper.getSelected();
                 selected = TestBaseCommon.getSelected(testedControl);
@@ -331,7 +331,7 @@ public class TestBase extends UtilTestFunctions {
             public String toString() {
                 helper_selected = new ArrayList<Point>(helper_selected);
                 selected = new ArrayList<Point>(selected);
-                
+
                 final Comparator<Point> comparator = new Comparator<Point>() {
                     public int compare(Point p1, Point p2) {
                         return p1.y - p2.y;
@@ -339,7 +339,7 @@ public class TestBase extends UtilTestFunctions {
                 };
                 Collections.sort((ArrayList) helper_selected, comparator);
                 Collections.sort((ArrayList) selected, comparator);
-                
+
                 StringBuilder sb;
                 sb = new StringBuilder("{")
                         .append("Helper selected : ").append(helper_selected).append("\n")
@@ -367,10 +367,10 @@ public class TestBase extends UtilTestFunctions {
             return "TreeTableView";
         }
     }
-    
+
     Wrap scrollToColumnByIndexBtn;
     Text columnIndexToScroll;
-    
+
     void scrollToColumnByIndex(final int index) {
         if (null == scrollToColumnByIndexBtn) {
             scrollToColumnByIndexBtn = parent.lookup(Button.class, new ByID<Button>(Table.SCROLL_TO_COLUMN_BTN_ID)).wrap();
@@ -378,21 +378,21 @@ public class TestBase extends UtilTestFunctions {
         if (null == columnIndexToScroll) {
             columnIndexToScroll = (Text) parent.lookup(TextField.class, new ByID<TextField>(Table.SCROLL_TO_COLUMN_INDEX_ID)).wrap().as(Text.class);
         }
-        
+
         columnIndexToScroll.clear();
         columnIndexToScroll.type(String.valueOf(index));
         scrollToColumnByIndexBtn.mouse().click();
     }
-    
+
     class Helper extends ApplicationInteractionFunctions {
 
         {
             testedControl = TestBase.testedControl;
         }
     }
-    
+
     boolean isColumnHeaderVisible(final int index) {
-        
+
         Boolean state = new Waiter(new Timeout("", 1000)).waitState(new State<Boolean>() {
             Helper helper = new Helper();
             Wrap<? extends TableColumnHeader> headerWrap;
@@ -409,10 +409,10 @@ public class TestBase extends UtilTestFunctions {
                 }
             }
         });
-        
+
         return (null == state) ? false : true;
     }
-    
+
     void scrollToColumn(final int index) {
         new GetAction<Void>() {
 
@@ -432,27 +432,27 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment());
     }
-    
+
     void refill(final int cols, final int rows) {
-        
+
         final String colsTextID = Table.COLUMNS_NUMBER_ID;
         final Text columnsText = (Text) parent.lookup(TextField.class, new ByID(colsTextID)).wrap().as(Text.class);
         columnsText.clear();
         columnsText.type(String.valueOf(cols));
-        
+
         final String rowsTextID = Table.ROWS_NUMBER_ID;
         final Text rowsText = (Text) parent.lookup(TextField.class, new ByID(rowsTextID)).wrap().as(Text.class);
         rowsText.clear();
         rowsText.type(String.valueOf(rows));
-        
+
         final String refillBtnID = Table.REFILL_BNT_ID;
         parent.lookup(Button.class, new ByID<Button>(refillBtnID)).wrap().mouse().click();
     }
-    
+
     String getSimpleColumnHeaderText(final int index) {
         return "field " + index;
     }
-    
+
     double getScrollBarValue(final Orientation orientation) {
         return new GetAction<Double>() {
 
@@ -463,7 +463,7 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment());
     }
-    
+
     double getScrollBarMaxValue(final Orientation orientation) {
          return new GetAction<Double>() {
 
@@ -474,7 +474,7 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment());
     }
-    
+
     double getScrollBarMinValue(final Orientation orientation) {
          return new GetAction<Double>() {
 
@@ -485,11 +485,11 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment());
     }
-    
+
     void resizeColumn(final int index, final double delta) {
-        
+
         final double initialWidth = getColumnWidth(index);
-        
+
         new GetAction<Void>() {
             @Override
             public void run(Object... os) throws Exception {
@@ -502,17 +502,17 @@ public class TestBase extends UtilTestFunctions {
                 }
             }
         }.dispatch(testedControl.getEnvironment());
-        
+
         new Waiter(new Timeout("", 1000)).waitState(new State<Boolean>() {
             public Boolean reached() {
                 return (Math.abs(getColumnWidth(index) - initialWidth - delta) <= 1e-7) ? Boolean.TRUE : null;
             }
         });
     }
-    
+
     protected void setColumnTextSync(final int index, final String text) {
-	assert !Platform.isFxApplicationThread();        
-	CountDownLatch latch = new CountDownLatch(1);
+    assert !Platform.isFxApplicationThread();
+    CountDownLatch latch = new CountDownLatch(1);
         Platform.runLater(() -> {
                 if (isTableTests) {
                     TableView table = (TableView) testedControl.getControl();

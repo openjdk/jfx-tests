@@ -69,7 +69,7 @@ class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA> implements o
         }
         return super.select(criteria);
     }
-   
+
     public static class ByPoint<DATA> implements ItemCriteria<Point, DATA> {
 
         private final int x, y;

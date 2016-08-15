@@ -37,7 +37,7 @@ import org.junit.Test;
 
 public class WebViewSample extends SampleBase {
     static SceneDock scene;
-    
+
     @BeforeClass
     public static void launch() throws InterruptedException {
         startApp(WebViewApp.class);

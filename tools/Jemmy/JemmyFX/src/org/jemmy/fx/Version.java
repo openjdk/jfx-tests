@@ -88,7 +88,7 @@ public class Version {
     }
 
     /**
-     * 
+     *
      * @return
      */
     public int getMini() {

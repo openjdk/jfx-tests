@@ -37,13 +37,13 @@ import java.util.GregorianCalendar;
 
 
 /**
- * This small FX app is used in JemmyFX ComboBox sample. 
+ * This small FX app is used in JemmyFX ComboBox sample.
  * It displays various ComboBox and ChoiceBox controls.
  */
 public class ComboBoxApp extends Application {
-    
+
     public static final int LONG_LIST = 500;
-    
+
     ComboBox comboBox1;
     ComboBox<Record> comboBox2;
     ComboBox<String> comboBox3;
@@ -52,7 +52,7 @@ public class ComboBoxApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         comboBox1 = new ComboBox();
@@ -78,13 +78,13 @@ public class ComboBoxApp extends Application {
             comboBox2.getItems().add(new Record("Record " + i, 1000 - i * 0.3));
         }
         comboBox2.getSelectionModel().select(0);
-        
+
         comboBox3 = new ComboBox<>();
         comboBox3.setId("countries-combo");
         comboBox3.setEditable(true);
         comboBox3.getItems().setAll("Russia", "USA", "India", "Switzerland", "Germany");
         comboBox3.getSelectionModel().select(0);
-        
+
         choiceBox = new ChoiceBox<>();
         choiceBox.setId("choice-box");
         for (int year = 1970; year < 2030; year++) {
@@ -99,12 +99,12 @@ public class ComboBoxApp extends Application {
         box.getChildren().add(choiceBox);
 
         Scene scene = new Scene(box);
-        
+
         stage.setTitle("ComboBoxApp");
         stage.setScene(scene);
         stage.show();
     }
-    
+
     public static class Record {
         private String name;
         private double value;

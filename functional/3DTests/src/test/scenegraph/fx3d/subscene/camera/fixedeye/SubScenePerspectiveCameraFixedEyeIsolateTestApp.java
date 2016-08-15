@@ -91,7 +91,7 @@ public class SubScenePerspectiveCameraFixedEyeIsolateTestApp extends SubSceneCam
                 ((PerspectiveCamera) cameras[0]).isVerticalFieldOfView(),
                 ((PerspectiveCamera) cameras[2]).isVerticalFieldOfView());
     }
-    
+
     public static void main(String[] args) {
         Utils.launch(SubScenePerspectiveCameraFixedEyeIsolateTestApp.class, args);
     }

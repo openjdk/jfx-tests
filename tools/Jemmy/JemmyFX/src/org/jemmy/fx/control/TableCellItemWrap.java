@@ -43,7 +43,7 @@ import org.jemmy.lookup.LookupCriteria;
 
 
 /**
- * A table could be used as a parent for objects, which are contained in the tree. 
+ * A table could be used as a parent for objects, which are contained in the tree.
  *
  * @param DATA
  * @author KAM, shura
@@ -52,7 +52,7 @@ import org.jemmy.lookup.LookupCriteria;
  */
 
 @ControlType(Object.class)
-@ControlInterfaces(value={WindowElement.class, EditableCell.class, Showable.class}, 
+@ControlInterfaces(value={WindowElement.class, EditableCell.class, Showable.class},
         encapsulates={TableView.class})
 @DockInfo(name="org.jemmy.fx.control.TableCellItemDock", generateSubtypeLookups=true, multipleCriteria=false)
 public class TableCellItemWrap<DATA extends Object> extends ItemWrap<DATA> implements Showable {
@@ -61,12 +61,12 @@ public class TableCellItemWrap<DATA extends Object> extends ItemWrap<DATA> imple
     public static <T> LookupCriteria<T> byCoords(Class<T> type, int row, int column) {
         return new TableCellItemParent.ByPoint<>(column, row);
     }
-    
+
     private TableViewWrap<? extends TableView> tableViewWrap;
     private int row;
     private TableColumn column;
     private final WindowElement<TableView> wElement;
-    
+
     /**
      *
      * @param env
@@ -92,7 +92,7 @@ public class TableCellItemWrap<DATA extends Object> extends ItemWrap<DATA> imple
     public Point getItem() {
         return (Point) super.getItem();
     }
-    
+
     @Override
     public Wrap<? extends TableCell> cellWrap() {
         return tableViewWrap.as(Parent.class, Node.class).lookup(TableCell.class,
@@ -116,7 +116,7 @@ public class TableCellItemWrap<DATA extends Object> extends ItemWrap<DATA> imple
 
     /**
      * To get the tree view where the item resides.
-     * @return 
+     * @return
      */
     @As
     public WindowElement<TableView> asWindowElement() {
@@ -125,7 +125,7 @@ public class TableCellItemWrap<DATA extends Object> extends ItemWrap<DATA> imple
 
     /**
      * Deprecated
-     * @param <ITEM> 
+     * @param <ITEM>
      */
     public static class TableCellLookup implements LookupCriteria<TableCell> {
 

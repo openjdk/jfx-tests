@@ -61,7 +61,7 @@ public class LookupSample extends LookupSampleBase {
         //this will heve very little use in a real app
         NodeDock node = new NodeDock(scene.asParent());
 
-        //let's just move a mouse there        
+        //let's just move a mouse there
         node.mouse().move();
 
     }
@@ -75,7 +75,7 @@ public class LookupSample extends LookupSampleBase {
         SceneDock scene = new SceneDock();
 
         //now find a Label
-        //this could be used directly in case there is only one node of a certain 
+        //this could be used directly in case there is only one node of a certain
         //type in a parent
         NodeDock label = new NodeDock(scene.asParent(), Label.class);
         label.mouse().move();
@@ -166,7 +166,7 @@ public class LookupSample extends LookupSampleBase {
             //expected
         }
     }
-    
+
     @Test
     public void dump() throws FileNotFoundException {
         new SceneDock().asParent().lookup().dump(new PrintStream(new FileOutputStream(System.getProperty("user.dir") + File.separator + "scene.dump")));

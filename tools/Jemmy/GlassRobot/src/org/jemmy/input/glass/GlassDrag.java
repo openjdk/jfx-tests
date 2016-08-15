@@ -47,7 +47,7 @@ public class GlassDrag implements Drag {
         Environment.getEnvironment().setTimeout(BEFORE_DROP_TIMEOUT);
         Environment.getEnvironment().setTimeout(IN_DRAG_TIMEOUT);
     }
-    
+
     Wrap<?> source;
 
     public GlassDrag(Wrap<?> source) {

@@ -65,7 +65,7 @@ import test.scenegraph.app.ControlEventsTab;
  */
 public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 {
-    
+
     @Override
     @Before
     public void before()
@@ -73,7 +73,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         super.before();
         sceneDock = new SceneDock(getScene());
     }
-    
+
     // * Clicks with right mouse button on node
     @Test(timeout = 60000)
     public void onContextMenuRequested()
@@ -89,7 +89,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             }
         });
     }
-    
+
     Command dragFromControlToTarget = new Command() {
         public void invoke() {
             NodeDock dragTarget = new NodeDock(tabDock.asParent(),
@@ -97,13 +97,13 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             dnd(primeDock.wrap(), dragTarget.wrap());
         }
     };
-    
+
     @Test(timeout = 60000)
     public void onDragDetected()
     {
         test(EventTypes.DRAG_DETECTED, dragFromControlToTarget);
     }
-    
+
     // * Drags from node to text field.
     // * DRAG_DONE event comes when drag is finished on text field.
     // * Text in text field will change to node's class name.
@@ -112,9 +112,9 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     {
         test(EventTypes.DRAG_DONE, dragFromControlToTarget);
     }
-    
-    
-    
+
+
+
     // * Moves mouse onto tested node.
     // * Event should come to tested node.
     @Test(timeout = 60000)
@@ -133,8 +133,8 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             }
         });
     }
-    
-    
+
+
     // * Moves mouse inside of tested node.
     @Test(timeout = 60000)
     public void onMouseMoved()
@@ -151,7 +151,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             }
         });
     }
-    
+
     @Test(timeout = 60000)
     public void onMouseClicked()
     {
@@ -162,7 +162,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             }
         });
     }
-    
+
     @Test(timeout = 60000)
     public void onMousePressed()
     {
@@ -175,7 +175,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             }
         });
     }
-    
+
     @Test(timeout = 60000)
     public void onMouseReleased()
     {
@@ -188,7 +188,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             }
         });
     }
-    
+
     // * Drags mouse over tested node starting outside of one.
     @Test(timeout = 60000)
     public void onMouseDragOver()
@@ -209,8 +209,8 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             }
         });
     }
-    
-    
+
+
     @Test(timeout = 60000)
     public void onAction()
     {
@@ -223,21 +223,21 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             });
         }
     }
-    
-    
+
+
     private final Command commandPushKey = new Command() {
             public void invoke() {
-                
+
                 final Point p1 = primeDock.wrap().getClickPoint();
                 final Mouse m = primeDock.mouse();
-                
+
                 new GetAction<Object>() {
                     @Override
                     public void run(Object... os) throws Exception {
                         m.move(p1);
                     }
                 }.dispatch(Root.ROOT.getEnvironment());
-                
+
                 new GetAction<Object>() {
                     @Override
                     public void run(Object... os) throws Exception {
@@ -245,7 +245,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                     }
                 }.dispatch(Root.ROOT.getEnvironment());
                 try { Thread.sleep(20); } catch (InterruptedException e){}
-                
+
                 new GetAction<Object>() {
                     @Override
                     public void run(Object... os) throws Exception {
@@ -257,17 +257,17 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     @Test(timeout = 60000)
     public void onKeyPressed()
     {
-        if (control.getProcessedEvents().contains(KeyEvent.class)) 
+        if (control.getProcessedEvents().contains(KeyEvent.class))
         test(EventTypes.KEY_PRESSED, commandPushKey);
     }
-    
+
     @Test(timeout = 60000)
     public void onKeyRelease()
     {
         if(control.getProcessedEvents().contains(KeyEvent.class))
         test(EventTypes.KEY_RELEASED, commandPushKey);
     }
-    
+
     @Test(timeout = 60000)
     public void onKeyTyped()
     {
@@ -299,7 +299,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     {
         test(EventTypes.MOUSE_DRAG_RELEASED, dragFromOutside);
     }
-    
+
     // * Drags mouse over tested node starting outside of one.
     @Test(timeout = 60000)
     public void onMouseDragEntered()
@@ -307,15 +307,15 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         test(EventTypes.MOUSE_DRAG_ENTERED, dragFromOutside);
     }
 
-    
+
     private final Command commandDnDFromDragSourceToPrimeDock = new Command() {
             public void invoke() {
-                final NodeDock dragSource = new NodeDock(tabDock.asParent(), 
+                final NodeDock dragSource = new NodeDock(tabDock.asParent(),
                         ControlEventsApp.DRAG_FIELD_ID);
                 dnd(dragSource.wrap(), primeDock.wrap());
-    
+
 }};
-    
+
     // * Drag from text field to node.
     // * Text in node's tooltip will change to text from text field.
     @Test(timeout = 60000)
@@ -330,27 +330,27 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     {
         test(EventTypes.DRAG_ENTERED, commandDnDFromDragSourceToPrimeDock);
     }
-    
+
     // * Drag from text field to node.
     @Test(timeout = 60000)
     public void onDragEnteredTarget()
     {
         test(EventTypes.DRAG_ENTERED_TARGET, commandDnDFromDragSourceToPrimeDock);
     }
- 
+
     @Test(timeout = 60000)
     public void onDragOver()
     {
         test(EventTypes.DRAG_OVER, commandDnDFromDragSourceToPrimeDock  );
     }
-    
+
     // * Drags mouse over tested node starting outside of one.
     @Test(timeout = 60000)
     public void onMouseDragExited()
     {
         test(EventTypes.MOUSE_DRAG_EXITED, dragFromOutside);
     }
-        
+
     Command dragFromOutside = new Command() {
 
         public void invoke() {
@@ -367,7 +367,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     Command dragControlAndExitCommand = new Command() {
 
         public void invoke() {
-            final Bounds bounds = primeDock.getBoundsInParent();            
+            final Bounds bounds = primeDock.getBoundsInParent();
             final Wrap wrap = primeDock.wrap();
             final Point insidePoint = wrap.getClickPoint();
             final Point outsidePoint = new Point(
@@ -375,12 +375,12 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             dnd(primeDock.wrap(), insidePoint, sceneDock.wrap(), outsidePoint);
         }
     };
-    
-    
+
+
     Command startDragOnControl = new Command() {
 
         public void invoke() {
-            final Bounds bounds = primeDock.getBoundsInParent();            
+            final Bounds bounds = primeDock.getBoundsInParent();
             final Wrap wrap = primeDock.wrap();
             final Point insidePoint = wrap.getClickPoint();
             final Point outsidePoint = new Point(
@@ -388,35 +388,35 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             dnd(primeDock.wrap(), insidePoint, sceneDock.wrap(), outsidePoint);
         }
     };
-    
-    
+
+
     private final Command dndFromDragSourceToCtrlAndBack = new Command() {
             public void invoke() {
-                final NodeDock dragSource = new NodeDock(tabDock.asParent(), 
+                final NodeDock dragSource = new NodeDock(tabDock.asParent(),
                         ControlEventsApp.DRAG_FIELD_ID);
                 dnd(dragSource.wrap(), primeDock.wrap());
-    
+
 }};
-    
+
     // * Drags mouse inside of tested node
     @Test(timeout = 60000)
     public void onMouseDraged()
     {
         test(EventTypes.MOUSE_DRAGGED, startDragOnControl);
     }
-    
+
     @Test(timeout = 60000)
     public void onDragExited()
     {
         test(EventTypes.DRAG_EXITED, dndFromDragSourceToCtrlAndBack);
     }
-    
+
     @Test(timeout = 60000)
     public void onDragExitedTarget()
     {
         test(EventTypes.DRAG_EXITED_TARGET, dndFromDragSourceToCtrlAndBack);
     }
-    
+
     @Test(timeout = 60000)
     public void onMouseExited()
     {
@@ -426,20 +426,20 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                 final Point p1 = primeDock.wrap().getClickPoint();
                 final double pointInX = p1.x;
                 final double pointOutX = p1.x - primeDock.wrap().getScreenBounds().getWidth()/2 -  14;//.getWidth() / 2 - 1;
-                
+
                 final Mouse m = primeDock.mouse();
-                
+
                 new GetAction<Object>() {
                     @Override
                     public void run(Object... os) throws Exception {
-                        p1.setLocation(pointOutX, p1.y);  
+                        p1.setLocation(pointOutX, p1.y);
                         m.move(p1);
                     }
                 }.dispatch(Root.ROOT.getEnvironment());
                 new GetAction<Object>() {
                     @Override
                     public void run(Object... os) throws Exception {
-                        p1.setLocation(pointOutX+10, p1.y);  
+                        p1.setLocation(pointOutX+10, p1.y);
                         m.move(p1);
                     }
                 }.dispatch(Root.ROOT.getEnvironment());
@@ -458,7 +458,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
                         m.move(p1);
                     }
                 }.dispatch(Root.ROOT.getEnvironment());
-                
+
                 new GetAction<Object>() {
                     @Override
                     public void run(Object... os) throws Exception {
@@ -469,14 +469,14 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             }
         });
     }
-    
 
-    
+
+
     protected void setEventType(EventTypes eventType)
     {
         this.eventType = eventType;
     }
-    
+
     // don't make it static
     final private List<EventTypes> bannedEvents = new ArrayList<>(Arrays.asList(
         EventTypes.DRAG_DONE,
@@ -488,9 +488,9 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         EventTypes.DRAG_OVER,
         EventTypes.DRAG_EXITED_TARGET,
         EventTypes.DRAG_EXITED));
-    
+
     protected final void test(final EventTypes eventType, Command command) {
-               
+
         selectTab();
         setEventType(eventType);
         if (selectEventType()) {
@@ -499,7 +499,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         }
     }
 
-    private void selectTab() 
+    private void selectTab()
     {
         final TabPaneDock tabPaneDock = new TabPaneDock(sceneDock.asParent());
         tabDock = new TabDock(tabPaneDock.asTabParent(), new LookupCriteria<Tab>() {
@@ -520,18 +520,18 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         }.dispatch(Root.ROOT.getEnvironment());
         primeDock = findPrimeDock();
     }
-    
+
     protected abstract T findPrimeDock();
 
     boolean selectEventType() {
         eventRadio = new LabeledDock(tabDock.asParent(), RadioButton.class,
                 eventType.toString());
         if (null != eventRadio) {
-            
+
             // Yes, I need retry count here. One click via Jemmy is not enough in real world.
             // testcase: run TextFiledEventTest 8 times.
             // (PS: one click using real hand and real mouse - OK)
-            
+
             int retryCount = 0;
             while ((!((RadioButton)eventRadio.control()).isSelected()) && (retryCount++ < 4 )) {
             new GetAction<Object>() {
@@ -547,56 +547,56 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
             public Boolean reached() {
                 return ((RadioButton)eventRadio.control()).isSelected();
             }
-            
-        }, true);            
-            
+
+        }, true);
+
             return true;
         } else {
             return false;
         }
     }
 
-    
+
     State targetState = new State<String>() {
             public String reached() {
                 return eventRadio.control().getStyle();
             }
         };
-    
+
     boolean gotEvent() {
         return ( ControlEventsTab.HANDLED_STYLE.equals(targetState.reached()));
     }
-    
-    private void waitHandler() 
+
+    private void waitHandler()
     {
         eventRadio.wrap().waitState(targetState, ControlEventsTab.HANDLED_STYLE);
-        
+
         // this "sleep" fixes Linux/onKeyPressed behavior, when
         // application exits before key released
         try { Thread.sleep(50); } catch (InterruptedException e){}
 
     }
-    
+
     protected void setControl(Controls control)
     {
         this.control = control;
     }
-    
+
     protected T getPrimeNodeDock()
     {
         return primeDock;
     }
-    
+
     protected TabDock getActiveTabDock()
     {
         return tabDock;
     }
-       
+
     private SceneDock sceneDock;
     private TabDock tabDock;
-    public T primeDock; 
+    public T primeDock;
     private LabeledDock eventRadio;
     private Controls control;
     private EventTypes eventType;
-    
+
 }

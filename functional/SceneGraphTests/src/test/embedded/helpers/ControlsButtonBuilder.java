@@ -72,5 +72,5 @@ class ControlsButtonBuilder implements ButtonBuilder {
         this.handler = handler;
         return this;
     }
-    
+
 }

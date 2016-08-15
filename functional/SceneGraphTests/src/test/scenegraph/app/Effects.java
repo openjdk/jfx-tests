@@ -254,7 +254,7 @@ public enum Effects implements ShapesApp.AbstractEffect {
                 circle.getStrokeDashArray().add(14.);
                 circle.setStrokeLineCap(StrokeLineCap.ROUND);
                 shape.setStrokeLineCap(StrokeLineCap.ROUND);
-                container.getChildren().clear(); 
+                container.getChildren().clear();
                 container.getChildren().add(Path.union( circle, shape));
             }
         }),
@@ -270,7 +270,7 @@ public enum Effects implements ShapesApp.AbstractEffect {
                 circle.getStrokeDashArray().add(14.);
                 circle.setStrokeLineCap(StrokeLineCap.ROUND);
                 shape.setStrokeLineCap(StrokeLineCap.ROUND);
-                container.getChildren().clear(); 
+                container.getChildren().clear();
                 container.getChildren().add(Path.union( circle, shape));
             }
         }),

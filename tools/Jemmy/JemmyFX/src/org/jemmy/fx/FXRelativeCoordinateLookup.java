@@ -46,5 +46,5 @@ public class FXRelativeCoordinateLookup<CONTROL extends Node> extends RelativeCo
     protected Rectangle getBounds(CONTROL control) {
         return new NodeWrap<CONTROL>(Environment.getEnvironment(), control).getScreenBounds();
     }
-    
+
 }

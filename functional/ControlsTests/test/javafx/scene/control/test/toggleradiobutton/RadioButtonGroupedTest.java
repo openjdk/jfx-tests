@@ -92,7 +92,7 @@ public class RadioButtonGroupedTest extends ToggleButtonTestBase {
     /**
      * This test checks working in group in condition, when one state is set by
      * bidirectional binding, other is set by unidirectinal binding and we try to
-     * set state by ToggleButtons. 
+     * set state by ToggleButtons.
      */
     @Smoke
     @Test(timeout=300000) //RT-17205

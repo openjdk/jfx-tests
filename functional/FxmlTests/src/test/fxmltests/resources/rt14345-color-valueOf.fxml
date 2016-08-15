@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml">
-    
+
     <HBox>
         <Rectangle fx:id="red_rectangle" width="30" height="30" fill="red"/>
         <Rectangle fx:id="green_rectangle" width="30" height="30" fill="#00af33"/>
@@ -17,5 +17,5 @@
         <Rectangle fx:id="radial_gradient_rectangle_1" width="30" height="30" fill="radial-gradient(center 50% 50%, radius 50%,  cyan, violet 75%, magenta)"/>
         <Rectangle fx:id="radial_gradient_rectangle_2" width="30" height="30" fill="radial-gradient(center 15px 15px, radius 15px, gold 0%, silver 75%)"/>
     </HBox>
-    
+
 </AnchorPane>

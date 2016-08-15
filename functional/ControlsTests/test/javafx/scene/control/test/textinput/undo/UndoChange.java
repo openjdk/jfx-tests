@@ -45,7 +45,7 @@ public class UndoChange extends Change {
     public String toString() {
         return this.getClass().getSimpleName();
     }
-    
+
     @Override
     public Object clone() {
         return new UndoChange();

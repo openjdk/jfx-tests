@@ -75,7 +75,7 @@ public class ButtonsApp extends ButtonSimpleApp {
         }
         return list;
     }
-    
+
     @Override
     protected Labeled getListenable() {
         Button button = new FireListenableButton(DEFAULT);

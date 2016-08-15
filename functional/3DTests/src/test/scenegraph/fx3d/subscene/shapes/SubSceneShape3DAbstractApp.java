@@ -109,7 +109,7 @@ public abstract class SubSceneShape3DAbstractApp extends SubSceneAbstractApp imp
             c.setDiffuseMap(bln);
         }
     }
-    
+
     @Override
     public void setVisible(boolean bln) {
         for (ShapesTestCase c : cases) {

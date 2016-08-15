@@ -46,7 +46,7 @@ import test.javaclient.shared.Utils;
  * @author Sergey Grinev
  */
 public class EventsApp extends BasicButtonChooserApp {
-    
+
     public static void main(String args[]) {
         Utils.launch(EventsApp.class, args);
     }
@@ -279,7 +279,7 @@ public class EventsApp extends BasicButtonChooserApp {
                     setupMarkers(met);
                 }
 
-                
+
                 Rectangle rect = new Rectangle(10, 10, 100, 100);
                 cont.getChildren().add(rect);
                 cont.getChildren().add(labels);

@@ -66,7 +66,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     @Test
     public void testfxblendmode () {
         Set<String> styleNames = getStyleNames();
@@ -76,7 +76,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-blend-mode");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxblockincrement () {
         Set<String> styleNames = getStyleNames();
@@ -86,7 +86,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-block-increment");
         Assert.assertEquals(data.getInitialValue(getControl()), 10.0);
     }
-    
+
     @Test
     public void testfxcursor () {
         Set<String> styleNames = getStyleNames();
@@ -96,7 +96,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-cursor");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxeffect () {
         Set<String> styleNames = getStyleNames();
@@ -106,7 +106,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-effect");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxmajortickunit () {
         Set<String> styleNames = getStyleNames();
@@ -116,7 +116,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-major-tick-unit");
         Assert.assertEquals(data.getInitialValue(getControl()), 25.0);
     }
-    
+
     @Test
     public void testfxminortickcount () {
         Set<String> styleNames = getStyleNames();
@@ -126,7 +126,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-minor-tick-count");
         Assert.assertEquals(data.getInitialValue(getControl()), 3.0);
     }
-    
+
     @Test
     public void testfxopacity () {
         Set<String> styleNames = getStyleNames();
@@ -136,7 +136,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-opacity");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxorientation () {
         Set<String> styleNames = getStyleNames();
@@ -146,7 +146,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-orientation");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.geometry.Orientation.HORIZONTAL);
     }
-    
+
     @Test
     public void testfxrotate () {
         Set<String> styleNames = getStyleNames();
@@ -156,7 +156,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-rotate");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testfxscalex () {
         Set<String> styleNames = getStyleNames();
@@ -166,7 +166,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-x");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxscaley () {
         Set<String> styleNames = getStyleNames();
@@ -176,7 +176,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-y");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxscalez () {
         Set<String> styleNames = getStyleNames();
@@ -186,7 +186,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-z");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxshowticklabels () {
         Set<String> styleNames = getStyleNames();
@@ -196,7 +196,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-show-tick-labels");
         Assert.assertEquals(data.getInitialValue(getControl()), false);
     }
-    
+
     @Test
     public void testfxshowtickmarks () {
         Set<String> styleNames = getStyleNames();
@@ -206,7 +206,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-show-tick-marks");
         Assert.assertEquals(data.getInitialValue(getControl()), false);
     }
-    
+
     @Test
     public void testfxskin () {
         Set<String> styleNames = getStyleNames();
@@ -216,7 +216,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-skin");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxsnaptoticks () {
         Set<String> styleNames = getStyleNames();
@@ -226,7 +226,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-snap-to-ticks");
         Assert.assertEquals(data.getInitialValue(getControl()), false);
     }
-    
+
     @Test
     public void testfxtranslatex () {
         Set<String> styleNames = getStyleNames();
@@ -236,7 +236,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-x");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testfxtranslatey () {
         Set<String> styleNames = getStyleNames();
@@ -246,7 +246,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-y");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testfxtranslatez () {
         Set<String> styleNames = getStyleNames();
@@ -256,7 +256,7 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-z");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testvisibility () {
         Set<String> styleNames = getStyleNames();
@@ -266,6 +266,6 @@ public class StylesSliderTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("visibility");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
 
 }

@@ -42,14 +42,14 @@ public class BufferedImageToFXImageGreenTest extends ReadImageGreenTest{
         WritableImage testingImage = new WritableImage(256, 256);
         try {
             SwingFXUtils.toFXImage(
-                    ImageIO.read(getColorComponentProvider().getGoldImageInputStream()), 
+                    ImageIO.read(getColorComponentProvider().getGoldImageInputStream()),
                     testingImage);
         } catch (IOException ex) {
             Assert.fail(ex.getMessage());
         }
-        
+
         return testingImage;
     }
-    
-    
+
+
 }

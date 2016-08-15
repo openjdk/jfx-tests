@@ -33,7 +33,7 @@ public abstract class RichTextPropertiesFunctional extends TestBase {
     protected final static String TEXT3 = " third string";
     protected final static String MULTILINE_TEXT = "(first line)\n"
             + "(second line)\n";
-    
+
     protected final static String STYLE1 = " -fx-fill: linear-gradient(from 0% 0% to 100% 100%, repeat, orange 0%, red 50%);"
             + "-fx-stroke: black;"
             + "-fx-stroke-width: 1;";

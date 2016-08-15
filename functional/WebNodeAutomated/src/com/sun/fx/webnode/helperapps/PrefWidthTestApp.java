@@ -47,7 +47,7 @@ public class PrefWidthTestApp extends Application {
 
         HBox box = new HBox();
         box.getChildren().add(view);
-        
+
         final Scene scene = new Scene(box);
         stage.setTitle(VIEW_ID);
         stage.setScene(scene);

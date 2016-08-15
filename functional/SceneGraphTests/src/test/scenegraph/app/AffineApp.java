@@ -36,110 +36,110 @@ import test.javaclient.shared.Utils;
  */
 public class AffineApp extends InteroperabilityApp
 {
-    
+
     public static void main(String[] args)
     {
-	Utils.launch(AffineApp.class, args);
+    Utils.launch(AffineApp.class, args);
     }
 
     @Override
-    protected Scene getScene() 
+    protected Scene getScene()
     {
-	return new AffineScene();
+    return new AffineScene();
     }
-    
+
     private class AffineScene extends Scene
     {
-	
-	public AffineScene()
-	{
-	    super(new Group(), 800, 600, false);
-	    
-	    regularAffine.setToIdentity();
-	    manualAffine.setToIdentity();
-	    
-	    fxTranformedRectangle.getTransforms().add(regularAffine);
-	    fxTranformedRectangle.setDepthTest(DepthTest.ENABLE);
-	    manualTranformedRectangle.getTransforms().add(manualAffine);
-	    manualTranformedRectangle.setDepthTest(DepthTest.ENABLE);
-	    
-	    fxTransRectPane.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-	    manualTransRectPane.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-	    
-	    fxTransRectPane.setId(FX_AFFINE_AREA);
-	    manualTransRectPane.setId(MANUAL_AFFINE_AREA);
-	    
-	    fxTransRectPane.getChildren().add(fxTranformedRectangle);
-	    manualTransRectPane.getChildren().add(manualTranformedRectangle);
+
+    public AffineScene()
+    {
+        super(new Group(), 800, 600, false);
+
+        regularAffine.setToIdentity();
+        manualAffine.setToIdentity();
+
+        fxTranformedRectangle.getTransforms().add(regularAffine);
+        fxTranformedRectangle.setDepthTest(DepthTest.ENABLE);
+        manualTranformedRectangle.getTransforms().add(manualAffine);
+        manualTranformedRectangle.setDepthTest(DepthTest.ENABLE);
+
+        fxTransRectPane.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        manualTransRectPane.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        fxTransRectPane.setId(FX_AFFINE_AREA);
+        manualTransRectPane.setId(MANUAL_AFFINE_AREA);
+
+        fxTransRectPane.getChildren().add(fxTranformedRectangle);
+        manualTransRectPane.getChildren().add(manualTranformedRectangle);
 
             VBox all = new VBox();
-	    for(Node cb: boxes)
+        for(Node cb: boxes)
             {
                all.getChildren().add(cb);
             }
-    
+
             //all.getChildren().add(appendRotate7D);
             HBox hb = new HBox();
-            
+
             all.getChildren().add(hb);
             hb.getChildren().addAll(fxTransRectPane,manualTransRectPane);
             fxTransRectPane.setMinSize(300,300);
             fxTransRectPane.setMaxSize(300,300);
-            
+
             manualTransRectPane.setMaxSize(300,300);
             manualTransRectPane.setMinSize(300,300);
-                     
 
-	    setRoot(all);            
-/*            
-	    GridPane all = new GridPane();
-	    ScrollPane sp = new ScrollPane();
-	    FlowPane methodsFlow = new FlowPane(Orientation.VERTICAL, 10, 2);
-	    methodsFlow.setPadding(new Insets(5));
-	    sp.setContent(methodsFlow);
+
+        setRoot(all);
+/*
+        GridPane all = new GridPane();
+        ScrollPane sp = new ScrollPane();
+        FlowPane methodsFlow = new FlowPane(Orientation.VERTICAL, 10, 2);
+        methodsFlow.setPadding(new Insets(5));
+        sp.setContent(methodsFlow);
             sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-	    
-	    ColumnConstraints leftSide = new ColumnConstraints();
-	    leftSide.setPercentWidth(50);
-	    ColumnConstraints rightSide = new ColumnConstraints();
-	    rightSide.setPercentWidth(50);
-	    RowConstraints methods = new RowConstraints();
-	    methods.setPercentHeight(40);
-	    RowConstraints rectangles = new RowConstraints();
-	    rectangles.setPercentHeight(60);
-	    
-	    GridPane.setValignment(fxTransRectPane, VPos.CENTER);
-	    GridPane.setHalignment(fxTransRectPane, HPos.CENTER);
-	    GridPane.setValignment(manualTransRectPane, VPos.CENTER);
-	    GridPane.setHalignment(manualTransRectPane, HPos.CENTER);
+
+        ColumnConstraints leftSide = new ColumnConstraints();
+        leftSide.setPercentWidth(50);
+        ColumnConstraints rightSide = new ColumnConstraints();
+        rightSide.setPercentWidth(50);
+        RowConstraints methods = new RowConstraints();
+        methods.setPercentHeight(40);
+        RowConstraints rectangles = new RowConstraints();
+        rectangles.setPercentHeight(60);
+
+        GridPane.setValignment(fxTransRectPane, VPos.CENTER);
+        GridPane.setHalignment(fxTransRectPane, HPos.CENTER);
+        GridPane.setValignment(manualTransRectPane, VPos.CENTER);
+        GridPane.setHalignment(manualTransRectPane, HPos.CENTER);
             GridPane.setColumnSpan(sp, 2);
-	    
-	    all.getColumnConstraints().addAll(leftSide, rightSide);
-	    all.getRowConstraints().addAll(methods, rectangles);
-	    
-	    for(CheckBox cb: boxes)
+
+        all.getColumnConstraints().addAll(leftSide, rightSide);
+        all.getRowConstraints().addAll(methods, rectangles);
+
+        for(CheckBox cb: boxes)
             {
                 methodsFlow.getChildren().add(cb);
             }
-	    
-	    all.add(sp, 0, 0);
-	    all.add(fxTransRectPane, 0, 1);
-	    all.add(manualTransRectPane, 1, 1);
-*/	    
-	    setRoot(all);
-	    setCamera(new PerspectiveCamera());
-            
-	}
-	
-	private Group root;
-	private StackPane fxTransRectPane = new StackPane();
-	private StackPane manualTransRectPane = new StackPane();
-	private Rectangle fxTranformedRectangle = new Rectangle(100, 100);
-	private Rectangle manualTranformedRectangle = new Rectangle(100, 100);
-	private Affine regularAffine = new Affine();
-	private AffineManual manualAffine = new AffineManual();
-	
-	private AbstractCheckBox append6d = CheckBoxBuilderFactory.newCheckboxBuilder()
+
+        all.add(sp, 0, 0);
+        all.add(fxTransRectPane, 0, 1);
+        all.add(manualTransRectPane, 1, 1);
+*/
+        setRoot(all);
+        setCamera(new PerspectiveCamera());
+
+    }
+
+    private Group root;
+    private StackPane fxTransRectPane = new StackPane();
+    private StackPane manualTransRectPane = new StackPane();
+    private Rectangle fxTranformedRectangle = new Rectangle(100, 100);
+    private Rectangle manualTranformedRectangle = new Rectangle(100, 100);
+    private Affine regularAffine = new Affine();
+    private AffineManual manualAffine = new AffineManual();
+
+    private AbstractCheckBox append6d = CheckBoxBuilderFactory.newCheckboxBuilder()
                 .text("append(double, double, double, double, double, double)")
                 .id(AffineAPI.APPEND_6D.name())
                 .setOnClickHandler(new OnClickHandler() {
@@ -158,8 +158,8 @@ public class AffineApp extends InteroperabilityApp
                         }
                     }
                 }).build();
-        
-	private AbstractCheckBox append12d = CheckBoxBuilderFactory.newCheckboxBuilder()
+
+    private AbstractCheckBox append12d = CheckBoxBuilderFactory.newCheckboxBuilder()
                 .text("append(double, double, double, double, double, double, double, double, double, double, double, double)")
                 .id(AffineAPI.APPEND_12D.name())
                 .setOnClickHandler(new OnClickHandler() {
@@ -173,25 +173,25 @@ public class AffineApp extends InteroperabilityApp
 
                         if(append12d.isChecked())
                         {
-                            regularAffine.append(cos, sin, 0, 0, 
-                                                 -sin, cos, 0, 0, 
+                            regularAffine.append(cos, sin, 0, 0,
+                                                 -sin, cos, 0, 0,
                                                  0, 0, 1, 0);
-                            manualAffine.append(cos, sin, 0, 0, 
-                                                -sin, cos, 0, 0, 
+                            manualAffine.append(cos, sin, 0, 0,
+                                                -sin, cos, 0, 0,
                                                 0, 0, 1, 0);
                         }
                         else
                         {
-                            regularAffine.append(cos, -sin, 0, 0, 
-                                                 sin, cos, 0, 0, 
+                            regularAffine.append(cos, -sin, 0, 0,
+                                                 sin, cos, 0, 0,
                                                  0, 0, 1, 0);
-                            manualAffine.append(cos, -sin, 0, 0, 
-                                                sin, cos, 0, 0, 
+                            manualAffine.append(cos, -sin, 0, 0,
+                                                sin, cos, 0, 0,
                                                 0, 0, 1, 0);
                         }
                     }
                 }).build();
-        
+
         private AbstractCheckBox appendTransform = CheckBoxBuilderFactory.newCheckboxBuilder()
                 .text("append(Transform)")
                 .id(AffineAPI.APPEND_TRANSFORM.name())
@@ -211,7 +211,7 @@ public class AffineApp extends InteroperabilityApp
                         }
                     }
                 }).build();
-        
+
         private AbstractCheckBox appendMatrix =  CheckBoxBuilderFactory.newCheckboxBuilder()
                 .text("append(double[], MatrixType, int)").
                 id(AffineAPI.APPEND_D_ARR_MATRIX_TYPE_INT.name())
@@ -238,7 +238,7 @@ public class AffineApp extends InteroperabilityApp
                         }
                     }
                 }).build();
-        
+
         private AbstractCheckBox appendRotateD = CheckBoxBuilderFactory.newCheckboxBuilder()
                 .text("appendRotate(double)")
                 .id(AffineAPI.APPEND_ROTATE_D.name())
@@ -258,7 +258,7 @@ public class AffineApp extends InteroperabilityApp
                     }
                 }
         }).build();
-        
+
         private AbstractCheckBox appendRotate3D = CheckBoxBuilderFactory.newCheckboxBuilder()
                 .text("appendRotate(double, double, double").
                 id(AffineAPI.APPEND_ROTATE_3D.name())
@@ -278,7 +278,7 @@ public class AffineApp extends InteroperabilityApp
                     }
                 }
         }).build();
-        
+
         private AbstractCheckBox appendRotateDPoint2D = CheckBoxBuilderFactory.newCheckboxBuilder()
                 .text("append(double, Point2D)")
                 .id(AffineAPI.APPEND_ROTATE_D_POINT2D.name())
@@ -298,7 +298,7 @@ public class AffineApp extends InteroperabilityApp
                     }
                 }
         }).build();
-        
+
         private AbstractCheckBox appendRotate7D = CheckBoxBuilderFactory.newCheckboxBuilder()
                 .text("append(double, double, double, double, double, double, double)")
                 .id(AffineAPI.APPEND_ROTATE_7D.name())
@@ -318,7 +318,7 @@ public class AffineApp extends InteroperabilityApp
                     }
                 }
         }).build();
-        
+
         private AbstractCheckBox appendRotate4DPoint3D = CheckBoxBuilderFactory.newCheckboxBuilder()
                 .text("append(double, double, double, double, Point3D)")
                 .id(AffineAPI.APPEND_ROTATE_4D_POINT3D.name())
@@ -338,7 +338,7 @@ public class AffineApp extends InteroperabilityApp
                     }
                 }
         }).build();
-        
+
         private AbstractCheckBox appendRotateD2Point3D = CheckBoxBuilderFactory.newCheckboxBuilder()
                 .text("append(double, Point3D, Point3D)").
                 id(AffineAPI.APPEND_ROTATE_D_2POINT3D.name())
@@ -358,15 +358,15 @@ public class AffineApp extends InteroperabilityApp
                     }
                 }
         }).build();
-        
-        private Node[] boxes = new Node[]{append6d.node(), append12d.node(), appendTransform.node(), appendMatrix.node(), appendRotateD.node(), 
+
+        private Node[] boxes = new Node[]{append6d.node(), append12d.node(), appendTransform.node(), appendMatrix.node(), appendRotateD.node(),
                 appendRotate3D.node(), appendRotateDPoint2D.node(), appendRotate7D.node(), appendRotate4DPoint3D.node(), appendRotateD2Point3D.node()};
-	
+
     }
-    
+
     public static final String FX_AFFINE_AREA = "fx-affine-area";
     public static final String MANUAL_AFFINE_AREA = "manual-affine-area";
-    
+
     public enum AffineAPI
     {
         APPEND_6D,
@@ -380,5 +380,5 @@ public class AffineApp extends InteroperabilityApp
         APPEND_ROTATE_4D_POINT3D,
         APPEND_ROTATE_D_2POINT3D
     }
-    
+
 }

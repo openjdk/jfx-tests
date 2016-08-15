@@ -41,7 +41,7 @@ import org.jemmy.interfaces.Parent;
 
 /**
  * @author Alexander Kirov
- * 
+ *
  * See https://javafx-jira.kenai.com/browse/RT-33520
  */
 @RunWith(FilteredTestRunner.class)

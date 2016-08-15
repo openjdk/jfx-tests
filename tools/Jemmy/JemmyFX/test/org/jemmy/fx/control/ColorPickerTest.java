@@ -73,7 +73,7 @@ public class ColorPickerTest extends SampleBase {
             }
         }, Boolean.TRUE);
     }
-    
+
     protected static boolean compareColor(Color a, Color b) {
         return ((Math.abs(a.getRed() - b.getRed()) <= 0.01) &&
                (Math.abs(a.getGreen() - b.getGreen()) <= 0.01) &&

@@ -27,7 +27,7 @@ package org.jemmy.interfaces;
 
 /**
  * Interface representing an object holding a numeric value which
- * could be increased or decreased in unit and block steps, 
+ * could be increased or decreased in unit and block steps,
  * such as scroll bar, slider, etc.
  * Use CaretOwner.position() to get the value.
  *

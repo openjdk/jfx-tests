@@ -124,7 +124,7 @@ public class GlassImage implements Image, WriteableRaster {
     public ByteBuffer getData() {
         return data;
     }
-    
+
     private Dimension getInitialSize() {
         final AtomicReference<Dimension> sizeRef = new AtomicReference<Dimension>();
         Application.invokeAndWait(new Runnable() {

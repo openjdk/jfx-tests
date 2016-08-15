@@ -47,23 +47,23 @@ public class ButtonsSample extends SampleBase {
 
     private static SceneDock scene;
     private static LabeledDock status;
-    
+
     @BeforeClass
     public static void startApp() throws InterruptedException {
         startApp(ButtonsApp.class);
         scene = new SceneDock();
         status = new LabeledDock(scene.asParent(), "status");
     }
-    
+
     /**
      * First thing first - how to find a button.
      */
     @Test
     public void lookup() {
         //a button is a labeled, every labeled could be found by text
-        assertEquals(Button.class, new LabeledDock(scene.asParent(), "button", 
+        assertEquals(Button.class, new LabeledDock(scene.asParent(), "button",
                 StringComparePolicy.EXACT).wrap().getControl().getClass());
-        assertEquals(CheckBox.class, new LabeledDock(scene.asParent(), "tri-state", 
+        assertEquals(CheckBox.class, new LabeledDock(scene.asParent(), "tri-state",
                 StringComparePolicy.EXACT).wrap().getControl().getClass());
     }
     /**
@@ -81,25 +81,25 @@ public class ButtonsSample extends SampleBase {
     @Test
     public void checkbox() {
         CheckBoxDock cb = new CheckBoxDock(scene.asParent(), "two-state", StringComparePolicy.EXACT);
-        
+
         //of course it is possile to click to change the value
         cb.mouse().click();
-        
+
         //but to change the value predictably, do
         cb.asSelectable().selector().select(CheckBoxWrap.State.CHECKED);
         //or
         cb.asSelectable().selector().select(CheckBoxWrap.State.UNCHECKED);
-        
+
         //now check that the status line is updated
         status.wrap().waitProperty(Wrap.TEXT_PROP_NAME, "two-state unselected");
-        
+
         //there also is an "unknown" state for some check boxes
         //here we will also find the checkbox by a sub-string of its text
         CheckBoxDock cbt = new CheckBoxDock(scene.asParent(), "tri", StringComparePolicy.SUBSTRING);
         cbt.asSelectable().selector().select(CheckBoxWrap.State.CHECKED);
         cbt.asSelectable().selector().select(CheckBoxWrap.State.UNCHECKED);
         cbt.asSelectable().selector().select(CheckBoxWrap.State.UNDEFINED);
-        
+
         status.wrap().waitProperty(Wrap.TEXT_PROP_NAME, "tri-state unknown");
     }
     /**
@@ -108,16 +108,16 @@ public class ButtonsSample extends SampleBase {
     @Test
     public void radio() {
         ToggleButtonDock cb = new ToggleButtonDock(scene.asParent(), "radio1", StringComparePolicy.EXACT);
-        
+
         //again, it is possile to click to change the value
         cb.mouse().click();
-        
+
         //which basically, works
         new ToggleButtonDock(scene.asParent(), "radio2", StringComparePolicy.EXACT).mouse().click();
         new ToggleButtonDock(scene.asParent(), "radio3", StringComparePolicy.EXACT).mouse().click();
 
         status.wrap().waitProperty(Wrap.TEXT_PROP_NAME, "radio3 selected");
-        
+
         //bug, again, you could us selectable
         cb.asSelectable().selector().select(true);
 
@@ -128,10 +128,10 @@ public class ButtonsSample extends SampleBase {
      */
     @Test
     public void toggle() {
-        
+
         //same with toggle buttons
         ToggleButtonDock cb = new ToggleButtonDock(scene.asParent(), "toggle1", StringComparePolicy.EXACT);
-        
+
         //bug, again, you could us selectable
         cb.asSelectable().selector().select(true);
 

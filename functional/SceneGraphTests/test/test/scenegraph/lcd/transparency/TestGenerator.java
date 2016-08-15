@@ -32,10 +32,10 @@ import java.io.FileWriter;
  * @author Alexander Petrov
  */
 public class TestGenerator {
-    
+
     private static final String packagePrefix = "test.scenegraph.lcd.transparency.test";
     private static final String prefix = "test/" + packagePrefix.replace(".", "/") + "/";
-    private static final String TEMPLATE = 
+    private static final String TEMPLATE =
               "/*\n"
             + "* Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.\n"
             + "* DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER."
@@ -63,7 +63,7 @@ public class TestGenerator {
             + "         commonTest();\n"
             + "     }\n"
             + "}";
-    
+
     private static void generateTest(Factories factory){
         File file = new File(prefix,  factory.name() + "Test.java");
         try {
@@ -75,13 +75,13 @@ public class TestGenerator {
             System.err.println("Error: " + e.getMessage());
         }
     }
-    
+
     public static void generateAllTests(){
         for(Factories factory : Factories.values()){
             generateTest(factory);
         }
     }
-    
+
     public static void main(String[] args) {
         generateAllTests();
     }

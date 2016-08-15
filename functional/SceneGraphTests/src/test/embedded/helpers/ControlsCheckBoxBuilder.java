@@ -33,7 +33,7 @@ import javafx.event.EventHandler;
  * @author akulyakh
  */
 class ControlsCheckBoxBuilder implements CheckBoxBuilder {
-    
+
     private javafx.scene.control.CheckBoxBuilder builder;
 
     public ControlsCheckBoxBuilder() {
@@ -60,11 +60,11 @@ class ControlsCheckBoxBuilder implements CheckBoxBuilder {
             public void handle(ActionEvent t) {
                 handler.onClick();
             }
-            
+
         });
         return this;
     }
-    
+
     @Override
     public CheckBoxBuilder setChecked(boolean checked) {
         builder.selected(checked);
@@ -75,5 +75,5 @@ class ControlsCheckBoxBuilder implements CheckBoxBuilder {
     public AbstractCheckBox build() {
         return new ControlsCheckbox(builder.build());
     }
-    
+
 }

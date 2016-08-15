@@ -44,5 +44,5 @@ public class BarChartsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.BarCharts.name();
     }
-    
+
 }

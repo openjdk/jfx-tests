@@ -44,5 +44,5 @@ public class PressedToggleButtonsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.PressedToggleButtons.name();
     }
-    
+
 }

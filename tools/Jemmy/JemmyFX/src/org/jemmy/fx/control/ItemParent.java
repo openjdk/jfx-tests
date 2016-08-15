@@ -141,8 +141,8 @@ abstract class ItemParent<ITEM, AUX> implements EditableCellOwner<ITEM> {
             getAux().clear();
             for (int i = 0; i < prev.getFound().size(); i++) {
                 if(getType().isInstance(prev.getFound().get(i)) &&
-                        lc.check(getType().cast(prev.getFound().get(i))) && 
-                        (!(lc instanceof AuxLookupCriteria) || 
+                        lc.check(getType().cast(prev.getFound().get(i))) &&
+                        (!(lc instanceof AuxLookupCriteria) ||
                         ((AuxLookupCriteria<ST, AUX>)lc).checkAux(prev.getAux().get(i)))) {
                     getFound().add(getType().cast(prev.getFound().get(i)));
                     getAux().add(prev.getAux().get(i));

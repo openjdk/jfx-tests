@@ -67,7 +67,7 @@ public class ConfirmTest extends GenericTestClass implements Callback<String, Bo
     @Test(timeout=10000)
     public void testConfirmFromHTMLJavascript() {
         Platform.runLater(new Runnable() {
-            public void run() {                
+            public void run() {
                 initEngine();
                 engine.load(getPath(this.getClass(), "resource/confirmTest.html"));
                 prepareWaitPageLoading();

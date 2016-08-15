@@ -50,5 +50,5 @@ public abstract class PickingAbstractApp extends PickingSharedAbstractApp {
     public void setFill(Paint paint) {
         scene.setFill(paint);
     }
-    
+
 }

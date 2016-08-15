@@ -41,7 +41,7 @@ import javafx.beans.value.ObservableValue;
 public class DrtWebNodeRunner extends Application {
     static String param = "";
     WebEngine web;
-    
+
     WebView createWebView(String url) {
         System.out.println("URL to load: " + url);
         WebView view = new WebView();
@@ -104,7 +104,7 @@ public class DrtWebNodeRunner extends Application {
      */
         public static void main(String args[]) {
         if (args.length == 1) {
-            param = args[0];            
+            param = args[0];
             run(param);
         }
     }

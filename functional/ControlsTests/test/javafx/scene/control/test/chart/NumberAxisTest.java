@@ -78,10 +78,10 @@ public class NumberAxisTest extends ValueAxisBase {
     public void cssTickUnit() throws InterruptedException {
         testCommon(NumberAxisCSS.CSSTickUnit.name(), null, true, true, NumberAxisApp.TICK_UNIT_S.length);
     }
-    
+
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void tickValueOverflowTest() throws InterruptedException {
         testCommon(Pages.UpperBoundOverflow.name());
-    }    
+    }
 }

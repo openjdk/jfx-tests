@@ -170,7 +170,7 @@ public class TestBaseCommon extends UtilTestFunctions {
                             } else {
                                 row = getRowIndex((TreeTableCell) control);
                             }
-                            
+
                             //For cases, when we don't see cell fully, we will require only click point area.
                             final int xEpsilon = 2;
                             final int yEpsilon = 2;
@@ -371,16 +371,16 @@ public class TestBaseCommon extends UtilTestFunctions {
                     Lookup lookup = testedControl.as(Parent.class, Node.class).lookup(new LookupCriteria<Node>() {
                         public boolean check(Node row) {
                             if (testedControl.getControl() instanceof TableView) {
-                                return TableRow.class.isAssignableFrom(row.getClass()) 
+                                return TableRow.class.isAssignableFrom(row.getClass())
                                         && ((TableRow) row).isVisible()
                                         && ((TableRow) row).isFocused();
                             } else {
-                                return TreeTableRow.class.isAssignableFrom(row.getClass()) 
-                                        && ((TreeTableRow) row).isVisible() 
+                                return TreeTableRow.class.isAssignableFrom(row.getClass())
+                                        && ((TreeTableRow) row).isVisible()
                                         && ((TreeTableRow) row).isFocused();
                             }
                         }
-                    });                
+                    });
                     if (lookup.size() > 0) {
                         if (lookup.size() > 1) {
                             throw new IllegalStateException("Too many focused rows.");

@@ -45,11 +45,11 @@ import test.javaclient.shared.screenshots.ScreenshotUtils;
  * @author Sergey Lugovoy
  */
 public class TextsCssTest extends TestBase {
-    
+
     {
         ScreenshotUtils.setComparatorDistance(0.003f);
     }
-    
+
     @BeforeClass
     public static void runUI() {
         ControlsCSSApp.main(null);
@@ -87,7 +87,7 @@ public class TextsCssTest extends TestBase {
         ScreenshotUtils.checkScreenshot(new StringBuilder(getName()).append("-").append(normalizedName).toString(),
                 ScreenshotUtils.getPageContent());
     }
-    
+
     public String getName() {
         return "ControlCss";
     }

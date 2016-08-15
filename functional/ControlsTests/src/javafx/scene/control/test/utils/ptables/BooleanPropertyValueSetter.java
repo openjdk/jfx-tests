@@ -32,7 +32,7 @@ import static javafx.scene.control.test.utils.ptables.StaticLogger.*;
 
 /**
  * @author Alexander Kirov
- * 
+ *
  * Implementation for boolean properties, using toggle buttons.
  */
 public class BooleanPropertyValueSetter extends AbstractPropertyValueSetter<Boolean> {

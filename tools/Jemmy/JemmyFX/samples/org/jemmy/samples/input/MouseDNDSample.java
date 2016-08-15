@@ -68,7 +68,7 @@ public class MouseDNDSample extends InputSampleBase {
      */
     @Test
     public void dndPointOtherRightShift() {
-        redTarget.drag().dnd(new Point(20, 20), blueTarget.wrap(), new Point(10, 10), 
+        redTarget.drag().dnd(new Point(20, 20), blueTarget.wrap(), new Point(10, 10),
                 Mouse.MouseButtons.BUTTON3, Keyboard.KeyboardModifiers.SHIFT_DOWN_MASK);
 
         checkMouseEvent(RED, MouseEvent.MOUSE_PRESSED, MouseButton.SECONDARY, 20, 20, 1);

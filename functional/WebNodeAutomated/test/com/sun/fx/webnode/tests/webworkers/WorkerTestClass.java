@@ -39,11 +39,11 @@ public class WorkerTestClass extends GenericTestClass {
           return result != null;
         }
     };
-    
+
     protected String getAbsolutePathToResource(String resource) {
         return WorkerTestClass.class.getResource(resource).toExternalForm();
     }
-    
+
     protected void waitForResultReady() {
         result = null;
         Platform.runLater(new Runnable() {
@@ -53,11 +53,11 @@ public class WorkerTestClass extends GenericTestClass {
         });
         doWait(resultReady);
     }
-    
+
     protected void waitForResult(final String resultValue) {
         waitForResult(resultValue, false);
     }
-    
+
     protected void waitForResult(final String resultValue, boolean debugMode) {
         boolean workerDone = false;
         while (!workerDone) {

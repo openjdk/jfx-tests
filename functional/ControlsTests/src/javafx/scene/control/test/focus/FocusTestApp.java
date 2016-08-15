@@ -67,7 +67,7 @@ public class FocusTestApp extends BasicButtonChooserApp {
         private CheckBox traversable = new CheckBox("Focus Traversable");
         private CheckBox disable = new CheckBox("Control Disable");
         private CheckBox disabled = new CheckBox("Control DisableD");
-        
+
         public Page(ControlsFactory factory) {
             HBox testArea = new HBox();
             control = factory.createNode();

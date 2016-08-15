@@ -36,12 +36,12 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class AddRemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding and WebEngine.removeJavaScriptBinding call.
      * Checks that a situation with malformed binding name is handled nicely when adding and removing binding.
@@ -65,7 +65,7 @@ public class AddRemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestCla
             }
         });
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding and WebEngine.removeJavaScriptBinding call.
      * Checks that a situation with malformed binding name is handled nicely when adding and removing binding.
@@ -89,7 +89,7 @@ public class AddRemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestCla
             }
         });
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding and WebEngine.removeJavaScriptBinding call.
      * Checks that nothing nasty happens when binding an unbinding
@@ -115,5 +115,5 @@ public class AddRemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestCla
         });
         Assert.assertEquals(containerObject, resultObject);
     }
-    
+
 }

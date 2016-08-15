@@ -49,7 +49,7 @@ public class FileChooser {
     public static void autofocus() {
         FileInputLauncher.run(FileChooser.class.getResource("resources/autofocus1.html").toExternalForm());
     }
-    
+
     /**
      * Test for simple operations with INPUT of type FILE.
      */

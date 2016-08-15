@@ -613,7 +613,7 @@ public class ColorPickerTest extends TestBase {
             public boolean check(Node node) {
                 if (node.getProperties().containsKey(MenuItem.class)) {
                     String text = ((MenuItem) node.getProperties().get(MenuItem.class)).getText();
-                    //String there, is the name of menuItem in context menu, on 
+                    //String there, is the name of menuItem in context menu, on
                     //right mouse button click, over the custom color.
                     if (text != null && text.contentEquals("Remove Color")) {
                         return true;
@@ -1041,7 +1041,7 @@ public class ColorPickerTest extends TestBase {
         final Color[] SAMPLE_COLORS = {
             Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.PINK
         };
-        
+
         //select colors in reverse order
         for (int i = SAMPLE_COLORS.length - 1; i >= 0; --i) {
             clickCustomColorPopupButton();

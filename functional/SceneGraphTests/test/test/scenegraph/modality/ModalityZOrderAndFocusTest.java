@@ -108,7 +108,7 @@ public class ModalityZOrderAndFocusTest extends ModalityBase {
         tryToCloseByButton("stage0");
         negativeScreenshotCheck("ModalityGreen100100", "stage0");
         tryToCloseByButton("stage1");
-        //Commented out, because it looks like, it works fine both on linux and 
+        //Commented out, because it looks like, it works fine both on linux and
         //windows (at leats, it works on ubuntu12).
 //        if (!isLinux()) {
         checkScreenshot("ModalityGreen100100", "stage0");
@@ -151,7 +151,7 @@ public class ModalityZOrderAndFocusTest extends ModalityBase {
             tryToCloseByButton("stage2", "stage3", "stage1");
             checkScreenshot("ModalityGreen100100", "stage0");
         }
-        //Commented out, because it looks like, it works fine both on linux and 
+        //Commented out, because it looks like, it works fine both on linux and
         //windows (at leats, it works on ubuntu12).
 //            negativeScreenshotCheck("ModalityGreen100100", "stage0");
 //            negativeScreenshotCheck("ModalityGreen100100", "stage1");

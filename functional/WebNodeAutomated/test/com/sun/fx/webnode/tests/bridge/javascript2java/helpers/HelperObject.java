@@ -30,7 +30,7 @@ package com.sun.fx.webnode.tests.bridge.javascript2java.helpers;
  * @author Irina Grineva
  */
 public class HelperObject {
-    
+
     public String stringField;
     public String unicodeField;
     public int intField;
@@ -50,44 +50,44 @@ public class HelperObject {
         this.charField = charField;
         this.objectField = objectField;
     }
-    
+
     public int publicField = 0;
     protected int protectedField = 1;
     private int privateField = 2;
     public static int staticField = 3;
-    
+
     public HelperObject(String s) {
             stringField = s;
     }
 
     public HelperObject() {
-        
+
     }
-    
+
     public int doSomethingPublic() {
         return publicField;
     }
-    
+
     protected int doSomethingProtected() {
         return protectedField;
     }
-    
+
     private int doSomethingPrivate() {
         return privateField;
     }
-    
+
     public static int doSomethingStatic() {
         return staticField;
     }
-    
+
     public static int doSomethingStatic2() {
         return 42;
     }
-    
+
     public static String doSomethingStatic3() {
         return "Test!";
     }
-    
+
     // Do not swap with next doSomehingOverloaded1 !!!
     public int doSomethingOverloaded1(String a) {
         return 1;
@@ -104,49 +104,49 @@ public class HelperObject {
     public int doSomethingOverloaded2(double a) {
         return 4;
     }
-    
+
     public int doParamImportant(int param) {
         return param + 10;
     }
-    
+
     public Exception e = new Exception("I throw up!");
     public void iThrowException() throws Exception {
         throw e;
     }
-    
+
     public SpecialException e2 = new SpecialException();
     public void iThrowException2() throws SpecialException {
         throw e2;
     }
-    
+
     public String doString(String s) {
         return s;
     }
-    
+
     public int doInt(int i) {
         return i;
     }
-    
+
     public boolean doBoolean(boolean b) {
         return b;
     }
-    
+
     public double doDouble(double d) {
         return d;
     }
-    
+
     public double doFloat(float f) {
         return f;
     }
-    
+
     public char doChar(char c) {
         return c;
     }
-    
+
     public Object doObject(Object o) {
         return o;
     }
-    
+
     public void justDoIt() {
         // Done :)
     }

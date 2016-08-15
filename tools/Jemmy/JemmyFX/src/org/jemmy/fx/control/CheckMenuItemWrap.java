@@ -33,7 +33,7 @@ import org.jemmy.env.Environment;
 import org.jemmy.interfaces.Selectable;
 
 /**
- * This is a menu item and so could be found within the menu hierarchy. It could 
+ * This is a menu item and so could be found within the menu hierarchy. It could
  * also be selected/unselected.
  * Please consult <a href="../../samples/menu">samples</a> for more info.
  * @see MenuBarWrap
@@ -45,13 +45,13 @@ import org.jemmy.interfaces.Selectable;
 public class CheckMenuItemWrap<T extends CheckMenuItem>  extends MenuItemWrap<T> {
 
     private final SelectableImpl selectable = new SelectableImpl();
-    
+
      public CheckMenuItemWrap(Environment env, T item) {
         super(env, item);
     }
-    
+
     @As(Boolean.class)
     public Selectable<Boolean> asSelectable() {
         return selectable;
-    }    
+    }
 }

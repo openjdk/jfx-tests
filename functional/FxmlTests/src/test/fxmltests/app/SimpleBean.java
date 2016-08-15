@@ -28,24 +28,24 @@ package test.fxmltests.app;
  *
  * @author Aleksandr Sakharuk
  */
-public class SimpleBean 
+public class SimpleBean
 {
-    
+
     public SimpleBean()
     {
-	content = new String();
+    content = new String();
     }
-    
+
     public String getContent()
     {
-	return content;
+    return content;
     }
-    
+
     public void setContent(String content)
     {
-	this.content = content;
+    this.content = content;
     }
-    
+
     private String content;
-    
+
 }

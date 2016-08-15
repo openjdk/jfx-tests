@@ -38,51 +38,51 @@ public class MenuDefaultValue extends BasicButtonChooserApp {
 
     private static int WIDTH = 400;
     private static int HEIGHT = 200;
-    
+
     private static String FXML_MENU_RESOURCE = "/test/fxmltests/resources/menu-RT-19007.fxml";
     private static String FXML_MENUBAR_RESOURCE = "/test/fxmltests/resources/menubar-RT-19007.fxml";
     private static String FXML_MENUITEMCUSTOM_RESOURCE = "/test/fxmltests/resources/menuitemcustom-RT-19007.fxml";
-    
+
     public static String MENU_FILE_ID = "File";
     public static String MENUITEM_ADD_ID = "add";
     public static String MENUITEM_OPEN_ID = "open";
-    
+
     public static int COUNT_MENUITEMS = 2;
-    
+
     private static Rectangle red= new Rectangle(10, 10) {
                     {
                         setFill(Color.RED);
                     }
                 };
-    
+
     public enum Pages {
         menuPage, menuBarPage, menuItemCustomPage
     }
-    
+
     public MenuDefaultValue() {
         super(WIDTH, HEIGHT, VersionInfo.getRuntimeVersion(), false);
     }
-    
-    
+
+
     @Override
     protected TestNode setup() {
         TestNode root = new TestNode();
 
         PageWithSlots pageMenu = new PageWithSlots(Pages.menuPage.name(), HEIGHT - 15, WIDTH - 10);
         pageMenu.add(new FXMLMenuPage(), Pages.menuPage.name());
-        
+
         PageWithSlots pageMenuBar = new PageWithSlots(Pages.menuBarPage.name(), HEIGHT - 15, WIDTH - 10);
         pageMenuBar.add(new FXMLMenuBarPage(), Pages.menuBarPage.name());
-        
+
         PageWithSlots pageMenuItemCustom = new PageWithSlots(Pages.menuItemCustomPage.name(), HEIGHT - 15, WIDTH - 10);
         pageMenuItemCustom.add(new FXMLMenuCustomItemPage(), Pages.menuItemCustomPage.name());
-        
+
         root.add(pageMenu);
         root.add(pageMenuBar);
         root.add(pageMenuItemCustom);
         return root;
     }
-    
+
 
     private class FXMLMenuPage extends TestNode {
         @Override
@@ -114,7 +114,7 @@ public class MenuDefaultValue extends BasicButtonChooserApp {
             return menuBar;
         }
     }
-    
+
     private class FXMLMenuCustomItemPage extends TestNode {
         @Override
         public Node drawNode() {
@@ -129,7 +129,7 @@ public class MenuDefaultValue extends BasicButtonChooserApp {
             return menuBar;
         }
     }
-    
+
     public static void main(String[] args) {
         Utils.launch(MenuDefaultValue.class, null);
     }

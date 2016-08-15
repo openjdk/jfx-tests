@@ -34,20 +34,20 @@ public class BackspaceChange extends Change {
 
     public BackspaceChange() {
     }
-    
+
     public void visit(ChangeVisitor v) {
         v.visit(this);
     }
-    
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
-    
+
     public static Change buildRandom(Random rnd) {
         return new BackspaceChange();
     }
-    
+
     @Override
     public Object clone() {
         return super.clone();

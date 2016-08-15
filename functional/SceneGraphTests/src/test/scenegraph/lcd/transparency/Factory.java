@@ -26,7 +26,7 @@ package test.scenegraph.lcd.transparency;
 import javafx.scene.Node;
 
 /**
- * 
+ *
  * @author Alexander Petrov
  */
 
@@ -37,13 +37,13 @@ public interface Factory {
      * @return created node.
      */
     public Node createNode(boolean lcd);
-    
+
     /**
      * True if LCD text work in this test.
-     * @return 
+     * @return
      */
     public boolean isLCDWork();
-    
+
     /**
      * Testing action on node.
      * @param node testing node.

@@ -104,7 +104,7 @@ public class LineChartApp extends XYChartBaseApp {
     }
 
     protected Object createObject(Axis x_axis, Axis y_axis, double width, double height) {
-        
+
         Series s1 = new Series( FXCollections.observableArrayList(
                     new XYChart.Data(1, 4),
                     new XYChart.Data(4, 5),

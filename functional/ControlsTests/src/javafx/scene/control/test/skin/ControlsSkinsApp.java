@@ -46,7 +46,7 @@ import test.javaclient.shared.Utils;
 
 /**
  * @author Alexander Kirov
- * 
+ *
  * See https://javafx-jira.kenai.com/browse/RT-33520
  */
 public class ControlsSkinsApp extends InteroperabilityApp {

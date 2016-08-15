@@ -33,38 +33,38 @@ import javafx.scene.layout.VBox;
 
 
 public class CustomControl extends VBox {
-    
+
     public static String VALUE = "Hello world!";
     public static String TEXT_FIELD_ID = "textField";
     public static String BUTTON_ID = "buttonId";
-    
+
     private static String FXML_RESOURCE = "/test/fxmltests/resources/customControl.fxml";
-    
+
     @FXML private TextField textField;
-    
+
     public CustomControl() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML_RESOURCE));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
-            fxmlLoader.load();            
+            fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
     }
-    
+
     public String getText() {
         return textProperty().get();
     }
-    
+
     public void setText(String value) {
         textProperty().set(value);
     }
-    
+
     public StringProperty textProperty() {
-        return textField.textProperty();                
+        return textField.textProperty();
     }
-        
+
     @FXML
     protected void doSomething() {
         setText(VALUE);

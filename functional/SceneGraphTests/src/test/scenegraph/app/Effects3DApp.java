@@ -46,7 +46,7 @@ public class Effects3DApp extends Effects2App {
     protected CombinedTestChooserPresenter createCombinedTestChooserPresenter(int width, int height, String title, boolean showButtons) {
         return new CombinedTestChooserPresenter3D(width, height, title, getButtonsPane());
     }
-    
+
     @Override
     protected void initPredefinedFont() {
     }

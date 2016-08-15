@@ -47,9 +47,9 @@ public class MenuLauncher extends Application {
 
     private Scene createScene(String url) {
         view = new WebView();
-        view2 = new WebView();        
+        view2 = new WebView();
         web = view.getEngine();
-        
+
         web.load(url);
         web.setCreatePopupHandler(new Callback<PopupFeatures, WebEngine>() {
             @Override
@@ -57,18 +57,18 @@ public class MenuLauncher extends Application {
                 return view2.getEngine();
             }
         });
-        
+
         view2.getEngine().load(MenuLauncher.class.getResource("resources/empty.html").toExternalForm());
-        
+
         final VBox box = new VBox();
         view.setMaxHeight(300);
         view.setMinHeight(300);
         view2.setMaxHeight(300);
         view2.setMinHeight(300);
         box.getChildren().addAll(view, view2);
-        
+
         final Scene scene = new Scene(box);
-        
+
         scene.setFill(Color.GRAY);
         return scene;
     }

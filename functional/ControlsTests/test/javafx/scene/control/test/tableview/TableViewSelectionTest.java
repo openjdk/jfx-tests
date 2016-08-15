@@ -133,9 +133,9 @@ public class TableViewSelectionTest extends TableListCommonTests {
     protected Point getSelectedItem() {
         return TestBaseCommon.getSelectedItem(testedControl);
     }
-    
+
     @Override
     public void keyboardShiftSequentialMultipleSelectionTest() {
-        
+
     }
 }

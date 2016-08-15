@@ -85,7 +85,7 @@ public enum ColorComponents implements ColorComponentProvider{
         }
 
         public double getComponent(int sRGBColor) {
-             
+
             int colorComponent = sRGBColor & 0x0000FF;
             return (double) colorComponent / 255;
         }
@@ -125,14 +125,14 @@ public enum ColorComponents implements ColorComponentProvider{
             return getClass().getResourceAsStream("opacity.png");
         }
     });
-        
+
 
     private ColorComponentProvider provider;
-    
+
     private ColorComponents(ColorComponentProvider provider){
         this.provider = provider;
     }
-        
+
     public double getComponent(Color color) {
         return provider.getComponent(color);
     }
@@ -152,5 +152,5 @@ public enum ColorComponents implements ColorComponentProvider{
     public InputStream getGoldImageInputStream() {
         return provider.getGoldImageInputStream();
     }
-    
+
 }

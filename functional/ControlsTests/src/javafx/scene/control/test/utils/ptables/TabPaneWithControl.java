@@ -62,7 +62,7 @@ public class TabPaneWithControl extends TabPane implements AbstractApplicationPr
                     sp.setPrefSize(t1.getWidth(), t1.getHeight());
                 }
             });
-            
+
             content.setId(domainName.toUpperCase() + PropertiesTable.PROPERTIES_TABLE_SUFFIX_ID);
 
             newTab.setContent(sp);

@@ -116,7 +116,7 @@ public class PieChartApp extends ChartBaseApp {
 
         return rootTestNode;
     }
-    
+
     protected Object createObject() {
         return createObject(SLOT_WIDTH, SLOT_HEIGHT);
     }

@@ -32,7 +32,7 @@ import static javafx.scene.control.test.utils.ptables.StaticLogger.*;
 
 /**
  * @author Alexander Kirov
- * 
+ *
  * Implementation to control StringProperty using TextField.
  */
 public class StringPropertyValueSetter extends AbstractPropertyValueSetter<String> {

@@ -38,11 +38,11 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class ContextMenuEnabledTest extends GenericTestClass {
-   
+
     private BooleanProperty contextMenuEnabledProperty;
     private Boolean contextMenuEnabledPropertyValue;
     private Boolean isContextMenuEnabled;
-    
+
     private Tester isContextMenuEnabledReady = new Tester() {
         public boolean isPassed() {
             return isContextMenuEnabled != null;
@@ -53,12 +53,12 @@ public class ContextMenuEnabledTest extends GenericTestClass {
             return isContextMenuEnabled != null && contextMenuEnabledPropertyValue != null;
         }
     };
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for checking default context menu state.
      */
@@ -74,7 +74,7 @@ public class ContextMenuEnabledTest extends GenericTestClass {
         doWait(isContextMenuEnabledReady);
         Assert.assertTrue("Context menu is not enabled by default!", isContextMenuEnabled);
     }
-    
+
     /**
      * Test for disabling context menu.
      */
@@ -91,7 +91,7 @@ public class ContextMenuEnabledTest extends GenericTestClass {
         doWait(isContextMenuEnabledReady);
         Assert.assertFalse("Context menu is not disabled!", isContextMenuEnabled);
     }
-    
+
     /**
      * Test for disabling, and then enabling context menu.
      */
@@ -109,7 +109,7 @@ public class ContextMenuEnabledTest extends GenericTestClass {
         doWait(isContextMenuEnabledReady);
         Assert.assertTrue("Context menu is disabled!", isContextMenuEnabled);
     }
-    
+
     /**
      * Test for checking default context menu state using a property.
      */
@@ -131,7 +131,7 @@ public class ContextMenuEnabledTest extends GenericTestClass {
         });
         Assert.assertTrue("Context menu is not enabled by default!", contextMenuEnabledPropertyValue);
     }
-    
+
     /**
      * Test for disabling context menu using a property.
      */
@@ -152,7 +152,7 @@ public class ContextMenuEnabledTest extends GenericTestClass {
         Assert.assertFalse("Context menu is not disabled!", contextMenuEnabledPropertyValue);
         Assert.assertFalse("Context menu is not disabled!", isContextMenuEnabled);
     }
-    
+
     /**
      * Test for disabling, and then enabling context menu using a property.
      */

@@ -34,5 +34,5 @@ public class LightScopeMeshTest extends LightScopeTests{
     public void chooseCase() {
         initTestCase(LightScopeTestApp.TestCaseType.SINGLE_MESH_CASE);
     }
-    
+
 }

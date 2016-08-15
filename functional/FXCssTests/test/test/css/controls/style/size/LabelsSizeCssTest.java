@@ -44,5 +44,5 @@ public class LabelsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.Labels.name();
     }
-    
+
 }

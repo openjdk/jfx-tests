@@ -51,10 +51,10 @@ public class ControlsBase extends UtilTestFunctions {
     Wrap<? extends Scene> scene;
     Wrap<? extends ChoiceBox> nodeChooser;
     Wrap<? extends Node> testedControl;
-    
+
     static protected enum TestedProperties {
         disable, opacity, focused};
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         ControlChooserApp.main(null);
@@ -64,13 +64,13 @@ public class ControlsBase extends UtilTestFunctions {
     public void setUp() {
         initWrappers();
     }
-    
+
     private void initWrappers() {
         scene = Root.ROOT.lookup().wrap();
         parent = scene.as(Parent.class, Node.class);
         nodeChooser = parent.lookup(ChoiceBox.class, new ByID<ChoiceBox>(NODE_CHOOSER_ID)).wrap();
     }
-    
+
     protected void setOpacity(final double OPACITY, WriteableRaster image) {
 
         List<Raster.Component> components = java.util.Arrays.asList(image.getSupported());
@@ -98,7 +98,7 @@ public class ControlsBase extends UtilTestFunctions {
             }
         }
     }
-    
+
     /**
      * Method blends first color with the second in the following proportion:
      * alpha for the first color and 1 - alpha for the second.
@@ -111,9 +111,9 @@ public class ControlsBase extends UtilTestFunctions {
         assert (colorX >= 0.0 && colorX <= 1.0);
         assert (colorY >= 0.0 && colorY <= 1.0);
         assert (alpha >= 0.0 && alpha <= 1.0);
-    
+
         double newColor = Math.min(1.0, colorX * alpha + (1 - alpha) * colorY);
-     
+
         assert (newColor >= 0.0 && newColor <= 1.0);
         return newColor;
     }

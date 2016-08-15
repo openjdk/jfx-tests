@@ -132,7 +132,7 @@ public class ComplexButtonsTest extends TestBase {
     public void Buttons_GLASS_GREY() throws InterruptedException {
         testCommon(ComplexButtonCssTests.Pages.GLASS_GREY.name());
     }
-    
+
     @Test
     public void Buttons_SHINY_ORANGE() throws InterruptedException {
         testCommon(ComplexButtonCssTests.Pages.SHINY_ORANGE.name());

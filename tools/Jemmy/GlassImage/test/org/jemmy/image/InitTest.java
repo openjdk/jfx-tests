@@ -42,7 +42,7 @@ public class InitTest {
 
     public InitTest() {
     }
-    
+
     @BeforeClass
     public static void setup() throws InterruptedException, IOException {
         TestApp.main(null);
@@ -55,7 +55,7 @@ public class InitTest {
         assertTrue(i instanceof GlassImage);
         assertNull(i.compareTo(i));
     }
-    
+
     @Test
     public void testComparator() {
         Environment.getEnvironment().setProperty(ImageCapturer.class, new GlassImageCapturer());
@@ -63,7 +63,7 @@ public class InitTest {
         assertTrue(comp instanceof GlassPixelImageComparator);
         assertTrue(((GlassPixelImageComparator)comp).getRasterComparator() instanceof MaxDistanceComparator);
     }
-        
+
     class TestScreen extends Screen {
 
         public TestScreen(Environment env) {

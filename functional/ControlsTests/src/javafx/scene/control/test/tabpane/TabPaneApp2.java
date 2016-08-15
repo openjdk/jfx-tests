@@ -55,11 +55,11 @@ public class TabPaneApp2 extends InteroperabilityApp {
     public final static String RESET_BTN_ID = "Reset";
     public final static String ADD_SINGLE_BTN_ID = "Add single item";
     public final static String ADD_SINGLE_AT_POS_BTN_ID = "Add single item at pos";
-    public final static String DISABLE_SINGLE_AT_POS_BTN_ID = "Disable single item at pos";    
+    public final static String DISABLE_SINGLE_AT_POS_BTN_ID = "Disable single item at pos";
     public final static String REMOVE_SINGLE_AT_POS_BTN_ID = "Remove single item at pos";
     public final static String REMOVE_POS_EDIT_ID = "Remove at pos";
     public final static String ADD_POS_EDIT_ID = "Add at pos";
-    public final static String DISABLE_POS_EDIT_ID = "Disable at pos";    
+    public final static String DISABLE_POS_EDIT_ID = "Disable at pos";
     public final static String LAST_SELECTED_ID = "Last selected";
     public final static String SHOWN_CHECK_ID = "Shown";
     public final static String SHOWING_CHECK_ID = "Showing";
@@ -144,7 +144,7 @@ public class TabPaneApp2 extends InteroperabilityApp {
 
             HBox add_position_box = new HBox(5);
             controls.getChildren().add(add_position_box);
-            
+
             final TextField add_position = new TextField("0");
             add_position.setId(ADD_POS_EDIT_ID);
 
@@ -162,8 +162,8 @@ public class TabPaneApp2 extends InteroperabilityApp {
             add_position_box.getChildren().add(add_label);
 
             add_position_box.getChildren().add(add_position);
-            
-            
+
+
             HBox disable_position_box = new HBox(5);
             controls.getChildren().add(disable_position_box);
 
@@ -186,7 +186,7 @@ public class TabPaneApp2 extends InteroperabilityApp {
             disable_position_box.getChildren().add(disable_label);
 
             disable_position_box.getChildren().add(disable_position);
-            
+
 
             HBox remove_position_box = new HBox(5);
             controls.getChildren().add(remove_position_box);

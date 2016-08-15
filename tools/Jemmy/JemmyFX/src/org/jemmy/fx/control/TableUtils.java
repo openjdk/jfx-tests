@@ -103,7 +103,7 @@ public class TableUtils {
     /**
      * Extracted for optimization purpose - we don't need to find clipped
      * container each time.
-     * 
+     *
      * @parameter clippedContainerWrap - precomputed wrap of clipped container.
      */
     private static <CellClass extends Node> Bounds shown1dImpl(
@@ -198,10 +198,10 @@ public class TableUtils {
     }
 
     private static <CellClass extends IndexedCell> int[] shown(
-            Environment env, 
-            final Wrap<? extends Control> wrap, 
-            final Function<CellClass, Point> infoProvider, 
-            final Class<CellClass> cellType, 
+            Environment env,
+            final Wrap<? extends Control> wrap,
+            final Function<CellClass, Point> infoProvider,
+            final Class<CellClass> cellType,
             final Rectangle actuallyVisibleArea) {
         return new FutureAction<>(env, () -> {
             final int[] res = new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE, -1, -1};
@@ -339,7 +339,7 @@ public class TableUtils {
             return new Point(theWrap.getColumnIndex(t), theWrap.getRowIndex(t));
         }
     }
-    
+
     public static class Bounds {
 
         private final int begin;
@@ -349,15 +349,15 @@ public class TableUtils {
             this.begin = begin;
             this.end = end;
         }
-        
+
         public int getBegin() {
             return begin;
         }
-        
+
         public int getEnd() {
             return end;
         }
-        
+
         @Override
         public String toString() {
             return "Bounds : begin <" + begin + ">, end <" + end + ">.";

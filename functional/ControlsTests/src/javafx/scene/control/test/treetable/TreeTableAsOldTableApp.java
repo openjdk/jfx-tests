@@ -197,17 +197,17 @@ public class TreeTableAsOldTableApp extends InteroperabilityApp {
     protected void fillTree(int rows, int cols) {
         TreeItem<Data> root = treeTableView.getRoot();
         root.getChildren().clear();
-        
+
         for (int k = 0; k < 5; k++) {
             TreeItem branch = new TreeItem(new Data(String.format("%02d", k), cols, 0));
             branch.setExpanded(true);
             root.getChildren().add(branch);
-            
+
             for (int z = 0; z < 3; z++) {
                 TreeItem subBranch = new TreeItem(new Data(String.format("%02d-%02d", k, z), cols, 0));
                 subBranch.setExpanded(true);
                 branch.getChildren().add(subBranch);
-                
+
                 for (int i = 0; i < rows; i++) {
                     TreeItem leaf = new TreeItem(new Data(String.format("%02d-%02d-%02d", k, z, i), cols, 0));
                     leaf.setExpanded(true);
@@ -215,7 +215,7 @@ public class TreeTableAsOldTableApp extends InteroperabilityApp {
                 }
             }
         }
-        
+
         //Create columns
         treeTableView.getColumns().clear();
         final ContextMenu contextMenu = new ContextMenu();
@@ -224,7 +224,7 @@ public class TreeTableAsOldTableApp extends InteroperabilityApp {
         }
         treeTableView.setContextMenu(contextMenu);
     }
-    
+
     /**
      * A container that contains all the controls which are used for tested UI
      * customization
@@ -265,20 +265,20 @@ public class TreeTableAsOldTableApp extends InteroperabilityApp {
 
         HBox hbFillTree = new HBox(5.0);
         resetVBox.getChildren().add(hbFillTree);
-        
+
         Button btnFillTree = new Button("Fill tree");
         btnFillTree.setId(FILL_TREE_ID);
         btnFillTree.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 Integer rows = Integer.valueOf(rowsNumberTf.getText());
                 Integer cols = Integer.valueOf(columnsNumberTf.getText());
-                
+
                 fillTree(rows, cols);
             }
         });
-        
+
         hbFillTree.getChildren().addAll(btnFillTree);
-        
+
         VBox insertItemVBox = new VBox();
         final TextField itemToInsert = new TextField("new item");
         itemToInsert.setId(TEXT_TO_ADD_ID);
@@ -369,7 +369,7 @@ public class TreeTableAsOldTableApp extends InteroperabilityApp {
             }
         });
         multipleSelectionHBox.getChildren().add(singleCellSelectionCheck);
-        
+
         VBox selectionVBox = new VBox();
         selectionVBox.getChildren().add(new Label("Selection: "));
         final TextField selection = new TextField("");
@@ -412,7 +412,7 @@ public class TreeTableAsOldTableApp extends InteroperabilityApp {
         final TextField columnIndexToScroll = new TextField();
         columnIndexToScroll.setId(Table.SCROLL_TO_COLUMN_INDEX_ID);
         columnIndexToScroll.setPromptText("Index to scroll");
-        
+
         Button scrollTo = new Button("Scroll to");
         scrollTo.setId(Table.SCROLL_TO_COLUMN_BTN_ID);
         scrollTo.setOnAction(new EventHandler<ActionEvent>() {
@@ -421,10 +421,10 @@ public class TreeTableAsOldTableApp extends InteroperabilityApp {
                 treeTableView.scrollToColumnIndex(Integer.valueOf(columnIndexToScroll.getText()));
             }
         });
-        
+
         HBox scrollingControls = new HBox(3, columnIndexToScroll, scrollTo);
         res.getChildren().add(scrollingControls);
-        
+
         Button actionButton = new Button("Custom action");
         actionButton.setOnAction(new EventHandler<ActionEvent>() {
             //For testing purposes
@@ -440,7 +440,7 @@ public class TreeTableAsOldTableApp extends InteroperabilityApp {
             }
         });
         res.getChildren().add(actionButton);
-        
+
         return res;
     }
 
@@ -471,7 +471,7 @@ public class TreeTableAsOldTableApp extends InteroperabilityApp {
         }
 
         public String getName() { return name; }
-        
+
         protected String getLongItem(int length) {
             if (length == 0) {
                 return "";

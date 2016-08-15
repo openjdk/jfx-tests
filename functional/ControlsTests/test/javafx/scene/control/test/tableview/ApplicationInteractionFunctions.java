@@ -85,7 +85,7 @@ public class ApplicationInteractionFunctions extends TestBaseCommon {
 
         prefWidth, prefHeight, width, sortNode, comparator, sortOrder, graphic,
         resizable, showRoot, expanded, editable, value, sortable, fixedCellSize, reorderable};
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         if (isTableTests) {
@@ -211,7 +211,7 @@ public class ApplicationInteractionFunctions extends TestBaseCommon {
             }
         }).wrap();
     }
-    
+
     /*
      * Clears all the content and then
      * creates COLS columns and respective numver of rows
@@ -271,19 +271,19 @@ public class ApplicationInteractionFunctions extends TestBaseCommon {
 
         clickButtonForTestPurpose(BTN_CREATE_SORTABLE_ROWS_ID);
     }
-    
+
     protected void setCellEditor(final CellEditorType type, final boolean isCustom) {
-        
+
         new GetAction<Object>() {
             @Override
             public void run(Object... parameters) throws Exception {
                 Wrap<? extends Node> cmbEditors
                         = parent.lookup(new ByID(CMB_EDITORS_ID)).wrap();
-                
+
                 ((ComboBox) cmbEditors.getControl()).setValue(type);
             }
         }.dispatch(testedControl.getEnvironment());
-        
+
         new GetAction<Object>() {
             @Override
             public void run(Object... parameters) throws Exception {
@@ -291,9 +291,9 @@ public class ApplicationInteractionFunctions extends TestBaseCommon {
                 ((CheckBox)chbCustom.getControl()).setSelected(isCustom);
             }
         }.dispatch(testedControl.getEnvironment());
-        
+
         clickButtonForTestPurpose(BTN_SET_CELLS_EDITOR_ID);
-        
+
         if (isCustom) {
             testedControl.waitState(new State<Object>() {
                 String id = null;
@@ -306,7 +306,7 @@ public class ApplicationInteractionFunctions extends TestBaseCommon {
                         id = Cell.EDITING_TEXTFIELD_CELL_ID;
                     } else {
                         throw new RuntimeException("Something went wrong");
-                    } 
+                    }
                 }
                 @Override
                 public Object reached() {
@@ -314,10 +314,10 @@ public class ApplicationInteractionFunctions extends TestBaseCommon {
                            ? 42 : null;
                     }
             });
-            
+
         }
     }
-    
+
     protected String getCellText(final Wrap<? extends Labeled> wrap) {
         return new GetAction<String>() {
             @Override
@@ -326,7 +326,7 @@ public class ApplicationInteractionFunctions extends TestBaseCommon {
             }
         }.dispatch(testedControl.getEnvironment());
     }
-    
+
     protected void checkPopup() throws Exception {
         Lookup<Scene> lookup = Root.ROOT.lookup(new ByWindowType(PopupWindow.class))
                                          .lookup(Scene.class);
@@ -334,18 +334,18 @@ public class ApplicationInteractionFunctions extends TestBaseCommon {
             throw new Exception("Popup is expected to appear.");
         }
     }
-    
+
     /*
      * Doesn't take nested columns into consideration.
      */
     protected Collection<TableColumnBase> getTopLevelColumns() {
         return new GetAction<Collection<TableColumnBase>>() {
-            
+
             @Override
             public void run(Object... parameters) throws Exception {
                 Collection<TableColumnBase> cols;
                 Control control = testedControl.getControl();
-                
+
                 if (isTableTests) {
                     cols = ((TableView) control).getColumns();
                 } else {
@@ -355,7 +355,7 @@ public class ApplicationInteractionFunctions extends TestBaseCommon {
             }
         }.dispatch(testedControl.getEnvironment());
     }
-    
+
     protected void setShowRoot(final boolean value) {
         if (!isTableTests) {
             new GetAction<Object>() {
@@ -365,14 +365,14 @@ public class ApplicationInteractionFunctions extends TestBaseCommon {
                     ((TreeTableView) testedControl.getControl()).setShowRoot(value);
                 }
             }.dispatch(testedControl.getEnvironment());
-            
+
             try {
                 TimeUnit.MILLISECONDS.sleep(1000);
             } catch (Exception e) {
             }
         }
     }
-    
+
     protected void sortColumnsByName(final boolean isAscending) {
         new GetAction<Object>() {
             private Comparator<TableColumnBase> comparator = new Comparator<TableColumnBase>() {
@@ -391,7 +391,7 @@ public class ApplicationInteractionFunctions extends TestBaseCommon {
                 }
             }
         }.dispatch(testedControl.getEnvironment());
-        
+
         try {
             TimeUnit.MILLISECONDS.sleep(1000);
         } catch (Exception e) {

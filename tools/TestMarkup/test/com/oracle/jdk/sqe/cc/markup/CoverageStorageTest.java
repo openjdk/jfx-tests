@@ -45,7 +45,7 @@ public class CoverageStorageTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     CoverageStorage instance = new CoverageStorage(false);
     CoverageStorage template = new CoverageStorage(false);
 
@@ -108,7 +108,7 @@ public class CoverageStorageTest {
         }
         assertEquals(instance.coverage.keySet().size(), copy.coverage.keySet().size());
     }
-    
+
     @Test
     public void testMergeWithTempale() {
         instance.merge(template);
@@ -120,7 +120,7 @@ public class CoverageStorageTest {
         template.merge(instance);
         assertMerge(template);
     }
-    
+
     private void assertMerge(CoverageStorage merge) {
         assertEquals(4, merge.coverage.keySet().size());
         assertEquals(2, merge.coverage.get("feature1").sourceUnits.size());

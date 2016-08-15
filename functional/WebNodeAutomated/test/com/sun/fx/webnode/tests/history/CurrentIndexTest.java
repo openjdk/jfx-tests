@@ -36,10 +36,10 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class CurrentIndexTest extends HistoryTestClass {
-    
+
     private Integer currentIndex;
     private ReadOnlyIntegerProperty currentIndexProperty;
-    
+
     private void getCurrentIndex() {
         doWait(engineReady);
         currentIndex = null;
@@ -54,7 +54,7 @@ public class CurrentIndexTest extends HistoryTestClass {
             }
         });
     }
-    
+
     private void getCurrentIndexProperty() {
         doWait(engineReady);
         currentIndexProperty = null;
@@ -69,7 +69,7 @@ public class CurrentIndexTest extends HistoryTestClass {
             }
         });
     }
-    
+
     /**
      * Test for getting current index in new WebEngine.
      */
@@ -79,7 +79,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndex();
         Assert.assertEquals(0, currentIndex.intValue());
     }
-    
+
     /**
      * Test for getting current index property in new WebEngine.
      */
@@ -89,7 +89,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndexProperty();
         Assert.assertEquals(0, currentIndexProperty.intValue());
     }
-    
+
     /**
      * Test for getting current index from zero-length history.
      */
@@ -104,7 +104,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndex();
         Assert.assertEquals(0, currentIndex.intValue());
     }
-    
+
     /**
      * Test for getting current index property from zero-length history.
      */
@@ -119,7 +119,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndexProperty();
         Assert.assertEquals(0, currentIndexProperty.intValue());
     }
-    
+
     /**
      * Test for getting current index from zero-length history.
      */
@@ -135,7 +135,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndex();
         Assert.assertEquals(0, currentIndex.intValue());
     }
-    
+
      /**
      * Test for getting current index property from zero-length history.
      */
@@ -151,7 +151,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndexProperty();
         Assert.assertEquals(0, currentIndexProperty.intValue());
     }
-    
+
     /**
      * Test for getting current index after navigation.
      */
@@ -162,7 +162,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndex();
         Assert.assertEquals(2, currentIndex.intValue());
     }
-    
+
     /**
      * Test for getting current index property after navigation.
      */
@@ -173,7 +173,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndexProperty();
         Assert.assertEquals(2, currentIndexProperty.intValue());
     }
-    
+
     /**
      * Test for getting current index after calling WebHistory.go() with negative argument.
      */
@@ -185,7 +185,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndex();
         Assert.assertEquals(1, currentIndex.intValue());
     }
-    
+
     /**
      * Test for getting current index property after calling WebHistory.go() with negative argument.
      */
@@ -197,7 +197,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndexProperty();
         Assert.assertEquals(1, currentIndexProperty.intValue());
     }
-    
+
     /**
      * Test for getting current index after calling WebHistory.go() with positive argument.
      */
@@ -211,7 +211,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndex();
         Assert.assertEquals(1, currentIndex.intValue());
     }
-    
+
     /**
      * Test for getting current index property after calling WebHistory.go() with positive argument.
      */
@@ -225,7 +225,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndexProperty();
         Assert.assertEquals(1, currentIndexProperty.intValue());
     }
-    
+
     /**
      * Test for getting current index after calling WebHistory.go() with 0.
      */
@@ -237,7 +237,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndex();
         Assert.assertEquals(2, currentIndex.intValue());
     }
-    
+
     /**
      * Test for getting current index property after calling WebHistory.go() with 0.
      */
@@ -249,7 +249,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndexProperty();
         Assert.assertEquals(2, currentIndexProperty.intValue());
     }
-    
+
     /**
      * Test for getting current index after reloading page.
      */
@@ -261,7 +261,7 @@ public class CurrentIndexTest extends HistoryTestClass {
         getCurrentIndex();
         Assert.assertEquals(2, currentIndex.intValue());
     }
-    
+
     /**
      * Test for getting current index property after reloading page.
      */

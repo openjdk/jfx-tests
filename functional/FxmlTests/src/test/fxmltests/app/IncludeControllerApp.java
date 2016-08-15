@@ -33,15 +33,15 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class IncludeControllerApp extends Application{
-    
+
     private static String FXML_RESOURCE = "/test/fxmltests/resources/main_controller.fxml";
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         initialize(stage);
         stage.show();
     }
-    
+
     private void initialize (Stage stage) {
         stage.setTitle(VersionInfo.getRuntimeVersion());
         try {
@@ -53,11 +53,11 @@ public class IncludeControllerApp extends Application{
             throw new RuntimeException(exc);
         }
     }
-    
+
     public static void main (String[] args) {
         launch(args);
     }
-    
+
     public static void reset () {
         IncludeController.reset();
         MainController.reset();

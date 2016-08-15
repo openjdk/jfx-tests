@@ -43,7 +43,7 @@ public class StackedAreaChartApp extends XYChartBaseApp {
     public StackedAreaChartApp() {
         super("StackedAreaChart", false);
     }
-    
+
     @Override
     protected TestNode setup() {
         super.setup();

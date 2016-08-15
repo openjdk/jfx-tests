@@ -33,7 +33,7 @@ public class E2ESample extends ExplorerSampleBase {
         final TextInputControlDock address = new TextInputControlDock(scene.asParent());
         String location = address.getText();
 
-        //go to the end of the location line and add "/build/test" 
+        //go to the end of the location line and add "/build/test"
         //Hit enter afterwards
         address.asSelectionText().to(address.getText().length());
         address.type(File.separator + "build"

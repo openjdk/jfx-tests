@@ -203,7 +203,7 @@ public class RichTextDifferentCasesApp extends BasicButtonChooserApp {
             tf.getChildren().add(new Rectangle(60, 10));
             Rectangle rect = new Rectangle(30, FLOW_HEIGHT / 2, Color.AQUA);
             rect.setStroke(Color.BLUE);
-            tf.getChildren().add(new Text("\n"));            
+            tf.getChildren().add(new Text("\n"));
             tf.getChildren().add(rect);
         }
     }

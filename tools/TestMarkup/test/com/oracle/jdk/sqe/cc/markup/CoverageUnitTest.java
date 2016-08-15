@@ -33,7 +33,7 @@ import static org.junit.Assert.*;
  * @author shura
  */
 public class CoverageUnitTest {
-    
+
     public CoverageUnitTest() {
     }
 
@@ -44,14 +44,14 @@ public class CoverageUnitTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     CoverageUnit instance;
-    
+
     @Before
     public void setUp() {
         instance = new CoverageUnit("feature1", "class1", Level.LOW);
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -73,7 +73,7 @@ public class CoverageUnitTest {
      */
     @Test
     public void testMerge() {
-        CoverageUnit another = new CoverageUnit("feature1", "class2", Level.FULL);      
+        CoverageUnit another = new CoverageUnit("feature1", "class2", Level.FULL);
         instance.merge(another);
         assertEquals(2, instance.sourceUnits.size());
         assertEquals("class2", instance.sourceUnits.get(instance.sourceUnits.size() - 1));

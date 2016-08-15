@@ -46,8 +46,8 @@ public interface AbstractPropertiesTable extends HavingVisualRepresentation {
     public static final String UNIDIR_PREFIX = "UNIDIR_";
 
     public void addBooleanPropertyLine(Property bindableProperty);
-    
-    public void addBooleanPropertyLine(Property bindableProperty, Object owningObject);    
+
+    public void addBooleanPropertyLine(Property bindableProperty, Object owningObject);
 
     public void addDoublePropertyLine(final DoubleProperty bindableProperty, double min, double max, double initial);
 
@@ -68,9 +68,9 @@ public interface AbstractPropertiesTable extends HavingVisualRepresentation {
     public void addCounter(String counterName);
 
     public void incrementCounter(String counterName);
-    
+
     public String getDomainName();
-    
+
     void setDomainName(String domainName);
 
     public Collection<AbstractEventsCounter> getCounters();

@@ -33,10 +33,10 @@ import javafx.scene.paint.Color;
 public interface ColorComponentProvider {
     public double getComponent(Color color);
     public double getComponent(int sRGBColor);
-    
+
     public Color getColor(double componentValue);
     public int getARGBColor(int componentValue);
-    
+
     //Replace String getGoldImageInputStream with InputStream getGoldImageInputStream
     public InputStream getGoldImageInputStream();
 }

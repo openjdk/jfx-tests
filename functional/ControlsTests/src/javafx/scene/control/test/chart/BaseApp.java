@@ -381,7 +381,7 @@ public abstract class BaseApp extends BasicButtonChooserApp {
                 Object objects_observable = type.getMethod(firstSymbolToLower(name) + "Property").invoke(node, new Object[0]);
 
                 invoke("bind", objects_observable, observable_value);
-                
+
                 invoke("setValue", observable_value, value);
 
                 if (!compare(value, (Type) invoke("get" + name, "is" + name, node,  new Object[0]))) {
@@ -390,7 +390,7 @@ public abstract class BaseApp extends BasicButtonChooserApp {
             } catch (Exception ex) {
                 Logger.getLogger(ValueAxisApp.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             try {
                 Object objects_observable = type.getMethod(firstSymbolToLower(name) + "Property").invoke(node, new Object[0]);
                 invoke("unbind", objects_observable, new Object[0]);

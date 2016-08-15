@@ -36,8 +36,8 @@ public class RotateTestAction  implements TestAction{
     public RotateTestAction(double angle) {
         this.angle = angle;
     }
-    
-    
+
+
 
     public void updateNode(Text text) {
         text.setRotate(angle);
@@ -46,7 +46,7 @@ public class RotateTestAction  implements TestAction{
     public boolean isLCDWork() {
         return true;
     }
-    
+
     public static TestAction[] generate(double[] angles) {
         if (angles == null) {
             return null;
@@ -65,5 +65,5 @@ public class RotateTestAction  implements TestAction{
     public String toString() {
         return "angle=" + angle;
     }
-    
+
 }

@@ -33,7 +33,7 @@ import javafx.scene.text.Text;
  * @author akulyakh
  */
 class GraphicsButton implements AbstractButton {
-    
+
     private final Text text;
 
     public GraphicsButton(Text text) {
@@ -45,5 +45,5 @@ class GraphicsButton implements AbstractButton {
         return text;
     }
 
-    
+
 }

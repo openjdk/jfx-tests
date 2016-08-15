@@ -69,8 +69,8 @@ public class TreeTableCellWrap<DATA extends Object> extends ItemWrap<DATA> imple
 
     public TreeTableCellWrap(TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap, int row, TreeTableColumn column, CellEditor<? super DATA> editor) {
         this(treeTableViewWrap, null, row, column, (DATA) column.getCellData(row), editor);
-    }    
-    
+    }
+
     public TreeTableCellWrap(TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap, int row, TreeTableColumn column, DATA cellItem, CellEditor<? super DATA> editor) {
         this(treeTableViewWrap, null, row, column, cellItem, editor);
     }
@@ -113,7 +113,7 @@ public class TreeTableCellWrap<DATA extends Object> extends ItemWrap<DATA> imple
     public void show() {
         treeTableViewWrap.scrollTo(row, treeTableViewWrap.getDataColumns().indexOf(column));
     }
-    
+
     @Override
     public void edit(DATA newValue) {
         boolean isEditable = new GetAction<Boolean>() {
@@ -170,5 +170,5 @@ public class TreeTableCellWrap<DATA extends Object> extends ItemWrap<DATA> imple
         public String toString() {
             return "Looking for a (" + row + "," + column + ") tree table cell.";
         }
-    }    
+    }
 }

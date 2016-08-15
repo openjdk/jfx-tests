@@ -34,11 +34,11 @@ public abstract class DefaultFactory implements Factory{
 
     public Parent createControl(boolean lcd) {
         Parent value = createControl();
-        
+
         value.getStylesheets().add(DefaultFactory.class.getResource(lcd ? "lcd.css":"gray.css").toExternalForm());
-        
+
         return value;
     }
-    
-    public abstract Parent createControl(); 
+
+    public abstract Parent createControl();
 }

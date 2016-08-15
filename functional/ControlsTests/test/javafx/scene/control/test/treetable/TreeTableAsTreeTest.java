@@ -59,7 +59,7 @@ public class TreeTableAsTreeTest extends TreeViewTest {
         ApplicationInteractionFunctions.addColumn(TREE_DATA_COLUMN_NAME, 0, true);
         selectionHelper.setPageHeight(7);
     }
-    
+
     /**
      * Checks that when the sorting is applied to the underlying data collection
      * the cells are rendered in the right order.

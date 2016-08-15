@@ -40,13 +40,13 @@ import test.scenegraph.app.ControlEventsApp.Controls;
  */
 public class PaginationEventsTest extends EventTestCommon<ControlDock>
 {
-    
+
     @BeforeClass
     public static void rinUI()
     {
         ControlEventsApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -54,14 +54,14 @@ public class PaginationEventsTest extends EventTestCommon<ControlDock>
         super.before();
         setControl(Controls.PAGINATION);
     }
-    
+
     @Override
     protected ControlDock findPrimeDock()
     {
-        return new ControlDock(getActiveTabDock().asParent(), 
+        return new ControlDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
-    
+
     /**
      * Finds right arrow button inside pagination and click it to produce an
      * action event.
@@ -87,5 +87,5 @@ public class PaginationEventsTest extends EventTestCommon<ControlDock>
             }
         });
     }
-    
+
 }

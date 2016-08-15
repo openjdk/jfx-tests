@@ -544,9 +544,9 @@ public enum ControlPage {
     public ControlsCSSApp.ControlFactory factory;
     public int slotHeight;
     public int slotWidth;
-    
+
     public static final String packageName = "functional";
-    
+
     ControlPage(List<CssMetaData<? extends Styleable, ?>> keys, ControlsCSSApp.ControlFactory factory) {
         this(keys, factory, DEFAULT_SLOTSIZE);
     }

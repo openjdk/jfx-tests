@@ -44,5 +44,5 @@ public class ButtonsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.Buttons.name();
     }
-    
+
 }

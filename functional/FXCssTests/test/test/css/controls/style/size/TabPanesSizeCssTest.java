@@ -44,5 +44,5 @@ public class TabPanesSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.TabPanes.name();
     }
-    
+
 }

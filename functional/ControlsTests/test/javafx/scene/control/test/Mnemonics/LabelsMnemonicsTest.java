@@ -49,10 +49,10 @@ import test.javaclient.shared.Utils;
  * According to the <a href=http://xdesign.us.oracle.com/projects/javaFX/fxcontrols-ue/specifications/mnemonics/mnemonics-UESpec.html>Mnemonics spec</a>
  * mnemonics are platform specific. Therefore tests design is aimed to
  * consider the difference between platforms and to avoid boilerplate.
- * 
+ *
  * If tests are run on Ubuntu with Unity the ALT key may invoke the HUD.
  * In that case you should change system keyboard mapping to avoid such behavior.
- * 
+ *
  */
 @RunWith(FilteredTestRunner.class)
 public class LabelsMnemonicsTest extends MnemonicsTestBase {
@@ -62,7 +62,7 @@ public class LabelsMnemonicsTest extends MnemonicsTestBase {
         LabelsMnemonicsApp.main(null);
         MnemonicsTestBase.setUpClass();
     }
-    
+
 
     @Smoke
     @Test(timeout = 300000)
@@ -113,23 +113,23 @@ public class LabelsMnemonicsTest extends MnemonicsTestBase {
         button2.waitProperty("isFocused", Boolean.FALSE);
         scene.keyboard().pushKey(label3_kbb);
         button3.waitProperty("isFocused", Boolean.FALSE);
-        
+
         try {
             if (isLinux) {
                 scene.keyboard().pressKey(activate_button);
             } else {
                 scene.keyboard().pushKey(activate_button);
             }
-            
+
             checkUnderline(label1, true);
             checkUnderline(label2, true);
             checkUnderline(label3, true);
             checkUnderline(button1, true);
-            
+
              if (isLinux) { scene.keyboard().releaseKey(activate_button); }
-            
+
             removeFocus(button1);
-            
+
             scene.keyboard().pushKey(button1_kbb, mod);
             button1.waitProperty("isFocused", Boolean.TRUE);
             removeFocus(button1);
@@ -162,7 +162,7 @@ public class LabelsMnemonicsTest extends MnemonicsTestBase {
         Selector check_reversed_set2 = sceneAsParent.lookup(CheckBox.class, new ByID<CheckBox>(LabelsMnemonicsApp.CHECK_DYNAMIC_REVERSED_SET_2_ID)).wrap().as(Selectable.class).selector();
         KeyboardButton label1_kbb = getButton(label1);
         KeyboardButton label2_kbb = getButton(label2);
-        
+
         try {
             check_set1.select(CheckBoxWrap.State.CHECKED);
             new Timeout("Item list delay", 200).sleep();
@@ -178,12 +178,12 @@ public class LabelsMnemonicsTest extends MnemonicsTestBase {
             } else {
                 scene.keyboard().pushKey(activate_button);
             }
-            
+
             checkUnderline(label1, true);
             checkUnderline(label2, true);
-            
+
             if (isLinux) { scene.keyboard().releaseKey(activate_button); }
-            
+
             scene.keyboard().pushKey(label1_kbb, mod);
             button1.waitProperty("isFocused", Boolean.TRUE);
             scene.keyboard().pushKey(label2_kbb, mod);

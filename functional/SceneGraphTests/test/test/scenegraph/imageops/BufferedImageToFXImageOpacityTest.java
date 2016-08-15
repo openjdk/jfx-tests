@@ -47,9 +47,9 @@ public class BufferedImageToFXImageOpacityTest extends ReadImageOpacityTest{
         } catch (IOException ex) {
             Assert.fail(ex.getMessage());
         }
-        
+
         return testingImage;
     }
-    
-    
+
+
 }

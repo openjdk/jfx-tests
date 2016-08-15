@@ -44,5 +44,5 @@ public class SeparatorsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.Separators.name();
     }
-    
+
 }

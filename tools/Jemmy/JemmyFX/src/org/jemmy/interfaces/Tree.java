@@ -30,8 +30,8 @@ package org.jemmy.interfaces;
  */
 public interface Tree<T> extends TypeControlInterface<T> {
     /**
-     * Actually performs the selection. 
-     * @return 
+     * Actually performs the selection.
+     * @return
      */
     public TreeSelector<T> selector();
 }

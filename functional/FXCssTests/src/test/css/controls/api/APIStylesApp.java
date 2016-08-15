@@ -45,7 +45,7 @@ public class APIStylesApp extends BasicButtonChooserApp {
 
     private static int WIDTH = 1500;
     private static int HEIGHT = 900;
-    
+
     TestNode rootTestNode = new TestNode();
 
     public APIStylesApp() {
@@ -55,7 +55,7 @@ public class APIStylesApp extends BasicButtonChooserApp {
     public APIStylesApp(int width, int height, String title, boolean showAdditionalActionButton) {
         super(width, height, title, showAdditionalActionButton);
     }
-    
+
     @Override
     protected TestNode setup() {
         URL css = ControlsCSSApp.class.getResource("/test/css/resources/style.css");
@@ -67,13 +67,13 @@ public class APIStylesApp extends BasicButtonChooserApp {
         }
         return rootTestNode;
     }
-    
+
     private void createPages (ControlPage page, TestNode rootNode) {
         ScrollablePageWithSlots pageWithSlot = new ScrollablePageWithSlots(page.name(), width, height);
         createPage(page, pageWithSlot);
         rootNode.add(pageWithSlot);
     }
-    
+
     private void createPage(ControlPage page, TestNode rootNode) {
         for (APIControlPage stylePage : APIControlPage.values()) {
             Pane slot = new Pane();

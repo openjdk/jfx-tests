@@ -44,7 +44,7 @@ import test.javaclient.shared.Utils;
  * @author asakharu
  */
 public class LocalTo_TransformsApp extends InteroperabilityApp {
-    
+
     public static void main(String[] args) {
         Utils.launch(LocalTo_TransformsApp.class, args);
     }
@@ -53,27 +53,27 @@ public class LocalTo_TransformsApp extends InteroperabilityApp {
     protected Scene getScene() {
         return new LocalTo_TransformsScene();
     }
-    
+
     public class LocalTo_TransformsScene extends Scene
     {
-        
+
         public LocalTo_TransformsScene()
         {
             super(hBox, 150, 150, true);
             setCamera(new PerspectiveCamera());
-            
+
             StackPane firstPane = new StackPane();
             StackPane secondPane = new StackPane();
             StackPane thirdPane = new StackPane();
             StackPane nestedPane = new StackPane();
             StackPane doubleNestedPane = new StackPane();
             StackPane forthPane = new StackPane();
-            
+
             Circle circle1 = CircleBuilder.create().radius(20).id("circle_one").build();
             Circle circle2 = CircleBuilder.create().radius(20).id("circle_two").build();
             Circle circle3 = CircleBuilder.create().radius(20).id("circle_three").build();
             Circle circle4 = CircleBuilder.create().radius(20).id("circle_four").translateZ(-50).build();
-            
+
             forthPane.getChildren().add(circle4);
             doubleNestedPane.getChildren().add(circle3);
             nestedPane.getChildren().add(doubleNestedPane);
@@ -82,9 +82,9 @@ public class LocalTo_TransformsApp extends InteroperabilityApp {
             firstPane.getChildren().add(circle1);
             hBox.getChildren().addAll(firstPane, secondPane, thirdPane, forthPane);
         }
-        
+
     }
-    
+
     private FlowPane hBox = new FlowPane(Orientation.HORIZONTAL, 50, 50);
-    
+
 }

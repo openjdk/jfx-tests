@@ -38,7 +38,7 @@ import test.scenegraph.fx3d.interfaces.ShapesTestingFace;
 public abstract class Shape3DTestFunctions extends Shape3DTestOverall{
 
     protected abstract ShapesTestingFace getShapesApp();
-    
+
     @Override
     public void setDiffuseColor(final Color color) {
         new GetAction() {
@@ -58,7 +58,7 @@ public abstract class Shape3DTestFunctions extends Shape3DTestOverall{
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-       
+
     @Override
     public void setSpecularMap(final boolean bln) {
         new GetAction() {
@@ -68,7 +68,7 @@ public abstract class Shape3DTestFunctions extends Shape3DTestOverall{
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     @Override
     public void setVisible(final boolean bln) {
         new GetAction() {

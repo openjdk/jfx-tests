@@ -34,6 +34,6 @@ public class LightScopeMultipleShape3DTest extends LightScopeMultipleTests{
     public void chooseCase() {
         initTestCase(LightScopeTestApp.TestCaseType.MULTIPLE_SHAPE3D_CASE);
     }
-    
-    
+
+
 }

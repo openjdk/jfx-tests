@@ -54,7 +54,7 @@ public class LCDTextTestApp extends InteroperabilityApp {
     static {
         System.setProperty("prism.lcdtext", "true");
     }
-    
+
     public static TestCollections testCollection = null;
     public static TestAction testAction = null;
 
@@ -76,19 +76,19 @@ public class LCDTextTestApp extends InteroperabilityApp {
 
     private Parent createGUI() {
         VBox mainPane = new VBox();
-        
+
         mainPane.setAlignment(Pos.CENTER);
 
         HBox controlsPane = new HBox(15);
         controlsPane.setAlignment(Pos.CENTER);
         controlsPane.setPadding(new Insets(5));
-        
+
         leftPane = new StackPane();
         leftPane.setId("leftPane");
         leftPane.setPrefSize(WIDTH, HEIGHT);
         leftPane.setMaxSize(WIDTH, HEIGHT);
         leftPane.setMinSize(WIDTH, HEIGHT);
-        
+
         collecionChoice = new ChoiceBox<TestCollections>(
                 FXCollections.observableArrayList(TestCollections.values()));
         collecionChoice.setPrefWidth(150);
@@ -110,11 +110,11 @@ public class LCDTextTestApp extends InteroperabilityApp {
                 leftPane.getChildren().add(lcdText);
             }
         });
-        
+
         if(LCDTextTestApp.testCollection != null){
             collecionChoice.getSelectionModel().select(LCDTextTestApp.testCollection);
         }
-       
+
 
         Button applyButton = new Button("Apply");
         applyButton.setId("btnApply");
@@ -138,7 +138,7 @@ public class LCDTextTestApp extends InteroperabilityApp {
         if(LCDTextTestApp.testAction != null){
             actionChoice.getSelectionModel().select(LCDTextTestApp.testAction);
         }
-        
+
 
         TestAction action = actionChoice.getSelectionModel().getSelectedItem();
 

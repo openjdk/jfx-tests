@@ -46,11 +46,11 @@ public class KeyboardSample extends InputSampleBase {
     @Test
     public void push() {
         scene.keyboard().pushKey(Keyboard.KeyboardButtons.RIGHT);
-        
+
         checkKeyboardEvent(KeyEvent.KEY_PRESSED, KeyCode.RIGHT, null);
         checkKeyboardEvent(KeyEvent.KEY_RELEASED, KeyCode.RIGHT, null);
     }
-    
+
     /**
      * Type is also consists of pressing, sleeping, releasing. Only when pushing
      * a letter key, another event is generated
@@ -58,40 +58,40 @@ public class KeyboardSample extends InputSampleBase {
     @Test
     public void type() {
         scene.keyboard().pushKey(Keyboard.KeyboardButtons.A);
-        
+
         checkKeyboardEvent(KeyEvent.KEY_PRESSED, KeyCode.A, null);
         checkKeyboardEvent(KeyEvent.KEY_RELEASED, KeyCode.A, null);
         checkKeyboardEvent(KeyEvent.KEY_TYPED, KeyCode.UNDEFINED, "a");
     }
-    
+
     /**
-     * Push with modifiers consists of pressing modifiers, pushing key, 
+     * Push with modifiers consists of pressing modifiers, pushing key,
      * releasing modifiers.
      */
     @Test
     public void pushMods() {
         scene.keyboard().pushKey(Keyboard.KeyboardButtons.HOME,Keyboard.KeyboardModifiers.ALT_DOWN_MASK);
-        
+
         checkKeyboardEvent(KeyEvent.KEY_PRESSED, KeyCode.ALT, null);
         checkKeyboardEvent(KeyEvent.KEY_PRESSED, KeyCode.HOME, null);
         checkKeyboardEvent(KeyEvent.KEY_RELEASED, KeyCode.HOME, null);
         checkKeyboardEvent(KeyEvent.KEY_RELEASED, KeyCode.ALT, null);
     }
-    
+
     /**
-     * Type with modifiers is also consists of pressing modifiers, pushing key, 
+     * Type with modifiers is also consists of pressing modifiers, pushing key,
      * releasing modifiers. Using shift as a modifiers causes chars to be capital.
      */
     @Test
     public void typeMods() {
         scene.keyboard().pushKey(Keyboard.KeyboardButtons.B,
                 Keyboard.KeyboardModifiers.SHIFT_DOWN_MASK);
-        
+
         checkKeyboardEvent(KeyEvent.KEY_PRESSED, KeyCode.SHIFT, null);
         checkKeyboardEvent(KeyEvent.KEY_PRESSED, KeyCode.B, null);
         checkKeyboardEvent(KeyEvent.KEY_RELEASED, KeyCode.B, null);
         checkKeyboardEvent(KeyEvent.KEY_RELEASED, KeyCode.SHIFT, null);
         checkKeyboardEvent(KeyEvent.KEY_TYPED, KeyCode.UNDEFINED, "B");
     }
-    
+
 }

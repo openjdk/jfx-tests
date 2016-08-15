@@ -159,7 +159,7 @@ public enum ControlsFactory implements NodeFactory {
         public Class getControlClass() {
             return ComboBox.class;
         }
-    }),    
+    }),
     Paginations(new ControlFactory() {
         public Control createControl() {
             Pagination ps = new Pagination();

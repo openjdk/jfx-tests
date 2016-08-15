@@ -53,7 +53,7 @@ public class FileInputLauncher extends Application {
             , "testveryveryverylongname.txt"
             , "test.png"
             , "test.jpg"};
-    
+
     private Scene createScene(String url) {
         WebView view = new WebView();
         web = view.getEngine();
@@ -62,7 +62,7 @@ public class FileInputLauncher extends Application {
 
         Label generate = new Label("Files generated in " + TARGET_DIR);
         box.getChildren().addAll(generate, view);
-        
+
         final Scene scene = new Scene(box);
         scene.widthProperty().addListener(new InvalidationListener() {
             public void invalidated(Observable ov) {
@@ -75,7 +75,7 @@ public class FileInputLauncher extends Application {
                 box.setPrefHeight(scene.getHeight());
             }
         });
-        
+
         scene.setFill(Color.GRAY);
         return scene;
     }
@@ -98,7 +98,7 @@ public class FileInputLauncher extends Application {
             }
         }, "FXSQE app launch thread").start();
     }
-    
+
     public static void generate() {
         for (String name : names) {
             try {

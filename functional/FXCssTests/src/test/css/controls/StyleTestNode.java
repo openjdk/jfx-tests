@@ -38,7 +38,7 @@ public class StyleTestNode extends TestNodeLeaf{
     private Style style;
     private Node control;
     private Pane container;
-    
+
     public StyleTestNode(Style style, Node control, Pane container) {
         super(style.name(), container);
         this.style = style;

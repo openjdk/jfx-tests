@@ -119,9 +119,9 @@ public class SizeStyleApp extends BasicButtonChooserApp {
             sizeSetter.setSize(control);
         }
     }
-    
-    
-    
+
+
+
     @Override
     protected TestNode setup() {
         URL css = ControlsCSSApp.class.getResource("/test/css/resources/sizes.css");

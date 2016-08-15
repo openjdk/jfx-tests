@@ -32,13 +32,13 @@ import test.javaclient.shared.TestUtil;
  * @author akulyakh
  */
 public class Configuration {
-    
+
     private Configuration() {
-        
+
     }
-    
+
     static public boolean isEmbedded() {
         return TestUtil.isEmbedded();
     }
-    
+
 }

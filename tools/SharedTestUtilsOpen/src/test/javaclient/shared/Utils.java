@@ -286,7 +286,7 @@ public class Utils {
     public static boolean isCaspian() {
         return "caspian".equalsIgnoreCase(System.getProperty("javafx.userAgentStylesheetUrl"));
     }
-    
+
     public static void initializeAwt() {
         try {
             if (JemmyUtils.usingGlassRobot() || TestUtil.isEmbeddedGraphicsProfile()) {
@@ -328,14 +328,14 @@ public class Utils {
         }
         return false;
     }
-    
+
     public static boolean isWindows8() {
         String os = System.getProperty("os.name").toLowerCase();
         if (isWindows() && os.contains("8")) {
             return true;
         }
         return false;
-    }    
+    }
 
     public static boolean isGlassRobotAvailable() {
         return usingGlassRobot();
@@ -347,7 +347,7 @@ public class Utils {
             stage.setTitle(appName + getRunEnvironmentInfo());
         }
     }
-    
+
     public static void waitFor(Supplier <Boolean> event) {
         while (!event.get()) {
             try {

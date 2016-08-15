@@ -63,9 +63,9 @@ public class TypeSpecSharChange extends TypeCharsChange {
             return this.getClass().getSimpleName() + " TAB";
         }
     }
-    
+
     public Object clone() {
         return new TypeSpecSharChange(val);
     }
-    
+
 }

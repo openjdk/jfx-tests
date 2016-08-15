@@ -36,13 +36,13 @@ import test.scenegraph.fx3d.utils.FX3DAbstractApp;
 public class SubSceneParallelCameraAsChildTest extends CameraAsChildTests {
 
     private static SubSceneParallelCameraAsChildTestApp app;
-    
+
     @BeforeClass
     public static void setUp(){
         SubSceneParallelCameraAsChildTestApp.main(null);
         app = (SubSceneParallelCameraAsChildTestApp) SubSceneParallelCameraAsChildTestApp.getInstance();
     }
-    
+
     @Override
     protected CameraAsChildTestingFace getCameraAsChildTestingFace() {
         return app;
@@ -53,5 +53,5 @@ public class SubSceneParallelCameraAsChildTest extends CameraAsChildTests {
         return app;
     }
 
-    
+
 }

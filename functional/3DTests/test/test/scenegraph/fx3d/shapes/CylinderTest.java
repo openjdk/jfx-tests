@@ -44,7 +44,7 @@ public class CylinderTest extends CylinderTests {
     protected Pair<Integer, Integer>[] getPositions() {
         if (positions == null) {
             positions = new Pair[] {
-                new Pair<>(135, 0), 
+                new Pair<>(135, 0),
                 new Pair<>(215, 0),
                 new Pair<>(-15, 0)
             };

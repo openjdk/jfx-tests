@@ -67,5 +67,5 @@ public class MeshGroupParallelPickingTest extends MeshPickingTestBase {
     protected int getIterations() {
         return 10;
     }
-    
+
 }

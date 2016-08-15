@@ -39,7 +39,7 @@ public class FileUploadServer extends Thread {
     private Socket connectedClient = null;
     private BufferedReader inFromClient = null;
     private DataOutputStream outToClient = null;
-    
+
     public FileUploadServer(Socket client) {
         connectedClient = client;
     }
@@ -61,11 +61,11 @@ public class FileUploadServer extends Thread {
                 currentLine = inFromClient.readLine();
                 request.append(currentLine);
                 request.append("\n");
-                
+
                 if (bodyStarted) {
                     contentLengthAccepted += currentLine.getBytes("UTF-8").length + 2; // + \r\n
                 }
-                
+
                 if ("".equals(currentLine)) {
                     bodyStarted = true;
                 } else {
@@ -114,7 +114,7 @@ public class FileUploadServer extends Thread {
             Logger.getLogger(FileUploadServer.class.getName()).log(Level.SEVERE, "Error during file upload", e);
         }
     }
-    
+
     public void sendOkResponse (String responseString) throws Exception {
         outToClient = new DataOutputStream(connectedClient.getOutputStream());
         StringBuilder response = new StringBuilder();
@@ -122,7 +122,7 @@ public class FileUploadServer extends Thread {
         response.append("Content-Type: text/html" + "\r\n");
         response.append("Content-Length: ").append(responseString.length()).append("\r\n");
         response.append("Connection: close\r\n");
-        response.append("\r\n");		
+        response.append("\r\n");
         response.append(responseString);
         outToClient.writeBytes(response.toString());
         outToClient.flush();

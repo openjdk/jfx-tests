@@ -51,7 +51,7 @@ public class MouseTest {
     private static Dock txt;
     private static TextInputControlDock lbl;
     private static Log log;
-    
+
     public MouseTest() {
     }
 
@@ -69,13 +69,13 @@ public class MouseTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
         txt.mouse().move(new Point(0, 0));
         btn.mouse().click();
     }
-    
+
     @After
     public void tearDown() throws InterruptedException {
     }
@@ -102,7 +102,7 @@ public class MouseTest {
     }
     @Test
     public void click3() {
-        txt.mouse().click(1, new Point(40, 10), Mouse.MouseButtons.BUTTON3, 
+        txt.mouse().click(1, new Point(40, 10), Mouse.MouseButtons.BUTTON3,
                 Keyboard.KeyboardModifiers.SHIFT_DOWN_MASK);
         String coords = coords(40, 10);
         log.checkEvent(MouseInputApp.MOVED, coords, KeyboardInputApp.SHIFT, NONE, "0");

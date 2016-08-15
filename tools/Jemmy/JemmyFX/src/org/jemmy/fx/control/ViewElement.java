@@ -48,5 +48,5 @@ class ViewElement<T extends Node> implements WindowElement<T> {
     public Class<T> getType() {
         return type;
     }
-    
+
 }

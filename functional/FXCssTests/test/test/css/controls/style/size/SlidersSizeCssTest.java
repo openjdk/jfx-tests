@@ -44,5 +44,5 @@ public class SlidersSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.Sliders.name();
     }
-    
+
 }

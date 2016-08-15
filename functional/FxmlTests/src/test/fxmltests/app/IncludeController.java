@@ -32,17 +32,17 @@ import javafx.fxml.Initializable;
 import junit.framework.Assert;
 
 public class IncludeController implements Initializable{
-    
+
     public static IncludeController instance;
-    
+
     @FXML
     private MainController myMainController;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
     }
-    
+
     public static void reset () {
         instance = null;
     }

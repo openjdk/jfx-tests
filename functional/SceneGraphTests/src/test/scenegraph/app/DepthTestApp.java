@@ -34,16 +34,16 @@ import test.javaclient.shared.Utils;
  */
 public class DepthTestApp extends InteroperabilityApp
 {
-    
-    public static void main(String... args) 
+
+    public static void main(String... args)
     {
         Utils.launch(DepthTestApp.class, args);
     }
 
     @Override
-    protected Scene getScene() 
+    protected Scene getScene()
     {
         return new DepthTestScene();
     }
-       
+
 }

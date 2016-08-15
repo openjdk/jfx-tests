@@ -44,5 +44,5 @@ public class ListViewsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.ListViews.name();
     }
-    
+
 }

@@ -91,11 +91,11 @@ public class FocusKeyboardTestBase extends FocusTestBase {
             throw new IllegalArgumentException("[Counter is negative]");
         }
         for (int i = 0; i < count; i++) {
-            getScene().keyboard().pushKey(Keyboard.KeyboardButtons.TAB, 
+            getScene().keyboard().pushKey(Keyboard.KeyboardButtons.TAB,
                     Keyboard.KeyboardModifiers.CTRL_DOWN_MASK);
         }
     }
-    
+
     @Override
     protected void moveTo(Item item) throws Exception {
         if (current.equals(Item.Undefined)) {

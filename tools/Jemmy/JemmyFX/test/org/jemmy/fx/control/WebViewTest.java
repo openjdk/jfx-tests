@@ -35,7 +35,7 @@ import org.junit.Test;
 
 public class WebViewTest extends SampleBase {
     static SceneDock scene;
-    
+
     @BeforeClass
     public static void launch() throws InterruptedException {
         startApp(WebViewApp.class);
@@ -51,7 +51,7 @@ public class WebViewTest extends SampleBase {
         WebViewDock web_view = new WebViewDock(scene.asParent(), cntrl -> true);
 
         WebNodeDock body = new WebNodeDock(web_view.asWebNodeParent(), new ByName("BODY"));
-        
+
         WebNodeDock button = new WebNodeDock(body.asWebNodeParent(), new ByAttribute("type", "button"));
 
         button.wrap().mouse().click();

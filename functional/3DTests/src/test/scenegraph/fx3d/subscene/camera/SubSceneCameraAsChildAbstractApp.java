@@ -42,7 +42,7 @@ public abstract class SubSceneCameraAsChildAbstractApp extends SubSceneCameraAbs
         generalCameraMover = new GroupMover();
     }
 
-    
+
     @Override
     protected void initCamera(int num) {
         if (camMovers[num] != null) {

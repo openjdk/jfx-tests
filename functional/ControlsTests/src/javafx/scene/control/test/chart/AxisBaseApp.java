@@ -267,7 +267,7 @@ public abstract class AxisBaseApp extends BaseApp {
         }
         rootTestNode.add(page);
     }
-    
+
     protected static final String[] SIDE = {"top", "bottom", "left", "right"};
     protected static final String[] BOOL = {"true", "false"};
     protected static final String[] PAINT = {"red", "linear (0%,0%) to (100%,100%) stops (0.0,red) (1.0,black)"};

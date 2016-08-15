@@ -56,16 +56,16 @@ public class resizeTest extends GenericTestClass {
         Platform.runLater(new Runnable() {
             public void run() {
                 initView();
-		view.setPrefSize(prefSize, prefSize);
-	    }
-	});
+        view.setPrefSize(prefSize, prefSize);
+        }
+    });
         doWait(new Tester() {
-        	public boolean isPassed() {
-			return (view != null)
-				&& ((view.getWidth() - prefSize) <= precision)
-				&& ((view.getHeight() - prefSize) <= precision);
-		}
-	});
+            public boolean isPassed() {
+            return (view != null)
+                && ((view.getWidth() - prefSize) <= precision)
+                && ((view.getHeight() - prefSize) <= precision);
+        }
+    });
         Platform.runLater(new Runnable() {
             public void run() {
                 System.out.println("Is resizable: " + view.isResizable());
@@ -82,14 +82,14 @@ public class resizeTest extends GenericTestClass {
         doWait(new Tester() {
             public boolean isPassed() {
                 return (resizeDone)
-			&& (view.isResizable() == true)
-			?
-				(Math.abs(view.getHeight() - newHeight) <= precision)
-				&& (Math.abs(view.getWidth() - newWidth) <= precision)
-			:
-				(Math.abs(view.getHeight() - initialHeight) <= precision)
-				&& (Math.abs(view.getWidth() - initialWidth) <= precision)
-			;
+            && (view.isResizable() == true)
+            ?
+                (Math.abs(view.getHeight() - newHeight) <= precision)
+                && (Math.abs(view.getWidth() - newWidth) <= precision)
+            :
+                (Math.abs(view.getHeight() - initialHeight) <= precision)
+                && (Math.abs(view.getWidth() - initialWidth) <= precision)
+            ;
             }
         });
     }

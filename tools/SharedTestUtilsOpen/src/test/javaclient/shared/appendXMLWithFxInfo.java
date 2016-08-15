@@ -68,15 +68,15 @@ public class appendXMLWithFxInfo extends Application {
         //  got:       1.8.0-ea-b97
         //  should be: 8.0.0-ea-b97
         // VersionInfo.getRuntimeVersion() == 8.0.0-ea
-        
+
         System.err.println("java.runtime.version: " + xxx);
         xxx = xxx.substring(xxx.lastIndexOf("-"),xxx.length());
         System.err.println("xxx: " + xxx);
         String zzz = VersionInfo.getVersion();
         zzz = zzz + xxx;
         System.err.println("tmp fx build number: " + zzz);
-        
-        
+
+
         String filepath = "report.xml";
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -114,8 +114,8 @@ public class appendXMLWithFxInfo extends Application {
 
         Element e1c = xmldoc.createElementNS(null, "attribute");
         e1c.setAttributeNS(null, "name", "version");
-        
-                
+
+
 //        Node n1c = xmldoc.createTextNode(VersionInfo.getRuntimeVersion());
         Node n1c = xmldoc.createTextNode(zzz);
         e1c.appendChild(n1c);
@@ -160,7 +160,7 @@ public class appendXMLWithFxInfo extends Application {
         serializer.setOutputProperty(OutputKeys.INDENT, "yes");
         serializer.transform(domSource, streamResult);
 
-        
+
         fos.flush(); // yes, I know. no need to flash() before close().
         fos.close();
         stage.close();

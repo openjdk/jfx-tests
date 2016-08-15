@@ -37,12 +37,12 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class SimpleTest extends WorkerTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test to check if WebWorkers are supported (prototype is available).
      */
@@ -58,7 +58,7 @@ public class SimpleTest extends WorkerTestClass {
         doWait(resultReady);
         Assert.assertFalse("typeof(Worker) is undefined!", UNDEFINED.equals((String)result));
     }
-    
+
     /**
      * Test to check that the simplest worker does its job.
      */
@@ -73,7 +73,7 @@ public class SimpleTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("done");
     }
-    
+
     /**
      * Test for the situation when worker file is not present.
      * http://javafx-jira.kenai.com/browse/RT-27149

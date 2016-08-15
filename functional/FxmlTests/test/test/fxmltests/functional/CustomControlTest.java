@@ -43,12 +43,12 @@ import test.javaclient.shared.Utils;
 import static test.javaclient.shared.TestUtil.isEmbedded;
 
 public class CustomControlTest extends TestBase{
-    
+
     @BeforeClass
     public static void setupUI () {
         Utils.launch(CustomControlApp.class, null);
     }
-    
+
     @Test
     public void testCustomControlId () {
         testCommon(CustomControlApp.Pages.customControl.name(), null, false, true);
@@ -59,7 +59,7 @@ public class CustomControlTest extends TestBase{
         Wrap<? extends TextField> field = sceneParent.lookup(TextField.class, new ByID<TextField>(CustomControl.TEXT_FIELD_ID)).wrap();
         Assert.assertNotNull(field);
     }
-    
+
     @Test
     public void testCustomControl () {
         testCommon(CustomControlApp.Pages.customControl.name(), null, false, true);
@@ -70,7 +70,7 @@ public class CustomControlTest extends TestBase{
         Wrap<? extends Button> button = sceneParent.lookup(Button.class).wrap();
         Assert.assertNotNull(button);
     }
-    
+
     @Test
     public void testCustomControlAction () {
         testCommon(CustomControlApp.Pages.customControl.name(), null, false, true);

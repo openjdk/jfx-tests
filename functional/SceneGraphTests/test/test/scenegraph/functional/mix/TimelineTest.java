@@ -41,13 +41,13 @@ import static org.junit.Assert.*;
  * @author Sergey Grinev
  */
 public class TimelineTest extends TestBase {
-    
+
     //@RunUI
     @BeforeClass
     public static void runUI() {
         TimelineApp.main(null);
     }
-    
+
     @Test
     public void simpleTimeline() throws InterruptedException {
         doTest("1", 0, length, new IndexStrategy() {

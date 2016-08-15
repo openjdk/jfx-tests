@@ -59,5 +59,5 @@ public abstract class SubScenePickingAbstractApp extends PickingSharedAbstractAp
     public void setFill(Paint paint) {
         subscene.setFill(paint);
     }
-    
+
 }

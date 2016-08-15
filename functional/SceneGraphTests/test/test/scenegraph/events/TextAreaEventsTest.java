@@ -33,18 +33,18 @@ import test.scenegraph.app.ControlEventsApp.Controls;
  *
  * @author Aleksandr Sakharuk
  */
-public class TextAreaEventsTest extends EventTestCommon<TextInputControlDock> 
+public class TextAreaEventsTest extends EventTestCommon<TextInputControlDock>
      //   EventTestTextInput
 {
-    
+
     @BeforeClass
     public static void rinUI()
-    
+
     {
         ControlEventsApp.main(null);
     }
-    
-    
+
+
     @Override
     @Before
     public void before()
@@ -52,14 +52,14 @@ public class TextAreaEventsTest extends EventTestCommon<TextInputControlDock>
         super.before();
         setControl(Controls.TEXT_AREA);
     }
-    
+
 @Override
     protected TextInputControlDock findPrimeDock()
     {
-        return new TextInputControlDock(getActiveTabDock().asParent(), 
+        return new TextInputControlDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
-    
+
     /*
     @Test(timeout = 60000)
     public void onInputMethodTextChanged()
@@ -69,11 +69,11 @@ public class TextAreaEventsTest extends EventTestCommon<TextInputControlDock>
             public void invoke() {
                 getPrimeNodeDock().mouse().click();
                 getPrimeNodeDock().keyboard().typeChar('i');
-                new TextInputControlDock(getActiveTabDock().asParent(), 
+                new TextInputControlDock(getActiveTabDock().asParent(),
                         ControlEventsApp.DRAG_FIELD_ID).mouse().click();
             }
         });
-        
+
     }
-    */    
+    */
 }

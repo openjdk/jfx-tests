@@ -44,5 +44,5 @@ public class RadioButtonsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.RadioButtons.name();
     }
-    
+
 }

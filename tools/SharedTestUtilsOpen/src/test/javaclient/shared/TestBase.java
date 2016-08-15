@@ -59,13 +59,13 @@ public class TestBase extends TestBaseBase {
 
     private static boolean isTest = false;
     protected static Robot robot = null;
-    
+
     static {
         Utils.initializeAwt();
         if (Utils.isMacOS()) {
             JemmyUtils.runInOtherJVM(true);
         }
-    }            
+    }
 
     @BeforeClass
     public static void setUpClass() {
@@ -77,7 +77,7 @@ public class TestBase extends TestBaseBase {
         return isTest;
     }
     /*
-     * I don't know what is it, but many tests use it. Copy from TestBaseOld 
+     * I don't know what is it, but many tests use it. Copy from TestBaseOld
      *
      */
     public void setWaitImageDelay(long _delay) {
@@ -109,7 +109,7 @@ public class TestBase extends TestBaseBase {
     }
     protected void testExecuter(String toplevel_name, String innerlevel_name, boolean shoots, boolean valuable_rect, int pagesNumber) {
         testExecuter(toplevel_name, innerlevel_name, shoots, valuable_rect, pagesNumber,true);
-        
+
     }
     /**
      * For embedded purpose.
@@ -135,15 +135,15 @@ public class TestBase extends TestBaseBase {
 
             getScene().mouse().move(new Point(0, 0));
             final String pageNameForTest = pageName;
-        
+
             new GetAction() {
                 @Override
                 public void run(Object... parameters) {
-                
+
                     if ( null == application ) { // sometimes in applet. reason: unknown
                      application = AbstractApp2.getLastInstance();
                     }
-                
+
                     final TestNode tn = getApplication().openPage(pageNameForTest, innerlevel_name);
                     Assert.assertNotNull(tn);
                     Assert.assertNotNull("Test node named: '"
@@ -151,7 +151,7 @@ public class TestBase extends TestBaseBase {
                                     + "' wasnt found in :" + application.toString(),tn);
                 }
             }.dispatch(Environment.getEnvironment());
-            
+
             try {
                 Thread.sleep(600); // ugly workaround to be removed ASAP
             } catch (InterruptedException ex) {
@@ -237,12 +237,12 @@ public class TestBase extends TestBaseBase {
         new GetAction() {
             @Override
             public void run(Object... parameters) {
-                TestNode tn = 
+                TestNode tn =
                         application.openPage(toplevel_name, innerlevel_name);
                         Assert.assertNotNull(tn);
             }
         }.dispatch(Environment.getEnvironment());
-        
+
         try {
             Thread.sleep(100); // ugly workaround to be removed ASAP
         } catch (InterruptedException ex) {
@@ -382,7 +382,7 @@ public class TestBase extends TestBaseBase {
                 System.err.println("Use jemmy robot");
                 from.drag().dnd(fromPoint, to, toPoint);
             } else {
-                System.err.println("Use Glass robot");                
+                System.err.println("Use Glass robot");
                 dndRobot(from, fromPoint, to, toPoint);
             }
             Thread.sleep(1000);

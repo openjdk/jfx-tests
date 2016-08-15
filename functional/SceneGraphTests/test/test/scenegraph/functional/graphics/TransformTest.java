@@ -82,13 +82,13 @@ public class TransformTest extends TestBase {
     private boolean[] tt;
     private boolean ttAffine = false;
     private Scale scale = new Scale(.33f, .66f, 100, 100);
-    private Rotate rotate = new Rotate(45f, 100, 100); 
+    private Rotate rotate = new Rotate(45f, 100, 100);
     private Shear shear = new Shear(-.33f, .1f, 80, 70);
     private Translate translate = new Translate(50, 50);
     private double mxx = 0.2, mxy = 0.9, myx = 0.8, myy = 0.1, mxt = 1, myt = 0.1;
     private Affine affine = Transform.affine(mxx, myx, mxy, myy, mxt, myt);
-    
-    
+
+
 
     protected Point scale(final Point p) {
         Point scaled = new Point(
@@ -171,7 +171,7 @@ public class TransformTest extends TestBase {
             checkLabels(50, 50);
         }
     }
-    
+
     static Point[] pnts = {
         new Point(25, 75), new Point(50, 50), new Point(75, 25),
         new Point(25, 25), new Point(75, 75), null
@@ -220,13 +220,13 @@ public class TransformTest extends TestBase {
         if (p != null) {
             clickGlobal(p);
             checkLabels(p.x, p.y);
-        } 
+        }
     }
 
     private void clickGlobal(Point p) {
         Point point = new Point(p);
-        point.translate(150, 100); 
-        
+        point.translate(150, 100);
+
         // transforms are applied in reversed order for unknown FX reason
         if (ttAffine) {
             point = affine(point);

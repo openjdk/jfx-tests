@@ -93,7 +93,7 @@ public class CustomPseudoClassTest {
     @Test(timeout = 10000)//RT-28635
     public void customPseudoClassAPIApplyingTest() throws InterruptedException {
         //Code is uncommented, but it could help.
-        //Wait scene appearing.        
+        //Wait scene appearing.
         //Thread.sleep(1000);
 
         makePseudoClassApplied(true);

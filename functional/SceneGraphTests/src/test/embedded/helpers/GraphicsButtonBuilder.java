@@ -63,7 +63,7 @@ class GraphicsButtonBuilder implements ButtonBuilder {
             public void handle(MouseEvent t) {
                 handler.onClick();
             }
-            
+
         });
         return new GraphicsButton(text);
     }
@@ -73,5 +73,5 @@ class GraphicsButtonBuilder implements ButtonBuilder {
        this.handler = handler;
        return this;
     }
-    
+
 }

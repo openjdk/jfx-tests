@@ -38,12 +38,12 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for WebEngine.removeJavaScriptBinding call.
      * Checks that a bound object can be unbound from JavaScript
@@ -66,7 +66,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
             }
         });
         Assert.assertEquals(testObject, resultObject);
-        
+
         resultObject = null;
         Platform.runLater(new Runnable() {
             public void run() {
@@ -88,7 +88,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(NO_VARIABLE_MSG));
     }
- 
+
     /**
      * Test for WebEngine.removeJavaScriptBinding call.
      * Checks that nothing nasty happens when unbinding a name which was not bound.
@@ -109,7 +109,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
             }
         });
     }
-    
+
     /**
      * Simple test for WebEngine.removeJavaScriptBinding call.
      * Checks nothing nasty happens when calling it with null.
@@ -135,7 +135,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
             }
         });
     }
-    
+
     /**
      * Simple test for WebEngine.removeJavaScriptBinding call.
      * Checks that nothing nasty happens when calling it with
@@ -158,7 +158,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
             }
         });
     }
-    
+
     /**
      * Simple test for WebEngine.removeJavaScriptBinding call.
      * Checks that nothing nasty happens when calling it with
@@ -182,7 +182,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
             }
         });
     }
-    
+
     /**
      * Simple test for WebEngine.removeJavaScriptBinding call.
      * Checks that nothing nasty happens when calling it with
@@ -206,7 +206,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
             }
         });
     }
-    
+
     /**
      * Simple test for WebEngine.removeJavaScriptBinding call.
      * Checks that nothing nasty happens when calling it with
@@ -230,7 +230,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
             }
         });
     }
-    
+
     /**
      * Simple test for WebEngine.removeJavaScriptBinding call.
      * Checks that nothing nasty happens when calling it with
@@ -254,7 +254,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
             }
         });
     }
-    
+
     /**
      * Simple test for WebEngine.removeJavaScriptBinding call.
      * Checks that nothing bad happens when trying to remove binding which was
@@ -277,7 +277,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
             }
         });
         Assert.assertEquals(testObject, resultObject);
-        
+
         for (int i = 0; i < 2; i++) {
             resultObject = null;
             Platform.runLater(new Runnable() {
@@ -301,7 +301,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
             Assert.assertTrue(((JSException) resultObject).getMessage().equals(NO_VARIABLE_MSG));
         }
     }
-    
+
     /**
      * Test for WebEngine.removeJavaScriptBinding call.
      * Checks that when an object is bound to two JavaScript aliases,
@@ -329,7 +329,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
         });
         Assert.assertEquals(testObject, resultObject);
         Assert.assertEquals(testObject, containerObject);
-        
+
         resultObject = null;
         containerObject = null;
         Platform.runLater(new Runnable() {
@@ -344,7 +344,7 @@ public class RemoveJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass 
                 containerObject = engine.executeScript("testObject1;");
             }
         });
-        
+
         doWait(new Tester() {
             public boolean isPassed() {
                 return (resultObject != null) && (containerObject != null);

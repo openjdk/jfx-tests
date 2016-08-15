@@ -1,4 +1,4 @@
-/* 
+/*
     Document   : draggable
     Created on : 07.09.2012, 23:37:31
     Author     : Trinity
@@ -6,7 +6,7 @@
         Purpose of the stylesheet follows.
 */
 
-.draggable { 
+.draggable {
     border: 1px black dotted;
     background-color: lavender;
 }

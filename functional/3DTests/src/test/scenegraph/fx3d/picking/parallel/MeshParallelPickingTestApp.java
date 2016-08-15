@@ -63,9 +63,9 @@ public class MeshParallelPickingTestApp extends MeshPickingAbstractApp {
         }
 
     }
-    
+
     public static void main(String[] args) {
         Utils.launch(MeshParallelPickingTestApp.class, args);
     }
-    
+
 }

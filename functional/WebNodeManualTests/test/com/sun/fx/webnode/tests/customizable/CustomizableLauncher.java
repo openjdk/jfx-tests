@@ -44,20 +44,20 @@ public class CustomizableLauncher extends Application {
 
     protected WebEngine engine;
     protected WebView view;
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         view = new WebView();
         engine = view.getEngine();
-        
+
         engine.load(CustomizableLauncher.class.getResource("resources/testpage.html").toExternalForm());
-        
+
         VBox container = new VBox();
         container.getChildren().addAll(buttons(), view);
         stage.setScene(new Scene(container));
         stage.show();
     }
-    
+
     public static void run() {
         final String[] args = new String[] {};
         new Thread(new Runnable() {
@@ -66,7 +66,7 @@ public class CustomizableLauncher extends Application {
             }
         }, "FXSQE app launch thread").start();
     }
-    
+
     protected HBox buttons() {
         Button disableJS = new Button("Disable JavaScript");
         disableJS.setOnAction(new EventHandler<ActionEvent>() {
@@ -116,10 +116,10 @@ public class CustomizableLauncher extends Application {
                 engine.setUserStyleSheetLocation("ololo");
             }
         });
-        
+
         HBox buttons = new HBox();
         buttons.getChildren().addAll(disableJS, enableJS, disableContextMenu, enableContextMenu, attachStyleSheet, detachStyleSheet, attachExternalStyleSheet, attachMalformedStyleSheet);
-        
+
         return buttons;
     }
 }

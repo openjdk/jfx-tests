@@ -37,7 +37,7 @@ public class TypeCharsChange extends Change {
     public TypeCharsChange(String val) {
         this.val = val;
     }
-    
+
     String getVal() {
         return val;
     }
@@ -54,7 +54,7 @@ public class TypeCharsChange extends Change {
     public String toString() {
         return this.getClass().getSimpleName() + " \"" + val + "\"";
     }
-    
+
     @Override
     public Object clone() {
         return new TypeCharsChange(val);

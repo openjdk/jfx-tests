@@ -44,5 +44,5 @@ public class AccordionsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.Accordions.name();
     }
-    
+
 }

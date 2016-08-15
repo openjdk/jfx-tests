@@ -94,7 +94,7 @@ public class TestBase extends UtilTestFunctions {
     protected final String USE_BUTTON_TEXT = "Use";
     private boolean isCustomColorsEnabled;
     private static double alpha = 1.0;
-    
+
     @Before
     public void setUp() {
         initWrappers();
@@ -205,7 +205,7 @@ public class TestBase extends UtilTestFunctions {
 //                    System.out.println("cntrl.getWidth() <= MAX_WIDTH = " + (cntrl.getWidth() <= MAX_WIDTH));
 //                    System.out.println("cntrl.getHeight() >= MIN_HEIGHT = " + (cntrl.getHeight() >= MIN_HEIGHT));
 //                    System.out.println("cntrl.getHeight() <= MAX_HEIGHT = " + (cntrl.getHeight() <= MAX_HEIGHT));
-                    
+
                     if (cntrl.getWidth() >= MIN_WIDTH && cntrl.getWidth() <= MAX_WIDTH
                             && cntrl.getHeight() >= MIN_HEIGHT && cntrl.getHeight() <= MAX_HEIGHT) {
                         return true;
@@ -711,7 +711,7 @@ public class TestBase extends UtilTestFunctions {
         org.jemmy.Rectangle sliderRec = sliderRectangle.getScreenBounds();
         assertEquals(rec.x + clickPoint.x, sliderRec.x + sliderRec.width / 2, xOffset);
         assertEquals(rec.y + clickPoint.y, sliderRec.y + sliderRec.height / 2, 2);
-        
+
         return new Color(col.getRed(), col.getGreen(), col.getBlue(), alpha);
     }
 

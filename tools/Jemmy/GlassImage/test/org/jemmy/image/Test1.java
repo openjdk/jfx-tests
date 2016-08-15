@@ -54,14 +54,14 @@ public class Test1 extends Application {
             }
         }).start();
         Thread.sleep(3000);
-        Environment.getEnvironment().setProperty(ImageStore.class, 
+        Environment.getEnvironment().setProperty(ImageStore.class,
                 new PNGFileImageStore(new File("/tmp")));
         Wrap<?> wrap = new ScreenRectangle(Environment.getEnvironment(), new Rectangle(0, 0, 220, 220));
         final GlassImage img = new GlassImageCapturer().capture(wrap, new Rectangle(0, 0, 200, 200));
         System.out.println(img.getImage().getWidth() + " " + img.getImage().getHeight());
         new PNGSaver(new File(System.getProperty("user.dir") + File.separator + "out.png")).
                 encode(img);
-        Environment.getEnvironment().setProperty(ImageStore.class, 
+        Environment.getEnvironment().setProperty(ImageStore.class,
                 new PNGFileImageStore(new File(System.getProperty("user.dir"))));
         GlassImage img1 = new GlassImageCapturer().capture(wrap, new Rectangle(20, 20, 200, 200));
         img1.save("actual.png");

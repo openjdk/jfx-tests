@@ -97,7 +97,7 @@ public abstract class TextControlApp extends InteroperabilityApp {
             setControllersContent(vb);
             setPropertiesContent(tb);
         }
-        
+
         protected void addControlDependentProperties() {}
     }
 

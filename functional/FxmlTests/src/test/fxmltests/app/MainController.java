@@ -36,19 +36,19 @@ import javafx.scene.layout.VBox;
  * @author cementovoz
  */
 public class MainController implements Initializable {
-    
+
     @FXML
     private VBox myInclude;
     @FXML private IncludeController myIncludeController;
-    
+
     public static IncludeController staticIncludeController;
     public static MainController staticMainController;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         staticIncludeController = myIncludeController;
     }
-    
+
     public static void reset () {
         staticIncludeController = null;
     }

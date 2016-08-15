@@ -45,7 +45,7 @@ public class JNLPJUnitTestRunner extends Application implements Abstract2TestRun
     final Abstract2TestRunner.Status currentStatus = Abstract2TestRunner.Status.FAIL;
         return currentStatus;
     }
-    
+
     /**
      *
      * @param args
@@ -53,7 +53,7 @@ public class JNLPJUnitTestRunner extends Application implements Abstract2TestRun
     public static void main(String[] args) {
         new JNLPJUnitTestRunner(args).cw.prepareAndRunTest();
     }
-    
+
     /**
      *
      */
@@ -71,7 +71,7 @@ public class JNLPJUnitTestRunner extends Application implements Abstract2TestRun
         cw = new CommonTestRunnerWorker(this);
         cw.setArgs(args);
     }
-    
+
     /**
      *
      * @param stage

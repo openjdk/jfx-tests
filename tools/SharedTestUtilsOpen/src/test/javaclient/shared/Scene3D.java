@@ -81,17 +81,17 @@ public class Scene3D extends Scene {
     }
 
     public void setRotateY(final double _angle) {
-        Utils.deferAction(new Runnable() {  public void run() {        
+        Utils.deferAction(new Runnable() {  public void run() {
                 rotateY.setAngle(_angle);
         }});
     }
     public void setRotateX(final double _angle) {
-        Utils.deferAction(new Runnable() {  public void run() {        
+        Utils.deferAction(new Runnable() {  public void run() {
             rotateX.setAngle(_angle);
         }});
     }
     public void setTranslateZ(final double _z) {
-        Utils.deferAction(new Runnable() {  public void run() {        
+        Utils.deferAction(new Runnable() {  public void run() {
             translateZ.setZ(_z);
         }});
     }

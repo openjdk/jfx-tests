@@ -35,13 +35,13 @@ import test.javaclient.shared.TestBase;
 import test.javaclient.shared.Utils;
 
 public class IncludeControllerTest extends TestBase{
-    
+
     @BeforeClass
     public static void runUI () {
         IncludeControllerApp.reset();
         Utils.launch(IncludeControllerApp.class, null);
     }
-    
+
     /**
      * testing availability included controllers in root controller
      */

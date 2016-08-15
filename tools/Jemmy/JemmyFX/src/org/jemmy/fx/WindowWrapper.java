@@ -34,7 +34,7 @@ import org.jemmy.env.Environment;
 class WindowWrapper extends DefaultWrapper {
 
     private static final List<Class<? extends Wrap>> OPERATORS = new ArrayList<Class<? extends Wrap>>();
-    
+
     static {
         OPERATORS.add(WindowWrap.class);
         try {

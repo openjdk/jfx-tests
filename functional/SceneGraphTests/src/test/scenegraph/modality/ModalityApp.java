@@ -96,7 +96,7 @@ public class ModalityApp extends Application{
 
             VBox vb = new VBox();
             vb.getChildren().addAll(new Label("This is the primary window"), hb);
-            
+
             Scene scene = new Scene(vb);
             addBrowser(scene);
             primaryStageMain.setScene(scene);
@@ -114,7 +114,7 @@ public class ModalityApp extends Application{
             mainwin_scene0 = new ModalityWindow(Modality.NONE, primaryStage, false);
         }
     }
-    
+
     public static void addBrowser(Scene scene) {
                 scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             boolean browserStarted = false;
@@ -135,7 +135,7 @@ public class ModalityApp extends Application{
             }
         });
     }
-    
+
     public static void tryToFront(){
         primaryStage.toFront();
     }

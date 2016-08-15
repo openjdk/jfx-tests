@@ -70,15 +70,15 @@ public class ScrollEventApp extends InteroperabilityApp {
     public static final String COME_EVENT_INDICATION = "Come!";
     public static final String CONTEXT_MENU_ID = "CONTEXT_MENU_ID";
     public static final String ENABLE_CONTEXT_MENU_CHECK_BOX_ID = "CONTEXT_MENU_CHECK_BOX_ID";
-    
+
     private VBox spaceForNode;
     private FlowPane spaceForListeners;
     private HashMap<String, TextField> hm;
     private ContextMenu contextMenu;
     private CheckBox enableContextMenuTest;
-    
+
     private static String LISTENER_TEXT_FIELD_SUFFIX = "_LISTENER_TEXT_FIELD_ID";
-    
+
     public static void main(String[] args) {
         Utils.launch(ScrollEventApp.class, args);
     }
@@ -86,7 +86,7 @@ public class ScrollEventApp extends InteroperabilityApp {
     public static String getContextMenuOnShownCounterID() {
         return getListenerTextFieldID(Options.contextMenuOnShown.toString());
     }
-    
+
     @Override
     protected Scene getScene() {
         Scene scene = new Scene(getContent(), 700, 300);
@@ -120,7 +120,7 @@ public class ScrollEventApp extends InteroperabilityApp {
             @Override
             public void changed(ObservableValue<? extends NodeFactory> ov, NodeFactory t, NodeFactory t1) {
                 final Node node = t1.createNode();
-                
+
                 if (!enableContextMenuTest.isSelected()) {
                     node.setOnScroll(new EventHandler<ScrollEvent>() {
 
@@ -151,7 +151,7 @@ public class ScrollEventApp extends InteroperabilityApp {
                         }
                     });
                 }
-                
+
                 node.setId(ID_TARGET_NODE);
                 spaceForNode.getChildren().clear();
                 spaceForNode.getChildren().add(node);
@@ -181,7 +181,7 @@ public class ScrollEventApp extends InteroperabilityApp {
 
         enableContextMenuTest = new CheckBox("Context menu test");
         enableContextMenuTest.setId(ENABLE_CONTEXT_MENU_CHECK_BOX_ID);
-                
+
         VBox controls = new VBox();
         controls.setAlignment(Pos.CENTER);
         controls.getChildren().add(enableContextMenuTest);
@@ -191,8 +191,8 @@ public class ScrollEventApp extends InteroperabilityApp {
         hBox.setAlignment(Pos.CENTER);
         hBox.getChildren().addAll(spaceForNode, spaceForListeners, controls);
         return hBox;
-    }    
-    
+    }
+
     private HBox getListener(String name) {
         HBox hb = new HBox();
         Label label = new Label(name + " : ");
@@ -222,12 +222,12 @@ public class ScrollEventApp extends InteroperabilityApp {
         for(int i = 1; i <= 5; i++) {
             contextMenu.getItems().add(new MenuItem("item - " + i));
         }
-        
+
         contextMenu.setOnShown(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent t) {
                 TextField tfCounter = hm.get(Options.contextMenuOnShown.toString());
                 assertTrue(tfCounter != null);
-                
+
                 String text = tfCounter.getText();
                 if (text.equals("")) {
                     tfCounter.setText("1");
@@ -250,7 +250,7 @@ public class ScrollEventApp extends InteroperabilityApp {
     private static String getListenerTextFieldID(String name) {
         return name.toUpperCase() + LISTENER_TEXT_FIELD_SUFFIX;
     }
-    
+
     private enum Options {
         eventType, consumed, deltaX, deltaY, textDeltaXUnits, textDeltaX, textDeltaYUnits, textDeltaY, x, y,
         contextMenuOnShown

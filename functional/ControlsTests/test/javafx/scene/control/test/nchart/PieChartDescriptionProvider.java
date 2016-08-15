@@ -277,7 +277,7 @@ public class PieChartDescriptionProvider extends ChartDescriptionProvider {
         TestBase.newRobot();
         Rectangle relativeWrapBounds = getChartContent().getScreenBounds();
         final double x = relativeWrapBounds.x + info.regionCenterX + info.radius * Math.cos(info.bisectAngle / 180 * Math.PI) / 2;
-        final double y = relativeWrapBounds.y + info.regionCenterY - info.radius * Math.sin(info.bisectAngle / 180 * Math.PI) / 2;     
+        final double y = relativeWrapBounds.y + info.regionCenterY - info.radius * Math.sin(info.bisectAngle / 180 * Math.PI) / 2;
         final Color color = TestBase.getPixelColor(x, y);
         pieInfoOnColorMatching.put(info, color);
         return color;

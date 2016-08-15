@@ -4,5 +4,5 @@
 <?import java.util.*?>
 <?import test.fxmltests.app.CustomIDButton?>
 
-<CustomIDButton xmlns:fx="http://javafx.com/fxml" id="btn_custom_id" 
+<CustomIDButton xmlns:fx="http://javafx.com/fxml" id="btn_custom_id"
         text="Button"/>

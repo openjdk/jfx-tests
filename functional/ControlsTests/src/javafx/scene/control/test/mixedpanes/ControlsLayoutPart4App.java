@@ -121,7 +121,7 @@ public class ControlsLayoutPart4App extends BasicButtonChooserApp {
             //tv1.getColumns().get(0).setVisible(false);
             //tv1.getColumns().get(1).setMaxWidth(40);
             //tv1.getColumns().get(1).setText("done");
-            
+
             pane.setPrefSize(40, 240);
             pane.setSpacing(10);
 
@@ -553,7 +553,7 @@ public class ControlsLayoutPart4App extends BasicButtonChooserApp {
     }
  */
 
-  
+
 
     public TestNode setup() {
         System.out.println("java.library.path=" + System.getProperty("java.library.path"));

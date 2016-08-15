@@ -44,5 +44,5 @@ public class ComboBoxesSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.ComboBoxes.name();
     }
-    
+
 }

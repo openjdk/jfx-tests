@@ -77,7 +77,7 @@ class FXStringMenuOwner extends StringMenuOwner<MenuItem> {
             }
         };
     }
-    
+
     static Wrap<? extends MenuItem> showMenu(Wrap<? extends MenuItem> parent, LookupCriteria<MenuItem>... criteria) {
         if (criteria.length == 0) {
             throw new IllegalStateException("Length supposed to be greater than 0 at this moment");

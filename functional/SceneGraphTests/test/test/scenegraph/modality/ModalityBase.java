@@ -101,10 +101,10 @@ public class ModalityBase extends Utils {
         sceneMouseClickable(name, mouseCounter);
         sceneKeyPressHandle(name, keysCounter);
     }
-    
+
     protected void sceneMouseClickable(final String stageID, int waitingClicks) throws InterruptedException {
         final Wrap<? extends Scene> sceneWrap = getSceneWrap(stageID);
-        
+
         // this toFront call is to let the test work in applet mode
         new GetAction() {
 
@@ -120,9 +120,9 @@ public class ModalityBase extends Utils {
             }
         }.dispatch(Root.ROOT.getEnvironment());
         Thread.sleep(sleepConst);
-        
+
         Parent<Node> parent = sceneWrap.as(Parent.class, Node.class);
-        
+
         Wrap<? extends Label> labelWrap = Lookups.byID(parent, stageID + ModalityWindow.MOUSE_COUNTER_ID, Label.class);
 
         int tempCounter = Integer.parseInt(labelWrap.as(Text.class).text());
@@ -157,8 +157,8 @@ public class ModalityBase extends Utils {
             Wrap<? extends Button> button = parent.lookup(Button.class, new ByID<Button>(ModalityWindow.DISMISS_BUTTON_ID)).wrap();
             doMouseClick(button);
             try {
-                //Specially wait, untill scene disappears, if it is closed, and 
-                //scene reordering (redrawing/drawing) happens, if reordering 
+                //Specially wait, untill scene disappears, if it is closed, and
+                //scene reordering (redrawing/drawing) happens, if reordering
                 //happens on attempt to close the stage.
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
@@ -179,7 +179,7 @@ public class ModalityBase extends Utils {
         applySubstageParenteness(parent, setSceneAsParent);
         Wrap<? extends ChoiceBox> choiceBoxWrap = parent.lookup(ChoiceBox.class).wrap();
         choiceBoxWrap.mouse().click();
-        try {//This is needed, because sometimes popup appears after its 
+        try {//This is needed, because sometimes popup appears after its
             //appearing it list of windows in fx.
             Thread.sleep(1000);
         } catch (InterruptedException ex) {

@@ -37,79 +37,79 @@ import javafx.scene.transform.Transform;
  */
 public class AffineManual extends Affine
 {
-    
+
     /**
      * The same as {@link Affine#append(double mxx, double mxy, double tx, double myx, double myy, double ty)}
      */
     @Override
     public void append(double mxx, double mxy, double tx, double myx, double myy, double ty)
     {
-	setMxx(getMxx() * mxx + getMxy() * myx);
-	setMxy(getMxx() * mxy + getMxy() * myy);
-	setMxz(getMxz());
-	setTx(getMxx() * tx + getMxy() * ty + getTx());
-	
-	setMyx(getMyx() * mxx + getMyy() * myx);
-	setMyy(getMyx() * mxy + getMyy() * myy);
-	setMyz(getMyz());
-	setTy(getMyx() * tx + getMyy() * ty + getTy());
-	
-	setMzx(getMzx() * mxx + getMzy() * myx);
-	setMzy(getMzx() * mxy + getMzy() * myy);
-	setMzz(getMzz());
-	setTz(getMzx() * tx + getMzy() * ty + getTz());
+    setMxx(getMxx() * mxx + getMxy() * myx);
+    setMxy(getMxx() * mxy + getMxy() * myy);
+    setMxz(getMxz());
+    setTx(getMxx() * tx + getMxy() * ty + getTx());
+
+    setMyx(getMyx() * mxx + getMyy() * myx);
+    setMyy(getMyx() * mxy + getMyy() * myy);
+    setMyz(getMyz());
+    setTy(getMyx() * tx + getMyy() * ty + getTy());
+
+    setMzx(getMzx() * mxx + getMzy() * myx);
+    setMzy(getMzx() * mxy + getMzy() * myy);
+    setMzz(getMzz());
+    setTz(getMzx() * tx + getMzy() * ty + getTz());
     }
-    
+
     /**
-     * The same as {@link Affine#append(double mxx, double mxy, double mxz, double tx, double myx, 
-	    double myy, double myz, double ty, double mzx, double mzy, double mzz, double tz)}
+     * The same as {@link Affine#append(double mxx, double mxy, double mxz, double tx, double myx,
+        double myy, double myz, double ty, double mzx, double mzy, double mzz, double tz)}
      */
     @Override
-    public void append(double mxx, double mxy, double mxz, double tx, double myx, 
-	    double myy, double myz, double ty, double mzx, double mzy, double mzz, double tz)
+    public void append(double mxx, double mxy, double mxz, double tx, double myx,
+        double myy, double myz, double ty, double mzx, double mzy, double mzz, double tz)
     {
-	double xx = getMxx() * mxx + getMxy() * myx + getMxz() * mzx;
-	double xy = getMxx() * mxy + getMxy() * myy + getMxz() * mzy;
-	double xz = getMxx() * mxz + getMxy() * myz + getMxz() * mzz;
-	double trX = getMxx() * tx + getMxy() * ty + getMxz() * tz + getTx();
-	
-	double yx = getMyx() * mxx + getMyy() * myx + getMyz() * mzx;
-	double yy = getMyx() * mxy + getMyy() * myy + getMyz() * mzy;
-	double yz = getMyx() * mxz + getMyy() * myz + getMyz() * mzz;
-	double trY = getMyx() * tx + getMyy() * ty + getMyz() * tz + getTy();
-	
-	double zx = getMzx() * mxx + getMzy() * myx + getMzz() * mzx;
-	double zy = getMzx() * mxy + getMzy() * myy + getMzz() * mzy;
-	double zz = getMzx() * mxz + getMzy() * myz + getMzz() * mzz;
-	double trZ = getMzx() * tx + getMzy() * ty + getMzz() * tz + getTz();
-        
+    double xx = getMxx() * mxx + getMxy() * myx + getMxz() * mzx;
+    double xy = getMxx() * mxy + getMxy() * myy + getMxz() * mzy;
+    double xz = getMxx() * mxz + getMxy() * myz + getMxz() * mzz;
+    double trX = getMxx() * tx + getMxy() * ty + getMxz() * tz + getTx();
+
+    double yx = getMyx() * mxx + getMyy() * myx + getMyz() * mzx;
+    double yy = getMyx() * mxy + getMyy() * myy + getMyz() * mzy;
+    double yz = getMyx() * mxz + getMyy() * myz + getMyz() * mzz;
+    double trY = getMyx() * tx + getMyy() * ty + getMyz() * tz + getTy();
+
+    double zx = getMzx() * mxx + getMzy() * myx + getMzz() * mzx;
+    double zy = getMzx() * mxy + getMzy() * myy + getMzz() * mzy;
+    double zz = getMzx() * mxz + getMzy() * myz + getMzz() * mzz;
+    double trZ = getMzx() * tx + getMzy() * ty + getMzz() * tz + getTz();
+
         setMxx(xx);
         setMxy(xy);
         setMxz(xz);
         setTx(trX);
-        
+
         setMyx(yx);
         setMyy(yy);
         setMyz(yz);
         setTy(trY);
-        
+
         setMzx(zx);
         setMzy(zy);
         setMzz(zz);
         setTz(trZ);
     }
-    
+
     /**
      * The same as {@link Affine#append(Transform transform)}
      */
     @Override
     public void append(Transform transform)
     {
-        append(transform.getMxx(), transform.getMxy(), transform.getMxz(), transform.getTx(), 
-                transform.getMyx(), transform.getMyy(), transform.getMyz(), transform.getTy(), 
+        append(transform.getMxx(), transform.getMxy(), transform.getMxz(), transform.getTx(),
+                transform.getMyx(), transform.getMyy(), transform.getMyz(), transform.getTy(),
                 transform.getMzx(), transform.getMzy(), transform.getMzz(), transform.getTz());
     }
-    
+
     /**
      * The same as {link Affine#append(double[] matrix, MatrixType type, int offset)}
      */
@@ -120,18 +120,18 @@ public class AffineManual extends Affine
         {
             case MT_2D_2x3:
             case MT_2D_3x3:
-                append(matrix[offset], matrix[offset + 1], matrix[offset + 2], 
+                append(matrix[offset], matrix[offset + 1], matrix[offset + 2],
                         matrix[offset + 3], matrix[offset + 4], matrix[offset + 5]);
                 break;
             case MT_3D_3x4:
             case MT_3D_4x4:
-                append(matrix[offset], matrix[offset + 1], matrix[offset + 2], matrix[offset + 3], 
-                        matrix[offset + 4], matrix[offset + 5], matrix[offset + 6], matrix[offset + 7], 
+                append(matrix[offset], matrix[offset + 1], matrix[offset + 2], matrix[offset + 3],
+                        matrix[offset + 4], matrix[offset + 5], matrix[offset + 6], matrix[offset + 7],
                         matrix[offset + 8], matrix[offset + 9], matrix[offset + 10], matrix[offset + 11]);
                 break;
         }
     }
-    
+
     /**
      * The same as {link Affine#appendRotation(double angle)}
      */
@@ -140,36 +140,36 @@ public class AffineManual extends Affine
     {
         append(new Rotate(angle));
     }
-    
+
     @Override
     public void appendRotation(double andle, double pivatX, double pivotY)
     {
         append(new Rotate(andle, pivatX, pivotY));
     }
-    
+
     @Override
     public void appendRotation(double angle, Point2D pivot)
     {
         append(new Rotate(angle, pivot.getX(), pivot.getY()));
     }
-    
+
     @Override
     public void appendRotation(double angle, double pivotX, double pivotY, double pivotZ,
             double axisX, double axisY, double axisZ)
     {
         append(new Rotate(angle, pivotX, pivotY, pivotZ, new Point3D(axisX, axisY, axisZ)));
     }
-    
+
     @Override
     public void appendRotation(double angle, double pivotX, double pivotY, double pivotZ, Point3D axis)
     {
         append(new Rotate(angle, pivotX, pivotY, pivotZ, axis));
     }
-    
+
     @Override
     public void appendRotation(double angle, Point3D pivot, Point3D axis)
     {
         append(new Rotate(angle, pivot.getX(), pivot.getY(), pivot.getZ(), axis));
     }
-    
+
 }

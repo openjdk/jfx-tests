@@ -42,29 +42,29 @@ public final class Consts {
     public static final String BTN_SET_CELLS_EDITOR_ID = "BTN_SET_CELLS_EDITOR_ID";
     public static final String CMB_EDITORS_ID = "CMB_EDITORS_ID";
     public static final String CHB_IS_CUSTOM_ID = "CHB_IS_CUSTOM_ID";
-    
+
     public static enum CellEditorType {
         TEXT_FIELD, COMBOBOX, CHOICEBOX
     }
-    
+
     public static final String BTN_SET_ON_EDIT_EVENT_HANDLERS = "BTN_SET_ON_EDIT_EVENT_HANDLERS";
-    
+
     public static final String COUNTER_EDIT_START = "EDIT_START_COUNTER";
     public static final String COUNTER_EDIT_COMMIT = "EDIT_COMMIT_COUNTER";
     public static final String COUNTER_EDIT_CANCEL = "EDIT_CANCEL_COUNTER";
     public static final String COUNTER_ON_SORT = "ON_SORT_COUNTER";
-    
+
     public static final String REMOVE_MULTIPLE_COLUMNS_TEXT_FIELD_ID = "REMOVE_MULTIPLE_COLUMNS_TEXT_FIELD_ID";
     public static final String REMOVE_MULTIPLE_COLUMNS_ACTION_BUTTON_ID = "REMOVE_MULTIPLE_COLUMNS_ACTION_BUTTON_ID";
     public static final String REMOVE_DATA_ITEMS_MULTIPLE_TEXT_FIELD_ID = "REMOVE_DATA_ITEMS_MULTIPLE_TEXT_FIELD_ID";
     public static final String REMOVE_DATA_ITEMS_MULTIPLE_ACTION_BUTTON_ID = "REMOVE_DATA_ITEMS_MULTIPLE_ACTION_BUTTON_ID";
     public static final String CREATE_NESTED_COLUMN_MULTIPLE_TEXTFIELD_ID = "CREATE_NESTED_COLUMN_MULTIPLE_TEXTFIELD_ID";
     public static final String CREATE_NESTED_COLUMN_MULTIPLE_ACTION_BUTTON_ID = "CREATE_NESTED_COLUMN_MULTIPLE_ACTION_BUTTON_ID";
-    
+
     public static final String RESET_BTN_ID = "RESET_BTN_ID";
     public static final String SELECTED_ITEMS_ID = "SELECTED_ITEMS_ID";
     public static final String ENABLE_MULTIPLE_SELECTION_ID = "ENABLE_MULTIPLE_SELECTION_ID";
-    
+
     public static final String INSERT_ITEM_BTN_ID = "INSERT_ITEM_BTN_ID";
     public static final String INSERT_ITEM_INDEX_ID = "INSERT_ITEM_INDEX_ID";
     public static final String INSERT_COLUMN_BTN_ID = "INSERT_COLUMN_BTN_ID";
@@ -73,16 +73,16 @@ public final class Consts {
     public static final String ITEM_INDEX_TO_REMOVE_ID = "ITEM_INDEX_TO_REMOVE_ID";
     public static final String REMOVE_COLUMN_BTN_ID = "REMOVE_COLUMN_BTN_ID";
     public static final String COLUMN_INDEX_TO_REMOVE_ID = "COLUMN_INDEX_TO_REMOVE_ID";
-    
+
     public final static String REPLACE_SKIN_IMPLEMENTATION_BUTTON_ID = "REPLACE_SKIN_IMPLEMENTATION_BUTTON_ID";
     public final static String CUSTOM_IMPLEMENTATION_MARKER = "CUSTOM_IMPLEMENTATION_MARKER";
-    
+
     public static class StyleClass {
         public static final String TREE_DISCLOSURE_NODE = "tree-disclosure-node";
         public static final String TREE_TABLE_ROW_CELL = "tree-table-row-cell";
         public static final String TREE_TABLE_CELL = "tree-table-cell";
     }
-    
+
     public static final class Table {
         public static final String SCROLL_TO_COLUMN_BTN_ID = "SCROLL_TO_COLUMN_BTN_ID";
         public static final String SCROLL_TO_COLUMN_INDEX_ID = "SCROLL_TO_COLUMN_INDEX_ID";
@@ -92,7 +92,7 @@ public final class Consts {
         public static final String SORTABLE_MENU_ITEM_ID = "SORTABLE_MENU_ITEM_ID";
         public static final String REFILL_BNT_ID = "REFILL_BNT_ID";
     }
-    
+
     public static final class Cell {
         public static final String EDITING_CHOICEBOX_CELL_ID = "EDITING_CHOICEBOX_CELL_ID";
         public static final String EDITING_COMBOBOX_CELL_ID = "EDITING_COMBOBOX_CELL_ID";

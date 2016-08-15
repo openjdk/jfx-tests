@@ -34,7 +34,7 @@ import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 
 public class NodeParentImpl extends AbstractParent<Node> {
-    
+
     private Environment env;
     private AbstractNodeHierarchy nodeHierarchy;
 

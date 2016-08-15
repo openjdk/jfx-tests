@@ -87,7 +87,7 @@ public class TransparencyWindowTest extends TestBase {
                 return status;
             }
         });
-        
+
     }
     public static String ccomparePopUpRGB(Image image, Rectangle rec, Node chB, int smallRectSize){
         String status = checkAssert(true,"Internal error: Image is not of proper type AWTImage/GlassImage", usingGlassRobot() ? image instanceof GlassImage : image instanceof AWTImage);
@@ -125,5 +125,5 @@ public class TransparencyWindowTest extends TestBase {
         else
             return _msg;
     }
-    
+
 }

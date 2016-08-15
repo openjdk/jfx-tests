@@ -654,7 +654,7 @@ public class TreeViewTest extends TestBase {
     @Test(timeout = 600000)
     /*
      * This test checks working of scrollTo method of TreeView. Checks behavior,
-     * when too big and negative values are used as paramteres, checks, that 
+     * when too big and negative values are used as paramteres, checks, that
      * scrolling is done correctly, and item is visible and correctly positioned.
      */
     public void scrollToTest() throws InterruptedException {

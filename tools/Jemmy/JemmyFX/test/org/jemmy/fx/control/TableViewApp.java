@@ -82,7 +82,7 @@ public class TableViewApp extends Application {
         firstNameCol.setEditable(true);
         TableColumn<Person, String> lastNameCol = new TableColumn<Person, String>("Last Name");
         lastNameCol.setEditable(true);
-        
+
         Callback<TableColumn<Person, String>, TableCell<Person, String>> cellFactory =
                 p -> new EditingCell();
 

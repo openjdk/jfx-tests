@@ -52,7 +52,7 @@ public class ListTest {
 
     ListViewDock lst;
     org.jemmy.interfaces.List list;
-    
+
     @Before
     public void setUp() throws InterruptedException {
         lst = new ListViewDock(new SceneDock().asParent());
@@ -72,7 +72,7 @@ public class ListTest {
         ListItemDock item = new ListItemDock(list, new EqualsLookup<Object>("2"));
         item.asEditableCell().edit("two");
     }
-    
+
     @Test
     public void indexLookup() {
         new ListItemDock(list, lst.asSelectable().getStates().size() - 1, new Any<>()).
@@ -88,7 +88,7 @@ public class ListTest {
         lst.asList().select(control -> ((String)control).trim().length() > 2);
         assertEquals(count, lst.wrap().getControl().getSelectionModel().getSelectedItems().size());
     }
-    
+
     @Test
     public void cellSelect() throws InterruptedException {
         new ListItemDock(lst.asList(), 0, new Any<>()).asEditableCell().select();

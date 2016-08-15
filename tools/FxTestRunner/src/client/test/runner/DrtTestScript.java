@@ -101,9 +101,9 @@ public class DrtTestScript extends htmltestrunner.TestScript {
                  Collections.addAll(cmdList, "-DproxyHost=" + proxyUrl.getHost(), "-DproxyPort=" + proxyUrl.getPort());
             }
         }
-        
+
         //prism
-        
+
         String pipelineOptions;
         try {
             pipelineOptions = savedEnv.lookup(PipelineQuestion.PIPELINE_PARAM_NAME)[0].trim();
@@ -116,7 +116,7 @@ public class DrtTestScript extends htmltestrunner.TestScript {
             Collections.addAll (cmdList, jvmArgPrismOrder);
         }
         Collections.addAll(cmdList, "-Dprism.verbose=true");
-        
+
         //adding params
         Collections.addAll(cmdList, DrtWebNodeRunner.class.getName(), "file:///" + testAbsPath);
 

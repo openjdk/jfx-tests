@@ -94,7 +94,7 @@ public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implement
     }
 
     @Override
-    public void edit(DATA newValue) {        
+    public void edit(DATA newValue) {
         if (editor == null) {
             throw new JemmyException("Editor is null for <" + toString() + ">.");
         } else {
@@ -111,7 +111,7 @@ public abstract class ItemWrap<DATA extends Object> extends Wrap<DATA> implement
 
     @Override
     public Class getType() {
-        //Object.class - this is only needed for editing where type is not 
+        //Object.class - this is only needed for editing where type is not
         //really sticking outside anywhere
         return dataClass == null ? Object.class : dataClass;
     }

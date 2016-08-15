@@ -94,7 +94,7 @@ public class TestBase extends UtilTestFunctions {
     static final int POPUP_MAX_EXPECTED_WIDTH = 260;
     static final int POPUP_MIN_EXPECTED_HEIGHT = 220;
     static final int POPUP_MAX_EXPECTED_HEIGHT = 240;
-    
+
     @Before
     public void setUp() {
         initWrappers();
@@ -172,7 +172,7 @@ public class TestBase extends UtilTestFunctions {
                             setResult(Boolean.valueOf(testedControl.getControl().isShowWeekNumbers()));
                         }
                     }.dispatch(testedControl.getEnvironment());
-                    
+
                     Boolean isHijrahUmalqura = new GetAction<Boolean>() {
                         @Override
                         public void run(Object... parameters) throws Exception {
@@ -183,7 +183,7 @@ public class TestBase extends UtilTestFunctions {
                     if (weekNumbersShowing == Boolean.TRUE) {
                         shift = 27;
                     }
-                     
+
                     if (isHijrahUmalqura) {
                         widthAddition = 20;
                         heightAddition = 77;
@@ -249,7 +249,7 @@ public class TestBase extends UtilTestFunctions {
                     return null;
                 }
             }
-            
+
             @Override public String toString() { return String.format("[Popup menu is showing = %b]", showing); }
         });
     }
@@ -262,9 +262,9 @@ public class TestBase extends UtilTestFunctions {
         System.out.println("popupWrap.as(Parent.class, Pane.class) = " + popupWrap.as(Parent.class, Pane.class));
         Lookup lookup = popupWrap.as(Parent.class, Pane.class).lookup(new ByStyleClass("date-picker-popup"));
         assertEquals("[Popup content not found]", 1, lookup.size());
-        
+
         Wrap content = lookup.wrap();
-        
+
         assertEquals(testedControl.getScreenBounds().x, content.getScreenBounds().x, 1);
         assertEquals(testedControl.getScreenBounds().y + testedControl.getScreenBounds().height, content.getScreenBounds().y, 1);
     }
@@ -318,7 +318,7 @@ public class TestBase extends UtilTestFunctions {
         public final DateCellDescription today;
         public final DateCellDescription selectedDay;
         public final DateCellDescription focusedDay;
-        
+
         public PopupInfoDescription(PopupSceneDescription sceneDescription) {
             if (sceneDescription.today != null) {
                 today = new DateCellDescription(sceneDescription.today);
@@ -380,7 +380,7 @@ public class TestBase extends UtilTestFunctions {
                     }
                 }
             }.dispatch(testedControl.getEnvironment(), sceneDescription);
-            
+
             focusedDay = new GetAction<DateCellDescription>() {
                 @Override
                 public void run(Object... parameters) throws Exception {
@@ -539,7 +539,7 @@ public class TestBase extends UtilTestFunctions {
             }
         }, expectedText);
     }
-    
+
     void checkExpectedDate(LocalDate expected) {
         LocalDate actual = new GetAction<LocalDate>() {
             @Override public void run(Object... parameters) throws Exception {
@@ -608,7 +608,7 @@ public class TestBase extends UtilTestFunctions {
             } catch(InterruptedException iex) {
                 Logger.getLogger(TestBase.class.getName()).log(Level.SEVERE, null, iex);
             } finally {
-               return isReached ? Boolean.TRUE : null; 
+               return isReached ? Boolean.TRUE : null;
             }
         }
 
@@ -624,11 +624,11 @@ public class TestBase extends UtilTestFunctions {
             return sb.toString();
         }
     }
-    
+
     /*
      * Context menu methods.
      */
-    
+
     final Lookup<Scene> contextMenuLookup = Root.ROOT.lookup(
             new LookupCriteria<Scene>() {
                 public boolean check(Scene cntrl) {
@@ -636,7 +636,7 @@ public class TestBase extends UtilTestFunctions {
                             && cntrl.getHeight() <= 82.0 + (Utils.isLinux() ? 5 : 0);
                 }
     });
-    
+
     /*
      * Makes right mouse click on the popup.
      */
@@ -646,7 +646,7 @@ public class TestBase extends UtilTestFunctions {
         popupWrap.mouse().click(1, popupWrap.getClickPoint(), MouseButtons.BUTTON3);
         waitPopupShowingState(true);
     }
-    
+
     void waitContextMenuShowing(final boolean showing) {
         testedControl.waitState(new State<Boolean>() {
             public Boolean reached() {
@@ -658,12 +658,12 @@ public class TestBase extends UtilTestFunctions {
             public String toString() { return String.format("[Context menu is showing = %b]", showing); }
         });
     }
-    
+
     Wrap getMenuItemLabelWrap(final String itemText) {
         if (null == itemText) {
             throw new IllegalArgumentException("[Cannot lookup 'null' menu item]");
         }
-        
+
         Wrap<? extends Scene> wrap = contextMenuLookup.wrap();
         Lookup lookup = wrap.as(Parent.class, Label.class).lookup(Label.class, new LookupCriteria<Label>() {
             public boolean check(Label control) {
@@ -671,55 +671,55 @@ public class TestBase extends UtilTestFunctions {
                        && itemText.equals(control.getText());
             }
         });
-        
+
         assertEquals("[Context menu item 'Show Today' not fonud]", 1, lookup.size());
-        
+
         return lookup.wrap();
     }
-    
+
     Wrap getMenuItemWrap(final String itemText) {
         Wrap<? extends Scene> wrap = contextMenuLookup.wrap();
         Lookup lookup = wrap.as(Parent.class, Region.class).lookup(Region.class, new LookupCriteria<Region>() {
             public boolean check(Region control) {
-                
+
                 if (!control.getStyleClass().contains("menu-item")) return false;
-                
+
                 for (Object object : control.getChildrenUnmodifiable()) {
                     if (Label.class.isAssignableFrom(object.getClass())
                         && itemText.equals(((Label) object).getText())) {
-                        
+
                             return true;
                     }
                 }
-                
+
                 return false;
             }
         });
-        
+
         assertEquals(String.format("[Context menu item '%s' not fonud]", itemText), 1, lookup.size());
-        
+
         return lookup.wrap();
     }
-    
+
     void contextMenuShowToday() throws InterruptedException {
         openContextMenu();
         getMenuItemWrap("Show Today").mouse().click();
     }
-    
+
     void contextMenuShowWeekNumbers() throws InterruptedException {
         openContextMenu();
         getMenuItemWrap("Show Week Numbers").mouse().click();
     }
-    
+
     Wrap<? extends Scene> getContextMenuWrap() {
         return contextMenuLookup.wrap();
     }
-    
+
     Wrap getContextMenuContentWrap() {
         return getContextMenuWrap().as(Parent.class, Region.class)
                .lookup(Region.class, new ByStyleClass("context-menu")).wrap();
     }
-    
+
     /*
      * Getter and setter wrappers
      */
@@ -730,7 +730,7 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment(), dayCellFactory);
     }
-    
+
     Callback<DatePicker, DateCell> getDayCellFactory() {
         return new GetAction<Callback<DatePicker, DateCell>>() {
             @Override public void run(Object... parameters) throws Exception {
@@ -738,7 +738,7 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment());
     }
-    
+
     void setConverter(StringConverter<LocalDate> converter) {
         new GetAction<Void>() {
             @Override public void run(Object... parameters) throws Exception {
@@ -746,7 +746,7 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment(), converter);
     }
-    
+
     StringConverter<LocalDate> getConverter() {
         return new GetAction<StringConverter>() {
             @Override public void run(Object... parameters) throws Exception {

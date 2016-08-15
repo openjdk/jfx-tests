@@ -14,7 +14,7 @@ import org.junit.*;
  * @author shura
  */
 public class ImageTest {
-    
+
     public ImageTest() {
     }
 
@@ -27,17 +27,17 @@ public class ImageTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
     @Test
     public void hello() throws InterruptedException {
-        final LabeledDock button = new LabeledDock(new SceneDock().asParent(), 
+        final LabeledDock button = new LabeledDock(new SceneDock().asParent(),
                 "push me", StringComparePolicy.EXACT);
         Thread.sleep(2000);
         final Image beforeClick = button.wrap().getScreenImage();

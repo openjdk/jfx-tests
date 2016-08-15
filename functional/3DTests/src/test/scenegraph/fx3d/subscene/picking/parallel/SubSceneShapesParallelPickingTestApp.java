@@ -43,5 +43,5 @@ public class SubSceneShapesParallelPickingTestApp extends SubSceneShapesPickingA
     public static void main(String[] args) {
         Utils.launch(SubSceneShapesParallelPickingTestApp.class, args);
     }
-    
+
 }

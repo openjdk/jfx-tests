@@ -109,7 +109,7 @@ public class NewStackedAreaChartApp extends InteroperabilityApp implements Chart
 
             VBox vb = new VBox(5);
             vb.getChildren().addAll(resetButtonsHBox, getAddItemHBox(), getRemoveDataDialog());
-            
+
             pane = getPaneFor(testedStackedAreaChart, CHART_TAB_NAME, axis1, AXIS_1_TAB_NAME, axis2, AXIS_2_TAB_NAME);
 
             setTestedControlContainerSize(500, 500);

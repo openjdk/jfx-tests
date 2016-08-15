@@ -65,10 +65,10 @@ public class Shapes2App extends BasicButtonChooserApp {
         super(width, heigth, "Shapes", false);
     }
 
-    
-    private static AbstractEffect[] effects = Effects.values();    
 
-    public static void main(String args[]) {        
+    private static AbstractEffect[] effects = Effects.values();
+
+    public static void main(String args[]) {
         Utils.launch(Shapes2App.class, args);
     }
 
@@ -78,7 +78,7 @@ public class Shapes2App extends BasicButtonChooserApp {
 
     /**
      * For each tested shape the ShapeFactory instance should be added
-     * @see ShapesApp#setup() 
+     * @see ShapesApp#setup()
      */
     private static abstract class ShapeFactory {
 
@@ -117,8 +117,8 @@ public class Shapes2App extends BasicButtonChooserApp {
 
     private void register(final ShapeFactory content, final int slotsize) {
         final PageWithSlots page = new PageWithSlots(content.name, height, width);
-        page.setSlotSize(slotsize, slotsize);       
-        for (final AbstractEffect effect : effects) {            
+        page.setSlotSize(slotsize, slotsize);
+        for (final AbstractEffect effect : effects) {
                     Pane slot = new Pane();//Region();
                     Shape shape = content.createShape();
                     shape.setTranslateX(10);

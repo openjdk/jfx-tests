@@ -48,8 +48,8 @@ public class BridgeSimpleTest extends BridgeTestClass {
     private static void printResult(Object resultObject, CountDownLatch lock) {
         Platform.runLater(new Runnable() {
             public void run() {
-           	System.out.println("resultObject: " + resultObject);
-           	lock.countDown();
+            System.out.println("resultObject: " + resultObject);
+            lock.countDown();
             }
         });
     }
@@ -60,7 +60,7 @@ public class BridgeSimpleTest extends BridgeTestClass {
     @Test(timeout=10000)
     public void testInteger() throws InterruptedException {
         resultObject = null;
-        
+
         Platform.runLater(new Runnable() {
             public void run() {
                 initWebEngine();

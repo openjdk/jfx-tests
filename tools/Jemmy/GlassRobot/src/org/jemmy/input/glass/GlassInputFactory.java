@@ -69,19 +69,19 @@ public class GlassInputFactory implements ControlInterfaceFactory {
     public GlassInputFactory() {
         this(new DefaultGlassInputMap());
     }
-    
+
     public static void setInitEnvironment(Environment e) {
         env = e;
     }
 
     public static void setRobot(Robot r) {
-    	robot = r;
+        robot = r;
     }
-    
+
     public static boolean robotInitialized() {
         return (null != robot);
     }
-    
+
     public static Robot getRobot() {
         if (robot == null) {
             robot = Environment.getEnvironment().getWaiter(WAIT_FACTORY).ensureState(new State<Robot>() {

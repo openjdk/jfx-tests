@@ -110,11 +110,11 @@ public class TableViewTest extends TestBase {
         final Lookup hScrollBar = getScrollLookup(Orientation.HORIZONTAL);
         final int ROWS_TO_REMOVE = DATA_ITEMS_NUM - pageHeightInCells;
         final int COLS_TO_REMOVE = DATA_FIELDS_NUM - pageWidthInCells;
-        
+
         final State<Integer> vScrollBarCount = new State<Integer>() {
             public Integer reached() { return Integer.valueOf(vScrollBar.size()); }
         };
-        
+
         final State<Integer> hScrollBarCount = new State<Integer>() {
             public Integer reached() { return Integer.valueOf(hScrollBar.size()); }
         };
@@ -125,7 +125,7 @@ public class TableViewTest extends TestBase {
             btnRemoveItem.mouse().click();
         }
         testedControl.waitState(vScrollBarCount, Integer.valueOf(0));
-        
+
         testedControl.waitState(hScrollBarCount, Integer.valueOf(1));
         for (int i = 0; i < COLS_TO_REMOVE; i++) {
             btnRemoveColumn.mouse().click();
@@ -154,7 +154,7 @@ public class TableViewTest extends TestBase {
         columHeader.mouse().click();
         Wrap<? extends IndexedCell> cellWrap = getCellWrap(0, isTableTests ? 0 : 1);// first line for treeTable - is root line.
         assertTrue(cellWrap.getControl().getItem().equals("item 00 field 0"));
-        
+
         //Descending sort
         columHeader.mouse().click();
         cellWrap = getCellWrap(0, isTableTests ? 0 : 1);
@@ -162,15 +162,15 @@ public class TableViewTest extends TestBase {
                              ? TableViewApp.DATA_ITEMS_NUM - 1
                              : TreeTableAsOldTableApp.DATA_ITEMS_NUM - 2;
         assertEquals(String.format("item %02d field 0", expectedIndex), cellWrap.getControl().getItem());
-        
+
         //Disable sort
         columHeader.mouse().click();
-        
+
          //Ascending sort
         columHeader.mouse().click();
         cellWrap = getCellWrap(0, isTableTests ? 0 : 1);
         assertTrue(cellWrap.getControl().getItem().equals("item 00 field 0"));
-        
+
         scrollTo(0, TableViewApp.DATA_ITEMS_NUM - 1);
         cellWrap = getCellWrap(0, TableViewApp.DATA_ITEMS_NUM - 1);
         Rectangle old_bounds = cellWrap.getScreenBounds();
@@ -306,7 +306,7 @@ public class TableViewTest extends TestBase {
             //Assert.assertTrue(columns.get(i).getProperties().entrySet().contains(userData[i]));
         }
     }
-    
+
     /**
      * Checks that when the sorting is applied
      * to the underlying data collection
@@ -315,10 +315,10 @@ public class TableViewTest extends TestBase {
     @Smoke
     @Test(timeout=300000)
     public void renderingAfterSortingTest() throws Throwable {
-        
+
         final int ITEMS_COUNT = 7;
         final int COL_IDX = 0;
-        
+
         StringConverter<Data> conv = new StringConverter<Data>() {
             @Override
             public String toString(Data item) {
@@ -328,7 +328,7 @@ public class TableViewTest extends TestBase {
             @Override
             public Data fromString(String s) { return new Data(s, DATA_FIELDS_NUM, 0); }
         };
-        
+
         SortValidator<Data, TableCell> validator = new SortValidator<Data, TableCell>(ITEMS_COUNT, conv) {
 
             @Override
@@ -363,7 +363,7 @@ public class TableViewTest extends TestBase {
                return cell.getText();
             }
         };
-        
+
         boolean result = validator.check();
         String msg = validator.getFailureReason();
         assertTrue(msg, result);
@@ -374,27 +374,27 @@ public class TableViewTest extends TestBase {
     public void scrollToColumnIndex() {
         DATA_FIELDS_NUM = 64;
         refill(DATA_FIELDS_NUM, DATA_ITEMS_NUM);
-        
+
         scrollToColumnByIndex(DATA_FIELDS_NUM - 1);
         assertTrue(isColumnHeaderVisible(DATA_FIELDS_NUM - 1));
         assertTrue(!isColumnHeaderVisible(0));
         assertEquals(getScrollBarMaxValue(Orientation.HORIZONTAL), getScrollBarValue(Orientation.HORIZONTAL), 1e-7);
-                
+
         scrollToColumnByIndex(0);
         assertTrue(isColumnHeaderVisible(0));
         assertTrue(!isColumnHeaderVisible(DATA_FIELDS_NUM - 1));
         assertEquals(getScrollBarMinValue(Orientation.HORIZONTAL), getScrollBarValue(Orientation.HORIZONTAL), 1e-7);
-                
+
         scrollToColumn(DATA_FIELDS_NUM - 1);
         assertTrue(isColumnHeaderVisible(DATA_FIELDS_NUM - 1));
         assertTrue(!isColumnHeaderVisible(0));
         assertEquals(getScrollBarMaxValue(Orientation.HORIZONTAL), getScrollBarValue(Orientation.HORIZONTAL), 1e-7);
-        
+
         scrollToColumn(0);
         assertTrue(isColumnHeaderVisible(0));
         assertTrue(!isColumnHeaderVisible(DATA_FIELDS_NUM - 1));
         assertEquals(getScrollBarMinValue(Orientation.HORIZONTAL), getScrollBarValue(Orientation.HORIZONTAL), 1e-7);
-        
+
         scrollToColumnByIndex(DATA_FIELDS_NUM / 3);
         assertTrue(isColumnHeaderVisible(DATA_FIELDS_NUM / 3));
         assertTrue(!isColumnHeaderVisible(0));
@@ -402,7 +402,7 @@ public class TableViewTest extends TestBase {
         double delta = testedControl.getScreenBounds().getWidth() / 2;
         assertEquals(getScrollBarMaxValue(Orientation.HORIZONTAL) / 3, getScrollBarValue(Orientation.HORIZONTAL), delta);
     }
-    
+
     /**
      * Checks that column resizing is correct
      * according to desired values
@@ -411,27 +411,27 @@ public class TableViewTest extends TestBase {
     @Test
     public void columnResizeTest() {
         final int columnIndex = 0;
-        
+
         double delta = 0.0;
         double expectedWidth = getColumnWidth(columnIndex);
         resizeColumn(columnIndex, delta);
         assertEquals(expectedWidth, getColumnWidth(columnIndex), 1e-7);
-        
+
         delta = 100.0;
         expectedWidth += delta;
         resizeColumn(columnIndex, delta);
         assertEquals(expectedWidth, getColumnWidth(columnIndex), 1e-7);
-        
+
         delta = 0.0;
         resizeColumn(columnIndex, delta);
         assertEquals(expectedWidth, getColumnWidth(columnIndex), 1e-7);
-        
+
         delta = 100.0;
         expectedWidth += delta;
         resizeColumn(columnIndex, delta);
         assertEquals(expectedWidth, getColumnWidth(columnIndex), 1e-7);
     }
-    
+
     @Override
     protected void insertAt(int pos) {
         txtItemInsertIndex.clear();

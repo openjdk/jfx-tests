@@ -36,20 +36,20 @@ import org.junit.BeforeClass;
  * @author Irina Grineva
  */
 public class HistoryTestClass extends GenericTestClass {
-    
+
     @BeforeClass
     public static void init(){
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     protected WebHistory history;
-    
+
     protected static int DEFAULT_MAX_SIZE = 100;
-    
+
     protected String getHelloHTML() {
         return HistoryResources.getHelloHTML();
     }
-    
+
     @Override
     @Deprecated
     protected void initWebEngine() {
@@ -57,13 +57,13 @@ public class HistoryTestClass extends GenericTestClass {
         history = engine.getHistory();
         Assert.assertNotNull(history);
     }
-    
+
     @Deprecated
     protected void initWebEngineAndLoadHello() {
         initWebEngine();
         engine.load(getHelloHTML());
     }
-    
+
     protected void initWELoadHelloFXThread() {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -72,20 +72,20 @@ public class HistoryTestClass extends GenericTestClass {
         });
         doWait(engineReady);
     }
-    
+
     protected Tester engineReady = new Tester() {
         public boolean isPassed() {
             return (engine != null) && (history != null);
         }
     };
-    
+
     private Boolean navResult;
     private Tester navResultReady = new Tester() {
         public boolean isPassed() {
             return navResult != null;
         }
     };
-            
+
     protected void go(final int n) {
         doWait(engineReady);
         Platform.runLater(new Runnable() {
@@ -95,7 +95,7 @@ public class HistoryTestClass extends GenericTestClass {
         });
         doWaitPageLoading();
     }
-    
+
     protected void reload() {
         doWait(engineReady);
         Platform.runLater(new Runnable() {
@@ -105,13 +105,13 @@ public class HistoryTestClass extends GenericTestClass {
         });
         doWaitPageLoading();
     }
-    
+
     protected void createHistory() {
         loadSite(HistoryResources.getHelloHTML());
         loadSite(HistoryResources.getHelloHTML2());
         loadSite(HistoryResources.getHelloHTML3());
     }
-    
+
     protected void loadSite(final String url) {
         doWait(engineReady);
         Platform.runLater(new Runnable() {

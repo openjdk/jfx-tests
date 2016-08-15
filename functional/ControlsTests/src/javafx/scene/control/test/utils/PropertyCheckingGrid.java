@@ -66,7 +66,7 @@ public class PropertyCheckingGrid extends GridPane {
     public static String getId(String name, String id) {
         return NAME_ID + ": " + name + "; " + id;
     }
-    
+
     public static String getExceptionId(String id, String exception_id) {
         return id + " " + exception_id;
     }

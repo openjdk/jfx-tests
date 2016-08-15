@@ -55,7 +55,7 @@ import org.jemmy.resources.StringComparePolicy;
 @ControlInterfaces(value = {EditableCellOwner.class, WindowElement.class, org.jemmy.interfaces.TreeItem.class, EditableCell.class, Showable.class},
 encapsulates = {Object.class, TreeView.class},
 name = {"asItemParent"})
-@DockInfo(name = "org.jemmy.fx.control.TreeItemDock", 
+@DockInfo(name = "org.jemmy.fx.control.TreeItemDock",
         generateSubtypeLookups = true, multipleCriteria = false)
 public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<DATA> {
 
@@ -63,7 +63,7 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
     public static final String LEAF_PROP_NAME = "leaf";
 
     @ObjectLookup("comparison policy and a toString of elements of the tree path")
-    public static <T> LookupCriteria<T> byPathToString(Class<T> type, final 
+    public static <T> LookupCriteria<T> byPathToString(Class<T> type, final
             StringComparePolicy policy, final String... path) {
         return TreeItemWrapBase.byPathToString(type, policy, path);
     }
@@ -73,11 +73,11 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
         return TreeItemWrapBase.byPathValues(type, path);
     }
 
-    @ObjectLookup("criteria for elements of the tree path")    
+    @ObjectLookup("criteria for elements of the tree path")
     public static <T> LookupCriteria<T> byPathCriteria(final Class<T> type, final LookupCriteria<T>... path) {
         return TreeItemWrapBase.byPathCriteria(type, path);
     }
-    
+
     private final TreeNodeWrap<TreeItem> theWrap;
     private TreeItemParent parent = null;
     private TreeNodeParent itemParent = null;
@@ -113,7 +113,7 @@ public class TreeItemWrap<DATA> extends ItemWrap<DATA> implements EditableCell<D
     public Rectangle getScreenBounds() {
         return theWrap.getScreenBounds();
     }
-    
+
     @Override
     public Point getClickPoint() {
         return theWrap.getClickPoint();

@@ -41,7 +41,7 @@ public class FXClickFocus extends ClickFocus {
     public static final String IS_FOCUSED_PROP = "isFocused";
 
     /**
-     * 
+     *
      * @param topControl
      */
     public FXClickFocus(Wrap<? extends Node> topControl) {
@@ -49,7 +49,7 @@ public class FXClickFocus extends ClickFocus {
     }
 
     /**
-     * 
+     *
      * @param topControl
      * @param clickPoint
      */

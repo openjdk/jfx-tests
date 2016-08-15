@@ -45,7 +45,7 @@ public class TitledPaneApp extends Application {
     public void start(Stage stage) throws Exception {
         stage.setScene(new Scene(new Group(new TitledPane("Title", new Rectangle(100, 100))), 300, 300));
         stage.show();
-        
-                
+
+
     }
 }

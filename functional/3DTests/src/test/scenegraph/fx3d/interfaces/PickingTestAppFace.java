@@ -31,6 +31,6 @@ import javafx.scene.paint.Paint;
  * @author Andrew Glushchenko
  */
 public interface PickingTestAppFace extends PickingTestingFace{
-    
+
     public void setFill(Paint paint);
 }

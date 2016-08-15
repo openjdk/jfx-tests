@@ -44,5 +44,5 @@ public interface PickingTestingFace {
     public double getXTranslation();
 
     public double getYTranslation();
-    
+
 }

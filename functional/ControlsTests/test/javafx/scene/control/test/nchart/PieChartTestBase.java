@@ -137,7 +137,7 @@ public abstract class PieChartTestBase extends AllChartsBase {
 
                     for (final PieLineLabelMatch match : pieChartDescriptionProvider.getPieChartContentDescription().info) {
                         if (match.label != null) {
-                            //If there is a label in the chart, then we expect to 
+                            //If there is a label in the chart, then we expect to
                             //find a label in the legend and then we will check its colors;
                             Color color1 = piesColors.get(match.pie);
                             Color color2 = labelsColors.get(new GetAction<String>() {
@@ -233,7 +233,7 @@ public abstract class PieChartTestBase extends AllChartsBase {
     }
 
     /*
-     * Will check, that for each line angle there is a Pie, with the same angle 
+     * Will check, that for each line angle there is a Pie, with the same angle
      * of median line.
      */
     protected void checkPiesOrientationCorrectness() throws Throwable {

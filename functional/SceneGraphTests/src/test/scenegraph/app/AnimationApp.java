@@ -616,8 +616,8 @@ public class AnimationApp extends BasicButtonChooserApp {
 
 
     class StdButtons {
-        
-        
+
+
 
         final AbstractButton buttonStart = ButtonBuilderFactory.newButtonBuilder().text("Start").id("Start")
                 .setOnClickHandler(
@@ -627,11 +627,11 @@ public class AnimationApp extends BasicButtonChooserApp {
                         public void onClick() {
                             timeline.play();
                         }
-                        
+
                     }
                 )
                 .build();
-        
+
         final AbstractButton buttonStop = ButtonBuilderFactory.newButtonBuilder().text("Stop").id("Stop")
                 .setOnClickHandler(
                     new OnClickHandler() {
@@ -640,7 +640,7 @@ public class AnimationApp extends BasicButtonChooserApp {
                         public void onClick() {
                             timeline.stop();
                         }
-                        
+
                     }
                 )
                 .build();
@@ -656,11 +656,11 @@ public class AnimationApp extends BasicButtonChooserApp {
                             try { Thread.sleep(50); } catch (Exception e) { }
                             currentState.setText(timeline.getStatus().toString());
                         }
-                        
+
                     }
                 )
                 .build();
-        
+
         final AbstractButton buttonRestart = ButtonBuilderFactory.newButtonBuilder().text("Restart").id("Restart")
                 .setOnClickHandler(
                     new OnClickHandler() {
@@ -669,11 +669,11 @@ public class AnimationApp extends BasicButtonChooserApp {
                         public void onClick() {
                             timeline.playFromStart();
                         }
-                        
+
                     }
                 )
                 .build();
-        
+
         final AbstractButton buttonCuepoint = ButtonBuilderFactory.newButtonBuilder().text("PlayFromCuepoint").id("PlayFromCuepoint")
                 .setOnClickHandler(
                     new OnClickHandler() {
@@ -682,7 +682,7 @@ public class AnimationApp extends BasicButtonChooserApp {
                         public void onClick() {
                             timeline.playFrom(cuepointName);
                         }
-                        
+
                     }
                 )
                 .build();
@@ -695,12 +695,12 @@ public class AnimationApp extends BasicButtonChooserApp {
                         public void onClick() {
                             timeline.playFrom(new Duration(1000));
                         }
-                        
+
                     }
                 )
                 .build();
-        
-        
+
+
 
         StdButtons(ObservableList<Node> _sn) {
             addButtonsToSequence(_sn);

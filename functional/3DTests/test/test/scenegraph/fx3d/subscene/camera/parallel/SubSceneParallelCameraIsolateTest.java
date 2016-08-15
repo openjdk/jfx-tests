@@ -52,5 +52,5 @@ public class SubSceneParallelCameraIsolateTest extends CameraIsolateTests{
     protected FX3DAbstractApp getApplication() {
         return app;
     }
-    
+
 }

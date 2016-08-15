@@ -31,7 +31,7 @@ import javafx.scene.control.SingleSelectionModel;
  * @author Oleg Barbashov
  */
 public class SingleSelectionModelImpl<T extends Object> extends SingleSelectionModel<T> {
-    
+
     protected ObservableList<T> itemsList;
 
     public SingleSelectionModelImpl(ObservableList<T> itemsList) {
@@ -42,7 +42,7 @@ public class SingleSelectionModelImpl<T extends Object> extends SingleSelectionM
     protected T getModelItem(int i) {
         if (i < 0)
             return null;
-        else 
+        else
             return itemsList.get(i);
     }
 

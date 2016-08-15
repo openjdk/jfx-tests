@@ -39,22 +39,22 @@ public class LookupSampleBase extends SampleBase {
     public static void setUpClass() throws Exception {
         startApp(LookupApp.class);
     }
-    
+
     @After
     public void after() throws Exception {
         //this sleep is just for a demo purposes - to see what's on the screen
         Thread.sleep(1000);
     }
-    
+
     public void before() {
-        
+
     }
-    
+
     /**
      * This code *waits* for LookupApp.mouseOverText value to be equal to an
-     * expected result. Everything must be waited in UI test and not just 
+     * expected result. Everything must be waited in UI test and not just
      * verified. More in synchronization samples.
-     * @param text 
+     * @param text
      */
     protected void assureMouseOver(String text) {
         Root.ROOT.getEnvironment().getWaiter(Wrap.WAIT_STATE_TIMEOUT).

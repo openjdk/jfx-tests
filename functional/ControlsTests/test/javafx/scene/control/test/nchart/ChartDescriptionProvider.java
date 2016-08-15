@@ -54,9 +54,9 @@ public class ChartDescriptionProvider {
     protected Parent<Node> controlAsParent;
     protected static boolean USE_CACHING = true;
     private Wrap<? extends Chart> chart;
-    
+
     //Cached, common for all instances:
-    //They are static to be common, when chart with multiple types of data will 
+    //They are static to be common, when chart with multiple types of data will
     //be implemented.
     private static Wrap<? extends Label> titleWrap;
     private static List<Wrap<? extends Label>> legendLabels;

@@ -52,5 +52,5 @@ public abstract class MeshPickingTestBase extends MeshPickingTests {
         }.dispatch(Root.ROOT.getEnvironment());
     }
 
-    
+
 }

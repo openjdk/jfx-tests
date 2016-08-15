@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
- 
+
 <?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
- 
- 
+
+
 <GridPane alignment="top_center" hgap="8" vgap="8" style="-fx-padding: 10;" xmlns:fx="http://javafx.com/fxml">
     <children>
         <Label text="Show in document progress" GridPane.columnIndex="0" GridPane.halignment="right" GridPane.rowIndex="0" />

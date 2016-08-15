@@ -43,7 +43,7 @@ import client.test.RunModes;
  */
 public class removeChangedListenerTest extends GenericTestClass {
     private boolean propertyChanged = false;
-    
+
     @BeforeClass
     public static void init(){
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);

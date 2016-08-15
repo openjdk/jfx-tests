@@ -59,16 +59,16 @@ public class TabApp  extends Application {
         tp.getTabs().add(new Tab("3"));
         tp.getTabs().add(new Tab("4"));
         tp.getTabs().add(new Tab("5"));
-        
+
         box.getChildren().add(tp);
-        
+
         focusHolder.requestFocus();
-        
+
         stage.setScene(scene);
-        
+
         stage.setWidth(300);
         stage.setHeight(300);
-        
+
         stage.show();
     }
 }

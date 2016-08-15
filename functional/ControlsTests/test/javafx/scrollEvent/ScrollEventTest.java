@@ -78,101 +78,40 @@ public class ScrollEventTest extends TestBase {
             checkParameters(-13, -19, nf.toString());
         }
     }
-    
+
     /**
      * This test checks that context menu appears
      * when different key combinations are pressed.
-     * 
+     *
      */
     @Smoke
     @OnlyPlatformMethod(Platforms.WINDOWS)
     @Test(timeout=300000)
     public void contextMenuKeyCombinationsTestWindows() {
         enableContextMenuTest();
-        
+
         for (Object nf : nodeChooser.as(Selectable.class).getStates()) {
             nodeChooser.as(Selectable.class).selector().select(nf);
-            
+
             targetControl = parent.lookup(Node.class, new ByID<Node>(ID_TARGET_NODE)).wrap();
-            
+
             //Test right mouse button click
             int expectedCounterValue = 1;
             targetControl.mouse().click(1, targetControl.getClickPoint(), Mouse.MouseButtons.BUTTON3);
-            
+
             /**
              * Test can fail on the next line, if screen is not hight, and there was an error on selecting item from the dropdown.
              */
-            
+
             checkListener(ScrollEventApp.getContextMenuOnShownCounterID(), expectedCounterValue);
-            
+
             closeContextMenu();
-            
+
             //Test Shift + F10 combination
             expectedCounterValue++;
             targetControl.keyboard().pushKey(KeyboardButtons.F10, KeyboardModifiers.SHIFT_DOWN_MASK);
             checkListener(ScrollEventApp.getContextMenuOnShownCounterID(), expectedCounterValue);
-            
-            closeContextMenu();
-            
-            //Test context menu button
-            expectedCounterValue++;
-            targetControl.keyboard().pushKey(KeyboardButtons.CONTEXT_MENU);
-            checkListener(ScrollEventApp.getContextMenuOnShownCounterID(), expectedCounterValue);
-        }
-    }
-        
-     /**
-     * This test checks that context menu appears
-     * when different key combinations are pressed.
-     * 
-     */
-    @Smoke
-    @OnlyPlatformMethod(Platforms.MAC)
-    @Test(timeout=300000)
-    public void contextMenuKeyCombinationsTestMac() {
-        enableContextMenuTest();
-        
-        for (Object nf : nodeChooser.as(Selectable.class).getStates()) {
-            nodeChooser.as(Selectable.class).selector().select(nf);
-          
-            targetControl = parent.lookup(Node.class, new ByID<Node>(ID_TARGET_NODE)).wrap();
-            
-            //Test right mouse button click
-            int expectedCounterValue = 1;
-            targetControl.mouse().click(1, targetControl.getClickPoint(), Mouse.MouseButtons.BUTTON3);
-            checkListener(ScrollEventApp.getContextMenuOnShownCounterID(), expectedCounterValue);
-            
-            closeContextMenu();
-                    
-            //Test left mouse button click
-            expectedCounterValue++;
-            targetControl.mouse().click(1, targetControl.getClickPoint(), Mouse.MouseButtons.BUTTON1, KeyboardModifiers.CTRL_DOWN_MASK);
-            checkListener(ScrollEventApp.getContextMenuOnShownCounterID(), expectedCounterValue);
-        }
-    }
-    
-    /**
-     * This test checks that context menu appears
-     * when different key combinations are pressed.
-     * 
-     */
-    @Smoke
-    @OnlyPlatformMethod(Platforms.UNIX)
-    @Test(timeout=300000)
-    public void contextMenuKeyCombinationsTestLinux() {
-        enableContextMenuTest();
-        
-        for (Object nf : nodeChooser.as(Selectable.class).getStates()) {
-            nodeChooser.as(Selectable.class).selector().select(nf);
-            
-            targetControl = parent.lookup(Node.class, new ByID<Node>(ID_TARGET_NODE)).wrap();
-            
-            //Test right mouse button click
-            int expectedCounterValue = 1;
-            
-            targetControl.mouse().click(1, targetControl.getClickPoint(), Mouse.MouseButtons.BUTTON3);
-            checkListener(ScrollEventApp.getContextMenuOnShownCounterID(), expectedCounterValue);
-            
+
             closeContextMenu();
 
             //Test context menu button
@@ -181,26 +120,87 @@ public class ScrollEventTest extends TestBase {
             checkListener(ScrollEventApp.getContextMenuOnShownCounterID(), expectedCounterValue);
         }
     }
-    
+
+     /**
+     * This test checks that context menu appears
+     * when different key combinations are pressed.
+     *
+     */
+    @Smoke
+    @OnlyPlatformMethod(Platforms.MAC)
+    @Test(timeout=300000)
+    public void contextMenuKeyCombinationsTestMac() {
+        enableContextMenuTest();
+
+        for (Object nf : nodeChooser.as(Selectable.class).getStates()) {
+            nodeChooser.as(Selectable.class).selector().select(nf);
+
+            targetControl = parent.lookup(Node.class, new ByID<Node>(ID_TARGET_NODE)).wrap();
+
+            //Test right mouse button click
+            int expectedCounterValue = 1;
+            targetControl.mouse().click(1, targetControl.getClickPoint(), Mouse.MouseButtons.BUTTON3);
+            checkListener(ScrollEventApp.getContextMenuOnShownCounterID(), expectedCounterValue);
+
+            closeContextMenu();
+
+            //Test left mouse button click
+            expectedCounterValue++;
+            targetControl.mouse().click(1, targetControl.getClickPoint(), Mouse.MouseButtons.BUTTON1, KeyboardModifiers.CTRL_DOWN_MASK);
+            checkListener(ScrollEventApp.getContextMenuOnShownCounterID(), expectedCounterValue);
+        }
+    }
+
+    /**
+     * This test checks that context menu appears
+     * when different key combinations are pressed.
+     *
+     */
+    @Smoke
+    @OnlyPlatformMethod(Platforms.UNIX)
+    @Test(timeout=300000)
+    public void contextMenuKeyCombinationsTestLinux() {
+        enableContextMenuTest();
+
+        for (Object nf : nodeChooser.as(Selectable.class).getStates()) {
+            nodeChooser.as(Selectable.class).selector().select(nf);
+
+            targetControl = parent.lookup(Node.class, new ByID<Node>(ID_TARGET_NODE)).wrap();
+
+            //Test right mouse button click
+            int expectedCounterValue = 1;
+
+            targetControl.mouse().click(1, targetControl.getClickPoint(), Mouse.MouseButtons.BUTTON3);
+            checkListener(ScrollEventApp.getContextMenuOnShownCounterID(), expectedCounterValue);
+
+            closeContextMenu();
+
+            //Test context menu button
+            expectedCounterValue++;
+            targetControl.keyboard().pushKey(KeyboardButtons.CONTEXT_MENU);
+            checkListener(ScrollEventApp.getContextMenuOnShownCounterID(), expectedCounterValue);
+        }
+    }
+
     /**
      * This test checks that context menu appears
      * but there are no other popup windows
-     * 
+     *
      * Input: each control gets right mouse click
      * Expected output: only one new window appears on the stage
-     * 
+     *
      */
     @Smoke
     @Test(timeout=300000)
     public void contextMenuPopupTest() {
         enableContextMenuTest();
-        
+
         for (Object nf : nodeChooser.as(Selectable.class).getStates()) {
             nodeChooser.as(Selectable.class).selector().select(nf);
-            
+
             targetControl = parent.lookup(Node.class, new ByID<Node>(ID_TARGET_NODE)).wrap();
             targetControl.mouse().click(1, targetControl.getClickPoint(), Mouse.MouseButtons.BUTTON3);
-            
+
             Lookup<Scene> popUpLookup = Root.ROOT.lookup(new ByWindowType(PopupWindow.class)).lookup(Scene.class);
             assertEquals("There must be only one popup window for control <" + nf + ">", 1, popUpLookup.size());
         }

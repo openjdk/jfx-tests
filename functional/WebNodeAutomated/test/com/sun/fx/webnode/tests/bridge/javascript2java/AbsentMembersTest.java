@@ -39,12 +39,12 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class AbsentMembersTest extends JavaScript2JavaBridgeTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * This test checks that the situation when JS is trying to access an absent
      * field of an exposed object is handled properly.
@@ -67,7 +67,7 @@ public class AbsentMembersTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(UNDEFINED, resultObject);
     }
-    
+
     /**
      * This test checks that the situation when JS is trying to access a null
      * field of an exposed object is handled properly.
@@ -90,7 +90,7 @@ public class AbsentMembersTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(UNDEFINED, resultObject);
     }
-    
+
     /**
      * This test checks that the situation when JS is trying to access an absent
      * method of an exposed object is handled properly.
@@ -120,7 +120,7 @@ public class AbsentMembersTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(UNDEFINED_FUNCTION_ABSENT_MSG));
     }
-    
+
     /**
      * This test checks that the situation when JS is trying to access a null
      * method of an exposed object is handled properly.

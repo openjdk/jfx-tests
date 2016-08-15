@@ -39,7 +39,7 @@ public class MoveCaretChange extends Change {
         this.pos = pos;
         this.select = select;
     }
-    
+
     boolean isSelect() {
         return select;
     }
@@ -47,7 +47,7 @@ public class MoveCaretChange extends Change {
     void setSelect(boolean select) {
         this.select = select;
     }
-    
+
     int getPos() {
         return pos;
     }
@@ -69,17 +69,17 @@ public class MoveCaretChange extends Change {
     public void visit(ChangeVisitor v) {
         v.visit(this);
     }
-    
+
     public static Change buildRandom(Random rnd) {
         return new MoveCaretChange((2 + rnd.nextInt(8)) * ((rnd.nextBoolean()) ? 1 : -1), rnd.nextBoolean());
     }
-    
-    
+
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + " pos: " + pos + ((select)? " select" : "");
     }
-    
+
     @Override
     public Object clone() {
         return new MoveCaretChange(pos, select);

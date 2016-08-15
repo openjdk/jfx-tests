@@ -44,7 +44,7 @@ public class CSSLauncher extends Application {
     protected Scene scene;
     protected String styleInfo;
     protected WebView view;
-    
+
     protected Button stylingButton = new Button("Enable styling");
 
     private EventHandler<ActionEvent> enableCSS = new EventHandler<ActionEvent>() {
@@ -63,11 +63,11 @@ public class CSSLauncher extends Application {
             stylingButton.setOnAction(enableCSS);
         }
     };
-    
+
     protected void setHandlers() {
         stylingButton.setOnAction(enableCSS);
     }
-    
+
     protected final static int SIZE = 200;
     @Override
     public void start(Stage stage) {
@@ -76,7 +76,7 @@ public class CSSLauncher extends Application {
 
         scene = new Scene(container, 800, 800);
         styleInfo = getParameters().getRaw().get(0);
-        
+
         view = new WebView();
         WebEngine web = view.getEngine();
         web.load(CSSLauncher.class.getResource("resources/test.html").toExternalForm());
@@ -99,7 +99,7 @@ public class CSSLauncher extends Application {
     }
 
     public static void run(final String url) {
-        final String[] args = new String[] {url};        
+        final String[] args = new String[] {url};
         new Thread(new Runnable() {
             public void run() {
                 Application.launch(CSSLauncher.class, args);

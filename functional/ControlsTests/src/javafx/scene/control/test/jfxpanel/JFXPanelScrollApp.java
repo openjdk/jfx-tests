@@ -74,7 +74,7 @@ public class JFXPanelScrollApp {
                 scrollJavafxPanel.setScene(createScene(SCROLL_CONTAINER_ID));
                 cl.countDown();
             }
-            
+
             protected Scene createScene(String id) {
                 final VBox pane = new VBox();
                 pane.setMinSize(SCENE_WIDTH, SCENE_HEIGHT);
@@ -99,7 +99,7 @@ public class JFXPanelScrollApp {
                         check.setSelected(true);
                     }
                 });
-                
+
                 button_box.getChildren().add(button);
                 button_box.getChildren().add(check);
 

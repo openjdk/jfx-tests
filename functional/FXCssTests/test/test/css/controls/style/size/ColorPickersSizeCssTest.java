@@ -44,5 +44,5 @@ public class ColorPickersSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.ColorPickers.name();
     }
-    
+
 }

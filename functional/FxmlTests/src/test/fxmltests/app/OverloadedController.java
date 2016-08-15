@@ -30,32 +30,32 @@ import javafx.event.Event;
  *
  * @author Aleksandr Sakharuk
  */
-public class OverloadedController 
+public class OverloadedController
 {
-    
+
     public void handle()
     {
         System.out.println("No args method called");
         noArgsCounter++;
     }
-    
+
     public void handle(Event event)
     {
         System.out.println("Method with Event parameter called");
         eventCounter++;
     }
-    
+
     public static int getNoArgsCounter()
     {
         return noArgsCounter;
     }
-    
+
     public static int getEventCounter()
     {
         return eventCounter;
     }
-    
+
     private static int noArgsCounter;
     private static int eventCounter;
-    
+
 }

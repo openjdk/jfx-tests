@@ -48,7 +48,7 @@ public class ImageTest extends TestBase {
     public static void runUI() {
         ImagesApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -134,25 +134,25 @@ public class ImageTest extends TestBase {
     public void ImageInEffects_SepiaTone() {
         testCommon("ImageInEffects", "SepiaTone");
     }
-    
+
     @Test
     public void ImagePatternDefaults()
     {
         testCommon("ImagePattern", "defaults");
     }
-    
+
     @Test
     public void ImagePatternResize()
     {
         testCommon("ImagePattern", "resize");
     }
-    
+
     @Test
     public void ImagePatternEffectsStroke()
     {
         testCommon("ImagePattern with effects", "stroke");
     }
-    
+
     @Test
     public void ImagePatternEffectsDropshadow()
     {

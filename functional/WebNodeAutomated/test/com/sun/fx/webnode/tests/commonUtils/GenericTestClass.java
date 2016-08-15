@@ -50,7 +50,7 @@ public class GenericTestClass {
     protected static final String url3 = "https://stbeehive.oracle.com/bcentral/";
     protected static final String url4 = "https://stbeehive.oracle.com/bcentral/home.jsp";
     protected static final String UNDEFINED = "undefined";
-    
+
     protected void initWebEngine(String url) {
         engine = new WebEngine(url);
 
@@ -73,7 +73,7 @@ public class GenericTestClass {
         engine = view.getEngine();
         Root.ROOT.lookup(Scene.class).wrap(0).getControl().setRoot(view);
     }
-    
+
     protected void initViewNoScene() {
         view = new WebView();
         engine = view.getEngine();
@@ -112,7 +112,7 @@ public class GenericTestClass {
             }
         }
     }
-    
+
     public static String getPath(Class testClass, String path) {
         return testClass.getResource(path).toString();
     }
@@ -130,13 +130,13 @@ public class GenericTestClass {
             }
         });
     }
-    
+
     protected Tester engineReady = new Tester() {
         public boolean isPassed() {
             return engine != null;
         }
     };
-    
+
     protected void initWebEngineOnFXThread() {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -145,7 +145,7 @@ public class GenericTestClass {
         });
         doWait(engineReady);
     }
-    
+
     protected void initWebEngineAndWebViewOnFXThread() {
         Platform.runLater(new Runnable() {
             public void run() {

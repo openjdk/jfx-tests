@@ -35,6 +35,6 @@ public class LightScopeSphereTest extends LightScopeTests{
     public void chooseCase(){
         initTestCase(LightScopeTestApp.TestCaseType.SINGLE_SPHERE_CASE);
     }
-    
-    
+
+
 }

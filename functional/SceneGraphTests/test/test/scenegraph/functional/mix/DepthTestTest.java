@@ -56,9 +56,9 @@ import test.scenegraph.app.DepthTestScene;
  */
 public class DepthTestTest extends TestBase
 {
-    
+
     @BeforeClass
-    public static void RunUI() 
+    public static void RunUI()
     {
         DepthTestApp.main();
     }
@@ -80,21 +80,21 @@ public class DepthTestTest extends TestBase
         referenceGreen = byID(getScene(), "reference_green", Shape.class);
         referenceRed = byID(getScene(), "reference_red", Shape.class);
     }
-    
+
     @Test
     public void mouseEventDeliveryTest()
     {
         if(Platform.isSupported(ConditionalFeature.SCENE3D))
         {
             final Object referenceColor = getCenterColor(referenceGreen);
-            
+
             iterate(new TestCore() {
-                
+
                 @Override
                 protected void catchError()
                 {
                     Object detectedColor = getCenterColor(indicator);
-                    
+
                     if(!(JemmyUtils.usingGlassRobot() ? Arrays.equals((double[]) detectedColor, (double[]) referenceColor) : ((Integer) detectedColor).intValue() == ((Integer) referenceColor).intValue()))
                     {
                         StringBuilder builder = new StringBuilder();
@@ -113,14 +113,14 @@ public class DepthTestTest extends TestBase
             });
         }
     }
-    
+
     @Test
     public void renderingTest()
     {
         if(Platform.isSupported(ConditionalFeature.SCENE3D))
         {
             iterate(new TestCore() {
-                
+
                 @Override
                 protected void catchError()
                 {
@@ -161,63 +161,63 @@ public class DepthTestTest extends TestBase
 
                 private boolean isDepthTestEnable(ComboBoxWrap<? extends ComboBox> cb)
                 {
-                    boolean enable = cb.getControl().getValue().equals(DepthTest.ENABLE) || 
-                            (cb.getControl().getValue().equals(DepthTest.INHERIT) && 
+                    boolean enable = cb.getControl().getValue().equals(DepthTest.ENABLE) ||
+                            (cb.getControl().getValue().equals(DepthTest.INHERIT) &&
                             parentDTest.getControl().getValue().equals(DepthTest.ENABLE));
                     return enable;
                 }
             });
         }
     }
-    
+
     private Point getCheckpoint()
     {
         Rectangle sceneBounds = getScene().getScreenBounds();
-        
+
         Point p = getGlobalCheckpoint();
         p.setLocation(p.getX() - sceneBounds.getX(), p.getY() - sceneBounds.getY());
         return p;
     }
-    
+
     private Point getGlobalCheckpoint()
     {
         Rectangle firstBounds = firstNode.getScreenBounds(), secondBounds = secondNode.getScreenBounds();
         Rectangle intesection = firstBounds.intersection(secondBounds);
-        
+
         double x = intesection.getX();
         double y = intesection.getY();
         double width = intesection.getWidth();
         double height = intesection.getHeight();
         Point p = new Point(x + 0.5 * width, y + 0.5 * height);
-        
+
         return p;
     }
-    
+
     private void testClick()
     {
         getScene().mouse().click(1, getCheckpoint());
     }
-    
+
     private void waitForIndicator()
     {
         indicator.waitState(new State<Boolean>(){
 
             public Boolean reached() {
                 Object indicatorColor = getCenterColor(indicator);
-                if(!(JemmyUtils.usingGlassRobot() ? 
-                        Arrays.equals((double[]) indicatorColor, (double[]) ((Object) 0)) : 
+                if(!(JemmyUtils.usingGlassRobot() ?
+                        Arrays.equals((double[]) indicatorColor, (double[]) ((Object) 0)) :
                         ((Integer) indicatorColor).intValue() == 0))
                     return true;
                 return false;
             }
-            
+
         }, Boolean.TRUE);
     }
-    
+
     private void iterate(TestCore core)
     {
         boolean doneWell = true;
-        
+
         for(final DepthTestScene.Nodes node1: DepthTestScene.Nodes.values())
         {
             for(final DepthTestScene.Nodes node2: DepthTestScene.Nodes.values())
@@ -228,7 +228,7 @@ public class DepthTestTest extends TestBase
                     {
                         for(final DepthTest dt3: new DepthTest[]{DepthTest.DISABLE, DepthTest.ENABLE})
                         {
-                            for(final ToggleButtonWrap<? extends RadioButton> tbw: 
+                            for(final ToggleButtonWrap<? extends RadioButton> tbw:
                                     new ToggleButtonWrap[]{firstToFront, secondToFront})
                             {
                                 new GetAction<Object>() {
@@ -254,28 +254,28 @@ public class DepthTestTest extends TestBase
         }
         Assert.assertTrue(doneWell);
     }
-    
+
     private Object getCenterColor(Wrap<?> wrap)
     {
         Rectangle wrapBounds = wrap.getScreenBounds();
         return getColor(wrap, wrapBounds.getWidth() / 2, wrapBounds.getHeight() / 2);
     }
-    
+
     private Object getColor(Wrap<?> wrap, double localX, double localY)
     {
         Rectangle wrapBounds = wrap.getScreenBounds();
         Rectangle sceneBounds = getScene().getScreenBounds();
-        Object detectedColor = JemmyUtils.getRGBColors(getScene().getScreenImage(), 
-                    (int) wrapBounds.getX() - (int) sceneBounds.getX() + (int) localX, 
+        Object detectedColor = JemmyUtils.getRGBColors(getScene().getScreenImage(),
+                    (int) wrapBounds.getX() - (int) sceneBounds.getX() + (int) localX,
                     (int) wrapBounds.getY() - (int) sceneBounds.getY() + (int) localY);
         return detectedColor;
     }
-    
+
     private ComboBoxWrap<? extends ComboBox> firstDTest, secondDTest, parentDTest;
     private ComboBoxWrap<? extends ComboBox> firstNodeCombo, secondNodeCombo;
     private ToggleButtonWrap<? extends RadioButton> firstToFront, secondToFront;
     private Wrap<? extends Node> indicator, firstNode, secondNode, referenceGreen, referenceRed;
-    
+
     abstract class TestCore
     {
 
@@ -294,7 +294,7 @@ public class DepthTestTest extends TestBase
             waitForIndicator();
             Object detectedColor = getCenterColor(indicator);
         }
-        
+
         private void indicatorPreparation()
         {
             new GetAction<Object>() {
@@ -305,16 +305,16 @@ public class DepthTestTest extends TestBase
                 }
             }.dispatch(Root.ROOT.getEnvironment());
         }
-        
+
         protected abstract void catchError();
-        
+
         public void setPassed(boolean passed)
         {
             this.passed = passed;
         }
-        
+
         private boolean passed;
 
     }
-    
+
 }

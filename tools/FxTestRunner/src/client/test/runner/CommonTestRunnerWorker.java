@@ -157,7 +157,7 @@ public class CommonTestRunnerWorker {
             System.err.println("null == testClassName, argslen=" + args.length);
         }
     }
-    
+
     /**
      *
      * @return
@@ -203,14 +203,14 @@ public class CommonTestRunnerWorker {
                         break;
                     case SET_BASEDIR:
                         //Looks like method is required for some remote invocation and could be
-                        //used later if it will be decided to run jnlp-mode again. 
-                        //So commenting instead of removing.      
+                        //used later if it will be decided to run jnlp-mode again.
+                        //So commenting instead of removing.
                         //GoldenImageManager.setBaseDir(trc.param);
                         break;
                     case SET_ABSOLUTE_DIR:
                         //Looks like method is required for some remote invocation and could be
-                        //used later if it will be decided to run jnlp-mode again. 
-                        //So commenting instead of removing.                              
+                        //used later if it will be decided to run jnlp-mode again.
+                        //So commenting instead of removing.
                         //GoldenImageManager.setAbsoluteDir(trc.param);
                         break;
                     case SET_TEST_NAME:
@@ -336,5 +336,5 @@ public class CommonTestRunnerWorker {
             this.type = cmd;
         }
     }
-    
+
 }

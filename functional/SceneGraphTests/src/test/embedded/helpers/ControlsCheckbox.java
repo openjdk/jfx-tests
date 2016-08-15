@@ -44,7 +44,7 @@ class ControlsCheckbox implements AbstractCheckBox {
     public boolean isChecked() {
         return checkBox.isSelected();
     }
-    
+
     @Override
     public void setChecked(boolean checked) {
         checkBox.setSelected(checked);
@@ -54,5 +54,5 @@ class ControlsCheckbox implements AbstractCheckBox {
     public Node node() {
         return checkBox;
     }
-    
+
 }

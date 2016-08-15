@@ -44,5 +44,5 @@ public class TextFieldsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.TextFields.name();
     }
-    
+
 }

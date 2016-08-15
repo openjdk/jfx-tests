@@ -10,11 +10,11 @@
 
 <fx:root type="javafx.scene.layout.VBox" prefHeight="200" prefWidth="200" xmlns:fx="http://javafx.com/fxml">
     <!-- This is comment -->
-    <!-- 
+    <!--
         Second comment
     -->
     <fx:define>
-        
+
     </fx:define>
     <fx:script>
         importClass(java.lang.System);
@@ -39,6 +39,6 @@
         </Tab>
     </TabPane>
     <fx:define>
-        
+
     </fx:define>
 </fx:root>

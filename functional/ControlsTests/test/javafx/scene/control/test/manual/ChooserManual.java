@@ -53,7 +53,7 @@ public class ChooserManual {
                 clazz.getCanonicalName());
         processBuilder.redirectErrorStream(redirectStream);
         process = processBuilder.start();
-        
+
     }
     @StopUI
     public static void stopUI(){

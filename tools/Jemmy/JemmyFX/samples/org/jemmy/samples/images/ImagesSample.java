@@ -199,7 +199,7 @@ public class ImagesSample extends SampleBase {
         radio.mouse().click();
         button.mouse().click();
         BEFORE_DIFF_TIMEOUT.sleep();
-        try {            
+        try {
             radio.waitImage(RADIO_PNG, "distance.1." + RADIO_RES_PNG, "distance.1." + RADIO_DIFF_PNG);
             throw new IllegalStateException("images are expected to be different!");
         } catch (TimeoutExpiredException e) {

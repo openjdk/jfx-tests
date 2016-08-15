@@ -80,7 +80,7 @@ public class TestApp extends Application {
         s2.setScene(scene2);
         s2.show();
     }
-    
+
     public static void main(String[] args) throws AWTException {
 //        org.jemmy.client.Browser.runBrowser();
         Application.launch(TestApp.class, args);

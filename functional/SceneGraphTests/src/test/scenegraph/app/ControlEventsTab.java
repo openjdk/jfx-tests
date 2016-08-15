@@ -60,7 +60,7 @@ import test.scenegraph.app.ControlEventsApp.EventTypes;
  *
  * @author Aleksandr Sakharuk
  */
-public class ControlEventsTab extends Tab 
+public class ControlEventsTab extends Tab
 {
 
     public ControlEventsTab(String text, Control control, List<Class<?>> eventsDeclaringClasses)
@@ -71,12 +71,12 @@ public class ControlEventsTab extends Tab
         this.eventsDeclaringClasses = eventsDeclaringClasses;
         init();
     }
-    
+
     private void init()
     {
         ScrollPane sp = new ScrollPane();
         final GridPane gp = new GridPane();
-        
+
         ColumnConstraints activeArea = new ColumnConstraints();
         activeArea.setPercentWidth(65);
         ColumnConstraints eventTypesList = new ColumnConstraints();
@@ -87,24 +87,24 @@ public class ControlEventsTab extends Tab
         helperControls.setPercentHeight(35);
         gp.getColumnConstraints().addAll(activeArea, eventTypesList);
         gp.getRowConstraints().addAll(chiefControl, helperControls);
-        
+
         StackPane controlPane = new StackPane();
         controlPane.setPadding(new Insets(ControlEventsApp.INSETS));
         controlPane.getChildren().add(control);
-        
+
         GridPane.setHalignment(controlPane, HPos.CENTER);
         gp.add(controlPane, 0, 0);
         eventTypes = new VBox(1);
         final ToggleGroup eventSwitch = new ToggleGroup();
-        
-        //List<String> fieldNames = new LinkedList<String>(); 
+
+        //List<String> fieldNames = new LinkedList<String>();
         List<Object> events = new LinkedList<Object>();
             for(Class<?> eventClass: eventsDeclaringClasses)
             {
                 for(Field field: eventClass.getDeclaredFields())
                 {
                     //fieldNames.add(field.getName());
-                    try 
+                    try
                     {
                         if(!field.isAccessible())
                         {
@@ -114,17 +114,17 @@ public class ControlEventsTab extends Tab
                         {
                             events.add(field.get(eventClass));
                         }
-                    } 
-                    catch(Exception ex) 
+                    }
+                    catch(Exception ex)
                     {
                         ex.printStackTrace();
                     }
                 }
             }
-        
+
         for(EventTypes et: EventTypes.values())
         {
-            
+
             if(!events.contains(et.getType()))
             {
                 continue;
@@ -132,7 +132,7 @@ public class ControlEventsTab extends Tab
             final RadioButton rb = new RadioButton(et.toString());
             eventTypes.getChildren().add(rb);
             rb.setToggleGroup(eventSwitch);
-            
+
             //eventSwitch.getSelectedToggle().
             rb.setStyle(NOT_HANDLED_STYLE);
             rb.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
@@ -173,33 +173,33 @@ public class ControlEventsTab extends Tab
         }
         sp.setContent(eventTypes);
         gp.add(sp, 1, 0, 1, 2);
-        
+
         resetButton.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent t) {
-                
+
                 dragTooltip.setText(ControlEventsTab.DRAG_WAIT);
                 dragTarget.setText("");
-                
+
                 final RadioButton trb = (RadioButton)eventSwitch.getSelectedToggle();
                 trb.setSelected(false);
-                
+
                 for(Node n: eventTypes.getChildren())
                 {
                     n.setStyle(NOT_HANDLED_STYLE);
-                    
+
                     //dragTooltip.setText(ControlEventsTab.DRAG_WAIT);
                     eventSwitch.selectToggle(null);
                     //dragTarget.setText("");
                 }
             }
         });
-        
+
         FlowPane fp = new FlowPane(Orientation.HORIZONTAL, 10, 10);
         fp.getChildren().addAll(dragField, dragTarget, resetButton);
         GridPane.setHalignment(fp, HPos.CENTER);
         gp.add(fp, 0, 1);
-        
+
         dragField.setOnDragDetected(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent event) {
@@ -210,7 +210,7 @@ public class ControlEventsTab extends Tab
                 event.consume();
             }
         });
-        
+
         control.setOnDragDetected(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent event) {
@@ -221,14 +221,14 @@ public class ControlEventsTab extends Tab
                 event.consume();
             }
         });
-        
+
         control.setOnDragOver(new EventHandler<DragEvent>() {
 
             public void handle(DragEvent event) {
                 event.acceptTransferModes(TransferMode.ANY);
             }
         });
-        
+
         control.setOnDragDropped(new EventHandler<DragEvent>() {
 
             public void handle(DragEvent event) {
@@ -241,14 +241,14 @@ public class ControlEventsTab extends Tab
                 event.setDropCompleted(success);
             }
         });
-        
+
         dragTarget.setOnDragOver(new EventHandler<DragEvent>() {
 
             public void handle(DragEvent event) {
                 event.acceptTransferModes(TransferMode.ANY);
             }
         });
-        
+
         dragTarget.setOnDragDropped(new EventHandler<DragEvent>() {
 
             public void handle(DragEvent event) {
@@ -261,18 +261,18 @@ public class ControlEventsTab extends Tab
                 event.setDropCompleted(success);
             }
         });
-        
+
         gp.addEventHandler(MouseEvent.DRAG_DETECTED, new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent arg0) {
                 gp.startFullDrag();
             }
         });
-        
+
         gp.setAlignment(Pos.CENTER);
         setContent(gp);
         setClosable(false);
-        
+
         setId(getText());
         control.setId(ControlEventsApp.CONTROL_ID);
         for(Node rb: eventTypes.getChildren())
@@ -281,9 +281,9 @@ public class ControlEventsTab extends Tab
         }
         dragField.setId(ControlEventsApp.DRAG_FIELD_ID);
         dragTarget.setId(ControlEventsApp.DRAG_TARGET_ID);
-        
+
     }
-    
+
     private Control control;
     private VBox eventTypes;
     private List<Class<?>> eventsDeclaringClasses;
@@ -291,9 +291,9 @@ public class ControlEventsTab extends Tab
     private TextField dragTarget = new TextField();
     private Tooltip dragTooltip = new Tooltip(DRAG_WAIT);
     private Button resetButton = new Button("Reset");
-    
+
     public static final String NOT_HANDLED_STYLE = "-fx-text-fill: red;";
     public static final String HANDLED_STYLE = "-fx-text-fill: green;";
     public static final String DRAG_WAIT = "Waiting for a drug";
-    
+
 }

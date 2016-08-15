@@ -34,7 +34,7 @@ import static javafx.scene.control.test.skin.ControlsSkinsApp.*;
 
 /**
  * @author Alexander Kirov
- * 
+ *
  * See https://javafx-jira.kenai.com/browse/RT-33520
  */
 @RunWith(FilteredTestRunner.class)

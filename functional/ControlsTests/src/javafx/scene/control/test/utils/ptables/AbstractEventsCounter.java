@@ -35,7 +35,7 @@ import javafx.scene.Node;
 public interface AbstractEventsCounter extends Refreshable, HavingVisualRepresentation, AbstractStateCheckable {
 
     public int getCurrentValue();
-    
+
     public String getName();
 
     public void increment();

@@ -46,7 +46,7 @@ public class LcdAPITestApp extends InteroperabilityApp {
     public static void main(String[] args) {
         Utils.launch(LcdAPITestApp.class, args);
     }
-    
+
 
     @Override
     protected Scene getScene() {

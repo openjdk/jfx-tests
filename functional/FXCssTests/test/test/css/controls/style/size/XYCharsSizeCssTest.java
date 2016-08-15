@@ -44,5 +44,5 @@ public class XYCharsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.XYChars.name();
     }
-    
+
 }

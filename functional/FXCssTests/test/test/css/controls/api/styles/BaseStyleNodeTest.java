@@ -140,7 +140,7 @@ public abstract class BaseStyleNodeTest {
         }
         return true;
     }
-    
+
       public boolean checkBorderImageSlices(BorderImageSlices[] first, BorderImageSlices[] second) {
         if (first == second) {
             return true;

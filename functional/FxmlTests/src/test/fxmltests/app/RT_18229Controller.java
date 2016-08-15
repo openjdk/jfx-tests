@@ -58,13 +58,13 @@ public class RT_18229Controller implements Initializable {
     protected void handleRootName1Change() {
         updateRootName1();
     }
-    
+
     @FXML
     protected void handleRootName2Change() {
         System.out.println("-----------------handleRootName2Change() -------------------------");
         throw new RuntimeException();
     }
-    
+
     @FXML
     protected void handleRootName2Change(Object event) {
         System.out.println("-----------------handleRootName2Change(Object event)-------------------------");

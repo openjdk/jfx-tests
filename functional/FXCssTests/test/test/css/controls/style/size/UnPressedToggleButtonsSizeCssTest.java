@@ -44,5 +44,5 @@ public class UnPressedToggleButtonsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.UnPressedToggleButtons.name();
     }
-    
+
 }

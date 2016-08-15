@@ -43,5 +43,5 @@ public class SubSceneShapesPerspectivePickingTestApp extends SubSceneShapesPicki
     public static void main(String[] args) {
         Utils.launch(SubSceneShapesPerspectivePickingTestApp.class, args);
     }
-    
+
 }

@@ -39,7 +39,7 @@ public class SimpleApp extends Application {
     public static Stage getStage() {
         return stage;
     }
-    
+
     @Override
     public void start(Stage stage){
         this.stage = stage;

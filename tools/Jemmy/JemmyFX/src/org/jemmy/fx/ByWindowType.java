@@ -29,18 +29,18 @@ import javafx.stage.Window;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- * A criterion to fins scenes by window class. This could be useful in a multi-stage 
+ * A criterion to fins scenes by window class. This could be useful in a multi-stage
  * applications to distinguish stages by their classes. This also could be used to
  * distinguish a regular stage from a popup menu.
- * @param <T> 
+ * @param <T>
  * @author shura
- * @see SceneDock#SceneDock(org.jemmy.lookup.LookupCriteria<javafx.scene.Scene>[]) 
+ * @see SceneDock#SceneDock(org.jemmy.lookup.LookupCriteria<javafx.scene.Scene>[])
  */
 public class ByWindowType<T extends Scene> implements LookupCriteria<T>{
     private Class<? extends Window> type;
 
     /**
-     * 
+     *
      * @param type the expected type of the window
      */
     public ByWindowType(Class<? extends Window> type) {

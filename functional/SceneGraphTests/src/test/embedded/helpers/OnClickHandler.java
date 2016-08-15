@@ -31,5 +31,5 @@ package test.embedded.helpers;
 public interface OnClickHandler {
 
     public void onClick();
-    
+
 }

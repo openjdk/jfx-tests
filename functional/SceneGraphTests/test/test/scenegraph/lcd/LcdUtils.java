@@ -32,9 +32,9 @@ import test.javaclient.shared.Utils;
  */
 public class LcdUtils {
     public static boolean isApplicablePlatform() {
-        // currently (March 15th 2012) LCD is no applicable for Linuxm, Mac 
+        // currently (March 15th 2012) LCD is no applicable for Linuxm, Mac
         // and for Windows with j2d
-        
+
         return Utils.isWindows() && !Utils.isJ2D();
     }
 }

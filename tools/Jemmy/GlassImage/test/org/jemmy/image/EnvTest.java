@@ -35,7 +35,7 @@ import static org.junit.Assert.*;
  * @author shura
  */
 public class EnvTest {
-    
+
     public EnvTest() {
     }
 

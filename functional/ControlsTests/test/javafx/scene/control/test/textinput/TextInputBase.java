@@ -686,13 +686,13 @@ public class TextInputBase extends TestBase {
                     int pos = 0;
                     while(' ' == text.charAt(pos)) ++pos;
                     text = text.substring(pos);
-                } else if (startsWithAnyOf(text, punctuation)) { 
+                } else if (startsWithAnyOf(text, punctuation)) {
                     text = text.substring(1);
                 }
             }
-            
+
             text = removeLeadingChars(text, punctuation);
-            
+
             while (startsWithAnyOf(text, punctuation)) {
                 if (!Utils.isWindows()) {
                     break;
@@ -717,7 +717,7 @@ public class TextInputBase extends TestBase {
         idx = idx == Integer.MAX_VALUE ? -1 : idx;
         return (idx < 0) ? "" : str.substring(idx);
     }
-    
+
     protected boolean startsWithAnyOf(String str, String[] symbols) {
         for (String sym : symbols) {
             if (str.startsWith(sym)) {
@@ -899,7 +899,7 @@ public class TextInputBase extends TestBase {
                 return text.equalsIgnoreCase(currentText) ? 42 : null;
             }
         });
-        
+
         wrap.waitState(new State() {
             String s1;
             String s2;
@@ -924,7 +924,7 @@ public class TextInputBase extends TestBase {
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     String getTextFromControl() {
         return new GetAction<String>() {
             @Override

@@ -57,7 +57,7 @@ public class TextInputExternalWrap implements TextInputControlWrapInterface {
                 return cntrl.isVisible();
             }
         }).wrap();
-        
+
         wrap.getControl().requestFocus();
     }
     public TextInputControl getControl() {
@@ -81,7 +81,7 @@ public class TextInputExternalWrap implements TextInputControlWrapInterface {
             public void run(Object... parameters) throws Exception {
                 setResult(wrap.getControl().getSelection().getStart() < wrap.getControl().getText().length());
             }
-            
+
         }.dispatch(Root.ROOT.getEnvironment());
         kbd.pushKey(KeyboardButtons.DELETE);
         return res;

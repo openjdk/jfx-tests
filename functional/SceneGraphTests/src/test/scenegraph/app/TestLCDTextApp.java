@@ -31,7 +31,7 @@ public class TestLCDTextApp extends TestTextApp {
     public TestLCDTextApp() {
         super("LCDTestText");
     }
-    
+
     @Override
     protected TestNode setup() {
         testText.setStyle("-fx-font-smoothing-type: lcd;"); // LCD

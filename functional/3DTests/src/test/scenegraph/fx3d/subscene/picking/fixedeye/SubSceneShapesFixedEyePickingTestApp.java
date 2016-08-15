@@ -43,5 +43,5 @@ public class SubSceneShapesFixedEyePickingTestApp extends SubSceneShapesPickingA
     public static void main(String[] args) {
         Utils.launch(SubSceneShapesFixedEyePickingTestApp.class, args);
     }
-    
+
 }

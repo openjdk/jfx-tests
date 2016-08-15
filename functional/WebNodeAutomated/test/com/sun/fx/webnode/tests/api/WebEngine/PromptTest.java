@@ -43,7 +43,7 @@ import org.junit.Test;
  * @author Irina Latysheva
  */
 public class PromptTest extends GenericTestClass implements Callback<PromptData, String>{
-    
+
     private boolean promptCalled = false;
     private String messageReceived = null;
     private String defaultText = null;
@@ -121,7 +121,7 @@ public class PromptTest extends GenericTestClass implements Callback<PromptData,
             }
         });
     }
-    
+
     protected final Callback thisHandler = this;    // Test hack.
     /**
      * Test for javafx.scene.web.WebEngine.promptHandlerProperty. Checks that the property
@@ -158,9 +158,9 @@ public class PromptTest extends GenericTestClass implements Callback<PromptData,
         correctHandlerReturned = (this == engine.getPromptHandler());
     }
 
-    
 
-   
+
+
 
 
 }

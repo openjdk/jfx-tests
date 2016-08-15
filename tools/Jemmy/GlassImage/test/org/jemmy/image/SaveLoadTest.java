@@ -38,7 +38,7 @@ import org.junit.*;
  * @author shura
  */
 public class SaveLoadTest {
-    
+
     public SaveLoadTest() {
     }
 
@@ -50,12 +50,12 @@ public class SaveLoadTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
         new SceneDock();
     }
-    
+
     @After
     public void tearDown() {
     }

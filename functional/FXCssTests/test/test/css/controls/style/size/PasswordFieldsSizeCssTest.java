@@ -44,5 +44,5 @@ public class PasswordFieldsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.PasswordFields.name();
     }
-    
+
 }

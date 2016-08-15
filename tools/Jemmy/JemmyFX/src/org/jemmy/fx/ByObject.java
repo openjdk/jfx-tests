@@ -27,18 +27,18 @@ package org.jemmy.fx;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- * A criterion to find an object by id. This could be used within a hierarchy 
+ * A criterion to find an object by id. This could be used within a hierarchy
  * such as list view or tree view - something that could contain objects - items.
   * @author shura
  * @param <ITEM> the encapsulated object type.
- * @see ListItemDock#ListItemDock(org.jemmy.interfaces.Parent, org.jemmy.lookup.LookupCriteria<java.lang.Object>[]) 
+ * @see ListItemDock#ListItemDock(org.jemmy.interfaces.Parent, org.jemmy.lookup.LookupCriteria<java.lang.Object>[])
  */
 public class ByObject<ITEM> implements LookupCriteria<ITEM> {
 
     private final ITEM item;
 
     /**
-     * 
+     *
      * @param item the actual item to compare to.
      */
     public ByObject(ITEM item) {

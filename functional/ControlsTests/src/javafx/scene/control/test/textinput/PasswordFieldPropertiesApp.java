@@ -43,7 +43,7 @@ public class PasswordFieldPropertiesApp extends TextFieldPropertiesApp {
     public static void main(String[] args) {
         Utils.launch(PasswordFieldPropertiesApp.class, args);
     }
-    
+
     public class PasswordFieldScene extends TextFieldScene {
 
         @Override

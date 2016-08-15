@@ -40,15 +40,15 @@ import org.junit.Test;
  *
  * @author asakharu
  */
-public class LocalTo_TransformsTest extends TestBase 
+public class LocalTo_TransformsTest extends TestBase
 {
-    
+
     @BeforeClass
     public static void runUI()
     {
         LocalTo_TransformsApp.main(null);
     }
-    
+
     @Before
     @Override
     public void before()
@@ -68,58 +68,58 @@ public class LocalTo_TransformsTest extends TestBase
         realTranform.setMzy(0);
         realTranform.setMzz(1);
     }
-    
+
     @Test
     public void sameParentAndSceneTransforms()
     {
         Node node = circleOneWrap.getControl();
         Transform localToScene = node.localToSceneTransformProperty().getValue();
         Transform localToParent = node.localToParentTransformProperty().getValue();
-        
+
         realTranform.setTx(node.getTranslateX() + node.getLayoutX());
         realTranform.setTy(node.getTranslateY() + node.getLayoutY());
         realTranform.setTz(0);
-        
+
         Assert.assertTrue(isTransformsEqual(localToParent, localToScene));
         Assert.assertTrue(isTransformsEqual(localToParent, realTranform));
     }
-    
+
     @Test
     public void differentParentAndSceneTransforms()
     {
         Node node = circleTwoWrap.getControl();
         Transform localToScene = node.localToSceneTransformProperty().getValue();
         Transform localToParent = node.localToParentTransformProperty().getValue();
-        
+
         realTranform.setTx(node.getTranslateX() + node.getLayoutX());
         realTranform.setTy(node.getTranslateY() + node.getLayoutY());
         realTranform.setTz(0);
-        
+
         Assert.assertFalse(isTransformsEqual(localToParent, localToScene));
         Assert.assertTrue(isTransformsEqual(localToParent, realTranform));
-        
-        realTranform.setTx(node.getTranslateX() + node.getLayoutX() + 
+
+        realTranform.setTx(node.getTranslateX() + node.getLayoutX() +
                 node.getParent().getTranslateX() + node.getParent().getLayoutX());
-        realTranform.setTy(node.getTranslateY() + node.getLayoutY() + 
+        realTranform.setTy(node.getTranslateY() + node.getLayoutY() +
                 node.getParent().getTranslateY() + node.getParent().getLayoutY());
-        
+
         Assert.assertTrue(isTransformsEqual(localToScene, realTranform));
     }
-    
+
     @Test
     public void doubleNestedNodeParentAndSceneTransforms()
     {
         Node node = circleThreeWrap.getControl();
         Transform localToScene = node.localToSceneTransformProperty().getValue();
         Transform localToParent = node.localToParentTransformProperty().getValue();
-        
+
         realTranform.setTx(node.getTranslateX() + node.getLayoutX());
         realTranform.setTy(node.getTranslateY() + node.getLayoutY());
         realTranform.setTz(0);
-        
+
         Assert.assertFalse(isTransformsEqual(localToParent, localToScene));
         Assert.assertTrue(isTransformsEqual(localToParent, realTranform));
-        
+
         double tx = 0, ty = 0;
         for(Node n = node; n != null; n = n.getParent())
         {
@@ -128,24 +128,24 @@ public class LocalTo_TransformsTest extends TestBase
         }
         realTranform.setTx(tx);
         realTranform.setTy(ty);
-        
+
         Assert.assertTrue(isTransformsEqual(localToScene, realTranform));
     }
-    
+
     @Test
     public void parentAndScene3DTransforms()
     {
         Node node = circleFourWrap.getControl();
         Transform localToScene = node.localToSceneTransformProperty().getValue();
         Transform localToParent = node.localToParentTransformProperty().getValue();
-        
+
         realTranform.setTx(node.getTranslateX() + node.getLayoutX());
         realTranform.setTy(node.getTranslateY() + node.getLayoutY());
         realTranform.setTz(node.getTranslateZ());
-        
+
         Assert.assertFalse(isTransformsEqual(localToParent, localToScene));
         Assert.assertTrue(isTransformsEqual(localToParent, realTranform));
-        
+
         double tx = 0, ty = 0;
         for(Node n = node; n != null; n = n.getParent())
         {
@@ -154,10 +154,10 @@ public class LocalTo_TransformsTest extends TestBase
         }
         realTranform.setTx(tx);
         realTranform.setTy(ty);
-        
+
         Assert.assertTrue(isTransformsEqual(localToScene, realTranform));
     }
-    
+
     private boolean isTransformsEqual(Transform first, Transform second)
     {
         return first.getMxx() == second.getMxx() &&
@@ -173,8 +173,8 @@ public class LocalTo_TransformsTest extends TestBase
                 first.getTy() == second.getTy() &&
                 first.getTz() == second.getTz();
     }
-    
+
     Wrap<? extends Node> circleOneWrap, circleTwoWrap, circleThreeWrap, circleFourWrap;
     Affine realTranform = new Affine();
-    
+
 }

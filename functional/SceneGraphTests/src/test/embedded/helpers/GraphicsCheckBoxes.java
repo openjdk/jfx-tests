@@ -33,14 +33,14 @@ import javafx.scene.text.Text;
  * @author akulyakh
  */
 public final class GraphicsCheckBoxes {
-    
+
     public static final Color COLOR_UNCHECKED = Color.BLACK;
     public static final Color COLOR_CHECKED   = Color.RED;
 
     public static boolean isChecked(Text text) {
         return COLOR_CHECKED.equals(text.getFill());
     }
-    
+
     private GraphicsCheckBoxes() {}
-    
+
 }

@@ -40,7 +40,7 @@ public class Menu {
     public static void back(){
         MenuLauncher.run(Menu.class.getResource("resources/page1.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Go Forward" context menu item.
      */
@@ -48,7 +48,7 @@ public class Menu {
     public static void forward(){
         MenuLauncher.run(Menu.class.getResource("resources/page1.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Open Link" context menu item.
      */
@@ -56,7 +56,7 @@ public class Menu {
     public static void openLink(){
         MenuLauncher.run(Menu.class.getResource("resources/page1.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Open Link in New Window" context menu item.
      */
@@ -64,7 +64,7 @@ public class Menu {
     public static void openLinkNewWindow(){
         MenuLauncher.run(Menu.class.getResource("resources/page1.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Open Image in New Window" context menu item.
      */
@@ -72,7 +72,7 @@ public class Menu {
     public static void openImageNewWindow(){
         MenuLauncher.run(Menu.class.getResource("resources/page1.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Copy Link to Clipboard" context menu item.
      */
@@ -80,7 +80,7 @@ public class Menu {
     public static void copyLink(){
         RichTextLauncher.run(Menu.class.getResource("resources/page1.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Copy Image to Clipboard" context menu item.
      */
@@ -88,7 +88,7 @@ public class Menu {
     public static void copyImage(){
         MenuLauncher.run(Menu.class.getResource("resources/page1.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Copy" context menu item.
      */
@@ -96,7 +96,7 @@ public class Menu {
     public static void copy(){
         MenuLauncher.run(Menu.class.getResource("resources/page1.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Stop Page Loading" context menu item.
      */
@@ -104,7 +104,7 @@ public class Menu {
     public static void stop(){
         WebNodeLauncher.run(Menu.class.getResource("resources/page1.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Reload" context menu item.
      */
@@ -112,7 +112,7 @@ public class Menu {
     public static void reload(){
         ReloadLauncher.run(Menu.class.getResource("resources/reload.html").getPath(), Menu.class.getResource("resources/reload.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Copy" context menu item.
      */
@@ -120,7 +120,7 @@ public class Menu {
     public static void textCopy(){
         MenuLauncher.run(Menu.class.getResource("resources/page1.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Paste" context menu item.
      */
@@ -128,7 +128,7 @@ public class Menu {
     public static void textPaste(){
         MenuLauncher.run(Menu.class.getResource("resources/page1.html").toExternalForm());
     }
-    
+
     /**
      * Test for "Cut" context menu item.
      */

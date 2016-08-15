@@ -39,7 +39,7 @@ import test.scenegraph.app.TransformsApp;
  */
 public class Transform3DTest {} /*extends TransformTest
 {
-    
+
     {
         setScale(new Scale(.33f, .66f, .45f, 100, 100, -100));
 //        setRotate(new Rotate(45f, new Point3D(100, 100, 0)));
@@ -47,13 +47,13 @@ public class Transform3DTest {} /*extends TransformTest
 //        setTranslate(new Translate(50, 50, 100));
 //        setAffine(Transform.affine(1, -0.15, 0, 50, 0, 0.95, 0, 0, -1, 1.05, 0.95, 0));
     }
-    
+
     //@RunUI
     @BeforeClass
     public static void RunUI() {
         Transforms3DApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -62,7 +62,7 @@ public class Transform3DTest {} /*extends TransformTest
         CAMERA_X = scene.getControl().getWidth() / 2;
         CAMERA_Y = scene.getControl().getHeight() / 2;
     }
-    
+
     @Override
     protected Point scale(final Point p)
     {
@@ -71,14 +71,14 @@ public class Transform3DTest {} /*extends TransformTest
         sup.x = (int) ((sup.x - 2 * CAMERA_X) * 217.39 / z);
         return sup;
     }
-    
+
     @Override
     protected Point rotate(final Point p) // Modify
     {
         Point sup = super.rotate(p);
         return sup;
     }
-    
+
     @Override
     protected Point shear(final Point p)
     {
@@ -99,10 +99,10 @@ public class Transform3DTest {} /*extends TransformTest
         Point sup = super.affine(p);
         return sup;
     }
-    
+
     private double CAMERA_X;
     private double CAMERA_Y;
     private double CAMERA_Z = 0;
-    
+
 }
 */

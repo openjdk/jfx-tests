@@ -43,14 +43,14 @@ import test.scenegraph.fx3d.utils.VisibleLight;
  * @author Andrew Glushchenko
  */
 public abstract class LightScopeTestBase extends FX3DTestBase {
-    
+
     private static LightScopeTestApp application;
-    
+
     @Override
     protected FX3DAbstractApp getApplication() {
         return application;
     }
-    
+
     @BeforeClass
     public static void setUp() {
         LightScopeTestApp.setTest(true);
@@ -58,13 +58,13 @@ public abstract class LightScopeTestBase extends FX3DTestBase {
         application = (LightScopeTestApp) LightScopeTestApp.getInstance();
         JemmyUtils.setJemmyComparatorByDistance(0.001f);
     }
-    
+
     @Before
     public abstract void chooseCase();
-    
+
     protected ShellVisibleLight[] getVisibleLights() {
         return new GetAction<ShellVisibleLight[]>() {
-            
+
             @Override
             public void run(Object... os) throws Exception {
                 VisibleLight[] vl = application.getVisibleLights();
@@ -76,30 +76,30 @@ public abstract class LightScopeTestBase extends FX3DTestBase {
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     protected void initTestCase(final LightScopeTestApp.TestCaseType type) {
         new GetAction() {
-            
+
             @Override
             public void run(Object... os) throws Exception {
                 application.initTestCase(type);
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     protected Node[] getNodes() {
         return new GetAction<Node[]>() {
-            
+
             @Override
             public void run(Object... os) throws Exception {
                 setResult(application.getNodes());
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     protected ShellGroupMover getLightMover(final ShellVisibleLight svl) {
         return new GetAction<ShellGroupMover>() {
-            
+
             @Override
             public void run(Object... os) throws Exception {
                 VisibleLight vl = svl.getVisibleLight();
@@ -108,10 +108,10 @@ public abstract class LightScopeTestBase extends FX3DTestBase {
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     protected ShellVisibleLight buildNewLight(final VisibleLight.LightType type, final Color color) {
         return new GetAction<ShellVisibleLight>() {
-            
+
             @Override
             public void run(Object... os) throws Exception {
                 setResult(new ShellVisibleLight(application.buildNewLight(type, color)));
@@ -121,12 +121,12 @@ public abstract class LightScopeTestBase extends FX3DTestBase {
 
     protected void deleteLight(final ShellVisibleLight light) {
         new GetAction() {
-            
+
             @Override
             public void run(Object... os) throws Exception {
                 application.deleteLight(light.getVisibleLight());
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
 }

@@ -80,7 +80,7 @@ public class NewLineChartApp extends InteroperabilityApp implements ChartIDsInte
     class LineChartScene extends CommonPropertiesScene {
 
         //LineChart to be tested.
-        LineChart testedLineChart;        
+        LineChart testedLineChart;
         NumberAxis axis1;
         NumberAxis axis2;
         TabPaneWithControl pane;

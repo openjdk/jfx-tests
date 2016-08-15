@@ -149,7 +149,7 @@ class GlassMouse implements Mouse {
                     double hyp = Math.sqrt((targetX - currX) * (targetX - currX)
                             + (targetY - currY) * (targetY - currY));
                     double steps = Math.ceil(hyp / Math.min(hyp, smoothness));
-                
+
                     double vx = (targetX - currX) / steps;
                     double vy = (targetY - currY) / steps;
                     assert (long) vx * vx + (long) vy * vy <= (long) smoothness * smoothness;

@@ -306,10 +306,10 @@ public class TableCellsApp extends InteroperabilityApp {
                         case MapValue:
                             TableColumn<Map, String> firstDataColumn = new TableColumn<Map, String>("Data One");
                             TableColumn<Map, String> secondDataColumn = new TableColumn<Map, String>("Data Two");
-                            
+
                             firstDataColumn.setCellValueFactory(new MapValueFactory<String>(Column1MapKey));
                             secondDataColumn.setCellValueFactory(new MapValueFactory<String>(Column2MapKey));
-                            
+
                             firstDataColumn.setPrefWidth(190);
                             secondDataColumn.setPrefWidth(190);
 

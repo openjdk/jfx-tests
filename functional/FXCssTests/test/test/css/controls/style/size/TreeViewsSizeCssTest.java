@@ -44,5 +44,5 @@ public class TreeViewsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.TreeViews.name();
     }
-    
+
 }

@@ -75,12 +75,12 @@ import static javafx.scene.control.test.utils.ptables.AbstractApplicationPropert
  * contains different checkers, value setters, etc).
  */
 public class PropertiesTable extends VBox implements AbstractPropertiesTable, Refreshable {
-    
+
     public final static String PROPERTIES_TABLE_SUFFIX_ID = "_PROPERTY_TABLE_ID";
     private final VBox linesVBox = new VBox(5);
     private final FlowPane countersFlowPane = FlowPaneBuilder.create().vgap(5).hgap(5).build();
     private final FlowPane listenersFlowPane = FlowPaneBuilder.create().vgap(5).hgap(5).build();
-    private final Object testedControl;    
+    private final Object testedControl;
     private String domainName;
     /**
      * Matches property name, on its controller.
@@ -94,7 +94,7 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
      * Matches property name on its listener (for read-only properties).
      */
     private HashMap<String, AbstractPropertyValueListener> readonlyPropertyListeners = new HashMap<String, AbstractPropertyValueListener>();
-    
+
     public PropertiesTable(Object testedControl) {
         super(5);
         this.domainName = DEFAULT_DOMAIN_NAME;
@@ -104,7 +104,7 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
         getChildren().add(2, linesVBox);
         this.testedControl = testedControl;
     }
-    
+
     public void refresh() {
         for (AbstractPropertyController controller : propertyControllers.values()) {
             controller.refresh();
@@ -116,7 +116,7 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
             listener.refresh();
         }
     }
-    
+
     @Override
     public void addBooleanPropertyLine(Property bindableProperty) {
         AbstractPropertyController controller = new PropertyValueController(bindableProperty, testedControl);
@@ -130,73 +130,73 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
         propertyControllers.put(bindableProperty.getName().toUpperCase(), controller);
         linesVBox.getChildren().add(controller.getVisualRepresentation());
     }
-           
+
     @Override
     public void addStringLine(Property bindableProperty, String initialText) {
         addStringLine(bindableProperty, initialText, testedControl);
     }
-    
+
     @Override
     public void addStringLine(Property bindableProperty, String initialText, Object owningObject) {
         AbstractPropertyController controller = new PropertyValueController(bindableProperty, owningObject, initialText);
         propertyControllers.put(bindableProperty.getName().toUpperCase(), controller);
         linesVBox.getChildren().add(controller.getVisualRepresentation());
     }
-    
+
     @Override
     public void addDoublePropertyLine(final DoubleProperty bindableProperty, double min, double max, double initial) {
         addDoublePropertyLine(bindableProperty, min, max, initial, testedControl);
     }
-    
+
     @Override
     public void addDoublePropertyLine(final DoubleProperty bindableProperty, double min, double max, double initial, Object owningObject) {
         AbstractPropertyController controller = new PropertyValueController(bindableProperty, testedControl, min, initial, max);
         propertyControllers.put(bindableProperty.getName().toUpperCase(), controller);
         linesVBox.getChildren().add(controller.getVisualRepresentation());
     }
-    
+
     @Override
     public void addIntegerPropertyLine(final IntegerProperty bindableProperty, int min, int max, int initial) {
         AbstractPropertyController controller = new PropertyValueController(bindableProperty, testedControl, min, initial, max);
         propertyControllers.put(bindableProperty.getName().toUpperCase(), controller);
         linesVBox.getChildren().add(controller.getVisualRepresentation());
     }
-    
+
     @Override
     public <T> void addObjectEnumPropertyLine(ObjectProperty<T> bindableProperty, List<T> valuesList) {
         addObjectEnumPropertyLine(bindableProperty, valuesList, testedControl);
     }
-    
+
     @Override
     public <T> void addObjectEnumPropertyLine(ObjectProperty<T> bindableProperty, List<T> valuesList, Object owningObject) {
         AbstractPropertyController controller = new PropertyValueController<T>(bindableProperty, owningObject, valuesList);
         propertyControllers.put(bindableProperty.getName().toUpperCase(), controller);
         linesVBox.getChildren().add(controller.getVisualRepresentation());
     }
-    
+
     @Override
     public void addSimpleListener(ReadOnlyProperty<? extends Object> bindableProperty, Object owningObject) {
         AbstractPropertyValueListener listener = new PropertyValueListener(bindableProperty, owningObject);
         readonlyPropertyListeners.put(bindableProperty.getName().toUpperCase(), listener);
         listenersFlowPane.getChildren().add(listener.getVisualRepresentation());
     }
-    
+
     @Override
     public void addCounter(String counterName) {
         AbstractEventsCounter counter = new TextFieldEventsCounter(counterName);
         eventCounters.put(counterName.toUpperCase(), counter);
         countersFlowPane.getChildren().add(counter.getVisualRepresentation());
     }
-    
+
     @Override
     public void incrementCounter(String counterName) {
         eventCounters.get(counterName.toUpperCase()).increment();
     }
-    
+
     public Collection<AbstractEventsCounter> getCounters() {
         return eventCounters.values();
     }
-    
+
     public List<AbstractPropertyValueListener> getListeners() {
         List<AbstractPropertyValueListener> temp = new ArrayList<AbstractPropertyValueListener>(Arrays.asList(readonlyPropertyListeners.values().toArray(new AbstractPropertyValueListener[0])));
         for (AbstractPropertyController controller : propertyControllers.values()) {
@@ -204,15 +204,15 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
         }
         return temp;
     }
-    
+
     public Node getVisualRepresentation() {
         return this;
     }
-    
+
     public String getDomainName() {
         return this.domainName;
     }
-    
+
     public void setDomainName(String domainName) {
         this.domainName = domainName;
     }

@@ -239,22 +239,22 @@ public class NewTabPaneApp extends InteroperabilityApp {
 
                     final NodesStorage fullController = NodeControllerFactory.createFullController(tab, tabPane);
                     fullController.pt.addCounter(TAB_CLOSE_REQUEST_EVENT);
-                    
+
                     tab.setOnCloseRequest(new EventHandler<Event>() {
                         private boolean useVeto = vetoOnClose.isSelected();
-                        
+
                         public void handle(Event t) {
                             fullController.pt.incrementCounter(TAB_CLOSE_REQUEST_EVENT);
-                            
+
                             if (useVeto) {
                                 t.consume();
                             }
                         }
                     });
-                    
+
                     tabPane.addPropertiesTable(newTabId.getText(), fullController);
                     testedTabPane.getTabs().add(Integer.parseInt(newTabIndex.getText()), tab);
-                    
+
                     if (createPropsTab.isSelected()) {
                         tabPane.addPropertiesTable(node.getClass().getSimpleName(), NodeControllerFactory.createFullController(node, tabPane));
                     }

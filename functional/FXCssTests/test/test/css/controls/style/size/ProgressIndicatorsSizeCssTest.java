@@ -44,5 +44,5 @@ public class ProgressIndicatorsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.ProgressIndicators.name();
     }
-    
+
 }

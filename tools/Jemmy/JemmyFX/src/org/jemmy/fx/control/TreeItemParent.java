@@ -32,7 +32,7 @@ class TreeItemParent<AUX> extends ItemDataParent<TreeItem, AUX> {
 
     private final TreeItem<? extends AUX> root;
     private final TreeViewWrap<? extends TreeView> treeViewWrap;
-    
+
     TreeItemParent(TreeViewWrap<? extends TreeView> treeViewWrap, TreeItem<? extends AUX> root, Class<AUX> type) {
         super(treeViewWrap, type);
         this.treeViewWrap = treeViewWrap;

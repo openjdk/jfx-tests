@@ -33,7 +33,7 @@ import org.jemmy.interfaces.Mouse;
  * @author shura
  */
 public interface GlassInputMap {
-    public int key(Keyboard.KeyboardButton button);    
+    public int key(Keyboard.KeyboardButton button);
     public int mouseButton(Mouse.MouseButton button);
     public int modifier(Modifier button);
 }

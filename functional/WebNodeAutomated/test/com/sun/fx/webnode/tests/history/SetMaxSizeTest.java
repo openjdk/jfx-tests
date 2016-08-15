@@ -37,7 +37,7 @@ import org.junit.Test;
 public class SetMaxSizeTest extends GetMaxSizeTest {
     protected int NEW_SIZE = 101;
     protected int NEW_SIZE2 = 98;
-        
+
     private void setHistorySize(final int sizeParam) {
         initWebEngineOnFXThread();
         doWait(engineReady);
@@ -55,7 +55,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
             }
         });
     }
-    
+
     private void setHistorySizeProperty(final int sizeParam) {
         initWebEngineOnFXThread();
         doWait(engineReady);
@@ -74,26 +74,26 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
             }
         });
     }
-    
+
     private void loadAndSet(final int sizeParam) {
         initWELoadHelloFXThread();
         doWaitPageLoading();
         setHistorySize(sizeParam);
     }
-    
+
     private void loadAndSetProperty(final int sizeParam) {
         initWELoadHelloFXThread();
         doWaitPageLoading();
         setHistorySizeProperty(sizeParam);
     }
-    
+
     private IllegalArgumentException error;
     private Tester exceptionCaught = new Tester() {
         public boolean isPassed() {
             return error != null;
         }
     };
-    
+
     /**
      * Test for setting history maximum size of a newly created WebEngine to a bigger value using history.setMaxSize() method.
      */
@@ -102,7 +102,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         setHistorySize(NEW_SIZE);
         Assert.assertEquals(NEW_SIZE, size.intValue());
     }
-    
+
     /**
      * Test for setting history maximum size of a newly created WebEngine to a smaller value using history.setMaxSize() method.
      */
@@ -111,7 +111,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         setHistorySize(NEW_SIZE2);
         Assert.assertEquals(NEW_SIZE2, size.intValue());
     }
-    
+
     /**
      * Test for simple setting history maximum size of a newly created WebEngine to a bigger value using history.maxSize property.
      */
@@ -120,7 +120,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         setHistorySizeProperty(NEW_SIZE);
         Assert.assertEquals(NEW_SIZE, size.intValue());
     }
-    
+
     /**
      * Test for simple setting history maximum size of a newly created WebEngine to a smaller value using history.maxSize property.
      */
@@ -129,7 +129,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         setHistorySizeProperty(NEW_SIZE2);
         Assert.assertEquals(NEW_SIZE2, size.intValue());
     }
-    
+
     /**
      * Test for setting history maximum size of a newly created WebEngine to 0 using history.setMaxSize() method.
      */
@@ -138,7 +138,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         setHistorySize(0);
         Assert.assertEquals(0, size.intValue());
     }
-    
+
     /**
      * Test for setting history maximum size of a newly created WebEngine to 0 using history.maxSize property.
      */
@@ -147,7 +147,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         setHistorySizeProperty(0);
         Assert.assertEquals(0, size.intValue());
     }
-    
+
     /**
      * Test for setting history maximum size of a newly created WebEngine to a negative value using history.setMaxSize() method.
      */
@@ -166,7 +166,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         });
         doWait(exceptionCaught);
     }
-    
+
     /**
      * Test for setting history maximum size of a newly created WebEngine to a negative value using history.maxSize property.
      */
@@ -185,7 +185,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         });
         doWait(exceptionCaught);
     }
-    
+
     /**
      * Test for simple setting history maximum size to a bigger value using history.setMaxSize() method.
      */
@@ -194,7 +194,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         loadAndSet(NEW_SIZE);
         Assert.assertEquals(NEW_SIZE, size.intValue());
     }
-    
+
     /**
      * Test for simple setting history maximum size to a smaller value using history.setMaxSize() method.
      */
@@ -203,7 +203,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         loadAndSet(NEW_SIZE2);
         Assert.assertEquals(NEW_SIZE2, size.intValue());
     }
-    
+
     /**
      * Test for setting history maximum size to a bigger value using history.maxSize property.
      */
@@ -212,7 +212,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         setHistorySizeProperty(NEW_SIZE);
         Assert.assertEquals(NEW_SIZE, size.intValue());
     }
-    
+
     /**
      * Test for setting history maximum size to a smaller value using history.maxSize property.
      */
@@ -221,7 +221,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         setHistorySizeProperty(NEW_SIZE2);
         Assert.assertEquals(NEW_SIZE2, size.intValue());
     }
-    
+
     /**
      * Test for setting history maximum size to 0 using history.setMaxSize() method.
      */
@@ -230,7 +230,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         loadAndSet(0);
         Assert.assertEquals(0, size.intValue());
     }
-    
+
     /**
      * Test for setting history maximum size to 0 using history.maxSize property.
      */
@@ -239,7 +239,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         loadAndSetProperty(0);
         Assert.assertEquals(0, size.intValue());
     }
-    
+
     /**
      * Test for setting history maximum size to a negative value using history.setMaxSize() method.
      */
@@ -260,7 +260,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         });
         doWait(exceptionCaught);
     }
-    
+
     /**
      * Test for setting history maximum size to a negative value using history.maxSize property.
      */
@@ -281,7 +281,7 @@ public class SetMaxSizeTest extends GetMaxSizeTest {
         });
         doWait(exceptionCaught);
     }
-    
+
     /**
      * Test for navigating with a zero-sized history.
      */

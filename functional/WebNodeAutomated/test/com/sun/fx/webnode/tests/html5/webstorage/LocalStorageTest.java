@@ -46,7 +46,7 @@ public class LocalStorageTest extends GenericTestClass {
     public static final String uriDomain1 = "http://shaman.ru.oracle.com/",uriDomain2 = "http://spb-ebola.ru.oracle.com/";
     public static final String veryLongString = "abacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabahabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabaiabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabahabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabajabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabahabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabaiabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabahabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabakabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabahabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabaiabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabahabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabajabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabahabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabaiabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabahabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacabagabacabadabacabaeabacabadabacabafabacabadabacabaeabacabadabacaba";
     // Length: 2047 /\
-    
+
     //Domains are available from inner/outer network
 
     protected Object result;
@@ -136,7 +136,7 @@ public class LocalStorageTest extends GenericTestClass {
         doWait(resultReady);
         assertTrue("LocalStorage doesn't support basic read/write operations through dot", result.equals(value));
     }
-    
+
     @Test(timeout = 10000)
     public void testCheckLocalStorageBasicReadWriteMixedAccessSetThroughInnerVariable() {
         initPage();
@@ -150,7 +150,7 @@ public class LocalStorageTest extends GenericTestClass {
         doWait(resultReady);
         assertTrue("LocalStorage doesn't support basic mixed read/write operations through dot", result.equals(value));
     }
-    
+
     @Test(timeout = 10000)
     public void testCheckLocalStorageBasicReadWriteMixedAccessSetThroughMethod() {
         initPage();
@@ -164,7 +164,7 @@ public class LocalStorageTest extends GenericTestClass {
         doWait(resultReady);
         assertTrue("LocalStorage doesn't support basic mixed read/write operations through dot", result.equals(value));
     }
-    
+
     @Test(timeout = 10000)
     public void testCheckLocalStorageWithLongString() {
         initPage();

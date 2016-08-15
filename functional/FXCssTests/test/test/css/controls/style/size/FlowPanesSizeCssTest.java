@@ -44,5 +44,5 @@ public class FlowPanesSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.FlowPanes.name();
     }
-    
+
 }

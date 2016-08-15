@@ -89,7 +89,7 @@ public class ChecksTest extends ControlsTestBase {
         scene = TestUtil.getScene();
         parent = scene.as(Parent.class, Node.class);
         clear = parent.lookup(Button.class, new ByText<Button>(CLEAR_BTN)).wrap();
-        
+
         scene.mouse().click();
     }
 
@@ -115,7 +115,7 @@ public class ChecksTest extends ControlsTestBase {
             System.out.println("Applet mode detected. Test skipped.");
         }
     }
-    
+
     /*
      * Checks that when Enter is pressed the control will not change it's state.
      */

@@ -134,7 +134,7 @@ public class PropertyValueListener<ValueType> extends HBox implements AbstractPr
                                  */
                                 Method getter;
                                 if ("reorderable".equals(propertyName)) {
-                                    getter = owningObject.getClass().getMethod("impl_isReorderable");                                    
+                                    getter = owningObject.getClass().getMethod("impl_isReorderable");
                                 } else if ("fixed".equals(propertyName)) {
                                     getter = owningObject.getClass().getMethod("impl_isFixed");
                                 } else {

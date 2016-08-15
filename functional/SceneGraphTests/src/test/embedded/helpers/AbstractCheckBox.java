@@ -30,7 +30,7 @@ package test.embedded.helpers;
  * @author akulyakh
  */
 public interface AbstractCheckBox extends WithNode {
-    
+
     public boolean isChecked();
     public void setChecked(boolean checked);
 }

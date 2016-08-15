@@ -30,12 +30,12 @@ package test.embedded.helpers;
  * @author akulyakh
  */
 public interface CheckBoxBuilder {
-    
+
     public CheckBoxBuilder text(String txt);
     public CheckBoxBuilder id(String id);
     public CheckBoxBuilder setOnClickHandler(OnClickHandler handler);
     public CheckBoxBuilder setChecked(boolean checked);
-    
+
     public AbstractCheckBox build();
-    
+
 }

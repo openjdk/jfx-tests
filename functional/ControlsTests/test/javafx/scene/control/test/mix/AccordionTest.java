@@ -99,7 +99,7 @@ public class AccordionTest extends TestBase {
         }
         ScreenshotUtils.throwScreenshotErrors();
     }
-    
+
     /**
      * Adds titled panes to the accordion in reverse order, sorts them and
      * checks that rendering works correctly.
@@ -107,9 +107,9 @@ public class AccordionTest extends TestBase {
     @Smoke
     @Test(timeout = 30000)
     public void renderingAfterSortingTest() {
-        
+
         testCommon(Pages.ExpandedPane.name(), null, false, true);
-        
+
         StringConverter<TitledPane> conv = new StringConverter<TitledPane>() {
             @Override
             public String toString(TitledPane t) {
@@ -131,7 +131,7 @@ public class AccordionTest extends TestBase {
         };
 
         final int SIZE = 4;
-        
+
         SortValidator<TitledPane, Text> sv = new SortValidator<TitledPane, Text>(SIZE, conv, cmp) {
             private SceneDock sceneDock;
             private AccordionDock accordion;
@@ -173,17 +173,17 @@ public class AccordionTest extends TestBase {
             @Override
             protected void sort() {
                 new GetAction<Object>() {
-                    @Override 
+                    @Override
                     public void run(Object... parameters) throws Exception {
                         FXCollections.sort(accordion.control().getPanes(), cmp);
                     }
                 }.dispatch(Root.ROOT.getEnvironment());
             }
         };
-        
+
         boolean res = sv.check();
         Assert.assertTrue(sv.getFailureReason(), res);
     }
-    
+
     static final int ANIMATION_DELAY = 1000;
 }

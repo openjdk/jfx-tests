@@ -132,7 +132,7 @@ public class CtrUtils {
 
         return result.toArray(new String[result.size()]);
     }
-    
+
     private static final int JEMMY_PORT = 53669;
 
     /**
@@ -153,9 +153,9 @@ public class CtrUtils {
                 socket.close();
             }
         }
-        
+
         // jemmy socket is free -- run jemmy
-        
+
         //TODO: optimize classpaths for jemmy server and test in remote jemmy mode
         String[] command = new String[]{"java", "-classpath", System.getProperty("java.class.path"), "org.jemmy.input.RobotExecutor"};
         final Process jemmyProcess = new ProcessBuilder(command).redirectErrorStream(true).start();

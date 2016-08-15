@@ -244,7 +244,7 @@ public class ExtendedDragApplication extends InteroperabilityApp {
         return list;
     }
 
-//Commented out, as Interoperability app was implemented.    
+//Commented out, as Interoperability app was implemented.
 //    @Override
 //    public void start(Stage stage) {
 //        stage.setX(100);

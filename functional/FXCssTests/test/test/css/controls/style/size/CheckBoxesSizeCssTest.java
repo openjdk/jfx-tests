@@ -44,5 +44,5 @@ public class CheckBoxesSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.CheckBoxes.name();
     }
-    
+
 }

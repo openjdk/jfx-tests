@@ -39,13 +39,13 @@ import test.scenegraph.app.AnimationTransitionApp;
 import test.javaclient.shared.TestBase;
 
 public class AnimationTransitionTest extends TestBase {
-    
+
     //@RunUI
     @BeforeClass
     public static void runUI() {
         AnimationTransitionApp.main(null);
     }
-    
+
 
     protected void clickButton(String name) {
         // TODO: remove this awful workaround
@@ -79,7 +79,7 @@ public class AnimationTransitionTest extends TestBase {
                 return txtS.getControl().getText();
             }
         },  Status.STOPPED.toString());
-        
+
 // was:     Thread.sleep(AnimationTransitionApp.typicalDuration);
         return txtS;
     }
@@ -203,6 +203,6 @@ public class AnimationTransitionTest extends TestBase {
     public void TransitionStroke() throws InterruptedException {
         doTest(Pages.TransitionStroke.name());
     }
-    
+
 
 }

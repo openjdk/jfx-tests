@@ -344,7 +344,7 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
     protected class TreeViewSelectable<T> extends TreeSelectable<T> {
 
         private TreeNodeParent treeNodeParent;
-        
+
         TreeViewSelectable(Class<T> type) {
             super(type);
         }

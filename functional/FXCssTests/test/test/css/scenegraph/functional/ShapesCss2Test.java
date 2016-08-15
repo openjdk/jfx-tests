@@ -186,7 +186,7 @@ public class ShapesCss2Test extends TestBase {
     public void Circle_INNER_SHADOW() throws InterruptedException {
         testAdditionalAction(Circle.name(), CssEffects.INNER_SHADOW.name(), true);
     }
-    
+
     /**
      * test CSS "-fx-stroke-type: centered" property on circle
      */
@@ -333,8 +333,8 @@ public class ShapesCss2Test extends TestBase {
 
     /**
      * test CSS "-fx-fill: linear (0%,0%) to (100%,100%)
-     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7)) 
-     * 1,rgba(100%,50%,100%,0.7), true); 
+     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7))
+     * 1,rgba(100%,50%,100%,0.7), true);
      * -fx-stroke: hsba( 300 , 10% , 50% , 0.8 );" property on rectangle
      */
     @Test
@@ -373,7 +373,7 @@ public class ShapesCss2Test extends TestBase {
     public void Rectangle_INNER_SHADOW() throws InterruptedException {
         testAdditionalAction(Rectangle.name(), CssEffects.INNER_SHADOW.name(), true);
     }
-    
+
     /**
      * test CSS "-fx-arc-height" and "-fx-arc-width" properties on rectangle
      */
@@ -405,7 +405,7 @@ public class ShapesCss2Test extends TestBase {
     public void Rectangle_STROKE_TYPE_OUTSIDE() throws InterruptedException {
         testAdditionalAction(Rectangle.name(), CssEffects.STROKE_TYPE_OUTSIDE.name(), true);
     }
-    
+
     /**
      * test CSS "-fx-fill" property on CubicCurve
      */
@@ -520,8 +520,8 @@ public class ShapesCss2Test extends TestBase {
 
     /**
      * test CSS "-fx-fill: linear (0%,0%) to (100%,100%)
-     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7)) 
-     * 1,rgba(100%,50%,100%,0.7), true); 
+     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7))
+     * 1,rgba(100%,50%,100%,0.7), true);
      * -fx-stroke: hsba( 300 , 10% , 50% , 0.8 );" property on CubicCurve
      */
     @Test
@@ -675,8 +675,8 @@ public class ShapesCss2Test extends TestBase {
 
     /**
      * test CSS "-fx-fill: linear (0%,0%) to (100%,100%)
-     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7)) 
-     * 1,rgba(100%,50%,100%,0.7), true); 
+     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7))
+     * 1,rgba(100%,50%,100%,0.7), true);
      * -fx-stroke: hsba( 300 , 10% , 50% , 0.8 );" property on QuadCurve
      */
     @Test
@@ -862,8 +862,8 @@ public class ShapesCss2Test extends TestBase {
 
     /**
      * test CSS "-fx-fill: linear (0%,0%) to (100%,100%)
-     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7)) 
-     * 1,rgba(100%,50%,100%,0.7), true); 
+     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7))
+     * 1,rgba(100%,50%,100%,0.7), true);
      * -fx-stroke: hsba( 300 , 10% , 50% , 0.8 );" property on Polygon
      */
     @Test
@@ -1542,8 +1542,8 @@ public class ShapesCss2Test extends TestBase {
 
     /**
      * test CSS "-fx-fill: linear (0%,0%) to (100%,100%)
-     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7)) 
-     * 1,rgba(100%,50%,100%,0.7), true); 
+     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7))
+     * 1,rgba(100%,50%,100%,0.7), true);
      * -fx-stroke: hsba( 300 , 10% , 50% , 0.8 );" property on Ellipse
      */
     @Test
@@ -1697,8 +1697,8 @@ public class ShapesCss2Test extends TestBase {
 
     /**
      * test CSS "-fx-fill: linear (0%,0%) to (100%,100%)
-     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7)) 
-     * 1,rgba(100%,50%,100%,0.7), true); 
+     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7))
+     * 1,rgba(100%,50%,100%,0.7), true);
      * -fx-stroke: hsba( 300 , 10% , 50% , 0.8 );" property on Arc
      */
     @Test
@@ -1828,8 +1828,8 @@ public class ShapesCss2Test extends TestBase {
 
     /**
      * test CSS "-fx-fill: linear (0%,0%) to (100%,100%)
-     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7)) 
-     * 1,rgba(100%,50%,100%,0.7), true); 
+     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7))
+     * 1,rgba(100%,50%,100%,0.7), true);
      * -fx-stroke: hsba( 300 , 10% , 50% , 0.8 );" property on Line
      */
     @Test
@@ -2015,8 +2015,8 @@ public class ShapesCss2Test extends TestBase {
 
     /**
      * test CSS "-fx-fill: linear (0%,0%) to (100%,100%)
-     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7)) 
-     * 1,rgba(100%,50%,100%,0.7), true); 
+     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7))
+     * 1,rgba(100%,50%,100%,0.7), true);
      * -fx-stroke: hsba( 300 , 10% , 50% , 0.8 );" property on PolylineLine
      */
     @Test
@@ -2202,8 +2202,8 @@ public class ShapesCss2Test extends TestBase {
 
     /**
      * test CSS "-fx-fill: linear (0%,0%) to (100%,100%)
-     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7)) 
-     * 1,rgba(100%,50%,100%,0.7), true); 
+     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7))
+     * 1,rgba(100%,50%,100%,0.7), true);
      * -fx-stroke: hsba( 300 , 10% , 50% , 0.8 );" property on PathLine
      */
     @Test
@@ -2389,8 +2389,8 @@ public class ShapesCss2Test extends TestBase {
 
     /**
      * test CSS "-fx-fill: linear (0%,0%) to (100%,100%)
-     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7)) 
-     * 1,rgba(100%,50%,100%,0.7), true); 
+     * stops (0,rgba(100%,0%,0%,1))(0.5,rgba(0,255,0,0.7))
+     * 1,rgba(100%,50%,100%,0.7), true);
      * -fx-stroke: hsba( 300 , 10% , 50% , 0.8 );" property on SVGPathLine
      */
     @Test

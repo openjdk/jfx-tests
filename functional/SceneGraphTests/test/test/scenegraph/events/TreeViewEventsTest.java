@@ -44,13 +44,13 @@ import test.scenegraph.app.ControlEventsApp.Controls;
  */
 public class TreeViewEventsTest extends EventTestCommon<TreeViewDock>
 {
-    
+
     @BeforeClass
     public static void rinUI()
     {
         ControlEventsApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -58,7 +58,7 @@ public class TreeViewEventsTest extends EventTestCommon<TreeViewDock>
         super.before();
         setControl(Controls.TREE_VIEW);
     }
-    
+
     @After
     public void collapseRootNode()
     {
@@ -67,14 +67,14 @@ public class TreeViewEventsTest extends EventTestCommon<TreeViewDock>
                 getPrimeNodeDock().getRootItem().setExpanded(true);
         }
     }
-    
+
     @Override
     protected TreeViewDock findPrimeDock()
     {
-        return new TreeViewDock(getActiveTabDock().asParent(), 
+        return new TreeViewDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
-    
+
     @Test
     public void onEditStart()
     {
@@ -88,7 +88,7 @@ public class TreeViewEventsTest extends EventTestCommon<TreeViewDock>
             }
         });
     }
-    
+
     @Test
     public void onEditCommit()
     {
@@ -110,7 +110,7 @@ public class TreeViewEventsTest extends EventTestCommon<TreeViewDock>
             }
         });
     }
-    
+
     @Test
     public void onEditCancel()
     {
@@ -132,5 +132,5 @@ public class TreeViewEventsTest extends EventTestCommon<TreeViewDock>
             }
         });
     }
-    
+
 }

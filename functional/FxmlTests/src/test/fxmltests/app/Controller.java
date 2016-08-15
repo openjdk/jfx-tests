@@ -38,7 +38,7 @@ import javafx.scene.control.Button;
  */
 public class Controller extends BaseController implements Initializable
 {
-    
+
     @FXML
     protected Button button2;
 
@@ -53,5 +53,5 @@ public class Controller extends BaseController implements Initializable
             }
         });
     }
-    
+
 }

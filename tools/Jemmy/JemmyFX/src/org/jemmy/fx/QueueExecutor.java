@@ -41,7 +41,7 @@ import org.jemmy.timing.State;
 public class QueueExecutor extends AbstractExecutor {
 
     /**
-     * @see #isQuiet() 
+     * @see #isQuiet()
      */
     public static final Timeout QUEUE_THROUGH_TIME = new Timeout("FXExecutor.FX_QUEUE_THROUGH_TIME", 50);
     static final Timeout QUEUE_IDENTIFYING_TIMEOUT =
@@ -90,9 +90,9 @@ public class QueueExecutor extends AbstractExecutor {
 
     /**
      * {@inheritDoc}
-     * @param env 
+     * @param env
      * @param action
-     * @param parameters  
+     * @param parameters
      */
     @Override
     public void executeQueue(Environment env, Action action, Object... parameters) {
@@ -112,9 +112,9 @@ public class QueueExecutor extends AbstractExecutor {
 
     /**
      * {@inheritDoc}
-     * @param env 
-     * @param action 
-     * @param parameters 
+     * @param env
+     * @param action
+     * @param parameters
      */
     @Override
     public void executeQueueDetached(Environment env, Action action, Object... parameters) {
@@ -125,7 +125,7 @@ public class QueueExecutor extends AbstractExecutor {
     }
 
     /**
-     * Checks whether the calling code is already on the queue thread. 
+     * Checks whether the calling code is already on the queue thread.
      * @return
      */
     @Override
@@ -141,7 +141,7 @@ public class QueueExecutor extends AbstractExecutor {
 
     /**
      * Checks whether the things are "quiet". All is currently does is check that
-     * something comes through the queue quickly enough as defined by 
+     * something comes through the queue quickly enough as defined by
      * <code>QUEUE_THROUGH_TIME</code> timeout.
      * @return
      */

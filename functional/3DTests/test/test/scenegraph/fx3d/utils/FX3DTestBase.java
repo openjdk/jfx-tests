@@ -79,7 +79,7 @@ public abstract class FX3DTestBase {
         /*Will work after RT-31878*/
         if(FX3DAbstractApp.getAntiAliasingMode() == SceneAntialiasing.BALANCED){
             name += "-AABALANCED";
-        }        
+        }
         /*******************************************/
         final String testName = getClass().getSimpleName() + "-" + name;
         ScreenshotUtils.checkScreenshot(testName, scene);

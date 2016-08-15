@@ -106,7 +106,7 @@ public class StackedBarChartApp extends XYChartBaseApp {
     }
 
     public static Chart createObject(Axis x_axis, Axis y_axis, double width, double height) {
-        
+
         Series s1 = new Series( FXCollections.observableArrayList(
                     new XYChart.Data("First", 4),
                     new XYChart.Data("Second", 5),

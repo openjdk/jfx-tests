@@ -201,7 +201,7 @@ public abstract class XYChartBaseApp extends ChartBaseApp {
             return chart;
         }
     }
-    
+
     @Override
     protected TestNode setup() {
         super.setup();

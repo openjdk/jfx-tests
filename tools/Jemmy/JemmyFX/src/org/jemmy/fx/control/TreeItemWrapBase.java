@@ -67,7 +67,7 @@ public class TreeItemWrapBase {
      * @param path starting with a value for root ending with a value for the
      * node
      * @return
-     */    
+     */
     public static <T> LookupCriteria<T> byPathValues(Class<T> type, final Object... path) {
         return new TreePathCriteria<T, Object>(path) {
             @Override
@@ -89,7 +89,7 @@ public class TreeItemWrapBase {
      * @param path starting with a criteria for root ending with a criteria for
      * the node
      * @return
-     */    
+     */
     public static <T> LookupCriteria<T> byPathCriteria(final Class<T> type, final LookupCriteria<T>... path) {
         return new TreePathCriteria<T, LookupCriteria<T>>(path) {
             @Override

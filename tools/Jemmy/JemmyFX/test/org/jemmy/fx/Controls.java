@@ -52,7 +52,7 @@ public class Controls extends Application {
     public static void main(String[] args) throws AWTException {
         launch(args);
     }
-    
+
     @Override
     public void start(Stage stg) {
         Scene scene = new Scene(new Group());
@@ -69,7 +69,7 @@ public class Controls extends Application {
         MenuBar bar = new MenuBar();
         addMenus(bar.getMenus());
         root.getChildren().add(bar);
-        
+
         Group grp = new Group();
         grp.setLayoutX(0);
         grp.setLayoutY(0);
@@ -84,8 +84,8 @@ public class Controls extends Application {
         hBox.getChildren().add(btn);
         hBox.getChildren().add(lbl);
         root.getChildren().add(grp);
-        
-        
+
+
         stg.setScene(scene);
         stg.setWidth(300);
         stg.setHeight(300);

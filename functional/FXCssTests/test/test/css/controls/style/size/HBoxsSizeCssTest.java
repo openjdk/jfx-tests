@@ -44,5 +44,5 @@ public class HBoxsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.HBoxs.name();
     }
-    
+
 }

@@ -102,7 +102,7 @@ public class ScrollTrack implements Shifter {
      * If that Shifter can not click it does nothing.
      * @param direction defines edge from which the position is calculated
      * @param offset of the position in pixels from edge defined with direction
- 
+
     protected void click(Dir direction, int offset) {
         click(direction, offset, 1);
     }
@@ -160,7 +160,7 @@ public class ScrollTrack implements Shifter {
         Rectangle bounds = trackNode.getScreenBounds();
         int len = isVertical? bounds.height: bounds.width;
         Point cp = ScrollerImpl.createScrollPoint(trackNode, ! isVertical, increase, (int)(dOffset/(max-min) * len));
-        
+
         return cp;
     }
 
@@ -168,7 +168,7 @@ public class ScrollTrack implements Shifter {
      * TODO Keep that here to evolve to some ClickableShifter interface later
      *
      * Utility method to get minimum value of the range corresponding to track area.
-     * @return 
+     * @return
      */
     public double minimum() {
         return ((Scroll) owningNode).minimum();

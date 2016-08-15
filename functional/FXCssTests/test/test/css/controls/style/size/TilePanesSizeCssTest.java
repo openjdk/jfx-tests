@@ -44,5 +44,5 @@ public class TilePanesSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.TilePanes.name();
     }
-    
+
 }

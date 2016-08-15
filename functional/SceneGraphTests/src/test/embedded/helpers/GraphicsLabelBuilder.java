@@ -52,5 +52,5 @@ class GraphicsLabelBuilder implements LabelBuilder {
     public AbstractLabel build() {
         return new GraphicsLabel(id, text);
     }
-    
+
 }

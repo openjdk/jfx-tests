@@ -474,5 +474,5 @@ public abstract class ShapesTestCase implements ShapesTestingFace{
     public void setRotateZ(double d) {
         getGroupMover().setRotateZ(d);
     }
-    
+
 }

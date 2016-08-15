@@ -43,50 +43,50 @@ import javafx.scene.input.DataFormat;
 public class CommonContentNotReceivingTestsGenerator {
     static String fileName = "test/javafx/draganddrop/CommonContentNotReceivingTests.java";
     static DataFormat[] allFormats;
-    
+
     static {
         final boolean imageTypeFound = dataFormatToCheckBoxID.containsKey(DataFormat.IMAGE);
         int size = dataFormatToCheckBoxID.size();
         if (! imageTypeFound) {
             size++;
         }
-        
+
         allFormats = new DataFormat[size];
-        
+
         int i = 0;
-        
+
         for (DataFormat dataFormat : dataFormatToCheckBoxID.keySet()) {
             allFormats[i++] = dataFormat;
         }
-        
+
         if (! imageTypeFound) {
             allFormats[i] = DataFormat.IMAGE;
         }
     }
-    
+
     static class Helper extends DragDropWithControlsBase {
         @Override
         public String getName(DataFormat[] dfArr) {
             return super.getName(dfArr);
         }
-        
+
         @Override
         public String getNameSimple(DataFormat df) {
             return super.getNameSimple(df);
         }
     }
-    
+
     /*
      * Generates tests that check that unexpected content won't be received during dnd
      */
     public static void main(String[] args) {
-        
+
         if (allFormats.length != 9) {
             throw new IllegalStateException("[Expected 9 types of content]");
         }
-        
+
         Helper helper = new Helper();
-       
+
         BufferedWriter writer = null;
         try {
             File f = new File(fileName);
@@ -114,7 +114,7 @@ public class CommonContentNotReceivingTestsGenerator {
             "\n" +
             "\tprotected abstract void transfer() throws InterruptedException, RemoteException;\n" +
             "\tprotected DataFormat[] allFormat = new ArrayList<DataFormat>(dataFormatToCheckBoxID.keySet()).toArray(new DataFormat[]{});");
-            
+
             //Need to keep this
             writer.append("\n\n//    @Test" +
             "\n//    public void generatorNotATest() {" +
@@ -122,7 +122,7 @@ public class CommonContentNotReceivingTestsGenerator {
             "\n//        for (DataFormat o1 : allFormat) {" +
             "\n//            for (DataFormat o2 : allFormat) {" +
             "\n//                String src = getNameSimple(o1);" +
-            "\n//                String trg = getNameSimple(o2);"+ 
+            "\n//                String trg = getNameSimple(o2);"+
             "\n//" +
             "\n//                if (!o1.equals(o2)) {" +
             "\n//                    test.append(\"/**\\n\");" +
@@ -145,7 +145,7 @@ public class CommonContentNotReceivingTestsGenerator {
             "\n//" +
             "\n//        System.err.println(test.toString());" +
             "\n//    }\n\n");
-            
+
             for (DataFormat o1 : allFormats) {
                 for (DataFormat o2 : allFormats) {
                     String src = helper.getNameSimple(o1);
@@ -164,7 +164,7 @@ public class CommonContentNotReceivingTestsGenerator {
 
                         writer.append("\tpublic void send" + simplestName1 + "Receive" + simplestName2 +
                                       "Test() throws InterruptedException, RemoteException {\n");
-                        
+
                         if (   ("RTF".equals(simplestName1) && "PLAIN_TEXT".equals(simplestName2))
                             || ("PLAIN_TEXT".equals(simplestName1) && "RTF".equals(simplestName2)))
                         {
@@ -182,7 +182,7 @@ public class CommonContentNotReceivingTestsGenerator {
                 }
             }
             writer.append("}");
-   
+
         } catch (IOException ex) {
             Logger.getLogger(CommonContentNotReceivingTestsGenerator.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

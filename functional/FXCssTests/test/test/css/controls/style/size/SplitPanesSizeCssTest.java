@@ -44,5 +44,5 @@ public class SplitPanesSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.SplitPanes.name();
     }
-    
+
 }

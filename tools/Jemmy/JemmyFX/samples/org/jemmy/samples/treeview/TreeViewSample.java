@@ -55,7 +55,7 @@ public class TreeViewSample extends SampleBase {
 
     @Test
     /**
-     * How to find an item in a tree. The tree itself has no specific lookup attributes - 
+     * How to find an item in a tree. The tree itself has no specific lookup attributes -
      * please check the LookupSample for generic lookup functionality.
      */
     public void itemLookup() {
@@ -65,7 +65,7 @@ public class TreeViewSample extends SampleBase {
         new TreeItemDock(treeView.asItemParent(), EXACT, "0", "0-1", "0-1-2", "0-1-2-3").mouse().click();
         //you could also find an item by simply its content (no path)
         new TreeItemDock(treeView.asItemParent(), new Data("0-3-2-1")).mouse().click();
-        //or find a second node by substring 
+        //or find a second node by substring
         new TreeItemDock(treeView.asItemParent(), 2, "-3-2-", SUBSTRING).mouse().click();
         //or a 5th by a custom criteria
         new TreeItemDock(treeView.asItemParent(), Data.class, 4, new LookupCriteria<Data>() {
@@ -76,13 +76,13 @@ public class TreeViewSample extends SampleBase {
             }
         }).mouse().click();
     }
-    
+
     /**
      * How to scroll
      */
     @Test
     public void scrolling() {
-        //scrolling to an item is done automatically. 
+        //scrolling to an item is done automatically.
         //should you need to scroll explicitely, just call show():
         TreeItemDock item = new TreeItemDock(treeView.asItemParent(), EXACT, "0", "0-3", "0-3-0", "0-3-0-1");
         item.shower().show();

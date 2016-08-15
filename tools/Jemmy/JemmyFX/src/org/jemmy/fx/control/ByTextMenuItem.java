@@ -42,5 +42,5 @@ public class ByTextMenuItem<T extends MenuItem> extends ByStringLookup<T> {
     public String getText(T t) {
         return t.getText();
     }
-    
+
 }

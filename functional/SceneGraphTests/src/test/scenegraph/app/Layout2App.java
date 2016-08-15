@@ -1145,7 +1145,7 @@ public class Layout2App extends BasicButtonChooserApp {
             GridPane.setConstraints(c1, 0, 0);
             c1.setFill(Color.RED);
 
-          
+
 
             Circle c2 = new Circle(8);
             GridPane.setConstraints(c2, 1, 0);
@@ -1208,7 +1208,7 @@ public class Layout2App extends BasicButtonChooserApp {
             sp2.getChildren().add(b2a);
             GridPane.setMargin(sp2, new Insets(5,5,5,5));
             GridPane.setConstraints(sp2, 0, 3,2,2);
-            
+
             pane.getChildren().addAll(sp2);
 */
 

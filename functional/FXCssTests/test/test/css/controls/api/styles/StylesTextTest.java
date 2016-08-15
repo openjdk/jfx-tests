@@ -61,12 +61,12 @@ public class StylesTextTest extends BaseStyleNodeTest {
             @Override
             public void run(Object... os) throws Exception {
                 Text control = new Text();
-                
+
                 setResult(control);
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     @Test
     public void testfxfont () {
         Set<String> styleNames = getStyleNames();
@@ -76,7 +76,7 @@ public class StylesTextTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-font");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.scene.text.Font.getDefault());
     }
-    
+
     @Test
     public void testfxfontfamily () {
         Set<String> styleNames = getStyleNames();
@@ -86,7 +86,7 @@ public class StylesTextTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-font-family");
         Assert.assertEquals(data.getInitialValue(getControl()), "System");
     }
-    
+
     @Test
     public void testfxfontsize () {
         Set<String> styleNames = getStyleNames();
@@ -96,7 +96,7 @@ public class StylesTextTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-font-size");
         Assert.assertEquals(data.getInitialValue(getControl()), Font.getDefault().getSize());
     }
-    
+
     @Test
     public void testfxfontsmoothingtype () {
         Set<String> styleNames = getStyleNames();
@@ -106,7 +106,7 @@ public class StylesTextTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-font-smoothing-type");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.scene.text.FontSmoothingType.GRAY);
     }
-    
+
     @Test
     public void testfxfontstyle () {
         Set<String> styleNames = getStyleNames();
@@ -116,7 +116,7 @@ public class StylesTextTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-font-style");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.scene.text.FontPosture.REGULAR);
     }
-    
+
     @Test
     public void testfxfontweight () {
         Set<String> styleNames = getStyleNames();
@@ -126,7 +126,7 @@ public class StylesTextTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-font-weight");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.scene.text.FontWeight.NORMAL);
     }
-    
+
     @Test
     public void testfxstrikethrough () {
         Set<String> styleNames = getStyleNames();
@@ -136,7 +136,7 @@ public class StylesTextTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-strikethrough");
         Assert.assertEquals(data.getInitialValue(getControl()), false);
     }
-    
+
     @Test
     public void testfxtextalignment () {
         Set<String> styleNames = getStyleNames();
@@ -146,7 +146,7 @@ public class StylesTextTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-text-alignment");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.scene.text.TextAlignment.LEFT);
     }
-    
+
     @Test
     public void testfxtextorigin () {
         Set<String> styleNames = getStyleNames();
@@ -156,7 +156,7 @@ public class StylesTextTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-text-origin");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.geometry.VPos.BASELINE);
     }
-    
+
     @Test
     public void testfxunderline () {
         Set<String> styleNames = getStyleNames();
@@ -166,6 +166,6 @@ public class StylesTextTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-underline");
         Assert.assertEquals(data.getInitialValue(getControl()), false);
     }
-    
+
 
 }

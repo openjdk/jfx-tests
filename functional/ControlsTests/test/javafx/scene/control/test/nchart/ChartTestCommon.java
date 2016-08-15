@@ -51,7 +51,7 @@ public abstract class ChartTestCommon extends ChartTestsBase {
 
     protected abstract Chart getNewChartInstance();
     abstract void populateChart();
-    
+
     @Test(timeout = 300000)
     public void titlePropertyTest() throws InstantiationException, IllegalArgumentException, InvocationTargetException, IllegalAccessException, Throwable {
         assertNull(getNewChartInstance().getTitle());
@@ -178,7 +178,7 @@ public abstract class ChartTestCommon extends ChartTestsBase {
         assertEquals(getNewChartInstance().isLegendVisible(), true);
 
         populateChart();
-        
+
         for (Side side : Side.values()) {
             setPropertyByChoiceBox(SettingType.SETTER, side, ChartProperties.legendSide);
             legendVisibleTestCommon(new BooleanOptionSetter() {
@@ -191,9 +191,9 @@ public abstract class ChartTestCommon extends ChartTestsBase {
 
     @Test(timeout = 300000)
     public void legendVisibleCSSTest() throws Throwable {
-        
+
         populateChart();
-                
+
         for (Side side : Side.values()) {
             setPropertyByChoiceBox(SettingType.SETTER, side, ChartProperties.legendSide);
             legendVisibleTestCommon(new BooleanOptionSetter() {

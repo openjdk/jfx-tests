@@ -67,7 +67,7 @@ public abstract class FX3DAbstractApp extends Application {
     /*******************************************/
     /*Will work after RT-31878*/
     private static SceneAntialiasing mode = SceneAntialiasing.DISABLED;
-    
+
     public static SceneAntialiasing getAntiAliasingMode(){
         return mode;
     }

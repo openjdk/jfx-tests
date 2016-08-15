@@ -157,7 +157,7 @@ public class SimpleDragApplication extends InteroperabilityApp {
 //        return parameters.size() > 0 && PARAM_TWO_STAGE.equals(parameters.get(0));
         return true;// Always true, as we don't know, how to ger parameters.
     }
-//Commented out, as Interoperability app was implemented.        
+//Commented out, as Interoperability app was implemented.
 //    public void start(Stage stage) {
 //        stage.setX(100);
 //        stage.setY(100);
@@ -176,5 +176,5 @@ public class SimpleDragApplication extends InteroperabilityApp {
 //            stage2.setScene(new Scene(new Group(getContent2())));
 //            stage2.show();
 //        }
-//    }    
+//    }
 }

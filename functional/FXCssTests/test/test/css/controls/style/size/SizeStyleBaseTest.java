@@ -169,7 +169,7 @@ abstract public class SizeStyleBaseTest extends TestBase {
         Assert.assertNotNull(golden_control);
         Assert.assertEquals(control.getControl().getMaxWidth(), golden_control.getControl().getMaxWidth(), 0.0);
     }
-    
+
     public void checkMaxHeight() {
         Assert.assertNotNull(control);
         Assert.assertNotNull(golden_control);

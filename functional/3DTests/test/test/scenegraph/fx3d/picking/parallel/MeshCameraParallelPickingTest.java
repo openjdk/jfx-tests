@@ -67,5 +67,5 @@ public class MeshCameraParallelPickingTest  extends MeshPickingTestBase {
     protected int getIterations() {
         return 10;
     }
-    
+
 }

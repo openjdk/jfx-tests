@@ -46,7 +46,7 @@ import test.embedded.helpers.OnClickHandler;
 public class TransparencyWindowApp extends InteroperabilityApp {
 
     public static final int smallRectSize = 10;
-    
+
     Pane root;
     Rectangle rectGreen;
 
@@ -89,8 +89,8 @@ public class TransparencyWindowApp extends InteroperabilityApp {
 
                         popup.getContent().add(rootPopup);
 
-                        popup.show(stage, 
-                                stage.getX() + scene.getX() + rectGreen.getX() - smallRectSize, 
+                        popup.show(stage,
+                                stage.getX() + scene.getX() + rectGreen.getX() - smallRectSize,
                                 stage.getY() + scene.getY() + rectGreen.getY() - smallRectSize);
                             }
 
@@ -102,7 +102,7 @@ public class TransparencyWindowApp extends InteroperabilityApp {
                 .id("TRANSPARENT_WINDOW")
                 .setChecked(Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW))
                 .build();
-        
+
 
         hbox.getChildren().addAll(btnShowPopup.node(), chIsSupportedTransparentWindow.node());
         root.getChildren().add(hbox);

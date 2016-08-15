@@ -292,9 +292,9 @@ public class NewTabPaneTest extends NewTabPaneBase {
         addTab(vetoTabName, 0, true, true);
 
         addTab(nonVetoTabName, 1, true, false);
-        
+
         checkTabsCount(2);
-        
+
         switchToPropertiesTab(vetoTabName);
         checkCounterValue(TAB_CLOSE_REQUEST_EVENT, 0);
         switchToPropertiesTab(nonVetoTabName);
@@ -318,7 +318,7 @@ public class NewTabPaneTest extends NewTabPaneBase {
         switchToPropertiesTab(nonVetoTabName);
         checkCounterValue(TAB_CLOSE_REQUEST_EVENT, 1);
     }
-    
+
     /**
      * Checks that when the sorting is applied
      * to the underlying data collection
@@ -328,15 +328,15 @@ public class NewTabPaneTest extends NewTabPaneBase {
     @Test(timeout=30000)
     public void renderingAfterSortingTest() {
         final int ITEMS_COUNT = 3;
-        
+
         StringConverter<Tab> conv = new StringConverter<Tab>() {
             @Override public String toString(Tab t) { return t.getText(); }
-            
+
             @Override public Tab fromString(String s) {
                 return TabBuilder.create().text(s).content(new Label("CONTENT!")).build();
             }
         };
-        
+
         SortValidator<Tab, Label> validator = new SortValidator<Tab, Label>(ITEMS_COUNT, conv) {
 
             @Override
@@ -365,7 +365,7 @@ public class NewTabPaneTest extends NewTabPaneBase {
             protected String getTextFromCell(Label cell) {
                 return cell.getText();
             }
-            
+
             @Override
             protected void sort() {
                 new GetAction<Object>() {

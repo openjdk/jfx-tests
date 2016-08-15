@@ -53,7 +53,7 @@ public void setEffect(Shape shape, Pane container) {
     Node notSeen = new Rectangle(30,20);
     Bounds b = shape.getBoundsInParent();
     notSeen.setTranslateX(b.getMinX() - 2);
-    notSeen.setTranslateY((b.getMaxY() - b.getMinY()) / 2 + b.getMinY());    
+    notSeen.setTranslateY((b.getMaxY() - b.getMinY()) / 2 + b.getMinY());
     container.getChildren().add(notSeen);
     notSeen.toBack();
 }
@@ -242,9 +242,9 @@ public void setEffect(Shape shape, Pane container) {
         public void setEffect(Shape shape, Pane container) {
             shape.setStyle("-fx-base: yellow;");
         }
-        
 
-   
+
+
 }), ARC_HEIGHT_WIDTH(new Effector() {
 
         @Override
@@ -252,7 +252,7 @@ public void setEffect(Shape shape, Pane container) {
             shape.setStyle("-fx-fill: black;"
                            + "-fx-arc-height: 20;"
                            + "-fx-arc-width: 20;");
-        }    
+        }
 }), STROKE_TYPE_CENTERED(new Effector() {
 
         @Override
@@ -261,7 +261,7 @@ public void setEffect(Shape shape, Pane container) {
                            + "-fx-stroke: red;"
                            + "-fx-stroke-width: 6;"
                            + "-fx-stroke-type: centered;");
-        }    
+        }
 }), STROKE_TYPE_INSIDE(new Effector() {
 
         @Override
@@ -279,7 +279,7 @@ public void setEffect(Shape shape, Pane container) {
                            + "-fx-stroke: red;"
                            + "-fx-stroke-width: 6;"
                            + "-fx-stroke-type: outside;");
-        } 
+        }
 });
 
     private static interface Effector {
@@ -291,12 +291,12 @@ public void setEffect(Shape shape, Pane container) {
     private CssEffects(Effector setEffect) {
         this.effector = setEffect;
     }
-    
+
     public void decorate (Shape shape, Pane container) {
         shape.setId(shape.getClass().getSimpleName() + " " + name());
         container.getChildren().add(shape);
     }
-    
+
     public void setEffect(Shape shape, Pane container) {
         effector.setEffect(shape, container);
     }

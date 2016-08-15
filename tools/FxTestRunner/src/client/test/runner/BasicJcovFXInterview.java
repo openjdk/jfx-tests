@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class BasicJcovFXInterview extends BasicFXInterview
         implements EnvParameters {
-    
+
     public final static String COVERAGE_TAG = "jcov";
     public final static String COVERAGE_LIST_TAG = "jcov_list";
     public final static String[] COVERAGE_LIST = {"com.sun.openpisces.*","com.sun.pisces.*","com.javafx.*", "com.sun.javafx.*", "javafx.*", "com.sun.scenario.*", "com.sun.mat.*", "com.sun.prism.*"};
@@ -45,7 +45,7 @@ public class BasicJcovFXInterview extends BasicFXInterview
         return qCoverage;
     }
 
-    
+
     private YesNoQuestion qCoverage = new YesNoQuestion(this, COVERAGE_TAG, YesNoQuestion.NO) {
         @Override
         public Question getNext() {
@@ -77,7 +77,7 @@ public class BasicJcovFXInterview extends BasicFXInterview
             }
         }
     };
-    
+
     private StringListQuestion qCoverageIncludes = new StringListQuestion(this, COVERAGE_LIST_TAG) {
         {
             this.setDefaultValue(COVERAGE_LIST);

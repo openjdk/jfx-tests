@@ -35,15 +35,15 @@ import test.scenegraph.fx3d.utils.PickingTestCase;
  * @author Andrew Glushchenko
  */
 public class SubSceneMeshPerspectivePickingTestApp extends SubScenePickingAbstractApp {
-    
+
     public static void main(String[] args) {
         Utils.launch(SubSceneMeshPerspectivePickingTestApp.class, args);
     }
-    
+
     @Override
     protected void initKeys(Scene scene) {
     }
-    
+
     @Override
     public PickingTestCase buildTestCase() {
         MeshPerspectivePickingTestApp temp = new MeshPerspectivePickingTestApp();

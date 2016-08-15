@@ -32,9 +32,9 @@ import org.junit.After;
  *
  * @author Aleksand Sakharuk
  */
-public abstract class EventTestHidingPopup<T extends NodeDock> extends EventTestCommon<T> 
+public abstract class EventTestHidingPopup<T extends NodeDock> extends EventTestCommon<T>
 {
-    
+
     @After
     public void hidePopup()
     {
@@ -46,5 +46,5 @@ public abstract class EventTestHidingPopup<T extends NodeDock> extends EventTest
             getPrimeNodeDock().mouse().click(1, new Point(x, y));
         }
     }
-    
+
 }

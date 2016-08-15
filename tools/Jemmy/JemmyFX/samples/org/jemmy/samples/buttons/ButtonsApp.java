@@ -34,10 +34,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * This small FX app is used in button JemmyFX samples. It displays a few of 
- * buttons of different kind with a visible reaction to any of the buttons been 
+ * This small FX app is used in button JemmyFX samples. It displays a few of
+ * buttons of different kind with a visible reaction to any of the buttons been
  * pushed.
- * 
+ *
  * @author shura
  */
 public class ButtonsApp extends Application {
@@ -84,9 +84,9 @@ public class ButtonsApp extends Application {
         stage.setScene(new Scene(content));
         stage.show();
     }
-    
+
     public static void main(String[] args) {
         launch();
     }
-    
+
 }

@@ -45,15 +45,15 @@ import org.jemmy.interfaces.TreeItem;
  * Defines how FX controls are operated. This implementation defines "generic"
  * behavior which comes from JemmyCore. Theme-specific implementations are
  * to be provided for every theme.
- * 
- * Ported from the project JemmyFX, original class 
+ *
+ * Ported from the project JemmyFX, original class
  * is   org.jemmy.fx.control.DriverFactory
- * 
+ *
  * @see CaspianDriverFactory
  * @author shura
  */
 public abstract class ThemeDriverFactory {
-    
+
     static {
         Root.ROOT.getEnvironment().setPropertyIfNotSet(ThemeDriverFactory.class, ThemeDriverFactory.newInstance());
     }
@@ -61,11 +61,11 @@ public abstract class ThemeDriverFactory {
     final static String NOT_SUPPORTED = "Not supported in the ThemeDriverFactory";
     /**
      * NOTE Probably param Environment env should be passed to the factory.
-     * @return theme-specific implementation of the ThemeDriverFactory. Only 
+     * @return theme-specific implementation of the ThemeDriverFactory. Only
      * CaspianDriverFactor is provided to the moment.
      */
     public static ThemeDriverFactory newInstance() {
-        return new CaspianDriverFactory(); 
+        return new CaspianDriverFactory();
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class ThemeDriverFactory {
     public abstract Scroller caret(final Wrap<? extends Control> wrap, final Scroll scroll);
 
     public abstract Shifter track(final Wrap<? extends Control> wrap, final Scroll scroll);
-    
+
     public abstract <T> TreeItem treeItem(Wrap<T> itemWrap, Wrap parentControlWrap);
 
     public abstract Focus menuBarFocuser(final MenuBarWrap<? extends MenuBar> menuBarWrap);

@@ -61,7 +61,7 @@ public class SceneBuilderTest {
 
     @BeforeClass
     public static void RunUI() {
-        //Use Application.launch(...) to run JavaFX application.  
+        //Use Application.launch(...) to run JavaFX application.
         new Thread(new Runnable() {
             public void run() {
                 Application.launch(Main.class);
@@ -82,10 +82,10 @@ public class SceneBuilderTest {
         //show list item with button by scrolling listview
         button.shower().show();
 
-        //find design surface by node ID "Anchor Pane".        
+        //find design surface by node ID "Anchor Pane".
         NodeDock designSurface = new NodeDock(sceneBuilder.asParent(), "AnchorPane");
 
-        //drag list item with button and drop in center of design surface 
+        //drag list item with button and drop in center of design surface
         button.drag().dnd(designSurface.wrap(), designSurface.wrap().getClickPoint());
 
         //find properties panel by node ID
@@ -96,7 +96,7 @@ public class SceneBuilderTest {
         //clear and type text
         textField.clear();
         textField.type("Submit");
-        //push enter to complete 
+        //push enter to complete
         textField.keyboard().pushKey(Keyboard.KeyboardButtons.ENTER);
 
         //Add text field/////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,7 +107,7 @@ public class SceneBuilderTest {
         //show list item with text field by scrolling listview
         textFieldControl.shower().show();
 
-        //drag list item with text field and drop on design surface near button 
+        //drag list item with text field and drop on design surface near button
         textFieldControl.drag().dnd(designSurface.wrap(), designSurface.wrap().getClickPoint().translate(70, 50));
 
         //find text field on design surface and double click to invoke inline editing
@@ -121,7 +121,7 @@ public class SceneBuilderTest {
 
 
         //show preview
-        //find menu bar by ID then push "Preview" menu. Finally push "Show preview" menu item. All menu item have id's that help to find them. 
+        //find menu bar by ID then push "Preview" menu. Finally push "Show preview" menu item. All menu item have id's that help to find them.
         new MenuBarDock(sceneBuilder.asParent(), ID_MENU_BAR).menu().push(new ByIdMenuItem(ID_PREVIEW_MENU), new ByIdMenuItem(ID_PREVIEW_MENU_ITEM));
 
         //find preview scene. Criteria: scene is not existing scene builder scene and scene.getWindow is not PopupWindow

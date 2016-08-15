@@ -123,7 +123,7 @@ public class ChoiceBoxApp extends InteroperabilityApp {
                 }
             }
         });
-        
+
         final CheckBox checkShowing = new CheckBox("isShowing()");
         checkShowing.setId(IS_SHOWING_CHECK_ID);
 
@@ -282,9 +282,9 @@ public class ChoiceBoxApp extends InteroperabilityApp {
         Scene res = new Scene(content);
 
         reset();
-        
+
         Utils.addBrowser(res);
-        
+
         return res;
     }
 

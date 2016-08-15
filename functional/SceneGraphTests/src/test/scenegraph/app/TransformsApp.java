@@ -74,7 +74,7 @@ public class TransformsApp extends InteroperabilityApp {
         new TransformToggle("translate", new Translate(50, 50)),
         new TransformToggle("affine", aff)
     };
-    
+
     protected void setTransformToggle(TransformToggle[] tt)
     {
         this.tt = tt;

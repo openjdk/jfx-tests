@@ -114,7 +114,7 @@ public class VisibleLight extends Group {
         } else {
             lightBase = new AmbientLight(lightBase.getColor());
         }
-        
+
         this.getChildren().add(lightBase);
     }
 

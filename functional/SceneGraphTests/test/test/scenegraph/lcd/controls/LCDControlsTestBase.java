@@ -70,9 +70,9 @@ public class LCDControlsTestBase {
             NodeDock rightPaneDock = new NodeDock(scene.asParent(), LCDControlsTestApp.RIGHT_PANE_ID);
 
             buttonApply.mouse().move();
-            
+
             // wait until LCD rendered:
-            // here should be a loop: 
+            // here should be a loop:
             // check image every 300ms and wait until image become stable
             try { Thread.sleep(400);} catch(Exception e){}
             checkAllTextImages(rightPaneDock,LCDControlsTestApp.action.isLCDWork());
@@ -128,7 +128,7 @@ public class LCDControlsTestBase {
             System.out.println(" colorPixelCount=" + colorPixelCount + " greyPixelCount=" + greyPixelCount);
             if ( 0 != colorPixelCount) {
                 final double percent = colorPixelCount  / sumPixelCount;
-                System.out.println(" percent = colorPixelCount  / sumPixelCount =" + percent 
+                System.out.println(" percent = colorPixelCount  / sumPixelCount =" + percent
                                  + "[  < " + UPPER_THRESHOLD + " && >" + LOWER_THRESHOLD);
                 return (percent < UPPER_THRESHOLD) && (percent > LOWER_THRESHOLD);
             }

@@ -40,9 +40,9 @@ public class HistoryLauncherJS extends HistoryLauncher {
         container.getChildren().addAll(currIndex, currHistorySize, view);
         return container;
     }
-    
+
     public static void run(final String url) {
-        final String[] args = new String[] {url};        
+        final String[] args = new String[] {url};
         new Thread(new Runnable() {
             public void run() {
                 Application.launch(HistoryLauncherJS.class, args);

@@ -49,23 +49,23 @@ import test.javaclient.shared.Utils;
  *
  * @author Aleksandr Sakharuk
  */
-public class SceneEventHandlersApp extends InteroperabilityApp 
+public class SceneEventHandlersApp extends InteroperabilityApp
 {
-    
-    public static void main(String... args) 
+
+    public static void main(String... args)
     {
         Utils.launch(SceneEventHandlersApp.class, args);
         //System.out.println("fx: " + VersionInfo.getRuntimeVersion());
     }
-    
+
     @Override
-    protected Scene getScene() 
+    protected Scene getScene()
     {
         eventCombo.setId(EVENTS_COMBO_ID);
         actionButton.setId(ACTION_BUTTON_ID);
         dragField.setId(DRAG_SOURCE_ID);
         dropField.setId(DROP_TARGET_ID);
-        
+
         eventCombo.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {
@@ -73,9 +73,9 @@ public class SceneEventHandlersApp extends InteroperabilityApp
                 scene.addEventHandler(type, new TestHandler(type));
             }
         });
-        
+
         eventCombo.setItems(FXCollections.observableArrayList(EventTypes.values()));
-        
+
         dragField.setOnDragDetected(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent event) {
@@ -86,21 +86,21 @@ public class SceneEventHandlersApp extends InteroperabilityApp
                 event.consume();
             }
         });
-        
+
 //        dragField.setOnDragExited(new EventHandler<DragEvent>() {
 //
 //            public void handle(DragEvent arg0) {
 //                System.out.println("Drag exited drag source.");
 //            }
 //        });
-        
+
         dropField.setOnDragOver(new EventHandler<DragEvent>() {
 
             public void handle(DragEvent event) {
                 event.acceptTransferModes(TransferMode.COPY);
             }
         });
-        
+
         dropField.setOnDragDropped(new EventHandler<DragEvent>() {
 
             public void handle(DragEvent event) {
@@ -113,13 +113,13 @@ public class SceneEventHandlersApp extends InteroperabilityApp
                 event.setDropCompleted(success);
             }
         });
-        
+
         for(EventTypes t: EventTypes.values())
         {
             Label lb = LabelBuilder.create().text(t.toString()).id(t.toString()).style(NOT_HANDLED_STYLE).build();
             controlLabels.add(lb);
         }
-        
+
         BorderPane root = new BorderPane();
         FlowPane flow = new FlowPane(Orientation.VERTICAL);
         flow.setVgap(30);
@@ -130,7 +130,7 @@ public class SceneEventHandlersApp extends InteroperabilityApp
         root.setCenter(flow);
         root.setLeft(VBoxBuilder.create().children(controlLabels).padding(new Insets(10, 10, 10, 10)).build());
         scene = new Scene(root);
-        
+
         scene.addEventHandler(MouseEvent.DRAG_DETECTED, new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent arg0) {
@@ -138,92 +138,92 @@ public class SceneEventHandlersApp extends InteroperabilityApp
                 scene.startFullDrag();
             }
         });
-        
+
         return scene;
     }
-    
+
     public Map<EventType<Event>, Boolean> getResults()
     {
         return handled;
     }
-    
+
     private ComboBox<EventTypes> eventCombo = new ComboBox<EventTypes>();
     private Button actionButton = new Button("Action");
     private List<Label> controlLabels = new ArrayList<Label>();
     private TextField dragField = new TextField("Drag source");
     private TextField dropField = new TextField("Drop target");
     private Scene scene;
-    
+
     private Map<EventType<Event>, Boolean> handled = new HashMap<EventType<Event>, Boolean>();
-    
+
     public static final String NOT_HANDLED_STYLE = "-fx-text-fill: red;";
     public static final String HANDLED_STYLE = "-fx-text-fill: green;";
     public static final String EVENTS_COMBO_ID = "events_combo";
     public static final String ACTION_BUTTON_ID = "action_button";
     public static final String DRAG_SOURCE_ID = "drag_field";
     public static final String DROP_TARGET_ID = "drop_field";
-    
+
     public static enum EventTypes
     {
-        
-        ACTION(ActionEvent.ACTION), 
-        CONTEXT_MENU_REQUESTED(ContextMenuEvent.CONTEXT_MENU_REQUESTED), 
-        DRAG_DONE(DragEvent.DRAG_DONE), 
-        DRAG_DROPPED(DragEvent.DRAG_DROPPED), 
-        DRAG_ENTERED(DragEvent.DRAG_ENTERED), 
-        DRAG_ENTERED_TARGET(DragEvent.DRAG_ENTERED_TARGET), 
-        DRAG_EXITED(DragEvent.DRAG_EXITED), 
-        DRAG_EXITED_TARGET(DragEvent.DRAG_EXITED_TARGET), 
-        DRAG_OVER(DragEvent.DRAG_OVER), 
-        //INPUT_METHOD_TEXT_CHANGED(InputMethodEvent.INPUT_METHOD_TEXT_CHANGED), 
-        KEY_PRESSED(KeyEvent.KEY_PRESSED), 
-        KEY_RELEASED(KeyEvent.KEY_RELEASED), 
-        KEY_TYPED(KeyEvent.KEY_TYPED), 
-        DRAG_DETECTED(MouseEvent.DRAG_DETECTED), 
-        MOUSE_CLICKED(MouseEvent.MOUSE_CLICKED), 
-        MOUSE_DRAGGED(MouseEvent.MOUSE_DRAGGED), 
-        MOUSE_ENTERED(MouseEvent.MOUSE_ENTERED), 
-        MOUSE_ENTERED_TARGET(MouseEvent.MOUSE_ENTERED_TARGET), 
-        MOUSE_EXITED(MouseEvent.MOUSE_EXITED), 
-        MOUSE_EXITED_TARGET(MouseEvent.MOUSE_EXITED_TARGET), 
-        MOUSE_MOVED(MouseEvent.MOUSE_MOVED), 
-        MOUSE_PRESSED(MouseEvent.MOUSE_PRESSED), 
-        MOUSE_RELEASED(MouseEvent.MOUSE_RELEASED), 
-        MOUSE_DRAG_ENTERED(MouseDragEvent.MOUSE_DRAG_ENTERED), 
-        MOUSE_DRAG_ENTERED_TARGET(MouseDragEvent.MOUSE_DRAG_ENTERED_TARGET), 
-        MOUSE_DRAG_EXITED(MouseDragEvent.MOUSE_DRAG_EXITED), 
-        MOUSE_DRAG_EXITED_TARGET(MouseDragEvent.MOUSE_DRAG_EXITED_TARGET), 
-        MOUSE_DRAG_OVER(MouseDragEvent.MOUSE_DRAG_OVER), 
-        MOUSE_DRAG_RELEASED(MouseDragEvent.MOUSE_DRAG_RELEASED), 
-        SCROLL(ScrollEvent.SCROLL), 
-        //MEDIA_ERROR(MediaErrorEvent.MEDIA_ERROR), 
-        //ALERT(WebEvent.ALERT), 
-        //RESIZED(WebEvent.RESIZED), 
-        //TATUS_CHANGED(WebEvent.STATUS_CHANGED), 
-        //VISIBILITY_CHANGED(WebEvent.VISIBILITY_CHANGED), 
-        //WINDOW_CLOSE_REQUEST(WindowEvent.WINDOW_CLOSE_REQUEST), 
-        //WINDOW_HIDDEN(WindowEvent.WINDOW_HIDDEN), 
-        //WINDOW_HIDING(WindowEvent.WINDOW_HIDING), 
-        //WINDOW_SHOWING(WindowEvent.WINDOW_SHOWING), 
-        //WINDOW_SHOWN(WindowEvent.WINDOW_SHOWN), 
-        //WORKER_STATE_CANCELLED(WorkerStateEvent.WORKER_STATE_CANCELLED), 
-        //WORKER_STATE_FAILED(WorkerStateEvent.WORKER_STATE_FAILED), 
-        //WORKER_STATE_READY(WorkerStateEvent.WORKER_STATE_READY), 
-        //WORKER_STATE_RUNNING(WorkerStateEvent.WORKER_STATE_RUNNING), 
-        //WORKER_STATE_SCHEDULED(WorkerStateEvent.WORKER_STATE_SCHEDULED), 
+
+        ACTION(ActionEvent.ACTION),
+        CONTEXT_MENU_REQUESTED(ContextMenuEvent.CONTEXT_MENU_REQUESTED),
+        DRAG_DONE(DragEvent.DRAG_DONE),
+        DRAG_DROPPED(DragEvent.DRAG_DROPPED),
+        DRAG_ENTERED(DragEvent.DRAG_ENTERED),
+        DRAG_ENTERED_TARGET(DragEvent.DRAG_ENTERED_TARGET),
+        DRAG_EXITED(DragEvent.DRAG_EXITED),
+        DRAG_EXITED_TARGET(DragEvent.DRAG_EXITED_TARGET),
+        DRAG_OVER(DragEvent.DRAG_OVER),
+        //INPUT_METHOD_TEXT_CHANGED(InputMethodEvent.INPUT_METHOD_TEXT_CHANGED),
+        KEY_PRESSED(KeyEvent.KEY_PRESSED),
+        KEY_RELEASED(KeyEvent.KEY_RELEASED),
+        KEY_TYPED(KeyEvent.KEY_TYPED),
+        DRAG_DETECTED(MouseEvent.DRAG_DETECTED),
+        MOUSE_CLICKED(MouseEvent.MOUSE_CLICKED),
+        MOUSE_DRAGGED(MouseEvent.MOUSE_DRAGGED),
+        MOUSE_ENTERED(MouseEvent.MOUSE_ENTERED),
+        MOUSE_ENTERED_TARGET(MouseEvent.MOUSE_ENTERED_TARGET),
+        MOUSE_EXITED(MouseEvent.MOUSE_EXITED),
+        MOUSE_EXITED_TARGET(MouseEvent.MOUSE_EXITED_TARGET),
+        MOUSE_MOVED(MouseEvent.MOUSE_MOVED),
+        MOUSE_PRESSED(MouseEvent.MOUSE_PRESSED),
+        MOUSE_RELEASED(MouseEvent.MOUSE_RELEASED),
+        MOUSE_DRAG_ENTERED(MouseDragEvent.MOUSE_DRAG_ENTERED),
+        MOUSE_DRAG_ENTERED_TARGET(MouseDragEvent.MOUSE_DRAG_ENTERED_TARGET),
+        MOUSE_DRAG_EXITED(MouseDragEvent.MOUSE_DRAG_EXITED),
+        MOUSE_DRAG_EXITED_TARGET(MouseDragEvent.MOUSE_DRAG_EXITED_TARGET),
+        MOUSE_DRAG_OVER(MouseDragEvent.MOUSE_DRAG_OVER),
+        MOUSE_DRAG_RELEASED(MouseDragEvent.MOUSE_DRAG_RELEASED),
+        SCROLL(ScrollEvent.SCROLL),
+        //MEDIA_ERROR(MediaErrorEvent.MEDIA_ERROR),
+        //ALERT(WebEvent.ALERT),
+        //RESIZED(WebEvent.RESIZED),
+        //TATUS_CHANGED(WebEvent.STATUS_CHANGED),
+        //VISIBILITY_CHANGED(WebEvent.VISIBILITY_CHANGED),
+        //WINDOW_CLOSE_REQUEST(WindowEvent.WINDOW_CLOSE_REQUEST),
+        //WINDOW_HIDDEN(WindowEvent.WINDOW_HIDDEN),
+        //WINDOW_HIDING(WindowEvent.WINDOW_HIDING),
+        //WINDOW_SHOWING(WindowEvent.WINDOW_SHOWING),
+        //WINDOW_SHOWN(WindowEvent.WINDOW_SHOWN),
+        //WORKER_STATE_CANCELLED(WorkerStateEvent.WORKER_STATE_CANCELLED),
+        //WORKER_STATE_FAILED(WorkerStateEvent.WORKER_STATE_FAILED),
+        //WORKER_STATE_READY(WorkerStateEvent.WORKER_STATE_READY),
+        //WORKER_STATE_RUNNING(WorkerStateEvent.WORKER_STATE_RUNNING),
+        //WORKER_STATE_SCHEDULED(WorkerStateEvent.WORKER_STATE_SCHEDULED),
         //WORKER_STATE_SUCCEEDED(WorkerStateEvent.WORKER_STATE_SUCCEEDED)
         ;
 
-        private EventTypes(EventType<? extends Event> type) 
+        private EventTypes(EventType<? extends Event> type)
         {
             this.type = type;
         }
-        
+
         public EventType<? extends Event> getType()
         {
             return type;
         }
-        
+
         public static EventTypes get(EventType<? extends Event> type)
         {
             for(EventTypes t: EventTypes.values())
@@ -235,15 +235,15 @@ public class SceneEventHandlersApp extends InteroperabilityApp
             }
             return null;
         }
-        
+
         private EventType<? extends Event> type;
-        
+
     }
-    
+
     private class TestHandler<T extends EventType<Event>> implements EventHandler<Event>
     {
 
-        public TestHandler(T eventType) 
+        public TestHandler(T eventType)
         {
             this.eventType = eventType;
             handled.put(eventType, Boolean.FALSE);
@@ -257,9 +257,9 @@ public class SceneEventHandlersApp extends InteroperabilityApp
             controlLabels.get(EventTypes.get(event.getEventType()).ordinal()).setStyle(HANDLED_STYLE);
             scene.removeEventHandler(event.getEventType(), this);
         }
-        
+
         private EventType<Event> eventType;
-        
+
     }
-    
+
 }

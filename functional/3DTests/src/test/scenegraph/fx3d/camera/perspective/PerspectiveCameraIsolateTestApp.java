@@ -49,9 +49,9 @@ public class PerspectiveCameraIsolateTestApp extends PerspectiveCameraFixedEyeIs
         scene.setCamera(camera);
         return camera;
     }
-    
+
     public static void main(String[] args) {
         Utils.launch(PerspectiveCameraIsolateTestApp.class, args);
     }
-    
+
 }

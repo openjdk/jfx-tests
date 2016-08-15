@@ -55,8 +55,8 @@ public class EditHistory {
             txt.apply(editChain.get(i));
         }
 
-        // HOTFIX 
-        // see RT-22729 Text selection after Undo action 
+        // HOTFIX
+        // see RT-22729 Text selection after Undo action
         // Have not implemented yet
         if (currentPosInChain > 0) {
             if ((currentPosInChain < editChain.size()) && (editChain.get(currentPosInChain - 1) instanceof MoveCaretChange)) {

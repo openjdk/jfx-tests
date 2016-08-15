@@ -33,24 +33,24 @@ import javafx.scene.image.WritableImage;
  */
 public abstract class WriteSingleColorImageTestBase extends ReadImageTestBase{
 
-    
+
     @Override
     protected Image getImage() {
         WritableImage image = new WritableImage(256, 256);
-        
+
         PixelWriter pixelWriter = image.getPixelWriter();
-                
-        
+
+
         for (int i = 0; i < 256; i++) {
             for (int j = 0; j < 256; j++) {
                 double color = i + j;
-                pixelWriter.setColor(i, j, 
+                pixelWriter.setColor(i, j,
                         getColorComponentProvider().getColor(
                         ((color > 255) ? 255.0 : color) / 255));
-                        
+
             }
         }
-        
+
         return image;
     }
 }

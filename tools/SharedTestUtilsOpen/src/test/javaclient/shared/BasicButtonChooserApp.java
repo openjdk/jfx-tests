@@ -21,7 +21,7 @@
  * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
  * or visit www.oracle.com if you need additional information or have any
  */
-	
+
 package test.javaclient.shared;
 
 import java.util.logging.Level;
@@ -172,10 +172,10 @@ public abstract class BasicButtonChooserApp extends AbstractApp2 {
     }
 
     public void restoreSceneRoot() {
-    	Utils.deferAction(new Runnable() {
+        Utils.deferAction(new Runnable() {
             public void run() {
-        	savedScene.setRoot(savedSceneRoot);
-	    }
+            savedScene.setRoot(savedSceneRoot);
+        }
         });
     }
 

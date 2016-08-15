@@ -38,7 +38,7 @@ public class EffectAction implements Action{
         this.lcdWork = lcdWork;
         this.effect = effect;
     }
-    
+
     public Parent updateControl(Parent node) {
         node.setEffect(effect);
         node.setRotate(0);
@@ -48,5 +48,5 @@ public class EffectAction implements Action{
     public boolean isLCDWork() {
         return lcdWork;
     }
-    
+
 }

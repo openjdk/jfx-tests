@@ -33,12 +33,12 @@ import org.jemmy.lookup.ByStringLookup;
 import org.jemmy.resources.StringComparePolicy;
 
 /**
- * A criterion to find nodes by text. This supports <code>Text</code>, 
- * <code>Labeled</code>, <code>TextInputControl</code>, <code>Choice</code>, 
- * and <code>ComboBox</code> 
+ * A criterion to find nodes by text. This supports <code>Text</code>,
+ * <code>Labeled</code>, <code>TextInputControl</code>, <code>Choice</code>,
+ * and <code>ComboBox</code>
  * @param <T>
  * @author Shura
- * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, org.jemmy.lookup.LookupCriteria<javafx.scene.Node>[]) 
+ * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, org.jemmy.lookup.LookupCriteria<javafx.scene.Node>[])
  */
 public class ByText<T> extends ByStringLookup<T> {
 
@@ -102,7 +102,7 @@ public class ByText<T> extends ByStringLookup<T> {
     }
 
     /**
-     * Gets text of the supported object types. Supports <code>MenuItem</code> and 
+     * Gets text of the supported object types. Supports <code>MenuItem</code> and
      * <code>Tab</code>
      * @param obj
      * @return text or empty string if the type is not supported

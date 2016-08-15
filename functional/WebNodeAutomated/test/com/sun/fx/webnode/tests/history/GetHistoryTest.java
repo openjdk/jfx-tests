@@ -35,7 +35,7 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class GetHistoryTest extends HistoryTestClass {
-    
+
     /**
      * Test for getting WebHistory object from a newly created WebEngine.
      */
@@ -43,9 +43,9 @@ public class GetHistoryTest extends HistoryTestClass {
     public void testGetHistoryNewWE() {
         initWebEngineOnFXThread();
     }
-    
+
     WebHistory myHistory;
-    
+
     /**
      * Test for getting WebHistory object.
      */

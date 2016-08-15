@@ -61,7 +61,7 @@ public class TableCellsTest extends TreeTableCellsTest {
     }
 
     @Before
-    @Override    
+    @Override
     public void tableSetUpClass() throws Exception {
         updateWraps();
         testedControl = parent.lookup(TableView.class, new ByID<TableView>(TableCellsApp.TABLE_VIEW_ID)).wrap();

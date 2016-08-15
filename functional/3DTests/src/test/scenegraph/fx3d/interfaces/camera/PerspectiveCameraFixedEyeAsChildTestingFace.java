@@ -29,5 +29,5 @@ package test.scenegraph.fx3d.interfaces.camera;
  * @author Andrew Glushchenko
  */
 public interface PerspectiveCameraFixedEyeAsChildTestingFace extends PerspectiveCameraFixedEyeTestingFace,CameraAsChildTestingFace{
-    
+
 }

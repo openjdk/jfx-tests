@@ -33,7 +33,7 @@ import org.jemmy.Point;
  * Dmitry Zinkevich <dmitry.zinkevich@oracle.com>
  */
 public class SelectionFormatter {
-    
+
     static class EmptyStringCreator {
         public static String make(int n) {
             StringBuilder sb = new StringBuilder();
@@ -43,11 +43,11 @@ public class SelectionFormatter {
             return sb.toString();
         }
     }
-    
+
     public static String format(String xsTitle, Collection<Point> xs, String ysTitle, Collection<Point> ys) {
         return format(xsTitle, xs, ysTitle, ys, ",");
     }
-    
+
     public static String format(String xsTitle, Collection<Point> xs, String ysTitle, Collection<Point> ys, String separator) {
         int[] helperIndices = new int[xs.size()];
         int i = 0;
@@ -66,7 +66,7 @@ public class SelectionFormatter {
         Arrays.sort(actualIndices);
 
         int maxLen = Math.max(xsTitle.length(), ysTitle.length());
-        
+
         StringBuilder firstResult = new StringBuilder(String.format("%" + maxLen + "s", xsTitle)).append("[");
         StringBuilder secondResult = new StringBuilder(String.format("%" + maxLen + "s", ysTitle)).append("[");
 
@@ -102,7 +102,7 @@ public class SelectionFormatter {
 
         firstResult.append("]");
         secondResult.append("]");
-        
+
         return firstResult.append("\n").append(secondResult).toString();
     }
 }

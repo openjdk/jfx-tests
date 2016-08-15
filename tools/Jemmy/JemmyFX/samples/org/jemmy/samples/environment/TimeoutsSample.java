@@ -45,14 +45,14 @@ import org.junit.Test;
 public class TimeoutsSample extends SampleBase {
     private static SceneDock scene;
     private static NodeDock node;
-    
+
     @BeforeClass
     public static void runApp() throws InterruptedException {
         startApp(LookupApp.class);
         scene = new SceneDock();
         node = new NodeDock(scene.asParent(), "lbl_01");
     }
-    
+
     /**
      * Timeouts are handled through environment.
      */
@@ -61,7 +61,7 @@ public class TimeoutsSample extends SampleBase {
         scene.wrap().getEnvironment().setTimeout("test.timeout", 999);
         assertEquals((long)999, node.wrap().getEnvironment().getTimeout("test.timeout").getValue());
     }
-    
+
     /**
      * Timeouts are defined wherever appropriate.
      */
@@ -80,5 +80,5 @@ public class TimeoutsSample extends SampleBase {
         //this will cause a waitState() methods to wait maximum for a minute
         Root.ROOT.getEnvironment().setTimeout(Wrap.WAIT_STATE_TIMEOUT, 60000);
     }
-    
+
 }

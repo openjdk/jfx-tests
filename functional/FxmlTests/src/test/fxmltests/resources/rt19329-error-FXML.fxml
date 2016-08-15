@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Scene xmlns:fx="http://javafx.com/fxml" 
+<Scene xmlns:fx="http://javafx.com/fxml"
  width="100" height="150" fill="#770000">
 
     <ErrorTag>Here is error</ErrorTag>

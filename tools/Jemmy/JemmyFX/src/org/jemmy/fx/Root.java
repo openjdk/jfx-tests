@@ -89,11 +89,11 @@ public class Root extends AbstractParent<Scene> {
         boolean isEmbedded = runtimeName != null && runtimeName.toLowerCase().contains("embedded");
         Environment.getEnvironment().setPropertyIfNotSet(RasterComparator.class, new PixelEqualityRasterComparator(0));
         //TODO this needs to be rewritten with the API either from profiles or jigsaw
-        
+
         String robotType = (String) env.getProperty("javafx.robot");
         if ( "glass".equals(robotType) ) {
             useGlassRobot(this.env);
-        } else if ( "awt".equals(robotType) ) {    
+        } else if ( "awt".equals(robotType) ) {
             useAWTRobot(env);
         } else if( ( osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os") ) && !isEmbedded) {
             useAWTRobot(env);
@@ -103,7 +103,7 @@ public class Root extends AbstractParent<Scene> {
         this.env.setProperty(ActionExecutor.class, QueueExecutor.EXECUTOR);
         this.env.initTimeout(QueueExecutor.QUEUE_THROUGH_TIME);
         this.env.initTimeout(QueueExecutor.QUEUE_IDENTIFYING_TIMEOUT);
-        
+
         GlassInputFactory.setInitEnvironment(env);
         GlassImageCapturer.setInitEnvironment(env);
 

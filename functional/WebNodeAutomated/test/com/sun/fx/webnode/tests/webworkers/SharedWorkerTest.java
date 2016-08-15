@@ -39,7 +39,7 @@ public class SharedWorkerTest extends WorkerTestClass {
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for connecting multiple pages to one shared worker.
      */
@@ -54,7 +54,7 @@ public class SharedWorkerTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("Connections: 2");
     }
-    
+
     /**
      * Test to ensure that pages connected to a shared worker have separate contexts.
      */

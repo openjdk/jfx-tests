@@ -7,6 +7,6 @@
 <MenuItem xmlns:fx="http://javafx.com/fxml">
  <text>open...</text>
  <accelerator>
-	 <KeyCombination fx:value="Ctrl+N"/>
+     <KeyCombination fx:value="Ctrl+N"/>
  </accelerator>
 </MenuItem>

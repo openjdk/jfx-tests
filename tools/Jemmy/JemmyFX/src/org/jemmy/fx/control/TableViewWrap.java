@@ -202,8 +202,8 @@ public class TableViewWrap<CONTROL extends TableView> extends ControlWrap<CONTRO
             scroll = new TableTreeScroll(this);
         }
         scroll.checkScrolls();
-        TableUtils.<TableCell>scrollTo(getEnvironment(), this, scroll.hScroll, 
-                scroll.vScroll, row, column, 
+        TableUtils.<TableCell>scrollTo(getEnvironment(), this, scroll.hScroll,
+                scroll.vScroll, row, column,
                 new TableUtils.TableViewIndexInfoProvider(this), TableCell.class);
     }
 

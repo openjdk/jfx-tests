@@ -44,7 +44,7 @@ public interface Mover {
     public DoubleProperty translateYProperty();
 
     public DoubleProperty translateZProperty();
-    
+
     public void setRotateX(double d);
 
     public void setRotateY(double d);

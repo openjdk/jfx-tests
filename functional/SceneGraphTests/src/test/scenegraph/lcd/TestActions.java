@@ -32,7 +32,7 @@ import javafx.scene.text.Text;
 public enum TestActions implements TestAction {
 
     ;
-        
+
     private TestAction testAction;
 
     private TestActions(TestAction testAction) {

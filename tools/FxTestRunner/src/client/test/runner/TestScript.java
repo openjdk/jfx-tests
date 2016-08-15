@@ -62,7 +62,7 @@ import test.javaclient.shared.Utils;
  * @author shura, mrkam, Sergey Grinev, Victor Shubov
  */
 public class TestScript extends htmltestrunner.TestScript {
-    
+
     private static final int FORCED_TERMINATION_TIMEOUT = 5000;
     private static final boolean verbose = true; //TODO: use real logger
     private volatile Process process = null;
@@ -83,7 +83,7 @@ public class TestScript extends htmltestrunner.TestScript {
     protected synchronized Status getStatus() {
         return super.getStatus();
     }
-    
+
     @Override
     protected void before(TestDescription description, String resultDir) throws Throwable {
         String testClassName = td.getParameter(RunUITestFinder.UNIT_TEST_CLASS_NAME);
@@ -134,7 +134,7 @@ public class TestScript extends htmltestrunner.TestScript {
                 commandStream.close();
                 interrupt(Status.error(e.toString()));
             }
-            
+
             Semaphore s = new Semaphore(0);
             resultThread = new Thread(new Runnable() {
                 @Override
@@ -143,7 +143,7 @@ public class TestScript extends htmltestrunner.TestScript {
                         System.err.println("Waiting for exit");
                         ObjectInputStream ois = new ObjectInputStream(cmdSocket.getInputStream());
                         status = (TestRunner.Status) ois.readObject();
-                        
+
                         Status jtStatus;
                         System.err.println("Process returned status " + status);
                         if (status == null) {
@@ -161,7 +161,7 @@ public class TestScript extends htmltestrunner.TestScript {
                         ex.printStackTrace(System.err);
                         interrupt(Status.error(CtrUtils.stackTraceToString(ex)));
                     } finally {
-                        
+
                         //finalize
                         try {
                             commandStream.close();
@@ -207,7 +207,7 @@ public class TestScript extends htmltestrunner.TestScript {
                 resultThread.interrupt();
                 process.destroyForcibly();
                 process.waitFor(FORCED_TERMINATION_TIMEOUT, TimeUnit.MILLISECONDS);
-            }            
+            }
         }
     }
 
@@ -318,7 +318,7 @@ public class TestScript extends htmltestrunner.TestScript {
         }
         String javaExec = pathStr.toString();
 
-        
+
         String proxy = lookup(BasicFXInterview.PROXY_PARAM_NAME, "");
         String jvmProxyHost = "";
         String jvmProxyPort = "";
@@ -396,7 +396,7 @@ public class TestScript extends htmltestrunner.TestScript {
         command = addToArray(command, additionalOptions);
         command = addToArray(command, jvmArgNoDesc, jvmProxyHost, jvmProxyPort, jvmInterop, swtTestOpt);
         command = addToArray(command, jvmArgClientTestRoot);
-        command = addToArray(command, "-DmasterPort=" + port);        
+        command = addToArray(command, "-DmasterPort=" + port);
         command = addToArray(command, "-classpath", System.getProperty("java.class.path"));
 //        command = addToArray(command, "-Xdebug", "-Xnoagent", "-Djava.compiler=NONE", "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5858");
         command = addToArray(command, isJunit ? JUnit2TestRunner.class.getName() : TestRunner.class.getName(), testClassName);
@@ -765,7 +765,7 @@ public class TestScript extends htmltestrunner.TestScript {
     protected TestEnvironment getSavedEnv() {
         return savedEnv;
     }
-    
+
     /**
      *
      * @return

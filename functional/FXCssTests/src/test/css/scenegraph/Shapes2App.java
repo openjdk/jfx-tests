@@ -54,7 +54,7 @@ public class Shapes2App extends BasicButtonChooserApp {
     public Shapes2App() {
         super(width, heigth, "Shapes", false);
     }
-   
+
     private static CssEffects[] effects = CssEffects.values();
 
     public static void main(String args[]) {
@@ -63,7 +63,7 @@ public class Shapes2App extends BasicButtonChooserApp {
 
     /**
      * For each tested shape the ShapeFactory instance should be added
-     * @see ShapesApp#setup() 
+     * @see ShapesApp#setup()
      */
     private static abstract class ShapeFactory {
 
@@ -405,7 +405,7 @@ public class Shapes2App extends BasicButtonChooserApp {
 
                             HLineTo hLineToTwo = new HLineTo();
                             hLineToTwo.setX(20.0f);
-                            
+
                             VLineTo vLineToThree = new VLineTo();
                             vLineToThree.setY(10.0f);
 
@@ -413,7 +413,7 @@ public class Shapes2App extends BasicButtonChooserApp {
                         }
                     }
                 );
-        
+
         register(
                 new ShapeFactory(Pages.SVGPath.name()) {
             @Override

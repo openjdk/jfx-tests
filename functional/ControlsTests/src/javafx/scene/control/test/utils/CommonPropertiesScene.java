@@ -78,7 +78,7 @@ public abstract class CommonPropertiesScene extends Scene {
         leftVBox.setSpacing(5);
         //Main scene layout.
         prepareMainSceneStructure();
-        
+
         nonTestedContentVisibility.addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
                 controllersVb.setVisible(t1);

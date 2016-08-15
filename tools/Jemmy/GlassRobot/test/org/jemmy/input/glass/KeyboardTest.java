@@ -41,7 +41,7 @@ import static org.jemmy.input.glass.KeyboardInputApp.TYPED;
  * @author shura
  */
 public class KeyboardTest {
-    
+
     public KeyboardTest() {
     }
 
@@ -49,7 +49,7 @@ public class KeyboardTest {
     static TextInputControlDock txt;
     static TextInputControlDock lbl;
     static Log log;
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         AppExecutor.executeNoBlock(KeyboardInputApp.class);
@@ -64,17 +64,17 @@ public class KeyboardTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
         btn.mouse().click();
         txt.mouse().click();
     }
-    
+
     @After
     public void tearDown() throws InterruptedException {
     }
-    
+
     @Test
     public void push() {
         txt.keyboard().pushKey(Keyboard.KeyboardButtons.A);
@@ -85,7 +85,7 @@ public class KeyboardTest {
         log.checkEvent(TYPED, "B");
         log.checkLines(4);
     }
-    
+
     @Test
     public void type() {
         txt.asSelectionText().type("New text.");

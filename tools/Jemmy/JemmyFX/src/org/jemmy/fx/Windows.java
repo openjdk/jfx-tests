@@ -32,9 +32,9 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.lookup.PlainLookup;
 
 class Windows extends AbstractParent<Window> {
-    
+
     public static final Windows WINDOWS = new Windows();
-    
+
     private final WindowWrapper wrapper;
     private final WindowList list;
     private final Environment env;
@@ -44,7 +44,7 @@ class Windows extends AbstractParent<Window> {
         list = new WindowList();
         env = new Environment(Root.ROOT.getEnvironment());
     }
-    
+
 
     public <ST extends Window> Lookup<ST> lookup(Class<ST> type, LookupCriteria<ST> lc) {
         return new PlainLookup<>(env, list, wrapper, type, lc);
@@ -57,5 +57,5 @@ class Windows extends AbstractParent<Window> {
     public Class<Window> getType() {
         return Window.class;
     }
-    
+
 }

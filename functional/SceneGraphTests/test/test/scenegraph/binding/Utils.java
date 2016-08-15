@@ -39,7 +39,7 @@ import java.util.jar.JarFile;
  * @author Sergey Grinev
  */
 public class Utils {
-    
+
     public static void main(String[] args) throws Exception {
         //generateTests(Factories.buttonGraphic, false);
         generateAllTests(false);
@@ -89,7 +89,7 @@ public class Utils {
             System.err.println("Error: " + e.getMessage());
         }
     }
-    
+
     private static final String packagePrefix = "test.scenegraph.binding";
     private static final String prefix = "test/" + packagePrefix.replace(".", "/") + "/";
     private static final String testTemplate =
@@ -102,7 +102,7 @@ public class Utils {
             + "    public void %1$s() {\n"
             + "        commonTest(%4$s);\n"
             + "    }\n\n";
-    
+
     private static final String fileTemplate =
             "package test.scenegraph.binding.%2$s;\n"
             + "\n"
@@ -155,7 +155,7 @@ public class Utils {
                     if (bindarable) {
                         list.add(clazz);
                     }
-                } 
+                }
                 catch (ClassNotFoundException e) {
                     System.err.println("Class Not Found: " + className);
                 }

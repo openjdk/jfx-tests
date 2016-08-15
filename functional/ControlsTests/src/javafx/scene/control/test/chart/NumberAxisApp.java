@@ -203,7 +203,7 @@ public class NumberAxisApp extends ValueAxisApp {
     public static void main(String[] args) {
         Utils.launch(NumberAxisApp.class, args);
     }
-    
+
     private void setupUpperBoundOverflow(String name, double d) {
         pageSetup(Pages.UpperBoundOverflow.name(), new TestNode(name) {
             @Override

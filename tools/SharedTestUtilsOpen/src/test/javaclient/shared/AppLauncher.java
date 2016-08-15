@@ -41,7 +41,7 @@ import org.jemmy.timing.Waiter;
  * @author Sergey Grinev
  */
 public class AppLauncher {
-    
+
     /**
      * For tests, which will not wait for stage appearing, and need only toolkit start.
      */
@@ -131,7 +131,7 @@ public class AppLauncher {
 
     private static void defaultLaunch(final Class<? extends Application> cl, final String[] args) {
         final boolean waitToolkit = args != null ? java.util.Arrays.asList(args).contains(WAIT_TOOLKIT_START_ONLY) : false;
-        
+
         new Thread(new Runnable() {
 
             public void run() {

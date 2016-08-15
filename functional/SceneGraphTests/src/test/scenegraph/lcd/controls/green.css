@@ -4,7 +4,7 @@
 }
 
 .button, .toggle-button, radio-button, check-box, .label, .title-pane,
-.table-view, .accordion, .slider, progress-indicator, .list-view, .text-field { 
+.table-view, .accordion, .slider, progress-indicator, .list-view, .text-field {
     -fx-border-color: green;
     -fx-text-fill: black;
 }

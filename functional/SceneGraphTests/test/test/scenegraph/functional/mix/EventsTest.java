@@ -94,7 +94,7 @@ public class EventsTest extends TestBase {
                 rect.keyboard().releaseKey(key);
             }
         }
-        
+
         int totalEventTyeCount = 0;
         for (EventsApp.MouseEventTypes met : EventsApp.MouseEventTypes.values()) {
             totalEventTyeCount += met.buttonized?2:1;
@@ -109,12 +109,12 @@ public class EventsTest extends TestBase {
         openPage("keyboard");
         Wrap<? extends Rectangle> rect = Lookups.byID(getScene(), "rect", Rectangle.class);
 
-        
+
         rect.mouse().move();
         getScene().mouse().move(new Point(0, 0));
         rect.mouse().move();
         rect.mouse().click(1, new Point(10,10), MouseButtons.BUTTON1);
-        
+
 
         for (KeyboardButton key : keybModifiers) {
             if (key != null) {
@@ -141,7 +141,7 @@ public class EventsTest extends TestBase {
             Assert.assertTrue("Control " + i + " of " + num + " failed.."+values.wrap(i).getControl().toString(), Boolean.valueOf(values.wrap(i).getControl().getFill().equals(Color.GREEN)));
         }
     }
-    
+
     /**
      * test for
      *  http://javafx-jira.kenai.com/browse/RT-17062
@@ -151,12 +151,12 @@ public class EventsTest extends TestBase {
         openPage("keyboard");
         Wrap<? extends Rectangle> rect = Lookups.byID(getScene(), "rect", Rectangle.class);
 
-        
+
         rect.mouse().move();
         getScene().mouse().move(new Point(0, 0));
         rect.mouse().move();
         rect.mouse().click(1, new Point(10,10), MouseButtons.BUTTON1);
-        
+
 
         KeyboardButton key = KeyboardButtons.CONTROL;
         rect.keyboard().pressKey(key);
@@ -166,5 +166,5 @@ public class EventsTest extends TestBase {
         int eventCount = EventsApp.eventCount;
         Assert.assertEquals(2, eventCount);
     }
-    
+
 }

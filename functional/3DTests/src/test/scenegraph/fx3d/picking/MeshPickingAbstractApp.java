@@ -51,7 +51,7 @@ public abstract class MeshPickingAbstractApp extends PickingAbstractApp {
     public PickingTestCase buildTestCase() {
         return buildMeshCase();
     }
-    
+
     protected abstract MeshPickingAbstractTestCase buildMeshCase();
 
     public abstract class MeshPickingAbstractTestCase extends PickingTestCase {
@@ -82,7 +82,7 @@ public abstract class MeshPickingAbstractApp extends PickingAbstractApp {
 
         }
 
-        
+
 
         private class MeshBuilder extends DefaultMeshBuilder {
 

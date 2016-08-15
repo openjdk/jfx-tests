@@ -127,7 +127,7 @@ public class MultipleLightingTest extends FX3DTestBase {
         setLight2Color(Color.GREEN);
         checkScreenshot("mixedChangePointColorTest");
     }
-    
+
 
     private void setLight1Position(final double angleX, final double angleY) {
         new GetAction() {

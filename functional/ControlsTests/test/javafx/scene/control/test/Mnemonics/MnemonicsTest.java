@@ -100,7 +100,7 @@ public class MnemonicsTest extends MnemonicsTestBase {
                     scene.keyboard().releaseKey(KeyboardButtons.ALT);
                 }
                 scene.keyboard().pushKey(button, mod);
-                
+
                 item.waitProperty("isFocused", Boolean.TRUE);
             } catch (Throwable th) {
                 throw th;

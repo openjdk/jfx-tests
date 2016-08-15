@@ -59,7 +59,7 @@ public class SliderTest extends TestBase {
 
     @Before
     public void setUp() {
-        initWrappers();	
+        initWrappers();
         Environment.getEnvironment().setTimeout("wait.state", 2000);
         Environment.getEnvironment().setTimeout("wait.control", 1000);
         scene.mouse().move(new Point(0, 0));

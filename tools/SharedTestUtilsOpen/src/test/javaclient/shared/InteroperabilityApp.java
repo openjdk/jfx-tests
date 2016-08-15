@@ -59,12 +59,12 @@ public abstract class InteroperabilityApp extends Application
     protected boolean needToLoadCustomFont() {
         return true;
     }
-        
+
     protected String getFirstStageName() {
         return null;
     }
 
-    //For second scene: 
+    //For second scene:
     protected StageInfo getSecondaryScene() {
         return null;
     }
@@ -143,10 +143,10 @@ public abstract class InteroperabilityApp extends Application
             if(!isEmbedded()) {
                 secondaryPanel = new javafx.embed.swing.JFXPanel();
             }
-            
+
             secondaryFrame.getContentPane().add((java.awt.Component) secondaryPanel, java.awt.BorderLayout.CENTER);
-            
-            
+
+
             swUtils.startSwing(secondaryFrame, secondaryPanel, secondaryScene, info.stageName);
             javax.swing.SwingUtilities.invokeLater(new Runnable() {
                 public void run() {

@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.*?>
 
 <VBox id="vbox" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml">
-    
+
     <Label id="label_1" text="$${foo}"/>
     <Label id="label_2" text="\${foo}"/>
     <Label id="label_3" text="@@{foo}"/>
     <Label id="label_4" text="\@{foo}"/>
     <Label id="label_5" text="%%{foo}"/>
     <Label id="label_6" text="\%{foo}"/>
-    
+
 </VBox>

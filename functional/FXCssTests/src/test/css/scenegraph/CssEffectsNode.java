@@ -34,11 +34,11 @@ import test.javaclient.shared.TestNodeLeaf;
  * @author sergey lugovoy <sergey.lugovoy@oracle.com>
  */
 public class CssEffectsNode extends TestNodeLeaf {
-    
+
     private CssEffects effects;
     private Shape shape;
     private Pane content;
-    
+
     public CssEffectsNode(CssEffects effects, Shape shape, Pane content) {
         super(effects.name(), content);
         this.effects = effects;
@@ -51,5 +51,5 @@ public class CssEffectsNode extends TestNodeLeaf {
         super.additionalAction();
         effects.setEffect(shape, content);
     }
-    
+
 }

@@ -66,7 +66,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     @Test
     public void testfxalignment () {
         Set<String> styleNames = getStyleNames();
@@ -76,7 +76,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-alignment");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.geometry.Pos.CENTER_LEFT);
     }
-    
+
     @Test
     public void testfxblendmode () {
         Set<String> styleNames = getStyleNames();
@@ -86,7 +86,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-blend-mode");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxcontentdisplay () {
         Set<String> styleNames = getStyleNames();
@@ -96,7 +96,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-content-display");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.scene.control.ContentDisplay.LEFT);
     }
-    
+
     @Test
     public void testfxcursor () {
         Set<String> styleNames = getStyleNames();
@@ -106,7 +106,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-cursor");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxeffect () {
         Set<String> styleNames = getStyleNames();
@@ -116,7 +116,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-effect");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxellipsisstring () {
         Set<String> styleNames = getStyleNames();
@@ -126,7 +126,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-ellipsis-string");
         Assert.assertEquals(data.getInitialValue(getControl()), "...");
     }
-    
+
     @Test
     public void testfxfont () {
         Set<String> styleNames = getStyleNames();
@@ -136,7 +136,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-font");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.scene.text.Font.getDefault());
     }
-    
+
     @Test
     public void testfxgraphic () {
         Set<String> styleNames = getStyleNames();
@@ -146,7 +146,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-graphic");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxgraphictextgap () {
         Set<String> styleNames = getStyleNames();
@@ -156,7 +156,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-graphic-text-gap");
         Assert.assertEquals(data.getInitialValue(getControl()), 4.0);
     }
-    
+
     @Test
     public void testfxlabelpadding () {
         Set<String> styleNames = getStyleNames();
@@ -166,7 +166,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-label-padding");
         Assert.assertEquals(data.getInitialValue(getControl()), new javafx.geometry.Insets(0.0,0.0,0.0,0.0));
     }
-    
+
     @Test
     public void testfxopacity () {
         Set<String> styleNames = getStyleNames();
@@ -176,7 +176,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-opacity");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxrotate () {
         Set<String> styleNames = getStyleNames();
@@ -186,7 +186,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-rotate");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testfxscalex () {
         Set<String> styleNames = getStyleNames();
@@ -196,7 +196,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-x");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxscaley () {
         Set<String> styleNames = getStyleNames();
@@ -206,7 +206,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-y");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxscalez () {
         Set<String> styleNames = getStyleNames();
@@ -216,7 +216,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-z");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxskin () {
         Set<String> styleNames = getStyleNames();
@@ -226,7 +226,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-skin");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxtextalignment () {
         Set<String> styleNames = getStyleNames();
@@ -236,7 +236,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-text-alignment");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.scene.text.TextAlignment.LEFT);
     }
-    
+
     @Test
     public void testfxtextfill () {
         Set<String> styleNames = getStyleNames();
@@ -246,7 +246,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-text-fill");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.scene.paint.Color.valueOf("0x000000ff"));
     }
-    
+
     @Test
     public void testfxtextoverrun () {
         Set<String> styleNames = getStyleNames();
@@ -256,7 +256,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-text-overrun");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.scene.control.OverrunStyle.ELLIPSIS);
     }
-    
+
     @Test
     public void testfxtranslatex () {
         Set<String> styleNames = getStyleNames();
@@ -266,7 +266,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-x");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testfxtranslatey () {
         Set<String> styleNames = getStyleNames();
@@ -276,7 +276,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-y");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testfxtranslatez () {
         Set<String> styleNames = getStyleNames();
@@ -286,7 +286,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-z");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testfxunderline () {
         Set<String> styleNames = getStyleNames();
@@ -296,7 +296,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-underline");
         Assert.assertEquals(data.getInitialValue(getControl()), false);
     }
-    
+
     @Test
     public void testfxwraptext () {
         Set<String> styleNames = getStyleNames();
@@ -306,7 +306,7 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-wrap-text");
         Assert.assertEquals(data.getInitialValue(getControl()), false);
     }
-    
+
     @Test
     public void testvisibility () {
         Set<String> styleNames = getStyleNames();
@@ -316,6 +316,6 @@ public class StylesButtonTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("visibility");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
 
 }

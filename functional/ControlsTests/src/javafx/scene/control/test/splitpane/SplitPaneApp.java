@@ -88,7 +88,7 @@ public class SplitPaneApp extends InteroperabilityApp {
             HBox nodeshb = new NodesChoserFactory("Add!", new NodesChoserFactory.NodeAction<Node>() {
 
                 @Override
-                public void execute(Node node) {                  
+                public void execute(Node node) {
                     testedSplitPane.getItems().add(Integer.parseInt(tf.getText()), node);
                     tabPane.addPropertiesTable(node.getClass().getSimpleName(), NodeControllerFactory.createFullController(node, tabPane));
                 }

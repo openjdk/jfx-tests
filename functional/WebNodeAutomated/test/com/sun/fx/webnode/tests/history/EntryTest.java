@@ -47,9 +47,9 @@ import client.test.RunModes;
  * @author Irina Grineva
  */
 public class EntryTest extends HistoryTestClass {
-    
+
     private Entry entry;
-    
+
     private void getEntry(final int n) {
         doWait(engineReady);
         entry = null;
@@ -65,11 +65,11 @@ public class EntryTest extends HistoryTestClass {
             }
         });
     }
-    
+
     private void getLastEntry() {
         getEntry(history.getCurrentIndex());
     }
-    
+
     /**
      * Simple test for a single entry.
      */
@@ -94,7 +94,7 @@ public class EntryTest extends HistoryTestClass {
             Assert.assertTrue(entry.getUrl().toString().equals(HistoryResources.getHelloHTML()));
         }
     }
-    
+
     /**
      * This test checks that last entry in entries list is updated properly when going back and forward the history.
      */
@@ -121,13 +121,13 @@ public class EntryTest extends HistoryTestClass {
             Assert.assertTrue(entry.getUrl().toString().equals(HistoryResources.getHelloHTML3()));
         }
     }
-    
+
     /**
      * This test checks that last entry in entries list is updated properly when reloading page.
      * This test should not be run in plugin/jnlp mode.
      * http://javafx-jira.kenai.com/browse/RT-21790
      */
-    @OnlyRunModeMethod(RunModes.DESKTOP) 
+    @OnlyRunModeMethod(RunModes.DESKTOP)
     @Test(timeout=10000)
     public void testCheckOneEntryReload() {
         initWebEngineOnFXThread();

@@ -31,7 +31,7 @@ import java.util.Map;
  *
  * @author Dmitry Ginzburg
  */
- 
+
 
 public class PipelineQuestion extends StringQuestion {
 
@@ -39,9 +39,9 @@ public class PipelineQuestion extends StringQuestion {
      *
      */
     public final static String PIPELINE_PARAM_NAME = "pipeline";
-    
+
     private Question nextQuestion;
-    
+
     /**
      *
      * @param interview
@@ -51,7 +51,7 @@ public class PipelineQuestion extends StringQuestion {
         super (interview, PIPELINE_PARAM_NAME);
         this.nextQuestion = nextQuestion;
     }
-    
+
     /**
      *
      */
@@ -78,7 +78,7 @@ public class PipelineQuestion extends StringQuestion {
     public String getSummary() {
         return "Pipeline option";
     }
-    
+
     /**
      *
      * @return

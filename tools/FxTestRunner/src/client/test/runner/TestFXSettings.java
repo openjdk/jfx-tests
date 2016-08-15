@@ -60,5 +60,5 @@ public class TestFXSettings {
            }
        }
        System.exit(0);
-    }                                            
+    }
 }

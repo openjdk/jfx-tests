@@ -35,7 +35,7 @@ import test.scenegraph.fx3d.interfaces.camera.CameraIsolateTestingFace;
 public abstract class SubSceneCameraIsolateAbstractApp extends SubSceneCameraAbstractApp implements CameraIsolateTestingFace{
 
     private Camera bindedCamera;
-    
+
     @Override
     protected void preInitScene(){
         bindedCamera = new PerspectiveCamera();

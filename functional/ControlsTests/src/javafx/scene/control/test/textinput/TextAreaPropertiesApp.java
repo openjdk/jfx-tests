@@ -37,7 +37,7 @@ import test.javaclient.shared.Utils;
 /**
  * @author Alexander Kirov
  */
-public class TextAreaPropertiesApp extends TextControlApp {    
+public class TextAreaPropertiesApp extends TextControlApp {
     public static void main(String[] args) {
         Utils.launch(TextAreaPropertiesApp.class, args);
     }
@@ -87,7 +87,7 @@ public class TextAreaPropertiesApp extends TextControlApp {
             });
             pane.getChildren().add(button);
         }
-        
+
         @Override
         protected void addControlDependentProperties() {
             TextArea textArea = (TextArea) testedTextInput;

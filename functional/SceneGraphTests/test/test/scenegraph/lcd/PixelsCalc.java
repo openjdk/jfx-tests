@@ -105,7 +105,7 @@ public class PixelsCalc {
 
         for (int i = 0; i < d.height; i++) {
             for (int j = 0; j < d.width; j++) {
-                
+
                 image.getColors(j, i, colors);
 
                 double red = colors[idxRed];
@@ -149,10 +149,10 @@ public class PixelsCalc {
      * This method uses empirical formula
      * to check whether pixel belongs to
      * particular group (white, gray, colored)
-     * 
+     *
      * @param red
      * @param green
-     * @param blue 
+     * @param blue
      */
     private void checkColorComponents(int red, int green, int blue) {
         if((Math.abs(red - green) + Math.abs(red - blue) + Math.abs(green - blue)) > COLOR_PIXEL_THRESHOLD){

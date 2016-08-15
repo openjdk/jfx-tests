@@ -35,13 +35,13 @@ public interface ChartIDsInterface {
     public final static String CHART_TAB_NAME = "Chart";
     public final static String AXIS_1_TAB_NAME = "Axis1";
     public final static String AXIS_2_TAB_NAME = "Axis2";
-    
+
     public final static String ADDED_SERIES_NAME_TEXTFIELD_ID = "ADDED_SERIES_NAME_TEXTFIELD_ID";
     public final static String ADDED_SERIES_MIN_VALUE_TEXTFIELD_ID = "ADDED_SERIES_MIN_VALUE_TEXTFIELD_ID";
     public final static String ADDED_SERIES_MAX_VALUE_TEXTFIELD_ID = "ADDED_SERIES_MAX_VALUE_TEXTFIELD_ID";
     public final static String ADDED_SERIES_DOTS_COUNT_TEXTFIELD_ID = "ADDED_SERIES_DOTS_COUNT_TEXTFIELD_ID";
     public final static String ADD_SERIES_COMMAND_BUTTON_ID = "ADD_SERIES_COMMAND_BUTTON_ID";
-    
+
     public final static String REMOVE_AREA_INDEX_TEXTFIELD_ID = "REMOVE_AREA_INDEX_TEXTFIELD_ID";
     public final static String REMOVE_AREA_BUTTON_ID = "REMOVE_AREA_BUTTON_ID";
 }

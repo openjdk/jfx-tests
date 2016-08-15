@@ -44,5 +44,5 @@ public class PaginationsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.Paginations.name();
     }
-    
+
 }

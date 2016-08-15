@@ -82,7 +82,7 @@ public enum TestCollections {
     SepiaTone(EffectTestAction.generate(new SepiaTone(), true)),
     Shadow(EffectTestAction.generate(new Shadow(), true))
     ;
-    
+
     private TestAction[] actions;
 
     private TestCollections(TestAction[] actions) {

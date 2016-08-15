@@ -181,7 +181,7 @@ public class BasicFXInterview extends BasicInterviewParameters
             throw new Error("should not happen" + e);
         }
     }
-    
+
     /**
      *
      * @param data
@@ -192,7 +192,7 @@ public class BasicFXInterview extends BasicInterviewParameters
         data.put(TESTSUITE_ID, id);
         super.export(data);
     }
-    
+
     /**
      *
      * @return
@@ -200,7 +200,7 @@ public class BasicFXInterview extends BasicInterviewParameters
     public boolean isRemoteRun() {
         return YesNoQuestion.YES.equals(qRemoteRun.getValue());
     }
-    
+
     /**
      *
      * @return
@@ -216,7 +216,7 @@ public class BasicFXInterview extends BasicInterviewParameters
     protected Question getLastQuestion(){
         return getEnvSuccessorQuestion();
     }
-    
+
     /**
      *
      */
@@ -311,7 +311,7 @@ public class BasicFXInterview extends BasicInterviewParameters
             data.put(JAVATEST_HOSTNAME, value);
         }
     };
-    
+
     private ChoiceQuestion qRunMode = new ChoiceQuestion(this, RUN_MODE_PARAM) {
         {
             setChoices(new String[]{RUN_MODE_DESKTOP, RUN_MODE_DESKTOP_SWING_INTEROPERABILITY, RUN_MODE_DESKTOP_SWT_INTEROPERABILITY, RUN_MODE_PLUGIN, RUN_MODE_JNLP}, false);
@@ -361,7 +361,7 @@ public class BasicFXInterview extends BasicInterviewParameters
             setValue((String) data.get(RUN_MODE_PARAM));
         }
     };
-    
+
     private FileQuestion qBrowser = new FileQuestion(this, BROWSER_PARAM_NAME) {
         {
             this.setFilter(new ExecutablesFileFilter());
@@ -394,7 +394,7 @@ public class BasicFXInterview extends BasicInterviewParameters
             }
             super.save(data);
         }
-        
+
         private final String mostCommonPaths[] = new String[]{
             "\\Applications\\Firefox.app\\Contents\\MacOS\\firefox",
             "C:/Program Files (x86)/Mozilla Firefox/firefox.exe"
@@ -411,8 +411,8 @@ public class BasicFXInterview extends BasicInterviewParameters
                 }
             }
             setValue(def);
-        }            
-        
+        }
+
         @Override
         public Question getNext() {
             if (!(value.isFile() || FF.equals(value.getName()))) {
@@ -423,7 +423,7 @@ public class BasicFXInterview extends BasicInterviewParameters
 
         @Override
         public void load(Map data) {
-            
+
             String tmp = null;
             if (data.containsKey(BROWSER_PARAM_NAME)
                 && (null!=(tmp= (String)data.get(BROWSER_PARAM_NAME)))
@@ -434,9 +434,9 @@ public class BasicFXInterview extends BasicInterviewParameters
                 clear();
             }
         }
-        
+
     };
-    
+
     private FileQuestion qJavawsPath = new FileQuestion(this, JAVAWS_PARAM_NAME) {
         {
             this.setFilter(new ExecutablesFileFilter());
@@ -461,7 +461,7 @@ public class BasicFXInterview extends BasicInterviewParameters
 
         @Override
         public void clear() { // you should not call setValue() twice here,
-                              //  and should not ask why          
+                              //  and should not ask why
             String def = JAVAWS;
             if (isWindows()) {
                 for (String path : mostCommonPaths) {
@@ -487,10 +487,10 @@ public class BasicFXInterview extends BasicInterviewParameters
         public void export(Map data) {
             data.put(JAVAWS_PARAM_NAME, value.getPath());
         }
-        
+
         @Override
         public void load(Map data) {
-            
+
             String tmp = null;
             if (data.containsKey(JAVAWS_PARAM_NAME)
                 && (null!=(tmp= (String)data.get(JAVAWS_PARAM_NAME)))
@@ -502,7 +502,7 @@ public class BasicFXInterview extends BasicInterviewParameters
             }
         }
     };
-            
+
     private FileQuestion qJavaPath = new FileQuestion(this, JAVA_PARAM_NAME) {
         {
             this.setFilter(new ExecutablesFileFilter());
@@ -515,7 +515,7 @@ public class BasicFXInterview extends BasicInterviewParameters
             }
             return super.isValueValid();
         }
-        
+
         @Override
         public String getText() {
             return "Choose java executable from JDK installation.";
@@ -552,8 +552,8 @@ public class BasicFXInterview extends BasicInterviewParameters
             }
         }
     };
-    
-    
+
+
     private FileQuestion qJavaFX = new FileQuestion(this, FX_SDK_HOME_PARAM_NAME) {
         {
             this.setFilter(new DirectoryFileFilter("JavaFX SDK containing directory"));
@@ -568,7 +568,7 @@ public class BasicFXInterview extends BasicInterviewParameters
         public String getSummary() {
             return "JavaFX SDK Home";
         }
-        
+
         @Override
         public boolean isValueValid() {
             if(YesNoQuestion.YES.equals(qRemoteRun.getValue())) {
@@ -685,7 +685,7 @@ public class BasicFXInterview extends BasicInterviewParameters
             }
             return super.isValueValid();
         }
-        
+
         @Override
         public Question getNext() {
             return qLookAndFeelGroup;
@@ -717,7 +717,7 @@ public class BasicFXInterview extends BasicInterviewParameters
             }
         }
     };
-    
+
     private StringQuestion qProxy = new StringQuestion(this, "proxy") {
 
         {
@@ -759,10 +759,10 @@ public class BasicFXInterview extends BasicInterviewParameters
             setValue(v != null ? v : "");
         }
     };
-    
+
     private LookAndFeelQuestion qLookAndFeelGroup = new LookAndFeelQuestion (this, qProxy);
     private ChoiceQuestion qPipelineGroup = new PipelineGroupQuestion (this, getLastQuestion());
-    
+
 
     private static boolean isWindows() {
         return System.getProperty("os.name").toLowerCase().contains("windows");
@@ -800,8 +800,8 @@ public class BasicFXInterview extends BasicInterviewParameters
             setValue(newValue != null ? newValue : "");
         }
     };
-    
-    
+
+
 
     private static class ExecutablesFileFilter implements FileFilter {
         @Override

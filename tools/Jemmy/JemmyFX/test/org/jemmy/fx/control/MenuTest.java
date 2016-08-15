@@ -50,7 +50,7 @@ import org.junit.Test;
  * @author shura
  */
 public class MenuTest {
-    
+
     public MenuTest() {
     }
 
@@ -62,11 +62,11 @@ public class MenuTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }

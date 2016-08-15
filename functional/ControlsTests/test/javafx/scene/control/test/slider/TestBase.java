@@ -84,7 +84,7 @@ public class TestBase extends UtilTestFunctions {
         track.click(value);
         checkTextFieldValue(Properties.value, value);
     }
-    
+
     /**
      * Precision : 0.2;
      *

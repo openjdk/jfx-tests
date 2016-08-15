@@ -43,7 +43,7 @@ import test.javaclient.shared.Utils;
 public class Checks extends InteroperabilityApp {
 
     public static final String NO_SELECTION = "no selection yet";
-    
+
     public static void main(String[] args) {
         Utils.launch(Checks.class, args); // args go to /dev/null/ for the moment
     }

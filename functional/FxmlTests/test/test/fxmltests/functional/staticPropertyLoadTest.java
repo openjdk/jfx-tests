@@ -422,7 +422,7 @@ public class staticPropertyLoadTest extends TestBase {
         testCommon(Pages.scenebuilderSlot.name(),null,false,true);
     }
 
-            
+
 /**
  *
  * fxml  RT-18178 test
@@ -440,7 +440,7 @@ public class staticPropertyLoadTest extends TestBase {
     public void apConstraintsSlot() throws InterruptedException {
         testCommon(Pages.apConstraints.name(),null,false,true);
     }
-    
+
 /**
  *
  * fxml  http://javafx-jira.kenai.com/browse/RT-19142 test
@@ -478,9 +478,9 @@ public class staticPropertyLoadTest extends TestBase {
     public void csspathSlot() throws InterruptedException {
         testCommon(Pages.csspath.name(),null,false,true);
     }
-    * 
+    *
     */
-    
+
     /**
     *
     * fxml http://javafx-jira.kenai.com/browse/RT-18299 test
@@ -489,7 +489,7 @@ public class staticPropertyLoadTest extends TestBase {
     public void scenebuilderNoRootSlot() throws InterruptedException {
         testCommon(Pages.scenebuilderNoRoot.name(),null,false,true);
     }
-    
+
     /**
     *
     * fxml http://javafx-jira.kenai.com/browse/RT-14345 test
@@ -498,7 +498,7 @@ public class staticPropertyLoadTest extends TestBase {
     public void colorValueOfSlot() throws InterruptedException {
         testCommon(Pages.colorValueOF.name(),null,false,true);
     }
-    
+
     /**
     *
     * fxml http://javafx-jira.kenai.com/browse/RT-18680 test
@@ -508,7 +508,7 @@ public class staticPropertyLoadTest extends TestBase {
     public void escapeCharacterSlot() throws InterruptedException {
         testCommon(Pages.escapeCharacter.name(),null,false,true);
     }
-    
+
     /**
     *
     * fxml http://javafx-jira.kenai.com/browse/RT-17714 test
@@ -517,7 +517,7 @@ public class staticPropertyLoadTest extends TestBase {
     public void collectionEventsSlot() throws InterruptedException {
         testCommon(Pages.collectionEventsHandlers.name(),null,false,true);
     }
-    
+
     /**
     *
     * fxml http://javafx-jira.kenai.com/browse/RT-18229 test
@@ -537,7 +537,7 @@ public class staticPropertyLoadTest extends TestBase {
             }
         }, count + 1);
     }
-    
+
     /**
     *
     * fxml http://javafx-jira.kenai.com/browse/RT-18229 test
@@ -564,7 +564,7 @@ public class staticPropertyLoadTest extends TestBase {
             }
         }, eventCount + 1);
     }
-    
+
     /**
     *
     * fxml http://javafx-jira.kenai.com/browse/RT-18218 test
@@ -572,7 +572,7 @@ public class staticPropertyLoadTest extends TestBase {
     @Test
     public void unknownCustopTypesSlot() throws InterruptedException {
         testCommon(Pages.unknownCustomType.name(),null,false,true);
-        final LabeledDock ld = new LabeledDock(new SceneDock(getScene()).asParent(), 
+        final LabeledDock ld = new LabeledDock(new SceneDock(getScene()).asParent(),
                 staticPropertyLoadApp.LOADER_LOG_ID);
         ld.wrap().waitState(new State<String>() {
 
@@ -582,7 +582,7 @@ public class staticPropertyLoadTest extends TestBase {
             }
         }, staticPropertyLoadApp.SUCCESSFUL_STATIC_LOAD);
     }
-    
+
     /**
     *
     * fxml http://javafx-jira.kenai.com/browse/RT-19329 test
@@ -591,7 +591,7 @@ public class staticPropertyLoadTest extends TestBase {
     public void fxmlErrorSlot() throws InterruptedException {
         testCommon(Pages.errorFXML.name(),null,false,true);
     }
-    
+
     /**
     *
     * fxml http://javafx-jira.kenai.com/browse/RT-16722 test
@@ -599,9 +599,9 @@ public class staticPropertyLoadTest extends TestBase {
     @Test
     public void baseControllerPropertySlot() throws InterruptedException {
         testCommon(Pages.baseControllerProperty.name(),null,false,true);
-        final LabeledDock ld1 = new LabeledDock(new SceneDock(getScene()).asParent(), 
+        final LabeledDock ld1 = new LabeledDock(new SceneDock(getScene()).asParent(),
                 "button1_base_controller");
-        final LabeledDock ld2 = new LabeledDock(new SceneDock(getScene()).asParent(), 
+        final LabeledDock ld2 = new LabeledDock(new SceneDock(getScene()).asParent(),
                 "button2_child_controller");
         ld1.mouse().click();
         ld2.mouse().click();
@@ -620,7 +620,7 @@ public class staticPropertyLoadTest extends TestBase {
             }
         }, "button2ChildHandler");
     }
-    
+
     /**
     *
     * fxml http://javafx-jira.kenai.com/browse/RT-18956 test
@@ -628,7 +628,7 @@ public class staticPropertyLoadTest extends TestBase {
  @Test
     public void relativeStylesheetsSlot() throws InterruptedException {
         testCommon(Pages.relativeStylesheet.name(),null,false,true);
-        final LabeledDock ld = new LabeledDock(new SceneDock(getScene()).asParent(), 
+        final LabeledDock ld = new LabeledDock(new SceneDock(getScene()).asParent(),
                 "relative-stylesheet-label");
         ld.wrap().waitState(new State<String>() {
 
@@ -654,16 +654,16 @@ public class staticPropertyLoadTest extends TestBase {
                     }
                     if ((4==vv.length) && (0==vv[0]) && (0==vv[1]) && (1==vv[2]) && (1==vv[3]))
                         isRed = true;
-                    
+
                 }
-                
-                
+
+
                 return isRed?"red":"nonred";
             }
         }, "red");
     }
-    
-    
+
+
     /**
     *
     * fxml http://javafx-jira.kenai.com/browse/RT-16815 test
@@ -672,10 +672,10 @@ public class staticPropertyLoadTest extends TestBase {
     public void FXMLLoaderAPISlot() throws InterruptedException {
         testCommon(Pages.FXMLLoaderAPI.name(),null,false,true);
     }
-    
+
     /**
-     * 
-     * @testableAssertId fully_qualified_name 
+     *
+     * @testableAssertId fully_qualified_name
      */
     @Test
     public void FullyQualifiedNamesSlot() throws InterruptedException
@@ -684,10 +684,10 @@ public class staticPropertyLoadTest extends TestBase {
         LabeledDock ld = new LabeledDock(new SceneDock(getScene()).asParent(), "fully-qualified-label-id");
         Assert.assertTrue(ld.control() instanceof Label);
     }
-    
+
     /**
-     * 
-     * @testableAssertId import 
+     *
+     * @testableAssertId import
      */
     @Test
     public void ImportSlot() throws InterruptedException
@@ -696,10 +696,10 @@ public class staticPropertyLoadTest extends TestBase {
         LabeledDock ld = new LabeledDock(new SceneDock(getScene()).asParent(), "import-label-id");
         Assert.assertTrue(ld.control() instanceof Label);
     }
-    
+
     /**
-     * 
-     * @testableAssertId instantiation_java_bean 
+     *
+     * @testableAssertId instantiation_java_bean
      */
     @Test
     public void BeanInstantiationSlot() throws InterruptedException
@@ -708,10 +708,10 @@ public class staticPropertyLoadTest extends TestBase {
         LabeledDock ld = new LabeledDock(new SceneDock(getScene()).asParent(), "label_from_bean");
         Assert.assertEquals(ld.getText(), "Just string");
     }
-    
+
     /**
-     * 
-     * @testableAssertId instantiation_no_default_constructor 
+     *
+     * @testableAssertId instantiation_no_default_constructor
      */
     @Test
     public void ValueOfSlot() throws InterruptedException
@@ -720,22 +720,22 @@ public class staticPropertyLoadTest extends TestBase {
         LabeledDock ld = new LabeledDock(new SceneDock(getScene()).asParent(), "value_of_label");
         Assert.assertEquals(ld.getText(), "1.0");
     }
-    
+
     /**
-     * 
-     * @testableAssertId root 
+     *
+     * @testableAssertId root
      */
     @Test
     public void RootSlot() throws InterruptedException
     {
         testCommon(Pages.root.name(),null,false,true);
         NodeDock vBoxDock = new NodeDock(new SceneDock(getScene()).asParent(), "vb_root");
-	LabeledDock ld = new LabeledDock(new SceneDock(getScene()).asParent(), "boxed_label");
+    LabeledDock ld = new LabeledDock(new SceneDock(getScene()).asParent(), "boxed_label");
         Assert.assertEquals(ld.control().getParent(), vBoxDock.control());
     }
-    
+
     /**
-     * 
+     *
      * @testableAssertId assigning_id
      */
     @Test
@@ -743,9 +743,9 @@ public class staticPropertyLoadTest extends TestBase {
     {
         testCommon(Pages.fxId.name(),null,false,true);
     }
-    
+
     /**
-     * 
+     *
      * @testableAssertId controller_attribute
      */
     @Test
@@ -753,60 +753,60 @@ public class staticPropertyLoadTest extends TestBase {
     {
         testCommon(Pages.fxController.name(),null,false,true);
     }
-    
+
     /**
-     * 
-     * @testableAssertId loader_setRoot 
+     *
+     * @testableAssertId loader_setRoot
      */
     @Test
     public void setRootSlot() throws InterruptedException
     {
         testCommon(Pages.root.name(),null,false,true);
-	NodeDock node = new NodeDock(new SceneDock(getScene()).asParent(), "boxed_label");
-	Parent root = node.control().getParent();
-	Assert.assertEquals("vb_root", root.getId());
+    NodeDock node = new NodeDock(new SceneDock(getScene()).asParent(), "boxed_label");
+    Parent root = node.control().getParent();
+    Assert.assertEquals("vb_root", root.getId());
     }
-    
+
     /**
-     * 
-     * @testableAssertId loader_setController 
+     *
+     * @testableAssertId loader_setController
      */
     @Test
     public void setControllerSlot() throws InterruptedException
     {
         testCommon(Pages.noDefaultController.name(),null,false,true);
     }
-    
+
     /**
-     * 
-     * @testableAssertId loader_setRoot_sequence 
+     *
+     * @testableAssertId loader_setRoot_sequence
      */
     @Test
     public void setRootSequenceSlot() throws InterruptedException
     {
         testCommon(Pages.lateRoot.name(),null,false,true);
     }
-    
+
     /**
-     * 
+     *
      * @testableAssertId loader_setController_sequence
      */
     @Test
     public void setControllerSequenceSlot() throws InterruptedException
     {
-	testCommon(Pages.lateController.name(),null,false,true);
+    testCommon(Pages.lateController.name(),null,false,true);
     }
-    
+
     /**
-     * 
+     *
      * @testableAssertId variable_resolution
      */
     @Test
     public void variableResolutionSlot() throws InterruptedException
     {
-	testCommon(Pages.variableResolution.name(),null,false,true);
+    testCommon(Pages.variableResolution.name(),null,false,true);
     }
-    
+
     /**
     *
     * @testableAssertId external_script_code
@@ -838,5 +838,5 @@ public class staticPropertyLoadTest extends TestBase {
     protected String getName() {
         return "staticPropertyLoad";
     }
-    
+
 }

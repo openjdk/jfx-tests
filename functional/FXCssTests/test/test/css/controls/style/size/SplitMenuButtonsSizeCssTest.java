@@ -44,5 +44,5 @@ public class SplitMenuButtonsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.SplitMenuButtons.name();
     }
-    
+
 }

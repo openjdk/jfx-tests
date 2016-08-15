@@ -98,7 +98,7 @@ public class TooltipTest extends ControlsTestBase {
         TooltipApp.main(new String[0]);
 
         sceneWrap = Root.ROOT.lookup(new ByWindowType(Window.class)).lookup(Scene.class).wrap();
-        
+
         scene = sceneWrap.as(Parent.class, Node.class);
 
         tooltipped = scene.lookup(Button.class, new ByID<Button>(TooltipApp.TOOLTIPPED_BUTTON_ID)).wrap();
@@ -236,7 +236,7 @@ public class TooltipTest extends ControlsTestBase {
         checkScreenshot("Tooltip-gap-size-20", testPane);
         throwScreenshotError();
     }
- 
+
     public void check(boolean enabled) throws InterruptedException {
         if (disable.getProperty(TextControlWrap.SELECTED_PROP_NAME).equals(enabled)) {
             disable.mouse().click();

@@ -38,10 +38,10 @@ import test.css.controls.ControlsCssStylesFactory;
  *
  * @author Aleksandr Sakharuk
  */
-public class FXCSSCoverage 
+public class FXCSSCoverage
 {
 
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
         if(args.length < 2)
         {
@@ -59,7 +59,7 @@ public class FXCSSCoverage
         coverage.cssRefCoverRate = coverage.intersect(coverage.cssRefRules);
         coverage.genReport();
     }
-    
+
     public FXCSSCoverage(String jarPath, String cssRefPath) {
         try {
             JarFile jar = new JarFile(jarPath);
@@ -85,7 +85,7 @@ public class FXCSSCoverage
             rules.put(ruleMatcher.group(1), null);
         }
     }
-    
+
     public void parseCssEffects()
     {
         Matcher ruleMatcher = RULE.matcher(cssEffectsContent);
@@ -94,7 +94,7 @@ public class FXCSSCoverage
             testedRules.add(ruleMatcher.group(1));
         }
     }
-    
+
     public void parseControlsCssStyleFactory()
     {
         Matcher ruleMatcher = RULE.matcher(controlsCssStylesFactoryContent);
@@ -103,7 +103,7 @@ public class FXCSSCoverage
             testedRules.add(ruleMatcher.group(1));
         }
     }
-    
+
     public void parseCssRef()
     {
         Matcher ruleMatcher = CSSREF_RULE.matcher(cssRefContent);
@@ -112,7 +112,7 @@ public class FXCSSCoverage
             cssRefRules.put(ruleMatcher.group(1), null);
         }
     }
-    
+
     public double intersect(Map<String, Character> rules)
     {
         int covered = 0, uncovered = 0;
@@ -132,12 +132,12 @@ public class FXCSSCoverage
         double coverRate = (double) covered / (covered + uncovered);
         return coverRate;
     }
-    
+
     public void genReport()
     {
         Iterator<String> ruleIterator = rules.keySet().iterator();
         Iterator<String> refRuleIterator = cssRefRules.keySet().iterator();
-        
+
         String key1 = ruleIterator.hasNext() ? ruleIterator.next() : null;
         String key2 = refRuleIterator.hasNext() ? refRuleIterator.next() : null;
         while(key1 != null || key2 != null)
@@ -164,15 +164,15 @@ public class FXCSSCoverage
         {
             completeReport.delete();
         }
-        
+
         String strCaspianCoverage = format.format(caspianCoverRate*100);
         String strCssRefCoverage = format.format(cssRefCoverRate*100);
-        try 
+        try
         {
             FileWriter writer = new FileWriter(completeReport);
             writer.write(String.format(TEMPLATE, tableRaws, strCaspianCoverage, strCssRefCoverage));
             writer.close();
-            
+
             writer = new FileWriter("caspian.properties");
             writer.write("YVALUE=" + strCaspianCoverage);
             writer.close();
@@ -180,8 +180,8 @@ public class FXCSSCoverage
             writer = new FileWriter("css-ref.properties");
             writer.write("YVALUE=" + strCssRefCoverage);
             writer.close();
-        } 
-        catch (IOException ex) 
+        }
+        catch (IOException ex)
         {
             System.err.println("Can't write to CSSCoverage.html.");
             ex.printStackTrace();
@@ -195,13 +195,13 @@ public class FXCSSCoverage
         {
             report.delete();
         }
-        try 
+        try
         {
             FileWriter writer = new FileWriter(report);
             writer.write(String.format(TEMPLATE, tableRaws, caspianCoverRate));
             writer.close();
-        } 
-        catch (IOException ex) 
+        }
+        catch (IOException ex)
         {
             System.err.println("Can't write to TestCoverage.html.");
             ex.printStackTrace();
@@ -216,37 +216,37 @@ public class FXCSSCoverage
         {
             report2.delete();
         }
-        try 
+        try
         {
             FileWriter writer = new FileWriter(report2);
             writer.write(String.format(TEMPLATE, tableRaws, cssRefCoverRate));
             writer.close();
-        } 
-        catch (IOException ex) 
+        }
+        catch (IOException ex)
         {
             System.err.println("Can't write to CssRefCoverage.html.");
             ex.printStackTrace();
         }*/
     }
-    
+
     private void addRawToTable(String style, String refStyle, Character covered)
     {
         String rawFormat = "<tr><td style=\"%1$s\">%2$s</td><td style=\"%1$s\">%3$s</td><td style=\"%1$s;text-align:center\">%4$c</td></tr>\n";
         tableRaws += String.format(rawFormat, covered == '+' ? GREEN_STYLE : RED_STYLE, style, refStyle, covered.charValue());
     }
-    
+
     public Map<String, Character> getRules()
     {
         return rules;
     }
-    
+
     private Map<String, Character> rules = new TreeMap<String, Character>();
     private Map<String, Character> cssRefRules = new TreeMap<String, Character>();
     private Set<String> testedRules = new HashSet<String>(ControlsCssStylesFactory.getRules());
     private String caspianContent, cssEffectsContent, cssRefContent, controlsCssStylesFactoryContent;
     private String tableRaws = "";
     private double caspianCoverRate, cssRefCoverRate;
-    
+
     private static final Pattern RULE = Pattern.compile("(-fx(-\\w+)+)");
     private static final Pattern CSSREF_RULE = Pattern.compile(">(-fx[^<]*)<");
 //    private static final Pattern CSSREF_RULE = Pattern.compile("(-fx-[\\w-]+)");

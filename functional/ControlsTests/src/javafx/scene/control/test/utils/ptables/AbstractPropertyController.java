@@ -47,7 +47,7 @@ public interface AbstractPropertyController<ValueType> extends HavingVisualRepre
     public int getChangeListenerCounter();
 
     public int getInvalidationListenerCounter();
-    
+
     public AbstractPropertyValueListener getListener();
 
     public void setPropertyValue(SettingType stype, ValueType newValue);

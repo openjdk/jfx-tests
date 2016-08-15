@@ -8,9 +8,9 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml">
     <fx:define>
-	<String fx:value="cat-o-dog" fx:id="cat_o_dog" />
+    <String fx:value="cat-o-dog" fx:id="cat_o_dog" />
     </fx:define>
     <children>
-	<Label text="$cat_o_dog" fx:id="cat_o_dog_label" />
+    <Label text="$cat_o_dog" fx:id="cat_o_dog_label" />
     </children>
 </AnchorPane>

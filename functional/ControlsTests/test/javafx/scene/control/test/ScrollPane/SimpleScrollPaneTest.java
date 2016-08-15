@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 /**
  * Test for RT-38745: ScrollPane scroll is set to 0 when adding scrollpane to a scene
- * 
+ *
  * @author andrey.rusakov
  */
 public class SimpleScrollPaneTest {

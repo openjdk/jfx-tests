@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<javafx.scene.control.Label 
-    text="Fully qualified label" 
+<javafx.scene.control.Label
+    text="Fully qualified label"
     id="fully-qualified-label-id" />

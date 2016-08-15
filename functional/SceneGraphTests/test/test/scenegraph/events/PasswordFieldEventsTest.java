@@ -34,15 +34,15 @@ import test.scenegraph.app.ControlEventsApp.Controls;
  */
 public class PasswordFieldEventsTest extends EventTestTextInput
 {
-    
+
     @BeforeClass
     public static void rinUI()
-    
+
     {
         ControlEventsApp.main(null);
     }
-    
-    
+
+
     @Override
     @Before
     public void before()
@@ -50,5 +50,5 @@ public class PasswordFieldEventsTest extends EventTestTextInput
         super.before();
         setControl(Controls.PASSWORD_FIELD);
     }
-    
+
 }

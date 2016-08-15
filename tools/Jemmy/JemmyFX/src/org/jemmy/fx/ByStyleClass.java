@@ -30,15 +30,15 @@ import org.jemmy.lookup.LookupCriteria;
 /**
  * A criterion to find a node by CSS style name.
  * <br/><br/>SAMPLES:<a href="../samples/lookup/LookupSample.java">Lookup Sample</a>
-  * @param <T> 
+  * @param <T>
  * @author ineverov
- * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, org.jemmy.lookup.LookupCriteria<javafx.scene.Node>[]) 
+ * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, org.jemmy.lookup.LookupCriteria<javafx.scene.Node>[])
  */
 public class ByStyleClass<T extends Node> implements LookupCriteria<T> {
         private String scName;
 
         /**
-         * 
+         *
          * @param styleClassName
          */
         public ByStyleClass(String styleClassName){
@@ -46,7 +46,7 @@ public class ByStyleClass<T extends Node> implements LookupCriteria<T> {
         }
 
         /**
-         * 
+         *
          * @param cntrl
          * @return
          */

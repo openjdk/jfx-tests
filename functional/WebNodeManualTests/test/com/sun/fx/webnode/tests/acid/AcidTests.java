@@ -28,7 +28,7 @@ package com.sun.fx.webnode.tests.acid;
 import client.test.RunUI;
 import com.sun.fx.webnode.tests.generic.WebNodeLauncher;
 
-public class AcidTests {    
+public class AcidTests {
     @RunUI(value="acid1.html")
     public static void acid1(){
         WebNodeLauncher.run("http://www.w3.org/Style/CSS/Test/CSS1/current/test5526c.htm");

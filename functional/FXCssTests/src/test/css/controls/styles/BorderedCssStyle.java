@@ -40,7 +40,7 @@ public class BorderedCssStyle extends CssStyle {
     public BorderedCssStyle(String name, String style, StyleSetter setter) {
         super(name, style, setter);
     }
-    
+
     @Override
     public void decorate(Node control, Pane container) {
         container.setStyle("-fx-border-color: black;");

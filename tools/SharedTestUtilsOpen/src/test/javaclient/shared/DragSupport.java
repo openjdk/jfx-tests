@@ -117,5 +117,5 @@ public class DragSupport {
                 throw new IllegalArgumentException("This orientation is not supported: " + orientation);
         }
     }
-    
+
 }

@@ -46,7 +46,7 @@ import test.scenegraph.fx3d.utils.GroupMover;
  */
 public class SubSceneDepthTestApp extends SubSceneAbstractApp {
 
-    
+
     private GroupMover rootTLMV;
     private GroupMover rootTRMV;
     private GroupMover rootDLMV;
@@ -92,15 +92,15 @@ public class SubSceneDepthTestApp extends SubSceneAbstractApp {
         }
         ScrollBar rotYBar = new ScrollBar();
         VBox controls = new VBox(new HBox(new Label("Rotate"),rotYBar));
-        
+
         rotYBar.setMin(-360);
         rotYBar.setMax(360);
         rotYBar.setValue(targetMover.rotateYProperty().get());
         rotYBar.valueProperty().bindBidirectional(targetMover.rotateYProperty());
-        
+
         return controls;
     }
-    
+
 
     private static GroupMover buildGroupMover(){
         GroupMover gm =  new GroupMover(buildGroup());
@@ -142,5 +142,5 @@ public class SubSceneDepthTestApp extends SubSceneAbstractApp {
         Utils.launch(SubSceneDepthTestApp.class, args);
     }
 
-    
+
 }

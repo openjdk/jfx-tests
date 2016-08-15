@@ -32,16 +32,16 @@ import test.scenegraph.app.ControlEventsApp;
  *
  * @author Aleksandr Sakharuk
  */
-public abstract class EventTestTextInput extends EventTestCommon<TextInputControlDock> 
+public abstract class EventTestTextInput extends EventTestCommon<TextInputControlDock>
 {
-    
+
     @Override
     protected TextInputControlDock findPrimeDock()
     {
-        return new TextInputControlDock(getActiveTabDock().asParent(), 
+        return new TextInputControlDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
-    
+
     @Override
     @Test(timeout = 60000)
     public void onAction()
@@ -63,11 +63,11 @@ public abstract class EventTestTextInput extends EventTestCommon<TextInputContro
             public void invoke() {
                 getPrimeNodeDock().mouse().click();
                 getPrimeNodeDock().keyboard().typeChar('i');
-                new TextInputControlDock(getActiveTabDock().asParent(), 
+                new TextInputControlDock(getActiveTabDock().asParent(),
                         ControlEventsApp.DRAG_FIELD_ID).mouse().click();
             }
         });
-        
+
     }
     */
 }

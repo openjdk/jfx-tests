@@ -88,7 +88,7 @@ public abstract class MeshTests extends Shape3DTestFunctions implements MeshTest
         setSmoothingGroups();
         lookTestFunc("setSmoothingGroupsTest");
     }
-    
+
     /**
      * Test for default Smoothing Groups in Mesh.
      */
@@ -130,5 +130,5 @@ public abstract class MeshTests extends Shape3DTestFunctions implements MeshTest
     public void facesGetterTest() {
         Assert.assertTrue(checkFacesGetter());
     }
-    
+
 }

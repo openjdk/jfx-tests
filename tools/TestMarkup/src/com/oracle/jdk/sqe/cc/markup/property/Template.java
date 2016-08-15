@@ -107,7 +107,7 @@ public class Template {
         }
         return 0;
     }
-    
+
     private static PrintStream out = null;
 
     public static boolean validOptions(String options[][],

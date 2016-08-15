@@ -56,7 +56,7 @@ import test.javaclient.shared.Utils;
 public abstract class TableListCommonTests extends UtilTestFunctions {
 
     public static boolean DEBUG_STEP = false;
-    
+
     protected static int DATA_ITEMS_NUM = 0;
     protected static int DATA_FIELDS_NUM = 0;
     protected static Wrap<? extends Control> testedControl; //ListView or TableView or TreeView
@@ -282,7 +282,7 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
     public void keyboardCtrlHomeEndTest() throws Throwable {
         keyboardHomeEndCycle(CTRL_DOWN_MASK_OS);
     }
-    
+
     @Smoke
     @Test(timeout = 300000)
     public void keyboardShiftSpaceTest() throws Throwable {
@@ -426,16 +426,16 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
 
             selectionCycle(0, 1, DATA_ITEMS_NUM / 4 * 3, DATA_ITEMS_NUM, KeyboardButtons.SHIFT);
             reverseSelectionCycle(0, 1, DATA_ITEMS_NUM, DATA_ITEMS_NUM / 2, Utils.isMacOS() ? KeyboardButtons.META : KeyboardButtons.CONTROL);
-            
+
             selectionCycle(0, 1, 0, DATA_ITEMS_NUM, KeyboardButtons.SHIFT);
             reverseSelectionCycle(0, 1, DATA_ITEMS_NUM, 1, KeyboardButtons.SHIFT);
         }
-        
+
         if (isListControl()) {
             selectionHelper = tmp;
         }
     }
-    
+
     public void keyboardRangeMultipleSelectionCycle(boolean discontinuous) throws Throwable {
         adjustControl();
         switchOnMultiple();
@@ -611,7 +611,7 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
         if (btn == KeyboardButtons.PAGE_DOWN || btn == KeyboardButtons.PAGE_UP) {
             selectionHelper.setVisibleRange(getVisibleRange());
         }
-        
+
         if (!DEBUG_STEP) {
             testedControl.keyboard().pushKey(btn, modifier);
         }
@@ -662,7 +662,7 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
             }
         }
     }
-    
+
     void reverseSelectionCycle(int first_column, int last_column, int first_row, int last_row, KeyboardButtons modifier) throws Throwable {
         if (modifier != null) {
             testedControl.keyboard().pressKey(modifier);

@@ -104,16 +104,16 @@ public class DatePickerApp extends InteroperabilityApp {
                 @Override public String toString() { return "Cells with ID"; }
             },
             new WorkingDays()}), testedDatePicker);
-            
+
             propertiesTable.addObjectEnumPropertyLine((ObjectProperty) testedDatePicker.converterProperty(),
                     Arrays.asList(new StringConverter[]{null, new LocalDateConverter(testedDatePicker)}), testedDatePicker);
-            
+
             PropertyTablesFactory.explorePropertiesList(testedDatePicker, propertiesTable);
             SpecialTablePropertiesProvider.provideForControl(testedDatePicker, propertiesTable);
 
 //            propertiesTable.addObjectEnumPropertyLine(testedDatePicker.chronologyProperty(), Arrays.asList(
 //                    Chronology.of("ISO"), Chronology.of("Minguo"), Chronology.of("ThaiBuddhist"), Chronology.of("Japanese"), Chronology.of("Hijrah-umalqura")));
-            
+
             pane.setMinSize(240, 240);
             pane.setPrefSize(240, 240);
             pane.setStyle("-fx-border-color : red;");
@@ -160,7 +160,7 @@ public class DatePickerApp extends InteroperabilityApp {
             setPropertiesContent(propertiesTable);
         }
     }
-    
+
     public static class LocalDateConverter extends StringConverter<LocalDate> {
 
         public LocalDateConverter(DatePicker testedDatePicker) {
@@ -187,10 +187,10 @@ public class DatePickerApp extends InteroperabilityApp {
                 return null;
             }
         }
-        
+
         @Override public String toString() { return pattern; }
     }
-    
+
     public static class DummyConverter extends StringConverter<LocalDate> {
         @Override public String toString(LocalDate date) { return "Dummy"; }
 
@@ -198,19 +198,19 @@ public class DatePickerApp extends InteroperabilityApp {
             return LocalDate.of(2000, Month.JANUARY, 1);
         }
     }
-    
+
     /**
      * Class implements a DateCell factory. It disables days which are sundays.
      */
     public static class WorkingDays implements Callback<DatePicker, DateCell> {
-        
+
         public DateCell call(DatePicker param) {
             return new DateCell() {
 
                 @Override
                 public void updateItem(LocalDate item, boolean empty) {
                     super.updateItem(item, empty);
-                    
+
                     if (isRestricted(item)) {
                         setStyle("-fx-background-color: #ff4444;");
                         setDisable(true);
@@ -218,7 +218,7 @@ public class DatePickerApp extends InteroperabilityApp {
                 }
             };
         }
-        
+
         protected static boolean isRestricted(LocalDate item) {
             return DayOfWeek.SUNDAY == item.getDayOfWeek();
         }

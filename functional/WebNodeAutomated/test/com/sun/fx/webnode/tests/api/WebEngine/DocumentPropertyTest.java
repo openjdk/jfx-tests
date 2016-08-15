@@ -46,7 +46,7 @@ public class DocumentPropertyTest extends GenericTestClass {
     public static void init(){
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for javafx.scene.web.WebEngine.documentProperty property getter.
      * Checks that a non-null object is returned.
@@ -64,7 +64,7 @@ public class DocumentPropertyTest extends GenericTestClass {
         ReadOnlyObjectProperty<Document> document = engine.documentProperty();
         Assert.assertNotNull(document);
     }
-    
+
     /**
      * Test for javafx.scene.web.WebEngine.documentProperty property getter.
      * Checks that the documentProperty of WebEngine holds the same document as

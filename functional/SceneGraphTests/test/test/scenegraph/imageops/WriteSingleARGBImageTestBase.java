@@ -35,19 +35,19 @@ public abstract class WriteSingleARGBImageTestBase extends ReadImageTestBase{
 
     @Override
     protected Image getImage() {
-        WritableImage image = new WritableImage(256, 256); 
+        WritableImage image = new WritableImage(256, 256);
         PixelWriter pixelWriter = image.getPixelWriter();
 
         for (int i = 0; i < 256; i++) {
             for (int j = 0; j < 256; j++) {
                 int color = i + j;
-                
-                pixelWriter.setArgb(i, j, 
+
+                pixelWriter.setArgb(i, j,
                         getColorComponentProvider().getARGBColor(
                         ((color > 255) ? 255 : color)));
             }
         }
-        
+
         return image;
     }
 }

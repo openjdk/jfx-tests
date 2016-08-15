@@ -71,7 +71,7 @@ public class CanvasShapePathElements2App extends BasicButtonChooserApp {
     public static void main(String args[]) {
         Utils.launch(CanvasShapePathElements2App.class, args);
     }
-    
+
     public enum Pages {
         ArcOpenSQUARE, ArcOpenROUND, ArcOpenBT, ArcChord, ArcRound, PathBT,
         PathSQUARE, PathROUNDNonZeroFillRule, SVG

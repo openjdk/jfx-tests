@@ -47,7 +47,7 @@ public class CoorinateLookupSample extends LookupSampleBase {
         //find the scene
         scene = new SceneDock();
 
-        //let's find the central label (1,1)and then some others which placed 
+        //let's find the central label (1,1)and then some others which placed
         //this or that way related to the center one
         center = new NodeDock(scene.asParent(), Label.class, cntrl -> cntrl.getText().equals("(1,1)"));
         before();

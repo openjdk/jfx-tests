@@ -577,7 +577,7 @@ public class TextInputChanger {
                         reporter.report(getMarker());
                     }
                 } else {
-                
+
                     int position = 0;
                     while (true) {
                         position = text.indexOf(' ', position + 1);

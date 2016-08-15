@@ -52,7 +52,7 @@ public class FocusClickTestBase extends FocusTestBase {
         elementTranslateClickParams.put(ControlsFactory.ScrollBars.name(), new Pair(20, 0));
         elementTranslateClickParams.put(ControlsFactory.Paginations.name(), new Pair(15, 0));
 
-        
+
 
     }
     public static Set<ControlsFactory> getExcludeSet(){

@@ -67,9 +67,9 @@ public class SpinnerApp extends Application {
 
     @Override public void start(Stage stage) {
         final Spinner spinner = new Spinner();
-        
+
         spinner.setId("spinner");
-        
+
         // debug: spinner as drag source
         /*
         spinner.getEditor().setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -84,8 +84,8 @@ public class SpinnerApp extends Application {
                                 event.consume();
                             }
                         }
-                    });        
-        */        
+                    });
+        */
 
         // debug output to console
         spinner.valueProperty().addListener((o, oldValue, newValue) ->
@@ -96,13 +96,13 @@ public class SpinnerApp extends Application {
         // this lets us switch between the spinner value factories
         ComboBox<String> spinnerValueFactoryOptions =
                 new ComboBox<>(FXCollections.observableArrayList("Integer", "Double", "List<String>"));
-                        
+
         // "date/time/calendar spinner" temporary removed. pls see
         // https://javafx-jira.kenai.com/browse/RT-37968          //   , "Calendar"));
-                        
-                        
+
+
         spinnerValueFactoryOptions.setId("valuetype");
-        
+
         // debug output
         spinnerValueFactoryOptions.armedProperty().addListener(
             new ChangeListener<Boolean>() {
@@ -110,7 +110,7 @@ public class SpinnerApp extends Application {
                     System.out.println("debug: armed:" + oldValue + "/" + newValue);
             }
         });
-        
+
         // debug output
         spinnerValueFactoryOptions.setOnHiding(new EventHandler<Event>() {
             public void handle(Event t) {
@@ -128,11 +128,11 @@ public class SpinnerApp extends Application {
                 setSpinnerValueFactory(spinner, spinnerValueFactoryOptions.getSelectionModel().selectedItemProperty().get());
             }
         });
-            
+
         spinnerValueFactoryOptions.getSelectionModel().selectedItemProperty().addListener((o, oldValue, newValue) -> {
             setSpinnerValueFactory(spinner, newValue);
         });
-        
+
         spinnerValueFactoryOptions.getSelectionModel().select(0);
 
         ComboBox<String> spinnerStyleClassOptions =
@@ -153,7 +153,7 @@ public class SpinnerApp extends Application {
                     Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
 
             switch (newValue) {
-                case "Default (Arrows on right (Vertical))": 
+                case "Default (Arrows on right (Vertical))":
                     break;
 
                 case "Arrows on right (Horizontal)": {
@@ -201,8 +201,8 @@ public class SpinnerApp extends Application {
 
         spinner.setTooltip(new Tooltip("tooltip for spinner"));
         Label label = new Label("Effect:");
-              
-        
+
+
         final CheckBox transfCheckBox = new CheckBox();
         transfCheckBox.selectedProperty().addListener(new ChangeListener<Boolean> (){
                 @Override
@@ -215,7 +215,7 @@ public class SpinnerApp extends Application {
                     }
                 }
             });
-                
+
         final CheckBox effectCheckBox = new CheckBox();
         effectCheckBox.selectedProperty().addListener(new ChangeListener<Boolean> (){
                 @Override
@@ -225,7 +225,7 @@ public class SpinnerApp extends Application {
                         Effect badEffect2 = new DropShadow(10., 0., 0., Color.BLACK) {{ setWidth(40);}};
                         Effect goodEffect = new DropShadow(BlurType.THREE_PASS_BOX, Color.BLACK, 5., 0.3, 0., 0.);
                         Effect actualEffect = badEffect;
-                        
+
                         spinner.setEffect(actualEffect);
                         effectCheckBox.setEffect(actualEffect);
                         label.setEffect(actualEffect);
@@ -248,7 +248,7 @@ public class SpinnerApp extends Application {
         txtBindedToValue.textProperty().bind(spinner.valueProperty().asString());
         Text txtBindedToEditor = new Text();
         txtBindedToEditor.textProperty().bind(spinner.getEditor().textProperty());
-        
+
         grid.add(new Label("Value Factory:"), 0, row);
         grid.add(new Text("text binded to value:"), 2, row);
         grid.add(txtBindedToValue, 3, row);
@@ -267,24 +267,24 @@ public class SpinnerApp extends Application {
 
         grid.add(new Label("Right-to-left:"), 0, row);
         grid.add(rtlCheckBox, 1, row++);
-        
+
         final TextField tf = new TextField();
         tf.setId("textfield");
         grid.add(new Label("TextField:"), 0, row);
         grid.add(tf, 1, row++);
-        
+
         grid.add(new Label("Transfromation:"), 0, row);
         grid.add(transfCheckBox, 1, row++);
-        
+
         grid.add(resetBtn, 1, row++);
-        
-        
+
+
         grid.add(label, 0, row);
         grid.add(effectCheckBox, 1, row++);
-        
+
         grid.add(new Label("Spinner:"), 0, row);
         grid.add(spinner, 1, row++);
-        
+
 
         //  this TexField would be used as drop taregt
         tf.setOnDragOver(new EventHandler<DragEvent>() {
@@ -316,10 +316,10 @@ public class SpinnerApp extends Application {
         stage.setTitle("Hello Spinner");
         stage.setScene(scene);
         stage.show();
-        
-        
+
+
     }
-    
+
     public void setSpinnerValueFactory(final Spinner _spinner, final String _newValue) {
         ObservableList<String> items = FXCollections.observableArrayList("Jonathan", "Julia", "Henry");
         switch (_newValue) {
@@ -346,8 +346,8 @@ public class SpinnerApp extends Application {
                 _spinner.setValueFactory(null);
                 break;
             }
-            
+
         }
-   
+
     }
 }

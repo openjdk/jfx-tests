@@ -34,5 +34,5 @@ public class LightScopeBoxTest extends LightScopeTests{
     public void chooseCase() {
         initTestCase(LightScopeTestApp.TestCaseType.SINGLE_BOX_CASE);
     }
-    
+
 }

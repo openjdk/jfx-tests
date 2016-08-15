@@ -93,7 +93,7 @@ public class Cone {
         @Override
         public float[] getTexCoords(int subDivX, int subDivY) {
             float texCoords[] = new float[(circleCount+2) * texCoordSize];
-            
+
             return texCoords;
         }
 
@@ -121,9 +121,9 @@ public class Cone {
                 faces[index + 2] = circleCount + 1;
                 faces[index + 1] = circleCount + 1;
                 faces[index] = p1Index;
-                
+
             }
-            
+
 
             return faces;
         }

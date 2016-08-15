@@ -80,13 +80,13 @@ public class NewBubbleChartApp extends InteroperabilityApp implements ChartIDsIn
         TabPaneWithControl pane;
 
         public BubbleChartScene() {
-            super("BubbleChart", 1300, 800);            
+            super("BubbleChart", 1300, 800);
         }
 
         @Override
         final protected void prepareScene() {
             Utils.addBrowser(this);
-            
+
             axis1 = new NumberAxis(0, 100, 10);
             axis2 = new NumberAxis(0, 100, 10);
             testedBubbleChart = getNewChart();

@@ -158,7 +158,7 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
                     //menu button could be in menu bar or by itself
                     if (item instanceof Menu) {
                         //if in menu bar, it contains the same item
-                        //the item is not exposed, however, so, I have to compare 
+                        //the item is not exposed, however, so, I have to compare
                         //first child
                         if (mb.getItems().size() > 0
                                 && mb.getItems().get(0) == ((Menu) item).getItems().get(0)) {
@@ -166,7 +166,7 @@ public class MenuItemWrap<ITEM extends MenuItem> extends Wrap<ITEM> {
                             return true;
                         }
                     }
-                    //else, if the menu item is on it's own, it does not have 
+                    //else, if the menu item is on it's own, it does not have
                     //a menu associated. Hence a top-level menu item
                     //would be within its items
                     for (MenuItem mi : ((MenuButton) node).getItems()) {

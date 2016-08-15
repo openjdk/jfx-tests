@@ -28,7 +28,7 @@ import javafx.util.StringConverter;
 
 /**
  * @author Alexander Kirov
- * 
+ *
  * It is used in ComboBox as converter of elements of list to text in TextField.
  */
 public class CustomStringConverter extends StringConverter {

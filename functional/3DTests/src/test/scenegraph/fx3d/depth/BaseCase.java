@@ -42,7 +42,7 @@ public abstract class BaseCase extends Group {
         new PhongMaterial(Color.BLUE),
         new PhongMaterial(Color.GREEN)
 };
-    protected GroupMover rb; 
+    protected GroupMover rb;
     protected Shape3D[] shapes;
 
     public BaseCase(){
@@ -53,16 +53,16 @@ public abstract class BaseCase extends Group {
         for(int i=0; i<shapes.length; i++){
             shapes[i].setMaterial(material[i]);
         }
-                
+
         rb = new GroupMover(shapes);
-        
+
         this.getChildren().add(rb.getGroup());
     }
-    
+
     public GroupMover getRotationBox(){
         return rb;
     }
-    
+
     protected abstract Shape3D[] getShapes();
-    
+
 }

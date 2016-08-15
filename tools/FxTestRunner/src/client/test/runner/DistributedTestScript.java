@@ -86,7 +86,7 @@ public class DistributedTestScript extends TestScript {
         String verbose = Boolean.getBoolean("javatest.FXProcessCommand.verbose") ? "-v" : "";
 //        String[] args = super.tdCmdArgs(td, id + File.separator + td.getRootRelativePath());
         String[] args = super.tdCmdArgs(td, workdirPath + File.separator + td.getParameter("testName"), port);
-        
+
         String[] ret = {
             "-mapArgs",
             "-c",
@@ -107,7 +107,7 @@ public class DistributedTestScript extends TestScript {
         }
         super.interrupt(status);
     }
-    
+
     private TestResult.Section section;
 
     /**

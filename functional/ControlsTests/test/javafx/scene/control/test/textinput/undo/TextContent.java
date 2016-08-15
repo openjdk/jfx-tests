@@ -59,7 +59,7 @@ public class TextContent implements Cloneable {
         }
         return false;
     }
-    
+
     @Override
     protected Object clone() {
         TextContent txt;

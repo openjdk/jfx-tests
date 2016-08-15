@@ -41,7 +41,7 @@ abstract class MenuItemParent extends AbstractParent<MenuItem> {
     private final Wrap wrap;
     private final Wrapper itemWrapper;
     private final ControlHierarchy items;
-    
+
     protected MenuItemParent(Wrap wrap) {
         this.wrap = wrap;
         itemWrapper = new ItemWrapper(wrap);
@@ -74,13 +74,13 @@ abstract class MenuItemParent extends AbstractParent<MenuItem> {
         public <T> Wrap<? extends T> wrap(Class<T> controlClass, T control) {
             if (MenuItem.class.isInstance(control)) {
                 if (Menu.class.isInstance(control)) {
-                    return (Wrap<? extends T>) 
+                    return (Wrap<? extends T>)
                             new MenuWrap<>(wrap.getEnvironment(), Menu.class.cast(control));
                 } else if (RadioMenuItem.class.isInstance(control)) {
-                    return (Wrap<? extends T>) 
+                    return (Wrap<? extends T>)
                             new RadioMenuItemWrap<>(wrap.getEnvironment(), RadioMenuItem.class.cast(control));
                 } else if (CheckMenuItem.class.isInstance(control)) {
-                    return (Wrap<? extends T>) 
+                    return (Wrap<? extends T>)
                             new CheckMenuItemWrap<>(wrap.getEnvironment(), CheckMenuItem.class.cast(control));
                 } else {
                     return (Wrap<? extends T>) new MenuItemWrap(wrap.getEnvironment(), MenuItem.class.cast(control));
@@ -89,7 +89,7 @@ abstract class MenuItemParent extends AbstractParent<MenuItem> {
             throw new JemmyException("Unexpected control class is used: " + controlClass);
         }
     }
-    
+
     private class MenuHierarchy implements ControlHierarchy {
 
         public List<?> getChildren(Object o) {

@@ -40,7 +40,7 @@ import org.junit.BeforeClass;
  * @author Dmitrij Pochepko
  */
 public class TitleTest extends GenericTestClass{
-    
+
     @BeforeClass
     public static void init(){
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);

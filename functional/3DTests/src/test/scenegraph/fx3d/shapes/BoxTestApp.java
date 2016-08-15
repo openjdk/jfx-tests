@@ -40,7 +40,7 @@ import test.scenegraph.fx3d.utils.ShapesTestCase;
 public class BoxTestApp extends PredefinedShape3DBasicApp {
 
     private BoxTestCase btc = null;
-    
+
     static {
         System.setProperty("prism.dirtyopts", "false");
     }

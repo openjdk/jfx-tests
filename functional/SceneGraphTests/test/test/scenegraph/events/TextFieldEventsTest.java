@@ -34,13 +34,13 @@ import test.scenegraph.app.ControlEventsApp.Controls;
  */
 public class TextFieldEventsTest extends EventTestTextInput
 {
-    
+
     @BeforeClass
     public static void rinUI()
     {
         ControlEventsApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -48,5 +48,5 @@ public class TextFieldEventsTest extends EventTestTextInput
         super.before();
         setControl(Controls.TEXT_FIELD);
     }
-    
+
 }

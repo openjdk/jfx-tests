@@ -76,7 +76,7 @@ public abstract class PickingSharedAbstractApp extends FX3DAbstractApp implement
     public void setTranslationMode(PickingTestCase.TranslationMode mode) {
         ptc.setTranslationMode(mode);
     }
-    
+
     public int getTestCaseWidth(){
         return ptc.WIDTH;
     }

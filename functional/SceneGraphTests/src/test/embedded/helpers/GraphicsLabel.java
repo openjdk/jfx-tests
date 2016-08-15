@@ -33,7 +33,7 @@ import javafx.scene.text.Text;
  * @author akulyakh
  */
 class GraphicsLabel implements AbstractLabel {
-    
+
     private final Text text;
 
     public GraphicsLabel(String id, String caption) {

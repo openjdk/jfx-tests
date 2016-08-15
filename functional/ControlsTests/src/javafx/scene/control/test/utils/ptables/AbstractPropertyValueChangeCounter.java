@@ -29,7 +29,7 @@ import javafx.scene.control.test.utils.ptables.AbstractPropertyValueChangeCounte
 
 /**
  * @author Alexander Kirov
- * 
+ *
  * Counts change listeners and invalidation listeners calls.
  */
 public interface AbstractPropertyValueChangeCounter extends HavingVisualRepresentation, AbstractStateCheckable<ChangeInvalidationCount>, Refreshable {

@@ -78,7 +78,7 @@ public class GoldenImageManager {
         }
         return "";
     }
-    
+
     public static String getDiffPath(String goldenPath) {
         String relativeGoldenPath = goldenPath.substring(goldenPath.indexOf(IMG_FOLDER) +
                 IMG_FOLDER.length());
@@ -86,7 +86,7 @@ public class GoldenImageManager {
         String diffName = goldenName.substring(0, goldenName.lastIndexOf(".") - 1) + "-diff";
         return getScreenshotPath(diffName);
     }
-    
+
     public static String getScreenshotPath(String testName) {
         return getGoldenPath(testName, "png");
     }
@@ -109,13 +109,13 @@ public class GoldenImageManager {
     }
 
     /**
-     * Retrieves images from reference image folder according to suffix (usually test name) and 
+     * Retrieves images from reference image folder according to suffix (usually test name) and
      * postfix (usually file extension).
      * Files should have name that matches "suffix[-number-]postfix", e.g: "SomeTestName.png",
      * "SomeTestName-1.png"... "SomeTestName-NUMBER.png".  Method searches for all matching files
      * in "TestsuiteName/RenderingMode/Platform", "TestsuiteName/RenderingMode/" and
      * "TestsuiteName/".
-     * 
+     *
      * @param suffix filename suffix, usually test name.
      * @param postfix filename prefix, usually file extension.
      * @return Full paths to all matching files or empty list if no files matched.
@@ -138,7 +138,7 @@ public class GoldenImageManager {
         }
         File currentDirectory = new File(imageRoot,
                 Paths.get(suiteName, getRenderingMode(), getPlatformAlias()).toString());
-        List<String> goldenVariants = new ArrayList<>();        
+        List<String> goldenVariants = new ArrayList<>();
         while (!currentDirectory.equals(imageRoot)) {
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(currentDirectory.toPath())) {
                 stream.forEach(path -> {
@@ -151,7 +151,7 @@ public class GoldenImageManager {
                     }
                 });
             } catch (IOException ex) {
-                System.err.printf("Failed to enumerate golden images at %s: %s\n", 
+                System.err.printf("Failed to enumerate golden images at %s: %s\n",
                         currentDirectory, ex);
             }
             currentDirectory = currentDirectory.getParentFile();

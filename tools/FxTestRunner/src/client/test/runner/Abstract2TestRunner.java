@@ -31,7 +31,7 @@ import java.io.Serializable;
  * @author shura, mrkam, Sergey Grinev, Victor Shubov
  */
 public interface Abstract2TestRunner {
-    
+
     /**
      *
      * @throws Throwable
@@ -49,19 +49,19 @@ public interface Abstract2TestRunner {
      * @throws Throwable
      */
     void stopUI() throws Throwable;
-    
+
     /**
      *
      * @return
      */
     Status getCurrentStatus();
-    
+
     /**
      *
      * @param exitStatus
      */
     void exit(Status exitStatus);
-    
+
     /**
      *
      */
@@ -106,7 +106,7 @@ public interface Abstract2TestRunner {
         public int getN() {
             return n;
         }
-        
+
         /**
          *
          * @return

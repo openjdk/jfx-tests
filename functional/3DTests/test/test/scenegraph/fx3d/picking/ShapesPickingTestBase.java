@@ -62,5 +62,5 @@ public abstract class ShapesPickingTestBase extends ShapesPickingTests {
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
 }

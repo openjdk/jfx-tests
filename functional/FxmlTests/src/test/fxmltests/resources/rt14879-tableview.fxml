@@ -10,7 +10,7 @@
 
 <TableView xmlns:fx="http://javafx.com/fxml">
 <Text>
-	<String fx:value="aaa"/>
+    <String fx:value="aaa"/>
 </Text>
 <Text text="B"/>
 <Text text="C"/>

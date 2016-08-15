@@ -63,7 +63,7 @@ public class MeshPerspectivePickingTestApp extends MeshPickingAbstractApp {
         }
 
     }
-    
+
     public static void main(String[] args) {
         Utils.launch(MeshPerspectivePickingTestApp.class, args);
     }

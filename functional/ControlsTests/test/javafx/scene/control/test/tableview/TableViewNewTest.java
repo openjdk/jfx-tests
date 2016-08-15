@@ -1081,36 +1081,36 @@ public class TableViewNewTest extends ApplicationInteractionFunctions {
             return;//pass all the time as this feature is not applicable to the tree table.
         }
         setSize(250, 250);
-        
+
         final int COLS = 3;
-        
+
         createRowsForSortPurposes(COLS);
-        
+
         clickButtonForTestPurpose(BTN_SET_SORTED_LIST_FOR_MODEL_ID);
-        
+
         String[][] testData = NewTableViewApp.getDataForSorting(COLS);
-        
+
         List<ColumnState> columnStates = new ArrayList<ColumnState>(COLS);
-        
+
         //Ascending
         getTableColumnHeaderWrap("column 2").mouse().click();
         columnStates.add(new ColumnState(2, ColumnState.SortType.ASCENDING));
         sortTestData(testData, columnStates);
         assertTrue("Sort order is wrong", checkSortResult(testData));
-        
+
         //Descending
         getTableColumnHeaderWrap("column 2").mouse().click();
         columnStates.clear();
         columnStates.add(new ColumnState(2, ColumnState.SortType.DESCENDING));
         sortTestData(testData, columnStates);
         assertTrue("Sort order is wrong", checkSortResult(testData));
-        
+
         //Initial state
         getTableColumnHeaderWrap("column 2").mouse().click();
         testData = NewTableViewApp.getDataForSorting(COLS);
         assertTrue("Sort order is wrong", checkSortResult(testData));
     }
-    
+
     /*
      * Helper methods
      */
@@ -1314,8 +1314,8 @@ public class TableViewNewTest extends ApplicationInteractionFunctions {
             if (isTableTests) {
                 assertEquals(wrap1.getScreenBounds().x, header1.getScreenBounds().x, 0);
             } else {
-                //For treeTable - there are nodes for showing tree structure 
-                //(arrows), so cells are less, and left border is not aligned 
+                //For treeTable - there are nodes for showing tree structure
+                //(arrows), so cells are less, and left border is not aligned
                 //according to the left border of the column header.
                 assertTrue(wrap1.getScreenBounds().x > header1.getScreenBounds().x);
                 assertTrue(wrap1.getScreenBounds().x < wrap2.getScreenBounds().x);
@@ -1343,7 +1343,7 @@ public class TableViewNewTest extends ApplicationInteractionFunctions {
         int editStartCounter = 0;
         int editCancelCounter = 0;
         int editCommitCounter = 0;
-        
+
         final class GetCellControlClassAction extends GetAction<Class> {
 
             int rowIndex = -1;
@@ -1353,15 +1353,15 @@ public class TableViewNewTest extends ApplicationInteractionFunctions {
                 this.columnIndex = columnIndex;
                 this.rowIndex = rowIndex;
             }
-            
+
             @Override
             public void run(Object... os) throws Exception {
                 TableCell cell = getCellWrap(columnIndex, rowIndex).getControl();
                 setResult((null != cell.getGraphic()) ? cell.getGraphic().getClass() : Object.class);
             }
-            
+
         }
-        
+
         Wrap<? extends TableCell> cellWrap;
         for (CellEditorType type : CellEditorType.values()) {
 
@@ -1408,7 +1408,7 @@ public class TableViewNewTest extends ApplicationInteractionFunctions {
                     case COMBOBOX:
                         setCellEditor(CellEditorType.COMBOBOX, isCustom);
                         cellWrap = getCellWrap(1, 4);
-                        
+
                         GetAction<Class> getCellClassAction = new GetCellControlClassAction(4, 1);
                         Class cellControlType = getCellClassAction.dispatch(cellWrap.getEnvironment());
                         while ( !ComboBox.class.equals(cellControlType) )
@@ -1416,9 +1416,9 @@ public class TableViewNewTest extends ApplicationInteractionFunctions {
                             cellWrap.mouse().click();
                             cellControlType = getCellClassAction.dispatch(cellWrap.getEnvironment());
                         }
-                        
+
                         Wrap<ComboBox> combobox = cellWrap.as(Parent.class, Node.class).lookup(ComboBox.class).wrap();
-                        
+
                         //Select nothing
                         if (!commit) {
                             combobox.mouse().click();
@@ -1430,7 +1430,7 @@ public class TableViewNewTest extends ApplicationInteractionFunctions {
                                                 setResult(popupScene.getControl().getWindow().showingProperty().getValue());
                                             }
                                         }.dispatch(Root.ROOT.getEnvironment()));
-                            
+
                             //First escape to close popup
                             scene.keyboard().pushKey(KeyboardButtons.ESCAPE);
                             //Second escape to cancel editing
@@ -1450,13 +1450,13 @@ public class TableViewNewTest extends ApplicationInteractionFunctions {
                             cellWrap.mouse().click();
                             cellControlType = getCellClassAction.dispatch(cellWrap.getEnvironment());
                         }
-                        
+
                         Wrap<ChoiceBox> choicebox = cellWrap.as(Parent.class, Node.class).lookup(ChoiceBox.class).wrap();
-                        
+
                         //Select nothing
                         if (!commit) {
                             choicebox.mouse().click();
-                        
+
                             choicebox.waitState(new State<Boolean>() {
                                 @Override
                                 public Boolean reached() {
@@ -1467,7 +1467,7 @@ public class TableViewNewTest extends ApplicationInteractionFunctions {
                                                    setResult(popupScene.getControl().getWindow().showingProperty().getValue());
                                                }
                                            }.dispatch(Root.ROOT.getEnvironment())
-                                           ? Boolean.TRUE : null;    
+                                           ? Boolean.TRUE : null;
                                 }
 
                                 @Override

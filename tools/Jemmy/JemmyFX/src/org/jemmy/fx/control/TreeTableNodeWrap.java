@@ -47,9 +47,9 @@ import org.jemmy.interfaces.Showable;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
- * This wraps a node that represents the treeTables's data item 
+ * This wraps a node that represents the treeTables's data item
  * representation - TreeTableRow.
- * 
+ *
  * @author Alexander Kirov
  */
 @ControlType(Object.class)
@@ -57,7 +57,7 @@ import org.jemmy.lookup.LookupCriteria;
 public class TreeTableNodeWrap<T extends TreeItem> extends Wrap<T>
         implements Showable, Show, EditableCellOwner.EditableCell<Object>, org.jemmy.interfaces.TreeItem<Object> {
 
-    private CellEditor<Object> editor;    
+    private CellEditor<Object> editor;
     private TreeTableItemWrap itemWrap;
     private TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap;
 
@@ -80,7 +80,7 @@ public class TreeTableNodeWrap<T extends TreeItem> extends Wrap<T>
             }
         }.dispatch(getEnvironment());
     }
-    
+
     @Override
     public Point getClickPoint() {
         return TableUtils.getTableRowClickPoint(treeTableViewWrap, this);
@@ -172,13 +172,13 @@ public class TreeTableNodeWrap<T extends TreeItem> extends Wrap<T>
     }
 
     /**
-     * Works with the first column. It's behavior is equivalent to behavior of 
+     * Works with the first column. It's behavior is equivalent to behavior of
      * editing in treeView, for case, when treeTableView has only 1 column.
      */
     @Override
     public void edit(Object newValue) {
-        new TreeTableCellWrap(treeTableViewWrap, 
-                treeTableViewWrap.getRow(getControl()), 
+        new TreeTableCellWrap(treeTableViewWrap,
+                treeTableViewWrap.getRow(getControl()),
                 treeTableViewWrap.getColumn(0),
                 editor).edit(newValue);
     }

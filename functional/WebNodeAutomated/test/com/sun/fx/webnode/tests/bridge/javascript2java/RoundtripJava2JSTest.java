@@ -38,17 +38,17 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     {
         testObject = new HelperObject("test", 42, false, 42.2, (float)42.3, 'o', new Object(), "\u16cf");
     }
     private HelperObject containerObject;
-    
+
     /**
      * This test checks that the value of a string field
      * can be passed to JS and back without being damaged.
@@ -76,7 +76,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).stringField, containerObject.stringField);
     }
-    
+
     /**
      * This test checks that the value of a string field
      * can be passed to JS and back without being damaged.
@@ -105,7 +105,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testValue, containerObject.stringField);
     }
-    
+
     /**
      * This test checks that the value of a unicode string field
      * can be passed to JS and back without being damaged.
@@ -133,7 +133,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).unicodeField, containerObject.unicodeField);
     }
-    
+
     /**
      * This test checks that the value of a unicode string field
      * can be passed to JS and back without being damaged.
@@ -162,7 +162,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testValue, containerObject.stringField);
     }
-    
+
     /**
      * This test checks that the value of an integer field
      * can be passed to JS and back without being damaged.
@@ -190,7 +190,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).intField, containerObject.intField);
     }
-    
+
     /**
      * This test checks that the value of an integer field
      * can be passed to JS and back without being damaged.
@@ -219,7 +219,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testValue, containerObject.intField);
     }
-    
+
     /**
      * This test checks that the value of a boolean field
      * can be passed to JS and back without being damaged.
@@ -247,7 +247,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).booleanField, containerObject.booleanField);
     }
-    
+
     /**
      * This test checks that the value of a boolean field
      * can be passed to JS and back without being damaged.
@@ -276,7 +276,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testValue, containerObject.booleanField);
     }
-    
+
     /**
      * This test checks that the value of a double field
      * can be passed to JS and back without being damaged.
@@ -305,7 +305,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).doubleField, containerObject.doubleField, precision);
     }
-    
+
     /**
      * This test checks that the value of a double field
      * can be passed to JS and back without being damaged.
@@ -334,7 +334,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testValue, containerObject.doubleField, precision);
     }
-    
+
     /**
      * This test checks that the values of a float field
      * can be passed to JS and back without being damaged.
@@ -363,7 +363,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).floatField, containerObject.floatField, precision);
     }
-    
+
     /**
      * This test checks that the values of a float field
      * can be passed to JS and back without being damaged.
@@ -392,7 +392,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testValue, containerObject.floatField, precision);
     }
-    
+
     /**
      * This test checks that the value of a character field
      * can be passed to JS and back without being damaged.
@@ -420,7 +420,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).charField, containerObject.charField);
     }
-    
+
     /**
      * This test checks that the value of a character field
      * can be passed to JS and back without being damaged.
@@ -450,7 +450,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testValue, containerObject.charField);
     }
-    
+
     /**
      * This test checks that the values of an object field
      * can be passed to JS and back without being damaged.
@@ -478,7 +478,7 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).objectField, containerObject.objectField);
     }
-    
+
     /**
      * This test checks that the values of an object field
      * can be passed to JS and back without being damaged.
@@ -508,5 +508,5 @@ public class RoundtripJava2JSTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testValue, containerObject.objectField);
     }
-    
+
 }

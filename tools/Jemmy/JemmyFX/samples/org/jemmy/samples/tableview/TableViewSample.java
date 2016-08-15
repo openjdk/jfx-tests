@@ -45,24 +45,24 @@ import java.util.List;
 public class TableViewSample extends SampleBase {
     private static SceneDock scene;
     private static TableViewDock tableView;
-    
+
     @BeforeClass
     public static void launch() throws InterruptedException {
         startApp(TableViewApp.class);
         scene = new SceneDock();
 
         /**
-        * Looking up for TableView control. The best option is to do that 
+        * Looking up for TableView control. The best option is to do that
         * by id.
         */
         tableView = new TableViewDock(scene.asParent(), "table");
-        
+
         //set an editor right away
         tableView.asTable().setEditor(new TextFieldCellEditor<Object>());
     }
-    
+
     /**
-     * TableView lookup is no different than other components - check the lookup 
+     * TableView lookup is no different than other components - check the lookup
      * samples, table item lookup is another matter.
      */
     @Test
@@ -76,7 +76,7 @@ public class TableViewSample extends SampleBase {
         //or any other way by creating a custom lookup criteria
         new TableCellItemDock(tableView.asTable(), cntrl -> cntrl instanceof Date).asEditableCell().select();
     }
-    
+
     /**
      * Selecting a cell by column and row indexes.
      */
@@ -86,7 +86,7 @@ public class TableViewSample extends SampleBase {
         //or
         tableView.asTable().select(new Point(6, 3));
     }
-    
+
     /**
      * Scrolling happens automatically when you are trying to select a cell. Should
      * you need the scrolling anyway ...
@@ -95,16 +95,16 @@ public class TableViewSample extends SampleBase {
     public void scrollToCell() {
         new TableCellItemDock(tableView.asTable(), "Tlastname").shower().show();
     }
-    
+
     /**
      * Getting information on the table size
      */
     @Test
     public void getTableSize() {
-        System.out.println("tableView has " + tableView.getColumns().size() + 
+        System.out.println("tableView has " + tableView.getColumns().size() +
                 " columns and " + tableView.getItems().size() + " rows.");
     }
-    
+
     /**
      * Selecting multiple cells.
      */
@@ -112,7 +112,7 @@ public class TableViewSample extends SampleBase {
     public void selectMultipleCells() {
         tableView.asTable().select(new Point(1, 1), new Point(2, 5), new Point(3, 10));
     }
-    
+
     /**
      * Editing cell value.
      */
@@ -120,15 +120,15 @@ public class TableViewSample extends SampleBase {
     public void editCell() {
         new TableCellItemDock(tableView.asTable(), 3, 2).asEditableCell().edit("Kouznetsov");
     }
-    
+
     /**
-     * Sorting by field. 
+     * Sorting by field.
      */
     @Test
     public void sort() {
         // No direct API for that http://javafx-jira.kenai.com/browse/JMY-170
     }
-    
+
     /**
      * Getting selected cells
      */

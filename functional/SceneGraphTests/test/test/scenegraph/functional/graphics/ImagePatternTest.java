@@ -38,13 +38,13 @@ import static test.scenegraph.app.ImagePatternApp.Shapes.*;
  */
 public class ImagePatternTest extends TestBase
 {
-    
+
     @BeforeClass
-    public static void runUI() 
+    public static void runUI()
     {
         ImagePatternApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -52,329 +52,329 @@ public class ImagePatternTest extends TestBase
         super.before();
         JemmyUtils.setJemmyComparatorByDistance(0.05f);
     }
-    
+
     @Test
-    public void CircleSizeZero() 
+    public void CircleSizeZero()
     {
         testCommon(CIRCLE.toString(), "size0");
     }
-    
+
     @Test
-    public void CircleSizeHalf() 
+    public void CircleSizeHalf()
     {
         testCommon(CIRCLE.toString(), "size0.5");
     }
-    
+
     @Test
-    public void CircleSizeOne() 
+    public void CircleSizeOne()
     {
         testCommon(CIRCLE.toString(), "size1");
     }
-    
+
     @Test
-    public void CircleSizeOneHalf() 
+    public void CircleSizeOneHalf()
     {
         testCommon(CIRCLE.toString(), "size1.5");
     }
-    
+
     @Test
-    public void CircleSizeTwo() 
+    public void CircleSizeTwo()
     {
         testCommon(CIRCLE.toString(), "size2");
     }
-    
+
     @Test
-    public void EllipseSizeZero() 
+    public void EllipseSizeZero()
     {
         testCommon(ELLIPSE.toString(), "size0");
     }
-    
+
     @Test
-    public void EllipseSizeHalf() 
+    public void EllipseSizeHalf()
     {
         testCommon(ELLIPSE.toString(), "size0.5");
     }
-    
+
     @Test
-    public void EllipseSizeOne() 
+    public void EllipseSizeOne()
     {
         testCommon(ELLIPSE.toString(), "size1");
     }
-    
+
     @Test
-    public void EllipseSizeOneHalf() 
+    public void EllipseSizeOneHalf()
     {
         testCommon(ELLIPSE.toString(), "size1.5");
     }
-    
+
     @Test
-    public void EllipseSizeTwo() 
+    public void EllipseSizeTwo()
     {
         testCommon(ELLIPSE.toString(), "size2");
     }
-    
+
     @Test
-    public void PolygonSizeZero() 
+    public void PolygonSizeZero()
     {
         testCommon(POLYGON.toString(), "size0");
     }
-    
+
     @Test
-    public void PolygonSizeHalf() 
+    public void PolygonSizeHalf()
     {
         testCommon(POLYGON.toString(), "size0.5");
     }
-    
+
     @Test
-    public void PolygonSizeOne() 
+    public void PolygonSizeOne()
     {
         testCommon(POLYGON.toString(), "size1");
     }
-    
+
     @Test
-    public void PolygonSizeOneHalf() 
+    public void PolygonSizeOneHalf()
     {
         testCommon(POLYGON.toString(), "size1.5");
     }
-    
+
     @Test
-    public void PolygonSizeTwo() 
+    public void PolygonSizeTwo()
     {
         testCommon(POLYGON.toString(), "size2");
     }
-    
+
     @Test
-    public void RectangleSizeZero() 
+    public void RectangleSizeZero()
     {
         testCommon(RECTANGLE.toString(), "size0");
     }
-    
+
     @Test
-    public void RectangleSizeHalf() 
+    public void RectangleSizeHalf()
     {
         testCommon(RECTANGLE.toString(), "size0.5");
     }
-    
+
     @Test
-    public void RectangleSizeOne() 
+    public void RectangleSizeOne()
     {
         testCommon(RECTANGLE.toString(), "size1");
     }
-    
+
     @Test
-    public void RectangleSizeOneHalf() 
+    public void RectangleSizeOneHalf()
     {
         testCommon(RECTANGLE.toString(), "size1.5");
     }
-    
+
     @Test
-    public void RectangleSizeTwo() 
+    public void RectangleSizeTwo()
     {
         testCommon(RECTANGLE.toString(), "size2");
     }
-    
+
     @Test
-    public void TextSizeZero() 
+    public void TextSizeZero()
     {
         testCommon(TEXT.toString(), "size0");
     }
-    
+
     @Test
-    public void TextSizeHalf() 
+    public void TextSizeHalf()
     {
         testCommon(TEXT.toString(), "size0.5");
     }
-    
+
     @Test
-    public void TextSizeOne() 
+    public void TextSizeOne()
     {
         testCommon(TEXT.toString(), "size1");
     }
-    
+
     @Test
-    public void TextSizeOneHalf() 
+    public void TextSizeOneHalf()
     {
         testCommon(TEXT.toString(), "size1.5");
     }
-    
+
     @Test
-    public void TextSizeTwo() 
+    public void TextSizeTwo()
     {
         testCommon(TEXT.toString(), "size2");
     }
-    
+
     @Test
-    public void CircleSizeZeroNonproportional() 
+    public void CircleSizeZeroNonproportional()
     {
         testCommon(CIRCLE.toString() + "(Nonproportional)", "size0");
     }
-    
+
     @Test
-    public void CircleSizeHalfNonproportional() 
+    public void CircleSizeHalfNonproportional()
     {
         testCommon(CIRCLE.toString() + "(Nonproportional)", "size0.5");
     }
-    
+
     @Test
-    public void CircleSizeOneNonproportional() 
+    public void CircleSizeOneNonproportional()
     {
         testCommon(CIRCLE.toString() + "(Nonproportional)", "size1");
     }
-    
+
     @Test
-    public void CircleSizeOneHalfNonproportional() 
+    public void CircleSizeOneHalfNonproportional()
     {
         testCommon(CIRCLE.toString() + "(Nonproportional)", "size1.5");
     }
-    
+
     @Test
-    public void CircleSizeTwoNonproportional() 
+    public void CircleSizeTwoNonproportional()
     {
         testCommon(CIRCLE.toString() + "(Nonproportional)", "size2");
     }
-    
+
     @Test
-    public void EllipseSizeZeroNonproportional() 
+    public void EllipseSizeZeroNonproportional()
     {
         testCommon(ELLIPSE.toString() + "(Nonproportional)", "size0");
     }
-    
+
     @Test
-    public void EllipseSizeHalfNonproportional() 
+    public void EllipseSizeHalfNonproportional()
     {
         testCommon(ELLIPSE.toString() + "(Nonproportional)", "size0.5");
     }
-    
+
     @Test
-    public void EllipseSizeOneNonproportional() 
+    public void EllipseSizeOneNonproportional()
     {
         testCommon(ELLIPSE.toString() + "(Nonproportional)", "size1");
     }
-    
+
     @Test
-    public void EllipseSizeOneHalfNonproportional() 
+    public void EllipseSizeOneHalfNonproportional()
     {
         testCommon(ELLIPSE.toString() + "(Nonproportional)", "size1.5");
     }
-    
+
     @Test
-    public void EllipseSizeTwoNonproportional() 
+    public void EllipseSizeTwoNonproportional()
     {
         testCommon(ELLIPSE.toString() + "(Nonproportional)", "size2");
     }
-    
+
     @Test
-    public void PolygonSizeZeroNonproportional() 
+    public void PolygonSizeZeroNonproportional()
     {
         testCommon(POLYGON.toString() + "(Nonproportional)", "size0");
     }
-    
+
     @Test
-    public void PolygonSizeHalfNonproportional() 
+    public void PolygonSizeHalfNonproportional()
     {
         testCommon(POLYGON.toString() + "(Nonproportional)", "size0.5");
     }
-    
+
     @Test
-    public void PolygonSizeOneNonproportional() 
+    public void PolygonSizeOneNonproportional()
     {
         testCommon(POLYGON.toString() + "(Nonproportional)", "size1");
     }
-    
+
     @Test
-    public void PolygonSizeOneHalfNonproportional() 
+    public void PolygonSizeOneHalfNonproportional()
     {
         testCommon(POLYGON.toString() + "(Nonproportional)", "size1.5");
     }
-    
+
     @Test
-    public void PolygonSizeTwoNonproportional() 
+    public void PolygonSizeTwoNonproportional()
     {
         testCommon(POLYGON.toString() + "(Nonproportional)", "size2");
     }
-    
+
     @Test
-    public void RectangleSizeZeroNonproportional() 
+    public void RectangleSizeZeroNonproportional()
     {
         testCommon(RECTANGLE.toString() + "(Nonproportional)", "size0");
     }
-    
+
     @Test
-    public void RectangleSizeHalfNonproportional() 
+    public void RectangleSizeHalfNonproportional()
     {
         testCommon(RECTANGLE.toString() + "(Nonproportional)", "size0.5");
     }
-    
+
     @Test
-    public void RectangleSizeOneNonproportional() 
+    public void RectangleSizeOneNonproportional()
     {
         testCommon(RECTANGLE.toString() + "(Nonproportional)", "size1");
     }
-    
+
     @Test
-    public void RectangleSizeOneHalfNonproportional() 
+    public void RectangleSizeOneHalfNonproportional()
     {
         testCommon(RECTANGLE.toString() + "(Nonproportional)", "size1.5");
     }
-    
+
     @Test
-    public void RectangleSizeTwoNonproportional() 
+    public void RectangleSizeTwoNonproportional()
     {
         testCommon(RECTANGLE.toString() + "(Nonproportional)", "size2");
     }
-    
+
     @Test
-    public void TextSizeZeroNonproportional() 
+    public void TextSizeZeroNonproportional()
     {
         testCommon(TEXT.toString() + "(Nonproportional)", "size0");
     }
-    
+
     @Test
-    public void TextSizeHalfNonproportional() 
+    public void TextSizeHalfNonproportional()
     {
         testCommon(TEXT.toString() + "(Nonproportional)", "size0.5");
     }
-    
+
     @Test
-    public void TextSizeOneNonproportional() 
+    public void TextSizeOneNonproportional()
     {
         testCommon(TEXT.toString() + "(Nonproportional)", "size1");
     }
-    
+
     @Test
-    public void TextSizeOneHalfNonproportional() 
+    public void TextSizeOneHalfNonproportional()
     {
         testCommon(TEXT.toString() + "(Nonproportional)", "size1.5");
     }
-    
+
     @Test
-    public void TextSizeTwoNonproportional() 
+    public void TextSizeTwoNonproportional()
     {
         testCommon(TEXT.toString() + "(Nonproportional)", "size2");
     }
-    
+
     @Test
     public void png()
     {
         testCommon("Formats", "png");
     }
-    
+
     @Test
     public void jpg()
     {
         testCommon("Formats", "jpg");
     }
-    
+
     @Test
     public void bmp()
     {
         testCommon("Formats", "bmp");
     }
-    
+
     @Test
     public void gif()
     {
         testCommon("Formats", "gif");
     }
-    
+
 }

@@ -40,12 +40,12 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Simple test that checks that JavaScript2Java Bridge can resolve overloaded
      * methods.
@@ -69,7 +69,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).doSomethingOverloaded1("test"), resultObject);
     }
-    
+
     /**
      * Test that checks that JavaScript2Java Bridge can resolve overloaded
      * methods.
@@ -94,7 +94,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).doSomethingOverloaded1(1), resultObject);
     }
-    
+
     /**
      * Test that checks how Java2JavaScript Bridge behaves when an ambiguous
      * call is made from JS.
@@ -121,7 +121,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).doSomethingOverloaded2(1.0), resultObject);
     }
-    
+
     /**
      * This test checks what happens when a wrong parameter is passed to the
      * method call. JS ignores parameter type mismatch (and can cast strings to
@@ -145,7 +145,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
             }
         });
     }
-    
+
     /**
      * This test checks what happens when a call to a method is made
      * while parameter is lacking. JS ignores lacking parameter, so
@@ -175,7 +175,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(ILLEGAL_ARGUMENT_EXCEPTION_MSG, ((JSException)resultObject).getMessage());
     }
-    
+
     /**
      * This test checks what happens when a method throws an exception.
      */
@@ -201,7 +201,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).e, ((JSException)resultObject).getCause());
     }
-    
+
     /**
      * This test checks what happens when a method throws an exception.
      */
@@ -227,7 +227,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).e2, ((JSException)resultObject).getCause());
     }
-    
+
     /**
      * This test checks that a String value can be passed to method call
      * and returned back without being damaged.
@@ -252,7 +252,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(value, resultObject);
     }
-    
+
     /**
      * This test checks that a String value can be passed to method call
      * and returned back without being damaged.
@@ -275,7 +275,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals("test me", resultObject);
     }
-    
+
     /**
      * This test checks that an integer value can be passed to method call
      * and returned back without being damaged.
@@ -300,7 +300,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(value, resultObject);
     }
-    
+
     /**
      * This test checks that an integer value can be passed to method call
      * and returned back without being damaged.
@@ -323,7 +323,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(5, resultObject);
     }
-    
+
     /**
      * This test checks that a boolean value can be passed to method call
      * and returned back without being damaged.
@@ -348,7 +348,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(value, resultObject);
     }
-    
+
     /**
      * This test checks that a boolean value can be passed to method call
      * and returned back without being damaged.
@@ -371,7 +371,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(true, resultObject);
     }
-    
+
     /**
      * This test checks that a double value can be passed to method call
      * and returned back without being damaged.
@@ -396,7 +396,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(value, (Double)resultObject, precision);
     }
-    
+
     /**
      * This test checks that a double value can be passed to method call
      * and returned back without being damaged.
@@ -419,7 +419,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(2.75, (Double)resultObject, precision);
     }
-    
+
     /**
      * This test checks that a float value can be passed to method call
      * and returned back without being damaged.
@@ -444,7 +444,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(value, (Double)resultObject, precision);
     }
-    
+
     /**
      * This test checks that a float value can be passed to method call
      * and returned back without being damaged.
@@ -467,7 +467,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(3.1, (Double)resultObject, precision);
     }
-    
+
     /**
      * This test checks that a char value can be passed to method call
      * and returned back without being damaged.
@@ -494,7 +494,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(value, resultObject);
     }
-    
+
     /**
      * This test checks that a char value can be passed to method call
      * and returned back without being damaged.
@@ -518,7 +518,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals('n', resultObject);
     }
-    
+
     /**
      * This test checks that a char value can be passed to method call
      * and returned back without being damaged.
@@ -544,7 +544,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals((int)value, resultObject);
     }
-    
+
     /**
      * This test checks that a char value can be passed to method call
      * and returned back without being damaged.
@@ -567,7 +567,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(11, resultObject);
     }
-    
+
     /**
      * This test checks that an Object value can be passed to method call
      * and returned back without being damaged.
@@ -592,7 +592,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(value, resultObject);
     }
-    
+
     private Object helperO;
     /**
      * This test checks that an Object value can be passed to method call
@@ -619,7 +619,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(helperO, resultObject);
     }
-    
+
     /**
      * This test checks that a null value can be passed to method call
      * and returned back without being damaged.
@@ -643,7 +643,7 @@ public class MethodCallsTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(null, resultObject);
     }
-    
+
     /**
      * This test checks that a void return value is handled properly.
      */

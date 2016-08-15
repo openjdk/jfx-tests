@@ -39,17 +39,17 @@ import client.util.JettyServer;
  * Test for refusing reflected XSS attacks.
  * @author Dmitry Ginzburg
  */
- 
+
 public class ReflectedXSSTest extends GenericTestClass {
     Node body;
-	
+
     @BeforeClass
     public static void init(){
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
 
     /**
-     * Test for refusing reflected XSS attacks: checks whether WebNode correctly searches for XSS reflected attacks 
+     * Test for refusing reflected XSS attacks: checks whether WebNode correctly searches for XSS reflected attacks
      */
     @Test(timeout=10000)
     public void test1() {
@@ -66,20 +66,20 @@ public class ReflectedXSSTest extends GenericTestClass {
         doWaitPageLoading();
         body = null;
         Platform.runLater (new Runnable() {
-        	public void run() {
-        		Document page = engine.getDocument();
-        		body = page.getElementsByTagName("body").item (0);
-        	}
+            public void run() {
+                Document page = engine.getDocument();
+                body = page.getElementsByTagName("body").item (0);
+            }
         });
-        
+
         doWait (new Tester () {
-        	public boolean isPassed () {
-        		return body != null;
-        	}
+            public boolean isPassed () {
+                return body != null;
+            }
         });
-        
+
         //Browser sees that we're trying to send some script in GET-query (...q=<script>script_ran=true</script> withing ) to xss-frame-victim.html
-        //Then it blocks the same script to be executed. So variable ran_script stay undefined or smth like this and we can see it. 
+        //Then it blocks the same script to be executed. So variable ran_script stay undefined or smth like this and we can see it.
         Assert.assertTrue (body.getTextContent().contains ("true"));
     }
 }

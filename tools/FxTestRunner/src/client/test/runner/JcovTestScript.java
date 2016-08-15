@@ -64,7 +64,7 @@ public class JcovTestScript extends TestScript {
         String[] includeClasses = BasicJcovFXInterview.COVERAGE_LIST;
         if (doCoverageStrValue.equals(YesNoQuestion.YES)) {
             this.doCoverage = true;
-            
+
             // prepare class list for coverage
             String arCoverage[] = null;
             try {
@@ -86,11 +86,11 @@ public class JcovTestScript extends TestScript {
 //            checkJCov();
             final String resultFile = testClassName + "." + testName + ".xml";
             jvmArgCoverage = "-javaagent:" + JCOV_LIBRARY_PATH + "=" + jvmArgCoverage + "type=all,file=" + JCOV_RESULT_FOLDER + resultFile;
-            
+
         } else {
             this.doCoverage = false;
         }
         return jvmArgCoverage;
     }
-    
+
 }

@@ -45,9 +45,9 @@ public class ZoomLauncher extends Application{
     protected final static int size = 200;
     protected Scene scene;
     protected WebView view;
-    
+
     protected Button zoomingButton = new Button("Enable zooming");
-    
+
     private EventHandler <ActionEvent> enableZoom = new EventHandler <ActionEvent>() {
         public void handle (ActionEvent t) {
             view.setZoom(zoom);
@@ -55,7 +55,7 @@ public class ZoomLauncher extends Application{
             zoomingButton.setOnAction(disableZoom);
         }
     };
-            
+
     private EventHandler <ActionEvent> disableZoom = new EventHandler <ActionEvent>() {
         public void handle (ActionEvent t) {
             view.setZoom(1);
@@ -63,23 +63,23 @@ public class ZoomLauncher extends Application{
             zoomingButton.setOnAction(enableZoom);
         }
     };
-    
+
     protected void setHandlers() {
         zoomingButton.setOnAction(enableZoom);
     }
-    
+
     public void start(Stage stage) {
         StackPane container = new StackPane();
 
         scene = new Scene(container, 800, 800);
-        
+
         view = new WebView ();
         WebEngine engine = view.getEngine();
         //using CSSLauncher's test.html
         engine.load(CSSLauncher.class.getResource("resources/test.html").toExternalForm());
-        
+
         setHandlers();
-        
+
         GridPane viewPane = new GridPane();
         viewPane.setMaxSize(size, size);
         viewPane.getChildren().add(view);
@@ -91,7 +91,7 @@ public class ZoomLauncher extends Application{
         stage.sizeToScene();
         stage.show();
     }
-    
+
     public static void run() {
         new Thread(new Runnable() {
             public void run() {

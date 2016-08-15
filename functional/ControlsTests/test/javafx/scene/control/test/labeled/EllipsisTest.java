@@ -38,7 +38,7 @@ import test.javaclient.shared.TestBase;
  */
 @RunWith(FilteredTestRunner.class)
 public class EllipsisTest extends TestBase{
-    
+
     @BeforeClass
     public static void runUI(){
         EllipsisApp.main(null);

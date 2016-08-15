@@ -38,13 +38,13 @@ import test.scenegraph.app.AnimationApp.CheckedIds;
 import test.scenegraph.app.AnimationApp.Pages;
 
 public class AnimationTest extends TestBase {
-    
+
     //@RunUI
     @BeforeClass
     public static void runUI() {
         AnimationApp.main(null);
     }
-    
+
 
     protected void clickButton(String name) {
         Wrap<? extends Node> label = null;

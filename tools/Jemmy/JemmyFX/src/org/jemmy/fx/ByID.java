@@ -33,11 +33,11 @@ import org.jemmy.lookup.ByStringLookup;
 import org.jemmy.resources.StringComparePolicy;
 
 /**
- * A criterion to find a control by its ID. 
+ * A criterion to find a control by its ID.
  * <br/><br/>SAMPLES:<a href="../samples/lookup/LookupSample.java">Lookup Sample</a>
  * @param <T>
  * @author Shura
- * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, org.jemmy.lookup.LookupCriteria<javafx.scene.Node>[]) 
+ * @see NodeDock#NodeDock(org.jemmy.interfaces.Parent, org.jemmy.lookup.LookupCriteria<javafx.scene.Node>[])
  */
 public class ByID<T> extends ByStringLookup <T> {
 

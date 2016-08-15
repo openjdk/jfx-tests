@@ -69,11 +69,11 @@ public class ControlsTestBase {
     @Before
     public void before() {
         if (!jemmyStuffConfigured) {
-            //prepare env          
+            //prepare env
             JemmyUtils.initJemmy();
             jemmyStuffConfigured = true;
         }
-    }   
+    }
 
     public static int getMouseSmoothness(){
         return JemmyUtils.getMouseSmoothness();

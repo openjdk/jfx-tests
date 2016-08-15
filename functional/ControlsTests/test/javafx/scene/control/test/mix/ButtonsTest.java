@@ -87,7 +87,7 @@ public class ButtonsTest extends ControlsTestBase {
         scene = TestUtil.getScene();
         parent = scene.as(Parent.class, Node.class);
         clear = parent.lookup(Button.class, new ByText<Button>(CLEAR_BTN)).wrap();
-        
+
         scene.mouse().click();
     }
 

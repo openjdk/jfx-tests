@@ -43,7 +43,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -66,7 +66,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -89,7 +89,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -112,7 +112,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -135,7 +135,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -158,7 +158,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -181,7 +181,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -204,7 +204,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -227,7 +227,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -250,7 +250,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     RectangleBuilder.create()
                         .opacity(0.5)
@@ -274,7 +274,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     RectangleBuilder.create()
                         .opacity(0.000001d)
@@ -297,7 +297,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     RectangleBuilder.create()
                         .opacity(0.9999999d)
@@ -320,7 +320,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     RectangleBuilder.create()
                         .opacity(0)
@@ -343,7 +343,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     RectangleBuilder.create()
                         .opacity(0.5)
@@ -366,7 +366,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     RectangleBuilder.create()
                         .opacity(0.000001d)
@@ -389,7 +389,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     RectangleBuilder.create()
                         .opacity(0.9999999d)
@@ -412,7 +412,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -451,7 +451,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -472,14 +472,14 @@ public enum Factories implements Factory{
                         .height(1)
                         .width(1)
                         .build());
-            
+
         }
     }),
     AddTranslucent01Pixel(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -506,7 +506,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -533,7 +533,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -560,7 +560,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -587,7 +587,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -614,7 +614,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -622,7 +622,7 @@ public enum Factories implements Factory{
                         .build());
             return value;
         }
-        
+
         boolean value = true;
 
         public boolean isLCDWork() {
@@ -644,7 +644,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -665,14 +665,14 @@ public enum Factories implements Factory{
                         .height(1)
                         .width(1)
                         .build());
-            
+
         }
     }),
     AddTranslucent01PixelBeforeText(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -699,7 +699,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -726,7 +726,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -753,7 +753,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -780,7 +780,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -807,7 +807,7 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-            
+
             value.getChildren().addAll(
                     TextBuilder.create()
                         .text("Test")
@@ -815,7 +815,7 @@ public enum Factories implements Factory{
                         .build());
             return value;
         }
-        
+
         boolean value = true;
 
         public boolean isLCDWork() {
@@ -833,10 +833,10 @@ public enum Factories implements Factory{
             value = false;
         }
     });
-    
-    
+
+
     private Factory factory;
-    
+
     private Factories(Factory factory){
         this.factory = factory;
     }
@@ -848,9 +848,9 @@ public enum Factories implements Factory{
     public boolean isLCDWork() {
         return this.factory.isLCDWork();
     }
-    
+
     public void action(Node node){
         this.factory.action(node);
     }
-    
+
 }

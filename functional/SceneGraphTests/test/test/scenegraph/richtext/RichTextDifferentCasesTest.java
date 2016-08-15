@@ -58,7 +58,7 @@ public class RichTextDifferentCasesTest extends TestBase {
     public void checkLayoutSizeTest() {
         testCommon("CheckLayoutSizeTest", null, true, true);
     }
-    
+
     /**
      * Test for line break with big horizontal objects.
      */

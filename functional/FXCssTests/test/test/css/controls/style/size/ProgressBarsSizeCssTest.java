@@ -44,5 +44,5 @@ public class ProgressBarsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.ProgressBars.name();
     }
-    
+
 }

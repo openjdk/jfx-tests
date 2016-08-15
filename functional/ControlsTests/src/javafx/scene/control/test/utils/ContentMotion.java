@@ -70,7 +70,7 @@ public class ContentMotion {
         path = (Path) drawPath(140.0, 140.0, 0);
         path.setStrokeWidth(2);
         path.setStroke(Color.RED);
-        
+
         path.setFill(Color.TRANSPARENT);
 
         pathTransition.setDuration(Duration.millis(motionDuration));

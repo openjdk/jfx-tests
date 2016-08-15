@@ -106,9 +106,9 @@ public class JFXPanelScrollTest extends ControlsTestBase {
         new_rect.translate(-(int)rect.getMinX(), -(int)rect.getMinY());
         frame.setBounds(new_rect);
         Rectangle initial_scene_size = scene.getScreenBounds();
-        
+
         moveMouseToTheRightBottomCorner();
-        
+
         frame.pressMouse(); // due to Jemmy "feature"
         for (int i = 0; i < SHIFT * 2; i++) {
             frame.moveMouse(right + i, bottom + i);
@@ -119,47 +119,47 @@ public class JFXPanelScrollTest extends ControlsTestBase {
             Thread.sleep(5);
         }
         frame.releaseMouse();
-        
+
         TimeUnit.MILLISECONDS.sleep(100);
-        
+
         assertEquals(initial_scene_size.height  + SHIFT, scene.getScreenBounds().height, 3);
         assertEquals(initial_scene_size.width + SHIFT, scene.getScreenBounds().width, 3);
     }
-    
+
     private void moveMouseToTheRightBottomCorner() {
         final java.awt.Rectangle bounds = frame.getBounds();
-        
+
         if (Utils.isWindows()) {
             frame.moveMouse(bounds.width - 2, bounds.height - 2);
             return;
         }
-        
+
         Cursor initialCursor = frame.getCursor();
         assertEquals("[Cursor was not in default state]",
                 Cursor.DEFAULT_CURSOR, initialCursor.getType());
-        
+
         boolean cursorChanged = false;
-        
+
         final int startX = bounds.width - 10;
         final int startY = bounds.height - 10;
-        
+
         final int endX = bounds.width + 2;
         final int endY = bounds.height + 2;
-        
+
         final int deltaX = 1;
         final int deltaY = 1;
-        
+
         int x = startX;
         int y = startY;
-        
+
         while(x <= endX && y <= endY && !cursorChanged) {
-            
+
             x += deltaX;
             y += deltaY;
-            
+
             frame.moveMouse(x, y);
             frame.getQueueTool().waitEmpty(150);
-            
+
             Cursor currentCursor = frame.getCursor();
             if (currentCursor.getType() != initialCursor.getType()) {
                 cursorChanged = true;

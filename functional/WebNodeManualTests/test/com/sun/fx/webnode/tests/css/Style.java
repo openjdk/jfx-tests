@@ -39,7 +39,7 @@ public class Style {
     public static void fontSmoothing(){
         StyleLauncher.run("-fx-font-smoothing-type: gray;");
     }
-    
+
     /**
      * Test for setting font scale.
      */
@@ -55,7 +55,7 @@ public class Style {
     public static void maxWidth(){
         StyleLauncher.run("-fx-max-width: 100;");
     }
-    
+
     /**
      * Test for setting maximum height of WebView.
      */
@@ -63,7 +63,7 @@ public class Style {
     public static void maxHeight(){
         StyleLauncher.run("-fx-max-height: 100;");
     }
-    
+
     /**
      * Test for setting minimum width of WebView.
      */
@@ -71,7 +71,7 @@ public class Style {
     public static void minWidth(){
         StyleLauncher.run("-fx-min-width: 400;");
     }
-    
+
     /**
      * Test for setting minimum height of WebView.
      */
@@ -79,7 +79,7 @@ public class Style {
     public static void minHeight(){
         StyleLauncher.run("-fx-min-height: 400;");
     }
-    
+
     /**
      * Test for setting preferred width of WebView.
      */
@@ -87,7 +87,7 @@ public class Style {
     public static void prefWidth(){
         StyleLauncher.run("-fx-pref-width: 100;");
     }
-    
+
     /**
      * Test for setting preferred height of WebView.
      */
@@ -95,7 +95,7 @@ public class Style {
     public static void prefHeight(){
         StyleLauncher.run("-fx-pref-height: 100;");
     }
-    
+
     /**
      * Test Helvetica font rendering on Mac
      */

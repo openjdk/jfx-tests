@@ -51,14 +51,14 @@ public class StyleLauncher extends CSSLauncher {
             stylingButton.setOnAction(enableStyle);
         }
     };
-    
+
     @Override
     protected void setHandlers() {
         stylingButton.setOnAction(enableStyle);
     }
-    
+
     public static void run(final String url) {
-        final String[] args = new String[] {url};        
+        final String[] args = new String[] {url};
         new Thread(new Runnable() {
             public void run() {
                 Application.launch(StyleLauncher.class, args);

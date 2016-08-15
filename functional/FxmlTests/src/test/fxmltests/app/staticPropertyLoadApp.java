@@ -125,11 +125,11 @@ public class staticPropertyLoadApp extends BasicButtonChooserApp {
         slotDefaultImageview, slotDefaultPane, slotControllerFactory,
         specificSignatureMethod, loadfontSlot, scenebuilderSlot,
         scenebuilderNoRoot, references2, apConstraints, coerce, listviewItems, listenerNullArg,
-        gridapplet, csspath, errorFXML, colorValueOF, escapeCharacter, collectionEventsHandlers, 
+        gridapplet, csspath, errorFXML, colorValueOF, escapeCharacter, collectionEventsHandlers,
         noArgControllerMethod, overloadedControllerMethod, customIDProperty, unknownCustomType,
         baseControllerProperty, relativeStylesheet, FXMLLoaderAPI, fullyQualifiedNames, importPI,
-	beanInstantiation, valueOf, root, fxId, fxController, noDefaultController, lateRoot, 
-	lateController, variableResolution, externalScript
+    beanInstantiation, valueOf, root, fxId, fxController, noDefaultController, lateRoot,
+    lateController, variableResolution, externalScript
 
     }
 
@@ -150,7 +150,7 @@ public class staticPropertyLoadApp extends BasicButtonChooserApp {
         @Override
         public Node drawNode() {
             Node result = redRectangle;
-            
+
             VBox vb = null;
 
             if (null != impl_getPathToResource()) {
@@ -305,7 +305,7 @@ public class staticPropertyLoadApp extends BasicButtonChooserApp {
                 FXMLLoader fxmlLoader2 = new FXMLLoader();
                 is = resource.openStream();
                 ClassLoader defaultClassLoader = fxmlLoader2.getClassLoader();
-                
+
                 fxmlLoader2.setBuilderFactory(new JavaFXBuilderFactory(defaultClassLoader));
                 color = (Color) fxmlLoader2.load(is); // see RT-18091
             } catch (Exception e) {
@@ -840,7 +840,7 @@ public class staticPropertyLoadApp extends BasicButtonChooserApp {
     }
 
 /*
- * getNamespace test    
+ * getNamespace test
  */
     private class namespaceSlot extends TestNodeWithIOExceptionProcessing {
 
@@ -987,7 +987,7 @@ public class staticPropertyLoadApp extends BasicButtonChooserApp {
                 System.out.println("THROWN   msg: " + e.getMessage());
                 System.out.println("THROWN cause: " + e.getCause());
                 exception1Thrown = true;
-                
+
                 ParseTraceElement ptes[] = fxmlLoader.impl_getParseTrace();
                 for (ParseTraceElement pte: ptes) {
                     // see rt-19329
@@ -1034,15 +1034,15 @@ public class staticPropertyLoadApp extends BasicButtonChooserApp {
  *
 Class javafx/fxml/FXMLLoader
  *
-+ getBuilderFactory()Ljavafx/util/BuilderFactory; 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	-
-+ getCharset()Ljava/nio/charset/Charset; 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	-
-+ getController()Ljava/lang/Object; 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	-
-+ getIncludes()Ljava/util/List; 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	-
-getLoadListener()Lcom/sun/javafx/fxml/LoadListener; 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	-
-+ getLocation()Ljava/net/URL; 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	-
-+ getNamespace()Ljavafx/collections/ObservableMap; 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	-
-+ getResources()Ljava/util/ResourceBundle; 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	-
-+ getRoot()Ljava/lang/Object; 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	- 	-
++ getBuilderFactory()Ljavafx/util/BuilderFactory;   -   -   -   -   -   -   -   -   -   -   -   -
++ getCharset()Ljava/nio/charset/Charset;    -   -   -   -   -   -   -   -   -   -   -   -
++ getController()Ljava/lang/Object;     -   -   -   -   -   -   -   -   -   -   -   -
++ getIncludes()Ljava/util/List;     -   -   -   -   -   -   -   -   -   -   -   -
+getLoadListener()Lcom/sun/javafx/fxml/LoadListener;     -   -   -   -   -   -   -   -   -   -   -   -
++ getLocation()Ljava/net/URL;   -   -   -   -   -   -   -   -   -   -   -   -
++ getNamespace()Ljavafx/collections/ObservableMap;  -   -   -   -   -   -   -   -   -   -   -   -
++ getResources()Ljava/util/ResourceBundle;  -   -   -   -   -   -   -   -   -   -   -   -
++ getRoot()Ljava/lang/Object;   -   -   -   -   -   -   -   -   -   -   -   -
 isStaticLoad()Z
  */
  //   Button b;
@@ -1126,7 +1126,7 @@ isStaticLoad()Z
                     // see rt-19329
                     System.out.println("trace element: " + pte);
                 }
-                
+
             }
             MenuBar mb = new MenuBar();
             mb.getMenus().add(uplevelNode);
@@ -1371,14 +1371,14 @@ isStaticLoad()Z
 
             RT_16724ControllerFactory cf = new RT_16724ControllerFactory();
             try {
-                
-                uplevelNode = 
+
+                uplevelNode =
                     FXMLLoader.load(resource, null, null,  cf);
 
                 cntrlrFctryInvoked = cf.isInvoked();
                 RT_16724Controller cntrlr = cf.getCntrlr();
                 cntrlrInvoked = cntrlr.isInvoked();
-                
+
                 fxmlLoader2.setControllerFactory(cf);
                 cfViaGetter = fxmlLoader2.getControllerFactory();
 
@@ -1470,7 +1470,7 @@ isStaticLoad()Z
                 System.out.println("message: " + e.getMessage());
                 reportGetterFailure("message: " + e.getMessage());
             }
-                  
+
             System.out.println("font name: " + fnt.getName());
             if ( 0 != "Lucida Bright Demibold".compareTo(fnt.getName())) {
                 reportGetterFailure("font name check failed");
@@ -1510,43 +1510,43 @@ isStaticLoad()Z
             return tmpScene.getRoot();
         }
     }
-    
-    
+
+
     public static final String rt18299ResourcePath = RESOURCE_BASE + "rt18299-scene-without-root.fxml";
     private class scenebuilderNoRootSlot extends scenebuilderSlot
     {
-        
+
         @Override
         protected String impl_getPathToResource()
         {
             return rt18299ResourcePath;
         }
-        
+
     }
-    
+
     public static final String rt19329ResourcePath = RESOURCE_BASE + "rt19329-error-FXML.fxml";
     public static final String ERROR_INFO_ID = "error_info";
     //public static final String FXML_ERROR_LOCATION = "<ErrorTag is not a valid type.>fxml:12";
     private class errorFXMLLoader extends TestNodeWithIOExceptionProcessing
     {
-        
+
         @Override
-        protected String impl_getPathToResource() 
+        protected String impl_getPathToResource()
         {
             return rt19329ResourcePath;
         }
 
         @Override
-        protected Node impl_drawNode() throws IOException 
+        protected Node impl_drawNode() throws IOException
         {
             final Label label = new Label();
             label.setId(ERROR_INFO_ID);
             FXMLLoader fxmlLoader = new FXMLLoader(resource);
-            try 
+            try
             {
                  fxmlLoader.load();
-            } 
-            catch(IOException e) 
+            }
+            catch(IOException e)
             {
                 boolean lineNumberPresentAndCorrect = false;
                 System.out.println("Exception text=" + e.getMessage());
@@ -1559,9 +1559,9 @@ isStaticLoad()Z
             reportGetterFailure("wrong error message");
             return label;
         }
-        
+
     }
-    
+
     public static final String rt18218ResourcePath = RESOURCE_BASE + "rt18218-unknown-custom-type.fxml";
     public static final String LOADER_LOG_ID = "loader_log";
     public static final String SUCCESSFUL_STATIC_LOAD = "success";
@@ -1572,20 +1572,20 @@ isStaticLoad()Z
         {
             return rt18218ResourcePath;
         }
-        
+
         @Override
-        protected Node impl_drawNode() throws IOException 
+        protected Node impl_drawNode() throws IOException
         {
             final Label label = new Label();
             label.setId(LOADER_LOG_ID);
             FXMLLoader fxmlLoader = new FXMLLoader(resource);
             fxmlLoader.impl_setStaticLoad(true);
-            try 
+            try
             {
                  fxmlLoader.load();
                  label.setText(SUCCESSFUL_STATIC_LOAD);
-            } 
-            catch(LoadException e) 
+            }
+            catch(LoadException e)
             {
                 e.printStackTrace();
                 for(ParseTraceElement trace: fxmlLoader.impl_getParseTrace())
@@ -1596,29 +1596,29 @@ isStaticLoad()Z
 
             return label;
         }
-        
+
     }
-    
+
     public static final String rt14345ResourcePath = RESOURCE_BASE + "rt14345-color-valueOf.fxml";
     private class ColorValueOf extends TestNodeWithIOExceptionProcessing
     {
-        
+
         @Override
-        protected String impl_getPathToResource() 
+        protected String impl_getPathToResource()
         {
             return rt14345ResourcePath;
         }
 
         @Override
-        protected Node impl_drawNode() throws IOException 
+        protected Node impl_drawNode() throws IOException
         {
             FXMLLoader fxmlLoader = new FXMLLoader(resource);
             Node node = null;
-            try 
+            try
             {
                  node = (Node) fxmlLoader.load();
-            } 
-            catch(Exception e) 
+            }
+            catch(Exception e)
             {
                 System.out.println("message: " + e.getMessage());
                 reportGetterFailure("message: " + e.getMessage());
@@ -1626,50 +1626,50 @@ isStaticLoad()Z
 
             return node;
         }
-        
+
     }
-    
+
     public static final String rt18680ResourcePath = RESOURCE_BASE + "rt18680-escape-character.fxml";
     private class EscapeCharacter extends TestNodeWithIOExceptionProcessing
     {
-        
+
         @Override
-        protected String impl_getPathToResource() 
+        protected String impl_getPathToResource()
         {
             return rt18680ResourcePath;
         }
 
         @Override
-        protected Node impl_drawNode() throws IOException 
+        protected Node impl_drawNode() throws IOException
         {
             FXMLLoader fxmlLoader = new FXMLLoader(resource);
             VBox node = null;
-            try 
+            try
             {
                  node = (VBox) fxmlLoader.load();
                  for(Node child: node.getChildren())
                  {
-                     if((child.getId().equals("label_1") 
-                             || child.getId().equals("label_2")) 
+                     if((child.getId().equals("label_1")
+                             || child.getId().equals("label_2"))
                          && !((Label) child).getText().equals("${foo}"))
                      {
                          reportGetterFailure(child.getId() + " text check failed");
                      }
-                     if((child.getId().equals("label_3") 
-                             || child.getId().equals("label_4")) 
+                     if((child.getId().equals("label_3")
+                             || child.getId().equals("label_4"))
                          && !((Label) child).getText().equals("@{foo}"))
                      {
                          reportGetterFailure(child.getId() + " text check failed");
                      }
-                     if((child.getId().equals("label_5") 
-                             || child.getId().equals("label_6")) 
+                     if((child.getId().equals("label_5")
+                             || child.getId().equals("label_6"))
                          && !((Label) child).getText().equals("%{foo}"))
                      {
                          reportGetterFailure(child.getId() + " text check failed");
                      }
                  }
-            } 
-            catch(Exception e) 
+            }
+            catch(Exception e)
             {
                 System.out.println("message: " + e.getMessage());
                 reportGetterFailure("message: " + e.getMessage());
@@ -1677,37 +1677,37 @@ isStaticLoad()Z
 
             return node;
         }
-        
+
     }
-    
+
     public static final String rt17714ResourcePath = RESOURCE_BASE + "rt17714-collection-events-handlers.fxml";
     private class CollectionEventsHandlers extends TestNodeWithIOExceptionProcessing
     {
-        
+
         @Override
-        protected String impl_getPathToResource() 
+        protected String impl_getPathToResource()
         {
             return rt17714ResourcePath;
         }
 
         @Override
-        protected Node impl_drawNode() throws IOException 
+        protected Node impl_drawNode() throws IOException
         {
             FXMLLoader fxmlLoader = new FXMLLoader(resource);
             ObservableList<String> observableArrayList = null;
             //javafx.collections.FXCollections.observableArrayList();
-            try 
+            try
             {
                  observableArrayList = (ObservableList<String>) fxmlLoader.load();
                  System.out.println(fxmlLoader.getController().getClass());
                  observableArrayList.add("New added string");
-            } 
-            catch(Exception e) 
+            }
+            catch(Exception e)
             {
                 System.out.println("message: " + e.getMessage());
                 reportGetterFailure("message: " + e.getMessage());
             }
-            
+
             if(1 != CollectionController.callCount)
             {
                 reportGetterFailure("Controller didn't handle event");
@@ -1715,9 +1715,9 @@ isStaticLoad()Z
 
             return new Label(observableArrayList.get(0).toString());
         }
-        
+
     }
-    
+
     public static final String rt18229ResourcePath = RESOURCE_BASE + "rt18229-no-args-controller-method.fxml";
     private class NoArgsControllerMethod extends TestNodeWithIOExceptionProcessing
     {
@@ -1726,7 +1726,7 @@ isStaticLoad()Z
         {
             return rt18229ResourcePath;
         }
-        
+
         @Override
         public Node impl_drawNode() throws IOException
         {
@@ -1746,17 +1746,17 @@ isStaticLoad()Z
             return button;
         }
     }
-    
+
     public static final String rt18229OverloadedResourcePath = RESOURCE_BASE + "rt18229-overloaded-controller-method.fxml";
     private class OverloadedControllerMethod extends TestNodeWithIOExceptionProcessing
     {
-        
+
         @Override
         protected String impl_getPathToResource()
         {
             return rt18229OverloadedResourcePath;
         }
-        
+
         @Override
         public Node impl_drawNode() throws IOException
         {
@@ -1774,19 +1774,19 @@ isStaticLoad()Z
             }
             return button;
         }
-        
+
     }
-    
+
     public static final String rt17657ResourcePath = RESOURCE_BASE + "rt17657-custom-id-property.fxml";
     private class CustomIDProperty extends TestNodeWithIOExceptionProcessing
     {
-        
+
         @Override
         protected String impl_getPathToResource()
         {
             return rt17657ResourcePath;
         }
-        
+
         @Override
         public Node impl_drawNode() throws IOException
         {
@@ -1804,21 +1804,21 @@ isStaticLoad()Z
                 reportGetterFailure("message: " + e.getMessage());
             }
             return button;
-            
+
         }
-        
+
     }
-    
+
     public static final String rt16722ResourcePath = RESOURCE_BASE + "rt16722-base-controller-properties.fxml";
     private class BaseColntrollerProperty extends TestNodeWithIOExceptionProcessing
     {
-        
+
         @Override
         protected String impl_getPathToResource()
         {
             return rt16722ResourcePath;
         }
-        
+
         @Override
         public Node impl_drawNode() throws IOException
         {
@@ -1835,11 +1835,11 @@ isStaticLoad()Z
                 reportGetterFailure("message: " + e.getMessage());
             }
             return vBox;
-            
+
         }
-        
+
     }
-    
+
     public static final String rt18956ResourcePath = RESOURCE_BASE + "rt18956-relative-stylesheets.fxml";
     private class RelativeStylesheet extends TestNodeWithIOExceptionProcessing
     {
@@ -1848,7 +1848,7 @@ isStaticLoad()Z
         {
             return rt18956ResourcePath;
         }
-        
+
         @Override
         public Node impl_drawNode() throws IOException
         {
@@ -1858,43 +1858,43 @@ isStaticLoad()Z
             {
                 label = (Label) loader.load();
                 System.out.println("font:" + label.getFont().toString());
-                
+
                 System.out.println("Style:");
                 System.out.println(label.getStyle());
                 final ObservableList<String> sheets = label.getStylesheets();
                 for (String str : sheets)
                     System.out.println("sheet:" + str);
                 if (null != label.getBackground()) {
-                final List<BackgroundFill> lbf = 
+                final List<BackgroundFill> lbf =
                     label.getBackground().getFills();
-                
-                
+
+
                 for (BackgroundFill bf : lbf)
                     System.out.println("fill:" + bf.toString());
                 } else {
                     System.out.println("null == label.getBackground() ");
                 }
-                final List<CssMetaData<? extends Styleable, ?>> ls = 
+                final List<CssMetaData<? extends Styleable, ?>> ls =
                     label.getControlCssMetaData();
-                
-                
+
+
                 for (CssMetaData<? extends Styleable, ?> md : ls)
                 {
                     System.out.println("css:" + md.toString());
                     if (md.getProperty().equals("-fx-region-background")){
-                        final List<CssMetaData<? extends Styleable, ?>> subList = 
+                        final List<CssMetaData<? extends Styleable, ?>> subList =
                             md.getSubProperties();
                             for (CssMetaData<? extends Styleable, ?> smd : subList){
                                 System.out.println("   subcss:" + smd.toString());
                                 if (smd.getProperty().equals("-fx-background-color")){
-                                    
+
                                 }
                             }
                     }
-                    
+
                 }
-                
-                
+
+
             }
             catch(Exception e)
             {
@@ -1903,21 +1903,21 @@ isStaticLoad()Z
                 reportGetterFailure("message: " + e.getMessage());
             }
             return label;
-            
+
         }
-        
+
     }
-    
+
     public static final String rt16815ResourcePath = RESOURCE_BASE + "FXMLLoaderAPI.fxml";
     private class FXMLLoaderAPI extends TestNodeWithIOExceptionProcessing
     {
-        
+
         @Override
         protected String impl_getPathToResource()
         {
             return rt16815ResourcePath;
         }
-        
+
         @Override
         public Node impl_drawNode() throws IOException
         {
@@ -1960,9 +1960,9 @@ isStaticLoad()Z
                 reportGetterFailure("message: " + e.getMessage());
             }
             return VBoxBuilder.create().children(list).build();
-            
+
         }
-        
+
     }
 
     public static final String references2Path = RESOURCE_BASE + "ref_test.fxml";
@@ -1981,7 +1981,7 @@ isStaticLoad()Z
             try {
                 FXMLLoader fxmlLoader2 = new FXMLLoader();
                 is = resource.openStream();
-                anchorPane = (AnchorPane) fxmlLoader2.load(is); 
+                anchorPane = (AnchorPane) fxmlLoader2.load(is);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -1989,8 +1989,8 @@ isStaticLoad()Z
             } finally {
                 is.close();
             }
-            
-            
+
+
             Button button = null;
             Label label = null;
             for (Node node : anchorPane.getChildren()) {
@@ -2001,11 +2001,11 @@ isStaticLoad()Z
                     label = (Label)node;
                 }
             }
-            
+
             if ( null != label && null != button ) {
                 System.out.println("label: " + label.getFont() + " / " + label.getTextFill());
                 System.out.println("button: " + button.getFont() + " / " + button.getTextFill());
-               
+
                 if (label.getTextFill().equals(button.getTextFill()) &&
                     label.getFont().equals(button.getFont())) {
                         return retRec;
@@ -2017,7 +2017,7 @@ isStaticLoad()Z
     }
 
 
-    
+
     public static final String apConstraintsPath = RESOURCE_BASE + "project-with-all-AnchorPane-constraints.fxml";
     private class apConstraintsSlot extends TestNodeWithIOExceptionProcessing {
         // RT-18178
@@ -2034,7 +2034,7 @@ isStaticLoad()Z
             try {
                 FXMLLoader fxmlLoader2 = new FXMLLoader();
                 is = resource.openStream();
-                anchorPane = (AnchorPane) fxmlLoader2.load(is); 
+                anchorPane = (AnchorPane) fxmlLoader2.load(is);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2042,14 +2042,14 @@ isStaticLoad()Z
             } finally {
                 is.close();
             }
-            
+
                         return retRec;
         }
     }
 
 
 
-        
+
     public static final String coercePath = RESOURCE_BASE + "project-with-all-p2-components.fxml";
     private class coerceSlot extends TestNodeWithIOExceptionProcessing {
         // RT-18178
@@ -2066,7 +2066,7 @@ isStaticLoad()Z
             try {
                 FXMLLoader fxmlLoader2 = new FXMLLoader();
                 is = resource.openStream();
-                anchorPane = (AnchorPane) fxmlLoader2.load(is); 
+                anchorPane = (AnchorPane) fxmlLoader2.load(is);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2094,7 +2094,7 @@ isStaticLoad()Z
             try {
                 FXMLLoader fxmlLoader2 = new FXMLLoader();
                 is = resource.openStream();
-                gridPane = (GridPane) fxmlLoader2.load(is); 
+                gridPane = (GridPane) fxmlLoader2.load(is);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2105,8 +2105,8 @@ isStaticLoad()Z
             return retRec;
         }
     }
-        
-    /* 
+
+    /*
     public static final String csspathPath = RESOURCE_BASE + "rt18956.xml";
     private class csspathSlot extends TestNodeWithIOExceptionProcessing {
         // RT-18956
@@ -2126,7 +2126,7 @@ isStaticLoad()Z
 
                 is = resource.openStream();
                 URL ggg;
-                AnchorPane sc = (AnchorPane) fxmlLoader2.load(is); 
+                AnchorPane sc = (AnchorPane) fxmlLoader2.load(is);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2138,7 +2138,7 @@ isStaticLoad()Z
         }
     }
     */
-    
+
     public static final String listviewPath = RESOURCE_BASE + "listview-items.fxml";
     private class listviewSlot extends TestNodeWithIOExceptionProcessing {
         // RT-18178
@@ -2155,7 +2155,7 @@ isStaticLoad()Z
             try {
                 FXMLLoader fxmlLoader2 = new FXMLLoader();
                 is = resource.openStream();
-                anchorPane = (AnchorPane) fxmlLoader2.load(is); 
+                anchorPane = (AnchorPane) fxmlLoader2.load(is);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2163,7 +2163,7 @@ isStaticLoad()Z
             } finally {
                 is.close();
             }
-            
+
             ListView lv = null;
             for (Node node : anchorPane.getChildren()) {
                 System.out.println("anchorpane child: " + node);
@@ -2171,7 +2171,7 @@ isStaticLoad()Z
                     lv = (ListView)node;
                 }
             }
-            
+
             int hboxcount = 0;
             if (null != lv) {
                 for (Object node : lv.getItems()) {
@@ -2182,7 +2182,7 @@ isStaticLoad()Z
                 }
 
             }
-            
+
             if ( 3 != hboxcount ) {
                 reportGetterFailure("wrong items/items count.");
                 return redRectangle;
@@ -2302,10 +2302,10 @@ isStaticLoad()Z
             return retRec;
         }
     }
-    
+
     public static final String fullyQualifiedNamesResPath = RESOURCE_BASE + "fully-qualified-name.fxml";
     private class FullyQualifiedNamesSlot extends TestNodeWithIOExceptionProcessing {
-        
+
         @Override
         protected String impl_getPathToResource() {
             return fullyQualifiedNamesResPath;
@@ -2318,7 +2318,7 @@ isStaticLoad()Z
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 is = resource.openStream();
-                label = (Label) fxmlLoader.load(is); 
+                label = (Label) fxmlLoader.load(is);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2329,10 +2329,10 @@ isStaticLoad()Z
             return label;
         }
     }
-    
+
     public static final String importResPath = RESOURCE_BASE + "import.fxml";
     private class ImportSlot extends TestNodeWithIOExceptionProcessing {
-        
+
         @Override
         protected String impl_getPathToResource() {
             return importResPath;
@@ -2345,7 +2345,7 @@ isStaticLoad()Z
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 is = resource.openStream();
-                label = (Label) fxmlLoader.load(is); 
+                label = (Label) fxmlLoader.load(is);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2356,10 +2356,10 @@ isStaticLoad()Z
             return label;
         }
     }
-    
+
     public static final String beanInstantiationResPath = RESOURCE_BASE + "bean-instantiation.fxml";
     private class BeanInstantiationSlot extends TestNodeWithIOExceptionProcessing {
-        
+
         @Override
         protected String impl_getPathToResource() {
             return beanInstantiationResPath;
@@ -2368,13 +2368,13 @@ isStaticLoad()Z
         @Override
         public Node impl_drawNode() throws IOException {
             Label label = new Label();
-	    label.setId("label_from_bean");
+        label.setId("label_from_bean");
             InputStream is = null;
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 is = resource.openStream();
-		SimpleBean bean = (SimpleBean) fxmlLoader.load(is);
-                label.setText(bean.getContent()); 
+        SimpleBean bean = (SimpleBean) fxmlLoader.load(is);
+                label.setText(bean.getContent());
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2385,10 +2385,10 @@ isStaticLoad()Z
             return label;
         }
     }
-    
+
     public static final String valueOfResPath = RESOURCE_BASE + "value-of.fxml";
     private class ValueOfSlot extends TestNodeWithIOExceptionProcessing {
-        
+
         @Override
         protected String impl_getPathToResource() {
             return valueOfResPath;
@@ -2397,13 +2397,13 @@ isStaticLoad()Z
         @Override
         public Node impl_drawNode() throws IOException {
             Label label = new Label();
-	    label.setId("value_of_label");
+        label.setId("value_of_label");
             InputStream is = null;
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 is = resource.openStream();
-		Double d = (Double) fxmlLoader.load(is);
-                label.setText(d.toString()); 
+        Double d = (Double) fxmlLoader.load(is);
+                label.setText(d.toString());
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2414,10 +2414,10 @@ isStaticLoad()Z
             return label;
         }
     }
-    
+
     public static final String rootResPath = RESOURCE_BASE + "root.fxml";
     private class RootSlot extends TestNodeWithIOExceptionProcessing {
-        
+
         @Override
         protected String impl_getPathToResource() {
             return rootResPath;
@@ -2425,14 +2425,14 @@ isStaticLoad()Z
 
         @Override
         public Node impl_drawNode() throws IOException {
-	    VBox vb = new VBox();
-	    vb.setId("vb_root");
+        VBox vb = new VBox();
+        vb.setId("vb_root");
             InputStream is = null;
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-		fxmlLoader.setRoot(vb);
+        fxmlLoader.setRoot(vb);
                 is = resource.openStream();
-		fxmlLoader.load(is);
+        fxmlLoader.load(is);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2443,10 +2443,10 @@ isStaticLoad()Z
             return vb;
         }
     }
-    
+
     public static final String fxIdResPath = RESOURCE_BASE + "fx-id.fxml";
     private class FxIdSlot extends TestNodeWithIOExceptionProcessing {
-        
+
         @Override
         protected String impl_getPathToResource() {
             return fxIdResPath;
@@ -2454,13 +2454,13 @@ isStaticLoad()Z
 
         @Override
         public Node impl_drawNode() throws IOException {
-	    AnchorPane ap = null;
+        AnchorPane ap = null;
             InputStream is = null;
-	    FXMLLoader fxmlLoader = null;
+        FXMLLoader fxmlLoader = null;
             try {
                 fxmlLoader = new FXMLLoader();
-		is = resource.openStream();
-		ap = (AnchorPane) fxmlLoader.load(is);
+        is = resource.openStream();
+        ap = (AnchorPane) fxmlLoader.load(is);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2468,19 +2468,19 @@ isStaticLoad()Z
             } finally {
                 is.close();
             }
-	    Object label = fxmlLoader.getNamespace().get("cat_o_dog_label");
-	    if(label == null || !(label instanceof Label))
-	    {
-		reportGetterFailure("no label with id cat_o_dog_label");
-	    }
-	    if(label instanceof Label && !((Label) label).getText().equals("cat-o-dog"))
-	    {
-		reportGetterFailure("invalid text in label");
-	    }
+        Object label = fxmlLoader.getNamespace().get("cat_o_dog_label");
+        if(label == null || !(label instanceof Label))
+        {
+        reportGetterFailure("no label with id cat_o_dog_label");
+        }
+        if(label instanceof Label && !((Label) label).getText().equals("cat-o-dog"))
+        {
+        reportGetterFailure("invalid text in label");
+        }
             return ap;
         }
     }
-    
+
     private class controllerAttributeSlot extends TestNodeWithIOExceptionProcessing {
 
         MyRootElement2 mr;
@@ -2492,10 +2492,10 @@ isStaticLoad()Z
 
         @Override
         public Node impl_drawNode() {
-	    FXMLLoader loader = new FXMLLoader();
+        FXMLLoader loader = new FXMLLoader();
             try {
                 // https://javafx-jira.kenai.com/browse/RT-26774
-		//mr = (MyRootElement2) FXMLLoader.load(resource);
+        //mr = (MyRootElement2) FXMLLoader.load(resource);
                 loader.setLocation(resource);
                 mr = (MyRootElement2)loader.load();
             } catch (Exception e) {
@@ -2505,17 +2505,17 @@ isStaticLoad()Z
             }
 
             if(!(loader.getController() instanceof MyRootElement2))
-	    {
-		reportGetterFailure("wrong controller");
-	    }
-	    
-	    return mr;
+        {
+        reportGetterFailure("wrong controller");
+        }
+
+        return mr;
         }
     }
-    
+
     public static final String noDefControllerResPath = RESOURCE_BASE + "no-default-controller.fxml";
     private class NoDefaultControllerSlot extends TestNodeWithIOExceptionProcessing {
-        
+
         @Override
         protected String impl_getPathToResource() {
             return noDefControllerResPath;
@@ -2523,15 +2523,15 @@ isStaticLoad()Z
 
         @Override
         public Node impl_drawNode() throws IOException {
-	    Button button = null;
-	    InputStream is = null;
-	    FXMLLoader fxmlLoader = null;
-	    MyRootElement myRootElement = new MyRootElement();
+        Button button = null;
+        InputStream is = null;
+        FXMLLoader fxmlLoader = null;
+        MyRootElement myRootElement = new MyRootElement();
             try {
                 fxmlLoader = new FXMLLoader();
-		fxmlLoader.setController(myRootElement);
+        fxmlLoader.setController(myRootElement);
                 is = resource.openStream();
-		button = (Button) fxmlLoader.load(is);
+        button = (Button) fxmlLoader.load(is);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2539,16 +2539,16 @@ isStaticLoad()Z
             } finally {
                 is.close();
             }
-	    if(fxmlLoader.getController() != myRootElement)
-	    {
-		reportGetterFailure("Wrong controller");
-	    }
+        if(fxmlLoader.getController() != myRootElement)
+        {
+        reportGetterFailure("Wrong controller");
+        }
             return button;
         }
     }
-    
+
     private class LateRootSlot extends TestNodeWithIOExceptionProcessing {
-        
+
         @Override
         protected String impl_getPathToResource() {
             return rootResPath;
@@ -2556,15 +2556,15 @@ isStaticLoad()Z
 
         @Override
         public Node impl_drawNode() throws IOException {
-	    VBox vb = new VBox();
-	    vb.setId("vb_root");
-	    Node node = null;
-	    FXMLLoader fxmlLoader = new FXMLLoader();
+        VBox vb = new VBox();
+        vb.setId("vb_root");
+        Node node = null;
+        FXMLLoader fxmlLoader = new FXMLLoader();
             InputStream is = null;
             try {
-		is = resource.openStream();
-		node = (Node) fxmlLoader.load(is);
-		fxmlLoader.setRoot(vb);
+        is = resource.openStream();
+        node = (Node) fxmlLoader.load(is);
+        fxmlLoader.setRoot(vb);
             } catch (LoadException e) {
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
@@ -2576,16 +2576,16 @@ isStaticLoad()Z
             } finally {
                 is.close();
             }
-//	    if(node.getId() == null || !node.getId().equals("default_root"))
-//	    {
-//		reportGetterFailure("Root id: " + node.getId());
-//	    }
-	    return redRectangle;
+//      if(node.getId() == null || !node.getId().equals("default_root"))
+//      {
+//      reportGetterFailure("Root id: " + node.getId());
+//      }
+        return redRectangle;
         }
     }
-    
+
     private class LateControllerSlot extends TestNodeWithIOExceptionProcessing {
-        
+
         @Override
         protected String impl_getPathToResource() {
             return noDefControllerResPath;
@@ -2593,31 +2593,31 @@ isStaticLoad()Z
 
         @Override
         public Node impl_drawNode() throws IOException {
-	    Button button = null;
-	    InputStream is = null;
-	    FXMLLoader fxmlLoader = new FXMLLoader();
-	    MyRootElement myRootElement = new MyRootElement();
+        Button button = null;
+        InputStream is = null;
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        MyRootElement myRootElement = new MyRootElement();
             try {
-		is = resource.openStream();
-		fxmlLoader.load(is);
-		fxmlLoader.setController(myRootElement);
+        is = resource.openStream();
+        fxmlLoader.load(is);
+        fxmlLoader.setController(myRootElement);
             } catch (Exception e) {
-                
-		if(e instanceof LoadException && e.getMessage().contains("No controller specified."))
-		{
-		    return retRec;
-		}
+
+        if(e instanceof LoadException && e.getMessage().contains("No controller specified."))
+        {
+            return retRec;
+        }
                 e.printStackTrace();
                 System.out.println("message: " + e.getMessage());
                 reportGetterFailure("exception thrown.");
             } finally {
                 is.close();
             }
-	    reportGetterFailure("Controller is not null.");
-	    return redRectangle;
+        reportGetterFailure("Controller is not null.");
+        return redRectangle;
         }
     }
-    
+
     private class VariableResolutionSlot extends TestNodeWithIOExceptionProcessing {
 
         VBox vb;
@@ -2635,23 +2635,23 @@ isStaticLoad()Z
                 System.out.println("message: " + e.getMessage());
                 reportGetterFailure("exception thrown.");
             }
-	    LinkedList<ToggleGroup> toggleGroups = new LinkedList<ToggleGroup>();
-	    for(Node child: vb.getChildren())
-	    {
-		toggleGroups.add(((RadioButton) child).getToggleGroup());
-	    }
-	    for(int i = 0; i < toggleGroups.size() - 2; i ++)
-	    {
-		if(!toggleGroups.get(i).equals(toggleGroups.get(i + 1)))
-		{
-		    reportGetterFailure("failed.");
-		    return redRectangle;
-		}
-	    }
+        LinkedList<ToggleGroup> toggleGroups = new LinkedList<ToggleGroup>();
+        for(Node child: vb.getChildren())
+        {
+        toggleGroups.add(((RadioButton) child).getToggleGroup());
+        }
+        for(int i = 0; i < toggleGroups.size() - 2; i ++)
+        {
+        if(!toggleGroups.get(i).equals(toggleGroups.get(i + 1)))
+        {
+            reportGetterFailure("failed.");
+            return redRectangle;
+        }
+        }
             return retRec;
         }
     }
-    
+
     public static final String externalScriptResPath = RESOURCE_BASE + "external-script.fxml";
     private class ExternalScriptCodeSlot extends TestNodeWithIOExceptionProcessing
     {
@@ -2660,7 +2660,7 @@ isStaticLoad()Z
         {
             return externalScriptResPath;
         }
-        
+
         @Override
         public Node impl_drawNode() throws IOException
         {
@@ -2680,7 +2680,7 @@ isStaticLoad()Z
         }
     }
 
-    
+
     @Override
     public TestNode setup() {
         System.out.println("java.library.path=" + System.getProperty("java.library.path"));
@@ -2752,19 +2752,19 @@ isStaticLoad()Z
         hm.add(new Pair<String, TestNode>(Pages.relativeStylesheet.name(), new RelativeStylesheet()));
         hm.add(new Pair<String, TestNode>(Pages.FXMLLoaderAPI.name(), new FXMLLoaderAPI()));
         hm.add(new Pair<String, TestNode>(Pages.fullyQualifiedNames.name(), new FullyQualifiedNamesSlot()));
-	hm.add(new Pair<String, TestNode>(Pages.importPI.name(), new ImportSlot()));
-	hm.add(new Pair<String, TestNode>(Pages.beanInstantiation.name(), new BeanInstantiationSlot()));
-	hm.add(new Pair<String, TestNode>(Pages.valueOf.name(), new ValueOfSlot()));
-	hm.add(new Pair<String, TestNode>(Pages.root.name(), new RootSlot()));
-	hm.add(new Pair<String, TestNode>(Pages.fxId.name(), new FxIdSlot()));
-	hm.add(new Pair<String, TestNode>(Pages.fxController.name(), new controllerAttributeSlot()));
-	hm.add(new Pair<String, TestNode>(Pages.noDefaultController.name(), new NoDefaultControllerSlot()));
-	hm.add(new Pair<String, TestNode>(Pages.lateRoot.name(), new LateRootSlot()));
-	hm.add(new Pair<String, TestNode>(Pages.lateController.name(), new LateControllerSlot()));
-	hm.add(new Pair<String, TestNode>(Pages.variableResolution.name(), new VariableResolutionSlot()));
-	hm.add(new Pair<String, TestNode>(Pages.externalScript.name(), new ExternalScriptCodeSlot()));
-        
-        
+    hm.add(new Pair<String, TestNode>(Pages.importPI.name(), new ImportSlot()));
+    hm.add(new Pair<String, TestNode>(Pages.beanInstantiation.name(), new BeanInstantiationSlot()));
+    hm.add(new Pair<String, TestNode>(Pages.valueOf.name(), new ValueOfSlot()));
+    hm.add(new Pair<String, TestNode>(Pages.root.name(), new RootSlot()));
+    hm.add(new Pair<String, TestNode>(Pages.fxId.name(), new FxIdSlot()));
+    hm.add(new Pair<String, TestNode>(Pages.fxController.name(), new controllerAttributeSlot()));
+    hm.add(new Pair<String, TestNode>(Pages.noDefaultController.name(), new NoDefaultControllerSlot()));
+    hm.add(new Pair<String, TestNode>(Pages.lateRoot.name(), new LateRootSlot()));
+    hm.add(new Pair<String, TestNode>(Pages.lateController.name(), new LateControllerSlot()));
+    hm.add(new Pair<String, TestNode>(Pages.variableResolution.name(), new VariableResolutionSlot()));
+    hm.add(new Pair<String, TestNode>(Pages.externalScript.name(), new ExternalScriptCodeSlot()));
+
+
         for (Pair<String, TestNode> tn : hm) {
             final PageWithSlots xPage = new PageWithSlots(tn.getKey(), heightPageContentPane, widthPageContentPane);
             xPage.setSlotSize(240, 180);

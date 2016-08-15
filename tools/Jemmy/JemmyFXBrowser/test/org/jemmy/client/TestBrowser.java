@@ -48,7 +48,7 @@ public class TestBrowser extends Application {
         MenuBar bar = new MenuBar();
         addMenus(bar.getMenus());
         root.getChildren().add(bar);
-        
+
         Group grp = new Group();
         grp.setLayoutX(0);
         grp.setLayoutY(0);
@@ -66,8 +66,8 @@ public class TestBrowser extends Application {
         hBox.getChildren().add(btn);
         hBox.getChildren().add(lbl);
         root.getChildren().add(grp);
-        
-        
+
+
         stg.setScene(scene);
         stg.setWidth(300);
         stg.setHeight(300);

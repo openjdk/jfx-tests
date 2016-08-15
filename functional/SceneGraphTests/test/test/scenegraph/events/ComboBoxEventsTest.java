@@ -38,13 +38,13 @@ import test.scenegraph.app.ControlEventsApp.EventTypes;
  */
 public class ComboBoxEventsTest extends EventTestHidingPopup<ComboBoxDock>
 {
-    
+
     @BeforeClass
     public static void rinUI()
     {
         ControlEventsApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -52,14 +52,14 @@ public class ComboBoxEventsTest extends EventTestHidingPopup<ComboBoxDock>
         super.before();
         setControl(Controls.COMBO_BOX);
     }
-    
+
     @Override
     protected ComboBoxDock findPrimeDock()
     {
-        return new ComboBoxDock(getActiveTabDock().asParent(), 
+        return new ComboBoxDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
-    
+
     @Override
     @Test(timeout = 60000)
     public void onAction()
@@ -79,5 +79,5 @@ public class ComboBoxEventsTest extends EventTestHidingPopup<ComboBoxDock>
             }
         });
     }
-    
+
 }

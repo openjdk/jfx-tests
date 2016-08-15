@@ -32,7 +32,7 @@ import javafx.scene.layout.Pane;
  * @author cementovoz
  */
 public interface Style extends Comparable<Object> {
-    
+
     void setStyle(Node control);
     String name();
     void decorate (Node control, Pane container);

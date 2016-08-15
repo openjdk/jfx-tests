@@ -36,7 +36,7 @@ import test.javaclient.shared.Utils;
  */
 public class Transforms3DApp extends TransformsApp
 {
-    
+
     {
         Affine aff = Transform.affine(1, -0.15, 0, 50, 0, 0.95, 0, 0, -1, 1.05, 0.95, 0);
         TransformsApp.TransformToggle[] tt = {
@@ -48,9 +48,9 @@ public class Transforms3DApp extends TransformsApp
         };
         setTransformToggle(tt);
     }
-    
+
     @Override
-    protected Scene getScene() 
+    protected Scene getScene()
     {
         Scene zScene = super.getScene();
         zScene.getRoot().setDepthTest(DepthTest.ENABLE);
@@ -58,9 +58,9 @@ public class Transforms3DApp extends TransformsApp
         //System.out.println("Camera angle " + new PerspectiveCamera().getFieldOfView());
         return zScene;
     }
-    
+
     public static void main(String[] args) {
         Utils.launch(Transforms3DApp.class, args);
     }
-    
+
 }

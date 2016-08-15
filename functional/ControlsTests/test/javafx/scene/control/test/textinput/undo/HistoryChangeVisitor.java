@@ -58,7 +58,7 @@ public class HistoryChangeVisitor implements ChangeVisitor {
     public void visit(DeleteChange ch) {
         history.addChange(ch);
     }
-    
+
     public void visit(BackspaceChange ch) {
         history.addChange(ch);
     }

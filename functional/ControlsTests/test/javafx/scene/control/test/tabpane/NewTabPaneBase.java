@@ -402,9 +402,9 @@ public class NewTabPaneBase extends UtilTestFunctions {
                 сheckBox.getControl().setSelected(vetoOfContent);
             }
         }.dispatch(Root.ROOT.getEnvironment());
-        
+
         clickButtonForTestPurpose(NODE_CHOOSER_ACTION_BUTTON_ID);
-        
+
         if (switchToTabPropertiesPanel) {
             switchToPropertiesTab(tabName);
         }

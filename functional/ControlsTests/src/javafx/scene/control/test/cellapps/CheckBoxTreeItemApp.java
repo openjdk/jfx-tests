@@ -57,7 +57,7 @@ public class CheckBoxTreeItemApp extends InteroperabilityApp {
             Utils.addBrowser(this);
 
             final HBox box = (HBox) getRoot();
-            
+
             VBox subbox = new VBox();
 
             tree_view.setEditable(true);

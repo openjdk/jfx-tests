@@ -14,7 +14,7 @@ import org.junit.*;
  * @author shura
  */
 public class MultiSceneTest {
-    
+
     public MultiSceneTest() {
     }
 
@@ -26,11 +26,11 @@ public class MultiSceneTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }

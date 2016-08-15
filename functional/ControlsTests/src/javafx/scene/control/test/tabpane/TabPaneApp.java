@@ -85,7 +85,7 @@ public class TabPaneApp extends BaseApp {
             selection_page.add(new SelectionNode(i), Pages.Selection.name() + " " + i);
         }
         rootTestNode.add(selection_page);
-        
+
         setupObject(Pages.Side.name(), Side.values());
 
         sizeSetup(Pages.TabMaxHeight.name(), null, new Double(65));

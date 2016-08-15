@@ -28,45 +28,45 @@ package test.fxmltests.cover;
  *
  * @author Aleksandr Sakharuk
  */
-public class SpecAssert 
+public class SpecAssert
 {
-    
+
     public SpecAssert(String id, String group, String assertion)
     {
         this.id = id;
         this.group = group;
         this.assertion = assertion;
     }
-    
+
     public String getID()
     {
         return id;
     }
-    
+
     public String getGroup()
     {
         return group;
     }
-    
+
     public String getAssertion()
     {
         return assertion;
     }
-    
+
     @Override
     public String toString()
     {
         return String.format("assert {%s, %s, %s}", id, group, assertion);
     }
-    
+
     public static SpecAssert valueOf(String str)
     {
         String[] components = str.substring(8, str.length() - 1).split(", ", 3);
         return new SpecAssert(components[0], components[1], components[2]);
     }
-    
+
     private String id;
     private String group;
     private String assertion;
-    
+
 }

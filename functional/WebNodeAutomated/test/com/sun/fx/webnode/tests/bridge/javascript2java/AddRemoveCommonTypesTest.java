@@ -39,12 +39,12 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class AddRemoveCommonTypesTest extends JavaScript2JavaBridgeTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding and WebEngine.removeJavaScriptBinding calls.
      * Checks that an integer value can be bound and unbound.
@@ -86,7 +86,7 @@ public class AddRemoveCommonTypesTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(NO_VARIABLE_MSG));
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding and WebEngine.removeJavaScriptBinding calls.
      * Checks that a boolean value can be bound and unbound.
@@ -128,7 +128,7 @@ public class AddRemoveCommonTypesTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(NO_VARIABLE_MSG));
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding and WebEngine.removeJavaScriptBinding calls.
      * Checks that a double value can be bound and unbound.
@@ -170,7 +170,7 @@ public class AddRemoveCommonTypesTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(NO_VARIABLE_MSG));
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding and WebEngine.removeJavaScriptBinding calls.
      * Checks that a float value can be bound and unbound.
@@ -212,7 +212,7 @@ public class AddRemoveCommonTypesTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(NO_VARIABLE_MSG));
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding and WebEngine.removeJavaScriptBinding calls.
      * Checks that a char value can be bound and unbound.
@@ -254,7 +254,7 @@ public class AddRemoveCommonTypesTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(NO_VARIABLE_MSG));
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding and WebEngine.removeJavaScriptBinding calls.
      * Checks that a string value can be bound and unbound.
@@ -296,5 +296,5 @@ public class AddRemoveCommonTypesTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(NO_VARIABLE_MSG));
     }
-    
+
 }

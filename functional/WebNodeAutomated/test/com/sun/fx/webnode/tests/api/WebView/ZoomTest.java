@@ -37,16 +37,16 @@ import org.junit.BeforeClass;
  * @author Dmitry Ginzburg
  */
 public class ZoomTest extends GenericTestClass {
-    
+
     final static int zoom = 2;
     final double precision = 1e-3;
     DoubleProperty zoomProperty;
-    
+
     @BeforeClass
     public static void init(){
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     @Test
     public void zoomPropertyTest () {
         view = null;
@@ -79,11 +79,11 @@ public class ZoomTest extends GenericTestClass {
         doWait (new Tester() {
            public boolean isPassed () {
                return Math.abs(zoomProperty.get() - zoom) <= precision;
-           } 
+           }
         });
         Assert.assertEquals(zoomProperty.get(), view.getZoom(), precision);
     }
-    
+
     @Test
     public void getSetZoomTest () {
         view = null;
@@ -106,7 +106,7 @@ public class ZoomTest extends GenericTestClass {
         doWait (new Tester() {
            public boolean isPassed () {
                return Math.abs(view.getZoom() - zoom) <= precision;
-           } 
+           }
         });
     }
 }

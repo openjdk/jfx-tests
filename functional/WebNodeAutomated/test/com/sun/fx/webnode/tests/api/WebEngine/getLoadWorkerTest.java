@@ -38,7 +38,7 @@ import org.junit.Test;
  * @author Dmitrij Pochepko
  */
 public class getLoadWorkerTest extends ExceptionWaitingTestClass {
-    
+
     @BeforeClass
     public static void init(){
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);

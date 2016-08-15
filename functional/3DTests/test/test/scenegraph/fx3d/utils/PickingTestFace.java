@@ -36,6 +36,6 @@ import test.scenegraph.fx3d.interfaces.PickingTestAppFace;
 public interface PickingTestFace extends PickingTestAppFace {
 
     public PickResult click(final Point pt);
-    
+
     public Rectangle getAppRectangle();
 }

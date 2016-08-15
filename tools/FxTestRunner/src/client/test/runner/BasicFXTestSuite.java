@@ -84,7 +84,7 @@ public class BasicFXTestSuite extends TestSuite {
         s.initClassLoader(getClassLoader());
         return s;
     }
-    
+
     private String envLookup(TestEnvironment env, String property) {
         String[] ss;
         try {

@@ -35,7 +35,7 @@ import test.javaclient.shared.TestBase;
  * @author Alexander Petrov
  */
 public class TestAnimationFullScreenNonResizable extends TestBase{
-    
+
     @RunUI
     @BeforeClass
     public static void runUI() {

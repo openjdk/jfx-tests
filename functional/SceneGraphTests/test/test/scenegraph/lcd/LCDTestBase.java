@@ -73,18 +73,18 @@ public class LCDTestBase {
                 //TODO: change font is not sync...investigate
             } catch (InterruptedException ex) {
             }
-            
+
             Image lcdImage = leftPane.getScreenImage();
 
             if (action.isLCDWork()) {
                 assertTrue("LCD test fail: " + action.toString(), testLCD(lcdImage, true));
-            } else {     
+            } else {
                 assertTrue("No LCD test fail: " + action.toString(), testLCD(lcdImage, false));
             }
         }
     }
 
-    private boolean testLCD(Image image, boolean lcd) {       
+    private boolean testLCD(Image image, boolean lcd) {
         calc.calculate(image, true);
         if (lcd) {
             if (calc.getColorPixelCount() != 0) {
@@ -93,8 +93,8 @@ public class LCDTestBase {
                 return (percent < UPPER_THRESHOLD) && (percent > LOWER_THRESHOLD);
             }
             return false;
-        } else { 
+        } else {
             return calc.getColorPixelCount() == 0;
-        }        
+        }
     }
 }

@@ -41,7 +41,7 @@ import org.junit.Test;
 
 public class AccordionSample extends SampleBase {
     static SceneDock scene;
-    
+
     @BeforeClass
     public static void launch() throws InterruptedException {
         startApp(AccordionApp.class);

@@ -38,7 +38,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Tests that check that objects bound and unbound by 
+ * Tests that check that objects bound and unbound by
  * WebEngine.addJavaScriptBinding and WebEngine.removeJavaScriptBinding methods
  * are properly accessible/inaccessible after WebEngine.reload.
  * @author Irina Grineva
@@ -48,7 +48,7 @@ public class ReloadTest extends JavaScript2JavaBridgeTestClass {
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding call.
      * Checks that a bound object is not accessible from JavaScript
@@ -98,7 +98,7 @@ public class ReloadTest extends JavaScript2JavaBridgeTestClass {
             }
         });
     }
-    
+
     /**
      * Test for WebEngine.removeJavaScriptBinding call.
      * Checks that an unbound object is not accessible from JavaScript
@@ -122,7 +122,7 @@ public class ReloadTest extends JavaScript2JavaBridgeTestClass {
             }
         });
         Assert.assertEquals(testObject, resultObject);
-        
+
         resultObject = null;
         Platform.runLater(new Runnable() {
             public void run() {
@@ -142,7 +142,7 @@ public class ReloadTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(NO_VARIABLE_MSG));
-        
+
         resultObject = null;
         Platform.runLater(new Runnable() {
             public void run() {

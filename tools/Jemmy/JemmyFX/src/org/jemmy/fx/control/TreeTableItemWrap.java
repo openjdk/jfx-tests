@@ -166,9 +166,9 @@ public class TreeTableItemWrap<DATA> extends ItemWrap<DATA>
     public Rectangle getScreenBounds() {
         return treeTableNodeWrap.getScreenBounds();
     }
-    
+
     @Override
-    public Point getClickPoint() {        
+    public Point getClickPoint() {
         return treeTableNodeWrap.getClickPoint();
     }
 
@@ -256,7 +256,7 @@ public class TreeTableItemWrap<DATA> extends ItemWrap<DATA>
             parent = new TreeTableItemParent<T>(treeTableViewWrap, getItem(), type);
         }
         return parent;
-    }    
+    }
 
     @Override
     public void expand() {

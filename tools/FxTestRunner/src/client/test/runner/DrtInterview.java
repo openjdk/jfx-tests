@@ -205,7 +205,7 @@ public class DrtInterview extends BasicInterviewParameters
         }
 
         @Override
-        public void clear() {            
+        public void clear() {
             setValue(browserExec);
         }
 
@@ -270,7 +270,7 @@ public class DrtInterview extends BasicInterviewParameters
             setValue((String) data.get(PROXY_PARAM_NAME));
         }
     };
-    
+
     private ChoiceQuestion qPipelineGroup = new PipelineGroupQuestion (this, qProxy);
 
 

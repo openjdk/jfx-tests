@@ -56,7 +56,7 @@ public class ModalityZOrderAndFocusWithFileChooser3Test extends ModalityBase{
         tryToCloseByButton("stage0", "stage1", "stage2");
 
         tryToClickAndWaitForClicks("stage2", 0, 0);
-  
+
         //Try to click in the corner
         Wrap<? extends Scene> sceneWrap = getSceneWrap("stage3");
         Parent<Node> parent = sceneWrap.as(Parent.class, Node.class);

@@ -147,7 +147,7 @@ class GlassKeyboard implements Keyboard {
         factory.runAction(control, new Action() {
 
             @Override
-            public void run(Object... parameters) { 
+            public void run(Object... parameters) {
                 doPushKey(pushTime, (KeyboardButton)control.getEnvironment().getBindingMap().getCharKey(keyChar),
                         control.getEnvironment().getBindingMap().getCharModifiers(keyChar));
             }
@@ -169,5 +169,5 @@ class GlassKeyboard implements Keyboard {
         detached = true;
         return this;
     }
-    
+
 }

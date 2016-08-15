@@ -124,7 +124,7 @@ public class ControlsLayoutPart1App extends BasicButtonChooserApp {
             //tv1.getColumns().get(0).setVisible(false);
             //tv1.getColumns().get(1).setMaxWidth(40);
             //tv1.getColumns().get(1).setText("done");
-            
+
             vbox.setPrefSize(40, 240);
             vbox.setSpacing(10);
 

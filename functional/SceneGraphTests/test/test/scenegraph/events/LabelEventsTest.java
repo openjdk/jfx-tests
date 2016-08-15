@@ -33,15 +33,15 @@ import test.scenegraph.app.ControlEventsApp.Controls;
  *
  * @author Aleksandr Sakharuk
  */
-public class LabelEventsTest extends EventTestCommon<LabeledDock> 
+public class LabelEventsTest extends EventTestCommon<LabeledDock>
 {
-    
+
     @BeforeClass
     public static void rinUI()
     {
         ControlEventsApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -49,12 +49,12 @@ public class LabelEventsTest extends EventTestCommon<LabeledDock>
         super.before();
         setControl(Controls.LABEL);
     }
-    
+
     @Override
     protected LabeledDock findPrimeDock()
     {
-        return new LabeledDock(getActiveTabDock().asParent(), 
+        return new LabeledDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
-    
+
 }

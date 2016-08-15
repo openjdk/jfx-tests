@@ -54,7 +54,7 @@ import test.scenegraph.app.SpinnerApp;
 import test.scenegraph.app.SpinnerUtils;
 
 public class SpinnerCalendarTest extends TestBase {
-    
+
     private Wrap<? extends StackPane> bIncrButton = null;
     private Wrap<? extends StackPane> bDecrButton = null;
     private Wrap<? extends ComboBox>  cbSpinnerStyle = null;
@@ -65,7 +65,7 @@ public class SpinnerCalendarTest extends TestBase {
     private Wrap<? extends TextField> tfTextField = null;
     private Wrap<? extends Spinner>   spinnerWrap = null;
     private Wrap<? extends Button>    resetBtnWrap = null;
-    
+
     private void initWrappers() {
         org.jemmy.interfaces.Parent p = getScene().as(org.jemmy.interfaces.Parent.class, Node.class);
         spinnerWrap =   p.lookup(new ByID<>("spinner")).wrap();
@@ -77,20 +77,20 @@ public class SpinnerCalendarTest extends TestBase {
 
         tfTextField =   p.lookup(new ByID<>("textfield")).wrap();
         resetBtnWrap =  p.lookup(new ByID<>("reset")).wrap();
-        
+
         bDecrButton =   spinnerWrap.as(org.jemmy.interfaces.Parent.class, Node.class).lookup(new ByStyleClass<>("decrement-arrow-button")).wrap();
         bIncrButton =   spinnerWrap.as(org.jemmy.interfaces.Parent.class, Node.class).lookup(new ByStyleClass<>("increment-arrow-button")).wrap();
     }
-    
+
     @BeforeClass
     public static void runUI() {
         test.javaclient.shared.Utils.launch(SpinnerApp.class,null);
     }
 
-    
+
     @Test
     public void wrapDate1() throws InterruptedException {
-      
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
@@ -98,20 +98,20 @@ public class SpinnerCalendarTest extends TestBase {
         initWrappers();
 
         System.out.println(" date wrap test is not implemented due to lack of required features.");   //bug
-    }    
-    
-    
-//              ------------------------   ( 6 styles ) x  editable date x ("right-to-left" )  ---------------------- 
+    }
+
+
+//              ------------------------   ( 6 styles ) x  editable date x ("right-to-left" )  ----------------------
     /*
     @Test
     public void editableDateRLDefaultStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Default.*");
@@ -120,16 +120,16 @@ public class SpinnerCalendarTest extends TestBase {
             select(chbRtl,false);
         }
     }
-    
+
     @Test
     public void editableDateRLSplitVertStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Split..Vert.*");
@@ -138,16 +138,16 @@ public class SpinnerCalendarTest extends TestBase {
             select(chbRtl,false);
         }
     }
-    
+
     @Test
     public void editableDateRLSplitHorizStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Split..Hor.*");
@@ -156,16 +156,16 @@ public class SpinnerCalendarTest extends TestBase {
             select(chbRtl,false);
         }
     }
-    
+
     @Test
     public void editableDateRLArrowsRHStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Arrows on right..Hor.*");
@@ -174,16 +174,16 @@ public class SpinnerCalendarTest extends TestBase {
             select(chbRtl,false);
         }
     }
-    
+
     @Test
     public void editableDateRLArrowsLVStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Arrows on left..Ver.*");
@@ -192,18 +192,18 @@ public class SpinnerCalendarTest extends TestBase {
             select(chbRtl,false);
         }
     }
-    
-    
+
+
 
     @Test
     public void editableDateRLArrowsLHStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Arrows on left..Hor.*");
@@ -212,7 +212,7 @@ public class SpinnerCalendarTest extends TestBase {
             select(chbRtl,false);
         }
     }
-    
+
     @Test
     public void editableDate1() throws InterruptedException {
         logTestName();
@@ -220,24 +220,24 @@ public class SpinnerCalendarTest extends TestBase {
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         editableDate();
     }
-    
+
     private void editableDate() throws InterruptedException {
-      
-        
+
+
         select(chbEditable,true);
-        
+
         selectRegexp(cbValueType,"Calend.*");
-        doReset();    
-        
+        doReset();
+
         Calendar cal = Calendar.getInstance();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");        
-	final String strToday = dateFormat.format(cal.getTime());
-        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    final String strToday = dateFormat.format(cal.getTime());
+
         check(strToday);
-        
+
         click(spinnerWrap);
         for(int k=0;k<15;++k)
             paste(spinnerWrap,KeyboardButtons.LEFT);
@@ -245,50 +245,50 @@ public class SpinnerCalendarTest extends TestBase {
         paste(spinnerWrap,KeyboardButtons.DELETE);
         paste(spinnerWrap,KeyboardButtons.DELETE);
         paste(spinnerWrap,KeyboardButtons.DELETE);
-        
+
         paste(spinnerWrap,"2015");
         paste(spinnerWrap,KeyboardButtons.ENTER);
-        
+
         cal.add(Calendar.YEAR, 1);
         check(dateFormat.format(cal.getTime()));
-        
-        
+
+
         select(chbEditable,false);
-    }    
-    
-    
+    }
+
+
     @Test
     public void date1() throws InterruptedException {
-      
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");        
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
        // Date curDate = new Date();
        // Calendar calendar = new GregorianCalendar();
         Calendar cal = Calendar.getInstance();
-	final String strToday = dateFormat.format(cal.getTime());
-        
+    final String strToday = dateFormat.format(cal.getTime());
+
         selectRegexp(cbValueType,"Calendar.*");
-        doReset();    
-    
+        doReset();
+
         check(strToday);
-        
+
         click(bIncrButton);
         cal.add(Calendar.DAY_OF_MONTH, 1);
         check(dateFormat.format(cal.getTime()));
-        
+
         click(bIncrButton);
         cal.add(Calendar.DAY_OF_MONTH, 1);
         check(dateFormat.format(cal.getTime()));
-        
+
         click(bDecrButton);
         cal.add(Calendar.DAY_OF_MONTH, -1);
         check(dateFormat.format(cal.getTime()));
-    }    
+    }
 
     private void check(final String  _str) {
         retrieveSpinnerValues(spinnerWrap);
@@ -297,7 +297,7 @@ public class SpinnerCalendarTest extends TestBase {
         Assert.assertEquals( _str, s1 ); //  (expected/actual)
         Assert.assertEquals( _str, s2 );
     }
-    
+
     private void check(int _i) {
         retrieveSpinnerValues(spinnerWrap);
         final String s1 = SpinnerUtils.getSpinnerEditorValue();
@@ -305,7 +305,7 @@ public class SpinnerCalendarTest extends TestBase {
         Assert.assertEquals(new Integer(_i).toString(),s1 );
         Assert.assertEquals(new Integer(_i).toString(),s2 );
     }
-    
+
     private void check(double _f) {
         retrieveSpinnerValues(spinnerWrap);
         final String s1 = SpinnerUtils.getSpinnerEditorValue();
@@ -313,9 +313,9 @@ public class SpinnerCalendarTest extends TestBase {
         Assert.assertEquals(_f, new Double(s1.replace(',', '.')) );
         Assert.assertEquals(_f, new Double(s2.replace(',', '.')) );
     }
-    
+
     private void doReset() {
-        resetBtnWrap.mouse().click();        
+        resetBtnWrap.mouse().click();
         try {
             Thread.sleep(200);
         } catch (InterruptedException ex){
@@ -324,8 +324,8 @@ public class SpinnerCalendarTest extends TestBase {
     }
     */
     private void logTestName() {
-        System.out.println(" ------------ TEST NAME [" + Thread.currentThread().getStackTrace()[2].getMethodName() + "] ----------------"); 
-        
+        System.out.println(" ------------ TEST NAME [" + Thread.currentThread().getStackTrace()[2].getMethodName() + "] ----------------");
+
     }
-    
+
 }

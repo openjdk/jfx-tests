@@ -53,11 +53,11 @@ public class PipelineGroupQuestion extends ChoiceQuestion {
      *
      */
     public final static String PIPELINE_GROUP_PARAM_NAME = "pipelineGroup";
-    
+
     private Question nextQuestion;
     private Interview interview;
     private PipelineQuestion pipeline = null;
-    
+
     /**
      *
      * @param interview
@@ -70,7 +70,7 @@ public class PipelineGroupQuestion extends ChoiceQuestion {
         this.interview = interview;
         this.nextQuestion = nextQuestion;
     }
-    
+
     /**
      *
      * @return
@@ -82,9 +82,9 @@ public class PipelineGroupQuestion extends ChoiceQuestion {
                 pipeline = new PipelineQuestion (interview, nextQuestion);
             return pipeline;
         } else
-            return nextQuestion;  
+            return nextQuestion;
     }
-    
+
     /**
      *
      * @return
@@ -102,7 +102,7 @@ public class PipelineGroupQuestion extends ChoiceQuestion {
     public String getSummary() {
         return "Settings to use";
     }
-    
+
     /**
      *
      */

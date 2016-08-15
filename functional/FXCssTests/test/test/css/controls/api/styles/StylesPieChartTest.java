@@ -61,12 +61,12 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
             @Override
             public void run(Object... os) throws Exception {
                 PieChart control = new PieChart();
-                
+
                 setResult(control);
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     @Test
     public void testfxbackgroundcolor () {
         Set<String> styleNames = getStyleNames();
@@ -86,7 +86,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-background-image");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxbackgroundinsets () {
         Set<String> styleNames = getStyleNames();
@@ -96,7 +96,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-background-insets");
         Assert.assertArrayEquals((Insets[])data.getInitialValue(getControl()), new Insets[]{new Insets(0.0, 0.0, 0.0, 0.0)});
     }
-    
+
     @Test
     public void testfxbackgroundposition () {
         Set<String> styleNames = getStyleNames();
@@ -106,7 +106,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-background-position");
         Assert.assertTrue(checkBackgroundPosition((BackgroundPosition[]) data.getInitialValue(getControl()), new BackgroundPosition[]{new BackgroundPosition(javafx.geometry.Side.LEFT,0.0,true,javafx.geometry.Side.TOP,0.0,true)}));
     }
-    
+
     @Test
     public void testfxbackgroundradius () {
         Set<String> styleNames = getStyleNames();
@@ -114,10 +114,10 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         Assert.assertTrue(styleNames.contains("-fx-background-radius"));
         Map<String, CssMetaData> styles = getStyles();
         CssMetaData data = styles.get("-fx-background-radius");
-        Assert.assertArrayEquals((CornerRadii[])data.getInitialValue(getControl()), 
+        Assert.assertArrayEquals((CornerRadii[])data.getInitialValue(getControl()),
                 new CornerRadii[]{new CornerRadii(0.0)});
     }
-    
+
     @Test
     public void testfxbackgroundrepeat () {
         Set<String> styleNames = getStyleNames();
@@ -127,7 +127,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-background-repeat");
         Assert.assertTrue(checkRepeatStruct((RepeatStruct[]) data.getInitialValue(getControl()), new RepeatStruct[]{new RepeatStruct(javafx.scene.layout.BackgroundRepeat.REPEAT,javafx.scene.layout.BackgroundRepeat.REPEAT)}));
     }
-    
+
     @Test
     public void testfxbackgroundsize () {
         Set<String> styleNames = getStyleNames();
@@ -137,7 +137,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-background-size");
         Assert.assertArrayEquals((BackgroundSize[])data.getInitialValue(getControl()), new BackgroundSize[]{new BackgroundSize(-1.0,-1.0,true,true,false,false)});
     }
-    
+
     @Test
     public void testfxblendmode () {
         Set<String> styleNames = getStyleNames();
@@ -147,7 +147,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-blend-mode");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxbordercolor () {
         Set<String> styleNames = getStyleNames();
@@ -157,7 +157,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-border-color");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxborderimageinsets () {
         Set<String> styleNames = getStyleNames();
@@ -167,7 +167,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-border-image-insets");
         Assert.assertArrayEquals((Insets[])data.getInitialValue(getControl()), new Insets[]{new Insets(0.0, 0.0, 0.0, 0.0)});
     }
-    
+
     @Test
     public void testfxborderimagerepeat () {
         Set<String> styleNames = getStyleNames();
@@ -177,7 +177,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-border-image-repeat");
         Assert.assertTrue(checkRepeatStruct((RepeatStruct[]) data.getInitialValue(getControl()), new RepeatStruct[]{new RepeatStruct(javafx.scene.layout.BackgroundRepeat.REPEAT,javafx.scene.layout.BackgroundRepeat.REPEAT)}));
     }
-    
+
     @Test
     public void testfxborderimageslice () {
         Set<String> styleNames = getStyleNames();
@@ -187,7 +187,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-border-image-slice");
         Assert.assertTrue(checkBorderImageSlices((BorderImageSlices[]) data.getInitialValue(getControl()), new BorderImageSlices[]{new BorderImageSlices(new BorderWidths(1.0,1.0,1.0,1.0,true,true,true,true),false)}));
     }
-    
+
     @Test
     public void testfxborderimagesource () {
         Set<String> styleNames = getStyleNames();
@@ -197,7 +197,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-border-image-source");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxborderimagewidth () {
         Set<String> styleNames = getStyleNames();
@@ -207,7 +207,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-border-image-width");
         Assert.assertArrayEquals((BorderWidths[])data.getInitialValue(getControl()), new BorderWidths[]{new BorderWidths(0, 0, 0, 0)});
     }
-    
+
     @Test
     public void testfxborderinsets () {
         Set<String> styleNames = getStyleNames();
@@ -217,7 +217,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-border-insets");
         Assert.assertArrayEquals((Insets[])data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxborderradius () {
         Set<String> styleNames = getStyleNames();
@@ -227,7 +227,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-border-radius");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxborderstyle () {
         Set<String> styleNames = getStyleNames();
@@ -237,7 +237,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-border-style");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxborderwidth () {
         Set<String> styleNames = getStyleNames();
@@ -247,7 +247,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-border-width");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxclockwise () {
         Set<String> styleNames = getStyleNames();
@@ -257,7 +257,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-clockwise");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
     @Test
     public void testfxcursor () {
         Set<String> styleNames = getStyleNames();
@@ -267,7 +267,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-cursor");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxeffect () {
         Set<String> styleNames = getStyleNames();
@@ -277,7 +277,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-effect");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxlabellinelength () {
         Set<String> styleNames = getStyleNames();
@@ -287,7 +287,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-label-line-length");
         Assert.assertEquals(data.getInitialValue(getControl()), 20.0);
     }
-    
+
     @Test
     public void testfxlegendside () {
         Set<String> styleNames = getStyleNames();
@@ -297,7 +297,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-legend-side");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.geometry.Side.BOTTOM);
     }
-    
+
     @Test
     public void testfxlegendvisible () {
         Set<String> styleNames = getStyleNames();
@@ -307,7 +307,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-legend-visible");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
     @Test
     public void testfxopacity () {
         Set<String> styleNames = getStyleNames();
@@ -317,7 +317,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-opacity");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxpadding () {
         Set<String> styleNames = getStyleNames();
@@ -327,7 +327,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-padding");
         Assert.assertEquals(data.getInitialValue(getControl()), new javafx.geometry.Insets(0.0,0.0,0.0,0.0));
     }
-    
+
     @Test
     public void testfxpielabelvisible () {
         Set<String> styleNames = getStyleNames();
@@ -337,7 +337,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-pie-label-visible");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
     @Test
     public void testfxpositionshape () {
         Set<String> styleNames = getStyleNames();
@@ -347,7 +347,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-position-shape");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
     @Test
     public void testfxregionbackground () {
         Set<String> styleNames = getStyleNames();
@@ -357,7 +357,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-region-background");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxregionborder () {
         Set<String> styleNames = getStyleNames();
@@ -367,7 +367,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-region-border");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxrotate () {
         Set<String> styleNames = getStyleNames();
@@ -377,7 +377,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-rotate");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testfxscaleshape () {
         Set<String> styleNames = getStyleNames();
@@ -387,7 +387,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-shape");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
     @Test
     public void testfxscalex () {
         Set<String> styleNames = getStyleNames();
@@ -397,7 +397,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-x");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxscaley () {
         Set<String> styleNames = getStyleNames();
@@ -407,7 +407,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-y");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxscalez () {
         Set<String> styleNames = getStyleNames();
@@ -417,7 +417,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-z");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
     public void testfxshape () {
         Set<String> styleNames = getStyleNames();
@@ -427,7 +427,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-shape");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
     public void testfxsnaptopixel () {
         Set<String> styleNames = getStyleNames();
@@ -437,7 +437,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-snap-to-pixel");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
     @Test
     public void testfxstartangle () {
         Set<String> styleNames = getStyleNames();
@@ -457,7 +457,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-title-side");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.geometry.Side.TOP);
     }
-    
+
     @Test
     public void testfxtranslatex () {
         Set<String> styleNames = getStyleNames();
@@ -467,7 +467,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-x");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testfxtranslatey () {
         Set<String> styleNames = getStyleNames();
@@ -477,7 +477,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-y");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testfxtranslatez () {
         Set<String> styleNames = getStyleNames();
@@ -487,7 +487,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-z");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
     public void testvisibility () {
         Set<String> styleNames = getStyleNames();
@@ -497,6 +497,6 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("visibility");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
 
 }

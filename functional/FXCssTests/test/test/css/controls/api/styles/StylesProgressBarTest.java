@@ -66,7 +66,7 @@ public class StylesProgressBarTest extends BaseStyleNodeTest {
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     @Test
     public void testfxindeterminatebaranimationtime () {
         Set<String> styleNames = getStyleNames();
@@ -76,7 +76,7 @@ public class StylesProgressBarTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-indeterminate-bar-animation-time");
         Assert.assertEquals(data.getInitialValue(getControl()), 2.0);
     }
-    
+
     @Test
     public void testfxindeterminatebarescape () {
         Set<String> styleNames = getStyleNames();
@@ -86,7 +86,7 @@ public class StylesProgressBarTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-indeterminate-bar-escape");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
     @Test
     public void testfxindeterminatebarflip () {
         Set<String> styleNames = getStyleNames();
@@ -96,7 +96,7 @@ public class StylesProgressBarTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-indeterminate-bar-flip");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
     @Test
     public void testfxindeterminatebarlength () {
         Set<String> styleNames = getStyleNames();
@@ -106,6 +106,6 @@ public class StylesProgressBarTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-indeterminate-bar-length");
         Assert.assertEquals(data.getInitialValue(getControl()), 60.0);
     }
-    
+
 
 }

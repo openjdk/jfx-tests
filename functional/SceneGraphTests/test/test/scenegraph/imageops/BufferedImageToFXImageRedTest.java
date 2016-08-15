@@ -47,9 +47,9 @@ public class BufferedImageToFXImageRedTest extends ReadImageRedTest{
         } catch (IOException ex) {
             Assert.fail(ex.getMessage());
         }
-        
+
         return testingImage;
     }
-    
-    
+
+
 }

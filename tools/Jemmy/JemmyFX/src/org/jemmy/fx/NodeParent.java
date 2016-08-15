@@ -31,24 +31,24 @@ import org.jemmy.interfaces.Parent;
 import org.jemmy.lookup.ControlHierarchy;
 
 /**
- * An SPI interface for a parent for nodes. Used to construct 
+ * An SPI interface for a parent for nodes. Used to construct
  * <code>ControlHierarchy</code> later.
  * @author shura
  * @see ControlHierarchy
  */
 public interface NodeParent{
     /**
-     * 
+     *
      * @return
      */
     public SceneWrap<? extends Scene> getScene();
     /**
-     * 
+     *
      * @return
      */
     public Parent<Node> getParent();
     /**
-     * 
+     *
      * @return
      */
     public Environment getEnvironment();

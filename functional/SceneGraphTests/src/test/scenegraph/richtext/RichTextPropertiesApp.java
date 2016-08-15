@@ -78,7 +78,7 @@ public class RichTextPropertiesApp extends InteroperabilityApp {
     protected boolean needToLoadCustomFont() {
         return false;
     }
-    
+
     private void initApplication() {
         root = new HBox();
         textPage = new TextPage();
@@ -245,7 +245,7 @@ public class RichTextPropertiesApp extends InteroperabilityApp {
     public void requestDefaultFocus(){
         textFlowPage.addTextFlow.requestFocus();
     }
-        
+
     private class TextFlowPage extends VBox {
 
         Button clear = null;

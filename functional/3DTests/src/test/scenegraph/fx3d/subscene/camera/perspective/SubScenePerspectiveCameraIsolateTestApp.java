@@ -55,5 +55,5 @@ public class SubScenePerspectiveCameraIsolateTestApp extends SubScenePerspective
      public static void main(String[] args) {
         Utils.launch(SubScenePerspectiveCameraIsolateTestApp.class, args);
     }
-    
+
 }

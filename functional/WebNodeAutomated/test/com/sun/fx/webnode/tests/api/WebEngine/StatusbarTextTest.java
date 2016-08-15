@@ -43,8 +43,8 @@ import javafx.scene.web.WebEvent;
  * @author Irina Latysheva
  */
 public class StatusbarTextTest extends GenericTestClass implements EventHandler<WebEvent<String>>{
-    
-    
+
+
     private boolean statusTextChanged = false;
     private String newText = null;
     private boolean correctHandlerReturned = false;
@@ -68,7 +68,7 @@ public class StatusbarTextTest extends GenericTestClass implements EventHandler<
      */
     @Test(timeout=10000)
     public void testStatusTextChangeFromHTML() {
-        
+
         Platform.runLater(new Runnable() {
             public void run() {
                 initEngine();

@@ -35,23 +35,23 @@ public class CustomControlApp extends BasicButtonChooserApp {
 
     private static int WIDTH = 300;
     private static int HEIGHT = 300;
-    
+
     public enum Pages {
         customControl
     }
-    
+
     public CustomControlApp() {
         super(WIDTH, HEIGHT, VersionInfo.getRuntimeVersion(), false);
     }
-    
+
     private class CustomControlPage extends TestNode {
-        
+
         @Override
         public Node drawNode() {
             return new CustomControl();
         }
     }
-    
+
     @Override
     protected TestNode setup() {
         TestNode root = new TestNode();
@@ -60,8 +60,8 @@ public class CustomControlApp extends BasicButtonChooserApp {
         root.add(pageCustomControl);
         return root;
     }
-    
-    
+
+
     public static void main(String[] args) {
         Utils.launch(CustomControlApp.class, null);
     }

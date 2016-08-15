@@ -44,5 +44,5 @@ public class SplitPaneWrap<T extends SplitPane> extends ControlWrap<T> {
     public SplitPaneWrap(Environment env, T node) {
         super(env, node);
     }
-  
+
 }

@@ -68,25 +68,25 @@ public abstract class SortValidator<Item, Cell extends Node> {
     public Orientation getOrientation() {
         return orientation;
     }
-    
+
     /**
      * Helper class that is used to perform simple check
      * of the order in which the content is rendered after the sorting
      * of underlying data is applied.
-     * 
+     *
      * @param size The size of inner collection of objects.
      */
     public SortValidator(int size, StringConverter<Item> converter, Comparator<Item> comparator) {
         if (null == converter) {
             throw new IllegalArgumentException("Please provide a string converter");
         }
-        
+
         this.size = size;
         this.converter = converter;
         this.comparator = comparator;
-        
+
         failureReasons = new ArrayList<String>();
-        
+
         try {
             initData();
         } catch (Exception ex) {
@@ -94,11 +94,11 @@ public abstract class SortValidator<Item, Cell extends Node> {
             failureReasons.add("Validator initialization error");
         }
     }
-    
+
     public SortValidator(int size, StringConverter<Item> converter) {
         this(size, converter, null);
     }
-    
+
     public static void waitForAnimation(final int ms) {
         try {
             TimeUnit.MILLISECONDS.sleep(ms);
@@ -106,7 +106,7 @@ public abstract class SortValidator<Item, Cell extends Node> {
             Logger.getLogger(SortValidator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Performs the sort of data and verifies that the data displayed in
      * the control has changed.
@@ -118,25 +118,25 @@ public abstract class SortValidator<Item, Cell extends Node> {
         compareData("Initial:");
 
         sortAllData();
-        
+
         waitForAnimation(PAUSE);
         compareData("After sort:");
-        
+
         return 0 == failureReasons.size();
     }
-    
+
     public String getFailureReason() {
         if (failureReasons.isEmpty())
             return "";
-        
+
         StringBuilder sb = new StringBuilder();
         for (String reason : failureReasons) {
             sb.append(reason).append("\n");
         }
-        
+
         return sb.toString();
     }
-    
+
     private void initData() {
         sampleData = observableArrayList();
         observableData = observableArrayList();
@@ -146,7 +146,7 @@ public abstract class SortValidator<Item, Cell extends Node> {
             sampleData.add(converter.toString(obj));
         }
     }
-    
+
     /*
      * First n items must be equal and others should be null in the list obtained from control
      */
@@ -159,29 +159,29 @@ public abstract class SortValidator<Item, Cell extends Node> {
             String fmt = "Control has corrupted underlying data. Old size: %d, new size %d.";
             failureReasons.add(String.format(fmt, sampleData.size(), observableData.size()));
         }
-        
+
         ObservableList<String> cellsData = getCellsData();
 
         if (null == cellsData) {
             failureReasons.add("Unable to retrieve data from cells.");
             return;
-        } 
-        
+        }
+
         int headerIndex = failureReasons.size();
-        
+
         boolean result = true;
-        
+
         //Remove heading nulls
         while(!cellsData.isEmpty() && null == cellsData.get(0)) {
             cellsData.remove(0);
         }
-        
+
         int N = sampleData.size();
-        
+
         //Check that cells render expected text
         for (int i = 0; i < N; i++) {
             String sample = sampleData.get(i);
-            
+
             if (!cellsData.isEmpty() && cellsData.size() > i) {
                 String test = cellsData.get(i);
 
@@ -205,7 +205,7 @@ public abstract class SortValidator<Item, Cell extends Node> {
                 failureReasons.add(String.format(fmt, cellsData.get(i)));
             }
         }
-        
+
         if (!result) {
             String fmt = "%s sample data differs from control data.";
             failureReasons.add(headerIndex, String.format(fmt, tag));
@@ -213,16 +213,16 @@ public abstract class SortValidator<Item, Cell extends Node> {
             failureReasons.add("Test: { " + cellsData + " }");
         }
     }
-    
+
     private ObservableList<String> getCellsData() {
-        
+
         if (Orientation.VERTICAL == orientation) {
             return getVerticalCellsData();
         } else {
             return getHorizontalCellsData();
         }
     }
-    
+
     /*
      * Because in controls like list view there may be more then one cell at the same height
      * we need to filter out empty cells. Current implementation uses
@@ -276,15 +276,15 @@ public abstract class SortValidator<Item, Cell extends Node> {
 
         return ls;
     }
-    
+
     private ObservableList<String> getHorizontalCellsData() {
         Lookup<? extends Cell> lookup = getCellsLookup();
         int lookupSize = lookup.size();
         List<Wrap<? extends Cell>> wrappedCells = new ArrayList<Wrap<? extends Cell>>(lookupSize);
-        
+
         for (int i = 0; i < lookupSize; i++) {
             Wrap<? extends Cell> cell = lookup.wrap(i);
-            
+
             //Need only cells which are on the screen
             Rectangle cellBounds;
 
@@ -295,7 +295,7 @@ public abstract class SortValidator<Item, Cell extends Node> {
             }
 
             if (null == cellBounds) continue;
-            
+
             wrappedCells.add(cell);
         }
 
@@ -308,17 +308,17 @@ public abstract class SortValidator<Item, Cell extends Node> {
 
         return ls;
     }
-    
+
     private void sortAllData() {
         Platform.runLater(new Runnable() {
             public void run() {
                 FXCollections.sort(sampleData);
             }
         });
-        
+
         sort();
     }
-    
+
     /*
      * Sorts observable data.
      * Default implementation if fine for controls which use setItems(ObservableList<T> list),
@@ -334,10 +334,10 @@ public abstract class SortValidator<Item, Cell extends Node> {
             }
         });
     }
-    
+
     protected abstract void setControlData(ObservableList<Item> ls);
-    
+
     protected abstract Lookup<? extends Cell> getCellsLookup();
-    
+
     protected abstract String getTextFromCell(Cell cell);
 }

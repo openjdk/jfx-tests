@@ -55,7 +55,7 @@ public class TreeTableAsTableTest extends TableViewTest {
         isTableTests = false;
         TestBase.isTableTests = false;
     }
-    
+
     /**
      * Checks that when the sorting is applied to the underlying data collection
      * the cells are rendered in the right order.
@@ -66,7 +66,7 @@ public class TreeTableAsTableTest extends TableViewTest {
     public void renderingAfterSortingTest() throws Throwable {
         final int ITEMS_COUNT = 7;
         final int COL_IDX = 0;
-        
+
         StringConverter<TreeItem<Data>> conv = new StringConverter<TreeItem<Data>>() {
             @Override
             public String toString(TreeItem<Data> t) {
@@ -100,9 +100,9 @@ public class TreeTableAsTableTest extends TableViewTest {
             @Override
             protected Lookup<? extends TreeTableCell> getCellsLookup() {
                 return testedControl.as(Parent.class, Node.class).lookup(TreeTableCell.class, new LookupCriteria<TreeTableCell>() {
-                    
+
                     final String rootName = "item fictive field 0 loooooooooong";
-                    
+
                     public boolean check(TreeTableCell cell) {
                         TreeTableColumn col = cell.getTableColumn();
                         return COL_IDX == cell.getTreeTableView().getColumns().indexOf(col)
@@ -132,8 +132,8 @@ public class TreeTableAsTableTest extends TableViewTest {
         String msg = validator.getFailureReason();
         assertTrue(msg, result);
     }
-    
-    
+
+
     /**
      * RT-38739 create test for RT-38172
      * RT-38172: ClassCastException after TreeTableColumn setText
@@ -152,5 +152,5 @@ public class TreeTableAsTableTest extends TableViewTest {
         setColumnTextSync(0, originalText);
         Thread.setDefaultUncaughtExceptionHandler(prevHandler);
         assertFalse("There should be no exception during setText", exceptionThrown.get());
-    }    
+    }
 }

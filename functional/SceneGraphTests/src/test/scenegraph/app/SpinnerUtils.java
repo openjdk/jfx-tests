@@ -43,8 +43,8 @@ import org.jemmy.timing.Waiter;
  * @author vshubov
  */
 public class SpinnerUtils {
-   
-    
+
+
     public static void click(final Wrap<? extends Region> control) throws InterruptedException {
         final Point p = control.getClickPoint();
         control.mouse().move(p);
@@ -52,21 +52,21 @@ public class SpinnerUtils {
         control.mouse().click();
         Thread.sleep(50);
     }
-    
+
     public static void paste(final Wrap<? extends Region> control, final String _str) throws InterruptedException {
-        
+
         for (int k=0; k<_str.length(); ++k) {
             control.keyboard().typeChar(_str.charAt(k));
             Thread.sleep(50);
         }
     }
-    
+
     public static void paste(final Wrap<? extends Region> control, final KeyboardButtons _btns) throws InterruptedException {
         control.keyboard().pushKey(_btns);
         Thread.sleep(50);
-        
+
     }
-    
+
     public static void selectRegexp(final Wrap<? extends ComboBox> _comboWrapper,final String _item) {
         new GetAction() {
             @Override
@@ -99,7 +99,7 @@ public class SpinnerUtils {
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     public static void select(final Wrap<? extends CheckBox> _checkboxWrapper,final Boolean _bSelected) {
         new GetAction() {
             @Override
@@ -107,17 +107,17 @@ public class SpinnerUtils {
                 final CheckBox checkbox = (CheckBox)_checkboxWrapper.getControl();
                 checkbox.setSelected(_bSelected);
                 System.out.println("checkbox \"" + checkbox.getId() + "\":" + checkbox.isSelected());
-                
+
                 new Waiter(Wrap.WAIT_STATE_TIMEOUT).ensureState(new State() {
                     @Override
                     public Object reached() {
                         return (_bSelected == checkbox.isSelected()) ? true : null;
                     }
-                });                
+                });
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     private static String spinnerEditorValue = null;
     private static String spinnerPropertyValue = null;
     public static String getSpinnerEditorValue() {
@@ -126,20 +126,20 @@ public class SpinnerUtils {
     public static String getSpinnerPropertyValue() {
         return spinnerPropertyValue;
     }
-    
+
     public static void retrieveSpinnerValues(final Wrap<? extends Spinner> _spinner) {
         new GetAction() {
             @Override
             public void run(Object... os) throws Exception {
                 final Spinner spinner = (Spinner)_spinner.getControl();
-                
+
                 spinnerPropertyValue = spinner.getValue().toString();
                 spinnerEditorValue = spinner.getEditor().textProperty().get();
                 System.out.println("retrieved values:" + spinnerPropertyValue + " / " + spinnerEditorValue);
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     /*
     spinner.getEditor().setOnDragDetected(new EventHandler<MouseEvent>() {
                         @Override
@@ -153,9 +153,9 @@ public class SpinnerUtils {
                                 event.consume();
                             }
                         }
-                    });        
+                    });
 
-    
+
                     tf.setOnDragOver(new EventHandler<DragEvent>() {
                         @Override
                         public void handle(DragEvent event) {
@@ -180,10 +180,10 @@ public class SpinnerUtils {
                             event.setDropCompleted(gotData);
                         }
                     });
-    
-    
-    
-    
+
+
+
+
     */
-    
+
 }

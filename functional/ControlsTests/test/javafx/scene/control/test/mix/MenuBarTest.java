@@ -190,21 +190,21 @@ public class MenuBarTest extends MenuTestBase {
     @Smoke
     @Test(timeout = 30000)
     public void renderingAfterSortingTest() {
-        
+
         StringConverter<Menu> conv = new StringConverter<Menu>() {
             @Override public String toString(Menu t) { return t.getText(); }
-            
+
             @Override public Menu fromString(String s) { return new Menu(s); }
         };
-        
+
         final Comparator<Menu> cmp = new Comparator<Menu>() {
             public int compare(Menu o1, Menu o2) {
                 return o1.getText().compareTo(o2.getText());
             }
         };
-        
+
         final int COUNT = 3;
-        
+
         SortValidator<Menu, MenuButton> sv = new SortValidator<Menu, MenuButton>(COUNT, conv, cmp) {
             @Override
             protected void setControlData(final ObservableList<Menu> ls) {
@@ -216,17 +216,17 @@ public class MenuBarTest extends MenuTestBase {
                     }
                 }.dispatch(menuBar.getEnvironment());
             }
-            
+
             @Override
             protected Lookup<? extends MenuButton> getCellsLookup() {
                 return sceneAsParent.lookup(MenuButton.class);
             }
-            
+
             @Override
             protected String getTextFromCell(MenuButton cell) {
                 return cell.getText();
             }
-            
+
             @Override
             protected void sort() {
                 new GetAction<Object>() {
@@ -239,12 +239,12 @@ public class MenuBarTest extends MenuTestBase {
             }
         };
         sv.setOrientation(Orientation.HORIZONTAL);
-        
+
         boolean res = sv.check();
         assertTrue(sv.getFailureReason(), res);
-        
+
     }
-    
+
     protected int getOpenedMenu() {
         return (new GetAction<Integer>() {
             @Override

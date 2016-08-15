@@ -38,11 +38,11 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class JSEnabledTest extends GenericTestClass {
-   
+
     private BooleanProperty jsEnabledProperty;
     private Boolean jsEnabledPropertyValue;
     private Boolean isJSEnabled;
-    
+
     private Tester isJSEnabledReady = new Tester() {
         public boolean isPassed() {
             return isJSEnabled != null;
@@ -53,12 +53,12 @@ public class JSEnabledTest extends GenericTestClass {
             return isJSEnabled != null && jsEnabledPropertyValue != null;
         }
     };
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for checking default JavaScript state.
      */
@@ -74,7 +74,7 @@ public class JSEnabledTest extends GenericTestClass {
         doWait(isJSEnabledReady);
         Assert.assertTrue("JS is not enabled by default!", isJSEnabled);
     }
-    
+
     /**
      * Test for disabling JavaScript.
      */
@@ -91,7 +91,7 @@ public class JSEnabledTest extends GenericTestClass {
         doWait(isJSEnabledReady);
         Assert.assertFalse("JS is not disabled!", isJSEnabled);
     }
-    
+
     /**
      * Test for disabling and then enabling JavaScript.
      */
@@ -109,7 +109,7 @@ public class JSEnabledTest extends GenericTestClass {
         doWait(isJSEnabledReady);
         Assert.assertTrue("JS is disabled!", isJSEnabled);
     }
-    
+
     /**
      * Test for checking default JavaScript state using a property.
      */
@@ -131,7 +131,7 @@ public class JSEnabledTest extends GenericTestClass {
         });
         Assert.assertTrue("JS is not enabled by default!", jsEnabledPropertyValue);
     }
-    
+
     /**
      * Test for disabling JavaScript using a property.
      */
@@ -152,7 +152,7 @@ public class JSEnabledTest extends GenericTestClass {
         Assert.assertFalse("JS is not disabled!", jsEnabledPropertyValue);
         Assert.assertFalse("JS is not disabled!", isJSEnabled);
     }
-    
+
     /**
      * Test for disabling and then enabling JavaScript using a property.
      */

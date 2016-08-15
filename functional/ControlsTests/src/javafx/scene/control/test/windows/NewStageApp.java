@@ -75,7 +75,7 @@ public class NewStageApp extends InteroperabilityApp {
 
             PropertiesTable tb = new PropertiesTable(testedStage);
             PropertyTablesFactory.explorePropertiesList(testedStage, tb);
-            
+
             final ToggleButton toggle = new ToggleButton("Fullscreen state : false");
             toggle.setSelected(false);
             toggle.selectedProperty().addListener(new ChangeListener<Boolean>(){

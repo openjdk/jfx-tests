@@ -53,7 +53,7 @@ import org.jemmy.resources.StringComparePolicy;
 @ControlType({ToggleButton.class})
 @ControlInterfaces(value={Selectable.class}, encapsulates={Boolean.class})
 public class ToggleButtonWrap<T extends ToggleButton> extends TextControlWrap<T> implements Selectable<Boolean> {
-    
+
     List<Boolean> stateList = new LinkedList<>();
     Selector<Boolean> selector = new SelectorImpl<ToggleButton, Boolean>(this, this);
 

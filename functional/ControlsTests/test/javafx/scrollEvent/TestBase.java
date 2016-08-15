@@ -78,12 +78,12 @@ public class TestBase extends UtilTestFunctions {
         Wrap wrap = scene.as(Parent.class, Node.class).lookup(TextField.class, new ByID(textFieldIdD)).wrap();
         wrap.mouse().click();
     }
-    
+
     protected void closeContextMenu() {
         clickOnTextField(EVENT_COME_INDICATOR_TEXT_FIELD_ID);
         requestFocusOnControl(targetControl);
     }
-    
+
     protected void initWrappers() {
         scene = Root.ROOT.lookup().wrap();
         parent = scene.as(Parent.class, Node.class);
@@ -103,7 +103,7 @@ public class TestBase extends UtilTestFunctions {
             final String dy_ID = "DELTAY_LISTENER_TEXT_FIELD_ID";
             final String text_dx_ID = "TEXTDELTAX_LISTENER_TEXT_FIELD_ID";
             final String text_dy_ID = "TEXTDELTAY_LISTENER_TEXT_FIELD_ID";
-            
+
             Wrap<? extends TextField> tfDeltaX = findTextField(dx_ID);
             Wrap<? extends TextField> tfDeltaY = findTextField(dy_ID);
             Wrap<? extends TextField> tfTextDeltaX = findTextField(text_dx_ID);
@@ -111,7 +111,7 @@ public class TestBase extends UtilTestFunctions {
 
             double deltaXValue = 0, deltaYValue = 0,
                    textDeltaXValue = 0, textDeltaYValue = 0;
-            
+
             boolean parseOk = true;
             try {
                 deltaXValue = Double.parseDouble(tfDeltaX.getControl().getText());
@@ -126,25 +126,25 @@ public class TestBase extends UtilTestFunctions {
                 System.err.println(dy_ID + "->" + tfDeltaY.getControl().getText());
                 parseOk = false;
             }
-            
+
             try {
                 textDeltaXValue = Double.parseDouble(tfTextDeltaX.getControl().getText());
             } catch (NumberFormatException nex) {
                 System.err.println(text_dx_ID + "->" + tfTextDeltaX.getControl().getText());
                 parseOk = false;
             }
-            
+
             try {
                 textDeltaYValue = Double.parseDouble(tfTextDeltaY.getControl().getText());
             } catch (NumberFormatException nex) {
                 System.err.println(text_dy_ID + "->" + tfTextDeltaY.getControl().getText());
                 parseOk = false;
             }
-            
+
             if (! parseOk) {
                 fail("Parsing failed for " + control);
             }
-            
+
             assert (deltaYValue == scrollY);
             assert (deltaXValue == scrollX);
 
@@ -166,14 +166,14 @@ public class TestBase extends UtilTestFunctions {
     protected void enableContextMenuTest() {
         //find checkbox which enables context menu request handler
         Wrap checkBoxWrap = scene.as(Parent.class, Node.class).lookup(CheckBox.class, new ByID(ENABLE_CONTEXT_MENU_CHECK_BOX_ID)).wrap();
-        
+
         //set check box selected
         checkBoxWrap.mouse().click();
     }
-    
+
     protected void checkListener(final String listenerID, final int expectedVal) {
         final Wrap<? extends TextField> textField = findTextField(listenerID);
-        
+
         new Waiter(new Timeout("", 2000)).ensureState(new State() {
             public Object reached() {
                 try {
@@ -184,7 +184,7 @@ public class TestBase extends UtilTestFunctions {
                         }
                     }.dispatch(Root.ROOT.getEnvironment());
                     int val = Integer.parseInt(text);
-                    
+
                     assertEquals(expectedVal, val);
                     return true;
                 } catch (Throwable ex) {
@@ -193,11 +193,11 @@ public class TestBase extends UtilTestFunctions {
             }
         });
     }
-    
+
     private boolean notExcludedControl(Wrap<? extends Node> someControl) {
         return !(someControl.getControl() instanceof ScrollBar) && !(someControl.getControl() instanceof ScrollPane)
                 && !(someControl.getControl() instanceof ListView) && !(someControl.getControl() instanceof TableView)
-                && !(someControl.getControl() instanceof TreeView) && !(someControl.getControl() instanceof Circle) 
+                && !(someControl.getControl() instanceof TreeView) && !(someControl.getControl() instanceof Circle)
                 && (TestUtil.isEmbedded() ? !(someControl.getControl() instanceof TreeTableView) : true);
     }
 

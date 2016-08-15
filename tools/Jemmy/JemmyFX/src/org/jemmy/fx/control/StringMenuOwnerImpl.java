@@ -56,7 +56,7 @@ class StringMenuOwnerImpl extends StringMenuOwner<MenuItem> {
     public org.jemmy.interfaces.Menu menu() {
         return new MenuImpl(parent);
     }
-    
+
     protected void prepare() {
     }
 

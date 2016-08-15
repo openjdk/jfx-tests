@@ -26,7 +26,7 @@ package javafx.scene.control.test.utils.ptables;
 
 /**
  * @author Alexander Kirov
- * 
+ *
  * Provides a way to set property value by binding or setter.
  */
 public interface AbstractPropertySetter<ValueType> extends Refreshable, HavingVisualRepresentation {
@@ -34,13 +34,13 @@ public interface AbstractPropertySetter<ValueType> extends Refreshable, HavingVi
     public PropertyValueType getPropertyValueType();
 
     public Boolean getBindingState();
-    
+
     public void setBindingState(Boolean newBindingState);
-    
+
     public void setValueThroughtBidirectionalBinding(ValueType value);
-    
+
     public void setValueThroughtUnidirectionalBinding(ValueType value);
-    
+
     public void setValueThroughtSetter(ValueType value);
 
     public static enum PropertyValueType {

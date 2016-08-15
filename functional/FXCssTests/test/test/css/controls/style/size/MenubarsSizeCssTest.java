@@ -44,5 +44,5 @@ public class MenubarsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.Menubars.name();
     }
-    
+
 }

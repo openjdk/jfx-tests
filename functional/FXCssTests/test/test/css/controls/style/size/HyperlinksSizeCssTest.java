@@ -44,5 +44,5 @@ public class HyperlinksSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.Hyperlinks.name();
     }
-    
+
 }

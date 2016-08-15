@@ -53,15 +53,15 @@ public abstract class ShapesPickingAbstractApp extends PickingAbstractApp {
     }
 
     private ShapesPickingAbstractTestCase spatc;
-    
+
     @Override
     public PickingTestCase buildTestCase() {
         spatc = buildShapesTestCase();
         return spatc;
     }
-    
-    protected abstract ShapesPickingAbstractTestCase buildShapesTestCase(); 
-    
+
+    protected abstract ShapesPickingAbstractTestCase buildShapesTestCase();
+
 
     public abstract class ShapesPickingAbstractTestCase extends PickingTestCase {
 
@@ -101,7 +101,7 @@ public abstract class ShapesPickingAbstractApp extends PickingAbstractApp {
             grp.getChildren().add(meshView);
         }
 
-        
+
     }
 
     public void setShape(Shape shape) {

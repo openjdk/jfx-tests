@@ -48,8 +48,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * This small FX app is used in input JemmyFX samples. It displays two mouse 
- * targets at the bottom: red and blue squares. Should a mouse event happen on 
+ * This small FX app is used in input JemmyFX samples. It displays two mouse
+ * targets at the bottom: red and blue squares. Should a mouse event happen on
  * any of the targets or a key event happen anywhere on the stage, details of
  * the event is shown in the list.
  * @author shura

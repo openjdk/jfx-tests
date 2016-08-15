@@ -48,7 +48,7 @@ public class PrefSizeTestApp extends Application {
 
         FlowPane pane = new FlowPane();
         pane.getChildren().add(view);
-        
+
         final Scene scene = new Scene(pane);
         stage.setTitle(VIEW_ID);
         stage.setScene(scene);

@@ -98,7 +98,7 @@ public class CanvasShape2Test extends TestBase {
     public void FillOval_TRANSPARENT() throws InterruptedException {
         testCommon(FillOval.name(), Effects.TRANSPARENT.name());
     }
-    
+
 /**
  * test fillOval
  */
@@ -106,25 +106,25 @@ public class CanvasShape2Test extends TestBase {
     public void FillOval_RADIAL_GRADIENT() throws InterruptedException {
         testCommon(FillOval.name(), Effects.RADIAL_GRADIENT.name());
     }
-    
+
  /**
  * test strokeOval
- * 
+ *
  */
     @Test
     public void StrokeOval_STROKE_GRAD() throws InterruptedException {
         testCommon(StrokeOval.name(), Effects.STROKE_GRAD.name());
     }
-    
+
  /**
  * test strokeOval
- * 
+ *
  */
     @Test
     public void StrokeOval_TRANSPARENT() throws InterruptedException {
         testCommon(StrokeOval.name(), Effects.TRANSPARENT.name());
     }
-    
+
 /**
  * test CubicCurve
  */
@@ -132,7 +132,7 @@ public class CanvasShape2Test extends TestBase {
     public void CubicCurve_FILL() throws InterruptedException {
         testCommon(CubicCurve.name(), Effects.FILL.name());
     }
-    
+
 /**
  * test CubicCurve
  */
@@ -148,7 +148,7 @@ public class CanvasShape2Test extends TestBase {
     public void CubicCurve_STROKE() throws InterruptedException {
         testCommon(CubicCurve.name(), Effects.STROKE.name());
     }
-    
+
 /**
  * test CubicCurve
  */
@@ -156,7 +156,7 @@ public class CanvasShape2Test extends TestBase {
     public void CubicCurve_STROKE_GRAD() throws InterruptedException {
         testCommon(CubicCurve.name(), Effects.STROKE_GRAD.name());
     }
-    
+
 /**
  * test CubicCurve
  */
@@ -164,7 +164,7 @@ public class CanvasShape2Test extends TestBase {
     public void CubicCurve_TRANSPARENT() throws InterruptedException {
         testCommon(CubicCurve.name(), Effects.TRANSPARENT.name());
     }
-    
+
 /**
  * test CubicCurve
  */
@@ -172,7 +172,7 @@ public class CanvasShape2Test extends TestBase {
     public void CubicCurve_RADIAL_GRADIENT() throws InterruptedException {
         testCommon(CubicCurve.name(), Effects.RADIAL_GRADIENT.name());
     }
-    
+
 /**
  * test QuadCurve
  */
@@ -180,7 +180,7 @@ public class CanvasShape2Test extends TestBase {
     public void QuadCurve_FILL() throws InterruptedException {
         testCommon(QuadCurve.name(), Effects.FILL.name());
     }
-    
+
 /**
  * test QuadCurve
  */
@@ -196,7 +196,7 @@ public class CanvasShape2Test extends TestBase {
     public void QuadCurve_STROKE() throws InterruptedException {
         testCommon(QuadCurve.name(), Effects.STROKE.name());
     }
-    
+
 /**
  * test QuadCurve
  */
@@ -204,7 +204,7 @@ public class CanvasShape2Test extends TestBase {
     public void QuadCurve_STROKE_GRAD() throws InterruptedException {
         testCommon(QuadCurve.name(), Effects.STROKE_GRAD.name());
     }
-    
+
 /**
  * test QuadCurve
  */
@@ -212,7 +212,7 @@ public class CanvasShape2Test extends TestBase {
     public void QuadCurve_TRANSPARENT() throws InterruptedException {
         testCommon(QuadCurve.name(), Effects.TRANSPARENT.name());
     }
-    
+
 /**
  * test QuadCurve
  */
@@ -368,13 +368,13 @@ public class CanvasShape2Test extends TestBase {
 
 /**
  * test Line
- * 
+ *
  */
     @Test
     public void Line_STROKE() throws InterruptedException {
         testCommon(Line.name(), Effects.STROKE.name());
     }
-    
+
 /**
  * test Line
  *

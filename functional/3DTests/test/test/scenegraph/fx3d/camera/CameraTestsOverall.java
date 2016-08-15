@@ -37,7 +37,7 @@ import test.scenegraph.fx3d.utils.FX3DTestBase;
 public abstract class CameraTestsOverall extends FX3DTestBase implements CameraTestingFace {
 
     protected abstract CameraTestingFace getCameraTestingFace();
-    
+
     @Override
     public double getFarClip() {
         return new GetAction<Double>() {

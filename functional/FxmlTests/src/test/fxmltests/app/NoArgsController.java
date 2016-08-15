@@ -28,15 +28,15 @@ package test.fxmltests.app;
  *
  * @author Aleksandr Sakharuk
  */
-public class NoArgsController 
+public class NoArgsController
 {
-    
+
     public void handle()
     {
         System.out.println("No args controller handle");
         counter++;
     }
-    
+
     public static int counter;
-    
+
 }

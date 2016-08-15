@@ -38,7 +38,7 @@ import org.junit.Test;
  * @author Irina Latysheva
  */
 public class BridgeCallTest extends BridgeTestClass  {
-    
+
     @BeforeClass
     public static void init(){
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
@@ -152,5 +152,5 @@ public class BridgeCallTest extends BridgeTestClass  {
         });
         Assert.assertEquals(UNDEFINED, resultObject);
     }
-    
+
 }

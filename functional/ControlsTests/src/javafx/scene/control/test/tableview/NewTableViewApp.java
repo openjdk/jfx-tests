@@ -177,7 +177,7 @@ public class NewTableViewApp extends InteroperabilityApp implements ResetButtonN
         }
 
         /*
-         * In this function TabPane with control will be refreshed, and all 
+         * In this function TabPane with control will be refreshed, and all
          * properties table will be refreshed and cleared.
          */
         private void refreshProcedure(int exceptFirstPropertiesTable) {
@@ -253,7 +253,7 @@ public class NewTableViewApp extends InteroperabilityApp implements ResetButtonN
                 sortedList.comparatorProperty().bind(testedTableView.comparatorProperty());
                 testedTableView.setItems(sortedList);
             });
-            
+
             HBox topContainer = new HBox();
 
             VBox internalContainer = new VBox(5.0);
@@ -469,20 +469,20 @@ public class NewTableViewApp extends InteroperabilityApp implements ResetButtonN
                             tb.incrementCounter(COUNTER_EDIT_START);
                         }
                     };
-                    
+
                     final EventHandler eventHandlerOnEditCommit = new EventHandler() {
                         public void handle(Event t) {
                             tb.incrementCounter(COUNTER_EDIT_COMMIT);
                         }
                     };
-                    
+
                     final EventHandler eventHandlerOnEditCancel = new EventHandler() {
                         public void handle(Event t) {
                             t.consume();
                             tb.incrementCounter(COUNTER_EDIT_CANCEL);
                         }
                     };
-                    
+
                     for (TableColumn col : testedTableView.getColumns()) {
                         col.setOnEditStart(eventHandlerOnEditStart);
                         assertTrue(eventHandlerOnEditStart == col.getOnEditStart());
@@ -720,9 +720,9 @@ public class NewTableViewApp extends InteroperabilityApp implements ResetButtonN
                 }
                 createComboBox();
                 comboBox.getSelectionModel().select(getItem());
-                
+
                 super.startEdit();
-                
+
                 setText(null);
                 setGraphic(comboBox);
             }

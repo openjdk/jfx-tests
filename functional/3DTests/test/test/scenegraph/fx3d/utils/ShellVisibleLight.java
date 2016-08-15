@@ -98,7 +98,7 @@ public class ShellVisibleLight {
             public void run(Object... os) throws Exception {
                 setResult(vl.getBase().getScope().toArray(new Node[0]));
             }
-            
+
         }.dispatch(Root.ROOT.getEnvironment());
     }
     public void clearScope(){
@@ -108,7 +108,7 @@ public class ShellVisibleLight {
             public void run(Object... os) throws Exception {
                 vl.getBase().getScope().clear();
             }
-            
+
         }.dispatch(Root.ROOT.getEnvironment());
     }
     public void addToScope(final Node... nodes){

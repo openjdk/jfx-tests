@@ -117,7 +117,7 @@ public class NewStackedBarChartApp extends InteroperabilityApp implements ChartI
 
             VBox vb = new VBox(5);
             vb.getChildren().addAll(resetButtonsHBox, getAddItemHBox(), getRemoveDataDialog(), getAddCategoryDialog(), getRemoveCategoryDialog());
-            
+
             pane = getPaneFor(testedStackedBarChart, CHART_TAB_NAME, axis1, AXIS_1_TAB_NAME, axis2, AXIS_2_TAB_NAME);
 
             setTestedControlContainerSize(500, 500);

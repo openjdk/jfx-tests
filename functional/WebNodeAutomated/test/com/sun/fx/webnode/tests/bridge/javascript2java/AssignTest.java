@@ -37,12 +37,12 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class AssignTest extends JavaScript2JavaBridgeTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for setting a public integer field.
      * Checks that public integer field of a bound object
@@ -67,7 +67,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(42, ((HelperObject)testObject).intField);
     }
-    
+
     /**
      * Test for setting a public character (char) field.
      * Checks that public character field of a bound object
@@ -93,7 +93,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals('o', ((HelperObject)testObject).charField);
     }
-    
+
     /**
      * Test for setting a public character (char) field.
      * Checks that public character field of a bound object
@@ -119,7 +119,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(15, ((HelperObject)testObject).charField);
     }
-    
+
     /**
      * Test for setting a public boolean field.
      * Checks that public boolean field of a bound object
@@ -144,7 +144,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(true, ((HelperObject)testObject).booleanField);
     }
-    
+
     /**
      * Test for setting a public double field.
      * Checks that public double field of a bound object
@@ -169,7 +169,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(42.24, ((HelperObject)testObject).doubleField, precision);
     }
-    
+
     /**
      * Test for setting a public float field.
      * Checks that public float field of a bound object
@@ -194,7 +194,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(42.42, ((HelperObject)testObject).floatField, precision);
     }
-    
+
     /**
      * Test for setting a public string field.
      * Checks that public string field of a bound object
@@ -219,7 +219,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals("test", ((HelperObject)testObject).stringField);
     }
-    
+
     /**
      * Test for setting a public integer field.
      * Checks that public integer field of a bound object
@@ -245,7 +245,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(0, ((HelperObject)testObject).intField);
     }
-    
+
     /**
      * Test for setting a public character (char) field.
      * Checks that public character field of a bound object
@@ -271,7 +271,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(0, ((HelperObject)testObject).charField);
     }
-    
+
     /**
      * Test for setting a public double field.
      * Checks that public double field of a bound object
@@ -297,7 +297,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(0, ((HelperObject)testObject).intField, precision);
     }
-    
+
     /**
      * Test for setting a public boolean field.
      * Checks that public boolean field of a bound object
@@ -323,7 +323,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(false, ((HelperObject)testObject).booleanField);
     }
-    
+
     /**
      * Test for setting a public Object (String) field.
      * Checks that public boolean field of a bound object
@@ -349,7 +349,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(null, ((HelperObject)testObject).stringField);
     }
-    
+
     /**
      * Test for setting a public object field.
      * Checks that public object field of a bound object can be set
@@ -375,7 +375,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals("test", ((HelperObject)testObject).objectField);
     }
-    
+
     /**
      * Test for setting a public double field.
      * Checks that public double field of a bound object can be set
@@ -404,7 +404,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(42.2, ((HelperObject)testObject).doubleField, precision);
     }
-    
+
     /**
      * Test for setting a public field with the value it can't accept.
      * TODO: finish after RT-19119 is evaluated.
@@ -429,7 +429,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
 //        });
 //        Assert.assertEquals(Integer.MIN_VALUE, ((HelperObject)testObject).intField);
 //    }
-    
+
     /**
      * Test for setting a new value to the exposed object.
      * This test checks that an object itself can't be changed from JS code
@@ -457,7 +457,7 @@ public class AssignTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testObjectHardLink, testObject);
     }
-    
+
     /**
      * Test for setting a new value to the exposed object.
      * This test checks that an object itself can't be changed from JS code

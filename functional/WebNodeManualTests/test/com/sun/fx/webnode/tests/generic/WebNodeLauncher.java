@@ -45,7 +45,7 @@ public class WebNodeLauncher extends Application {
         web.load(url);
         box.getChildren().add(view);
         final Scene scene = new Scene(box);
-        
+
         scene.widthProperty().addListener(new InvalidationListener() {
             public void invalidated(Observable ov) {
                 box.setPrefWidth(scene.getWidth());
@@ -88,4 +88,4 @@ public class WebNodeLauncher extends Application {
 
 
 
-                                         
+

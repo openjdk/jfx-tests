@@ -71,12 +71,12 @@ import test.javaclient.shared.Utils;
 public class NewListViewTest extends TestBase {
 
     static StringBuilder sb = new StringBuilder();
-    
+
     @Before
     @Override
     public void setUp() {
        super.setUp();
-       
+
        new GetAction<Object>() {
             @Override
             public void run(Object... os) throws Exception {
@@ -86,17 +86,17 @@ public class NewListViewTest extends TestBase {
                         if (event.getCode() == KeyCode.CONTROL) return;
                         if (event.getCode() == KeyCode.ALT) return;
                         if (event.getCode() == KeyCode.SHIFT) return;
-                        
+
                         if (event.isAltDown()) sb.append("ALT + ");
                         if (event.isControlDown()) sb.append("CTRL + ");
                         if (event.isShiftDown()) sb.append("SHIFT + ");
-                        
+
                         sb.append(event.getCode()).append("\n");
                     }
                 });
             }
         }.dispatch(testedControl.getEnvironment());
-       
+
        new GetAction<Object>() {
             @Override
             public void run(Object... os) throws Exception {
@@ -107,18 +107,18 @@ public class NewListViewTest extends TestBase {
                     }
                 });
             }
-        }.dispatch(testedControl.getEnvironment()); 
+        }.dispatch(testedControl.getEnvironment());
     }
-    
+
     @After
     public void _after() {
         String newLine = "\n";
         int currIndex = sb.indexOf(newLine);
         int prevIndex = 0;
-        
+
         int counter = 1;
         String prevLine = null;
-        
+
         StringBuilder rolledUpResult = new StringBuilder();
         while(currIndex > 0) {
             String currLine = sb.substring(prevIndex, currIndex);
@@ -144,7 +144,7 @@ public class NewListViewTest extends TestBase {
         System.out.println(rolledUpResult.toString());
         sb = new StringBuilder();
     }
-    
+
     //SECTION OF TESTS ON PROPERTIES
     @Smoke
     @Test(timeout = 300000)
@@ -314,7 +314,7 @@ public class NewListViewTest extends TestBase {
     }
 
     private void checkScrollingState(final double scrollValue, boolean beginVisible, boolean endVisible, int size, final Orientation orientation) {
-        //assertEquals(findScrollBar(testedControl.as(Parent.class, Node.class), orientation, true).getControl().getValue(), scrollValue, 0.01);        
+        //assertEquals(findScrollBar(testedControl.as(Parent.class, Node.class), orientation, true).getControl().getValue(), scrollValue, 0.01);
         testedControl.waitState(new State() {
             public Object reached() {
                 Wrap<? extends ScrollBar> sb = findScrollBar(testedControl.as(Parent.class, Node.class), orientation, true);
@@ -340,7 +340,7 @@ public class NewListViewTest extends TestBase {
         Rectangle control = testedControl.getScreenBounds();
 
 //        int epsilon = 0;
-//        
+//
 //        if (orientation == Orientation.HORIZONTAL) {
 //            control.x = control.x - epsilon;
 //            control.width = control.width + 2 * epsilon;
@@ -1151,7 +1151,7 @@ public class NewListViewTest extends TestBase {
             resetSceneByDefault();
         }
     }
-    
+
     @Test(timeout = 60000)
     public void compositeSelectionTest() throws InterruptedException, Throwable {
         for (Orientation orientation : Orientation.values()) {
@@ -1191,7 +1191,7 @@ public class NewListViewTest extends TestBase {
             resetSceneByDefault();
         }
     }
-    
+
     @Test(timeout = 300000)
     public void selectionCancelTest() throws InterruptedException {
         checkKeyboardButtonOnCancellingSelection(KeyboardButtons.HOME);

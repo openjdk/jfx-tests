@@ -44,5 +44,5 @@ public class ChoiceBoxesSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.ChoiceBoxes.name();
     }
-    
+
 }

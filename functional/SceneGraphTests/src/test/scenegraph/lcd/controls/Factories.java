@@ -42,7 +42,7 @@ public enum Factories implements Factory{
         public Parent createControl() {
             return new Button("Test");
         }
-    }), 
+    }),
     ToggleButton(new DefaultFactory() {
 
         @Override
@@ -80,10 +80,10 @@ public enum Factories implements Factory{
         @Override
         public Parent createControl() {
             StackPane value = new StackPane();
-            
+
             Label label = new Label("Test");
             value.getChildren().add(label);
-            
+
             return value;
         }
     }),
@@ -109,7 +109,7 @@ public enum Factories implements Factory{
 
         @Override
         public Parent createControl() {
-            
+
             return MenuBarBuilder.create()
                     .menus(
                         MenuBuilder.create()
@@ -147,14 +147,14 @@ public enum Factories implements Factory{
             tableColumn.setCellValueFactory(new PropertyValueFactory("test"));
             tableView.getColumns().add(tableColumn);
             System.err.println("TableColumnFactory is temporarily modifier. Please, review once http://javafx-jira.kenai.com/browse/RT-27027 is resolved.");
-            
+
             tableView.getItems().addAll(FXCollections.observableArrayList((Object)new TestTableItem()));
             tableView.setMaxHeight(150);
             tableView.setMaxWidth(150);
             return tableView;
         }
     }),
-    
+
     Accordion(new DefaultFactory() {
 
         @Override
@@ -162,7 +162,7 @@ public enum Factories implements Factory{
             TitledPane expandedPane = TitledPaneBuilder.create()
                     .text("Test1")
                     .content(new Button("Test3"))
-                    .build(); 
+                    .build();
             return AccordionBuilder.create()
                     .maxHeight(200)
                     .maxWidth(200)
@@ -204,8 +204,8 @@ public enum Factories implements Factory{
 
     private Factories(Factory factory) {
         this.factory = factory;
-    }      
-    
+    }
+
     public Parent createControl(boolean lcd) {
         return factory.createControl(lcd);
     }

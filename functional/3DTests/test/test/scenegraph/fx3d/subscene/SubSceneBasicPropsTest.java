@@ -167,7 +167,7 @@ public class SubSceneBasicPropsTest extends FX3DTestBase {
         setRotate(45);
         checkScreenshot("rotateSetterZTest");
     }
-    
+
 
     /**
      * Test for SubScene.setHeight() and SubScene.setWidth() methods.

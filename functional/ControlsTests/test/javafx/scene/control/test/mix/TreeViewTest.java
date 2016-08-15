@@ -126,7 +126,7 @@ public class TreeViewTest extends ControlsTestBase {
         } else {
             cellClass = TreeTableCell.class;
         }
-        
+
         ThemeDriverFactory factory = (ThemeDriverFactory) ThemeDriverFactory.getThemeFactory();
         CaspianDriverFactory caspianFactory = null;
         if (factory instanceof CaspianDriverFactory) {
@@ -221,9 +221,9 @@ public class TreeViewTest extends ControlsTestBase {
 
         TreeItem root = getRoot();
         treeAsMultiSelectable.selector().select(root);
-	//TreeView should not treat the next mouse click as
-	//double click. Therefore we need a pause.
-	Thread.sleep(1000);
+    //TreeView should not treat the next mouse click as
+    //double click. Therefore we need a pause.
+    Thread.sleep(1000);
         selectionHelper.click(root);
 
         scene.keyboard().pressKey(KeyboardButtons.SHIFT);
@@ -426,7 +426,7 @@ public class TreeViewTest extends ControlsTestBase {
         treeAsMultiSelectable.selector().select(mid.getControl());
         LookupCriteria crit = new ByText(TreeViewApp.REMOVE_SELECTED_BTN_TXT);
         parent.lookup(crit).wrap().mouse().click();
-        
+
         final SimpleObjectProperty<Lookup> lookupHolder = new SimpleObjectProperty<Lookup>(lookup);
         final State<Boolean> noHorizShiftState = new State<Boolean>() {
             public Boolean reached() {
@@ -447,7 +447,7 @@ public class TreeViewTest extends ControlsTestBase {
             }
         };
         tree.waitState(noHorizShiftState);
-        
+
         final SimpleObjectProperty<Rectangle> rectHolder = new SimpleObjectProperty<Rectangle>(rectMid);
         final State<Boolean> verticalShiftState = new State<Boolean>() {
             public Boolean reached() {
@@ -468,7 +468,7 @@ public class TreeViewTest extends ControlsTestBase {
             }
         };
         tree.waitState(verticalShiftState);
-        
+
         //Add child to the middle
         int level = 0, idx = 1;
         addItem("Test", level, idx);
@@ -476,7 +476,7 @@ public class TreeViewTest extends ControlsTestBase {
 
         lookupHolder.set(lookup);
         rectHolder.set(initialRectLast);
-        
+
         tree.waitState(noHorizShiftState);
         tree.waitState(verticalShiftState);
     }

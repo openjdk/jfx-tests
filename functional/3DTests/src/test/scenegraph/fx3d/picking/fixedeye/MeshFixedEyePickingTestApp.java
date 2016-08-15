@@ -65,7 +65,7 @@ public class MeshFixedEyePickingTestApp extends MeshPickingAbstractApp {
         }
 
     }
-    
+
     public static void main(String[] args) {
         Utils.launch(MeshFixedEyePickingTestApp.class, args);
     }

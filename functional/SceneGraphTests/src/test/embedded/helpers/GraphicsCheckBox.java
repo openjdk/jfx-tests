@@ -35,9 +35,9 @@ import javafx.scene.text.Text;
  * @author akulyakh
  */
 class GraphicsCheckBox implements AbstractCheckBox {
-    
+
     private final Text text;
-    
+
     GraphicsCheckBox(Text text) {
         this.text = text;
         setChecked(false);
@@ -54,25 +54,25 @@ class GraphicsCheckBox implements AbstractCheckBox {
     }
 
     void setOnMouseClicked(OnClickHandler handler) {
-        
+
         text.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent t) {
-                
+
                 setChecked(!isChecked());
-            
+
                 if(handler != null) {
                     handler.onClick();
                 }
             }
-            
+
         });
     }
-    
+
     @Override
     public void setChecked(boolean checked) {
         text.setFill(checked ? GraphicsCheckBoxes.COLOR_CHECKED : GraphicsCheckBoxes.COLOR_UNCHECKED);
     }
-    
+
 }

@@ -33,7 +33,7 @@ import javafx.scene.control.Button;
  * @author akulyakh
  */
 class ControlsButton implements AbstractButton {
-    
+
     private final Button button;
 
     public ControlsButton(Button button) {
@@ -45,5 +45,5 @@ class ControlsButton implements AbstractButton {
         return button;
     }
 
-    
+
 }

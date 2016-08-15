@@ -101,8 +101,8 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
     @Override
     public Point getClickPoint() {
         return TableUtils.getClickPoint(listViewWrap, this);
-    }    
-    
+    }
+
     @Override
     public Rectangle getScreenBounds() {
         return cellWrap().getScreenBounds();
@@ -119,7 +119,7 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
 
         AbstractScroll scroll1 = Utils.getContainerScroll(listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() == Orientation.VERTICAL);
         if (scroll1 != null) {
-            TableUtils.scrollToInSingleDimension((Wrap<? extends Control>) viewWrap, ListCell.class, p -> items.indexOf(p.getItem()), listViewWrap.getItems().indexOf(getControl()), 
+            TableUtils.scrollToInSingleDimension((Wrap<? extends Control>) viewWrap, ListCell.class, p -> items.indexOf(p.getItem()), listViewWrap.getItems().indexOf(getControl()),
             scroll1.caret(), listViewWrap.vertical());
         }
         AbstractScroll scroll2 = Utils.getContainerScroll(listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() != Orientation.VERTICAL);

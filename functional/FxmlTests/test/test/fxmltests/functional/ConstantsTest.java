@@ -45,12 +45,12 @@ import test.javaclient.shared.TestBase;
 import test.javaclient.shared.Utils;
 
 public class ConstantsTest extends TestBase{
-    
+
     @BeforeClass
     public static void runUI () {
         Utils.launch(FxmlConstantApp.class, null);
     }
-    
+
     /**
      * Testing default property
      */
@@ -64,7 +64,7 @@ public class ConstantsTest extends TestBase{
         Assert.assertEquals(100.0, pane1.getControl().getPrefWidth());
         Assert.assertEquals(160.0, pane1.getControl().getHeight());
     }
-    
+
     /**
      * Testing constant property
      * @testableAssertId constant

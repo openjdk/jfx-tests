@@ -32,7 +32,7 @@ import javafx.scene.control.Label;
  * @author akulyakh
  */
 class ControlsLabelBuilder implements LabelBuilder {
-    
+
     private Label label;
 
     public ControlsLabelBuilder() {
@@ -56,5 +56,5 @@ class ControlsLabelBuilder implements LabelBuilder {
         return new ControlsLabel(label);
     }
 
-    
+
 }

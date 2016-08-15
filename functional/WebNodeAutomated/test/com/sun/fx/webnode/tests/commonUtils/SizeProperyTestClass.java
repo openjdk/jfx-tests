@@ -35,7 +35,7 @@ import org.jemmy.fx.Root;
  */
 public class SizeProperyTestClass extends GenericTestClass {
     protected DoubleProperty p;
-    
+
     public static void useGlassRobot() {
         Root.useGlassRobot(Root.ROOT.getEnvironment());
         Root.useGlassRobot(Environment.getEnvironment());

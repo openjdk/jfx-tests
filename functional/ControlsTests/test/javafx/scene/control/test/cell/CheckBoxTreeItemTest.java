@@ -98,7 +98,7 @@ public class CheckBoxTreeItemTest extends UtilTestFunctions {
     }
 
     @Before
-    public void setUp() {        
+    public void setUp() {
         parent.lookup(Button.class, new ByID<Button>(CheckBoxTreeItemApp.RESET_SCENE_BTN_ID)).wrap().mouse().click();
         new TreeViewTest().expand(treeAsParent.lookup());
 
@@ -110,7 +110,7 @@ public class CheckBoxTreeItemTest extends UtilTestFunctions {
         }).wrap();
         propertyTableHelper = new PropertyGridHelper<CheckBoxTreeItem>((Wrap<? extends CheckBoxTreeItem>) item, parent.lookup(PropertyCheckingGrid.class).wrap());
     }
-    
+
     @Smoke
     @Test
     public void selectedPropertyTest() throws Throwable {

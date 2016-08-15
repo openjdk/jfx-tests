@@ -39,7 +39,7 @@ public class SelfTest extends WorkerTestClass {
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for worker's self and this objects.
      */

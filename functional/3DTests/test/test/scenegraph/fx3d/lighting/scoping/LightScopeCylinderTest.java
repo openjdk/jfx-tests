@@ -34,5 +34,5 @@ public class LightScopeCylinderTest extends LightScopeTests{
     public void chooseCase() {
         initTestCase(LightScopeTestApp.TestCaseType.SINGLE_CYLINDER_CASE);
     }
-    
+
 }

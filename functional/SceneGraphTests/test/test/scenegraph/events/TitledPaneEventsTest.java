@@ -36,13 +36,13 @@ import test.scenegraph.app.ControlEventsApp.Controls;
  */
 public class TitledPaneEventsTest extends EventTestCommon<TitledPaneDock>
 {
-    
+
     @BeforeClass
     public static void rinUI()
     {
         ControlEventsApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -50,12 +50,12 @@ public class TitledPaneEventsTest extends EventTestCommon<TitledPaneDock>
         super.before();
         setControl(Controls.TITLED_PANE);
     }
-    
+
     @Override
     protected TitledPaneDock findPrimeDock()
     {
-        return new TitledPaneDock(getActiveTabDock().asParent(), 
+        return new TitledPaneDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
-    
+
 }

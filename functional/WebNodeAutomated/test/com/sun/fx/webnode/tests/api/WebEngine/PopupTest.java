@@ -73,7 +73,7 @@ public class PopupTest extends GenericTestClass implements Callback<PopupFeature
      * executed on document load with associated WebEngine.
      */
 
-    
+
     @Test(timeout=10000)
     public void testPopupFromHTML() {
         Platform.runLater(new Runnable() {
@@ -94,7 +94,7 @@ public class PopupTest extends GenericTestClass implements Callback<PopupFeature
     *  Test for javafx.scene.web.WebEngine popup handler. Uses passing window.open JavaScript
      * to associated WebEngine.
     */
-    
+
     @Test(timeout=10000)
     public void testPopupWithoutStatus() {
         Platform.runLater(new Runnable() {
@@ -209,7 +209,7 @@ public class PopupTest extends GenericTestClass implements Callback<PopupFeature
             }
         });
     }
-    
+
     private void initEngine(){
         engine = new WebEngine();
         engine.setCreatePopupHandler(this);

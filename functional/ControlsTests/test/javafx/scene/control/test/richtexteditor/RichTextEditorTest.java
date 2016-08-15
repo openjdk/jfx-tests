@@ -160,7 +160,7 @@ public class RichTextEditorTest extends ControlsTestBase {
             }
         } finally {
             webView.keyboard().releaseKey(KeyboardButtons.SHIFT);
-        }        
+        }
         color(background, "background", someRandomColor);
         webView.keyboard().pushKey(KeyboardButtons.A, CTRL_DOWN_MASK_OS);
         webView.keyboard().pushKey(KeyboardButtons.RIGHT);
@@ -689,7 +689,7 @@ public class RichTextEditorTest extends ControlsTestBase {
      * @return
      * @throws InterruptedException
      * @throws IOException
-     * @throws Throwable 
+     * @throws Throwable
      */
     protected String color(Wrap control, String name, int num) throws InterruptedException, IOException, Throwable {
         control.mouse().click();
@@ -860,7 +860,7 @@ public class RichTextEditorTest extends ControlsTestBase {
                 }
             }
         }
-        
+
         System.out.println("there is no platform specific html for name <" + name + ">.");
         return name;
     }

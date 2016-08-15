@@ -181,7 +181,7 @@ public class LabelsMnemonicsApp extends InteroperabilityApp {
                         }
                     }
                 });
-                                
+
                 CheckBox label_for_reversed_check2 = new CheckBox("label2.setLabelFor(button1)");
                 label_for_reversed_check2.setId(CHECK_DYNAMIC_REVERSED_SET_2_ID);
                 label_for_reversed_check2.selectedProperty().addListener(new ChangeListener<Boolean>() {

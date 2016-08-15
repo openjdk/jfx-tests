@@ -371,8 +371,8 @@ public class ComboBoxTest extends TestBase {
         assertEquals(((ListView) getPopupWrap().as(Parent.class, Node.class).lookup(ListView.class).wrap().getControl()).getItems(), ((ComboBox) testedControl.getControl()).getItems());
     }
 
-    //Test//Jonathan said, that there is no support for multiple 
-    // selection model now. So I'll wait until he will write it and check my 
+    //Test//Jonathan said, that there is no support for multiple
+    // selection model now. So I'll wait until he will write it and check my
     // customMultipleSelection model class. So to write test now is impossible.
     public void customMultipleSelectionModelTest() throws InterruptedException {
         assertNotSame((new ComboBox()).getItems(), null);
@@ -1348,7 +1348,7 @@ public class ComboBoxTest extends TestBase {
             } else {
                 setPropertyByToggleClick(SettingType.UNIDIRECTIONAL, Properties.editable, true);
             }
-            
+
             //Wait editable state application.
             Thread.sleep(1000);
 
@@ -1446,7 +1446,7 @@ public class ComboBoxTest extends TestBase {
         MessageFormat m = new MessageFormat(pattern);
         final Format fmt = new ComboBoxApp.MyMessageFormat(m);
 
-        //Set format string converter 
+        //Set format string converter
         new GetAction<Object>() {
             @Override
             public void run(Object... parameters) throws Exception {

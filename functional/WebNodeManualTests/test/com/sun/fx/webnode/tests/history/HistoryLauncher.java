@@ -46,12 +46,12 @@ import javafx.stage.Stage;
  * @author Irina Grineva
  */
 public class HistoryLauncher extends Application {
-    
+
     protected WebEngine web = null;
     protected Text currIndex = new Text();
     protected Text currHistorySize = new Text();
     protected WebView view;
-    
+
     protected HBox addButtonPanel() {
         Button goNeg = new Button("Go(-1)");
         goNeg.setOnAction(new EventHandler<ActionEvent>() {
@@ -59,35 +59,35 @@ public class HistoryLauncher extends Application {
                 web.getHistory().go(-1);
             }
         });
-        
+
         Button goPos = new Button("Go(1)");
         goPos.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 web.getHistory().go(1);
             }
         });
-        
+
         Button goNegTooMuch = new Button("Go(-5)");
         goNegTooMuch.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 web.getHistory().go(-5);
             }
         });
-        
+
         Button goPosTooMuch = new Button("Go(5)");
         goPosTooMuch.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 web.getHistory().go(5);
             }
         });
-        
+
         Button go0 = new Button("Go(0)");
         go0.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 web.getHistory().go(0);
             }
         });
-        
+
         Button setHistorySize1 = new Button("Set history size to 1");
         setHistorySize1.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
@@ -96,25 +96,25 @@ public class HistoryLauncher extends Application {
                 currHistorySize.setText("Current number of entries: " + web.getHistory().getEntries().size());
             }
         });
-        
+
         Button setHistorySize0 = new Button("Set history size to 0");
         setHistorySize0.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 web.getHistory().setMaxSize(0);
             }
         });
-        
+
         HBox buttons = new HBox();
         buttons.getChildren().addAll(goNeg, goPos, go0, goNegTooMuch, goPosTooMuch, setHistorySize1, setHistorySize0);
         return buttons;
     }
-    
+
     protected VBox createContainer() {
         VBox container = new VBox();
         container.getChildren().addAll(addButtonPanel(), currIndex, currHistorySize, view);
         return container;
     }
-    
+
     @Override
     public void start(Stage stage) {
         view = new WebView();
@@ -135,14 +135,14 @@ public class HistoryLauncher extends Application {
         stage.sizeToScene();
         stage.show();
     }
-    
+
     public static void run(final String url) {
-        final String[] args = new String[] {url};        
+        final String[] args = new String[] {url};
         new Thread(new Runnable() {
             public void run() {
                 Application.launch(HistoryLauncher.class, args);
             }
         }, "FXSQE app launch thread").start();
     }
-    
+
 }

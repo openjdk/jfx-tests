@@ -44,5 +44,5 @@ public class ToolbarsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.Toolbars.name();
     }
-    
+
 }

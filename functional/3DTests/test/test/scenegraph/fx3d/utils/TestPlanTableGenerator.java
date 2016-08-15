@@ -195,7 +195,7 @@ public class TestPlanTableGenerator extends Application {
         });
         testCountBtn.setPrefWidth(WIDTH / 2);
         testCountBtn.setPrefHeight(50);
-        
+
         tableArea = new TextArea();
         tableArea.setEditable(false);
         tableArea.setPrefHeight(HEIGHT);

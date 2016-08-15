@@ -4,6 +4,6 @@
 <?import java.util.*?>
 <?import javafx.collections.FXCollections?>
 
-<FXCollections fx:controller="test.fxmltests.app.CollectionController" 
-               xmlns:fx="http://javafx.com/fxml" fx:factory="observableArrayList" 
+<FXCollections fx:controller="test.fxmltests.app.CollectionController"
+               xmlns:fx="http://javafx.com/fxml" fx:factory="observableArrayList"
                onChange="#handleListChangeEvent"/>

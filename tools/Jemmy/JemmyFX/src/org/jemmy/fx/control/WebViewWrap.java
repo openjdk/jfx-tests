@@ -38,7 +38,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 @ControlType({WebView.class})
-@ControlInterfaces( value = {Parent.class}, 
+@ControlInterfaces( value = {Parent.class},
                     encapsulates = {org.w3c.dom.Node.class},
                     name= {"asWebNodeParent"})
 public class WebViewWrap<CONTROL extends WebView> extends NodeWrap<CONTROL> {

@@ -65,7 +65,7 @@ public class NavigatingTest extends HistoryTestClass {
         Assert.assertEquals(1, currentIndex);
         Assert.assertEquals("1", title);
     }
-    
+
     /**
      * Test for loading the same page multiple times.
      */
@@ -86,7 +86,7 @@ public class NavigatingTest extends HistoryTestClass {
         Assert.assertEquals(0, currentIndex);
         Assert.assertEquals("0", title);
     }
-    
+
     /**
      * Test for WebHistory.go() method called with a negative argument.
      */
@@ -102,7 +102,7 @@ public class NavigatingTest extends HistoryTestClass {
         Assert.assertEquals(1, currentIndex);
         Assert.assertEquals("1", title);
     }
-    
+
     /**
      * Test for WebHistory.go() method called with a positive argument.
      */
@@ -119,14 +119,14 @@ public class NavigatingTest extends HistoryTestClass {
         Assert.assertEquals(2, currentIndex);
         Assert.assertEquals("2", title);
     }
-    
+
     IndexOutOfBoundsException e;
     Tester exceptionHere = new Tester() {
         public boolean isPassed() {
             return e != null;
         }
     };
-    
+
     /**
      * Test for WebHistory.go() method called with a negative argument when it is impossible to load an entry.
      */
@@ -152,7 +152,7 @@ public class NavigatingTest extends HistoryTestClass {
         Assert.assertEquals(2, currentIndex);
         Assert.assertEquals("2", title);
     }
-    
+
     /**
      * Test for WebHistory.go() method called with a positive argument when it is impossible to load an entry.
      */
@@ -178,7 +178,7 @@ public class NavigatingTest extends HistoryTestClass {
         Assert.assertEquals(2, currentIndex);
         Assert.assertEquals("2", title);
     }
-    
+
     /**
      * Test for WebHistory.go() method called with 0.
      */
@@ -194,7 +194,7 @@ public class NavigatingTest extends HistoryTestClass {
         Assert.assertEquals(2, currentIndex);
         Assert.assertEquals("2", title);
     }
-    
+
     /**
      * Test for loading a resource which cannot be loaded.
      */

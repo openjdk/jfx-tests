@@ -45,15 +45,15 @@ public class StylesheetApp extends Application {
     public final static String EXAMPLE_ID = "example";
     private static int WIDTH = 300;
     private static int HEIGHT = 300;
-    
-    
+
+
     private static String[] styles = new String[]{
         StylesheetApp.class.getResource("/test/css/resources/rt-17348_1.css").toExternalForm(),
         StylesheetApp.class.getResource("/test/css/resources/rt-17348_2.css").toExternalForm()
     };
-    
+
     private int styleIndex = 0;
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         StackPane  pane = new StackPane();
@@ -76,7 +76,7 @@ public class StylesheetApp extends Application {
         stage.setTitle("Test for RT-17348." + VersionInfo.getRuntimeVersion());
         stage.show();
     }
-    
+
     public static void main(String[] args) {
         Utils.launch(StylesheetApp.class, null);
     }

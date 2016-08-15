@@ -53,16 +53,16 @@ public class JFXPanelBrowserTest extends ControlsTestBase {
 
     private static String proxyHost;
     private static String proxyPort;
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         System.setProperty("javafx.swinginteroperability", "true");
         JFXPanelBrowserApp.main(null);
-        
+
         //Save proxy settings
         proxyHost = System.getProperty("http.proxyHost");
         proxyPort = System.getProperty("http.proxyPort");
-        
+
         System.setProperty("http.proxyHost", "www-proxy.us.oracle.com");
         System.setProperty("http.proxyPort", "80");
         //BrowserApp.main(null);

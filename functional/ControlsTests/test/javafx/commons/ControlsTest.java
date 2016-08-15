@@ -64,13 +64,13 @@ public class ControlsTest extends ControlsBase {
 
         final MaxDistanceComparator maxDistanceComparator = new MaxDistanceComparator(0.0);
         final double THRESHOLD = 0.03 * Math.sqrt(3);
-        
+
         /*
          * Change comparator because it is called by
          */
         final RasterComparator rasterComparator = Environment.getEnvironment().getProperty(RasterComparator.class);
         Environment.getEnvironment().setProperty(RasterComparator.class, new MaxDistanceComparator(THRESHOLD));
-        
+
         String nodeName;
 
         for (Object node : nodeChooser.as(Selectable.class).getStates()) {
@@ -88,7 +88,7 @@ public class ControlsTest extends ControlsBase {
 
                 final Image imgInitial = testedControl.getScreenImage();
                 final Image imgOpacity40 = testedControl.getScreenImage();
-                
+
                 Assert.assertTrue("Two initial state screenshots have differences",
                         maxDistanceComparator.compare((Raster) imgInitial, (Raster) imgOpacity40));
 
@@ -119,17 +119,17 @@ public class ControlsTest extends ControlsBase {
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                     Image imgTranslucent = testedControl.getScreenImage();
-                    
+
                     String screenshotPath = GoldenImageManager.getScreenshotPath(String.format("%s_img_opacity40", nodeName));
                     imgOpacity40.save(screenshotPath);
-                    
+
                     screenshotPath = GoldenImageManager.getScreenshotPath(String.format("%s_control_opacity40", nodeName));
                     imgTranslucent.save(screenshotPath);
 
                     Image diff = Environment.getEnvironment().getProperty(ImageComparator.class).compare(imgOpacity40, imgTranslucent);
-                    
+
                     Assert.assertTrue(diff != null);
-                    
+
                     screenshotPath = GoldenImageManager.getScreenshotPath(String.format("%s_diff", nodeName));
                     diff.save(screenshotPath);
                 }
@@ -137,7 +137,7 @@ public class ControlsTest extends ControlsBase {
             }
             clearCache();
         }
-        
+
         /*
          * Restore comparator
          */

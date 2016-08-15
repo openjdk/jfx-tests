@@ -40,7 +40,7 @@ public class TerminatingTest extends WorkerTestClass {
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for terminating worker from calling page.
      */
@@ -63,7 +63,7 @@ public class TerminatingTest extends WorkerTestClass {
         doWait(resultReady);
         Assert.assertEquals("alpha", result);
     }
-    
+
     /**
      * Test for terminating worker from itself.
      */

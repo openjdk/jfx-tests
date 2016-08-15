@@ -32,7 +32,7 @@ import static test.javaclient.shared.TestUtil.isEmbedded;
  * @author akulyakh
  */
 public class CheckBoxBuilderFactory {
-    
+
     public static CheckBoxBuilder newCheckboxBuilder() {
         if(Configuration.isEmbedded()) {
             return new GraphicsCheckableBuilder();
@@ -40,7 +40,7 @@ public class CheckBoxBuilderFactory {
             return new ControlsCheckBoxBuilder();
         }
     }
-    
+
     private CheckBoxBuilderFactory() {}
-    
+
 }

@@ -111,7 +111,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
     }
 
     @Smoke
-    //@Test//Commented out, as RT-22649 is a feature. 
+    //@Test//Commented out, as RT-22649 is a feature.
     public void BackspaceSequence() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
 
@@ -128,7 +128,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
     }
 
     @Smoke
-    //@Test//Commented out, as RT-22649 is a feature. 
+    //@Test//Commented out, as RT-22649 is a feature.
     public void DeleteSequence() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
 
@@ -145,7 +145,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
     }
 
     @Smoke
-    //@Test//Commented out, as RT-22649 is a feature. 
+    //@Test//Commented out, as RT-22649 is a feature.
     public void DeleteAndBackspaceSequence() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
 

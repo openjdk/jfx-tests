@@ -30,5 +30,5 @@ package com.sun.fx.webnode.tests.bridge.javascript2java.helpers;
  * @author Irina Grineva
  */
 public class SpecialException extends Exception {
-    
+
 }

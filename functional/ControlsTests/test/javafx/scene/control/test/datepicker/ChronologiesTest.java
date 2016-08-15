@@ -52,53 +52,53 @@ public class ChronologiesTest extends TestBase {
         selectObjectFromChoiceBox(SettingType.SETTER, Properties.chronology, Chronology.of("ISO"));
         setDefaultDate();
         showPopup();
-        
+
         checkScreenshot("DatePicker-initialPopupISO", getRootWrap(getPopupWrap()));
         throwScreenshotError();
     }
-    
+
     /**
      * Checks initial appearance of the DateChooser
      * with predefined date using Minguo chronology.
      */
-    @Test(timeout = 10000) 
+    @Test(timeout = 10000)
     public void initialPopupAppearanceMinguo() throws Throwable {
         selectObjectFromChoiceBox(SettingType.SETTER, Properties.chronology, Chronology.of("Minguo"));
         setDefaultDate();
         showPopup();
-        
+
         checkScreenshot("DatePicker-initialPopupMinguo", getRootWrap(getPopupWrap()));
         throwScreenshotError();
     }
-    
+
     /**
      * Checks initial appearance of the DateChooser
      * with predefined date using ThaiBuddhist chronology.
      */
-    @Test(timeout = 10000) 
+    @Test(timeout = 10000)
     public void initialPopupAppearanceThaiBuddhist() throws Throwable {
         selectObjectFromChoiceBox(SettingType.SETTER, Properties.chronology, Chronology.of("ThaiBuddhist"));
         setDefaultDate();
         showPopup();
-        
+
         checkScreenshot("DatePicker-initialPopupThaiBuddhist", getRootWrap(getPopupWrap()));
         throwScreenshotError();
     }
-    
+
     /**
      * Checks initial appearance of the DateChooser
      * with predefined date using Japanese chronology.
      */
-    @Test(timeout = 10000) 
+    @Test(timeout = 10000)
     public void initialPopupAppearanceJapanese() throws Throwable {
         selectObjectFromChoiceBox(SettingType.SETTER, Properties.chronology, Chronology.of("Japanese"));
         setDefaultDate();
         showPopup();
-        
+
         checkScreenshot("DatePicker-initialPopupJapanese", getRootWrap(getPopupWrap()));
         throwScreenshotError();
     }
-    
+
     /**
      * Checks initial appearance of the DateChooser
      * with predefined date using Hijrah-umalqura chronology.
@@ -112,7 +112,7 @@ public class ChronologiesTest extends TestBase {
         checkScreenshot("DatePicker-initialPopupHijrahUmalqura", getRootWrap(getPopupWrap()));
         throwScreenshotError();
     }
-    
+
     /**
      * Checks that DateField shows correct date representation
      * according using ISO chronology.
@@ -123,7 +123,7 @@ public class ChronologiesTest extends TestBase {
         setDefaultDate();
         waitShownText("10/11/1990");
     }
-    
+
     /**
      * Checks that DateField shows correct date representation
      * according using Minguo chronology.
@@ -134,7 +134,7 @@ public class ChronologiesTest extends TestBase {
         setDefaultDate();
         waitShownText("10/11/0079 1");
     }
-    
+
     /**
      * Checks that DateField shows correct date representation
      * according using Thai Buddhist chronology.
@@ -145,7 +145,7 @@ public class ChronologiesTest extends TestBase {
         setDefaultDate();
         waitShownText("10/11/2533 B.E.");
     }
-    
+
     /**
      * Checks that DateField shows correct date representation
      * according using Japanese chronology.
@@ -156,7 +156,7 @@ public class ChronologiesTest extends TestBase {
         setDefaultDate();
         waitShownText("10/11/0002 H");
     }
-    
+
     /**
      * Checks that DateField shows correct date representation
      * according using Hijrah-umalqura chronology.
@@ -167,7 +167,7 @@ public class ChronologiesTest extends TestBase {
         setDefaultDate();
         waitShownText("3/21/1411 AH");
     }
-    
+
     /**
      * Test checks that after typing
      * a correct date in the DateField the DateChooser will render
@@ -182,7 +182,7 @@ public class ChronologiesTest extends TestBase {
         expectedState.put("year", "2012");
         checkTypedDate(Chronology.of("ISO"), expectedState, "2/29/2012");
     }
-    
+
     /**
      * Test checks that after typing
      * a correct date in the DateField the DateChooser will render
@@ -197,7 +197,7 @@ public class ChronologiesTest extends TestBase {
         expectedState.put("year", "101");
         checkTypedDate(Chronology.of("Minguo"), expectedState, "2/29/0101 1");
     }
-    
+
     /**
      * Test checks that after typing
      * a correct date in the DateField the DateChooser will render
@@ -212,7 +212,7 @@ public class ChronologiesTest extends TestBase {
         expectedState.put("year", "2555");
         checkTypedDate(Chronology.of("ThaiBuddhist"), expectedState, "2/29/2555 B.E.");
     }
-    
+
     /**
      * Test checks that after typing
      * a correct date in the DateField the DateChooser will render
@@ -227,7 +227,7 @@ public class ChronologiesTest extends TestBase {
         expectedState.put("year", "Heisei24");
         checkTypedDate(Chronology.of("Japanese"), expectedState, "2/29/0024 H");
     }
-    
+
     /**
      * Test checks that after typing
      * a correct date in the DateField the DateChooser will render
@@ -242,20 +242,20 @@ public class ChronologiesTest extends TestBase {
         expectedState.put("year", "2012");
         checkTypedDate(Chronology.of("Hijrah-umalqura"), expectedState, "4/7/1433 AH");
     }
-    
+
     public void checkTypedDate(Chronology chronology, HashMap<String, String> expectedState, String date) throws InterruptedException {
         selectObjectFromChoiceBox(SettingType.SETTER, Properties.chronology, chronology);
         TextInputControlDock  in = new TextInputControlDock(testedControl.as(Parent.class, Node.class));
         in.type(date);
         in.keyboard().pushKey(KeyboardButtons.ENTER);
         waitShownText(date);
-        
+
         clickDropDownButton();
         waitPopupShowingState(true);
-        
+
         PopupSceneDescription description = new PopupSceneDescription();
         description.extractData();
-        
+
         testedControl.waitState(new DateState(expectedState, description));
         //Close pop up
         scene.mouse().click(1, new Point(2, 2));

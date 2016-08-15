@@ -34,7 +34,7 @@ public class TwoSceneApp extends Application {
         position(noFocus);
         noFocus.show();
     }
-    
+
     private void position(Stage stage) {
         stage.setX(100);
         stage.setY(100);

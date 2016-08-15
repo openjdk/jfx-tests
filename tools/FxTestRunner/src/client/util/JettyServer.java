@@ -38,7 +38,7 @@ public class JettyServer {
     private final Server server;
     private ResourceHandler handler = new ResourceHandler();
     private static Map servers = new HashMap <Integer, JettyServer> ();
-    
+
     /**
      *
      * @param path
@@ -59,7 +59,7 @@ public class JettyServer {
             throw new RuntimeException("Failed to start server.", ex);
         }
     }
-    
+
     /**
      *
      * @param port

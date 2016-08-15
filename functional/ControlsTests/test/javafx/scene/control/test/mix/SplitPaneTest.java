@@ -96,7 +96,7 @@ public class SplitPaneTest extends TestBase {
     @Test(timeout=300000)
     public void resizableWithParentTest() {
         openPage(Pages.ResizableWithParent.name());
-        
+
         Parent<Node> scene_as_parent = getScene().as(Parent.class, Node.class);
         Lookup<SplitPane> scene_lookup = scene_as_parent.lookup(SplitPane.class, new ByID<SplitPane>(SplitPaneApp.PARENT_SPLIT));
         for (int i = 0; i < scene_lookup.size(); i++) {
@@ -160,7 +160,7 @@ public class SplitPaneTest extends TestBase {
             assertTrue((Double.compare(initial_split_sizes.get(i), split_sizes.get(i)) == 0) != resizable_flags.get(i));
         }
     }
-    
+
     protected Boolean isVertical(final Wrap <? extends SplitPane> split) {
         return (new GetAction<Boolean>() {
             @Override
@@ -169,7 +169,7 @@ public class SplitPaneTest extends TestBase {
             }
         }).dispatch(split.getEnvironment());
     }
-    
+
     protected List<Boolean> getResizableFlags(final Wrap <? extends SplitPane> split) {
         return (new GetAction<List<Boolean>>() {
             @Override
@@ -397,33 +397,33 @@ public class SplitPaneTest extends TestBase {
      * (6 pixels is the width of the split)
      */
     private static final double PIXELS_SENSITICITY = 0.0;
-    
+
     /**
      * Adds content split pane in reverse order, sorts them and
      * checks that rendering works correctly.
      */
     @Test(timeout=3000000)
     public void renderingAfterSortingTest() {
-        
+
         openPage(Pages.Orientation.name());
-        
+
         final int CHILD_COUNT = 5;
         final String LABEL_ID = "--content";
-        
+
         StringConverter<Label> conv = new StringConverter<Label>() {
             @Override
             public String toString(Label t) { return t.getText(); }
 
             @Override
             public Label fromString(String s) {
-                Label l = new Label(s); 
+                Label l = new Label(s);
                 l.setId(LABEL_ID);
                 return l;
             }
         };
-        
+
         SortValidator sv = new SortValidator<Label, Label>(CHILD_COUNT, conv){
-            
+
             private SceneDock scene = new SceneDock();
             private SplitPaneDock sp = new SplitPaneDock(scene.asParent(), 0);
             private Comparator<Node> cmp = new Comparator<Node>() {
@@ -435,11 +435,11 @@ public class SplitPaneTest extends TestBase {
                     }
                 }
             };
-            
+
             @Override
             protected void setControlData(final ObservableList<Label> ls) {
                 new GetAction<Object>() {
-                    @Override 
+                    @Override
                     public void run(Object... parameters) { sp.control().getItems().setAll(ls); }
                 }.dispatch(Root.ROOT.getEnvironment());
             }
@@ -459,18 +459,18 @@ public class SplitPaneTest extends TestBase {
 
             @Override
             protected String getTextFromCell(Label cell) { return cell.getText(); }
-            
+
             @Override
             protected void sort() {
                  new GetAction<Object>() {
-                    @Override 
+                    @Override
                     public void run(Object... parameters) throws Exception { FXCollections.sort(sp.control().getItems(), cmp); }
                 }.dispatch(Root.ROOT.getEnvironment());
             }
         };
-        
+
         sv.setOrientation(Orientation.HORIZONTAL);
-        
+
         boolean res = sv.check();
         assertTrue(sv.getFailureReason(), res);
     }

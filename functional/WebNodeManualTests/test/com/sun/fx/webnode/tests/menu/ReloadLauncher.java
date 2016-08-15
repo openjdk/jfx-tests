@@ -46,10 +46,10 @@ import javafx.stage.Stage;
 public class ReloadLauncher extends Application {
 
     private WebView view = null;
-    
+
     private static final String DOC1 = "Document 1";
     private static final String DOC2 = "Document 2";
-    
+
     private void write(String target, String content) {
         FileWriter fw = null;
         try {
@@ -67,24 +67,24 @@ public class ReloadLauncher extends Application {
             }
         }
     }
-    
+
     private Scene createScene(final String path, final String url) {
         view = new WebView();
         write(path, DOC1);
         view.getEngine().load(url);
-        
+
         Button rewrite = new Button("Rewrite document");
         rewrite.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 write(path, DOC2);
             }
         });
-        
+
         final VBox box = new VBox();
         box.getChildren().addAll(rewrite, view);
-        
+
         final Scene scene = new Scene(box);
-        
+
         scene.setFill(Color.GRAY);
         return scene;
     }

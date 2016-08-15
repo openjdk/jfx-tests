@@ -37,7 +37,7 @@ import java.lang.reflect.Method;
  */
 public class TestRunner implements Abstract2TestRunner {
     private CommonTestRunnerWorker cw;
-    
+
     /**
      *
      * @param args
@@ -60,7 +60,7 @@ public class TestRunner implements Abstract2TestRunner {
             args[i] = splittedCmdLine[i+1];
         }
         cw.setArgs(args);
-        
+
         System.out.println(" cmd: " + cmdline);
     }
 
@@ -72,7 +72,7 @@ public class TestRunner implements Abstract2TestRunner {
     public void exit(Status exitStatus) {
         cw.exit(exitStatus);
     }
-    
+
     /**
      *
      * @throws Throwable
@@ -166,7 +166,7 @@ public class TestRunner implements Abstract2TestRunner {
     /**
      *
      */
-    
+
     public static void fail() {
         getInstance().cw.exit(Status.FAIL);
     }

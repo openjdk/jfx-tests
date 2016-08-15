@@ -40,7 +40,7 @@ public class ErrorTest extends WorkerTestClass {
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Tests for receiving an error from a worker.
      */

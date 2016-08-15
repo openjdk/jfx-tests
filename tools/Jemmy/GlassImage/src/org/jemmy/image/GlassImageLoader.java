@@ -41,7 +41,7 @@ public abstract class GlassImageLoader implements ImageLoader {
         } catch (ClassNotFoundException ex) {
         }
     }
-    
+
     @Override
     public Image load(String name) {
         try {
@@ -52,5 +52,5 @@ public abstract class GlassImageLoader implements ImageLoader {
     }
 
     protected abstract InputStream getInputStream(String name);
-    
+
 }

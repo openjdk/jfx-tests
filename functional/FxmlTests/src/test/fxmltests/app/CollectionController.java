@@ -31,16 +31,16 @@ import javafx.collections.ObservableList;
  *
  * @author Victor Shubov
  */
-public class CollectionController 
+public class CollectionController
 {
     static int callCount = 0;
-    
+
     public void handleListChangeEvent(ListChangeListener.Change change)
     {
         System.out.println("arg class: " + change.getClass().getName());
         if (change instanceof ListChangeListener.Change){
        // System.out.println("was added (y/n): " + change.wasAdded());
-            
+
             ObservableList<String> tt  = change.getList();
             for (String str : tt){
                 System.out.println(str);

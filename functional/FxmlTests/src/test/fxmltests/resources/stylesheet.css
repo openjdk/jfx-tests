@@ -1,4 +1,4 @@
-/* 
+/*
     Document   : stylesheet
     Created on : Oct 17, 2012, 5:34:28 PM
     Author     : Aleksandr Sakharuk
@@ -6,7 +6,7 @@
         Stylesheet for rt18956-relative-stylesheets.fxml
 */
 
-.label { 
+.label {
  -fx-font-size: 30;
     -fx-background-color: red;
 }

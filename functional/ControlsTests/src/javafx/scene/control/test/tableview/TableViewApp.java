@@ -67,7 +67,7 @@ public class TableViewApp extends InteroperabilityApp {
     public static final String FILL_LONG_BNT_ID = "Fill by long items";
     public static final String TEXT_TO_ADD_ID = "text_to_add";
     public static final String SINGLE_CELL_SELECTION_ID = "single_cell_selection";
-    
+
     Pane content;
     TableView<Data> view;
     ObservableList<Data> data = FXCollections.<Data>observableArrayList();
@@ -382,7 +382,7 @@ public class TableViewApp extends InteroperabilityApp {
         final TextField columnIndexToScroll = new TextField();
         columnIndexToScroll.setId(Table.SCROLL_TO_COLUMN_INDEX_ID);
         columnIndexToScroll.setPromptText("Index to scroll");
-        
+
         Button scrollTo = new Button("Scroll to");
         scrollTo.setId(Table.SCROLL_TO_COLUMN_BTN_ID);
         scrollTo.setOnAction(new EventHandler<ActionEvent>() {
@@ -391,10 +391,10 @@ public class TableViewApp extends InteroperabilityApp {
                 view.scrollToColumnIndex(Integer.valueOf(columnIndexToScroll.getText()));
             }
         });
-        
+
         HBox scrollingControls = new HBox(3, columnIndexToScroll, scrollTo);
         res.getChildren().add(scrollingControls);
-        
+
         return res;
     }
 
@@ -441,22 +441,22 @@ public class TableViewApp extends InteroperabilityApp {
                 return this.name.compareTo(other.name);
             }
         }
-        
+
         @Override
         public String toString() {
            return name;
         }
-        
+
         @Override
         public boolean equals(Object other) {
             if (this == other) {
                 return true;
             }
-            
+
             if (null == other || !Data.class.isAssignableFrom(other.getClass())) {
                 return false;
             }
-            
+
             return this.name.equals(((Data) other).name);
         }
 

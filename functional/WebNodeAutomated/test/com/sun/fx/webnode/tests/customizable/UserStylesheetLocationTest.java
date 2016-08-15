@@ -38,7 +38,7 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class UserStylesheetLocationTest extends GenericTestClass {
-   
+
     private String userStylesheetLocation;
     private String userStylesheetLocationPropertyValue;
     private StringProperty userStylesheetLocationProperty;
@@ -48,12 +48,12 @@ public class UserStylesheetLocationTest extends GenericTestClass {
             return e != null;
         }
     };
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for getting default user stylesheet location.
      */
@@ -94,7 +94,7 @@ public class UserStylesheetLocationTest extends GenericTestClass {
         });
         Assert.assertEquals(cssUrl, userStylesheetLocation);
     }
-    
+
     /**
      * Test for setting a null to user stylesheet location.
      */
@@ -114,7 +114,7 @@ public class UserStylesheetLocationTest extends GenericTestClass {
             }
         });
     }
-    
+
     /**
      * Test for setting a null to user stylesheet location.
      */
@@ -148,7 +148,7 @@ public class UserStylesheetLocationTest extends GenericTestClass {
             }
         });
     }
-    
+
     /**
      * Test for setting an external URL to user stylesheet location.
      * http://javafx-jira.kenai.com/browse/RT-22579
@@ -169,7 +169,7 @@ public class UserStylesheetLocationTest extends GenericTestClass {
         });
         doWait(exceptionCaught);
     }
-    
+
     /**
      * Test for setting an invalid URL to user stylesheet location.
      * http://javafx-jira.kenai.com/browse/RT-22579
@@ -190,7 +190,7 @@ public class UserStylesheetLocationTest extends GenericTestClass {
         });
         doWait(exceptionCaught);
     }
-    
+
     /**
      * Test for getting default user stylesheet location using a property.
      */
@@ -238,7 +238,7 @@ public class UserStylesheetLocationTest extends GenericTestClass {
         Assert.assertEquals(cssUrl, userStylesheetLocation);
         Assert.assertEquals(cssUrl, userStylesheetLocationPropertyValue);
     }
-    
+
     /**
      * Test for setting a null to user stylesheet location using a property.
      */
@@ -261,7 +261,7 @@ public class UserStylesheetLocationTest extends GenericTestClass {
             }
         });
     }
-    
+
     /**
      * Test for setting a null to user stylesheet location using a property.
      */
@@ -303,7 +303,7 @@ public class UserStylesheetLocationTest extends GenericTestClass {
             }
         });
     }
-    
+
     /**
      * Test for setting an external URL to user stylesheet location using a property.
      * http://javafx-jira.kenai.com/browse/RT-22579
@@ -326,7 +326,7 @@ public class UserStylesheetLocationTest extends GenericTestClass {
         });
         doWait(exceptionCaught);
     }
-    
+
     /**
      * Test for setting an invalid URL to user stylesheet location using a property.
      * http://javafx-jira.kenai.com/browse/RT-22579

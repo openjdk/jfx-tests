@@ -38,12 +38,12 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class StaticClassMembersTest extends JavaScript2JavaBridgeTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for accessing a public static field.
      * Checks that public static field of a bound object
@@ -67,7 +67,7 @@ public class StaticClassMembersTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).staticField, resultObject);
     }
-    
+
     /**
      * Test for accessing a public static field.
      * Checks that public static field of a bound object
@@ -91,7 +91,7 @@ public class StaticClassMembersTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(42, HelperObject.staticField);
     }
-    
+
     /**
      * Test for accessing a public static method.
      * Checks that public method of a bound object is accessible from JavaScript.

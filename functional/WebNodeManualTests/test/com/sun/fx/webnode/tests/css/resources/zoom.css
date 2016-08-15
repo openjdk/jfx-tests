@@ -1,4 +1,4 @@
-/* 
+/*
     Document   : zoom
     Created on : Nov 13, 2012, 4:08:02 PM
     Author     : dmitry.ginzburg
@@ -6,7 +6,7 @@
         Purpose of the stylesheet follows.
 */
 
-.web-view { 
+.web-view {
     -fx-zoom: 2;
 }
 

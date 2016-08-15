@@ -40,7 +40,7 @@ import test.javaclient.shared.TestBase;
  * @author Sergey Grinev
  */
 public class GeometryTest extends TestBase {
-    
+
     @BeforeClass
     public static void runUI() {
         GeometryApp.main(null);

@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 
 
-<Scene xmlns:fx="http://javafx.com/fxml" 
+<Scene xmlns:fx="http://javafx.com/fxml"
  width="100" height="150" fill="#770000">
 
     <VBox xmlns:fx="http://javafx.com/fxml" fx:id="sceneParent2">

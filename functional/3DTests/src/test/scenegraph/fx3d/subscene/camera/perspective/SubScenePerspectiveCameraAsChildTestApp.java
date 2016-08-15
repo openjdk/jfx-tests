@@ -55,7 +55,7 @@ public class SubScenePerspectiveCameraAsChildTestApp extends SubScenePerspective
         scene.setCamera(camera);
         return camera;
     }
-    
+
     public static void main(String[] args) {
         Utils.launch(SubScenePerspectiveCameraAsChildTestApp.class, args);
     }

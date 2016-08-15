@@ -42,7 +42,7 @@ public class RoundtripJS2JavaTest extends JavaScript2JavaBridgeTestClass {
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * This test checks that a string can be passed from JS to Java
      * without being damaged.
@@ -71,7 +71,7 @@ public class RoundtripJS2JavaTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(Boolean.TRUE, resultObject);
     }
-    
+
     /**
      * This test checks that an integer can be passed from JS to Java
      * without being damaged.
@@ -100,7 +100,7 @@ public class RoundtripJS2JavaTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(Boolean.TRUE, resultObject);
     }
-    
+
     /**
      * This test checks that a boolean can be passed from JS to Java
      * without being damaged.
@@ -129,7 +129,7 @@ public class RoundtripJS2JavaTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(Boolean.TRUE, resultObject);
     }
-    
+
     /**
      * This test checks that a double can be passed from JS to Java
      * without being damaged.
@@ -160,7 +160,7 @@ public class RoundtripJS2JavaTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(Boolean.TRUE, resultObject);
     }
-    
+
     /**
      * This test checks that a float can be passed from JS to Java
      * without being damaged.
@@ -191,7 +191,7 @@ public class RoundtripJS2JavaTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(Boolean.TRUE, resultObject);
     }
-    
+
     /**
      * This test checks that the char can be passed from JS to Java
      * without being damaged.
@@ -200,7 +200,7 @@ public class RoundtripJS2JavaTest extends JavaScript2JavaBridgeTestClass {
 //    @Test(timeout=10000)
 //    public void testJava2JSChar() {
 //    }
-    
+
     /**
      * This test checks that an object can be passed from JS to Java
      * without being damaged.

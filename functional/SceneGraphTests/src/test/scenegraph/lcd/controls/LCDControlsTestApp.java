@@ -49,13 +49,13 @@ public class LCDControlsTestApp extends InteroperabilityApp {
     static {
         System.setProperty("prism.lcdtext", "true");
     }
-    
+
     public static final String BUTTON_APPLY_ID = "buttonApply";
     public static final String RIGHT_PANE_ID = "rightPane";
     public static volatile Factories factory = null;
     public static volatile Action action = null;
     public static Factories testCollection;
-    
+
     private ChoiceBox<Action> actionChoice;
     private ChoiceBox<Factory> controlChoice;
     private Pane rightPane;
@@ -67,28 +67,28 @@ public class LCDControlsTestApp extends InteroperabilityApp {
     public static void main(String[] args) {
         Utils.launch(LCDControlsTestApp.class, args);
     }
-    
+
     private Pane createGUI(){
         VBox mainPane = new VBox();
-        
+
         mainPane.getStylesheets().add(
                 LCDControlsTestApp.class.getResource("green.css").toExternalForm());
-        
+
         HBox testPane = new HBox();
         testPane.setAlignment(Pos.CENTER);
 
         rightPane = new StackPane();
         rightPane.setId(RIGHT_PANE_ID);
         rightPane.setPrefSize(300, 480);
-        
+
         HBox controlsPane = new HBox(15);
         controlsPane.setAlignment(Pos.CENTER);
         controlsPane.setPadding(new Insets(5));
-        
+
         actionChoice = new ChoiceBox<Action>(
                 FXCollections.observableArrayList((Action[])Actions.values()));
         actionChoice.setPrefWidth(150);
-        
+
         controlChoice = new ChoiceBox<Factory>(FXCollections.observableArrayList((Factory[])Factories.values()));
         controlChoice.setPrefWidth(150);
         controlChoice.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Factory>() {
@@ -100,18 +100,18 @@ public class LCDControlsTestApp extends InteroperabilityApp {
                     lcdControl.setId("LCDNode");
                     rightPane.getChildren().clear();
                     rightPane.getChildren().add(lcdControl);
-                    
+
                     actionChoice.getSelectionModel().selectFirst();
                 }
             }
         });
-        
-        
+
+
         if(factory != null){
             controlChoice.getSelectionModel().select(factory);
         }
-        
-        
+
+
         Button applyButton = new Button("Apply");
         applyButton.setId(BUTTON_APPLY_ID);
         applyButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -122,36 +122,36 @@ public class LCDControlsTestApp extends InteroperabilityApp {
         });
         applyButton.setPrefWidth(75);
 
-        
-        controlsPane.getChildren().addAll(controlChoice, actionChoice, 
-                applyButton); 
-       
+
+        controlsPane.getChildren().addAll(controlChoice, actionChoice,
+                applyButton);
+
         testPane.getChildren().addAll(rightPane);
-        
+
         mainPane.getChildren().addAll(controlsPane, testPane);
-        
+
         return mainPane;
     }
-   
+
     private void checkSelection(){
         if(controlChoice.getSelectionModel().getSelectedItem() == null){
-           controlChoice.getSelectionModel().selectFirst(); 
+           controlChoice.getSelectionModel().selectFirst();
         }
-        
+
         if(actionChoice.getSelectionModel().getSelectedItem() == null){
-           actionChoice.getSelectionModel().selectFirst(); 
+           actionChoice.getSelectionModel().selectFirst();
         }
     }
-    
+
     private void apply(){
         if(LCDControlsTestApp.action != null){
             actionChoice.getSelectionModel().select(LCDControlsTestApp.action);
         }
-        
+
         checkSelection();
-        Action CurrentAction = 
+        Action CurrentAction =
                 actionChoice.getSelectionModel().getSelectedItem();
-        
+
         CurrentAction.updateControl(lcdControl);
     }
 

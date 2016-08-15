@@ -44,5 +44,5 @@ public class VBoxsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.VBoxs.name();
     }
-    
+
 }

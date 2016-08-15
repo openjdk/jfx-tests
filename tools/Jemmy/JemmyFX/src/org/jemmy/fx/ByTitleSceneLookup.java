@@ -36,7 +36,7 @@ import org.jemmy.resources.StringComparePolicy;
  * A criterion to find scenes by title.
  * @param <T>
  * @author shura
- * @see SceneDock#SceneDock(org.jemmy.lookup.LookupCriteria<javafx.scene.Scene>[]) 
+ * @see SceneDock#SceneDock(org.jemmy.lookup.LookupCriteria<javafx.scene.Scene>[])
  */
 public class ByTitleSceneLookup<T extends Scene> extends ByStringLookup<T> {
 
@@ -49,7 +49,7 @@ public class ByTitleSceneLookup<T extends Scene> extends ByStringLookup<T> {
     }
 
     /**
-     * 
+     *
      * @param text the expected title
      * @param policy a way to compare scene title to the expected
      */

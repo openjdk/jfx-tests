@@ -42,27 +42,27 @@ public abstract class WriteArrayBGRABytesImageTestBase extends ReadImageTestBase
 
     @Override
     protected Image getImage() {
-        WritableImage image = new WritableImage(256, 256); 
-        
+        WritableImage image = new WritableImage(256, 256);
+
         byte[] imageInArray = new byte[256 * 256 * 4];
 
         //Create byte image array
         for (int i = 0; i < 256; i++) {
             for (int j = 0; j < 256; j++) {
                 int color = i + j;
-                
+
                 int intValue = getColorComponentProvider().getARGBColor(
                         ((color > 255) ? 255 : color));
                 for (int k = 0; k < 4; k++) {
-                    imageInArray[i * 4 + j * 256 * 4 + k] = 
+                    imageInArray[i * 4 + j * 256 * 4 + k] =
                            (byte)((intValue >>> (k * 8))  & (0x000000FF));
-                }        
+                }
             }
         }
-        
+
         //Copy bytes to image
         image.getPixelWriter().setPixels(0, 0, 256, 256, PixelFormat.getByteBgraInstance(), imageInArray, 0, 256 * 4);
-        
+
         return image;
     }
 }

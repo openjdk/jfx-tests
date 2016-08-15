@@ -36,7 +36,7 @@ public class Person {
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
     }
-    
+
     private StringProperty firstName;
 
     public void setFirstName(String value) {

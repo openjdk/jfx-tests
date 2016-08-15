@@ -111,7 +111,7 @@ public class TestBase extends UtilTestFunctions {
             TreeTableNewApp.main(null);
         }
     }
-    
+
     @Before
     public void setUp() {
         TreeViewCommonFunctionality.setCheckFocus(true);
@@ -428,7 +428,7 @@ public class TestBase extends UtilTestFunctions {
                                     throw new IllegalStateException("There are too many stack panes with the same style class under the same TreeCell.");
                                 } else {
                                     //Be careful: this could become different.
-                                    //Also, if it fails, this means, that there is an arrow with strange size. 
+                                    //Also, if it fails, this means, that there is an arrow with strange size.
                                     //it needs evaluation.
                                     Assert.assertEquals("For " + text.getText(), foundStackPanes.get().getBoundsInLocal().getWidth(), 7.0, 2.01);
                                     Assert.assertEquals("For " + text.getText(), foundStackPanes.get().getBoundsInLocal().getHeight(), 7.0, 2.01);
@@ -515,8 +515,8 @@ public class TestBase extends UtilTestFunctions {
         int subtreeSize = subtreeVisibleSize(treeItemContent);
 
         if (selectionHelper.ctrlA) {
-            //Some nodes inside will be added, so we need to convert ctrlA 
-            //into selection set with all items, and after that work with 
+            //Some nodes inside will be added, so we need to convert ctrlA
+            //into selection set with all items, and after that work with
             //the set.
             selectionHelper.selectedSet.clear();
             selectionHelper.ctrlA = false;
@@ -549,7 +549,7 @@ public class TestBase extends UtilTestFunctions {
                     it.remove();
                 }
             }
-            
+
         } else {//was collapsed
             Point[] copy = selectionHelper.selectedSet.toArray(new Point[0]);
             for (Point point : copy) {
@@ -558,7 +558,7 @@ public class TestBase extends UtilTestFunctions {
                         point.y -= subtreeSize;
                     } else {
                         //All other points in the selection will be lost, except
-                        //anchor and focus. They jump to the treeItem, and 
+                        //anchor and focus. They jump to the treeItem, and
                         //selection is moved with them
                         removePointFromSet(point.y);
                         if ((selectionHelper.anchor.y == point.y) || (selectionHelper.focus.y == point.y)) {
@@ -688,7 +688,7 @@ public class TestBase extends UtilTestFunctions {
     protected Wrap<Node> levelWrapUp(Wrap<? extends Node> wrap) {
         return (Wrap<Node>) new NodeWrap(wrap.getEnvironment(), wrap.getControl().getParent());
     }
-    
+
     EventHandler getOnEditStart(final int columnIndex) {
         return new GetAction<EventHandler>() {
             @Override
@@ -702,7 +702,7 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment());
     }
-    
+
     EventHandler getOnEditCancel(final int columnIndex) {
         return new GetAction<EventHandler>() {
             @Override
@@ -716,7 +716,7 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment());
     }
-    
+
     EventHandler getOnEditCommit(final int columnIndex) {
         return new GetAction<EventHandler>() {
             @Override
@@ -730,7 +730,7 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment());
     }
-    
+
     void setOnEditStart(EventHandler handler, final int columnIndex) {
         new GetAction<Void>() {
             @Override
@@ -744,7 +744,7 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment(), handler);
     }
-    
+
     void setOnEditCancel(EventHandler handler, final int columnIndex) {
         new GetAction<Void>() {
             @Override
@@ -758,7 +758,7 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment(), handler);
     }
-    
+
     void setOnEditCommit(EventHandler handler, final int columnIndex) {
         new GetAction<Void>() {
             @Override
@@ -772,5 +772,5 @@ public class TestBase extends UtilTestFunctions {
             }
         }.dispatch(testedControl.getEnvironment(), handler);
     }
-    
+
 }

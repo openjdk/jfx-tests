@@ -97,13 +97,13 @@ public class TreeTableViewTest {
     }
 
     @Test(timeout = 300000)
-    public void treeImplementationTest() {        
+    public void treeImplementationTest() {
         //scroll to the top.
         treeTableView.vto(0.0);
         //We expect this code to select the fourth line in the treeTableView, index == 3.
         treeTableView.asTree(Data.class).selector().select(new OfMainData("data-0-0"), new OfMainData("data-1-0"), new OfMainData("data-2-0"));
         assertTrue(treeTableView.getSelectedIndices().contains(3));
-        
+
         expandAll();
         //Now, with need of scrolling down.
         treeTableView.asTree(Data.class).selector().select(new OfMainData("data-0-2"), new OfMainData("data-1-2"), new OfMainData("data-2-2"));

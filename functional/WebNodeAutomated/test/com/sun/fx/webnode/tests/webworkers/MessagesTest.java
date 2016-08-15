@@ -39,7 +39,7 @@ public class MessagesTest extends WorkerTestClass {
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for sending a simple string message to a worker.
      */
@@ -54,7 +54,7 @@ public class MessagesTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("alphaomega");
     }
-    
+
     /**
      * Test to ensure that worker messages are copied, not shared.
      */
@@ -81,7 +81,7 @@ public class MessagesTest extends WorkerTestClass {
             }
         });
     }
-    
+
     /**
      * Test for sending a JSON message to a worker.
      */

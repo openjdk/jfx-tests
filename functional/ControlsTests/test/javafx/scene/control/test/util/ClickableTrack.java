@@ -40,7 +40,7 @@ public class ClickableTrack {
 //    Wrap control;
     ScrollTrack track;
     double tickSize;
-    
+
     public ClickableTrack(Shiftable s, double tickSize){
         Shifter sh = s.shifter();
         if (! ScrollTrack.class.isAssignableFrom(sh.getClass())) {

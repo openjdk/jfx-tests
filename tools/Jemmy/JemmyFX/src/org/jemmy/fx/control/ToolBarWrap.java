@@ -55,7 +55,7 @@ public class ToolBarWrap<CONTROL extends ToolBar> extends NodeWrap<CONTROL> {
     private Selectable<Node> objectSelectable = new ToolBarSelectable();
 
     private State<Boolean> focusedState = this::isFocused;
-    
+
     private Focus focus = () -> {
         if (!isFocused()) {
             mouse().click(1, new Point(1, 1));

@@ -44,5 +44,5 @@ public class PieChartsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.PieCharts.name();
     }
-    
+
 }

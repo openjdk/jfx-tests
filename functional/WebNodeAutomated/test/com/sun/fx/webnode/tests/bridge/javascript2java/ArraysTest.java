@@ -40,12 +40,12 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class ArraysTest extends JavaScript2JavaBridgeTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Simple test for accessing an element of bound array from JavaScript.
      */
@@ -68,7 +68,7 @@ public class ArraysTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(42, resultObject);
     }
-    
+
     /**
      * Simple test for getting size of bound array from JavaScript.
      */
@@ -90,7 +90,7 @@ public class ArraysTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(3, resultObject);
     }
-    
+
     int []arrayToJavaScript;
     int []arrayFromJavaScript;
 }

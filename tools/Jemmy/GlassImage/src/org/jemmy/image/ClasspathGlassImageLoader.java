@@ -31,7 +31,7 @@ import java.io.InputStream;
  * @author shura
  */
 public class ClasspathGlassImageLoader extends GlassImageLoader {
-    
+
     private ClassLoader loader;
     private String packagePrefix;
 
@@ -56,5 +56,5 @@ public class ClasspathGlassImageLoader extends GlassImageLoader {
     protected InputStream getInputStream(String name) {
         return loader.getResourceAsStream(packagePrefix + name);
     }
-    
+
 }

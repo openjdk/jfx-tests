@@ -33,23 +33,23 @@ import netscape.javascript.JSObject;
  * @author Irina Grineva
  */
 public class JavaScript2JavaBridgeTestClass extends BridgeTestClass {
-    
+
     // Helper for null-values.
     protected boolean ready;
-    
+
     // Helper objects for exchanging values with JavaScript
     protected Object testObject;
-    protected Object containerObject;    
-    
+    protected Object containerObject;
+
     protected double precision = 0.001;
-    
+
     protected JSObject window;
-    
+
     public void initWebEngineAndWindow() {
         initWebEngine();
         window = (JSObject) engine.executeScript("window;");
     }
-    
+
     protected String NO_VARIABLE_MSG = "ReferenceError: Can't find variable: testObject";
     protected String NO_VARIABLE_MSG2 = "ReferenceError: Can't find variable: test";
     protected String INVALID_CHARACTER_MSG = "SyntaxError: Invalid character: '#'";

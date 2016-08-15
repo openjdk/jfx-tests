@@ -38,5 +38,5 @@ public class LabelBuilderFactory {
             return new ControlsLabelBuilder();
         }
     }
-    
+
 }

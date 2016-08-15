@@ -43,7 +43,7 @@ public class AreaChartApp extends XYChartBaseApp {
     public AreaChartApp() {
         super("AreaChart", false);
     }
-    
+
     @Override
     protected TestNode setup() {
         super.setup();
@@ -66,7 +66,7 @@ public class AreaChartApp extends XYChartBaseApp {
                 )));
         TestNode add_series_node = new ChangeSeriesNode(data, true);
         pageSetup(Pages.AddSeries.name(), add_series_node);
-        
+
         List<XYChart.Data> series_data = new ArrayList<XYChart.Data>();
         series_data.add(new XYChart.Data(1.5,5));
         series_data.add(new XYChart.Data(4.5,8));

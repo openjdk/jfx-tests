@@ -30,11 +30,11 @@ package test.embedded.helpers;
  * @author akulyakh
  */
 public interface LabelBuilder {
-    
+
     public LabelBuilder text(String text);
-    
+
     public LabelBuilder id(String id);
-    
+
     public AbstractLabel build();
-    
+
 }

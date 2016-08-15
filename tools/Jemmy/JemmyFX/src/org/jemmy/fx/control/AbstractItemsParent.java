@@ -34,7 +34,7 @@ import java.util.List;
 
 /**
  * Parent for a collection of single-level objects within a compound control. Such as list,
- * tree, table and such. 
+ * tree, table and such.
  * @author shura
  * @param <ITEM>
  */
@@ -60,9 +60,9 @@ public abstract class AbstractItemsParent<ITEM extends Object> extends AbstractP
 
     /**
      *
-     * @param wrap Owner of the sub-hierarchy. Typically itself is a part of 
+     * @param wrap Owner of the sub-hierarchy. Typically itself is a part of
      * <code>Node</code> hierarchy.
-     * @param wrapper 
+     * @param wrapper
      * @param itemClass
      */
     public AbstractItemsParent(Wrap wrap, Wrapper wrapper, Class<ITEM> itemClass) {
@@ -89,12 +89,12 @@ public abstract class AbstractItemsParent<ITEM extends Object> extends AbstractP
     }
 
     /**
-     * 
+     *
      */
     class ItemsList implements ControlList {
 
         /**
-         * 
+         *
          * @return
          */
         @Override

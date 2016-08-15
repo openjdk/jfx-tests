@@ -31,7 +31,7 @@ import org.jemmy.lookup.LookupCriteria;
  * This is to support cell collections like
  * list, trees and such. Children of this hierarchy are assumed to support
  * <code>Cell</code> control interface.
- * 
+ *
  * @author shura
  */
 public interface CellOwner<ITEM> extends Parent<ITEM> {

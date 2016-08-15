@@ -41,84 +41,84 @@ import test.scenegraph.app.AffineApp;
  */
 public class AffineTest extends TestBase
 {
-    
+
     @BeforeClass
     public static void runUI()
     {
         AffineApp.main(null);
     }
-    
+
     @Before
     @Override
     public void before()
     {
         super.before();
-        
+
         sceneDock = new SceneDock(getScene());
         fxArea = new NodeDock(sceneDock.asParent(), AffineApp.FX_AFFINE_AREA);
         manualArea = new NodeDock(sceneDock.asParent(), AffineApp.MANUAL_AFFINE_AREA);
     }
-    
+
     @Test
     public void append6d()
     {
         check(AffineApp.AffineAPI.APPEND_6D.name());
     }
-    
+
     @Test
     public void append12d()
     {
         check(AffineApp.AffineAPI.APPEND_12D.name());
     }
-    
+
     @Test
     public void appendTransform()
     {
         check(AffineApp.AffineAPI.APPEND_TRANSFORM.name());
     }
-    
+
     @Test
     public void appendMatrix()
     {
         check(AffineApp.AffineAPI.APPEND_D_ARR_MATRIX_TYPE_INT.name());
     }
-    
+
     @Test
     public void appendRotateD()
     {
         check(AffineApp.AffineAPI.APPEND_ROTATE_D.name());
     }
-    
+
     @Test
     public void appendRotate3D()
     {
         check(AffineApp.AffineAPI.APPEND_ROTATE_3D.name());
     }
-    
+
     @Test
     public void appendRotateDPoint2D()
     {
         check(AffineApp.AffineAPI.APPEND_ROTATE_D_POINT2D.name());
     }
-    
+
     @Test
     public void appendRotate7D()
     {
         check(AffineApp.AffineAPI.APPEND_ROTATE_7D.name());
     }
-    
+
     @Test
     public void appendRotate4DPoint3D()
     {
         check(AffineApp.AffineAPI.APPEND_ROTATE_4D_POINT3D.name());
     }
-    
+
     @Test
     public void appendRotateD2Point3D()
     {
         check(AffineApp.AffineAPI.APPEND_ROTATE_D_2POINT3D.name());
     }
-    
+
     private void check(String checkBoxId)
     {
         if(Configuration.isEmbedded()) {
@@ -127,7 +127,7 @@ public class AffineTest extends TestBase
             checkDesktop(checkBoxId);
         }
     }
-    
+
     private void checkDesktop(String checkBoxId) {
         CheckBoxDock checkBoxDock = new CheckBoxDock(sceneDock.asParent(), checkBoxId);
         checkBoxDock.selector().select(CheckBoxWrap.State.CHECKED);
@@ -145,7 +145,7 @@ public class AffineTest extends TestBase
             checkBoxDock.selector().select(CheckBoxWrap.State.UNCHECKED);
         }
     }
-    
+
     private void checkEmbedded(String checkBoxId) {
         NodeDock dock = new NodeDock(sceneDock.asParent(), checkBoxId);
         dock.mouse().click();
@@ -156,8 +156,8 @@ public class AffineTest extends TestBase
             }
         }, true);
     }
-    
+
     private SceneDock sceneDock;
     private NodeDock fxArea, manualArea;
-    
+
 }

@@ -77,7 +77,7 @@ public class ImagesApp extends BasicButtonChooserApp {
 
             try { Thread.sleep(500); }
             catch(Exception e) { e.printStackTrace();}
-            
+
             if (image.getProgress() != 100) {
                 reportGetterFailure("image.getProgress()");
             }
@@ -223,7 +223,7 @@ public class ImagesApp extends BasicButtonChooserApp {
             rect.setScaleY(0.8);
             page.add(new SmallLeaf("resize", rect));
         }
-        
+
         root.add(page = new PageWithSlots("ImagePattern with effects", height, width));
         {
             Rectangle rect = new Rectangle(50, 50);

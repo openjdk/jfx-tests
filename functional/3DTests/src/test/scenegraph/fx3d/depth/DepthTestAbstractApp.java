@@ -54,12 +54,12 @@ public abstract class DepthTestAbstractApp extends FX3DAbstractApp {
     private DragSupport dsy;
     final protected DoubleProperty rotationX = new SimpleDoubleProperty();
     final protected DoubleProperty rotationY = new SimpleDoubleProperty();
-    
+
     @Override
     public Scene getScene(){
         return scene;
     }
-    
+
     @Override
     protected void initScene(){
         root = new Group(getLight());

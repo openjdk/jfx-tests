@@ -22,7 +22,7 @@ public class NullBuilderFactoryApp extends Application {
     public static Stage getStage() {
         return stage;
     }
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
@@ -33,7 +33,7 @@ public class NullBuilderFactoryApp extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     public static void main(String[] args) {
         Application.launch(args);
     }

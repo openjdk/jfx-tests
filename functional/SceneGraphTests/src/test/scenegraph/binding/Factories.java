@@ -513,7 +513,7 @@ public enum Factories implements Factory {
             final Menu menu1 = new Menu("File");
             final Menu menu2 = new Menu("Options");
             final Menu menu3 = new Menu("Help");
- 
+
             MenuBar node = new MenuBar();
             node.getMenus().addAll(menu1, menu2, menu3);
             prepareControl(node);
@@ -525,7 +525,7 @@ public enum Factories implements Factory {
         public NodeAndBindee create() {
             MenuButton node = new MenuButton();
             node.getItems().addAll(new MenuItem("Burger"), new MenuItem("Hot Dog"));
-            
+
             prepareControl(node);
             return new BindingApp.NodeAndBindee(node, node);
         }
@@ -593,23 +593,23 @@ public enum Factories implements Factory {
             prepareControl(node);
             return new BindingApp.NodeAndBindee(node, node);
         }
-    }),    
+    }),
     TableView(controls, new DefaultFactory() {
 
         public NodeAndBindee create() {
             TableView<Person> node = new TableView<Person>();
-             
+
             TableColumn<Person,String> firstNameCol = new TableColumn<Person,String>("First Name");
             firstNameCol.setCellValueFactory(new PropertyValueFactory("firstName"));
             TableColumn<Person,String> lastNameCol = new TableColumn<Person,String>("Last Name");
             lastNameCol.setCellValueFactory(new PropertyValueFactory("lastName"));
- 
-            node.getColumns().setAll(firstNameCol, lastNameCol); 
-             
+
+            node.getColumns().setAll(firstNameCol, lastNameCol);
+
             ObservableList<Person> items = FXCollections.observableArrayList();
             items.add(new Person("First name", "Last name"));
             node.setItems(items);
-            
+
             prepareControl(node);
             return new BindingApp.NodeAndBindee(node, node);
         }
@@ -659,7 +659,7 @@ public enum Factories implements Factory {
         }
     }),
     TreeView(controls, new DefaultFactory(){
-        
+
         public NodeAndBindee create() {
             TreeItem<String> root = new TreeItem<String>("Root Node");
             root.setExpanded(true);
@@ -679,14 +679,14 @@ public enum Factories implements Factory {
         BindingApp.main(null);
     }
 
-    public enum Package { 
-        shapes("javafx.scene.shape"), 
-        effects("javafx.scene.effect"), 
-        text("javafx.scene.text"), 
+    public enum Package {
+        shapes("javafx.scene.shape"),
+        effects("javafx.scene.effect"),
+        text("javafx.scene.text"),
         controls("javafx.scene.control");
-        
+
         public final String fullName;
-        
+
         private Package(String fullName){
             this.fullName = fullName;
         }
@@ -770,7 +770,7 @@ public enum Factories implements Factory {
         }
     }
 
-    
+
 
 
 }

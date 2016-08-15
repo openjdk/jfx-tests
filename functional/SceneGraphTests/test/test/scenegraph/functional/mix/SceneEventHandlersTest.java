@@ -38,13 +38,13 @@ import static test.scenegraph.app.SceneEventHandlersApp.EventTypes;
 public class SceneEventHandlersTest extends TestBase
 {
    static boolean isInitDone = false;
-    
+
     @BeforeClass
-    public static void RunUI() 
+    public static void RunUI()
     {
         SceneEventHandlersApp.main();
     }
-    
+
     @Override
     @Before
     public void before()
@@ -76,7 +76,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testContextMenuRequested()
     {
@@ -89,7 +89,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testDragDone()
     {
@@ -101,7 +101,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testDragEntered()
     {
@@ -113,7 +113,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testDragEnteredTarget()
     {
@@ -125,7 +125,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testDragOver()
     {
@@ -137,7 +137,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testKeyPressed()
     {
@@ -151,7 +151,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testKeyReleased()
     {
@@ -165,7 +165,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testKeyTyped()
     {
@@ -178,7 +178,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testDragDetected()
     {
@@ -193,7 +193,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseClicked()
     {
@@ -205,7 +205,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseDraged()
     {
@@ -220,7 +220,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseEntered()
     {
@@ -236,7 +236,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseEnteredTarget()
     {
@@ -252,7 +252,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseExited()
     {
@@ -272,7 +272,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseExitedTarget()
     {
@@ -292,7 +292,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseMoved()
     {
@@ -308,7 +308,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMousePressed()
     {
@@ -319,32 +319,32 @@ public class SceneEventHandlersTest extends TestBase
                             setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
                         }
                     }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
-        }            
+        }
         verify(EventTypes.MOUSE_PRESSED, new FireCommand<Wrap>(getScene()) {
-            
+
 
             @Override
             public void invoke() {
-                
+
         new GetAction<Object>() {
             @Override
             public void run(Object... os) throws Exception {
                 robot.mousePress(1);
             }
-        }.dispatch(Root.ROOT.getEnvironment());        
+        }.dispatch(Root.ROOT.getEnvironment());
         try {Thread.sleep(500);}catch(Exception e){}
         new GetAction<Object>() {
             @Override
             public void run(Object... os) throws Exception {
                 robot.mouseRelease(1);
             }
-        }.dispatch(Root.ROOT.getEnvironment());        
+        }.dispatch(Root.ROOT.getEnvironment());
         try {Thread.sleep(500);}catch(Exception e){}
-        
+
             }
         });
     }
-    
+
     @Test
     public void testMouseReleased()
     {
@@ -355,7 +355,7 @@ public class SceneEventHandlersTest extends TestBase
                             setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
                         }
                     }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
-        }            
+        }
         verify(EventTypes.MOUSE_RELEASED, new FireCommand<Wrap>(getScene()) {
 
             @Override
@@ -365,19 +365,19 @@ public class SceneEventHandlersTest extends TestBase
             public void run(Object... os) throws Exception {
                 robot.mousePress(1);
             }
-        }.dispatch(Root.ROOT.getEnvironment());        
+        }.dispatch(Root.ROOT.getEnvironment());
         try {Thread.sleep(500);}catch(Exception e){}
         new GetAction<Object>() {
             @Override
             public void run(Object... os) throws Exception {
                 robot.mouseRelease(1);
             }
-        }.dispatch(Root.ROOT.getEnvironment());        
+        }.dispatch(Root.ROOT.getEnvironment());
         try {Thread.sleep(500);}catch(Exception e){}
             }
         });
     }
-    
+
     @Test
     public void testMouseDragEntered()
     {
@@ -389,7 +389,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseDragEnteredTarget()
     {
@@ -401,7 +401,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseDragExited()
     {
@@ -413,7 +413,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseDragExitedTarget()
     {
@@ -425,7 +425,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseDragOver()
     {
@@ -437,7 +437,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testMouseDragReleased()
     {
@@ -449,7 +449,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testScroll()
     {
@@ -461,7 +461,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testDragExited()
     {
@@ -473,7 +473,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testDragExitedTarget()
     {
@@ -485,7 +485,7 @@ public class SceneEventHandlersTest extends TestBase
             }
         });
     }
-    
+
     @Test
     public void testDragDroped()
     {
@@ -508,14 +508,14 @@ public class SceneEventHandlersTest extends TestBase
         EventTypes.DRAG_OVER,
         EventTypes.DRAG_EXITED_TARGET,
         EventTypes.DRAG_EXITED));
-    
+
     private void verify(final EventTypes eventType, FireCommand<?> fire)
     {
         if (Utils.isWindows8() && bannedEvents.contains(eventType)) {
                     Assert.assertTrue(false); // fail the test until the bug in robot is not fixed
         }
-//        Selection with selectors doesn't work at least on Ubuntu. 
-//        But work well on Windows. 
+//        Selection with selectors doesn't work at least on Ubuntu.
+//        But work well on Windows.
 //        eventCombo.selector().select(eventType);
         new GetAction<Object>() {
 
@@ -533,40 +533,40 @@ public class SceneEventHandlersTest extends TestBase
             }
         }, SceneEventHandlersApp.HANDLED_STYLE);
     }
-    
+
     private TextControlWrap<Button> actionButton;
     private ComboBoxWrap<ComboBox> eventCombo;
     private Wrap<? extends TextInputControl> dragSource;
     private Wrap<? extends TextInputControl> dropTarget;
     private Map<EventTypes, TextControlWrap<Label>> controlLabels = new EnumMap<EventTypes, TextControlWrap<Label>>(EventTypes.class);
-    
+
     static Robot robot = null;
-    static 
+    static
     {
-        if (Utils.isMacOS()) 
+        if (Utils.isMacOS())
         {
             //AWTRobotInputFactory.runInOtherJVM(true);
             runInOtherJVM(true);
         }
     }
-    
+
 }
 
 abstract class FireCommand<T>
 {
-    
+
     public FireCommand(T wrap)
     {
         this.wrap = wrap;
     }
-    
+
     public abstract void invoke();
-    
+
     public T getWrap()
     {
         return wrap;
     }
-    
+
     private T wrap;
-    
+
 }

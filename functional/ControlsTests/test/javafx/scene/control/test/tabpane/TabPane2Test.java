@@ -249,11 +249,11 @@ public class TabPane2Test extends UtilTestFunctions {
     @Test(timeout = 300000)
     public void tooltipTest() throws Throwable {
         final String imageWaitName = "wait.state";
-        
+
         final int defaultSmoothness = getMouseSmoothness();
         final Timeout defaultTimeout = scene.getEnvironment().getTimeout(imageWaitName);
 
-        setMouseSmoothness(4);        
+        setMouseSmoothness(4);
         scene.getEnvironment().setTimeout(imageWaitName, 3000);//Tooltip disappears quickly.
 
         Lookup<Node> tabLookup = getTabLookup(true);

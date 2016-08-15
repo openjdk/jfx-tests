@@ -54,7 +54,7 @@ public class LifecycleApp extends Application {
         reset();
         launch(DEFAULT_PARAMS);
     }
-    
+
     @Override
     public void start(final Stage stage) throws Exception {
 
@@ -82,16 +82,16 @@ public class LifecycleApp extends Application {
 
         }).build())));
         stage.show();
-        
+
     }
-    
+
     @Override
     public void init() throws Exception {
         super.init();
         System.out.println("INIT");
         status.init = now();
     }
-    
+
     @Override
     public void stop() throws Exception {
         super.stop();

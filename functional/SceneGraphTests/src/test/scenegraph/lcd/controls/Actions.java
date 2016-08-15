@@ -40,7 +40,7 @@ public enum Actions implements Action {
             control.setEffect(null);
             return control;
         }
-        
+
         public boolean isLCDWork() {
             return true;
         }
@@ -52,7 +52,7 @@ public enum Actions implements Action {
             control.setEffect(null);
             return control;
         }
-        
+
         public boolean isLCDWork() {
             return true;
         }
@@ -64,7 +64,7 @@ public enum Actions implements Action {
             control.setEffect(null);
             return control;
         }
-        
+
         public boolean isLCDWork() {
             return true;
         }
@@ -80,7 +80,7 @@ public enum Actions implements Action {
         public boolean isLCDWork() {
             return true;
         }
-        
+
     }),
     ColorAdjust(new EffectAction(new ColorAdjust(), true)),
     DisplacementMap(new EffectAction(new DisplacementMap(), true)),

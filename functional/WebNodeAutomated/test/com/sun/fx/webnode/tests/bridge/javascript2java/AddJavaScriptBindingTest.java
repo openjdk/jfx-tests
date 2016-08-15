@@ -38,12 +38,12 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Simple test for WebEngine.addJavaScriptBinding call.
      * Checks that a bound object is accessible from JavaScript.
@@ -66,7 +66,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testObject, resultObject);
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding call.
      * Checks that a bound object is accessible from JavaScript, and
@@ -91,7 +91,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testObject, resultObject);
         Assert.assertEquals("a", ((HelperObject)resultObject).stringField);
-        
+
         resultObject = null;
         Platform.runLater(new Runnable() {
             public void run() {
@@ -99,7 +99,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
                 resultObject = engine.executeScript("testObject;");
             }
         });
-        
+
         doWait(new Tester() {
             public boolean isPassed() {
                 return (resultObject != null);
@@ -108,7 +108,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertEquals(testObject, resultObject);
         Assert.assertEquals("b", ((HelperObject)resultObject).stringField);
     }
-    
+
     /**
      * Simple test for WebEngine.addJavaScriptBinding call.
      * Checks that an object with null value is properly bound and accessible from JavaScript.
@@ -132,7 +132,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(testObject, resultObject);
     }
-    
+
     /**
      * Simple test for WebEngine.addJavaScriptBinding call.
      * Checks that a null value is properly bound and accessible from JavaScript. And nothing bad happens ;)
@@ -155,7 +155,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertNull(resultObject);
     }
-    
+
     /**
      * Simple test for WebEngine.addJavaScriptBinding call.
      * Checks that nothing nasty happens when a binding with null name
@@ -182,7 +182,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
             }
         });
     }
-    
+
     /**
      * Simple test for WebEngine.addJavaScriptBinding call.
      * Checks that a situation with empty binding name is handled nicely
@@ -205,7 +205,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
             }
         });
     }
-    
+
     /**
      * Simple test for WebEngine.addJavaScriptBinding call.
      * Checks that a situation with malformed binding name is handled nicely
@@ -235,7 +235,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(NO_VARIABLE_MSG2));
     }
-    
+
     /**
      * Simple test for WebEngine.addJavaScriptBinding call.
      * Checks that a situation with malformed binding name is handled nicely
@@ -265,7 +265,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(INVALID_CHARACTER_MSG));
     }
-    
+
     /**
      * Simple test for WebEngine.addJavaScriptBinding call.
      * Checks that a situation with malformed binding name is handled nicely.
@@ -295,7 +295,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(NO_VARIABLE_MSG2));
     }
-    
+
     /**
      * Simple test for WebEngine.addJavaScriptBinding call.
      * Checks that a situation with malformed binding name is handled nicely.
@@ -325,7 +325,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(UNEXPECTED_EOF_MSG));
     }
-    
+
     /**
      * Simple test for WebEngine.addJavaScriptBinding call.
      * Checks that nothing nasty happens when binding an object to the name already used.
@@ -349,7 +349,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(containerObject, resultObject);
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding call.
      * Checks that an object can be bound under multiple names,
@@ -377,7 +377,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertEquals(testObject, resultObject);
         Assert.assertEquals(testObject, containerObject);
     }
-    
+
     /**
      * Test for WebEngine.addJavaScriptBinding call.
      * Checks that an object can be bound under multiple names,
@@ -407,7 +407,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertEquals(testObject, containerObject);
         Assert.assertEquals("a", ((HelperObject)resultObject).stringField);
         Assert.assertEquals("a", ((HelperObject)containerObject).stringField);
-        
+
         resultObject = null;
         containerObject = null;
         Platform.runLater(new Runnable() {
@@ -417,7 +417,7 @@ public class AddJavaScriptBindingTest extends JavaScript2JavaBridgeTestClass {
                 containerObject = engine.executeScript("testObject1;");
             }
         });
-        
+
         doWait(new Tester() {
             public boolean isPassed() {
                 return (resultObject != null) && (containerObject != null);

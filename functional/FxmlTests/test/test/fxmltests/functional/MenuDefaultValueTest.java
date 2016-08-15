@@ -50,12 +50,12 @@ import test.javaclient.shared.Utils;
  * @author cementovoz
  */
 public class MenuDefaultValueTest extends TestBase {
-    
+
     @BeforeClass
     public static void runUI() {
         Utils.launch(MenuDefaultValue.class, null);
     }
-    
+
     /**
      * this test verified creation menu with MenuItems from xml, RT-19007
      */
@@ -73,8 +73,8 @@ public class MenuDefaultValueTest extends TestBase {
         testCommon(Pages.menuBarPage.name(), null, false, true);
         checkMenu();
     }
-    
-    
+
+
     /**
      * this test verified creation menu with custom children from xml, RT-19007
      */
@@ -83,7 +83,7 @@ public class MenuDefaultValueTest extends TestBase {
         testCommon(Pages.menuItemCustomPage.name(), null, false, true);
         checkMenu();
     }
-    
+
     private void checkMenu () {
         Wrap<? extends Scene> sceneWrap = Root.ROOT.lookup(Scene.class).wrap();
         Wrap<? extends Menu> menuWrap = getMenu(sceneWrap, MenuDefaultValue.MENU_FILE_ID);
@@ -100,7 +100,7 @@ public class MenuDefaultValueTest extends TestBase {
         sceneWrap.mouse().move(new Point(0, 0));
         sceneWrap.mouse().click();
     }
-    
+
     private Wrap<? extends Menu> getMenu (Wrap<? extends Scene> scene, String text) {
         Parent<Node> sceneParent = scene.as(Parent.class, Node.class);
         Wrap<? extends MenuBar> menuBar = sceneParent.lookup(MenuBar.class).wrap(0);
@@ -111,7 +111,7 @@ public class MenuDefaultValueTest extends TestBase {
         Assert.assertNotNull(menu);
         return menu;
     }
-    
+
     protected Wrap lookupByMenuItem(Wrap<? extends Scene> scene, final MenuItem menu) {
         final Wrap<Node> item = scene.as(Parent.class, Node.class).lookup(Node.class, new LookupCriteria<Node>() {
                 public boolean check(Node node) {
@@ -123,7 +123,7 @@ public class MenuDefaultValueTest extends TestBase {
             }).wrap();
         return item;
     }
-    
+
     private static void expand(final Wrap<? extends Menu> menu) {
         if (new GetAction<Boolean>() {
             @Override

@@ -54,7 +54,7 @@ public class TabApp extends BaseApp {
     protected TestNode setup() {
 
         setupBoolean(Pages.Closable.name());
-        
+
         setupBoolean(Pages.Disable.name());
 
         Label contents[] = {new TitleLabel("New Content 1"), new TitleLabel("New Content 2")};

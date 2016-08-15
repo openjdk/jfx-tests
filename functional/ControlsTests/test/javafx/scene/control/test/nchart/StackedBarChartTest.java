@@ -68,7 +68,7 @@ public class StackedBarChartTest extends XYChartsBase {
         addSeries("Series B", 0, 100, 10);
         addSeries("Series C", 0, 100, 15);
     }
-    
+
     void addSeries(String seriesName, int minValue, int maxValue, int dotsCount) {
         setText(findTextField(ADDED_SERIES_NAME_TEXTFIELD_ID), seriesName);
         setText(findTextField(ADDED_SERIES_MIN_VALUE_TEXTFIELD_ID), String.valueOf(minValue));

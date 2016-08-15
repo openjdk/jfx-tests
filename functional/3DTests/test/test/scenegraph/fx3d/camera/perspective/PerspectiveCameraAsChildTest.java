@@ -34,9 +34,9 @@ import test.scenegraph.fx3d.utils.FX3DAbstractApp;
  * @author Andrew Glushchenko
  */
 public class PerspectiveCameraAsChildTest extends PerspectiveCameraAsChildTests{
-    
+
     private static PerspectiveCameraAsChildTestApp app;
-    
+
     @BeforeClass
     public static void setUp() {
         PerspectiveCameraAsChildTestApp.main(null);
@@ -53,5 +53,5 @@ public class PerspectiveCameraAsChildTest extends PerspectiveCameraAsChildTests{
         return app;
     }
 
-   
+
 }

@@ -54,7 +54,7 @@ import test.scenegraph.app.SpinnerApp;
 import test.scenegraph.app.SpinnerUtils;
 
 public class SpinnerTest extends TestBase {
-    
+
     private Wrap<? extends StackPane> bIncrButton = null;
     private Wrap<? extends StackPane> bDecrButton = null;
     private Wrap<? extends ComboBox>  cbSpinnerStyle = null;
@@ -65,7 +65,7 @@ public class SpinnerTest extends TestBase {
     private Wrap<? extends TextField> tfTextField = null;
     private Wrap<? extends Spinner>   spinnerWrap = null;
     private Wrap<? extends Button>    resetBtnWrap = null;
-    
+
     private void initWrappers() {
         org.jemmy.interfaces.Parent p = getScene().as(org.jemmy.interfaces.Parent.class, Node.class);
         spinnerWrap =   p.lookup(new ByID<>("spinner")).wrap();
@@ -79,11 +79,11 @@ public class SpinnerTest extends TestBase {
 
         tfTextField =   p.lookup(new ByID<>("textfield")).wrap();
         resetBtnWrap =  p.lookup(new ByID<>("reset")).wrap();
-        
+
         bDecrButton =   spinnerWrap.as(org.jemmy.interfaces.Parent.class, Node.class).lookup(new ByStyleClass<>("decrement-arrow-button")).wrap();
         bIncrButton =   spinnerWrap.as(org.jemmy.interfaces.Parent.class, Node.class).lookup(new ByStyleClass<>("increment-arrow-button")).wrap();
     }
-    
+
     @BeforeClass
     public static void runUI() {
         test.javaclient.shared.Utils.launch(SpinnerApp.class,null);
@@ -93,16 +93,16 @@ public class SpinnerTest extends TestBase {
 
     @Test
     public void vbox1() throws InterruptedException {
-      
+
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
-    
+
+
         Point p = bIncrButton.toAbsolute(bIncrButton.getClickPoint());
         System.out.println(" x=" + p.x + " y="+ p.y);
-        
+
         if (test.javaclient.shared.Utils.isWindows()) {
             JavaHowTo jht = new JavaHowTo();
             Thread.sleep(2000);
@@ -111,9 +111,9 @@ public class SpinnerTest extends TestBase {
             jht.click();
             jht.dnd(spinnerWrap, tfTextField);
         }
-        
+
         Thread.sleep(4000);
-                
+
         click(bIncrButton);
         //                Thread.sleep(400);
         click(bIncrButton);
@@ -122,17 +122,17 @@ public class SpinnerTest extends TestBase {
         //                Thread.sleep(400);
         click(bDecrButton);
         //                Thread.sleep(400);
-        
+
         click(cbSpinnerStyle);
         //                Thread.sleep(400);
         click(cbSpinnerStyle);
         selectRegexp(cbSpinnerStyle,"Split..Vert.*");
         //                Thread.sleep(400);
-        
-        selectRegexp(cbValueType,"Double.*");
-        doReset();    
 
-    
+        selectRegexp(cbValueType,"Double.*");
+        doReset();
+
+
          //               Thread.sleep(400);
       //  selectRegexp(cbValueType,"Arrows on left.*");
       //                  Thread.sleep(400);
@@ -148,13 +148,13 @@ public class SpinnerTest extends TestBase {
         //                Thread.sleep(400);
         click(bDecrButton);
         //                Thread.sleep(400);
-                        
+
         selectRegexp(cbSpinnerStyle,"Split..Hori.*");
         //                Thread.sleep(400);
-        
+
         selectRegexp(cbValueType,"Integer.*");
-        doReset();    
-    
+        doReset();
+
         //                Thread.sleep(400);
         click(bIncrButton);
         //                Thread.sleep(400);
@@ -164,122 +164,122 @@ public class SpinnerTest extends TestBase {
         //                Thread.sleep(400);
         click(bDecrButton);
         //                Thread.sleep(400);
-            
-        
-        
-                        
+
+
+
+
     }
     */
 
     @Test
     public void integer1() throws InterruptedException {
-      
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbValueType,"Integer.*");
-        doReset();    
-    
+        doReset();
+
         check(5);
         click(bIncrButton);
         check(6);
         click(bIncrButton);
         check(7);
         click(bDecrButton);
-        
-                        
-    }    
-//              ------------------------   ( 6 styles ) x  editable integer ---------------------- 
+
+
+    }
+//              ------------------------   ( 6 styles ) x  editable integer ----------------------
     @Test
     public void editableInteger1DefaultStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbSpinnerStyle,"Default.*");
         editableInteger1();
     }
-    
+
     @Test
     public void editableInteger1SplitVertStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbSpinnerStyle,"Split..Vert.*");
         editableInteger1();
     }
-    
+
     @Test
     public void editableInteger1SplitHorizStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbSpinnerStyle,"Split..Hor.*");
         editableInteger1();
     }
-    
+
     @Test
     public void editableInteger1ArrowsRHStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbSpinnerStyle,"Arrows on right..Hor.*");
         editableInteger1();
     }
-    
+
     @Test
     public void editableInteger1ArrowsLVStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbSpinnerStyle,"Arrows on left..Ver.*");
         editableInteger1();
     }
-    
+
     @Test
     public void editableInteger1ArrowsLHStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbSpinnerStyle,"Arrows on left..Hor.*");
         editableInteger1();
     }
-//              ------------------------   ( 6 styles ) x  editable integer x ("right-to-left" )  ---------------------- 
+//              ------------------------   ( 6 styles ) x  editable integer x ("right-to-left" )  ----------------------
     @Test
     public void editableIntegerRLDefaultStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Default.*");
@@ -288,16 +288,16 @@ public class SpinnerTest extends TestBase {
             select(chbRtl,false);
         }
     }
-    
+
     @Test
     public void editableIntegerRLSplitVertStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Split..Vert.*");
@@ -306,16 +306,16 @@ public class SpinnerTest extends TestBase {
             select(chbRtl,false);
         }
     }
-    
+
     @Test
     public void editableIntegerRLSplitHorizStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Split..Hor.*");
@@ -324,16 +324,16 @@ public class SpinnerTest extends TestBase {
             select(chbRtl,false);
         }
     }
-    
+
     @Test
     public void editableIntegerRLArrowsRHStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Arrows on right..Hor.*");
@@ -342,16 +342,16 @@ public class SpinnerTest extends TestBase {
             select(chbRtl,false);
         }
     }
-    
+
     @Test
     public void editableIntegerRLArrowsLVStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Arrows on left..Ver.*");
@@ -360,16 +360,16 @@ public class SpinnerTest extends TestBase {
             select(chbRtl,false);
         }
     }
-    
+
     @Test
     public void editableIntegerRLArrowsLHStyle() throws InterruptedException {
-        
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         try{
          select(chbRtl,true);
          selectRegexp(cbSpinnerStyle,"Arrows on left..Hor.*");
@@ -380,16 +380,16 @@ public class SpinnerTest extends TestBase {
     }
 //---------------------------------------------------------------------------------------------------
     private void editableInteger1() throws InterruptedException {
-        
+
         select(chbEditable,true);
-        
+
         selectRegexp(cbValueType,"Integer.*");
-        doReset();    
+        doReset();
 
         check(5);  // 5
         click(bIncrButton);
         check(6);
-        
+
         click(spinnerWrap);
         paste(spinnerWrap,KeyboardButtons.END);
         paste(spinnerWrap,KeyboardButtons.BACK_SPACE);
@@ -398,27 +398,27 @@ public class SpinnerTest extends TestBase {
         check(8);
         click(bDecrButton);
         check(7);
-        
+
         select(chbEditable,false);
         click(spinnerWrap);
         paste(spinnerWrap,KeyboardButtons.BACK_SPACE);
         paste(spinnerWrap,"8");
         paste(spinnerWrap,KeyboardButtons.ENTER);
         check(7);
-    }    
-    
-    
+    }
+
+
     @Test
     public void wrapInteger1() throws InterruptedException {
-      
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbValueType,"Integer.*");
-        doReset();    
+        doReset();
 
         check(5);
         click(bDecrButton);
@@ -432,22 +432,22 @@ public class SpinnerTest extends TestBase {
         select(chbWrapAround,true);
         click(bIncrButton);
         check(5);
-        
+
         select(chbWrapAround,false);
-    }    
-    
+    }
+
     @Test
     public void wrapDouble1() throws InterruptedException {
-      
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbValueType,"Double.*");
-        doReset();    
-        
+        doReset();
+
         check(.5);
         for (int i=0;i<13;++i)
             click(bDecrButton);
@@ -461,61 +461,61 @@ public class SpinnerTest extends TestBase {
         select(chbWrapAround,true);
         click(bIncrButton);
         check(.0);
-        
+
         select(chbWrapAround,false);
-    }    
-    
+    }
+
     @Test
     public void wrapString1() throws InterruptedException {
-      
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbValueType, "List.*");
-        doReset();    
-        
+        doReset();
+
         check("Jonathan");
         for (int i = 0; i < 3; ++i)
             click(bDecrButton);
         check("Jonathan");
-        
+
         select(chbWrapAround,true);
         click(bDecrButton);
         check("Henry");
-        
+
         select(chbWrapAround,false);
         click(bIncrButton);
         check("Henry");
-        
+
         select(chbWrapAround,true);
         click(bIncrButton);
         check("Jonathan");
-        
+
         select(chbWrapAround,false);
-    }    
-    
-    
+    }
+
+
     @Test
     public void editableDouble1() throws InterruptedException {
-      
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         select(chbEditable,true);
-        
+
         selectRegexp(cbValueType,"Double.*");
-        doReset();    
+        doReset();
 
         check(.5);
         click(bIncrButton);
         check(.55);
-        
+
         click(spinnerWrap);
         paste(spinnerWrap,KeyboardButtons.BACK_SPACE);
         paste(spinnerWrap,"3");
@@ -524,27 +524,27 @@ public class SpinnerTest extends TestBase {
         click(bDecrButton);
         check(.48);
         select(chbEditable,false);
-        
-                        
-    }    
-    
+
+
+    }
+
     @Test
     public void editableString1() throws InterruptedException {
-      
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         select(chbEditable,true);
-        
+
         selectRegexp(cbValueType,"List.*");
-        doReset();    
+        doReset();
 
         check("Jonathan");
         select(chbEditable,true);
-        
+
         click(spinnerWrap);
         paste(spinnerWrap,KeyboardButtons.END);
         for(int k=0;k<15;++k)
@@ -554,22 +554,22 @@ public class SpinnerTest extends TestBase {
         click(bIncrButton);
         check("Mary");   // BUG
         select(chbEditable,false);
-    }    
-    
-    
-    
+    }
+
+
+
     @Test
     public void double1() throws InterruptedException {
-      
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbValueType,"Double.*");
-        doReset();    
-    
+        doReset();
+
         check(.5);
         click(bIncrButton);
         check(.55);
@@ -577,32 +577,32 @@ public class SpinnerTest extends TestBase {
         check(.6);
         click(bDecrButton);
         check(.55);
-    }    
-    
+    }
+
     @Test
     public void string1() throws InterruptedException {
-      
+
         logTestName();
         if ( null == application ) { // ==null sometimes in applet. reason: unknown
             application = AbstractApp2.getLastInstance();
         }
         initWrappers();
-        
+
         selectRegexp(cbValueType,"List.*");
-        doReset();    
-    
+        doReset();
+
         check("Jonathan");
-        
+
         click(bIncrButton);
         check("Julia");
-        
+
         click(bIncrButton);
         check("Henry");
-        
+
         click(bDecrButton);
         check("Julia");
-    }    
-    
+    }
+
     private void check(final String  _str) {
         retrieveSpinnerValues(spinnerWrap);
         final String s1 = SpinnerUtils.getSpinnerEditorValue();
@@ -610,7 +610,7 @@ public class SpinnerTest extends TestBase {
         Assert.assertEquals( _str, s1 ); //  (expected/actual)
         Assert.assertEquals( _str, s2 );
     }
-    
+
     private void check(int _i) {
         retrieveSpinnerValues(spinnerWrap);
         final String s1 = SpinnerUtils.getSpinnerEditorValue();
@@ -618,7 +618,7 @@ public class SpinnerTest extends TestBase {
         Assert.assertEquals(new Integer(_i).toString(),s1 );
         Assert.assertEquals(new Integer(_i).toString(),s2 );
     }
-    
+
     private void check(double _f) {
         retrieveSpinnerValues(spinnerWrap);
         final String s1 = SpinnerUtils.getSpinnerEditorValue();
@@ -626,18 +626,18 @@ public class SpinnerTest extends TestBase {
         Assert.assertEquals(_f, new Double(s1.replace(',', '.')) );
         Assert.assertEquals(_f, new Double(s2.replace(',', '.')) );
     }
-    
+
     private void doReset() {
-        resetBtnWrap.mouse().click();        
+        resetBtnWrap.mouse().click();
         try {
             Thread.sleep(200);
         } catch (InterruptedException ex){
             System.err.println("InterruptedException" + ex.getMessage());
         }
     }
-    
+
     private void logTestName() {
-        System.out.println(" ------------ TEST NAME [" + Thread.currentThread().getStackTrace()[2].getMethodName() + "] ----------------"); 
-        
+        System.out.println(" ------------ TEST NAME [" + Thread.currentThread().getStackTrace()[2].getMethodName() + "] ----------------");
+
     }
 }

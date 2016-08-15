@@ -37,102 +37,102 @@ public class DragAndDrop {
     public static void eventDragstartDragend(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/eventDragstartDragend.html").toExternalForm());
     }
-    
+
     @RunUI(value="eventDrag.html")
     public static void eventDrag(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/eventDrag.html").toExternalForm());
     }
-    
+
     @RunUI(value="eventDragenterDragleave.html")
     public static void eventDragenterDragleave(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/eventDragenterDragleave.html").toExternalForm());
     }
-    
+
     @RunUI(value="eventDragover.html")
     public static void eventDragover(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/eventDragover.html").toExternalForm());
     }
-    
+
     @RunUI(value="eventDrop.html")
     public static void eventDrop(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/eventDrop.html").toExternalForm());
     }
-    
+
     @RunUI(value="cancelDragstart.html")
     public static void cancelDragstart(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/cancelDragstart.html").toExternalForm());
     }
-    
+
     @RunUI(value="cancelDrop.html")
     public static void cancelDrop(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/cancelDrop.html").toExternalForm());
     }
-    
+
     @RunUI(value="defaultLink.html")
     public static void defaultLink(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/defaultLink.html").toExternalForm());
     }
-    
+
     @RunUI(value="defaultSelection.html")
     public static void defaultSelection(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/defaultSelection.html").toExternalForm());
     }
-    
+
     @RunUI(value="defaultUndraggable.html")
     public static void defaultUndraggable(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/defaultUndraggable.html").toExternalForm());
     }
-    
+
     @RunUI(value="sequenceDragstartDrag.html")
     public static void sequenceDragstartDrag(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/sequenceDragstartDrag.html").toExternalForm());
     }
-    
+
     @RunUI(value="addElement.html")
     public static void addElement(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/addElement.html").toExternalForm());
     }
-    
+
     @RunUI(value="setDragImage.html")
     public static void setDragImage(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/setDragImage.html").toExternalForm());
     }
-    
+
     @RunUI(value="dropEffectDefault.html")
     public static void dropEffectDefault(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/dragDropEffects.html").toExternalForm());
     }
-    
+
     @RunUI(value="dropEffectNone.html")
     public static void dropEffectNone(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/dragDropEffects.html").toExternalForm());
     }
-    
+
     @RunUI(value="dropEffectCopy.html")
     public static void dropEffectCopy(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/dragDropEffects.html").toExternalForm());
     }
-    
+
     @RunUI(value="dropEffectMove.html")
     public static void dropEffectMove(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/dragDropEffects.html").toExternalForm());
     }
-    
+
     @RunUI(value="dropEffectLink.html")
     public static void dropEffectLink(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/dragDropEffects.html").toExternalForm());
     }
-    
+
     @RunUI(value="dropzoneCopy.html")
     public static void dropzoneCopy(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/dropzone.html").toExternalForm());
     }
-    
+
     @RunUI(value="dropzoneLink.html")
     public static void dropzoneLink(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/dropzone.html").toExternalForm());
     }
-    
+
     @RunUI(value="dropzoneMove.html")
     public static void dropzoneMove(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/dropzone.html").toExternalForm());

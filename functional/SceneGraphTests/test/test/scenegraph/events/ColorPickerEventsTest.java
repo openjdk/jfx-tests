@@ -38,13 +38,13 @@ import test.scenegraph.app.ControlEventsApp.Controls;
  */
 public class ColorPickerEventsTest extends EventTestHidingPopup<ControlDock>
 {
-    
+
     @BeforeClass
     public static void rinUI()
     {
         ControlEventsApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -52,14 +52,14 @@ public class ColorPickerEventsTest extends EventTestHidingPopup<ControlDock>
         super.before();
         setControl(Controls.COLOR_PICKER);
     }
-    
+
     @Override
     protected ControlDock findPrimeDock()
     {
-        return new ControlDock(getActiveTabDock().asParent(), 
+        return new ControlDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
-    
+
     @Override
     @Test(timeout = 60000)
     public void onAction()
@@ -77,5 +77,5 @@ public class ColorPickerEventsTest extends EventTestHidingPopup<ControlDock>
             }
         });
     }
-    
+
 }

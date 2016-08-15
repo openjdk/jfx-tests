@@ -38,7 +38,7 @@ public class PasteChange extends Change {
         appendable = false;
         this.val = val;
     }
-    
+
     public String getVal() {
         return val;
     }
@@ -57,15 +57,15 @@ public class PasteChange extends Change {
         for(int i = 0; i < len; ++i) {
             sb.append(str.charAt(rnd.nextInt(str.length())));
         }
-        
+
         return sb.toString();
     }
-    
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + " \"" + val + "\"";
     }
-    
+
     @Override
     public Object clone() {
         return new PasteChange(val);

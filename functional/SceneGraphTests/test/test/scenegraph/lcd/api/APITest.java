@@ -108,7 +108,7 @@ public class APITest {
 
     private boolean testLCD(Image image, boolean lcd) {
         PixelsCalc calc = new PixelsCalc();
-        
+
         calc.calculate(image, true);
 
         if (lcd) {

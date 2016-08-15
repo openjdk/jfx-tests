@@ -36,10 +36,10 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class GetMaxSizeTest extends HistoryTestClass {
-    
+
     protected Integer size;
     protected IntegerProperty sizeProperty;
-    
+
     private void getMaxSize() {
         doWait(engineReady);
         size = null;
@@ -54,7 +54,7 @@ public class GetMaxSizeTest extends HistoryTestClass {
             }
         });
     }
-    
+
     private void getMaxSizeProperty() {
         doWait(engineReady);
         sizeProperty = null;
@@ -69,7 +69,7 @@ public class GetMaxSizeTest extends HistoryTestClass {
             }
         });
     }
-    
+
     /**
      * Test for getting maximum size from newly created WebEngine.
      */
@@ -79,7 +79,7 @@ public class GetMaxSizeTest extends HistoryTestClass {
         getMaxSize();
         Assert.assertEquals(DEFAULT_MAX_SIZE, size.intValue());
     }
-    
+
     /**
      * Test for getting maximum size property from newly created WebEngine.
      */
@@ -89,7 +89,7 @@ public class GetMaxSizeTest extends HistoryTestClass {
         getMaxSizeProperty();
         Assert.assertEquals(DEFAULT_MAX_SIZE, sizeProperty.intValue());
     }
-    
+
     /**
      * Test for getting maximum size after some navigation.
      */
@@ -100,7 +100,7 @@ public class GetMaxSizeTest extends HistoryTestClass {
         getMaxSize();
         Assert.assertEquals(DEFAULT_MAX_SIZE, size.intValue());
     }
-    
+
     /**
      * Test for getting maximum size property after some navigation.
      */
@@ -111,5 +111,5 @@ public class GetMaxSizeTest extends HistoryTestClass {
         getMaxSizeProperty();
         Assert.assertEquals(DEFAULT_MAX_SIZE, sizeProperty.intValue());
     }
-    
+
 }

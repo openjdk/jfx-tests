@@ -35,7 +35,7 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 
 /**
- * A wrap around <code>javafx.scene.text.Text</code>. <code>javafx.scene.text.Text</code> 
+ * A wrap around <code>javafx.scene.text.Text</code>. <code>javafx.scene.text.Text</code>
  * is a <code>org.jemmy.interfaces.Text</code> - no surprise here :)
  * @param <T>
  * @author Shura
@@ -45,26 +45,26 @@ import org.jemmy.resources.StringComparePolicy;
 @ControlInterfaces({org.jemmy.interfaces.Text.class})
 public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.interfaces.Text {
 
-    
+
     /**
      * Converts a text sample and a text comparison logic to lookup criteria.
      * Looking for a Text node by test content is the most logical approach.
-     * 
+     *
      * @param <B>
      * @param tp Text subclass
      * @param text a text sample
-     * @param policy defines how to compare 
+     * @param policy defines how to compare
      * @return
      */
     @ObjectLookup("text and comparison policy")
-    public static <B extends Text> LookupCriteria<B> textLookup(Class<B> tp, String text, 
+    public static <B extends Text> LookupCriteria<B> textLookup(Class<B> tp, String text,
         StringComparePolicy policy) {
         return new ByText<>(text, policy);
     }
     /**
      * Wraps a text.
-     * @param env 
-     * @param node  
+     * @param env
+     * @param node
      */
     public TextWrap(Environment env, T node) {
         super(env, node);
@@ -74,7 +74,7 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
      * Look for a certain node and create an operator for it.
      * @param parent
      * @param criteria
-     * @return  
+     * @return
      * @deprecated use docks
      * @see TextDock
      */
@@ -84,7 +84,7 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
     }
 
     /**
-     * 
+     *
      * @param parent
      * @param text
      * @return
@@ -104,7 +104,7 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
 
     /**
      * This is not functional as <code>javafx.scene.text.Text</code> is not editable.
-     * @param arg0 
+     * @param arg0
      */
     @Override
     public void type(String arg0) {
@@ -112,7 +112,7 @@ public class TextWrap<T extends Text> extends NodeWrap<T> implements org.jemmy.i
 
     /**
      * This is not functional as <code>javafx.scene.text.Text</code> is not editable.
-     * @param arg0 
+     * @param arg0
      */
     @Override
     public void clear() {

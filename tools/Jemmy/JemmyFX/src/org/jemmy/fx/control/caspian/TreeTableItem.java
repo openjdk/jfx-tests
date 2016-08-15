@@ -67,7 +67,7 @@ public class TreeTableItem implements org.jemmy.interfaces.TreeItem<javafx.scene
                 treeTableViewWrap.as(Scrollable2D.class).hto(treeTableViewWrap.as(Scrollable2D.class).hmin());
             }
             findPointer(wrap.cellWrap()).mouse().click();
-            wrap.waitState(expandedState, true);            
+            wrap.waitState(expandedState, true);
         }
     }
 

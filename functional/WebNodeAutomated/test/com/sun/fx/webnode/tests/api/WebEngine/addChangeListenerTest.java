@@ -39,7 +39,7 @@ import org.junit.BeforeClass;
  */
 public class addChangeListenerTest extends GenericTestClass {
     private boolean propertyChanged = false;
-    
+
     @BeforeClass
     public static void init(){
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);

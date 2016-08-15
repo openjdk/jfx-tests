@@ -191,13 +191,13 @@ public class PopupTest extends TestBase {
     }
 
     private void showPopup(boolean autoHide, boolean consumeAutoHidingEvents, boolean hideOnEscape) throws InterruptedException {
-        
+
         if(Configuration.isEmbedded()) {
             setupControlsEmbedded(autoHide, consumeAutoHidingEvents, hideOnEscape);
         } else {
             setupControlsDesktop(autoHide, consumeAutoHidingEvents, hideOnEscape);
         }
-        
+
 
         Wrap<? extends Node> wrapBtnPopup = Lookups.byID(getScene(), PopupApp.ID_BTN_SWOW_POPUP, Node.class);
         wrapBtnPopup.mouse().click();
@@ -207,7 +207,7 @@ public class PopupTest extends TestBase {
             e.printStackTrace();
         }
     }
-    
+
     private void setupControlsDesktop(boolean autoHide, boolean consumeAutoHidingEvents, boolean hideOnEscape) {
         CheckBoxDock dockCbAutoHide = new CheckBoxDock(new SceneDock(getScene()).asParent(), PopupApp.ID_CHBOX_AUTO_HIDE);
         CheckBoxDock dockCbConsumeAutoHidingEvents = new CheckBoxDock(new SceneDock(getScene()).asParent(), PopupApp.ID_CHBOX_CONSUME_AUTO_HIDING_EVENTS);
@@ -217,12 +217,12 @@ public class PopupTest extends TestBase {
         dockCbConsumeAutoHidingEvents.asSelectable().selector().select(consumeAutoHidingEvents ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
         dockCbHideOnEscape.asSelectable().selector().select(hideOnEscape ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
     }
-    
+
     private void setupControlsEmbedded(boolean autoHide, boolean consumeAutoHidingEvents, boolean hideOnEscape) {
         TextDock dockCbAutoHide = new TextDock(new SceneDock(getScene()).asParent(), PopupApp.ID_CHBOX_AUTO_HIDE);
         TextDock dockCbConsumeAutoHidingEvents = new TextDock(new SceneDock(getScene()).asParent(), PopupApp.ID_CHBOX_CONSUME_AUTO_HIDING_EVENTS);
         TextDock dockCbHideOnEscape = new TextDock(new SceneDock(getScene()).asParent(), PopupApp.ID_CHBOX_HIDE_ON_ESCAPE);
-        
+
         Text cbAutoHide = dockCbAutoHide.control();
         Text cbConsumeAutoHidingEvents = dockCbConsumeAutoHidingEvents.control();
         Text cbHideOnEscape = dockCbHideOnEscape.control();
@@ -230,11 +230,11 @@ public class PopupTest extends TestBase {
         if(!GraphicsCheckBoxes.isChecked(cbAutoHide) && autoHide) {
             dockCbAutoHide.mouse().click();
         }
-        
+
         if(!GraphicsCheckBoxes.isChecked(cbConsumeAutoHidingEvents) && consumeAutoHidingEvents) {
             dockCbConsumeAutoHidingEvents.mouse().click();
         }
-        
+
         if(!GraphicsCheckBoxes.isChecked(cbHideOnEscape) && hideOnEscape) {
             dockCbHideOnEscape.mouse().click();
         }
@@ -312,7 +312,7 @@ public class PopupTest extends TestBase {
                         if (status != null) {
                             failStorage.set(status);
                             return null;
-                        }                        
+                        }
                     } catch (Exception ex) {
                         Logger.getLogger(PopupTest.class.getName()).log(Level.SEVERE, null, ex);
                         failStorage.set(ex.getMessage());

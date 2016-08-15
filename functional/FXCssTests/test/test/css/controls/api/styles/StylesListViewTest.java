@@ -66,7 +66,7 @@ public class StylesListViewTest extends BaseStyleNodeTest {
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     @Test
     public void testfxorientation () {
         Set<String> styleNames = getStyleNames();
@@ -76,6 +76,6 @@ public class StylesListViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-orientation");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.geometry.Orientation.VERTICAL);
     }
-    
+
 
 }

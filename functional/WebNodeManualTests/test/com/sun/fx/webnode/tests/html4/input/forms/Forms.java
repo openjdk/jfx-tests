@@ -37,28 +37,28 @@ public class Forms {
     public static void buttons() {
         WebNodeLauncher.run(Forms.class.getResource("buttons-test.html").toExternalForm());
     }
-    
+
     @RunUI(value="forms.html")
     public static void forms() {
         WebNodeLauncher.run(Forms.class.getResource("forms-test.html").toExternalForm());
     }
-    
+
     // !!
     @RunUI(value="inputs.html")
     public static void inputs() {
         WebNodeLauncher.run(Forms.class.getResource("inputs-test.html").toExternalForm());
     }
-    
+
     @RunUI(value="labels_accesskeys.html")
     public static void labels_accesskeys() {
         WebNodeLauncher.run(Forms.class.getResource("labels_accesskeys-test.html").toExternalForm());
     }
-    
+
     @RunUI(value="selects.html")
     public static void selects() {
         WebNodeLauncher.run(Forms.class.getResource("selects-test.html").toExternalForm());
     }
-    
+
     @RunUI(value="textareas.html")
     public static void textareas() {
         WebNodeLauncher.run(Forms.class.getResource("textareas-test.html").toExternalForm());

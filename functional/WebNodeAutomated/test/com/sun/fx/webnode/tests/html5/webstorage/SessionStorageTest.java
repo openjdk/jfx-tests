@@ -112,7 +112,7 @@ public class SessionStorageTest extends GenericTestClass {
         doWait(resultReady);
         assertTrue("SessionStorage doesn't support basic read/write operations through dot", result.equals(value));
     }
-    
+
     @Test(timeout = 10000)
     public void testCheckSessionStorageBasicReadWriteMixedAccessSetThroughInnerVariable() {
         initPage();
@@ -126,7 +126,7 @@ public class SessionStorageTest extends GenericTestClass {
         doWait(resultReady);
         assertTrue("SessionStorage doesn't support basic mixed read/write operations through dot", result.equals(value));
     }
-    
+
     @Test(timeout = 10000)
     public void testCheckSessionStorageBasicReadWriteMixedAccessSetThroughMethod() {
         initPage();

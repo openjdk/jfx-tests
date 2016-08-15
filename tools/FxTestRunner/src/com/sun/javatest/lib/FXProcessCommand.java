@@ -142,14 +142,14 @@ public class FXProcessCommand extends Command {
     /**
      * Run the given command.
      *
-     * @param args	An array of strings composed of <em>command-options</em>,
+     * @param args  An array of strings composed of <em>command-options</em>,
      * <em>environment-variables</em>, <em>command</em>,
      * <em>command-arguments</em>. <br>
      *
      * The <em>command-options</em> are an optional set of options, each
      * beginning with `-', to be used by this object. The options are <dt>
-     * <dt>-v <dd>	verbose mode <dt>-pass|-fail|-error <i>exit-code</i>
-     * <i>string</i> <dd>	set the status to be returned for the given exit code
+     * <dt>-v <dd>  verbose mode <dt>-pass|-fail|-error <i>exit-code</i>
+     * <i>string</i> <dd>   set the status to be returned for the given exit code
      * to one of Status.passed/Status.failed/Status.error. <i>exit-code</i> can
      * be either an integer or "default". <i>string</i> the message string
      * provided in the status object. <dt>-execDir <i>execDir</i> <dd> set the
@@ -164,8 +164,8 @@ public class FXProcessCommand extends Command {
      *
      * The <em>command-arguments</em> are an optional list of strings to be
      * passed to the command to be executed.
-     * @param log	A stream for logging output.
-     * @param ref	A stream for reference output, if the test requires it. If
+     * @param log   A stream for logging output.
+     * @param ref   A stream for reference output, if the test requires it. If
      * not, it can be used as an additional logging stream.
      *
      * @return The result of the method is obtained by calling
@@ -202,7 +202,7 @@ public class FXProcessCommand extends Command {
             } else if (args[i].equals("-error") && i + 2 < args.length) {
                 setStatus(args[++i], Status.error(args[++i]));
             } else if (args[i].equals("-end")) {
-                // -end is supported for the improbable event someone wants an 
+                // -end is supported for the improbable event someone wants an
                 // env var or command beginning with -
                 i++; // because the for-loop won't get a chance to do it
                 break;
@@ -394,8 +394,8 @@ public class FXProcessCommand extends Command {
      *
      * @param cmd The command to be executed
      * @param cmdEnv The environment to be passed to the command
-     * @param log	A stream for logging output.
-     * @param ref	A stream for reference output, if the test requires it. If
+     * @param log   A stream for logging output.
+     * @param ref   A stream for reference output, if the test requires it. If
      * not, it can be used as an additional logging stream.
      * @return The result of the method is obtained by calling
      * <code>getStatus</code> after the command completes.
@@ -468,7 +468,7 @@ public class FXProcessCommand extends Command {
             // interruptible.
             int exitCode = p.waitFor();
             //if (verbose > 0)
-            //	log.report("command exited, exit=" + exitCode);
+            //  log.report("command exited, exit=" + exitCode);
 
             in.close();
             err.close();
@@ -492,18 +492,18 @@ public class FXProcessCommand extends Command {
      * a status that may have been passed from the command by using
      * <code>status.exit()</code>.
      *
-     * @param exitCode	The exit code from the command that was executed.
-     * @param logStatus	If the command that was executed was a test program and
+     * @param exitCode  The exit code from the command that was executed.
+     * @param logStatus If the command that was executed was a test program and
      * exited by calling
      * <code>status.exit()</code>, then logStatus will be set to `status'.
      * Otherwise, it will be null. The value of the status is passed from the
      * command by writing it as the last line to stdout before exiting the
      * process. If it is not received as the last line, the value will be lost.
-     * @return	Unless overridden, the default is
+     * @return  Unless overridden, the default is
      * <code>Status.passed("exit code 0")</code> if the command exited with exit
      * code 0, or
      * <code>Status.failed("exit code " + exitCode)</code> otherwise.
-	 *
+     *
      */
     protected Status getStatus(int exitCode, Status logStatus) {
         if (logStatus != null) {
@@ -529,7 +529,7 @@ public class FXProcessCommand extends Command {
          * Create one.
          *
          * @param from the stream to copy from
-         * @param out	the log to copy to
+         * @param out   the log to copy to
          */
         StreamCopier(Reader from, PrintWriter to) {
             super(Thread.currentThread().getName() + "_StreamCopier_"

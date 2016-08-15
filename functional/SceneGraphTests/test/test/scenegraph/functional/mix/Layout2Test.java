@@ -610,7 +610,7 @@ public class Layout2Test extends TestBase {
     }
 
 /**
- * test AnchorPane 
+ * test AnchorPane
  */
     @Test
     public void AnchorDefaults() throws InterruptedException {

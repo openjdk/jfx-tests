@@ -39,12 +39,12 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class AccessModifiersTest extends JavaScript2JavaBridgeTestClass {
-    
+
     @BeforeClass
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for accessing a public field.
      * Checks that public field of a bound object is accessible from JavaScript.
@@ -67,7 +67,7 @@ public class AccessModifiersTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).publicField, resultObject);
     }
-    
+
     /**
      * Test for accessing a protected field.
      * Checks that protected field of a bound object is not accessible from JavaScript.
@@ -90,7 +90,7 @@ public class AccessModifiersTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(UNDEFINED, resultObject);
     }
-    
+
     /**
      * Test for accessing a private field.
      * Checks that private field of a bound object is not accessible from JavaScript.
@@ -113,7 +113,7 @@ public class AccessModifiersTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(UNDEFINED, resultObject);
     }
-    
+
     /**
      * Test for accessing a public method.
      * Checks that public method of a bound object is accessible from JavaScript.
@@ -136,7 +136,7 @@ public class AccessModifiersTest extends JavaScript2JavaBridgeTestClass {
         });
         Assert.assertEquals(((HelperObject)testObject).publicField, resultObject);
     }
-    
+
     /**
      * Test for accessing a protected method.
      * Checks that protected method of a bound object is not accessible from JavaScript.
@@ -166,7 +166,7 @@ public class AccessModifiersTest extends JavaScript2JavaBridgeTestClass {
         Assert.assertTrue(resultObject instanceof JSException);
         Assert.assertTrue(((JSException) resultObject).getMessage().equals(UNDEFINED_FUNCTION_PROTECTED_MSG));
     }
-    
+
     /**
      * Test for accessing a private method.
      * Checks that private method of a bound object is not accessible from JavaScript.

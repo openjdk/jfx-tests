@@ -28,5 +28,5 @@ import javafx.scene.control.MenuItem;
 
 
 public class CustomMenuItem extends MenuItem{
-    
+
 }

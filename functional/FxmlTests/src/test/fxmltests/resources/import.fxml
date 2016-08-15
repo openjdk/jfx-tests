@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.Label?>
 
-<Label 
-    text="Import label" 
+<Label
+    text="Import label"
     id="import-label-id" />

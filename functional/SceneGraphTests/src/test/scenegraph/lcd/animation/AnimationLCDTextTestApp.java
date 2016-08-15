@@ -46,14 +46,14 @@ public class AnimationLCDTextTestApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        
-        
+
+
         final TextArea testText = TextAreaBuilder.create()
                 .text("Test")
                 .prefHeight(50)
                 .prefWidth(500)
                 .build();
-        
+
         final ChoiceBox<Interpolator> interpolatorChoiceBox = new ChoiceBox<Interpolator>();
         interpolatorChoiceBox.getItems().addAll(FXCollections.observableArrayList(
                     Interpolator.LINEAR,
@@ -64,25 +64,25 @@ public class AnimationLCDTextTestApp extends Application {
                     ));
         interpolatorChoiceBox.setPrefHeight(25);
         interpolatorChoiceBox.setPrefWidth(500);
-        
+
         interpolatorChoiceBox.getSelectionModel().selectFirst();
-                
-        
+
+
         final Text lcdText = TextBuilder.create()
                 .x(100)
                 .y(100)
                 .fontSmoothingType(FontSmoothingType.LCD)
                 .build();
-        
+
         lcdText.textProperty().bind(testText.textProperty());
-        
+
         final Circle point = CircleBuilder.create()
                 .centerX(100)
                 .centerY(100)
                 .radius(2)
                 .fill(Color.RED)
                 .build();
-        
+
         Pane root = VBoxBuilder.create()
                 .children(
                     PaneBuilder.create()
@@ -97,13 +97,13 @@ public class AnimationLCDTextTestApp extends Application {
                         public void handle(MouseEvent event) {
                             point.setCenterX(event.getX());
                             point.setCenterY(event.getY());
-                            
+
                             TimelineBuilder.create()
                                 .keyFrames(
                                     new KeyFrame(Duration.seconds(5),
                                         new KeyValue(lcdText.xProperty(), event.getX(),
                                             interpolatorChoiceBox.getSelectionModel().getSelectedItem())),
-                                    new KeyFrame(Duration.seconds(5), 
+                                    new KeyFrame(Duration.seconds(5),
                                         new KeyValue(lcdText.yProperty(), event.getY(),
                                             interpolatorChoiceBox.getSelectionModel().getSelectedItem()))
                                     )
@@ -115,9 +115,9 @@ public class AnimationLCDTextTestApp extends Application {
                     testText,
                     interpolatorChoiceBox)
                 .build();
-        
 
-        
+
+
         Scene scene = new Scene(root, 500, 575);
 
         primaryStage.setTitle("Test Animnation LCD Text");
@@ -127,5 +127,5 @@ public class AnimationLCDTextTestApp extends Application {
     }
 }
 
-        
+
 

@@ -117,7 +117,7 @@ class ColorEditorImpl implements Editor<Color> {
                 }
                 return super.check(cntrl);
             }
-            
+
         }).wrap();
         String opacity = String.valueOf((int) (state.getOpacity()*100));
         if (!alpha.as(Text.class).text().equals(opacity)) {

@@ -26,7 +26,7 @@ public class SwingNodeDragDropTest extends TestBase {
     public void testDragFail() throws Throwable{
         Utils.launch(SwingNodeDragDropApp.class, new String[] {});
         sceneSource = Root.ROOT.lookup().wrap();
-        Wrap source = sceneSource.as(Parent.class, Node.class).lookup(SwingNode.class).wrap();        
+        Wrap source = sceneSource.as(Parent.class, Node.class).lookup(SwingNode.class).wrap();
         dnd(source, new Point(100, 100), source, new Point(200, 200));
         if (SwingNodeDragDropApp.dragDropException != null) {
             throw SwingNodeDragDropApp.dragDropException;

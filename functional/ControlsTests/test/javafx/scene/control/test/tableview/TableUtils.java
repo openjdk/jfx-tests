@@ -92,7 +92,7 @@ public class TableUtils {
             return "Index : " + columnIndex + "; sortType : " + sortType + "; sortable : " + sortable + ".";
         }
     }
-    
+
     /*
      * Returns sort policy which keeps table reversed.
      */
@@ -100,33 +100,33 @@ public class TableUtils {
         return new Callback<TableView<T>, Boolean>() {
 
             public Boolean call(TableView<T> table ){
-                
+
                 sort(table.getItems(), Collections.reverseOrder());
-                
+
                 return Boolean.TRUE;
             }
         };
     }
-    
+
     /*
      * Returns sort policy which keeps tree table reversed.
      */
     static <T extends Comparable> Callback<TreeTableView<T>, Boolean> getAlwaysReverseTreeTableSortPolicy() {
         return new Callback<TreeTableView<T>, Boolean>() {
             public Boolean call(TreeTableView<T> treeTable) {
-                
+
                 Comparator<? super TreeItem<T>> treeItemComparator = new Comparator<TreeItem<T>>() {
                     public int compare(TreeItem<T> t, TreeItem<T> t1) {
                         return t.getValue().compareTo(t1.getValue());
                     }
                 };
                 sort(treeTable.getRoot().getChildren(), Collections.reverseOrder(treeItemComparator));
-                
+
                 return Boolean.TRUE;
             }
         };
     }
-    
+
     static void sortTestData(String[][] testData, final List<ColumnState> sortOrder) {
 
         Arrays.sort(testData, new Comparator<String[]>() {

@@ -52,5 +52,5 @@ public class SubScenePerspectiveCameraFixedEyeAsChildTest extends PerspectiveCam
     protected PerspectiveCameraFixedEyeAsChildTestingFace getPerspectiveCameraFixedEyeAsChildTestingFace() {
         return app;
     }
-    
+
 }

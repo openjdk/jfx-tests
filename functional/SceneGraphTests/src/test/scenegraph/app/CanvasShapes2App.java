@@ -57,13 +57,13 @@ public class CanvasShapes2App extends BasicButtonChooserApp {
     private static Effects[] effects = {Effects.FILL, Effects.LINEAR_GRAD,
         Effects.STROKE, Effects.STROKE_GRAD, Effects.TRANSPARENT, Effects.RADIAL_GRADIENT};
 
-    public static void main(String args[]) {        
+    public static void main(String args[]) {
         Utils.launch(CanvasShapes2App.class, args);
     }
 
     /**
      * For each tested shape the ShapeFactory instance should be added
-     * @see ShapesApp#setup() 
+     * @see ShapesApp#setup()
      */
     protected static abstract class ShapeFactory {
 
@@ -87,7 +87,7 @@ public class CanvasShapes2App extends BasicButtonChooserApp {
      */
     private void register(final ShapeFactory content, final int slotsize) {
         final PageWithSlots page = new PageWithSlots(content.name, height, width);
-        page.setSlotSize(slotsize, slotsize);       
+        page.setSlotSize(slotsize, slotsize);
         for (final Effects effect : effects) {
 
             Pane slot = new Pane();

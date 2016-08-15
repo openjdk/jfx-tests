@@ -37,9 +37,9 @@ import org.junit.Test;
  * @author Irina Grineva
  */
 public class EntriesListTest extends HistoryTestClass {
-    
+
     private ObservableList<Entry> entries;
-    
+
     private final Tester entriesReady = new Tester() {
         public boolean isPassed() {
             return entries != null;
@@ -56,9 +56,9 @@ public class EntriesListTest extends HistoryTestClass {
         Assert.assertNotNull(entries);
         Assert.assertTrue("Entries list is not empty before navigating", entries.isEmpty());
     }
-    
+
     private Integer newSize;
-    
+
     /**
      * Test for getting entries list for empty history after resizing it.
      */
@@ -79,7 +79,7 @@ public class EntriesListTest extends HistoryTestClass {
         });
         Assert.assertEquals(1, newSize.intValue());
     }
-    
+
     /**
      * Test for getting entries list for empty history after resizing it to 0.
      */
@@ -96,7 +96,7 @@ public class EntriesListTest extends HistoryTestClass {
         Assert.assertNotNull(entries);
         Assert.assertEquals(0, entries.size());
     }
-    
+
     /**
      * Test for getting entries list for zero sized history.
      * http://javafx-jira.kenai.com/browse/RT-21791
@@ -115,7 +115,7 @@ public class EntriesListTest extends HistoryTestClass {
         Assert.assertNotNull(entries);
         Assert.assertEquals(0, entries.size());
     }
-    
+
     /**
      * Test for getting entries list.
      */
@@ -127,7 +127,7 @@ public class EntriesListTest extends HistoryTestClass {
         Assert.assertNotNull(entries);
         Assert.assertEquals(3, entries.size());
     }
-    
+
     /**
      * Test for getting entries list after calling WebHistory.go() with negative argument.
      */
@@ -143,7 +143,7 @@ public class EntriesListTest extends HistoryTestClass {
         Assert.assertEquals(3, entries.size());
         Assert.assertEquals(prevSize, entries.size());
     }
-    
+
     /**
      * Test for getting entries list after calling WebHistory.go() with negative and positive argument.
      */
@@ -160,7 +160,7 @@ public class EntriesListTest extends HistoryTestClass {
         Assert.assertEquals(3, entries.size());
         Assert.assertEquals(prevSize, entries.size());
     }
-    
+
     /**
      * Test for getting entries list after reloading page.
      */
@@ -176,7 +176,7 @@ public class EntriesListTest extends HistoryTestClass {
         Assert.assertEquals(3, entries.size());
         Assert.assertEquals(prevSize, entries.size());
     }
-    
+
     private UnsupportedOperationException exception = null;
     /**
      * Test for trying to add entry to entries list.
@@ -198,5 +198,5 @@ public class EntriesListTest extends HistoryTestClass {
             }
         });
     }
-    
+
 }

@@ -69,7 +69,7 @@ public class ListItemParent<ITEM> extends ItemParent<ITEM, Integer>
         }
         return super.select(criteria);
     }
-    
+
 
     public static class ByIndex<ITEM> implements AuxLookupCriteria<ITEM, Integer> {
         int index;

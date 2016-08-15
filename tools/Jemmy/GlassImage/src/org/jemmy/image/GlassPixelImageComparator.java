@@ -44,7 +44,7 @@ public class GlassPixelImageComparator extends PixelImageComparator {
     public GlassPixelImageComparator(Environment env) {
         super(env);
     }
-    
+
     @Override
     protected Image toImage(Raster raster) {
         return (GlassImage)raster;
@@ -65,5 +65,5 @@ public class GlassPixelImageComparator extends PixelImageComparator {
                 ));
     }
 
-    
+
 }

@@ -33,10 +33,10 @@ import org.jemmy.lookup.LookupCriteria;
  */
 public interface TreeSelector<T> {
     /**
-     * Been called with a chain of criteria, selects nodes adhering to a criterion - 
+     * Been called with a chain of criteria, selects nodes adhering to a criterion -
      * one level per a criterion.
      * @param criteria
-     * @return 
+     * @return
      */
     public Wrap<? extends T> select(LookupCriteria<T>... criteria);
 }

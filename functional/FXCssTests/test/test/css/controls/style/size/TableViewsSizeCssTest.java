@@ -44,5 +44,5 @@ public class TableViewsSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.TableViews.name();
     }
-    
+
 }

@@ -116,7 +116,7 @@ public class DragDropWithControls extends InteroperabilityApp {
     final static List<File> CONTENT_FILES = new LinkedList<File>();
     private Scene leftScene;
     private Scene rightScene;
-    
+
     static {
         CONTENT_FILES.add(new File("./content/index.html"));
         System.setProperty("prism.lcdtext", "false");
@@ -149,7 +149,7 @@ public class DragDropWithControls extends InteroperabilityApp {
 
         Parameters params = getParameters();
         parameters = params == null ? Collections.<String>emptyList() : params.getRaw();
-        
+
         if (parameters.size() > 1 && parameters.get(1).equals(PARAMETER_ONLY_SOURCE_STAGE)) {
             leftScene = prepareSourceStage(stage);
             return leftScene;
@@ -163,7 +163,7 @@ public class DragDropWithControls extends InteroperabilityApp {
             return leftScene;
         }
     }
-    
+
     @Override
     protected String getFirstStageName() {
         return TITLE_SOURCE_STAGE;
@@ -260,7 +260,7 @@ public class DragDropWithControls extends InteroperabilityApp {
     private Scene prepareTargetStage(Stage stageTarget) {
         final Scene localScene = new Scene(createRightPane(), isEmbedded() ? 420 : 630, 700);
         localScene.getRoot().setId(TITLE_TARGET_STAGE);
-        
+
         if (stageTarget != null) {
             stageTarget.setTitle(TITLE_TARGET_STAGE);
             stageTarget.setScene(localScene);
@@ -273,7 +273,7 @@ public class DragDropWithControls extends InteroperabilityApp {
     private Scene prepareSourceStage(final Stage stageSource) {
         final Scene localScene = new Scene(createLeftPane(), isEmbedded() ? 420 : 580, 700);
         localScene.getRoot().setId(TITLE_SOURCE_STAGE);
-        
+
         if (stageSource != null) {
             stageSource.setTitle(TITLE_SOURCE_STAGE);
             stageSource.setScene(localScene);

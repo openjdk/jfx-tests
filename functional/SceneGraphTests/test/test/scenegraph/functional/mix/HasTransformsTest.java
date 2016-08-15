@@ -45,31 +45,31 @@ import test.scenegraph.app.HasTransformsApp;
  */
 public class HasTransformsTest extends TestBase
 {
-    
+
     @BeforeClass
     public static void RunUI()
     {
         HasTransformsApp.main(null);
     }
-    
+
     @Before
     @Override
     public void before()
     {
         super.before();
-        
+
         translate = Lookups.byID(getScene(), "translate", CheckBox.class).as(CheckBoxWrap.class);
         rotate = Lookups.byID(getScene(), "rotate", CheckBox.class).as(CheckBoxWrap.class);
         scale = Lookups.byID(getScene(), "scale", CheckBox.class).as(CheckBoxWrap.class);
         shear = Lookups.byID(getScene(), "shear", CheckBox.class).as(CheckBoxWrap.class);
-        
+
         check = Lookups.byID(getScene(), "check_tranforms", Button.class);
-        
+
         indicator = Lookups.byID(getScene(), "has_transforms", Label.class).as(TextControlWrap.class);
-        
+
         nodesCombo = Lookups.byID(getScene(), "nodes_combo", ComboBox.class).as(ComboBoxWrap.class);
     }
-    
+
     @Test
     public void noTranfomsTest() // Passing only if run at first
     {
@@ -77,9 +77,9 @@ public class HasTransformsTest extends TestBase
         rotate.selector().select(CheckBoxWrap.State.UNCHECKED);
         scale.selector().select(CheckBoxWrap.State.UNCHECKED);
         shear.selector().select(CheckBoxWrap.State.UNCHECKED);
-        
+
         check.mouse().click();
-        
+
         indicator.waitState(new State<String>() {
 
             public String reached() {
@@ -87,7 +87,7 @@ public class HasTransformsTest extends TestBase
             }
         }, "false");
     }
-    
+
     @Test
     public void translateTransformTest()
     {
@@ -95,9 +95,9 @@ public class HasTransformsTest extends TestBase
         rotate.selector().select(CheckBoxWrap.State.UNCHECKED);
         scale.selector().select(CheckBoxWrap.State.UNCHECKED);
         shear.selector().select(CheckBoxWrap.State.UNCHECKED);
-        
+
         check.mouse().click();
-        
+
         indicator.waitState(new State<String>() {
 
             public String reached() {
@@ -105,7 +105,7 @@ public class HasTransformsTest extends TestBase
             }
         }, "true");
     }
-    
+
     @Test
     public void rotateTransformTest()
     {
@@ -113,9 +113,9 @@ public class HasTransformsTest extends TestBase
         rotate.selector().select(CheckBoxWrap.State.CHECKED);
         scale.selector().select(CheckBoxWrap.State.UNCHECKED);
         shear.selector().select(CheckBoxWrap.State.UNCHECKED);
-        
+
         check.mouse().click();
-        
+
         indicator.waitState(new State<String>() {
 
             public String reached() {
@@ -123,7 +123,7 @@ public class HasTransformsTest extends TestBase
             }
         }, "true");
     }
-    
+
     @Test
     public void scaleTransformTest()
     {
@@ -131,9 +131,9 @@ public class HasTransformsTest extends TestBase
         rotate.selector().select(CheckBoxWrap.State.UNCHECKED);
         scale.selector().select(CheckBoxWrap.State.CHECKED);
         shear.selector().select(CheckBoxWrap.State.UNCHECKED);
-        
+
         check.mouse().click();
-        
+
         indicator.waitState(new State<String>() {
 
             public String reached() {
@@ -141,7 +141,7 @@ public class HasTransformsTest extends TestBase
             }
         }, "true");
     }
-    
+
     @Test
     public void shearTransformTest()
     {
@@ -149,9 +149,9 @@ public class HasTransformsTest extends TestBase
         rotate.selector().select(CheckBoxWrap.State.UNCHECKED);
         scale.selector().select(CheckBoxWrap.State.UNCHECKED);
         shear.selector().select(CheckBoxWrap.State.CHECKED);
-        
+
         check.mouse().click();
-        
+
         indicator.waitState(new State<String>() {
 
             public String reached() {
@@ -159,7 +159,7 @@ public class HasTransformsTest extends TestBase
             }
         }, "true");
     }
-    
+
     @Test
     public void multipleTranformsTest()
     {
@@ -167,9 +167,9 @@ public class HasTransformsTest extends TestBase
         rotate.selector().select(CheckBoxWrap.State.CHECKED);
         scale.selector().select(CheckBoxWrap.State.CHECKED);
         shear.selector().select(CheckBoxWrap.State.CHECKED);
-        
+
         check.mouse().click();
-        
+
         indicator.waitState(new State<String>() {
 
             public String reached() {
@@ -177,7 +177,7 @@ public class HasTransformsTest extends TestBase
             }
         }, "true");
     }
-    
+
     @Test
     public void cleanupTransformsTest()
     {
@@ -185,11 +185,11 @@ public class HasTransformsTest extends TestBase
         rotate.selector().select(CheckBoxWrap.State.UNCHECKED);
         scale.selector().select(CheckBoxWrap.State.UNCHECKED);
         shear.selector().select(CheckBoxWrap.State.CHECKED);
-        
+
         shear.selector().select(CheckBoxWrap.State.UNCHECKED);
-        
+
         check.mouse().click();
-        
+
         indicator.waitState(new State<String>() {
 
             public String reached() {
@@ -197,10 +197,10 @@ public class HasTransformsTest extends TestBase
             }
         }, "false");
     }
-    
+
     CheckBoxWrap<CheckBox> translate, rotate, scale, shear;
     Wrap<? extends Button> check;
     TextControlWrap<Label> indicator;
     ComboBoxWrap<ComboBox> nodesCombo;
-    
+
 }

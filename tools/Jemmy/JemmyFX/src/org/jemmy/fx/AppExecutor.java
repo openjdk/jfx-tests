@@ -39,10 +39,10 @@ public class AppExecutor {
     private Class mainClass;
 
     /**
-     * @deprecated This represents deprecated Java FX app execution model. 
+     * @deprecated This represents deprecated Java FX app execution model.
      * Use static void execute(Class<? extends Application> program, String... parameters)
      * @param mainClassName Name of the application main class
-     * @throws ClassNotFoundException  
+     * @throws ClassNotFoundException
      */
     public AppExecutor(String mainClassName) throws ClassNotFoundException {
         this(Class.forName(mainClassName));
@@ -100,7 +100,7 @@ public class AppExecutor {
     }
 
     /**
-     * 
+     *
      * Runs an FX application.
      * @param program Application class.
      * @param parameters Application parameters
@@ -110,7 +110,7 @@ public class AppExecutor {
     }
 
     /**
-     * 
+     *
      * Runs an FX application in a separate thread.
      * @param program Application class.
      * @param parameters Application parameters
@@ -137,10 +137,10 @@ public class AppExecutor {
             AppExecutor.execute(app, argv);
             return;
         }
-        // throw new ClassNotFoundException("Class doesn't extends " + 
+        // throw new ClassNotFoundException("Class doesn't extends " +
         //                                   Application.class.getName() + ". Old way to start FX app isn't supported");
         // then use old deprecated method to start.
-        
+
         new AppExecutor(mainClass).execute(argv);
     }
 }

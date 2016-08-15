@@ -41,7 +41,7 @@ import org.junit.Assert;
  * @author Oleg Barbashov, Alexander Kirov
  */
 public class MultipleSelectionHelper {
-    
+
     public Point focus = new Point(-1, 0);
     public Point anchor = null;
     public boolean multiple = false;
@@ -585,13 +585,13 @@ public class MultipleSelectionHelper {
             this.begin = begin;
             this.end = end;
         }
-        
+
         @Override
         public String toString() {
             return "Range : begin <" + begin + ">, end <" + end + ">.";
         }
     }
-    
+
     public static class ListViewMultipleSelectionHelper extends MultipleSelectionHelper {
 
         public ListViewMultipleSelectionHelper(int columns, int rows) {

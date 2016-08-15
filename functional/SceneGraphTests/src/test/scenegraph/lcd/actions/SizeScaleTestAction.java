@@ -59,7 +59,7 @@ public class SizeScaleTestAction implements TestAction {
         //text.setFont(new Font(text.getFont().getName(), size));
         text.setStyle((text.getStyle() != null ? text.getStyle() : "")
                 + "-fx-font-size: " + size + ";");
-        
+
         if (scaleAxis.x) {
             text.setScaleX(scale);
         }
@@ -121,6 +121,6 @@ public class SizeScaleTestAction implements TestAction {
     public String toString() {
         return "size=" + size + ", scale=" + scale + ", scaleAxis=" + scaleAxis;
     }
-    
-    
+
+
 }

@@ -262,13 +262,13 @@ public class ChoiceTest extends ControlsTestBase {
     @Test(timeout=30000)
     public void renderingAfterSortingTest() {
         final int ITEMS_COUNT = 10;
-        
+
         StringConverter<String> conv = new StringConverter<String>() {
             @Override public String toString(String s) { return s; }
 
             @Override public String fromString(String s) { return s; }
         };
-        
+
         SortValidator<String, LabeledText> validator
                 = new SortValidator<String, LabeledText>(ITEMS_COUNT, conv) {
 
@@ -299,12 +299,12 @@ public class ChoiceTest extends ControlsTestBase {
                         }
                     }
                 });
-                
+
                 Lookup result = popup.as(Parent.class, Node.class)
                                        .lookup(LabeledText.class);
-                
+
                 choice.keyboard().pushKey(KeyboardButtons.ESCAPE);
-                
+
                 return result;
             }
 
@@ -313,12 +313,12 @@ public class ChoiceTest extends ControlsTestBase {
                 return cell.getText();
             }
         };
-        
+
         boolean result = validator.check();
         String msg = validator.getFailureReason();
         assertTrue(msg, result);
     }
-    
+
     protected void checkState(boolean check) {
         isShowing.waitProperty(TextControlWrap.SELECTED_PROP_NAME, check ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);
         propVal.waitProperty(TextControlWrap.SELECTED_PROP_NAME, check ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED);

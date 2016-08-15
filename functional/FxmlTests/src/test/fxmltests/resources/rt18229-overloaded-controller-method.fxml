@@ -4,6 +4,6 @@
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
 
-<Button xmlns:fx="http://javafx.com/fxml" id="btn_overloaded_handler" 
-        fx:controller="test.fxmltests.app.OverloadedController" text="Button" 
+<Button xmlns:fx="http://javafx.com/fxml" id="btn_overloaded_handler"
+        fx:controller="test.fxmltests.app.OverloadedController" text="Button"
         onAction="#handle"/>

@@ -41,23 +41,23 @@ public class RichTextLauncher extends Application {
 
     private WebView view = null;
     private HTMLEditor htmlEditor;
-    
+
 
     private Scene createScene(String url) {
         view = new WebView();
         htmlEditor =  new HTMLEditor();
-        
+
         view.getEngine().load(url);
-        
+
         final VBox box = new VBox();
         view.setMaxHeight(300);
         view.setMinHeight(300);
         htmlEditor.setMaxHeight(300);
         htmlEditor.setMinHeight(300);
         box.getChildren().addAll(view, htmlEditor);
-        
+
         final Scene scene = new Scene(box);
-        
+
         scene.setFill(Color.GRAY);
         return scene;
     }

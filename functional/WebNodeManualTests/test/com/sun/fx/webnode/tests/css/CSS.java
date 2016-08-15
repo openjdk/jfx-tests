@@ -39,7 +39,7 @@ public class CSS {
     public static void fontSmoothing(){
         CSSLauncher.run(CSS.class.getResource("resources/fontsmoothinggray.css").toExternalForm());
     }
-    
+
     /**
      * Test for setting font scale.
      */
@@ -55,7 +55,7 @@ public class CSS {
     public static void maxWidth(){
         CSSLauncher.run(CSS.class.getResource("resources/maxwidth.css").toExternalForm());
     }
-    
+
     /**
      * Test for setting maximum height of WebView.
      */
@@ -63,7 +63,7 @@ public class CSS {
     public static void maxHeight(){
         CSSLauncher.run(CSS.class.getResource("resources/maxheight.css").toExternalForm());
     }
-    
+
     /**
      * Test for setting minimum width of WebView.
      */
@@ -71,7 +71,7 @@ public class CSS {
     public static void minWidth(){
         CSSLauncher.run(CSS.class.getResource("resources/minwidth.css").toExternalForm());
     }
-    
+
     /**
      * Test for setting minimum height of WebView.
      */
@@ -79,7 +79,7 @@ public class CSS {
     public static void minHeight(){
         CSSLauncher.run(CSS.class.getResource("resources/minheight.css").toExternalForm());
     }
-    
+
     /**
      * Test for setting preferred width of WebView.
      */
@@ -87,7 +87,7 @@ public class CSS {
     public static void prefWidth(){
         CSSLauncher.run(CSS.class.getResource("resources/prefwidth.css").toExternalForm());
     }
-    
+
     /**
      * Test for setting preferred height of WebView.
      */
@@ -95,7 +95,7 @@ public class CSS {
     public static void prefHeight(){
         CSSLauncher.run(CSS.class.getResource("resources/prefheight.css").toExternalForm());
     }
-    
+
     /**
      * Test for enabling/disabling context menu in WebView.
      */

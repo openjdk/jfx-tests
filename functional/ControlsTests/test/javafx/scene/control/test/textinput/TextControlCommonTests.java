@@ -104,7 +104,7 @@ public abstract class TextControlCommonTests extends TextControlTestBase {
             checkScreenshot(getNewControl().getClass().getSimpleName() + "PromptTextTest-[" + st.name() + ",unfocused]", testedControl);
             checkTextFieldText(Properties.prompttext, st.name());//getter
 
-            //Type some text. 
+            //Type some text.
             testedControl.mouse().click();
             setPropertyByTextField(st, Properties.text, "Text");
             //Leave control. It will be unfocused.
@@ -124,9 +124,9 @@ public abstract class TextControlCommonTests extends TextControlTestBase {
         final int paddingWidth = 14;//7 pt from both sides of the text field
         final int initialColumnsCount = 12;
         double innerTextWidth = testedControl.getScreenBounds().getWidth() - paddingWidth;
-        
+
         final double COL_WIDTH = innerTextWidth / initialColumnsCount;
-        
+
         int[] values = {5, 1, 0, 10, 20, 5};
         for (SettingType type : EnumSet.of(SettingType.BIDIRECTIONAL, SettingType.SETTER, SettingType.UNIDIRECTIONAL)) {
             for (final int value : values) {

@@ -40,13 +40,13 @@ import java.util.regex.Pattern;
  */
 public class SpecParser
 {
-    
+
     @SuppressWarnings("empty-statement")
     public static void main(String... args)
     {
         if(args.length != 1)
         {
-            System.out.println(String.format("Usage: %1$s path%2$sto%2$sintroduction_to_fxml.html", 
+            System.out.println(String.format("Usage: %1$s path%2$sto%2$sintroduction_to_fxml.html",
                     SpecParser.class.getSimpleName(), System.getProperty("file.separator")));
         }
         else
@@ -55,15 +55,15 @@ public class SpecParser
             parser.parse(args[0]);
         }
     }
-    
+
     public String readSpecContent(String pathToSpec)
     {
         String specContent = "";
-        
+
         File spec = new File(pathToSpec);
         if(spec.exists() && spec.isFile())
         {
-            try 
+            try
             {
                 FileReader reader = new FileReader(spec);
                 BufferedReader bufReader = new BufferedReader(reader);
@@ -78,8 +78,8 @@ public class SpecParser
                 {
                     reader.close();
                 }
-            } 
-            catch(FileNotFoundException ex) 
+            }
+            catch(FileNotFoundException ex)
             {
                 System.err.println("Can't find file " + pathToSpec);
             }
@@ -88,16 +88,16 @@ public class SpecParser
                 exc.printStackTrace();
             }
         }
-        
+
 //        System.out.println(specContent);
-        
+
         return specContent;
     }
-    
+
     public void parse(String pathToSpec)
     {
         String content = readSpecContent(pathToSpec);
-        
+
         Pattern assertPattern = Pattern.compile(ASSERT_REGEX);
         Matcher matcher = assertPattern.matcher(content);
         for(;matcher.find();)
@@ -105,7 +105,7 @@ public class SpecParser
             asserts.add(new SpecAssert(matcher.group(1), matcher.group(2), matcher.group(3)));
         }
         File assertsTxt = new File("asserts.txt");
-        try 
+        try
         {
             if(assertsTxt.exists())
                 assertsTxt.delete();
@@ -122,15 +122,15 @@ public class SpecParser
             {
                 writer.close();
             }
-        } 
-        catch (IOException ex) 
+        }
+        catch (IOException ex)
         {
             ex.printStackTrace();
         }
     }
-    
+
     private ArrayList<SpecAssert> asserts = new ArrayList<SpecAssert>();
-    
+
     public static final String ASSERT_REGEX = "\\<assert\\s+id=\"([^\"]+)\"\\s+group=\"([^\"]+)\"\\s*\\>(.+?)\\</assert\\>";
-    
+
 }

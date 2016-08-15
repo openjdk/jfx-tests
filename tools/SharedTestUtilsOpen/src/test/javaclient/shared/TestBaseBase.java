@@ -48,7 +48,7 @@ import test.javaclient.shared.screenshots.ScreenshotUtils;
  */
 public class TestBaseBase {
 
-    
+
     private static boolean jemmyStuffConfigured = false;
     protected AbstractTestableApplication application;
     private Wrap<? extends Scene> scene = null;
@@ -108,16 +108,16 @@ public class TestBaseBase {
         });
     }
     protected void restoreSceneRoot() {
-	Utils.deferAction(new Runnable() {
-	    public void run() {
+    Utils.deferAction(new Runnable() {
+        public void run() {
                 ((BasicButtonChooserApp) application).restoreSceneRoot();
             }
-	});
+    });
     }
     protected void verifyGetters() {
         Assert.assertEquals("", application.getFailures());
     }
-    
+
     protected void verifyFailures() {
         String failures = application.getFailures();
         Assert.assertEquals("", failures);

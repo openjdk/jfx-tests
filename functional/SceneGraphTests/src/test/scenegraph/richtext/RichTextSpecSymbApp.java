@@ -59,7 +59,7 @@ public class RichTextSpecSymbApp extends InteroperabilityApp {
      public static RichTextSpecSymbApp getApplication() {
         return application;
     }
-    
+
 
     private Parent buildRoot() {
         HBox root = new HBox();

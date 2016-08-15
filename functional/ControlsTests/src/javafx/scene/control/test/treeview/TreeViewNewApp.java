@@ -213,7 +213,7 @@ public class TreeViewNewApp extends InteroperabilityApp implements TreeViewConst
         }
 
         /*
-         * In this function TabPane with control will be refreshed, and all 
+         * In this function TabPane with control will be refreshed, and all
          * properties table will be refreshed and cleared.
          */
         private void refreshProcedure(int exceptFirstPropertiesTable) {

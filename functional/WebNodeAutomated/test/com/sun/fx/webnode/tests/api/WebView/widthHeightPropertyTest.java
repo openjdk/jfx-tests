@@ -38,7 +38,7 @@ import org.junit.Test;
  * @author Irina Latysheva
  */
 public class widthHeightPropertyTest extends GenericTestClass {
-    
+
     private ReadOnlyDoubleProperty p;
 
     @BeforeClass

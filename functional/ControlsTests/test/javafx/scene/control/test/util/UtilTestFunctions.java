@@ -374,7 +374,7 @@ public class UtilTestFunctions extends ControlsTestBase {
                 break;
         }
 
-        //Wait, until content of according Tab (root item of tab is scrollPane, 
+        //Wait, until content of according Tab (root item of tab is scrollPane,
         //with preset Id), will be findable on the scene.
         new Waiter(new Timeout("", TestUtil.isEmbedded() ? 20000 : 2000)).ensureState(new State() {
             public Object reached() {
@@ -792,11 +792,11 @@ public class UtilTestFunctions extends ControlsTestBase {
         //For 8.0 before b64 and RT-9383
         //final ScrollEvent scrollEvent = new ScrollEvent.impl_scrollEvent(ScrollEvent.SCROLL, _scrollX, _scrollY, _scrollX, _scrollY, _scrollTextXUnits, _scrollTextX, _scrollTextYUnits, _scrollTextY, 0, _x, _y, _screenX, _screenY, false, false, false, false, false, false);
 
-        //new ScrollEvent(EventType<ScrollEvent> eventType, 
-        //double x, double y, double screenX, double screenY, 
-        //boolean shiftDown, boolean controlDown, boolean altDown, boolean metaDown, 
-        //boolean direct, boolean inertia, double deltaX, double deltaY, double gestureDeltaX, double gestureDeltaY, 
-        //ScrollEvent.HorizontalTextScrollUnits textDeltaXUnits, double textDeltaX, 
+        //new ScrollEvent(EventType<ScrollEvent> eventType,
+        //double x, double y, double screenX, double screenY,
+        //boolean shiftDown, boolean controlDown, boolean altDown, boolean metaDown,
+        //boolean direct, boolean inertia, double deltaX, double deltaY, double gestureDeltaX, double gestureDeltaY,
+        //ScrollEvent.HorizontalTextScrollUnits textDeltaXUnits, double textDeltaX,
         //ScrollEvent.VerticalTextScrollUnits textDeltaYUnits, double textDeltaY, int touchCount)
         final ScrollEvent scrollEvent = new ScrollEvent(ScrollEvent.SCROLL,
                 _x, _y, _screenX, _screenY,
@@ -990,7 +990,7 @@ public class UtilTestFunctions extends ControlsTestBase {
         ((CommonPropertiesScene) scene.getControl()).setNonTestedContentVisibility(nonTestedControlsVisibility);
         ((CommonPropertiesScene) scene.getControl()).setTestedControlContainerSize(width, height);
     }
-    
+
     protected Wrap<? extends Node> getParentWrap(Wrap<? extends Node> node) {
         final Node control = node.getControl();
         return new NodeWrap(node.getEnvironment(), new GetAction<Node>(){

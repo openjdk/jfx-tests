@@ -61,14 +61,14 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
             @Override
             public void run(Object... os) throws Exception {
                 WebView control = new WebView();
-                
+
                 setResult(control);
             }
         }.dispatch(Root.ROOT.getEnvironment());
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxblendmode () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -77,9 +77,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-blend-mode");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxcontextmenuenabled () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -88,9 +88,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-context-menu-enabled");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxcursor () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -99,9 +99,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-cursor");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxeffect () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -110,9 +110,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-effect");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxfontscale () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -121,9 +121,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-font-scale");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxfontsmoothingtype () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -132,9 +132,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-font-smoothing-type");
         Assert.assertEquals(data.getInitialValue(getControl()), javafx.scene.text.FontSmoothingType.LCD);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxmaxheight () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -143,9 +143,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-max-height");
         Assert.assertEquals(data.getInitialValue(getControl()), Double.MAX_VALUE);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxmaxwidth () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -154,9 +154,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-max-width");
         Assert.assertEquals(data.getInitialValue(getControl()), Double.MAX_VALUE);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxminheight () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -165,9 +165,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-min-height");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxminwidth () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -176,9 +176,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-min-width");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxopacity () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -187,9 +187,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-opacity");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxprefheight () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -198,9 +198,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-pref-height");
         Assert.assertEquals(data.getInitialValue(getControl()), 600.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxprefwidth () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -209,9 +209,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-pref-width");
         Assert.assertEquals(data.getInitialValue(getControl()), 800.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxrotate () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -220,9 +220,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-rotate");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxscalex () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -231,9 +231,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-x");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxscaley () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -242,9 +242,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-y");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxscalez () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -253,9 +253,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-scale-z");
         Assert.assertEquals(data.getInitialValue(getControl()), 1.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxtranslatex () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -264,9 +264,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-x");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxtranslatey () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -275,9 +275,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-y");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testfxtranslatez () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -286,9 +286,9 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("-fx-translate-z");
         Assert.assertEquals(data.getInitialValue(getControl()), 0.0);
     }
-    
+
     @Test
-	@Keywords(keywords="webkit")
+    @Keywords(keywords="webkit")
     public void testvisibility () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);
@@ -297,6 +297,6 @@ public class StylesWebViewTest extends BaseStyleNodeTest {
         CssMetaData data = styles.get("visibility");
         Assert.assertEquals(data.getInitialValue(getControl()), true);
     }
-    
+
 
 }

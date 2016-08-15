@@ -38,7 +38,7 @@ public class PNGLoader extends org.jemmy.image.pixel.PNGLoader {
     /**
      * Constructs a PNGDecoder object.
      * @param in input stream to read PNG image from.
-     */    
+     */
     public PNGLoader(InputStream in) {
         super(in);
     }

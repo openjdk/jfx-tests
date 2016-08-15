@@ -38,15 +38,15 @@ import test.scenegraph.app.ControlEventsApp.EventTypes;
  *
  * @author Aleksandr Sakharuk
  */
-public class ChoiceBoxEventsTest extends EventTestHidingPopup<ChoiceBoxDock> 
+public class ChoiceBoxEventsTest extends EventTestHidingPopup<ChoiceBoxDock>
 {
-    
+
     @BeforeClass
     public static void rinUI()
     {
         ControlEventsApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -54,14 +54,14 @@ public class ChoiceBoxEventsTest extends EventTestHidingPopup<ChoiceBoxDock>
         super.before();
         setControl(Controls.CHOICE_BOX);
     }
-    
+
     @Override
     protected ChoiceBoxDock findPrimeDock()
     {
-        return new ChoiceBoxDock(getActiveTabDock().asParent(), 
+        return new ChoiceBoxDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
-    
+
     @Override
     @Test(timeout = 60000)
     public void onAction()

@@ -73,5 +73,5 @@ public class SceneOnOtherThreadTest extends TestBase {
             return Color.RED.equals(c);
         });
     }
-    
+
 }

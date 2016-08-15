@@ -367,7 +367,7 @@ public class CanvasEffects2App extends BasicButtonChooserApp {
 
         }
     }
- 
+
     private class slotWithTextNode extends TestNode {
         final Effect e;
         Group group;

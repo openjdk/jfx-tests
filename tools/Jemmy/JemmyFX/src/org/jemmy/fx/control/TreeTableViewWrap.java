@@ -466,7 +466,7 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
             }
         }.dispatch(getEnvironment());
     }
-    
+
     /**
      * @return List<Integer>, containing list of selected indices.
      */
@@ -510,9 +510,9 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
             scroll = new TableTreeScroll(this);
         }
         scroll.checkScrolls();
-        TableUtils.<TreeTableCell>scrollTo(getEnvironment(), this, 
-                scroll.hScroll, scroll.vScroll, 
-                row, column, 
+        TableUtils.<TreeTableCell>scrollTo(getEnvironment(), this,
+                scroll.hScroll, scroll.vScroll,
+                row, column,
                 new TableUtils.TreeTableViewIndexInfoProvider(this), TreeTableCell.class);
     }
 

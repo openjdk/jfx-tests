@@ -73,5 +73,5 @@ public class ScrollBarsCssTest extends TestBase {
         incrementArrow.mouse().click();
         Assert.assertEquals(100.0d, scrollWrap.getControl().getValue(), 0);
     }
-    
+
 }

@@ -66,7 +66,7 @@ import org.junit.Test;
 public class TreeTableMultipleSelectionTest extends TableViewMultipleCellSelectionTest {
 
     final Timeout timeout = new Timeout("", 1000L);
-    
+
     static {
         isTableTests = false;
     }
@@ -432,7 +432,7 @@ public class TreeTableMultipleSelectionTest extends TableViewMultipleCellSelecti
         return treeTable.wrap().as(Parent.class, TreeTableCell.class)
                 .lookup(TreeTableCell.class,
                 new LookupCriteria<TreeTableCell>() {
-            public boolean check(TreeTableCell control) {                
+            public boolean check(TreeTableCell control) {
                 return control.getTreeTableRow().getTreeItem()
                         == treeItem.getItem();
             }

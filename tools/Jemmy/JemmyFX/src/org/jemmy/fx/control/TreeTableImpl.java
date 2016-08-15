@@ -33,7 +33,7 @@ import org.jemmy.lookup.LookupCriteria;
 
 /**
  * Implementation of Tree interface for TreeTableView.
- * 
+ *
  * @author Alexander Kirov
  */
 class TreeTableImpl<T> implements Tree<T> {

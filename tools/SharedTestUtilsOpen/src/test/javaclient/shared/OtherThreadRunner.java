@@ -45,7 +45,7 @@ public abstract class OtherThreadRunner extends FilteredTestRunner {
         if (!isMainThread()) {
             throw new IllegalStateException("Call this method only on main thread. Current thread is <" + Thread.currentThread().getName() + ">.");
         }
-        
+
         mainThread = Thread.currentThread();
 
         while (true) {
@@ -70,7 +70,7 @@ public abstract class OtherThreadRunner extends FilteredTestRunner {
             Logger.getLogger(OtherThreadRunner.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private static boolean isMainThread() {
         return Thread.currentThread().getName().equals("main");
     }

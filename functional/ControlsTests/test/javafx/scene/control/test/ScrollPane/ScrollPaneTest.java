@@ -260,7 +260,7 @@ public class ScrollPaneTest extends TestBase {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.minViewportWidth, 600);
         checkTextFieldValue(Properties.width, 600, 20);
     }
-    
+
     @Smoke
     @Test(timeout = 300000)//Property affecting is verified in other test.
     @Covers(value = {"javafx.scene.control.ScrollPane.pannable.GET", "javafx.scene.control.ScrollPane.pannable.DEFAULT"}, level = Level.FULL)
@@ -695,11 +695,11 @@ public class ScrollPaneTest extends TestBase {
         //assert that the maximum difference in coordinates is less or equal 1 pixel
         final Point expected = new Point(deltaX, deltaY);
         final Point actual = new Point(after.x - before.x, after.y - before.y);
-        
+
         int dx = expected.x - actual.x;
         int dy = expected.y - actual.y;
         int distance_squared = dx * dx + dy * dy;
-        
+
         Assert.assertTrue("[Expected point is too far from actual]", distance_squared <= 2);
     }
 

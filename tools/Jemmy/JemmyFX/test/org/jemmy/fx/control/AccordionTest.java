@@ -36,7 +36,7 @@ public class AccordionTest extends SampleBase {
     final static int STRESS_COUNT = 20;
 
     static SceneDock scene;
-    
+
     @BeforeClass
     public static void launch() throws InterruptedException {
         startApp(AccordionApp.class);

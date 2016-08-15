@@ -36,17 +36,17 @@ import javafx.scene.control.Button;
 @IDProperty("customID")
 public class CustomIDButton extends Button
 {
-    
+
     public String getCustomID()
     {
         return customID.get();
     }
-    
+
     public void setCustomID(String newID)
     {
         customID.set(newID);
     }
-    
+
     private StringProperty customID = new SimpleStringProperty("not set");
-    
+
 }

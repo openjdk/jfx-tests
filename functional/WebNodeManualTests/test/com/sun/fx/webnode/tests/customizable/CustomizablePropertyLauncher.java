@@ -35,7 +35,7 @@ import javafx.scene.layout.HBox;
  * @author Irina Grineva
  */
 public class CustomizablePropertyLauncher extends CustomizableLauncher {
-    
+
     @Override
     protected HBox buttons() {
         Button disableJS = new Button("Disable JavaScript");
@@ -86,10 +86,10 @@ public class CustomizablePropertyLauncher extends CustomizableLauncher {
                 engine.userStyleSheetLocationProperty().set("ololo");
             }
         });
-        
+
         HBox buttons = new HBox();
         buttons.getChildren().addAll(disableJS, enableJS, disableContextMenu, enableContextMenu, attachStyleSheet, detachStyleSheet, attachExternalStyleSheet, attachMalformedStyleSheet);
-        
+
         return buttons;
     }
 

@@ -35,13 +35,13 @@ import test.scenegraph.app.ControlEventsApp.Controls;
  */
 public class CheckBoxEventsTest extends EventTestCommon<LabeledDock>
 {
-    
+
     @BeforeClass
     public static void rinUI()
     {
         ControlEventsApp.main(null);
     }
-    
+
     @Override
     @Before
     public void before()
@@ -49,12 +49,12 @@ public class CheckBoxEventsTest extends EventTestCommon<LabeledDock>
         super.before();
         setControl(Controls.CHECK_BOX);
     }
-    
+
     @Override
     protected LabeledDock findPrimeDock()
     {
-        return new LabeledDock(getActiveTabDock().asParent(), 
+        return new LabeledDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
-    
+
 }

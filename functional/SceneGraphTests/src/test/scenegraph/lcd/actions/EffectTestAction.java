@@ -31,7 +31,7 @@ import test.scenegraph.lcd.TestAction;
  *
  * @author Alexander Petrov
  */
-public class EffectTestAction implements TestAction{   
+public class EffectTestAction implements TestAction{
     private Effect effect;
     private boolean lcdWork;
 
@@ -52,7 +52,7 @@ public class EffectTestAction implements TestAction{
     public boolean isLCDWork() {
         return lcdWork;
     }
-    
+
     public static TestAction[] generate(Effect effect, boolean isLCDWork){
         return new TestAction[] {
             new EffectTestAction(),
@@ -65,7 +65,7 @@ public class EffectTestAction implements TestAction{
     public String toString() {
         return "effect=" + (effect != null ? effect.getClass().getSimpleName() : "no") ;
     }
-    
-    
-    
+
+
+
 }

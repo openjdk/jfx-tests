@@ -41,7 +41,7 @@ public class GlassImageCapturer implements ImageCapturer{
     public static final Timeout WAIT_FACTORY = new Timeout("wait.for.robot.init", 60000);
     private static Robot robot;
     private static Environment env = null;
-    
+
     static {
         Environment.getEnvironment().setTimeout(WAIT_FACTORY);
         try {
@@ -54,7 +54,7 @@ public class GlassImageCapturer implements ImageCapturer{
     public static void setInitEnvironment(Environment e) {
         env = e;
     }
-    
+
     @Override
     public GlassImage capture(final Wrap<?> wrap, final Rectangle rctngl) {
         final Rectangle rect = wrap.getScreenBounds();
@@ -62,7 +62,7 @@ public class GlassImageCapturer implements ImageCapturer{
 
             @Override
             public void run(Object... os) throws Exception {
-                setResult(new GlassImage(wrap.getEnvironment(), 
+                setResult(new GlassImage(wrap.getEnvironment(),
                         getRobot().
                         getScreenCapture(rect.x + rctngl.x, rect.y + rctngl.y, rctngl.width, rctngl.height)));
             }

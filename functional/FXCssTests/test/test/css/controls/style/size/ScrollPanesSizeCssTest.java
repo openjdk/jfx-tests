@@ -44,5 +44,5 @@ public class ScrollPanesSizeCssTest extends SizeStyleBaseTest {
     public String getPageName() {
         return ControlPage.ScrollPanes.name();
     }
-    
+
 }

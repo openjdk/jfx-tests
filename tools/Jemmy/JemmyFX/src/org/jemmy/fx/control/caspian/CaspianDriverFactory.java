@@ -179,7 +179,7 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
             if (!nodeWrap.isFocused()) {
                 activate();
             }
-            nodeWrap.waitState(()->nodeWrap.isFocused(), true);                
+            nodeWrap.waitState(()->nodeWrap.isFocused(), true);
         }
 
         abstract protected void activate();

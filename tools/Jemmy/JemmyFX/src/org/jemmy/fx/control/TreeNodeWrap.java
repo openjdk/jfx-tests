@@ -83,7 +83,7 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
             return null;
         }).get();
     }
-    
+
     @Override
     public Point getClickPoint() {
         return TableUtils.getClickPoint(treeViewWrap, this);
@@ -164,8 +164,8 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
     }
 
     private void scrollTo() {
-        TableUtils.scrollToInSingleDimension(treeViewWrap, TreeCell.class, 
-                cell-> treeViewWrap.getRow(cell.getTreeItem()), treeViewWrap.getRow(getControl()), 
+        TableUtils.scrollToInSingleDimension(treeViewWrap, TreeCell.class,
+                cell-> treeViewWrap.getRow(cell.getTreeItem()), treeViewWrap.getRow(getControl()),
         treeViewWrap.as(Scroll.class).caret(), true);
     }
 

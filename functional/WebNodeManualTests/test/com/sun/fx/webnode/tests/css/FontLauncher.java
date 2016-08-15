@@ -42,12 +42,12 @@ public class FontLauncher extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
-        
+
         StackPane container = new StackPane();
 
         Scene scene = new Scene(container, SIZE, SIZE);
         styleInfo = getParameters().getRaw().get(0);
-        
+
         WebView view = new WebView();
         WebEngine web = view.getEngine();
         web.load(CSSLauncher.class.getResource("resources/textSample.html").toExternalForm());
@@ -63,16 +63,16 @@ public class FontLauncher extends Application
         stage.sizeToScene();
         stage.show();
     }
-    
+
     public static void run(final String url) {
-        final String[] args = new String[] {url};        
+        final String[] args = new String[] {url};
         new Thread(new Runnable() {
             public void run() {
                 Application.launch(FontLauncher.class, args);
             }
         }, "FXSQE app launch thread").start();
     }
-    
+
     private final static int SIZE = 800;
     private String styleInfo;
 }

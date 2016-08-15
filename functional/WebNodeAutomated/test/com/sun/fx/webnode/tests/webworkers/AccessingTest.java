@@ -39,7 +39,7 @@ public class AccessingTest extends WorkerTestClass {
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for accessing Document object from a worker.
      */
@@ -54,7 +54,7 @@ public class AccessingTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("true");
     }
-    
+
     /**
      * Test for accessing Window object from a worker.
      */
@@ -69,7 +69,7 @@ public class AccessingTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("true");
     }
-    
+
     /**
      * Test for accessing Parent object from a worker.
      */
@@ -84,5 +84,5 @@ public class AccessingTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("true");
     }
-    
+
 }

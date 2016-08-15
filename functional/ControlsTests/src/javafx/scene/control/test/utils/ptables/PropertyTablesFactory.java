@@ -115,11 +115,11 @@ public class PropertyTablesFactory {
                                 if (storedObjectClass == Node.class) {
                                     provideCustomNodeObjectEnumPropertyLine((ObjectProperty) method.invoke(control), tb, control);
                                 }
-                                
+
                                 if (storedObjectClass == Chronology.class) {
                                     provideChronologyObjectEnumPropertyLine((ObjectProperty) method.invoke(control), tb, control);
                                 }
-                                
+
                                 if (!(storedObjectClass == null) && storedObjectClass.isEnum()) {
                                     tb.addObjectEnumPropertyLine((ObjectProperty) method.invoke(control), Arrays.asList(storedObjectClass.getEnumConstants()), control);
                                 }
@@ -200,7 +200,7 @@ public class PropertyTablesFactory {
                     10.0, 0.0,}).build());
         tb.addObjectEnumPropertyLine(property, possibleNodes, owningObject);
     }
-    
+
 //    public static void provideChronologyObjectEnumPropertyLine(ObjectProperty property, PropertiesTable tb, Object owningObject) {
 //        List possibleChronologies = new ArrayList();
 //        possibleChronologies.add(null);
@@ -233,7 +233,7 @@ public class PropertyTablesFactory {
         values.add(Chronology.of("ThaiBuddhist"));
         values.add(Chronology.of("Japanese"));
         values.add(Chronology.of("Hijrah-umalqura"));
-        
+
         tb.addObjectEnumPropertyLine(property, values, control);
     }
 

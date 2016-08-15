@@ -40,7 +40,7 @@ public class SpawnTest extends WorkerTestClass {
     public static void init() {
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
     }
-    
+
     /**
      * Test for spanning a new worker based on a file which is in same directory
      * as current worker.
@@ -57,7 +57,7 @@ public class SpawnTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("Success");
     }
-    
+
     /**
      * Test for spanning a new worker based on a file which is in a subdirectory
      * of current worker's directory.
@@ -74,7 +74,7 @@ public class SpawnTest extends WorkerTestClass {
         doWaitPageLoading();
         waitForResult("Success");
     }
-    
+
     /**
      * Test for spanning a new worker based on a file which is has origin
      * different from current worker.

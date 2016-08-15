@@ -67,5 +67,5 @@ public class SubSceneMeshCameraPerspectivePickingTest extends SubSceneMeshPickin
     protected int getIterations() {
         return 10;
     }
-    
+
 }

@@ -278,7 +278,7 @@ public class AnimationTransitionApp extends BasicButtonChooserApp {
             if ( (typicalDuration - tst1) > 1e-6 ) {
                 reportGetterFailure("TransitionFade.getFromValue()");
             }
-            
+
             timeline.setCycleCount(1);
             timeline.setAutoReverse(false);
 
@@ -966,7 +966,7 @@ public class AnimationTransitionApp extends BasicButtonChooserApp {
         });
         vb.getChildren().add(txtCue);
 
-        
+
         final Text txtTime = new Text("");
         timeline.currentTimeProperty().addListener(new InvalidationListener() {
 

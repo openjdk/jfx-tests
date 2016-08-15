@@ -45,7 +45,7 @@ import client.test.RunModes;
  * @author Dmitrij Pochepko
  */
 public class reloadTest extends GenericTestClass {
-    
+
     @BeforeClass
     public static void init(){
         test.javaclient.shared.Utils.launch(ToolkitInitializer.class, new String[0]);
@@ -73,7 +73,7 @@ public class reloadTest extends GenericTestClass {
         } catch (IOException ex) {
             Logger.getLogger(reloadTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             if (f == null)
                 throw new IOException ("File is not initialized correctly.");
@@ -83,7 +83,7 @@ public class reloadTest extends GenericTestClass {
         } catch (IOException ex) {
             Logger.getLogger(reloadTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Platform.runLater(new Runnable() {
             public void run() {
                 initWebEngine();
