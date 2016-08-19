@@ -200,11 +200,11 @@ public class AntBundlingManager extends BundlingManager {
                 }
                 case "secondaryLaunchers": {
                     List<Map<String, Object>> launchers = (List<Map<String, Object>>) value;
-                    for (Map<String, Object> eachLauncher : launchers) {
+                    for (Map<String, Object> properties : launchers) {
                         Element launcherEl = document
                                 .createElement("fx:secondaryLauncher");
 
-                        for (Map.Entry<String, Object> keyVal : eachLauncher
+                        for (Map.Entry<String, Object> keyVal : properties
                                 .entrySet()) {
 
                             switch (keyVal.getKey()) {
@@ -234,7 +234,7 @@ public class AntBundlingManager extends BundlingManager {
                             break;
 
                             case APPLICATION_CLASS:
-                                launcherEl.setAttribute("mainClass", (String) keyVal.getValue());
+                                launcherEl.setAttribute(location.attribute, (String) keyVal.getValue());
                             break;
 
                             default:
@@ -482,7 +482,7 @@ public class AntBundlingManager extends BundlingManager {
 
     @Override
     public String getShortName() {
-        return "ANT";
+        return "ant";
     }
 
     private static class Location {

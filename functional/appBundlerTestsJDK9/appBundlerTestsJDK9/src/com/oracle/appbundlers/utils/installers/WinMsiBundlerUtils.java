@@ -114,7 +114,7 @@ public class WinMsiBundlerUtils extends WinAbstractBundlerUtils {
     @Override
     public void uninstall(AppWrapper app, String applicationTitle)
             throws IOException {
-        Path msiPath = findByExtension(app.getBundlesDir(), "msi",
+        Path msiPath = findByExtension(app.getWorkDir(), "msi",
                 ROOT_DIRECTORY_DEPTH);
         String msiPath1 = msiPath.toString();
         try {

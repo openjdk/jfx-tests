@@ -1,4 +1,4 @@
-package com.rm.testapp;
+package testapp;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

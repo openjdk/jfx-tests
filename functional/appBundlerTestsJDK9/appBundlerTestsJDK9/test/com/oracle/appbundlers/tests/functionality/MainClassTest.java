@@ -64,7 +64,7 @@ public class MainClassTest extends TestBase {
 
     private AppWrapper getApp(ExtensionType intermediate) throws IOException {
         return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
-                COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
+                COM_GREETINGS_APP2_QUALIFIED_CLASS_NAME,
                 SourceFactory.get_com_greetings_app_unnamed_module(),
                 SourceFactory.get_com_greetings_app_unnamed_module(
                         COM_GREETINGS_APP2_QUALIFIED_CLASS_NAME,
@@ -72,9 +72,11 @@ public class MainClassTest extends TestBase {
                             private static final long serialVersionUID = 1765566031472224391L;
 
                             {
+                                put(APP_NAME_REPLACEMENT_STATEMENT,
+                                        mainClassName());
                                 put(PASS_STRING_REPLACEMENT_STATEMENT,
-                                        PASS_2);
-                                put(APP_NAME_REPLACEMENT_STATEMENT, mainClassName());
+                                        "PASS_2");
+                                put(APP_NAME_REPLACEMENT_STATEMENT, "App2");
                             }
                         }));
 

@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.ExtensionType;
@@ -26,13 +25,13 @@ public class ListServiceProvidersTest extends ModuleTestBase {
 
     public AppWrapper getApp() throws IOException {
 
-        Map<String, String> classToTemplateMap = new HashMap<String, String>();
-        classToTemplateMap.put(COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS,
-                COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS_TEMPLATE);
+        Map<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put(COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS_TEMPLATE,
+                COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS);
 
         return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                 COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS,
-                SourceFactory.get_com_shape_serviceinterface_module(classToTemplateMap,
+                SourceFactory.get_com_shape_serviceinterface_module(hashMap,
                         Collections.emptyMap(),
                         COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS),
                 SourceFactory.get_com_shape_serviceprovider_circle_module(),
@@ -54,16 +53,7 @@ public class ListServiceProvidersTest extends ModuleTestBase {
             throws IOException {
         if (intermediate != ExtensionType.NormalJar) {
             this.currentParameter.setApp(getApp());
-            this.currentParameter.setAdditionalParams(getAdditionalParams());
             this.currentParameter.setVerifiedOptions(getVerifiedOptions());
         }
-    }
-
-    private AdditionalParams getAdditionalParams() {
-        return () -> {
-            Map<String, Object> additionalParams = new HashMap<String, Object>();
-            additionalParams.put(ADD_MODS, this.currentParameter.getApp().getAllModuleNamesSeparatedByComma());
-            return additionalParams;
-        };
     }
 }

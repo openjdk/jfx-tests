@@ -46,7 +46,6 @@ import javafx.util.Pair;
  *
  * SERVICE_INTERFACE is module which exposes API for service provider.
  * CIRCLE and RECTANGLE are modules which provides service for SERVICE_INTERFACE
- * Each row is a module path directory where each column says what is containing in directory.
  *
  * ==============================================================
  * ModularJar            | Jmods             | ExplodedMods
@@ -79,13 +78,13 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
     private List<Path> modulePathList = new ArrayList<Path>();
 
     public AppWrapper getApp() throws IOException {
-        Map<String, String> classNameToTemplate = new HashMap<String, String>();
-        classNameToTemplate.put(COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS,
-                COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS_TEMPLATE);
+        Map<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put(COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS_TEMPLATE,
+                COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS);
 
         return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                 COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS,
-                SourceFactory.get_com_shape_serviceinterface_module(classNameToTemplate,
+                SourceFactory.get_com_shape_serviceinterface_module(hashMap,
                         Collections.emptyMap(),
                         COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS),
                 SourceFactory.get_com_shape_serviceprovider_circle_module(),
@@ -232,9 +231,9 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
     }
 
     private void uninstallApp(Path modulepath) throws Exception {
-        if (this.bundlingManager != null) {
-            String appName = this.bundlingManager.getAppName(getAllParams(modulepath));
-            this.bundlingManager.uninstall(this.intermediateToParametersMap
+        if (bundlingManager != null) {
+            String appName = bundlingManager.getAppName(getAllParams(modulepath));
+            bundlingManager.uninstall(this.intermediateToParametersMap
                     .get(ExtensionType.NormalJar).getApp(), appName);
         }
     }

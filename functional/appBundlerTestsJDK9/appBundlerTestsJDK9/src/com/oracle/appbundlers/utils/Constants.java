@@ -48,7 +48,7 @@ public interface Constants {
     String MAC_CF_BUNDLE_NAME = "mac.CFBundleName";
     String SIGNING_KEY_USER = "mac.signing-key-user-name";
     String LinuxDebBundler_BUNDLE_NAME = "linux.bundleName";
-    String MAINTAINER = "linux.deb.maintainer";
+    String MAINTAINER = "";
     String LinuxRpmBundler_BUNDLE_NAME = "linux.bundleName";
     String MSI_SYSTEM_WIDE = "systemWide";
     String APP_CDS_CLASS_ROOTS = "commercial.AppCDS.classRoots";
@@ -99,10 +99,10 @@ public interface Constants {
     String COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS_TEMPLATE = "com.shape.serviceinterface.ShapeMainClass.template";
     String RECTANGLE_OUTPUT = "This is Rectangle";
     String ALL_MODULE_PATH = "ALL-MODULE-PATH";
+    String MINIMUM_MODULES = "MINIMUM_MODULES";
     String FXAPP_JAVA_TEMPLATE = "FXApp.java.template";
     String COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME = "com.greetings.App1";
     String COM_GREETINGS_APP2_QUALIFIED_CLASS_NAME = "com.greetings.App2";
-    String COM_GREETINGS_APP3_QUALIFIED_CLASS_NAME = "com.greetings.App3";
     String COM_GREETINGS_JAR_NAME = "com.greetings";
     String JMODS_PATH_IN_JDK = String.join(File.separator, System.getProperty("java.home"), "jmods");
     String COM_GREETINGS_MODULE_INFO_TEMPLATE = "com.greetings.module.info.template";
@@ -114,8 +114,6 @@ public interface Constants {
     String CLASS_NAME_STATEMENT = "%CLASS_NAME%";
     String PASS_STRING_REPLACEMENT_STATEMENT = "%PASS_STRING%";
     String DEPENDENT_MODULE = "%REQUIRED_MODULE%";
-    String OPTION_PREFIX = "sqe";
-    String PREFIX = "%PREFIX%";
     String PASS_1 = "PASS_1";
     String CUSTOM_UTIL_MODULE_NAME = "custom.util";
     String CUSTOM_UTIL_MODULE_TEMPLATE_FILE_NAME = "util.module.template";
@@ -135,9 +133,7 @@ public interface Constants {
     String COPYRIGHT_VALUE = "Copyright (c) 2011, 2016 Oracle and/or its affiliates. All rights reserved.";
     String LICENSE_TYPE_VALUE = "SQE GPL v.100.500";
     String PASS_2 = "PASS_2";
-    String PASS_3 = "PASS_3";
     String APP2_NAME = "App2";
-    String APP3_NAME = "App3";
     String packageName = "testapp";
     /*
      * MODULE RELATED PARAMETERS in AppWrapper
@@ -153,6 +149,4 @@ public interface Constants {
     String APP2_FULLNAME = packageName + "." + APP2_NAME;
     String DOUBLE_HYPHEN ="--";
     String RUNTIME = "runtime";
-    String MODULE_INFO_DOT_JAVA = "module-info.java";
-    
 }

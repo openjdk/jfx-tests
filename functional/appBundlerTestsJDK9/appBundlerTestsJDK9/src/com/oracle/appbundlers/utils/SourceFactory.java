@@ -28,55 +28,13 @@ public class SourceFactory implements Constants {
         return get_com_greetings_module(Collections.emptyMap(),
                 Collections.emptyMap(), null);
     }
-    
-    /*
-     * com.greetings module 
-     */
-    
-    public static Source get_com_greetings_module(
-            Map<String, String> classNameToTemplateMap,
-            String mainClassfullyQualifiedName,
-            Map<String, Map<String, String>> classNameToReplacementsInSrcMap)
-                    throws IOException {
-        String mainClassfullyQualifiedNameInternal = COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME;
-
-        if (mainClassfullyQualifiedName != null) {
-            mainClassfullyQualifiedNameInternal = mainClassfullyQualifiedName;
-        }
-
-        Map<String, Map<String, String>> classNameToReplacementsInSrcMapInternal = new HashMap<String, Map<String, String>>();
-        int count = 1;
-        for (String className : classNameToReplacementsInSrcMap.keySet()) {
-            Map<String, String> commonReplacementsForEachClass = new HashMap<String, String>();
-            commonReplacementsForEachClass.put(PRINTLN_STATEMENT,
-                    SYSTEM_OUT_PRINTLN);
-            commonReplacementsForEachClass.put(PASS_STRING_REPLACEMENT_STATEMENT,
-                    "PASS_"+count++);
-            commonReplacementsForEachClass.put(PACKAGE_NAME_STATEMENT,
-                    COM_GREETINGS_MODULE_CUM_PACKAGE_NAME);
-            commonReplacementsForEachClass.put(PREFIX, OPTION_PREFIX);
-            commonReplacementsForEachClass.put(APP_NAME_REPLACEMENT_STATEMENT, className);
-            classNameToReplacementsInSrcMapInternal.put(className, commonReplacementsForEachClass);
-        }
-        
-        Map<String, String> moduleInfoReplacements = new HashMap<>();
-        moduleInfoReplacements.put(DEPENDENT_MODULE, "");
-        moduleInfoReplacements.put(PACKAGE_NAME_STATEMENT, COM_GREETINGS_MODULE_CUM_PACKAGE_NAME);
-        classNameToReplacementsInSrcMapInternal.put(MODULE_INFO_DOT_JAVA, moduleInfoReplacements);
-        
-        return new Source(COM_GREETINGS_MODULE_CUM_PACKAGE_NAME,
-                COM_GREETINGS_MODULE_INFO_TEMPLATE,
-                classNameToTemplateMap,
-                mainClassfullyQualifiedNameInternal,
-                classNameToReplacementsInSrcMapInternal, COM_GREETINGS_JAR_NAME);
-    }
 
     /*
      * com.greetings module
      */
 
     public static Source get_com_greetings_module(
-            Map<String, String> classnameToTemplateMap,
+            Map<String, String> templateToClassnameMap,
             Map<String, String> replacementsInSourceCode, String mainClassName)
                     throws IOException {
 
@@ -86,9 +44,10 @@ public class SourceFactory implements Constants {
             mainClassInternal = mainClassName;
         }
 
-        Map<String, String> classNameToTemplateMapInternal = new HashMap<String, String>();
-        classNameToTemplateMapInternal.put(mainClassInternal,FXAPP_JAVA_TEMPLATE);
-        classNameToTemplateMapInternal.putAll(classnameToTemplateMap);
+        Map<String, String> templateToClassNameMapInternal = new HashMap<String, String>();
+        templateToClassNameMapInternal.put(FXAPP_JAVA_TEMPLATE,
+                mainClassInternal);
+        templateToClassNameMapInternal.putAll(templateToClassnameMap);
 
         Map<String, String> replacementsInSourceCodeInternal = new HashMap<String, String>();
         replacementsInSourceCodeInternal.put(PRINTLN_STATEMENT,
@@ -100,13 +59,12 @@ public class SourceFactory implements Constants {
         replacementsInSourceCodeInternal.put(PACKAGE_NAME_STATEMENT,
                 COM_GREETINGS_MODULE_CUM_PACKAGE_NAME);
         replacementsInSourceCodeInternal.put(DEPENDENT_MODULE, "");
-        replacementsInSourceCodeInternal.put(PREFIX, OPTION_PREFIX);
 
         replacementsInSourceCodeInternal.putAll(replacementsInSourceCode);
 
         return new Source(COM_GREETINGS_MODULE_CUM_PACKAGE_NAME,
                 COM_GREETINGS_MODULE_INFO_TEMPLATE,
-                classNameToTemplateMapInternal, mainClassInternal,
+                templateToClassNameMapInternal, mainClassInternal,
                 COM_GREETINGS_JAR_NAME, replacementsInSourceCodeInternal, true);
     }
 
@@ -115,9 +73,9 @@ public class SourceFactory implements Constants {
      */
 
     public static Source get_com_greetings_module(
-            Map<String, String> classNameToTemplateMap,
+            Map<String, String> templateToClassnameMap,
             Map<String, String> replacementsInSourceCode) throws IOException {
-        return get_com_greetings_module(classNameToTemplateMap,
+        return get_com_greetings_module(templateToClassnameMap,
                 replacementsInSourceCode, null);
     }
 
@@ -140,8 +98,9 @@ public class SourceFactory implements Constants {
      * custom.util module
      */
     public static Source get_custom_util_module() throws IOException {
-        Map<String, String> classNameToTemplateMap = new HashMap<String, String>();
-        classNameToTemplateMap.put(CUSTOM_UTIL_CLASS_NAME,CUSTOM_UTIL_JAVA_TEMPLATE);
+        Map<String, String> templateToClassNameMap = new HashMap<String, String>();
+        templateToClassNameMap.put(CUSTOM_UTIL_JAVA_TEMPLATE,
+                CUSTOM_UTIL_CLASS_NAME);
 
         Map<String, String> replacementsInSourceCode = new HashMap<String, String>();
         replacementsInSourceCode.put(PRINTLN_STATEMENT,
@@ -154,7 +113,7 @@ public class SourceFactory implements Constants {
                 CUSTOM_UTIL_CLASS_SIMPLE_NAME);
 
         return new Source(CUSTOM_UTIL_MODULE_NAME,
-                CUSTOM_UTIL_MODULE_TEMPLATE_FILE_NAME, classNameToTemplateMap,
+                CUSTOM_UTIL_MODULE_TEMPLATE_FILE_NAME, templateToClassNameMap,
                 CUSTOM_UTIL_CLASS_FULLY_QUALIFIED_NAME, CUSTOM_UTIL_MODULE_NAME,
                 replacementsInSourceCode);
     }
@@ -171,15 +130,15 @@ public class SourceFactory implements Constants {
         if (mainClassFullName != null) {
             mainClassFullNameInternal = mainClassFullName;
         }
-        Map<String, String> classNameToTemplateMapInternal = new HashMap<String, String>();
-        classNameToTemplateMapInternal.put(COM_SHAPE_SERVICEINTERFACE_SHAPE_CLASS_NAME,
-                COM_SHAPE_SERVICEINTERFACE_SHAPE_TEMPLATE
-                );
-        classNameToTemplateMapInternal.putAll(templateToClassNameMap);
+        Map<String, String> templateToClassNameMapInternal = new HashMap<String, String>();
+        templateToClassNameMapInternal.put(
+                COM_SHAPE_SERVICEINTERFACE_SHAPE_TEMPLATE,
+                COM_SHAPE_SERVICEINTERFACE_SHAPE_CLASS_NAME);
+        templateToClassNameMapInternal.putAll(templateToClassNameMap);
 
         return new Source(COM_SHAPE_SERVICEINTERFACE_MODULE_NAME,
                 COM_SHAPE_SERVICEINTERFACE_MODULE_INFO_TEMPLATE,
-                classNameToTemplateMapInternal, mainClassFullNameInternal,
+                templateToClassNameMapInternal, mainClassFullNameInternal,
                 COM_SHAPE_SERVICEINTERFACE_MODULE_NAME, Collections.emptyMap(),
                 true);
     }
@@ -190,14 +149,14 @@ public class SourceFactory implements Constants {
     public static Source get_com_shape_serviceinterface_module()
             throws IOException {
         String mainClassFullNameInternal = COM_SHAPE_SERVICEINTERFACE_SHAPE_CLASS_NAME;
-        Map<String, String> classNameToTemplateMapInternal = new HashMap<String, String>();
-        classNameToTemplateMapInternal.put(COM_SHAPE_SERVICEINTERFACE_SHAPE_CLASS_NAME,
-                COM_SHAPE_SERVICEINTERFACE_SHAPE_TEMPLATE
-                );
+        Map<String, String> templateToClassNameMapInternal = new HashMap<String, String>();
+        templateToClassNameMapInternal.put(
+                COM_SHAPE_SERVICEINTERFACE_SHAPE_TEMPLATE,
+                COM_SHAPE_SERVICEINTERFACE_SHAPE_CLASS_NAME);
 
         return new Source(COM_SHAPE_SERVICEINTERFACE_MODULE_NAME,
                 COM_SHAPE_SERVICEINTERFACE_MODULE_INFO_TEMPLATE,
-                classNameToTemplateMapInternal, mainClassFullNameInternal,
+                templateToClassNameMapInternal, mainClassFullNameInternal,
                 COM_SHAPE_SERVICEINTERFACE_MODULE_NAME, Collections.emptyMap(),
                 true);
     }
@@ -208,14 +167,14 @@ public class SourceFactory implements Constants {
 
     public static Source get_com_shape_serviceprovider_circle_module()
             throws IOException {
-        Map<String, String> classNameToTemplateMapInternal = new HashMap<String, String>();
-        classNameToTemplateMapInternal.put(COM_SHAPE_SERVICEPROVIDER_CIRCLE_CLASSNAME,
-                COM_SHAPE_SERVICEPROVIDER_CIRCLE_TEMPLATE
-                );
+        Map<String, String> templateToClassNameMapInternal = new HashMap<String, String>();
+        templateToClassNameMapInternal.put(
+                COM_SHAPE_SERVICEPROVIDER_CIRCLE_TEMPLATE,
+                COM_SHAPE_SERVICEPROVIDER_CIRCLE_CLASSNAME);
 
         return new Source(COM_SHAPE_SERVICEPROVIDER_CIRCLE_MODULENAME,
                 COM_SHAPE_SERVICEPROVIDER_CIRCLE_MODULE_INFO_TEMPLATE,
-                classNameToTemplateMapInternal,
+                templateToClassNameMapInternal,
                 COM_SHAPE_SERVICEPROVIDER_CIRCLE_CLASSNAME,
                 COM_SHAPE_SERVICEPROVIDER_CIRCLE_MODULENAME,
                 Collections.emptyMap());
@@ -227,14 +186,14 @@ public class SourceFactory implements Constants {
 
     public static Source get_com_shape_serviceprovider_rectangle_module()
             throws IOException {
-        Map<String, String> classNameToTemplateMapInternal = new HashMap<String, String>();
-        classNameToTemplateMapInternal.put(COM_SHAPE_SERVICEPROVIDER_RECTANGLE_CLASS_NAME,
-                COM_SHAPE_SERVICEPROVIDER_RECTANGLE_TEMPLATE
-                );
+        Map<String, String> templateToClassNameMapInternal = new HashMap<String, String>();
+        templateToClassNameMapInternal.put(
+                COM_SHAPE_SERVICEPROVIDER_RECTANGLE_TEMPLATE,
+                COM_SHAPE_SERVICEPROVIDER_RECTANGLE_CLASS_NAME);
 
         return new Source(COM_SHAPE_SERVICEPROVIDER_RECTANGLE_MODULE_NAME,
                 COM_SHAPE_SERVICEPROVIDER_RECTANGLE_MODULE_INFO_TEMPLATE,
-                classNameToTemplateMapInternal,
+                templateToClassNameMapInternal,
                 COM_SHAPE_SERVICEPROVIDER_RECTANGLE_CLASS_NAME,
                 COM_SHAPE_SERVICEPROVIDER_RECTANGLE_MODULE_NAME,
                 Collections.emptyMap());
@@ -245,14 +204,14 @@ public class SourceFactory implements Constants {
      */
 
     public static Source get_com_shape_test_module() throws IOException {
-        Map<String, String> classNameToTemplateMapInternal = new HashMap<String, String>();
-        classNameToTemplateMapInternal.put(COM_SHAPE_TEST_LIMITMODSMAINCLASS,
-                COM_SHAPE_TEST_LIMITMODSMAINCLASS_TEMPLATE
-                );
+        Map<String, String> templateToClassNameMapInternal = new HashMap<String, String>();
+        templateToClassNameMapInternal.put(
+                COM_SHAPE_TEST_LIMITMODSMAINCLASS_TEMPLATE,
+                COM_SHAPE_TEST_LIMITMODSMAINCLASS);
 
         return new Source(COM_SHAPE_TEST_MODULE_NAME,
                 COM_SHAPE_TEST_MODULE_INFO_TEMPLATE,
-                classNameToTemplateMapInternal,
+                templateToClassNameMapInternal,
                 COM_SHAPE_TEST_LIMITMODSMAINCLASS, COM_SHAPE_TEST_MODULE_NAME,
                 Collections.emptyMap());
     }
@@ -291,7 +250,6 @@ public class SourceFactory implements Constants {
                 PASS_1);
         replacementsInSourceCodeInternal.put(PACKAGE_NAME_STATEMENT,
                 COM_GREETINGS_MODULE_CUM_PACKAGE_NAME);
-        replacementsInSourceCodeInternal.put(PREFIX, OPTION_PREFIX);
         replacementsInSourceCodeInternal.putAll(replacementsInSourceCode);
 
         return new Source(fullName, FXAPP_JAVA_TEMPLATE,

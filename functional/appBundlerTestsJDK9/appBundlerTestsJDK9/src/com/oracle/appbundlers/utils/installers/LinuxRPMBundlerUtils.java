@@ -138,9 +138,7 @@ public class LinuxRPMBundlerUtils extends LinuxAbstractBundlerUtils {
 
     @Override
     public String getAppName(Map<String, Object> params) {
-        String fetchFrom = LinuxRpmBundler.BUNDLE_NAME.fetchFrom(params);
-        System.out.println("Linux RPM Bundle Name is "+fetchFrom);
-        return fetchFrom;
+        return LinuxRpmBundler.BUNDLE_NAME.fetchFrom(params);
     }
 
     @Override

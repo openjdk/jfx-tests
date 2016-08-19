@@ -18,8 +18,11 @@ import java.util.concurrent.ExecutionException;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.AppWrapper;
+import com.oracle.appbundlers.utils.BundlerUtils;
+import com.oracle.appbundlers.utils.BundlingManagers;
 import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.tools.packager.RelativeFileSet;
+import com.oracle.tools.packager.StandardBundlerParam;
 
 /**
  * @author Dmitry Ginzburg &lt;dmitry.x.ginzburg@oracle.com&gt;
@@ -54,6 +57,16 @@ public class DefaultClassPathTest extends TestBase {
     }
 
     @Override
+    protected BundlingManagers[] getBundlingManagers() {
+        return new BundlingManagers[] { BundlingManagers.CLI };
+    }
+
+    @Override
+    protected BundlerUtils[] getBundlerUtils() {
+        return new BundlerUtils[] { BundlerUtils.EXE };
+    }
+
+    @Override
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
@@ -69,7 +82,9 @@ public class DefaultClassPathTest extends TestBase {
                                     app.getJarFilesList().stream()
                                             .map(Path::toFile)
                                             .collect(toSet())));
-            basicParams.put(APPLICATION_CLASS, this.currentParameter.getApp().getMainClass());
+            String mainClass = StandardBundlerParam.MAIN_CLASS
+                    .fetchFrom(basicParams);
+            basicParams.put(APPLICATION_CLASS, mainClass);
             return basicParams;
         };
     }

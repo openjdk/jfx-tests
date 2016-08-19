@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
+import com.oracle.appbundlers.utils.BundlerUtils;
+import com.oracle.appbundlers.utils.BundlingManagers;
 import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
@@ -27,6 +29,16 @@ public class CommandLineArgumentsTest extends TestBase {
 
     public List<String> args() {
         return Arrays.asList("aba", "caba", "aba caba");
+    }
+
+    @Override
+    protected BundlerUtils[] getBundlerUtils() {
+        return new BundlerUtils[] { BundlerUtils.EXE };
+    }
+
+    @Override
+    protected BundlingManagers[] getBundlingManagers() {
+        return new BundlingManagers[] { BundlingManagers.CLI };
     }
 
     @Override

@@ -87,29 +87,21 @@ public class FileAssociationTest extends TestBase {
         };
     }
 
-    private AppWrapper getNewApp(ExtensionType extension) throws IOException {
-        Map<String, String> replacementsInSrcCodeInternal = new HashMap<>();
-        replacementsInSrcCodeInternal.put(APP_NAME_REPLACEMENT_STATEMENT,
-                RM_NAME);
+    public AppWrapper getApp() throws IOException {
         String templateName = Utils.isMacOS() ? "MacRmApp.java.template"
                 : "RmApp.java.template";
-        String mainClassfullyQualifiedName = "com.rm.testapp.RmApp";
-        switch (extension) {
-        default:
-            return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
-                    mainClassfullyQualifiedName, new Source(mainClassfullyQualifiedName, templateName, "rmApp",
-                            replacementsInSrcCodeInternal));
-        case ExplodedModules:
-        case Jmods:
-        case ModularJar:
-            Map<String, String> classNameToTemplateMap = new HashMap<String, String>();
-            classNameToTemplateMap.put(mainClassfullyQualifiedName, templateName);
-            return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
-                    mainClassfullyQualifiedName,
-                    new Source("com.rm", "com.rm.module.info.template",
-                            classNameToTemplateMap, mainClassfullyQualifiedName,
-                            "rmApp", replacementsInSrcCodeInternal, true));
-        }
+        return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY), RM_FULLNAME,
+                new Source(RM_FULLNAME, templateName, "rmApp",
+                        new HashMap<String, String>() {
+                            /**
+                             * serial version UID
+                             */
+                            private static final long serialVersionUID = -559615341303319079L;
+
+                            {
+                                put(APP_NAME_REPLACEMENT_STATEMENT, RM_NAME);
+                            }
+                        }));
     }
 
     @Override
@@ -124,8 +116,7 @@ public class FileAssociationTest extends TestBase {
     }
 
     @Override
-    protected void prepareApp(AppWrapper app, ExtensionType extension)
-            throws IOException, ExecutionException {
+    protected void prepareApp(AppWrapper app, ExtensionType extension) throws IOException, ExecutionException {
         final String makeJavacReadClassesFromRtJar = "-XDignore.symbol.file=true";
         app.preinstallApp(extension);
         app.writeSourcesToAppDirectory();
@@ -134,9 +125,10 @@ public class FileAssociationTest extends TestBase {
     }
 
     @Override
-    public void overrideParameters(ExtensionType extension) throws IOException {
+    public void overrideParameters(ExtensionType intermediate)
+            throws IOException {
         this.currentParameter.setAdditionalParams(getAdditionalParams());
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
-        this.currentParameter.setApp(getNewApp(extension));
+        this.currentParameter.setApp(getApp());
     }
 }

@@ -67,7 +67,7 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put(ADD_MODS,
-                    this.currentParameter.getApp().getAllModuleNamesSeparatedByPathSeparator());
+                    this.currentParameter.getApp().addAllModules());
             return hashMap;
         };
     }
@@ -97,7 +97,7 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
         app.preinstallApp(
                 new ExtensionType[] { extension, ExtensionType.NormalJar });
         app.writeSourcesToAppDirectory();
-        app.compileAndCreateJavaExtensionProduct(extension);
+        app.compileAndCreateExtensionEndProduct(extension);
     }
 
     @Override

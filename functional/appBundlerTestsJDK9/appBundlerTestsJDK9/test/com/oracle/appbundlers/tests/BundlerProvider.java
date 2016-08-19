@@ -5,13 +5,13 @@
 
 package com.oracle.appbundlers.tests;
 
-import java.util.ArrayList;
+
+import static java.util.stream.Collectors.toList;
+
 import java.util.Iterator;
 import java.util.List;
 
-import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.BundlingManagers;
-import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;
 
 /**
@@ -21,22 +21,17 @@ import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;
  * @author Andrei Eremeev &lt;andrei.eremeev@oracle.com&gt;
  */
 public class BundlerProvider {
-    public static Iterator<Object[]> createBundlingManagers(
-            List<AbstractBundlerUtils> systemExtFormatList,
-            List<BundlingManagers> bundlingMgrList,
-            List<ExtensionType> javaExtFormatList) {
-        List<Object[]> list = new ArrayList<Object[]>();
-        for (BundlingManagers eachBundlingMgr : bundlingMgrList) {
-            for (ExtensionType eachJavaExtension : javaExtFormatList) {
-                for (AbstractBundlerUtils eachSystemExtension : systemExtFormatList) {
-                    BundlingManager bundlingMgr = eachBundlingMgr.getFactory()
-                            .createInstance(eachSystemExtension);
-                    bundlingMgr.setExtensionType(eachJavaExtension);
-                    Object[] object = new Object[] { bundlingMgr };
-                    list.add(object);
-                }
-            }
-        }
-        return list.iterator();
+    public static Iterator<Object[]> createBundlingManagers(List<AbstractBundlerUtils> params,
+                                                             List<BundlingManagers> interfaces) {
+        return params.stream()
+                .flatMap(b -> bundlingInterfaces(b, interfaces).stream())
+                .collect(toList()).iterator();
+    }
+
+    private static List<Object[]> bundlingInterfaces(AbstractBundlerUtils b,
+                                                     List<BundlingManagers> interfaces) {
+        return interfaces.stream()
+                .map(i -> new Object[]{i.getFactory().createInstance(b)})
+                .collect(toList());
     }
 }

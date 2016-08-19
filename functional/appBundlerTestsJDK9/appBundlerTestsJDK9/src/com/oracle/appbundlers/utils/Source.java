@@ -28,15 +28,14 @@ public class Source {
     private String simpleName;
     private String fileContent;
     private String jarName;
-    private Map<String, String> replacementsInSrcCode;
+    private Map<String, String> replacementsInSourceCode;
     /*
      * JDK 9 Parameters
      */
 
     private String moduleName;
     private String moduleInfoContent;
-    private Map<String, String> classNameToTemplateMap = new HashMap<>();
-    private Map<String, Map<String, String>> classNameToReplacementsInSrcMap = new HashMap<>();
+    private Map<String, String> templateToClassNameMap = new HashMap<>();
     private boolean isModule;
     private boolean mainModule;
 
@@ -51,11 +50,24 @@ public class Source {
     }
 
     /*
+     * Jar Source
+     */
+
+    public Source(String fullName, String jar,
+            Map<String, String> templateToClassNameMap,
+            Map<String, Map<String, String>> templateToSourceCodeReplacementsMap)
+                    throws IOException {
+        init(fullName, jar);
+        this.isModule = false;
+        this.templateToClassNameMap = templateToClassNameMap;
+    }
+
+    /*
      * Module Source
      */
 
     public Source(String moduleName, String moduleInfoFileName,
-            Map<String, String> classNameToTemplateMap, String fullName,
+            Map<String, String> templateToClassNameMap, String fullName,
             String jar, Map<String, String> replacementsInSourceCode)
                     throws IOException {
         init(fullName, jar);
@@ -68,10 +80,10 @@ public class Source {
                     "Module Info File Name cannot be null");
         }
         this.isModule = true;
-        this.replacementsInSrcCode = replacementsInSourceCode;
+        this.replacementsInSourceCode = replacementsInSourceCode;
         this.moduleInfoContent = readFileAsString(moduleInfoFileName,
-                this.replacementsInSrcCode);
-        this.classNameToTemplateMap = classNameToTemplateMap;
+                this.replacementsInSourceCode);
+        this.templateToClassNameMap = templateToClassNameMap;
     }
 
     /*
@@ -79,37 +91,12 @@ public class Source {
      */
 
     public Source(String moduleName, String moduleInfoFileName,
-            Map<String, String> classNameToTemplateMap,
-            String mainClassfullyQualifiedName, String jar,
-            Map<String, String> replacementsInSrcCode, boolean mainModule)
-                    throws IOException {
-        this(moduleName, moduleInfoFileName, classNameToTemplateMap,
-                mainClassfullyQualifiedName, jar, replacementsInSrcCode);
+            Map<String, String> templateToClassNameMap, String fullName,
+            String jar, Map<String, String> replacementsInSourceCode,
+            boolean mainModule) throws IOException {
+        this(moduleName, moduleInfoFileName, templateToClassNameMap, fullName,
+                jar, replacementsInSourceCode);
         this.mainModule = mainModule;
-    }
-
-    /*
-     * Module Source
-     */
-    public Source(String moduleName, String moduleInfoFileName,
-            Map<String, String> classNameToTemplateMap,
-            String mainClassfullyQualifiedName,
-            Map<String, Map<String, String>> classNameToReplacementsInSrcMap,
-            String jar) throws IOException {
-        init(mainClassfullyQualifiedName, jar);
-        if (moduleName == null) {
-            throw new NullPointerException("Module Name cannot be null");
-        }
-        this.moduleName = moduleName;
-        if (moduleInfoFileName == null) {
-            throw new NullPointerException(
-                    "Module Info File Name cannot be null");
-        }
-        this.classNameToReplacementsInSrcMap = classNameToReplacementsInSrcMap;
-        this.classNameToTemplateMap = classNameToTemplateMap;
-        this.moduleInfoContent = readFileAsString(moduleInfoFileName,
-                this.classNameToReplacementsInSrcMap.get(Constants.MODULE_INFO_DOT_JAVA));
-        this.isModule = true;
     }
 
     private void init(String fullName, String jarName) {
@@ -174,62 +161,51 @@ public class Source {
     void generateSourceForModule(Path srcDir) throws IOException {
         Path moduleDir = srcDir.resolve(moduleName);
         Utils.createDir(moduleDir);
-        Path moduleInfoPath = moduleDir.resolve(Constants.MODULE_INFO_DOT_JAVA);
+        Path moduleInfoPath = moduleDir.resolve("module-info.java");
         write(moduleInfoPath, moduleInfoContent.getBytes());
-        Set<Entry<String, String>> entrySet = this.classNameToTemplateMap
-                .entrySet();
-        Iterator<Entry<String, String>> classNameToTemplateItr = entrySet
-                .iterator();
-        while (classNameToTemplateItr.hasNext()) {
-            Entry<String, String> next = classNameToTemplateItr.next();
-            String className = next.getKey();
-            String templateName = next.getValue();
-            if (this.replacementsInSrcCode != null) {
-                writeJavaSourceFilesToDir(moduleDir, className, templateName,
-                        this.replacementsInSrcCode);
-            } else {
-                writeJavaSourceFilesToDir(moduleDir, className, templateName,
-                        this.classNameToReplacementsInSrcMap.get(className
-                                .substring(className.lastIndexOf('.') + 1)));
-            }
-        }
+        writeJavaSourceFilesToDir(moduleDir);
     }
 
     private String readFileAsString(String templateFileName,
-            Map<String, String> replacementsInSrcCode) throws IOException {
+            Map<String, String> replacements) throws IOException {
         String content = Files
                 .lines(CONFIG_INSTANCE.getResourceFilePath(templateFileName))
                 .collect(joining(System.lineSeparator()));
-        for (Map.Entry<String, String> entry : replacementsInSrcCode
-                .entrySet()) {
+        for (Map.Entry<String, String> entry : replacements.entrySet()) {
             content = content.replace(entry.getKey(), entry.getValue());
         }
         return content;
     }
 
-    private void writeJavaSourceFilesToDir(Path moduleDir,
-            String fullyQualifiedJavaClassName, String templatename,
-            Map<String, String> replacementsInSrcCode) throws IOException {
-        int lastIndex = fullyQualifiedJavaClassName.lastIndexOf('.');
-        String appNameDir = fullyQualifiedJavaClassName.substring(0, lastIndex);
-        String replaceAll = appNameDir.replaceAll(Pattern.quote("."),
-                Matcher.quoteReplacement(File.separator));
-        File file = new File(
-                moduleDir.toString() + File.separator + replaceAll);
-        file.mkdirs();
-        String fileContent = readFileAsString(templatename,
-                replacementsInSrcCode);
-        String fileName = fullyQualifiedJavaClassName.substring(
-                fullyQualifiedJavaClassName.lastIndexOf('.') + 1) + ".java";
-        write(Paths.get(moduleDir.toString() + File.separator + replaceAll)
-                .resolve(fileName), fileContent.getBytes());
+    private void writeJavaSourceFilesToDir(Path moduleDir) throws IOException {
+        Set<Entry<String, String>> entrySet = this.templateToClassNameMap
+                .entrySet();
+        Iterator<Entry<String, String>> iterator = entrySet.iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<java.lang.String, java.lang.String> entry = iterator
+                    .next();
+            String fileNameInFullPath = entry.getValue();
+            int lastIndexOf = fileNameInFullPath.lastIndexOf('.');
+            String appNameDir = fileNameInFullPath.substring(0, lastIndexOf);
+            String replaceAll = appNameDir.replaceAll(Pattern.quote("."),
+                    Matcher.quoteReplacement(File.separator));
+            File file = new File(
+                    moduleDir.toString() + File.separator + replaceAll);
+            file.mkdirs();
+            String fileContent = readFileAsString(entry.getKey(),
+                    replacementsInSourceCode);
+            String fileName = fileNameInFullPath.substring(
+                    fileNameInFullPath.lastIndexOf('.') + 1) + ".java";
+            write(Paths.get(moduleDir.toString() + File.separator + replaceAll)
+                    .resolve(fileName), fileContent.getBytes());
+        }
+    }
+
+    public Map<String, String> getReplacementsInSourceCode() {
+        return this.replacementsInSourceCode;
     }
 
     public boolean isMainModule() {
         return this.mainModule;
-    }
-
-    public void setMainModule(boolean mainModule) {
-        this.mainModule = mainModule;
     }
 }

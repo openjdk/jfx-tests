@@ -41,11 +41,6 @@ public abstract class GenericModuleParameters extends Parameters {
     public Map<String, Object> getBasicParams() throws Exception {
         Map<String, Object> basicParams = new HashMap<String, Object>();
         basicParams.put(MAIN_MODULE, String.join("/", app.getMainModuleName(), app.getMainClass()));
-        /*
-         * @TODO
-         * untill bug in jlink is fixed
-         */
-        basicParams.put(STRIP_NATIVE_COMMANDS, false);
         return basicParams;
     }
 

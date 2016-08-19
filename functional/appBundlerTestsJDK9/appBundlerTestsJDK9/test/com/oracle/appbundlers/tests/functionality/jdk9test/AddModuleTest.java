@@ -23,7 +23,7 @@ public class AddModuleTest extends ModuleTestBase {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put(ADD_MODS, AddModuleTest.this.getParameters().getApp()
-                    .getAllModuleNamesSeparatedByPathSeparator());
+                    .addAllModules());
             return hashMap;
         };
     }

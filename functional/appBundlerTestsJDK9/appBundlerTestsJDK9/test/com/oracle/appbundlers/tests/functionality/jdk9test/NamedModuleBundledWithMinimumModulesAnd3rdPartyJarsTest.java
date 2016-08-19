@@ -39,7 +39,7 @@ public class NamedModuleBundledWithMinimumModulesAnd3rdPartyJarsTest
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(ADD_MODS, getApp().getAllModuleNamesSeparatedByPathSeparator());
+            hashMap.put(ADD_MODS, getApp().addAllModules());
             return hashMap;
         };
     }

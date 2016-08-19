@@ -35,6 +35,6 @@ public class JavaApiBundlingManager extends BundlingManager {
 
     @Override
     public String getShortName() {
-        return "JAVA-API";
+        return "java-api";
     }
 }

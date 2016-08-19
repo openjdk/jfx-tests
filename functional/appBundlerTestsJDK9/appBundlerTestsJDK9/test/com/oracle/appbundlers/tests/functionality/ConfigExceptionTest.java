@@ -52,9 +52,4 @@ public class ConfigExceptionTest extends TestBase {
             throws IOException {
         this.currentParameter.setAdditionalParams(getAdditionalParams());
     }
-    
-    @Override
-    public void validate() throws Exception {
-        this.bundlingManager.validate(getAllParams());
-    }
 }
