@@ -30,6 +30,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -78,24 +79,35 @@ public abstract class TestBase implements Constants {
 
     protected BundlingManager bundlingManager;
     protected Parameters currentParameter;
-    protected Map<ExtensionType, Parameters> intermediateToParametersMap = new HashMap<ExtensionType, Parameters>() {
-        /**
-         * serial version UID
-         */
-        private static final long serialVersionUID = -9110787670838081437L;
-
-        {
-            put(ExtensionType.NormalJar, new NormalJarParameters());
-            put(ExtensionType.ModularJar, new ModularJarParameters());
-            put(ExtensionType.ExplodedModules, new ExplodedModuleParameters());
-            put(ExtensionType.Jmods, new JmodParameters());
-        }
-    };
+    protected Map<ExtensionType, Parameters> intermediateToParametersMap = new HashMap<ExtensionType, Parameters>();
 
     protected static final Logger LOG = Logger
             .getLogger(TestBase.class.getName());
 
     protected Method testMethod = null;
+
+    protected void populateIntermediateToParametersMap() {
+        for (ExtensionType extension : getExtensionArray()) {
+            switch (extension) {
+            case NormalJar:
+                intermediateToParametersMap.put(extension,
+                        new NormalJarParameters());
+                break;
+            case ModularJar:
+                intermediateToParametersMap.put(extension,
+                        new ModularJarParameters());
+                break;
+            case ExplodedModules:
+                intermediateToParametersMap.put(extension,
+                        new ExplodedModuleParameters());
+                break;
+            case Jmods:
+                intermediateToParametersMap.put(extension,
+                        new JmodParameters());
+                break;
+            }
+        }
+    }
 
     // method block: should be overridden in some tests
     // all these implementations are just "default-values"
@@ -122,13 +134,14 @@ public abstract class TestBase implements Constants {
             throws IOException, ExecutionException {
         app.preinstallApp(extension);
         app.writeSourcesToAppDirectory();
-        app.compileApp();
+        app.compileApp(extension);
         app.jarApp(extension);
     }
 
     @BeforeClass
     public void setupApplication() throws Exception {
         Log.setLogger(new Log.Logger(true));
+        populateIntermediateToParametersMap();
         prepareTestEnvironment();
         customBeforeClassHook();
     }
@@ -137,10 +150,13 @@ public abstract class TestBase implements Constants {
     }
 
     protected void prepareTestEnvironment() throws Exception {
-        for (ExtensionType intermediate : ExtensionType.values()) {
+        for (ExtensionType extension : getExtensionArray()) {
+            if(!isTestCaseApplicableForExtensionType(extension)) {
+                continue;
+            }
             this.currentParameter = this.intermediateToParametersMap
-                    .get(intermediate);
-            overrideParameters(intermediate);
+                    .get(extension);
+            overrideParameters(extension);
             initializeAndPrepareApp();
         }
     }
@@ -160,54 +176,49 @@ public abstract class TestBase implements Constants {
 
     @Test(dataProvider = "getBundlers")
     public void runTest(BundlingManager bundlingManager) throws Exception {
-        for (ExtensionType extension : getExtensionArray()) {
-            this.currentParameter = intermediateToParametersMap
-                    .get(extension);
-            if (!isTestCaseApplicableForExtensionType(extension)) {
-                continue;
-            }
+        this.currentParameter = intermediateToParametersMap
+                .get(bundlingManager.getExtensionType());
+        if (!isTestCaseApplicableForExtensionType(
+                bundlingManager.getExtensionType())) {
+            return;
+        }
 
-            Map<String, Object> allParams = getAllParams(extension);
-            String testName = this.getClass().getName() + "::"
-                    + testMethod.getName() + "$" + bundlingManager.toString();
-            this.bundlingManager = bundlingManager;
-            LOG.log(Level.INFO, "Starting test \"{0}\".", testName);
-            try {
-                validate();
-                if (isConfigExceptionExpected(bundlingManager.getBundler())) {
-                    Assert.fail(
-                            "ConfigException is expected, but isn't thrown");
-                }
-            } catch (ConfigException ex) {
-                if (isConfigExceptionExpected(bundlingManager.getBundler())) {
-                    return;
-                } else {
-                    LOG.log(Level.SEVERE, "Configuration error: {0}.",
-                            new Object[] { ex });
-                    throw ex;
-                }
+        Map<String, Object> allParams = getAllParams();
+        String testName = this.getClass().getName() + "::"
+                + testMethod.getName() + "$" + bundlingManager.toString();
+        this.bundlingManager = bundlingManager;
+        LOG.log(Level.INFO, "Starting test \"{0}\".", testName);
+        try {
+            validate();
+            if (isConfigExceptionExpected(bundlingManager.getBundler())) {
+                Assert.fail("ConfigException is expected, but isn't thrown");
             }
-
-            try {
-                bundlingManager.execute(allParams,
-                        this.currentParameter.getApp());
-                String path = bundlingManager.install(
-                        this.currentParameter.getApp(), getResultingAppName(),
-                        false);
-                LOG.log(Level.INFO, "Installed at: {0}", path);
-
-                Pair<TimeUnit, Integer> tuple = getDelayAfterInstall();
-                tuple.getKey().sleep(tuple.getValue());
-                AppWrapper app2 = this.currentParameter.getApp();
-                this.currentParameter.getVerifiedOptions().forEach(
-                        (name, value) -> bundlingManager.verifyOption(name,
-                                value, app2, getResultingAppName()));
+        } catch (ConfigException ex) {
+            if (isConfigExceptionExpected(bundlingManager.getBundler())) {
+                return;
+            } else {
+                LOG.log(Level.SEVERE, "Configuration error: {0}.",
+                        new Object[] { ex });
+                throw ex;
             }
+        }
 
-            finally {
-                uninstallApp(extension);
-                LOG.log(Level.INFO, "Finished test: {0}", testName);
-            }
+        try {
+            bundlingManager.execute(allParams, this.currentParameter.getApp());
+            String path = bundlingManager.install(
+                    this.currentParameter.getApp(), getResultingAppName(),
+                    false);
+            LOG.log(Level.INFO, "Installed at: {0}", path);
+
+            Pair<TimeUnit, Integer> tuple = getDelayAfterInstall();
+            tuple.getKey().sleep(tuple.getValue());
+            AppWrapper app2 = this.currentParameter.getApp();
+            this.currentParameter.getVerifiedOptions()
+                    .forEach((name, value) -> bundlingManager.verifyOption(name,
+                            value, app2, getResultingAppName()));
+        } finally {
+            uninstallApp();
+            LOG.log(Level.INFO, "Finished test: {0}", testName);
         }
     }
 
@@ -220,11 +231,10 @@ public abstract class TestBase implements Constants {
         return ExtensionType.values();
     }
 
-    protected void uninstallApp(ExtensionType intermediate) throws Exception {
-        if (bundlingManager != null) {
-            String appName = bundlingManager
-                    .getAppName(getAllParams(intermediate));
-            bundlingManager.uninstall(this.currentParameter.getApp(), appName);
+    protected void uninstallApp() throws Exception {
+        if (this.bundlingManager != null) {
+            String appName = this.bundlingManager.getAppName(getAllParams());
+            this.bundlingManager.uninstall(this.currentParameter.getApp(), appName);
         }
     }
 
@@ -257,7 +267,7 @@ public abstract class TestBase implements Constants {
                 .map(BundlerUtils::getBundlerUtils).collect(toList());
 
         return BundlerProvider.createBundlingManagers(installationPackageTypes,
-                packagerInterfaces);
+                packagerInterfaces, Arrays.asList(getExtensionArray()));
     }
 
     public boolean mustBeSupported(String bundlerId) {
@@ -278,8 +288,7 @@ public abstract class TestBase implements Constants {
         return new Pair<TimeUnit, Integer>(TimeUnit.MILLISECONDS, 100);
     }
 
-    protected Map<String, Object> getAllParams(ExtensionType intermediate)
-            throws Exception {
+    protected Map<String, Object> getAllParams() throws Exception {
         Map<String, Object> basicParams = this.currentParameter
                 .getBasicParams();
         Map<String, Object> allParams = new HashMap<String, Object>();
@@ -290,7 +299,7 @@ public abstract class TestBase implements Constants {
     }
 
     public void validate() throws Exception {
-        bundlingManager.validate(this.currentParameter.getBasicParams());
+        this.bundlingManager.validate(this.currentParameter.getBasicParams());
     }
 
     public Parameters getParameters() {

@@ -121,7 +121,6 @@ public class AppWrapper implements Constants {
         }
     }
 
-
     private List<Source> getJarTempSources() {
         return sources.stream().filter((source) -> !source.isModule())
                 .collect(Collectors.toList());
@@ -201,7 +200,7 @@ public class AppWrapper implements Constants {
         return compileApp(javacOptions, null, classpath);
     }
 
-    public int compileAndCreateExtensionEndProduct(ExtensionType extension, Path... classpath) throws IOException, ExecutionException  {
+    public int compileAndCreateJavaExtensionProduct(ExtensionType extension, Path... classpath) throws IOException, ExecutionException  {
         int resultForModule = compileAppForModules(new String[0], extension, classpath);
         jarApp(extension);
         compileAppForJars(new String[0], extension, classpath);
@@ -231,7 +230,6 @@ public class AppWrapper implements Constants {
         for (Source tempSource : getJarTempSources()) {
             List<String> newArgs = new ArrayList<String>();
             newArgs.addAll(argsList);
-
 
             newArgs.add("-classpath");
             if (classpath.length != 0) {
@@ -267,14 +265,13 @@ public class AppWrapper implements Constants {
             });
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            System.out.println(
-                    "====================COMPILATION STARTS===========================");
-            System.out.println("compilation command for jars is " + newArgs);
+            LOG.log(Level.INFO,
+                    "====================COMPILATION STARTS FOR NORMAL JAR===========================");
+            LOG.log(Level.INFO,"compilation command for jars is " + newArgs);
             result = compiler.run(System.in, outputStream, System.err,
                     newArgs.toArray(new String[newArgs.size()]));
-            System.out.println(
-                    "===================COMPILATION ENDS===============================");
-            System.out.println();
+            LOG.log(Level.INFO,
+                    "====================COMPILATION ENDS FOR NORMAL JAR=============================");
         }
         return result;
     }
@@ -320,10 +317,14 @@ public class AppWrapper implements Constants {
                         .collect(joining(File.pathSeparator)));
             }
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            System.out.println(
-                    "====================COMPILATION STARTS===========================");
-            System.out.println(
-                    "compilation command for modules is " + argsList);
+            if(extension != null) {
+                LOG.log(Level.INFO,
+                        "====================COMPILATION STARTS FOR "+extension+" ===========================");
+                LOG.log(Level.INFO, "compilation command for "+extension+" is "+argsList);
+            } else {
+                LOG.log(Level.INFO,
+                        "compilation command for modules is " + argsList);
+            }
 
             int tempResult = compiler.run(System.in, outputStream, System.err,
                     argsList.toArray(new String[argsList.size()]));
@@ -334,9 +335,13 @@ public class AppWrapper implements Constants {
             if (!out.trim().isEmpty()) {
                 LOG.log(Level.INFO, out);
             }
-            System.out.println(
-                    "===================COMPILATION ENDS===============================");
-            System.out.println();
+            if(extension != null) {
+                LOG.log(Level.INFO,
+                        "===================COMPILATION ENDS FOR "+extension+ " ==============================");
+            } else {
+                LOG.log(Level.INFO, "===================COMPILATION ENDS===================");
+            }
+            LOG.log(Level.INFO, "\n");
         }
         return result;
     }
@@ -669,9 +674,14 @@ public class AppWrapper implements Constants {
         return "";
     }
 
-    public String addAllModules() {
+    public String getAllModuleNamesSeparatedByPathSeparator() {
         return getModuleTempSources().stream().map(Source::getModuleName)
                 .collect(Collectors.joining(File.pathSeparator));
+    }
+
+    public String getAllModuleNamesSeparatedByComma() {
+        return getModuleTempSources().stream().map(Source::getModuleName)
+                .collect(Collectors.joining(","));
     }
 
     public List<String> getAllModuleNamesAsList() {

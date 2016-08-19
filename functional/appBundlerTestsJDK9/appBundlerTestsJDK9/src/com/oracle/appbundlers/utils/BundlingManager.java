@@ -30,6 +30,7 @@ public abstract class BundlingManager implements Constants {
 
     private final AbstractBundlerUtils bundlerUtils;
     protected AppWrapper app;
+    protected ExtensionType extensionType;
 
     public BundlingManager(AbstractBundlerUtils bundlerUtils) {
         this.bundlerUtils = bundlerUtils;
@@ -45,7 +46,8 @@ public abstract class BundlingManager implements Constants {
             throws IOException {
         this.app = app;
         LOG.log(Level.INFO, "Bundling with params: {0}.", params);
-        return execute(params, app.getBundlesDir().toFile()).toPath();
+        Path bundlesDir = app.getBundlesDir();
+        return execute(params, bundlesDir.toFile()).toPath();
     }
 
     public Bundler getBundler() {
@@ -122,7 +124,8 @@ public abstract class BundlingManager implements Constants {
 
     @Override
     public String toString() {
-        return getBundler().getID() + "-" + getShortName();
+        return getShortName() + "-" + getExtensionType() + "-"
+                + getBundler().getID();
     }
 
     public Path getAppCDSCacheFile(AppWrapper app, String appName) {
@@ -131,5 +134,13 @@ public abstract class BundlingManager implements Constants {
 
     public AbstractBundlerUtils getBundlerUtils() {
         return bundlerUtils;
+    }
+
+    public ExtensionType getExtensionType() {
+        return this.extensionType;
+    }
+
+    public void setExtensionType(ExtensionType extensionType) {
+        this.extensionType = extensionType;
     }
 }

@@ -24,7 +24,6 @@ import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.utils.BundlerUtils;
-import com.oracle.appbundlers.utils.BundlingManagers;
 import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
@@ -57,14 +56,16 @@ public class IconTest extends TestBase {
                 RPM };
     }
 
-    @Override
-    protected BundlingManagers[] getBundlingManagers() {
-        return new BundlingManagers[] { BundlingManagers.CLI };
-    }
 
     @Override
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
         this.currentParameter.setAdditionalParams(getAdditionalParams());
+    }
+
+    @Override
+    public boolean isTestCaseApplicableForExtensionType(
+            ExtensionType extension) {
+        return ExtensionType.NormalJar == extension;
     }
 }

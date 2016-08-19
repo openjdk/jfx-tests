@@ -23,6 +23,7 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.Additional
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.BundlingManagers;
+import com.oracle.appbundlers.utils.Constants;
 import com.oracle.appbundlers.utils.ExtensionType;
 
 import javafx.util.Pair;
@@ -31,7 +32,7 @@ import javafx.util.Pair;
  *
  * @author Dmitry Zinkevich &lt;dmitry.zinkevich@oracle.com&gt
  */
-public class SecondLauncherTest extends TestBase {
+public class SecondLauncherWithJvmParametersTest extends TestBase {
 
     private static final List<String> jvmOptions;
     private static final Map<String, String> jvmProperties;
@@ -67,30 +68,36 @@ public class SecondLauncherTest extends TestBase {
 
     public AdditionalParams getAdditionalParams() {
         return () -> {
-            Map<String, Object> additionalParams = new HashMap<>();
+            Map<String, Object> firstLauncherParams = new HashMap<>();
 
-            additionalParams.put(APP_NAME,
-                    SecondLauncherTest.this.getResultingAppName());
-            String appClass = String.join("/",
+            firstLauncherParams.put(APP_NAME,
+                    SecondLauncherWithJvmParametersTest.this.getResultingAppName());
+            String mainModuleWithAppClass = String.join("/",
                     this.currentParameter.getApp().getMainModuleName(),
                     this.currentParameter.getApp().getMainClass());
-            additionalParams.put(MAIN_MODULE, appClass);
-            Map<String, Object> launcherParams = new HashMap<>();
-            launcherParams.put(APP_NAME,
-                    SecondLauncherTest.this.getSecondaryLauncherName());
-            if (this.currentParameter.getApp().isAppContainsModules()) {
-                launcherParams.put(MAIN_MODULE, this.currentParameter.getApp()
-                        .getModuleTempSources().get(0).getModuleName());
+            if(this.currentParameter.getApp().isAppContainsModules()) {
+                firstLauncherParams.put(MAIN_MODULE, mainModuleWithAppClass);
             }
-            launcherParams.put(JVM_OPTIONS, jvmOptions);
-            launcherParams.put(JVM_PROPERTIES, jvmProperties);
-            launcherParams.put(USER_JVM_OPTIONS, userJvmOptions);
-            List<Map<String, Object>> launchers = new ArrayList<>();
-            launchers.add(launcherParams);
 
-            additionalParams.put(SECONDARY_LAUNCHERS, launchers);
+            Map<String, Object> secondLauncher = new HashMap<>();
+            secondLauncher.put(APP_NAME,
+                    SecondLauncherWithJvmParametersTest.this.getSecondaryLauncherName());
+            if (this.currentParameter.getApp().isAppContainsModules()) {
+                secondLauncher.put(MAIN_MODULE,
+                        Constants.COM_GREETINGS_MODULE_CUM_PACKAGE_NAME);
+            }
+            secondLauncher.put(APPLICATION_CLASS,
+                    Constants.COM_GREETINGS_APP2_QUALIFIED_CLASS_NAME);
+            secondLauncher.put(JVM_OPTIONS, jvmOptions);
+            secondLauncher.put(JVM_PROPERTIES, jvmProperties);
+            secondLauncher.put(USER_JVM_OPTIONS, userJvmOptions);
 
-            return additionalParams;
+            List<Map<String, Object>> secondarylaunchersList = new ArrayList<>();
+            secondarylaunchersList.add(secondLauncher);
+
+            firstLauncherParams.put(SECONDARY_LAUNCHERS, secondarylaunchersList);
+
+            return firstLauncherParams;
         };
 
     }
