@@ -392,7 +392,6 @@ public abstract class WinAbstractBundlerUtils extends AbstractBundlerUtils {
                     @SuppressWarnings("unchecked")
                     List<String> extensions = (List<String>) association
                             .get(FA_EXTENSIONS);
-                    @SuppressWarnings("unchecked")
                     File icon = (File) association.get(FA_ICON);
 
                     // check association of extension with our application name

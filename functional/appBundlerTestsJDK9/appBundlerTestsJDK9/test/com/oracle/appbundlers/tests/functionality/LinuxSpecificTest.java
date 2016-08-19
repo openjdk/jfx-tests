@@ -7,7 +7,6 @@ package com.oracle.appbundlers.tests.functionality;
 
 import static com.oracle.appbundlers.utils.BundlerUtils.DEB;
 import static com.oracle.appbundlers.utils.BundlerUtils.RPM;
-import static com.oracle.tools.packager.linux.LinuxDebBundler.BUNDLE_NAME;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,7 +31,7 @@ public class LinuxSpecificTest extends TestBase {
     protected AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
-            additionalParams.put(BUNDLE_NAME.getID(), bundleName);
+            additionalParams.put(LinuxDebBundler_BUNDLE_NAME, bundleName);
             additionalParams.put(MAINTAINER, maintainer);
             return additionalParams;
         };

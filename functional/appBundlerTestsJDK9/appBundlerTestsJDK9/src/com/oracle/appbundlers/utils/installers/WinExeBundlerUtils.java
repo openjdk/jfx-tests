@@ -90,7 +90,7 @@ public class WinExeBundlerUtils extends WinAbstractBundlerUtils {
         });
 
         verificators.put(COPYRIGHT, (copyright, app, appName) -> {
-            Path installer = app.getWorkDir().resolve(appName + "-1.0.exe");
+            Path installer = app.getBundlesDir().resolve(appName + "-1.0.exe");
             assertTrue(exists(installer),
                     "[" + installer + " does not exists]");
 

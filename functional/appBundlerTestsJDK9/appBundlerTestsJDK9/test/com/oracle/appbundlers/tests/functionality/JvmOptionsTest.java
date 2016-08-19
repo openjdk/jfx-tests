@@ -29,19 +29,18 @@ import com.oracle.appbundlers.utils.ExtensionType;
  */
 public class JvmOptionsTest extends TestBase {
     private static final List<String> jvmOptions = Arrays.asList(
-            "-Dsqe.foo.bar=baz", "-Dsqe.qux.corge=grault", "-Xmx1g",
-            "-Xms1024m");
+            "-Dsqe.foo.bar=baz", "-Dsqe.qux.corge=grault");
     private static final Map<String, String> jvmProperties = new HashMap<String, String>() {
         {
             put("sqe.aba.caba", "dabacaba");
         }
     };
-    private static final Map<String, String> userJvmOptions = new HashMap<String, String>() {
-        {
-            // put("-Xmx", "1g");
-            // put("-Xms", "512m");
-        }
-    };
+//    private static final Map<String, String> userJvmOptions = new HashMap<String, String>() {
+//        {
+//            // put("-Xmx", "1g");
+//            // put("-Xms", "512m");
+//        }
+//    };
 
     public List<String> jvmOptions() {
         return jvmOptions;
@@ -51,16 +50,16 @@ public class JvmOptionsTest extends TestBase {
         return jvmProperties;
     }
 
-    public Map<String, String> userJvmOptions() {
-        return userJvmOptions;
-    }
+//    public Map<String, String> userJvmOptions() {
+//        return userJvmOptions;
+//    }
 
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
             additionalParams.put(JVM_OPTIONS, jvmOptions());
             additionalParams.put(JVM_PROPERTIES, jvmProperties());
-            additionalParams.put(USER_JVM_OPTIONS, userJvmOptions());
+//            additionalParams.put(USER_JVM_OPTIONS, userJvmOptions());
             return additionalParams;
         };
     }
@@ -70,12 +69,12 @@ public class JvmOptionsTest extends TestBase {
             Map<String, Object> verifiedOptions = new HashMap<>();
             verifiedOptions.put(JVM_PROPERTIES, jvmProperties);
             verifiedOptions.put(MULTI_OUTPUT_CONTAINS, jvmOptions);
-            verifiedOptions
-                    .put(MULTI_OUTPUT_CONTAINS,
-                            userJvmOptions.entrySet().stream()
-                                    .map(entry -> entry.getKey()
-                                            + entry.getValue())
-                            .collect(toList()));
+//            verifiedOptions
+//                    .put(MULTI_OUTPUT_CONTAINS,
+//                            userJvmOptions.entrySet().stream()
+//                                    .map(entry -> entry.getKey()
+//                                            + entry.getValue())
+//                            .collect(toList()));
             return verifiedOptions;
         };
     }

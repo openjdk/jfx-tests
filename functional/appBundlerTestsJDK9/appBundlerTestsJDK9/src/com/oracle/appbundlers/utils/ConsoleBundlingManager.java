@@ -260,6 +260,6 @@ public class ConsoleBundlingManager extends BundlingManager {
 
     @Override
     public String getShortName() {
-        return "cli";
+        return "CLI";
     }
 }

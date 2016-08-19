@@ -1,0 +1,35 @@
+package testapp;
+
+import java.nio.file.Files;
+import java.io.IOException;
+import com.apple.eawt.Application;
+import com.apple.eawt.AppEvent.OpenFilesEvent;
+import com.apple.eawt.OpenFilesHandler;
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class %APP_NAME% {
+
+    /**
+     * Mac OS requires specific treatment for handling file opening.
+     * We should provide a file handler which will do the job.
+     * Thus during the first launch the handler will be set.
+     */
+    public static void main(String[] args) throws IOException {
+        System.out.println("Setting open files handler...");
+        Application.getApplication().setOpenFileHandler(new OpenFilesHandler() {
+
+            @Override
+            public void openFiles(OpenFilesEvent ofe) {
+                for (File f : ofe.getFiles()) {
+                    try {
+                        Files.deleteIfExists(f.toPath());
+                    } catch (IOException ex) {
+                        Logger.getLogger(%APP_NAME%.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+}
