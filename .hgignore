@@ -1,3 +1,4 @@
+^\.jcheck/
 \.orig$
 \.orig\..*$
 \.chg\..*$
