@@ -1,0 +1,57 @@
+
+package testapp;
+
+import com.oracle.tools.packager.AbstractBundler;
+import com.oracle.tools.packager.BundlerParamInfo;
+import com.oracle.tools.packager.ConfigException;
+import com.oracle.tools.packager.UnsupportedPlatformException;
+import java.io.File;
+import java.util.Collection;
+import java.util.Map;
+
+/**
+ *
+ * @author Dmitry Ginzburg &lt;dmitry.x.ginzburg@oracle.com&gt;
+ */
+public class ExampleBundler extends AbstractBundler {
+    public static final String NAME = "exampleName";
+    public static final String DESCRIPTION = "exampleDescription";
+    public static final String ID = "ex.am.ple";
+    public static final String bundleType = "IMAGE";
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public String getDescription() {
+        return DESCRIPTION;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    public String getBundleType() {
+        return bundleType;
+    }
+
+    @Override
+    public Collection<BundlerParamInfo<?>> getBundleParameters() {
+        return null;
+    }
+
+    @Override
+    public boolean validate(Map<String, ? super Object> params) throws UnsupportedPlatformException, ConfigException {
+        return true;
+    }
+
+    @Override
+    public File execute(Map<String, ? super Object> params, File outputParentDir) {
+        return outputParentDir;
+    }
+
+}

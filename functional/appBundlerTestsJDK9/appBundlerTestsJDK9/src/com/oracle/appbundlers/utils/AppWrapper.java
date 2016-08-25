@@ -113,11 +113,13 @@ public class AppWrapper implements Constants {
         Utils.createDir(getBinDir());
     }
 
-    public void preinstallApp(ExtensionType[] extensionArray) throws IOException {
+    public void preinstallApp(ExtensionType[] extensionArray)
+            throws IOException {
         createSrcBundleAndBinDirs();
 
         for (ExtensionType extension : extensionArray) {
-            Utils.createDir(Paths.get(getModulePathBasedOnExtension(extension)));
+            Utils.createDir(
+                    Paths.get(getModulePathBasedOnExtension(extension)));
         }
     }
 
@@ -200,8 +202,10 @@ public class AppWrapper implements Constants {
         return compileApp(javacOptions, null, classpath);
     }
 
-    public int compileAndCreateJavaExtensionProduct(ExtensionType extension, Path... classpath) throws IOException, ExecutionException  {
-        int resultForModule = compileAppForModules(new String[0], extension, classpath);
+    public int compileAndCreateJavaExtensionProduct(ExtensionType extension,
+            Path... classpath) throws IOException, ExecutionException {
+        int resultForModule = compileAppForModules(new String[0], extension,
+                classpath);
         jarApp(extension);
         compileAppForJars(new String[0], extension, classpath);
         jarApp(ExtensionType.NormalJar);
@@ -233,8 +237,10 @@ public class AppWrapper implements Constants {
 
             newArgs.add("-classpath");
             if (classpath.length != 0) {
-                newArgs.add(Stream.of(classpath)
-                        .map(eachPath -> eachPath.toAbsolutePath().toString())
+                newArgs.add(
+                        Stream.of(classpath)
+                                .map(eachPath -> eachPath.toAbsolutePath()
+                                        .toString())
                         .collect(joining(File.pathSeparator)));
             } else {
                 newArgs.add(getBinDir().toString());
@@ -246,7 +252,9 @@ public class AppWrapper implements Constants {
 
             if (extension != null) {
                 newArgs.add("-mp");
-                newArgs.add(String.join(File.pathSeparator, getModulePathBasedOnExtension(extension), JMODS_PATH_IN_JDK));
+                newArgs.add(String.join(File.pathSeparator,
+                        getModulePathBasedOnExtension(extension),
+                        JMODS_PATH_IN_JDK));
             }
 
             String string = getSrcDir() + File.separator
@@ -263,11 +271,10 @@ public class AppWrapper implements Constants {
                     return FileVisitResult.CONTINUE;
                 }
             });
-
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             LOG.log(Level.INFO,
                     "====================COMPILATION STARTS FOR NORMAL JAR===========================");
-            LOG.log(Level.INFO,"compilation command for jars is " + newArgs);
+            LOG.log(Level.INFO, "compilation command for jars is " + newArgs);
             result = compiler.run(System.in, outputStream, System.err,
                     newArgs.toArray(new String[newArgs.size()]));
             LOG.log(Level.INFO,
@@ -294,7 +301,8 @@ public class AppWrapper implements Constants {
             }
 
             argsList.add("-mp");
-            argsList.add(String.join(File.pathSeparator, getBinDir().toString(), JMODS_PATH_IN_JDK));
+            argsList.add(String.join(File.pathSeparator, getBinDir().toString(),
+                    JMODS_PATH_IN_JDK));
             argsList.add("-d");
             argsList.add(String.join(File.separator, getBinDir().toString(),
                     source.getModuleName()));
@@ -317,10 +325,12 @@ public class AppWrapper implements Constants {
                         .collect(joining(File.pathSeparator)));
             }
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            if(extension != null) {
+            if (extension != null) {
                 LOG.log(Level.INFO,
-                        "====================COMPILATION STARTS FOR "+extension+" ===========================");
-                LOG.log(Level.INFO, "compilation command for "+extension+" is "+argsList);
+                        "====================COMPILATION STARTS FOR "
+                                + extension + " ===========================");
+                LOG.log(Level.INFO, "compilation command for " + extension
+                        + " is " + argsList);
             } else {
                 LOG.log(Level.INFO,
                         "compilation command for modules is " + argsList);
@@ -335,11 +345,12 @@ public class AppWrapper implements Constants {
             if (!out.trim().isEmpty()) {
                 LOG.log(Level.INFO, out);
             }
-            if(extension != null) {
-                LOG.log(Level.INFO,
-                        "===================COMPILATION ENDS FOR "+extension+ " ==============================");
+            if (extension != null) {
+                LOG.log(Level.INFO, "===================COMPILATION ENDS FOR "
+                        + extension + " ==============================");
             } else {
-                LOG.log(Level.INFO, "===================COMPILATION ENDS===================");
+                LOG.log(Level.INFO,
+                        "===================COMPILATION ENDS===================");
             }
             LOG.log(Level.INFO, "\n");
         }
@@ -473,7 +484,28 @@ public class AppWrapper implements Constants {
             createSimpleJar(Collections.emptyList(), false);
             break;
         case ModularJar:
-            createModularJar(Collections.emptyList(), false);
+            createModularJar();
+            break;
+        case ExplodedModules: /******************************************
+                               * bin directory itself is exploded modules
+                               * directory
+                               ******************************************/
+            break;
+        case Jmods:
+            createJmod();
+            break;
+        }
+    }
+
+    public void jarApp(ExtensionType extension,
+            List<Pair<String, String>> services)
+                    throws IOException, ExecutionException {
+        switch (extension) {
+        case NormalJar:
+            createSimpleJar(services, false);
+            break;
+        case ModularJar:
+            createModularJar();
             break;
         case ExplodedModules: /******************************************
                                * bin directory itself is exploded modules
@@ -489,7 +521,7 @@ public class AppWrapper implements Constants {
     public void jarApp(List<Pair<String, String>> services,
             boolean crossClassPath) throws IOException, ExecutionException {
         createSimpleJar(services, crossClassPath);
-        createModularJar(services, crossClassPath);
+        createModularJar();
     }
 
     private void createJmod() throws IOException, ExecutionException {
@@ -513,149 +545,38 @@ public class AppWrapper implements Constants {
         }
     }
 
-    private void createModularJar(List<Pair<String, String>> services,
-            boolean crossClassPath) throws IOException, ExecutionException {
+    private void createModularJar() throws IOException, ExecutionException {
 
         if (getModuleTempSources().isEmpty()) {
             return;
         }
         /*
-         * @TODO check whether services are required in modular jar Need to
-         * change below code Implementation pending. complete this
-         * implementation.
+         * JDK 9 jar creation procedure. $ jar --create
+         * --file=mlib/org.astro@1.0.jar --module-version=1.0 -C mods/org.astro
+         * .
          */
-        if (!services.isEmpty()) {
-            Map<String, List<Source>> jars = sources.stream()
-                    .collect(Collectors.groupingBy(Source::getJarName));
-
-            // for (Map.Entry<String, List<TempSource>> entry : jars.entrySet())
-            // {
-            // String jarFileName = entry.getKey();
-            //// Path jarFile = getJarDir().resolve(jarFileName + ".jar");
-            // Manifest manifest = new Manifest();
-            // manifest.getMainAttributes()
-            // .put(Attributes.Name.MANIFEST_VERSION, "1.0");
-            // if (crossClassPath) {
-            // manifest.getMainAttributes()
-            // .put(Attributes.Name.CLASS_PATH,
-            // jars.keySet().stream()
-            // .filter(str -> !str
-            // .equals(jarFileName))
-            // .map(str -> str + ".jar")
-            // .collect(joining(File.pathSeparator)));
-            // }
-            // if (mainJar != null && jarFileName != null &&
-            // mainJar.equals(jarFileName)) {
-            // manifest.getMainAttributes().put(Attributes.Name.MAIN_CLASS,
-            // mainClass);
-            // }
-            // }
-            /*
-             * Dummy code
-             *
-             * @TODO complete implementation.
-             */
-
-            for (Source tempSource : getModuleTempSources()) {
-                Manifest manifest = new Manifest();
-                String jarFileName = tempSource.getJarName();
-                manifest.getMainAttributes()
-                        .put(Attributes.Name.MANIFEST_VERSION, "1.0");
-                if (crossClassPath) {
-                    manifest.getMainAttributes()
-                            .put(Attributes.Name.CLASS_PATH,
-                                    jars.keySet().stream()
-                                            .filter(str -> !str
-                                                    .equals(jarFileName))
-                                    .map(str -> str + ".jar")
-                                    .collect(joining(File.pathSeparator)));
-                }
-                if (mainJar != null && jarFileName != null
-                        && mainJar.equals(jarFileName)) {
-                    manifest.getMainAttributes().put(Attributes.Name.MAIN_CLASS,
-                            mainClass);
-                }
-
-                // try (JarOutputStream jarOutputStream = new JarOutputStream(
-                // Files.newOutputStream(Paths.get(jarFileName)), manifest)) {
-                // Stream<Path> walk =
-                // Files.walk(Paths.get(getModularJarsDir().toString() +
-                // File.separatorChar + tempSource.getModuleName()),
-                // Integer.MAX_VALUE);
-                // String join = String.join(File.separator,
-                // getModularJarsDir().toString(), tempSource.getModuleName(),
-                // tempSource.getModuleName().replace('.', File.separatorChar));
-                // Path moduleInfoPath =
-                // getModularJarsDir().resolve(tempSource.getModuleName().replace('.',
-                // '/')).resolve("module-info.class");
-                // ZipEntry zipEntry = new JarEntry(
-                // moduleInfoPath.getFileName().toString());
-                // jarOutputStream.putNextEntry(zipEntry);
-                // jarOutputStream.write(Files.readAllBytes(moduleInfoPath));
-                // jarOutputStream.closeEntry();
-                //
-                // String packageName =
-                // getModularJarsDir().toString().replace('.', '/');
-                // DirectoryStream<Path> classFiles = newDirectoryStream(
-                // getModularJarsDir().resolve(packageName), "*.class");
-                // for (Path eachClassFile : classFiles) {
-                // ZipEntry jarEntry = new JarEntry("com/greetings" + "/"
-                // + eachClassFile.getFileName().toString());
-                // jarOutputStream.putNextEntry(jarEntry);
-                // jarOutputStream.write(Files.readAllBytes(eachClassFile));
-                // jarOutputStream.closeEntry();
-                // }
-                // }
-
-                // Files.walkFileTree(Paths.get(getModsDir().toString() +
-                // File.separatorChar + tempSource.getModuleName()), new
-                // SimpleFileVisitor<Path>() {
-                // @Override
-                // public FileVisitResult visitFile(Path file,
-                // BasicFileAttributes attr) {
-                //
-                // if ("module-info.java".equals(file.toString())) {
-                // ZipEntry zipEntry = new JarEntry(
-                // moduleInfoPath.getFileName().toString());
-                // jarOutputStream.putNextEntry(zipEntry);
-                // jarOutputStream.write(Files.readAllBytes(moduleInfoPath));
-                // jarOutputStream.closeEntry();
-                // }
-                // return FileVisitResult.CONTINUE;
-                // }
-                // });
-
+        for (Source source : getModuleTempSources()) {
+            List<String> command = new ArrayList<String>();
+            command.add("jar");
+            command.add("--create");
+            command.add("--file=" + getModularJarsDir() + File.separator
+                    + source.getJarName() + ".jar");
+            command.add("--module-version=1.0");
+            if (source.getFullName() != null && this.mainClass != null
+                    && source.getFullName().equals(this.mainClass)) {
+                command.add("--main-class=" + this.mainClass);
             }
-
-        } else {
-            /*
-             * JDK 9 jar creation procedure. $ jar --create
-             * --file=mlib/org.astro@1.0.jar --module-version=1.0 -C
-             * mods/org.astro .
-             */
-            for (Source source : getModuleTempSources()) {
-                List<String> command = new ArrayList<String>();
-                command.add("jar");
-                command.add("--create");
-                command.add("--file=" + getModularJarsDir() + File.separator
-                        + source.getJarName() + ".jar");
-                command.add("--module-version=1.0");
-                if (source.getFullName() != null && this.mainClass != null
-                        && source.getFullName().equals(this.mainClass)) {
-                    command.add("--main-class=" + this.mainClass);
-                }
-                command.add("-C");
-                String moduleAbsouleDirectoryPath = String.join(File.separator,
-                        getBinDir().toString(), source.getModuleName());
-                command.add(moduleAbsouleDirectoryPath);
-                command.add(".");
-                System.out.println(
-                        "====================MODULAR JAR CREATION STARTS==================");
-                Utils.runCommand(command, CONFIG_INSTANCE.getInstallTimeout());
-                System.out.println(
-                        "====================MODULAR JAR CREATION ENDS====================");
-                System.out.println();
-            }
+            command.add("-C");
+            String moduleAbsouleDirectoryPath = String.join(File.separator,
+                    getBinDir().toString(), source.getModuleName());
+            command.add(moduleAbsouleDirectoryPath);
+            command.add(".");
+            System.out.println(
+                    "====================MODULAR JAR CREATION STARTS==================");
+            Utils.runCommand(command, CONFIG_INSTANCE.getInstallTimeout());
+            System.out.println(
+                    "====================MODULAR JAR CREATION ENDS====================");
+            System.out.println();
         }
     }
 

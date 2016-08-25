@@ -97,6 +97,10 @@ public interface Constants {
     String COM_SHAPE_SERVICEPROVIDER_RECTANGLE_TEMPLATE = "com.shape.serviceprovider.Rectangle.template";
     String COM_SHAPE_SERVICEPROVIDER_RECTANGLE_CLASS_NAME = "com.shape.serviceprovider.rectangle.Rectangle";
     String COM_SHAPE_SERVICEINTERFACE_SHAPEMAINCLASS_TEMPLATE = "com.shape.serviceinterface.ShapeMainClass.template";
+    String EXAMPLE_BUNDLER_TEMPLATE ="ExampleBundler.java.template";
+    String EXAMPLE_BUNDLERS_TEMPLATE = "ExampleBundlers.java.template";
+    String TESTAPP_EXAMPLE_BUNDLER="testapp.ExampleBundler";
+    String TESTAPP_EXAMPLE_BUNDLERS="testapp.ExampleBundlers";
     String RECTANGLE_OUTPUT = "This is Rectangle";
     String ALL_MODULE_PATH = "ALL-MODULE-PATH";
     String FXAPP_JAVA_TEMPLATE = "FXApp.java.template";
