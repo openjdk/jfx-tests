@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2016, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -76,6 +76,16 @@ public class TestScript extends htmltestrunner.TestScript {
     @Override
     protected synchronized void interrupt(Status status) {
         System.out.println("interrupting with status " + status);
+        try {
+            if (process.isAlive()) {
+                process.destroyForcibly().waitFor(FORCED_TERMINATION_TIMEOUT, TimeUnit.MILLISECONDS);
+            }
+        } catch (InterruptedException ex) {
+            System.err.println("Exception while interrupting test process: " + ex.getMessage());
+        }
+        if (resultThread.isAlive()) {
+            resultThread.interrupt();
+        }
         super.interrupt(status);
     }
 
@@ -135,7 +145,6 @@ public class TestScript extends htmltestrunner.TestScript {
                 interrupt(Status.error(e.toString()));
             }
 
-            Semaphore s = new Semaphore(0);
             resultThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -195,19 +204,10 @@ public class TestScript extends htmltestrunner.TestScript {
 //                        jemmyProcess.destroy();
 //                    }
                         System.out.println("DONE");
-                        s.release();
                     }
                 }
             }, "I'm waiting for test's result");
             resultThread.start();
-            try {
-                s.acquire();
-            } catch (InterruptedException ex) {
-                System.out.println("Interrupt from test runner: " + ex);
-                resultThread.interrupt();
-                process.destroyForcibly();
-                process.waitFor(FORCED_TERMINATION_TIMEOUT, TimeUnit.MILLISECONDS);
-            }
         }
     }
 
