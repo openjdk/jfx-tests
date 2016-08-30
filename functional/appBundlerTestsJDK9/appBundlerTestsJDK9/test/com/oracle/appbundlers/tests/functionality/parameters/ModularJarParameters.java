@@ -14,8 +14,12 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOp
 import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
+ * In order to provide default(common) parameters to
+ * com.oracle.tools.packager.Bundler.execute(Map params,File outputFile) such as
+ * -modulepath, -mainmodule required by most number of test cases
+ * then this class provides those parameters
+ * com.oracle.tools.packager.Bundler.execute(Map params,File outputFile)
  * @author Ramesh BG
- *
  */
 public class ModularJarParameters extends GenericModuleParameters {
 
@@ -46,3 +50,4 @@ public class ModularJarParameters extends GenericModuleParameters {
         return ExtensionType.ModularJar;
     }
 }
+

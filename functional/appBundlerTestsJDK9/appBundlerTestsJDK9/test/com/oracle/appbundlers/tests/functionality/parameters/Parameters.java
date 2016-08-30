@@ -16,8 +16,11 @@ import com.oracle.appbundlers.utils.Constants;
 import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
+ * In order to provide default(common) parameters to
+ * com.oracle.tools.packager.Bundler.execute(Map params,File outputFile) such as
+ * APP_NAME required by most number of test cases then Hierarchy of
+ * com.oracle.appbundlers.tests.functionality.parameters.Parameters is used.
  * @author Ramesh BG
- *
  */
 public abstract class Parameters implements Constants {
 
@@ -95,3 +98,4 @@ public abstract class Parameters implements Constants {
 
     public abstract ExtensionType getExtension();
 }
+

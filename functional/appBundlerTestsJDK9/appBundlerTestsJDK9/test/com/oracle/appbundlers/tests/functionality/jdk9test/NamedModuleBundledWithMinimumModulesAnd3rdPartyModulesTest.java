@@ -19,10 +19,10 @@ import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 
 /**
- * @author Ramesh BG Example 9 in chris list. Example 9: Named Module, Minimum
- *         modules + 3rd party modules -appClass HelloWorld
- *         -BmainJar=hello.world.jar -addmods hello.world,3rd.party -modulepath
- *         <path to 3rd party JARs>
+ * Named Module + Minimum modules + 3rd party modules
+ * -m hello.world/HelloWorld -addmods hello.world,3rd.party
+ * -modulepath <path to 3rd party JARs>
+ * @author Ramesh BG
  */
 public class NamedModuleBundledWithMinimumModulesAnd3rdPartyModulesTest
         extends ModuleTestBase {
@@ -61,3 +61,4 @@ public class NamedModuleBundledWithMinimumModulesAnd3rdPartyModulesTest
         }
     }
 }
+

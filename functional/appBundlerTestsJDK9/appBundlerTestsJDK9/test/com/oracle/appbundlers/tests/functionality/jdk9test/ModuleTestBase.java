@@ -4,8 +4,8 @@ import com.oracle.appbundlers.tests.functionality.TestBase;
 import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
+ * This is the baseclass for module based test case.
  * @author Ramesh BG
- *
  */
 public class ModuleTestBase extends TestBase {
 
@@ -15,3 +15,4 @@ public class ModuleTestBase extends TestBase {
         return ExtensionType.NormalJar != extension;
     }
 }
+

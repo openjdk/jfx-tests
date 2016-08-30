@@ -21,13 +21,10 @@ import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 
 /**
- * @author Ramesh BG Example 2 in chris list Example 2: Unnamed Module + Entire
- *         JRE + 3rd party JARs
- *
- *         -srcfiles hello.world.jar,3rd.party.jar -appClass HelloWorld
- *         -BmainJar=hello.world.jar
- *
- *         Test case working completed
+ * Unnamed Module + JRE + 3rd party JARs
+ * -srcfiles hello.world.jar,3rd.party.jar -appClass HelloWorld
+ * -BmainJar=hello.world.jar
+ * @author Ramesh BG
  */
 public class UnnamedModuleDependsOnOtherJarsBundledWithEntireJre
         extends TestBase {
@@ -93,3 +90,4 @@ public class UnnamedModuleDependsOnOtherJarsBundledWithEntireJre
         return ExtensionType.NormalJar == extensionType;
     }
 }
+

@@ -29,10 +29,10 @@ import com.oracle.tools.packager.RelativeFileSet;
 import com.sun.javafx.tools.packager.bundlers.BundleParams;
 
 /**
- * @author Ramesh BG Example 3 in chris list Example 3: Unnamed Module + Entire
- *         JRE + 3rd party modules -srcfiles hello.world.jar -appClass
- *         HelloWorld -BmainJar=hello.world.jar -addmods 3rd.party -modulepath
- *         <path to 3rd party JARs>
+ *  Unnamed Module + JRE + 3rd party modules -srcfiles hello.world.jar -appClass
+ *  HelloWorld -BmainJar=hello.world.jar -addmods 3rd.party -modulepath
+ *  <path to 3rd party JARs>
+ *  @author Ramesh BG
  */
 public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
         extends TestBase {
@@ -135,3 +135,4 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
         return ExtensionType.getModuleTypes();
     }
 }
+

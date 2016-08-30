@@ -15,10 +15,9 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOp
 import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
- * @author Ramesh BG Example 1 in chris list TestCase working and no pending in
- *         testcase Example 1: Unnamed Module + Entire JRE (default, backwards
- *         compatible case) -srcfiles hello.world.jar -appClass HelloWorld
- *         -BmainJar=hello.world.jar
+ * Unnamed Module + JRE -srcfiles hello.world.jar -appClass HelloWorld
+ * -BmainJar=hello.world.jar
+ * @author Ramesh BG
  */
 public class UnNamedModuleWithEntireJreTest extends TestBase {
 
@@ -45,3 +44,5 @@ public class UnNamedModuleWithEntireJreTest extends TestBase {
         return ExtensionType.NormalJar == extensionType;
     }
 }
+
+

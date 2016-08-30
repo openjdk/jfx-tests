@@ -27,8 +27,12 @@ import com.oracle.tools.packager.StandardBundlerParam;
 import com.sun.javafx.tools.packager.bundlers.BundleParams;
 
 /**
+ * In order to provide default(common) parameters to
+ * com.oracle.tools.packager.Bundler.execute(Map params,File outputFile) such as
+ * -appClass, -classpath, -appresources, -mainJar required by most number of test cases
+ * then this class provides those parameters
+ * com.oracle.tools.packager.Bundler.execute(Map params,File outputFile)
  * @author Ramesh BG
- *
  */
 public class NormalJarParameters extends Parameters {
 
@@ -74,3 +78,4 @@ public class NormalJarParameters extends Parameters {
         return ExtensionType.NormalJar;
     }
 }
+

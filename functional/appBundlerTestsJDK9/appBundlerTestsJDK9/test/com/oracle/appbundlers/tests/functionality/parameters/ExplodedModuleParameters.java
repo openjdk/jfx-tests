@@ -14,8 +14,12 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOp
 import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
+ * In order to provide default(common) parameters to
+ * com.oracle.tools.packager.Bundler.execute(Map params,File outputFile) such as
+ * -mainmodule, -modulepath required by most number of test cases
+ * then this class provides those parameters
+ * com.oracle.tools.packager.Bundler.execute(Map params,File outputFile)
  * @author Ramesh BG
- *
  */
 public class ExplodedModuleParameters extends GenericModuleParameters {
 
@@ -47,3 +51,4 @@ public class ExplodedModuleParameters extends GenericModuleParameters {
         return ExtensionType.ExplodedModules;
     }
 }
+

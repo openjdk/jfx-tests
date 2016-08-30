@@ -19,9 +19,9 @@ import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 
 /**
- * @author Ramesh BG Example 6 in chris list Example 6: Named Module, Minimum
- *         modules -appClass HelloWorld -BmainJar=hello.world.jar -addmods
- *         hello.world Testcase pending.
+ *  Named Module + Minimum modules
+ *  -m hello.world/HelloWorld -mp hello.world.jar -addmods hello.world
+ *  @author Ramesh BG
  */
 public class NamedModuleWithMinimumModulesTest extends ModuleTestBase {
 
@@ -59,3 +59,5 @@ public class NamedModuleWithMinimumModulesTest extends ModuleTestBase {
         }
     }
 }
+
+

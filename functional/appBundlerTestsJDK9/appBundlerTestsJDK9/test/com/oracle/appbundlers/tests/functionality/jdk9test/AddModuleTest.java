@@ -14,8 +14,9 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOp
 import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
- * @author Ramesh BG Aim: add all modules available in application mods dir and
- *         check the same in java -listmods output.
+ * Aim: add all modules available in application mods dir and
+ * check the same in java -listmods output.
+ * @author Ramesh BG
  */
 public class AddModuleTest extends ModuleTestBase {
 
@@ -45,3 +46,5 @@ public class AddModuleTest extends ModuleTestBase {
         }
     }
 }
+
+

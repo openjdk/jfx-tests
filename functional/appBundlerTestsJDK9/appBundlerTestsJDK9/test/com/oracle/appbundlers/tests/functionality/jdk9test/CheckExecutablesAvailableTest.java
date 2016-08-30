@@ -14,10 +14,10 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOp
 import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
- * @author Ramesh BG
- *         aim of this testcase is to check for executables available
- *         in bin directory when "-stripexecutables false" is passed to
- *         javapackager.
+ *  aim of this testcase is to check for executables available
+ *  in bin directory when "-stripexecutables false" is passed to
+ *  javapackager.
+ *  @author Ramesh BG
  */
 public class CheckExecutablesAvailableTest extends ModuleTestBase {
 
@@ -45,3 +45,4 @@ public class CheckExecutablesAvailableTest extends ModuleTestBase {
         }
     }
 }
+

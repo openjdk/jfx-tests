@@ -5,8 +5,8 @@
 package com.oracle.appbundlers.utils;
 
 /**
+ * This class represents java extension product.
  * @author Ramesh BG
- *
  */
 public enum ExtensionType implements Constants {
     NormalJar, ModularJar, ExplodedModules, Jmods;
@@ -15,3 +15,4 @@ public enum ExtensionType implements Constants {
         return new ExtensionType[] { ModularJar, ExplodedModules, Jmods };
     }
 }
+

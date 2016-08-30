@@ -16,8 +16,12 @@ import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 
 /**
+ * In order to provide default(common) parameters to
+ * com.oracle.tools.packager.Bundler.execute(Map params,File outputFile) such as
+ * -mainmodule required by most number of test cases
+ * then this class provides those parameters
+ * com.oracle.tools.packager.Bundler.execute(Map params,File outputFile)
  * @author Ramesh BG
- *
  */
 public abstract class GenericModuleParameters extends Parameters {
 
@@ -41,14 +45,9 @@ public abstract class GenericModuleParameters extends Parameters {
     public Map<String, Object> getBasicParams() throws Exception {
         Map<String, Object> basicParams = new HashMap<String, Object>();
         basicParams.put(MAIN_MODULE, String.join("/", app.getMainModuleName(), app.getMainClass()));
-        /*
-         * @TODO
-         * untill bug in jlink is fixed
-         */
-        basicParams.put(STRIP_NATIVE_COMMANDS, false);
         return basicParams;
     }
 
     public abstract String getModulePath();
-
 }
+

@@ -22,9 +22,8 @@ import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 
 /**
+ * Aim: To execute other class available in module other than Main-Class of Manifest
  * @author Ramesh BG
- * Aim: To execute other class avaialable in module other than Main-Class of Manifest
- *
  */
 public class OtherClassInMainModuleTest extends ModuleTestBase {
 
@@ -75,3 +74,4 @@ public class OtherClassInMainModuleTest extends ModuleTestBase {
                 get_com_greetings_module);
     }
 }
+

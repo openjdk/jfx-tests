@@ -36,20 +36,19 @@ import com.oracle.tools.packager.ConfigException;
 import javafx.util.Pair;
 
 /**
- * @author Ramesh BG
  * Aim: To test dependency on different module packages.
  * There are three module packages
  * 1. Modular Jar
  * 2. Jmods
  * 3. Exploded Modules
- * here is the different permutations for test case
+ * here is the different permutations and combination for test case
  *
  * SERVICE_INTERFACE is module which exposes API for service provider.
  * CIRCLE and RECTANGLE are modules which provides service for SERVICE_INTERFACE
- * Each row is a module path directory where each column says what is containing in directory.
+ * Each row is a module path directory where each column says what type of module(modularjar, jmods, explodedmods) is containing in directory.
  *
  * ==============================================================
- * ModularJar            | Jmods             | ExplodedMods
+ *  ModularJar           | Jmods            | ExplodedMods
  * ==============================================================
  * | SERVICE_INTERFACE   |CIRCLE            | RECTANGLE         |
  * -------------------------------------------------------------|
@@ -63,7 +62,7 @@ import javafx.util.Pair;
  * -------------------------------------------------------------|
  * | SERVICE_INTERFACE   |RECTANGLE         | CIRCLE            |
  * -------------------------------------------------------------|
- *
+ * @author Ramesh BG
  */
 public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBase {
 
@@ -239,3 +238,4 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
         }
     }
 }
+

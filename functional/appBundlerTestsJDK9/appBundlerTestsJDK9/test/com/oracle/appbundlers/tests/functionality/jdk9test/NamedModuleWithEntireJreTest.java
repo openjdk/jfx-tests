@@ -19,13 +19,10 @@ import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 
 /**
- * Example 5: Named Module App + Entire JRE (default)
- *
- * -appClass HelloWorld -BmainJar=hello.world.jar -addmods hello.world,ALL_JRE
+ *  Named Module App + JRE
+ * -m hello.world/HelloWorld -addmods hello.world, ALL_JRE
  * (implicit so not required)
- *
- * @author Ramesh BG Example 5 in chris list Need to check with chris whether
- *         ALL_JRE is required here.
+ * @author Ramesh BG
  */
 public class NamedModuleWithEntireJreTest extends ModuleTestBase {
 
@@ -63,3 +60,5 @@ public class NamedModuleWithEntireJreTest extends ModuleTestBase {
         }
     }
 }
+
+

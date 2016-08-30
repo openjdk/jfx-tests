@@ -19,8 +19,10 @@ import com.oracle.appbundlers.utils.Utils;
 import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;
 
 /**
+ * Aim: module com.shape.serviceinterface is the service interface
+ *      module com.shape.serviceprovider.circle and module com.shape.serviceprovider.rectangle are two service provider modules.
+ *      Aim of this test case is to display all modules which implements com.shape.serviceinterface module.
  * @author Ramesh BG
- *
  */
 public class ListServiceProvidersTest extends ModuleTestBase {
 
@@ -67,3 +69,5 @@ public class ListServiceProvidersTest extends ModuleTestBase {
         };
     }
 }
+
+

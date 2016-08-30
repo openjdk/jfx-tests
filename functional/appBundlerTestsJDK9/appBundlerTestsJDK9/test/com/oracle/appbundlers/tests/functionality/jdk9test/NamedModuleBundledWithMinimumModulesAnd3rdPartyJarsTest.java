@@ -19,9 +19,11 @@ import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 
 /**
- * @author Ramesh BG Example 8 in chris list -srcfiles 3rd.party.jar -appClass
- *         HelloWorld -BmainJar=hello.world.jar -addmods hello.world Need to
- *         check this test case it is failing
+ * -srcfiles 3rd.party.jar -m hello.world/HelloWorld -mp hello.world.jar
+ * -addmods hello.world
+ * Need to check whether this testcase is valid since it's not possible to
+ * access package from module.
+ * @author Ramesh BG
  */
 public class NamedModuleBundledWithMinimumModulesAnd3rdPartyJarsTest
         extends ModuleTestBase {
@@ -61,3 +63,5 @@ public class NamedModuleBundledWithMinimumModulesAnd3rdPartyJarsTest
         }
     }
 }
+
+

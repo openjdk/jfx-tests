@@ -15,10 +15,9 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOp
 import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
- * @author Ramesh BG
- *         Example 7 in chris list Example 7: Named Module App + all
- *         modules -appClass HelloWorld -BmainJar=hello.world.jar -addmods
- *         ALL_MODULEPATH
+ *  Named Module App + ALL_MODULEPATH
+ *  -m hello.world/HelloWorld -mp hello.world.jar -addmods ALL_MODULEPATH
+ *  @author Ramesh BG
  */
 public class NamedModuleBundledWithAllModules extends ModuleTestBase {
 
@@ -52,3 +51,5 @@ public class NamedModuleBundledWithAllModules extends ModuleTestBase {
         }
     }
 }
+
+
