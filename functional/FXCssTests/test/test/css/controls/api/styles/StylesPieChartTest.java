@@ -205,7 +205,7 @@ public class StylesPieChartTest extends BaseStyleNodeTest {
         Assert.assertTrue(styleNames.contains("-fx-border-image-width"));
         Map<String, CssMetaData> styles = getStyles();
         CssMetaData data = styles.get("-fx-border-image-width");
-        Assert.assertArrayEquals((BorderWidths[])data.getInitialValue(getControl()), new BorderWidths[]{new BorderWidths(0, 0, 0, 0)});
+        Assert.assertArrayEquals(DEFAULT_WIDTHS, (BorderWidths[])data.getInitialValue(getControl()));
     }
 
     @Test

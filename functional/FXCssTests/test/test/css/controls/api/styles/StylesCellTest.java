@@ -29,24 +29,12 @@ import java.util.Map;
 import java.util.Set;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.chart.*;
-import javafx.scene.shape.*;
-import javafx.scene.web.*;
-import javafx.scene.image.*;
 import javafx.scene.text.*;
-import javafx.scene.*;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.jemmy.fx.Root;
 import org.jemmy.action.GetAction;
-import client.test.Keywords;
-import com.sun.javafx.scene.control.skin.*;
-import javafx.scene.paint.Paint;
 import javafx.geometry.Insets;
-import com.sun.javafx.scene.layout.region.RepeatStruct;
-import com.sun.javafx.scene.layout.region.BorderImageSlices;
 
 
 /**
@@ -84,16 +72,6 @@ public class StylesCellTest extends BaseStyleNodeTest {
         Map<String, CssMetaData> styles = getStyles();
         CssMetaData data = styles.get("-fx-blend-mode");
         Assert.assertEquals(data.getInitialValue(getControl()), null);
-    }
-
-    @Test
-    public void testfxcellsize () {
-        Set<String> styleNames = getStyleNames();
-        Assert.assertNotNull(styleNames);
-        Assert.assertTrue(styleNames.contains("-fx-cell-size"));
-        Map<String, CssMetaData> styles = getStyles();
-        CssMetaData data = styles.get("-fx-cell-size");
-        Assert.assertEquals(data.getInitialValue(getControl()), "15");
     }
 
     @Test

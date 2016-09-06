@@ -28,21 +28,11 @@ import javafx.css.CssMetaData;
 import java.util.Map;
 import java.util.Set;
 import javafx.scene.Node;
-import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.chart.*;
-import javafx.scene.shape.*;
-import javafx.scene.web.*;
-import javafx.scene.image.*;
-import javafx.scene.text.*;
-import javafx.scene.*;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.jemmy.fx.Root;
 import org.jemmy.action.GetAction;
-import client.test.Keywords;
-import com.sun.javafx.scene.control.skin.*;
 import javafx.scene.paint.Paint;
 import javafx.geometry.Insets;
 import com.sun.javafx.scene.layout.region.RepeatStruct;
@@ -206,7 +196,7 @@ public class StylesAnchorPaneTest extends BaseStyleNodeTest {
         Assert.assertTrue(styleNames.contains("-fx-border-image-width"));
         Map<String, CssMetaData> styles = getStyles();
         CssMetaData data = styles.get("-fx-border-image-width");
-        Assert.assertArrayEquals((BorderWidths[])data.getInitialValue(getControl()), new BorderWidths[]{new BorderWidths(0, 0, 0, 0)});
+        Assert.assertArrayEquals(DEFAULT_WIDTHS, (BorderWidths[])data.getInitialValue(getControl()));
     }
 
     @Test

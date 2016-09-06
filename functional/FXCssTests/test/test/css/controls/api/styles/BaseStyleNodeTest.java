@@ -36,6 +36,7 @@ import java.util.TreeSet;
 import javafx.css.Styleable;
 import javafx.scene.Node;
 import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BorderWidths;
 import org.junit.BeforeClass;
 import test.css.controls.EmptyApp;
 import test.javaclient.shared.Utils;
@@ -45,6 +46,8 @@ import test.javaclient.shared.Utils;
  * @author sergey.lugovoy@oracle.com
  */
 public abstract class BaseStyleNodeTest {
+
+    protected static final BorderWidths[] DEFAULT_WIDTHS = new BorderWidths[] {BorderWidths.DEFAULT};
 
     protected Node control;
 
@@ -141,7 +144,7 @@ public abstract class BaseStyleNodeTest {
         return true;
     }
 
-      public boolean checkBorderImageSlices(BorderImageSlices[] first, BorderImageSlices[] second) {
+    public boolean checkBorderImageSlices(BorderImageSlices[] first, BorderImageSlices[] second) {
         if (first == second) {
             return true;
         }

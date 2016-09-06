@@ -88,16 +88,6 @@ public class StylesIndexedCellTest extends BaseStyleNodeTest {
     }
 
     @Test
-    public void testfxcellsize () {
-        Set<String> styleNames = getStyleNames();
-        Assert.assertNotNull(styleNames);
-        Assert.assertTrue(styleNames.contains("-fx-cell-size"));
-        Map<String, CssMetaData> styles = getStyles();
-        CssMetaData data = styles.get("-fx-cell-size");
-        Assert.assertEquals(data.getInitialValue(getControl()), "15");
-    }
-
-    @Test
     public void testfxcontentdisplay () {
         Set<String> styleNames = getStyleNames();
         Assert.assertNotNull(styleNames);

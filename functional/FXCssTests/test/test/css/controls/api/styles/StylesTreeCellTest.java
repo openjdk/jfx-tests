@@ -98,7 +98,7 @@ public class StylesTreeCellTest extends BaseStyleNodeTest {
         Assert.assertTrue(styleNames.contains("-fx-cell-size"));
         Map<String, CssMetaData> styles = getStyles();
         CssMetaData data = styles.get("-fx-cell-size");
-        Assert.assertEquals(data.getInitialValue(getControl()), "15");
+        Assert.assertEquals(24.0, data.getInitialValue(getControl()));
     }
 
     @Test
