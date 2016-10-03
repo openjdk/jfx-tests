@@ -5,7 +5,7 @@
 package com.oracle.appbundlers.utils;
 
 /**
- * This class represents java extension product.
+ * This class represents java extension type.
  * @author Ramesh BG
  */
 public enum ExtensionType implements Constants {

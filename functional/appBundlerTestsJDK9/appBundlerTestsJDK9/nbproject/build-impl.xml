@@ -20,10 +20,10 @@ is divided into following sections:
 
         -->
 <project xmlns:j2seproject1="http://www.netbeans.org/ns/j2se-project/1" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:jaxrpc="http://www.netbeans.org/ns/j2se-project/jax-rpc" basedir=".." default="default" name="appBundlerTests-impl">
-    <fail message="Please build using Ant 1.8.0 or higher.">
+    <fail message="Please build using Ant 1.9.4 or higher.">
         <condition>
             <not>
-                <antversion atleast="1.8.0"/>
+                <antversion atleast="1.9.4"/>
             </not>
         </condition>
     </fail>
@@ -260,7 +260,6 @@ is divided into following sections:
                 <property location="${build.dir}/empty" name="empty.dir"/>
                 <mkdir dir="${empty.dir}"/>
                 <mkdir dir="@{apgeneratedsrcdir}"/>
-            	<echoproperties destfile="abc.properties"/>
                 <javac debug="true" verbose="true" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" fork="${javac.fork}" includeantruntime="false" includes="@{includes}" source="${javac.source}" sourcepath="@{sourcepath}" srcdir="@{srcdir}" target="${javac.target}" tempdir="${java.io.tmpdir}">
                     <src>
                         <dirset dir="@{gensrcdir}" erroronmissingdir="false">
@@ -284,15 +283,15 @@ is divided into following sections:
                 	<!--
                 	   Test Framework uses exported packages of jdk.packager and jdk.packager.services module. 
                 	-->
-                	<compilerarg value="-XaddExports:jdk.packager/com.oracle.tools.packager=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager/com.sun.javafx.tools.packager=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager/com.sun.javafx.tools.packager.bundlers=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager/com.sun.javafx.tools.resource=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager.services/jdk.packager.services=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager/com.oracle.tools.packager.linux=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager/com.oracle.tools.packager.windows=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager/com.oracle.tools.packager.mac=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager/com.oracle.tools.packager.jnlp=ALL-UNNAMED"/>
+                    <compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.oracle.tools.packager=ALL-UNNAMED"/>
+                    <compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.sun.javafx.tools.packager=ALL-UNNAMED"/>
+                    <compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.sun.javafx.tools.packager.bundlers=ALL-UNNAMED"/>
+                    <compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.sun.javafx.tools.resource=ALL-UNNAMED"/>
+                    <compilerarg value="--add-exports"/> <compilerarg value="jdk.packager.services/jdk.packager.services=ALL-UNNAMED"/>
+                    <compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.oracle.tools.packager.linux=ALL-UNNAMED"/>
+                    <compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.oracle.tools.packager.windows=ALL-UNNAMED"/>
+                    <compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.oracle.tools.packager.mac=ALL-UNNAMED"/>
+                    <compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.oracle.tools.packager.jnlp=ALL-UNNAMED"/>
                     <customize/>
                 </javac>
             </sequential>
@@ -459,8 +458,9 @@ is divided into following sections:
             	<echo>======================================================</echo>
             	<echo>===============TESTNG EXECUTION BEGINS================</echo>
             	<echo>======================================================</echo>
+            	<echoproperties destfile="abc.properties"/>
                 <taskdef classname="org.testng.TestNGAntTask" classpath="${run.test.classpath}" name="testng"/>
-                <testng classfilesetref="test.set" failureProperty="tests.failed" listeners="org.testng.reporters.VerboseReporter" methods="${testng.methods.arg}" mode="${testng.mode}" outputdir="${build.test.results.dir}" suitename="appBundlerTests" testname="TestNG tests" workingDir="${work.dir}">
+                <testng classfilesetref="test.set" configFailurePolicy="continue" failureProperty="tests.failed" listeners="org.testng.reporters.VerboseReporter" methods="${testng.methods.arg}" mode="${testng.mode}" outputdir="${build.test.results.dir}" suitename="appBundlerTests" testname="TestNGtests" workingDir="${work.dir}" dumpCommand="true">
                     <xmlfileset dir="${build.test.classes.dir}" includes="@{testincludes}"/>
                     <propertyset>
                         <propertyref prefix="test-sys-prop."/>
@@ -796,11 +796,11 @@ is divided into following sections:
                 	<!--
                 	   Test Framework uses exported packages of jdk.packager and jdk.packager.services modules. 
                 	-->
-                	<compilerarg value="-XaddExports:jdk.packager/com.oracle.tools.packager=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager/com.sun.javafx.tools.packager=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager/com.sun.javafx.tools.packager.bundlers=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager/com.sun.javafx.tools.resource=ALL-UNNAMED"/>
-                	<compilerarg value="-XaddExports:jdk.packager.services/jdk.packager.services=ALL-UNNAMED"/>
+                	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.oracle.tools.packager=ALL-UNNAMED"/>
+                	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.sun.javafx.tools.packager=ALL-UNNAMED"/>
+                	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.sun.javafx.tools.packager.bundlers=ALL-UNNAMED"/>
+                	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.sun.javafx.tools.resource=ALL-UNNAMED"/>
+                	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager.services/jdk.packager.services=ALL-UNNAMED"/>
                     <classpath>
                         <path path="@{classpath}"/>
                     </classpath>

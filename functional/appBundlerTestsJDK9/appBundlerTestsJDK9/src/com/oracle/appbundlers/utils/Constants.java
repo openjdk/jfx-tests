@@ -64,11 +64,10 @@ public interface Constants {
     String ADD_MODS = "add-modules";
     String LIMIT_MODS = "limit-modules";
     String MODULEPATH = "module-path";
+    String LIST_MODULES = "list-modules";
     String STRIP_NATIVE_COMMANDS = "strip-native-commands";
     String SPACE = " ";
     char QUOTE = '\"';
-    String DETECT_JRE_MODS = "detectjremods";
-    String JDKMODULEPATH = "jdkmodulepath";
     String APPCLASS = "appclass";
     String APPLICATION_CLASS = "applicationClass";
     String WORK_DIRECTORY = "testBundlerWorkDir";

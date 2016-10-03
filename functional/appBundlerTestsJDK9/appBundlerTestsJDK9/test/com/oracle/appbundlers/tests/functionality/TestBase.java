@@ -30,7 +30,6 @@ import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -61,6 +60,7 @@ import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.BundlingManagers;
 import com.oracle.appbundlers.utils.Constants;
 import com.oracle.appbundlers.utils.ExtensionType;
+import com.oracle.appbundlers.utils.JavaExtensionTypeFilter;
 import com.oracle.appbundlers.utils.PackageTypeFilter;
 import com.oracle.appbundlers.utils.PackagerApiFilter;
 import com.oracle.appbundlers.utils.Utils;
@@ -204,7 +204,7 @@ public abstract class TestBase implements Constants {
         }
 
         try {
-            bundlingManager.execute(allParams, this.currentParameter.getApp());
+            executeJavaPackager(bundlingManager, allParams);
             String path = bundlingManager.install(
                     this.currentParameter.getApp(), getResultingAppName(),
                     false);
@@ -222,13 +222,20 @@ public abstract class TestBase implements Constants {
         }
     }
 
+    protected void executeJavaPackager(BundlingManager bundlingManager,
+            Map<String, Object> allParams) throws IOException {
+        bundlingManager.execute(allParams, this.currentParameter.getApp());
+    }
+
     public boolean isTestCaseApplicableForExtensionType(
             ExtensionType extension) {
         return true;
     }
 
     public ExtensionType[] getExtensionArray() {
-        return ExtensionType.values();
+        return Stream
+                .of(ExtensionType.values()).filter(JavaExtensionTypeFilter::accept)
+                .collect(toList()).toArray(new ExtensionType[0]);
     }
 
     protected void uninstallApp() throws Exception {
@@ -244,7 +251,9 @@ public abstract class TestBase implements Constants {
             LOG.log(Level.INFO, "Removing temporary files: ");
         } finally {
             for (Parameters parameters : intermediateToParametersMap.values()) {
-                Utils.tryRemoveRecursive(parameters.getApp().getWorkDir());
+                if(parameters.getApp() != null && parameters.getApp().getWorkDir() != null) {
+                    Utils.tryRemoveRecursive(parameters.getApp().getWorkDir());
+                }
             }
         }
     }
@@ -261,13 +270,17 @@ public abstract class TestBase implements Constants {
                 .of(getBundlingManagers()).filter(PackagerApiFilter::accept)
                 .collect(Collectors.toList());
 
-        final List<AbstractBundlerUtils> installationPackageTypes = Stream
+        List<AbstractBundlerUtils> installationPackageTypes = Stream
                 .of(getBundlerUtils()).filter(BundlerUtils::isSupported)
                 .filter(PackageTypeFilter::accept)
                 .map(BundlerUtils::getBundlerUtils).collect(toList());
 
+        List<ExtensionType> javaExtensionTypeList = Stream
+                .of(getExtensionArray()).filter(JavaExtensionTypeFilter::accept)
+                .collect(toList());
+
         return BundlerProvider.createBundlingManagers(installationPackageTypes,
-                packagerInterfaces, Arrays.asList(getExtensionArray()));
+                packagerInterfaces, javaExtensionTypeList);
     }
 
     public boolean mustBeSupported(String bundlerId) {

@@ -33,6 +33,7 @@ public enum Config {
     private boolean manualOnly = false;
     private BundlerUtils acceptedInstallationPackagerType;
     private BundlingManagers acceptedPackagerInterface;
+    private ExtensionType javaExtensionType;
 
     private Config() {
         tryLoadTestSuiteProperties();
@@ -82,6 +83,7 @@ public enum Config {
             tryDefinePackagerInterface();
         }
         tryFilterManual();
+        isJavaExtensionTypeDefined();
     }
 
     private void tryFilterManual() {
@@ -121,6 +123,23 @@ public enum Config {
                     + acceptedPackagerInterface + "]");
         } catch (Throwable t) {
             System.out.println("[Packager interfaces won't be filtered]");
+        }
+    }
+
+    private void isJavaExtensionTypeDefined() {
+        try {
+            String javaExtensionString = System
+                    .getProperty("java-extension-type");
+            if(!javaExtensionString.trim().equals("")) {
+                javaExtensionType = getEnumInstance(ExtensionType.class,
+                        javaExtensionString);
+                System.out.println(
+                        "[Filtered java extension type: " + javaExtensionString+"]");
+            } else {
+                System.out.println("[Java Extension Type won't be Filtered]");
+            }
+        } catch (Exception e) {
+            System.out.println("[Java Extension Type won't be Filtered]");
         }
     }
 
@@ -208,6 +227,10 @@ public enum Config {
 
     public BundlingManagers getAcceptedPackagerApi() {
         return acceptedPackagerInterface;
+    }
+
+    public ExtensionType getAcceptedJavaExtensionType() {
+        return this.javaExtensionType;
     }
 
     public boolean manualOnly() {
