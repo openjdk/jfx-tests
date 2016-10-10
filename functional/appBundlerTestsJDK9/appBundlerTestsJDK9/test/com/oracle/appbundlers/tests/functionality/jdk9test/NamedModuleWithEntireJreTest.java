@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.ExtensionType;
@@ -36,14 +35,6 @@ public class NamedModuleWithEntireJreTest extends ModuleTestBase {
         };
     }
 
-    protected AdditionalParams getAdditionalParams() {
-        return () -> {
-            Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(ADD_MODS, this.currentParameter.getApp().getAllModuleNamesSeparatedByPathSeparator());
-            return hashMap;
-        };
-    }
-
     protected AppWrapper getApp() throws IOException {
         return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                 COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
@@ -55,7 +46,6 @@ public class NamedModuleWithEntireJreTest extends ModuleTestBase {
             throws IOException {
         if (ExtensionType.NormalJar != intermediate) {
             this.currentParameter.setApp(getApp());
-            this.currentParameter.setAdditionalParams(getAdditionalParams());
             this.currentParameter.setVerifiedOptions(getVerifiedOptions());
         }
     }

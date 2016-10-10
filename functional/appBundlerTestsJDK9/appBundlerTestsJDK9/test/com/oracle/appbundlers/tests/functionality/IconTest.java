@@ -62,10 +62,4 @@ public class IconTest extends TestBase {
             throws IOException {
         this.currentParameter.setAdditionalParams(getAdditionalParams());
     }
-
-    @Override
-    public boolean isTestCaseApplicableForExtensionType(
-            ExtensionType extension) {
-        return ExtensionType.NormalJar == extension;
-    }
 }

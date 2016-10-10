@@ -203,6 +203,26 @@ public class SourceFactory implements Constants {
     }
 
     /*
+     * com.shape.serviceinterface module
+     */
+    public static Source get_com_shape_serviceinterface_module(boolean isMainModule)
+            throws IOException {
+        String mainClassFullNameInternal = COM_SHAPE_SERVICEINTERFACE_SHAPE_CLASS_NAME;
+        Map<String, String> classNameToTemplateMapInternal = new HashMap<String, String>();
+        classNameToTemplateMapInternal.put(COM_SHAPE_SERVICEINTERFACE_SHAPE_CLASS_NAME,
+                COM_SHAPE_SERVICEINTERFACE_SHAPE_TEMPLATE
+                );
+
+        return new Source(COM_SHAPE_SERVICEINTERFACE_MODULE_NAME,
+                COM_SHAPE_SERVICEINTERFACE_MODULE_INFO_TEMPLATE,
+                classNameToTemplateMapInternal, mainClassFullNameInternal,
+                COM_SHAPE_SERVICEINTERFACE_MODULE_NAME, Collections.emptyMap(),
+                isMainModule);
+    }
+
+
+
+    /*
      * com.shape.serviceprovider.circle module
      */
 
@@ -244,7 +264,7 @@ public class SourceFactory implements Constants {
      * com.shape.test module
      */
 
-    public static Source get_com_shape_test_module() throws IOException {
+    public static Source get_com_shape_test_module(boolean isMainModule) throws IOException {
         Map<String, String> classNameToTemplateMapInternal = new HashMap<String, String>();
         classNameToTemplateMapInternal.put(COM_SHAPE_TEST_LIMITMODSMAINCLASS,
                 COM_SHAPE_TEST_LIMITMODSMAINCLASS_TEMPLATE
@@ -254,7 +274,7 @@ public class SourceFactory implements Constants {
                 COM_SHAPE_TEST_MODULE_INFO_TEMPLATE,
                 classNameToTemplateMapInternal,
                 COM_SHAPE_TEST_LIMITMODSMAINCLASS, COM_SHAPE_TEST_MODULE_NAME,
-                Collections.emptyMap());
+                Collections.emptyMap(), isMainModule);
     }
 
     /*

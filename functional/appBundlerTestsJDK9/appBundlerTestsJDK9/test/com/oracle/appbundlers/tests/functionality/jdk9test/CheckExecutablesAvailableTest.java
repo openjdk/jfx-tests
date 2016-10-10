@@ -15,7 +15,7 @@ import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
  *  aim of this testcase is to check for executables available
- *  in bin directory when "-stripexecutables false" is passed to
+ *  in bin directory when "-strip-native-commands false" is passed to
  *  javapackager.
  *  @author Ramesh BG
  */

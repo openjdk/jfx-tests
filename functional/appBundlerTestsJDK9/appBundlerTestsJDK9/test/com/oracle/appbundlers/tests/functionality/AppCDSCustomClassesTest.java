@@ -34,13 +34,13 @@ import com.oracle.appbundlers.utils.Utils;
 
 public class AppCDSCustomClassesTest extends TestBase {
 
-    protected AdditionalParams getAdditionalParams() {
+    protected AdditionalParams getAdditionalParams(ExtensionType extension) {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
             additionalParams.put(UNLOCK_COMMERCIAL_FEATURES, true);
             additionalParams.put(ENABLE_APP_CDS, true);
             additionalParams.put(IDENTIFIER,
-                    currentParameter.getApp().getIdentifier());
+                    currentParameter.getApp().getIdentifier(extension));
             additionalParams.put(APP_CDS_CLASS_ROOTS, "testapp.util.Util");
             return additionalParams;
         };
@@ -74,9 +74,9 @@ public class AppCDSCustomClassesTest extends TestBase {
     }
 
     @Override
-    public void overrideParameters(ExtensionType intermediate)
+    public void overrideParameters(ExtensionType extension)
             throws IOException {
-        this.currentParameter.setAdditionalParams(getAdditionalParams());
+        this.currentParameter.setAdditionalParams(getAdditionalParams(extension));
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 }

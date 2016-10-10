@@ -9,6 +9,7 @@ import static java.lang.String.format;
 import static java.nio.file.Files.newDirectoryStream;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,7 +32,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.logging.Level;
@@ -42,6 +42,8 @@ import java.util.zip.ZipEntry;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+
+import com.oracle.tools.packager.RelativeFileSet;
 
 import javafx.util.Pair;
 
@@ -180,15 +182,28 @@ public class AppWrapper implements Constants {
         return compileApp(new String[0], extension, classpath);
     }
 
-    private int compileApp(String[] javacOptions, ExtensionType extension,
-            Path... classpath) throws IOException {
-        int resultForModule = compileAppForModules(javacOptions, extension,
-                classpath);
-        int resultForJar = compileAppForJars(javacOptions, extension,
-                classpath);
+    public int compileApp(String[] javacOptions, ExtensionType extension,
+            Path... classpath) throws IOException, RuntimeException {
+        int resultForModule = 0;
+        int resultForJar = 0;
+        if(extension != null) {
+            switch (extension) {
+            case ExplodedModules:
+            case Jmods:
+            case ModularJar:
+                resultForModule = compileAppForModules(javacOptions, extension,
+                        classpath);
+                break;
+            default:
+                resultForJar = compileAppForJars(javacOptions, extension,
+                        classpath);
+                break;
+            }
+        }
+
         int result = 0;
-        if (resultForJar < 0 || resultForModule < 0) {
-            result = -1;
+        if (resultForJar != 0 || resultForModule != 0) {
+            throw new RuntimeException("Compilation Failed for Module or Normal Package");
         }
         return result;
     }
@@ -251,7 +266,7 @@ public class AppWrapper implements Constants {
             }
 
             if (extension != null) {
-                newArgs.add("-mp");
+                newArgs.add(DOUBLE_HYPHEN+MODULEPATH);
                 newArgs.add(String.join(File.pathSeparator,
                         getModulePathBasedOnExtension(extension),
                         JMODS_PATH_IN_JDK));
@@ -273,12 +288,12 @@ public class AppWrapper implements Constants {
             });
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             LOG.log(Level.INFO,
-                    "====================COMPILATION STARTS FOR NORMAL JAR===========================");
+                    "====================COMPILATION STARTS for NORMAL JAR for package:: "+string+"===========================");
             LOG.log(Level.INFO, "compilation command for jars is " + newArgs);
             result = compiler.run(System.in, outputStream, System.err,
                     newArgs.toArray(new String[newArgs.size()]));
             LOG.log(Level.INFO,
-                    "====================COMPILATION ENDS FOR NORMAL JAR=============================");
+                    "====================COMPILATION ENDS for NORMAL JAR for package:: "+string+"===========================");
         }
         return result;
     }
@@ -300,7 +315,7 @@ public class AppWrapper implements Constants {
                 }
             }
 
-            argsList.add("-mp");
+            argsList.add(DOUBLE_HYPHEN + MODULEPATH);
             argsList.add(String.join(File.pathSeparator, getBinDir().toString(),
                     JMODS_PATH_IN_JDK));
             argsList.add("-d");
@@ -327,30 +342,32 @@ public class AppWrapper implements Constants {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             if (extension != null) {
                 LOG.log(Level.INFO,
-                        "====================COMPILATION STARTS FOR "
-                                + extension + " ===========================");
+                        "====================COMPILATION STARTS for module "+
+                                source.getModuleName() +" for extension "  +extension + " ===========================");
                 LOG.log(Level.INFO, "compilation command for " + extension
                         + " is " + argsList);
             } else {
                 LOG.log(Level.INFO,
-                        "compilation command for modules is " + argsList);
+                        "compilation command for module "+source.getModuleName() +" is " + argsList);
             }
 
             int tempResult = compiler.run(System.in, outputStream, System.err,
                     argsList.toArray(new String[argsList.size()]));
             if (tempResult != 0) {
-                result = tempResult;
+                throw new RuntimeException("Module Compilation failed for "+source.getModuleName());
             }
             String out = outputStream.toString();
             if (!out.trim().isEmpty()) {
                 LOG.log(Level.INFO, out);
             }
             if (extension != null) {
-                LOG.log(Level.INFO, "===================COMPILATION ENDS FOR "
-                        + extension + " ==============================");
+                LOG.log(Level.INFO,
+                        "====================COMPILATION ENDS for module "+
+                                source.getModuleName() +" for extension"  +extension + " ===========================");
             } else {
                 LOG.log(Level.INFO,
-                        "===================COMPILATION ENDS===================");
+                        "====================COMPILATION ENDS for module "+
+                                source.getModuleName());
             }
             LOG.log(Level.INFO, "\n");
         }
@@ -537,10 +554,10 @@ public class AppWrapper implements Constants {
             command.add(getJmodsDir() + File.separator + source.getModuleName()
                     + ".jmod");
             System.out.println(
-                    "=========================JMOD CREATION STARTS=========================");
+                    "=========================JMOD CREATION STARTS For Module "+source.getModuleName()+" =========================");
             Utils.runCommand(command, CONFIG_INSTANCE.getInstallTimeout());
             System.out.println(
-                    "=========================JMOD CREATION ENDS===========================");
+                    "=========================JMOD CREATION ENDS For Module "+source.getModuleName()+" ===========================");
             System.out.println();
         }
     }
@@ -572,27 +589,26 @@ public class AppWrapper implements Constants {
             command.add(moduleAbsouleDirectoryPath);
             command.add(".");
             System.out.println(
-                    "====================MODULAR JAR CREATION STARTS==================");
-            Utils.runCommand(command, CONFIG_INSTANCE.getInstallTimeout());
+                    "====================MODULAR JAR CREATION STARTS For "+ source.getJarName() +"==================");
+            ProcessOutput output = Utils.runCommand(command, CONFIG_INSTANCE.getInstallTimeout());
+            if( output.exitCode() != 0) {
+                throw new RuntimeException("Modular Jar Creation failed for module "+source.getJarName());
+            }
             System.out.println(
-                    "====================MODULAR JAR CREATION ENDS====================");
+                    "====================MODULAR JAR CREATION ENDS For "+ source.getJarName() +"==================");
             System.out.println();
         }
     }
 
-    public String getIdentifier() {
-        try (JarFile mainJar = new JarFile(getMainJarFile().toFile());) {
-            Manifest manifest = mainJar.getManifest();
-            for (Map.Entry<Object, Object> entry : manifest.getMainAttributes()
-                    .entrySet()) {
-                if (entry.getKey().toString().equals("Main-Class")) {
-                    return entry.getValue().toString();
-                }
-            }
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+    public String getIdentifier(ExtensionType extension) {
+        switch (extension) {
+        default:
+            return getMainClass();
+        case ExplodedModules:
+        case Jmods:
+        case ModularJar:
+            return String.join("/", getMainModuleName(), getMainClass());
         }
-        return "";
     }
 
     public String getAllModuleNamesSeparatedByPathSeparator() {
@@ -603,6 +619,12 @@ public class AppWrapper implements Constants {
     public String getAllModuleNamesSeparatedByComma() {
         return getModuleTempSources().stream().map(Source::getModuleName)
                 .collect(Collectors.joining(","));
+    }
+
+    public String getAllModuleNamesSeperatedByCommaExceptMainmodule() {
+        return getModuleTempSources().stream()
+                .filter(source -> !source.isMainModule())
+                .map(Source::getModuleName).collect(Collectors.joining(","));
     }
 
     public List<String> getAllModuleNamesAsList() {
@@ -635,5 +657,51 @@ public class AppWrapper implements Constants {
         default:
             return getJarDir().toString();
         }
+    }
+
+    public Path getJavaExtensionPathBasedonExtension(ExtensionType extension) {
+        if (extension == null) {
+            throw new NullPointerException("Extension cannot be null");
+        }
+        switch (extension) {
+        case ModularJar:
+            return getModularJarsDir();
+        case ExplodedModules:
+            return getExplodedModsDir();
+        case Jmods:
+            return getJmodsDir();
+        default:
+            return getJarDir();
+        }
+    }
+
+    public RelativeFileSet getRelativeFileSetBasedOnExtension(
+            ExtensionType extension) throws IOException {
+        RelativeFileSet relativeFileSet = null;
+        Path javaExtensionDirPath = this
+                .getJavaExtensionPathBasedonExtension(extension);
+        switch (extension) {
+        case NormalJar:
+            relativeFileSet = new RelativeFileSet(javaExtensionDirPath.toFile(),
+                    this.getJarFilesList().stream().map(Path::toFile)
+                            .collect(toSet()));
+            break;
+        case ExplodedModules:
+            relativeFileSet = new RelativeFileSet(javaExtensionDirPath.toFile(),
+                    this.getExplodedModFileList().stream().map(Path::toFile)
+                            .collect(toSet()));
+            break;
+        case Jmods:
+            relativeFileSet = new RelativeFileSet(javaExtensionDirPath.toFile(),
+                    this.getJmodFileList().stream().map(Path::toFile)
+                            .collect(toSet()));
+            break;
+        case ModularJar:
+            relativeFileSet = new RelativeFileSet(javaExtensionDirPath.toFile(),
+                    this.getModularJarFileList().stream().map(Path::toFile)
+                            .collect(toSet()));
+            break;
+        }
+        return relativeFileSet;
     }
 }

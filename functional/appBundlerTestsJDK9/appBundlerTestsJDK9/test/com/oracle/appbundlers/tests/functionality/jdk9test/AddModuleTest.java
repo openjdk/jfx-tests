@@ -24,7 +24,8 @@ public class AddModuleTest extends ModuleTestBase {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put(ADD_MODS, AddModuleTest.this.getParameters().getApp()
-                    .getAllModuleNamesSeparatedByPathSeparator());
+                    .getAllModuleNamesSeperatedByCommaExceptMainmodule());
+            hashMap.put(STRIP_NATIVE_COMMANDS, false);
             return hashMap;
         };
     }
@@ -46,5 +47,3 @@ public class AddModuleTest extends ModuleTestBase {
         }
     }
 }
-
-

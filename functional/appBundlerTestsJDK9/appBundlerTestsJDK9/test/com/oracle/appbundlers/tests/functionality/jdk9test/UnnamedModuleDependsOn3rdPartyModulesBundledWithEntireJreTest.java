@@ -40,7 +40,9 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
     protected AppWrapper getApp() throws IOException {
         return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                 COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
-                "-XaddExports:custom.util/testapp.util=ALL-UNNAMED",
+                DOUBLE_HYPHEN + ADD_EXPORTS + SPACE
+                        +
+                "custom.util/testapp.util=ALL-UNNAMED",
                 SourceFactory.get_custom_util_module(),
                 SourceFactory.get_com_greetings_app_unnamed_module(
                         new HashMap<String, String>() {
@@ -67,7 +69,7 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put(ADD_MODS,
-                    this.currentParameter.getApp().getAllModuleNamesSeparatedByPathSeparator());
+                    this.currentParameter.getApp().getAllModuleNamesSeparatedByComma());
             return hashMap;
         };
     }
@@ -109,7 +111,7 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
     public BasicParams getBasicParams() throws IOException {
         /*
          * there is no main module in this test since unnamed module depending
-         * on named module via -XaddExports
+         * on named module via --add-exports
          */
         return (AppWrapper app) -> {
             Map<String, Object> basicParams = new HashMap<String, Object>();

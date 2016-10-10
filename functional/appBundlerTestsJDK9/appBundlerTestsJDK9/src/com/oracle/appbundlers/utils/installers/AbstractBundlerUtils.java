@@ -30,11 +30,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+import javax.management.RuntimeErrorException;
+
 import org.testng.Assert;
 
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.Constants;
+import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.ProcessOutput;
 import com.oracle.appbundlers.utils.Utils;
 import com.oracle.tools.packager.Bundler;
@@ -388,18 +391,16 @@ public abstract class AbstractBundlerUtils implements Constants {
 
         verificators.put(CHECK_MODULE_IN_JAVA_EXECUTABLE,
                 (value, app, appName) -> {
-                    Path installedAppRootLocation = getInstalledAppRootLocation(
-                            app, appName);
                     List<String> stringList = new ArrayList<String>();
+                    Path binPath = getJavaExecutableBinPathInInstalledApp(app, appName);
                     String joinedString = String.join(File.separator,
-                            installedAppRootLocation.toString(), "runtime",
-                            "bin", "java");
+                            binPath.toString(),  getJavaExecutable());
                     stringList.add(joinedString);
-                    stringList.add("-listmods");
+                    stringList.add(DOUBLE_HYPHEN + LIST_MODULES);
 
                     try {
                         ProcessOutput processOutput = Utils
-                                .runCommand(stringList, 1000);
+                                .runCommand(stringList, CONFIG_INSTANCE.getRunTimeout());
                         if (value instanceof List) {
                             List<String> list = (List) value;
                             checkOutputContains(processOutput, list);
@@ -414,19 +415,11 @@ public abstract class AbstractBundlerUtils implements Constants {
 
         verificators.put(CHECK_EXECUTABLES_AVAILABLE_IN_BIN,
                 (value, app, appName) -> {
-                    Path installedAppRootLocation = getInstalledAppRootLocation(
-                            app, appName);
-                    String joinedString = String.join(File.separator,
-                            installedAppRootLocation.toString(), "runtime",
-                            "bin");
+                    Path binPath = getJavaExecutableBinPathInInstalledApp(app, appName);
                     try {
-                        /*
-                         * need to change "exe" to platform independent format.
-                         */
-                        findByExtension(Paths.get(joinedString), "exe",
-                                ROOT_DIRECTORY_DEPTH);
+                        checkIfExecutablesAvailableInBinDir(binPath);
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                       throw new RuntimeException(e);
                     }
                 });
     }
@@ -443,6 +436,8 @@ public abstract class AbstractBundlerUtils implements Constants {
         }
         bundler = bundlers.get(0);
     }
+
+    public abstract void checkIfExecutablesAvailableInBinDir(Path binPath) throws FileNotFoundException, IOException;
 
     public Bundler getBundler() {
         return bundler;
@@ -579,9 +574,13 @@ public abstract class AbstractBundlerUtils implements Constants {
         return StandardBundlerParam.APP_NAME.fetchFrom(params);
     }
 
-    abstract public Path getAppCDSCacheFile(AppWrapper app, String appName);
+    abstract public Path getAppCDSCacheFile(AppWrapper app, String appName, ExtensionType extensionType);
 
     public String[] getRmCommand(Path file) {
         return new String[] { "sudo", "/bin/rm", file.toString() };
     };
+
+    public abstract Path getJavaExecutableBinPathInInstalledApp(AppWrapper appWrapper, String appTitle);
+
+    public abstract String getJavaExecutable();
 }

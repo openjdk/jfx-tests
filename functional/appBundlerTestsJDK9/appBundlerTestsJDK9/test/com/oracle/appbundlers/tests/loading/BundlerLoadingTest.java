@@ -86,7 +86,7 @@ public class BundlerLoadingTest implements Constants {
                 .map(Bundler::getClass).map(Class::getName).collect(toSet());
         /*
          * since below classes are not exported from jdk.packager module, using
-         * string's directly without use of -XaddExports
+         * string's directly without use of --add-exports
          */
         String[] mustBeLoadedStrings = new String[] {
                 "com.oracle.tools.packager.linux.LinuxRpmBundler",

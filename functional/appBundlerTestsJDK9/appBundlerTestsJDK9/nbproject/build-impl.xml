@@ -156,6 +156,7 @@ is divided into following sections:
         <property name="application.args" value=""/>
         <property name="source.encoding" value="${file.encoding}"/>
         <property name="runtime.encoding" value="${source.encoding}"/>
+    	<property name="noclean" value="false"/>
         <condition property="javadoc.encoding.used" value="${javadoc.encoding}">
             <and>
                 <isset property="javadoc.encoding"/>
@@ -458,7 +459,7 @@ is divided into following sections:
             	<echo>======================================================</echo>
             	<echo>===============TESTNG EXECUTION BEGINS================</echo>
             	<echo>======================================================</echo>
-            	<echoproperties destfile="abc.properties"/>
+            	<echoproperties destfile="allproperties.properties"/>
                 <taskdef classname="org.testng.TestNGAntTask" classpath="${run.test.classpath}" name="testng"/>
                 <testng classfilesetref="test.set" configFailurePolicy="continue" failureProperty="tests.failed" listeners="org.testng.reporters.VerboseReporter" methods="${testng.methods.arg}" mode="${testng.mode}" outputdir="${build.test.results.dir}" suitename="appBundlerTests" testname="TestNGtests" workingDir="${work.dir}" dumpCommand="true">
                     <xmlfileset dir="${build.test.classes.dir}" includes="@{testincludes}"/>
@@ -801,6 +802,10 @@ is divided into following sections:
                 	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.sun.javafx.tools.packager.bundlers=ALL-UNNAMED"/>
                 	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.sun.javafx.tools.resource=ALL-UNNAMED"/>
                 	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager.services/jdk.packager.services=ALL-UNNAMED"/>
+                	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.oracle.tools.packager.linux=ALL-UNNAMED"/>
+                	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.oracle.tools.packager.windows=ALL-UNNAMED"/>
+                	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.oracle.tools.packager.mac=ALL-UNNAMED"/>
+                	<compilerarg value="--add-exports"/> <compilerarg value="jdk.packager/com.oracle.tools.packager.jnlp=ALL-UNNAMED"/>
                     <classpath>
                         <path path="@{classpath}"/>
                     </classpath>

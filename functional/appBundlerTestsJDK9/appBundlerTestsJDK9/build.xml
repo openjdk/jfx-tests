@@ -170,8 +170,16 @@ For example -Dclass-name=com.oracle.appbundlers.tests.functionality.SimpleExecut
 			</not>
 		</condition>
 
+		<condition property="noclean" value="false">
+			<not>
+				<isset property="noclean" />
+			</not>
+		</condition>
+
+		<echo>You may avoid cleaning up bundles and temporary directory by passing -Dnoclean=true</echo>
+
 		<property name="run.jvmargs" value="-Dtest-run-mode=single-method -Dinstallation-package-type=${installation-package-type} -Dpackager-interface=${packager-interface} -Djava-extension-type=${java-extension-type}
-			-Dmanual-only=${manual-only}" />
+			-Dmanual-only=${manual-only} -Dnoclean=${noclean}" />
 
 		<antcall target="-do-compile-single">
 			<param  name="javac.includes" value="${class-name}" />

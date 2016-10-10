@@ -4,7 +4,10 @@
  */
 package com.oracle.appbundlers.tests.functionality.parameters;
 
+import static java.util.stream.Collectors.toSet;
+
 import java.io.File;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +15,8 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.Additional
 import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.ExtensionType;
+import com.oracle.tools.packager.RelativeFileSet;
+import com.sun.javafx.tools.packager.bundlers.BundleParams;
 
 /**
  * In order to provide default(common) parameters to
@@ -36,6 +41,10 @@ public class ExplodedModuleParameters extends GenericModuleParameters {
     public Map<String, Object> getBasicParams() throws Exception {
         Map<String, Object> basicParams = new HashMap<String, Object>();
         basicParams.putAll(super.getBasicParams());
+        basicParams.put(BundleParams.PARAM_APP_RESOURCES,
+                new RelativeFileSet(this.app.getExplodedModsDir().toFile(),
+                        app.getExplodedModFileList().stream().map(Path::toFile)
+                                .collect(toSet())));
         basicParams.put(MODULEPATH, String.join(File.pathSeparator,
                 JMODS_PATH_IN_JDK, app.getExplodedModsDir().toString()));
         return requireNonNull(getBasicParamsFunctionalInterface(), basicParams);

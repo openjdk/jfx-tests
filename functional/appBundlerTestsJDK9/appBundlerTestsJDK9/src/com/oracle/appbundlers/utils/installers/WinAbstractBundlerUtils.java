@@ -15,6 +15,7 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,6 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Predicate;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,6 +37,7 @@ import org.testng.Assert;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.Config;
+import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.ProcessOutput;
 import com.oracle.appbundlers.utils.Utils;
 import com.oracle.appbundlers.utils.windows.Registry;
@@ -476,8 +479,8 @@ public abstract class WinAbstractBundlerUtils extends AbstractBundlerUtils {
     }
 
     @Override
-    public Path getAppCDSCacheFile(AppWrapper app, String appName) {
-        return Paths.get(System.getenv("APPDATA"), app.getIdentifier(), "cache",
+    public Path getAppCDSCacheFile(AppWrapper app, String appName, ExtensionType extensionType) {
+        return Paths.get(System.getenv("APPDATA"), app.getIdentifier(extensionType), "cache",
                 appName + ".jpa");
     };
 
@@ -494,4 +497,24 @@ public abstract class WinAbstractBundlerUtils extends AbstractBundlerUtils {
         }
         return new String[] { "C:\\cygwin64\\bin\rm.exe", file.toString() };
     };
+
+    public Path getJavaExecutableBinPathInInstalledApp(AppWrapper appWrapper, String appTitle) {
+        return getInstalledAppRootLocation(appWrapper, appTitle).resolve("runtime/bin");
+    }
+
+    @Override
+    public void checkIfExecutablesAvailableInBinDir(Path binDirPath) throws IOException {
+        Optional<Path> result = Files.find(binDirPath, 1, (file, attr) -> file
+                .toFile().getName().equals("java.exe")).findFirst();
+        if (!result.isPresent()) {
+            throw new FileNotFoundException("java"
+                    + " not found under " + binDirPath );
+        }
+        LOG.log(Level.INFO, "java.exe found in {0}", binDirPath);
+    }
+
+    @Override
+    public String getJavaExecutable() {
+        return "java.exe";
+    }
 }

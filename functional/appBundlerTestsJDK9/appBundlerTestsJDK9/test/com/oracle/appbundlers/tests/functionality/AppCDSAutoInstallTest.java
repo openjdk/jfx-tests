@@ -40,14 +40,14 @@ public class AppCDSAutoInstallTest extends TestBase {
         return new BundlerUtils[] { PKG, DMG, EXE, MSI, DEB, RPM };
     }
 
-    public AdditionalParams getAdditionalParams() throws Exception {
+    public AdditionalParams getAdditionalParams(ExtensionType extension) throws Exception {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
             additionalParams.put(UNLOCK_COMMERCIAL_FEATURES, true);
             additionalParams.put(ENABLE_APP_CDS, true);
             additionalParams.put(APP_CDS_CACHE_MODE, "auto+install");
             additionalParams.put(IDENTIFIER,
-                    this.currentParameter.getApp().getIdentifier());
+                    this.currentParameter.getApp().getIdentifier(extension));
             return additionalParams;
         };
     }
@@ -78,9 +78,9 @@ public class AppCDSAutoInstallTest extends TestBase {
     }
 
     @Override
-    public void overrideParameters(ExtensionType intermediate)
+    public void overrideParameters(ExtensionType extension)
             throws Exception {
-        this.currentParameter.setAdditionalParams(getAdditionalParams());
+        this.currentParameter.setAdditionalParams(getAdditionalParams(extension));
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 }

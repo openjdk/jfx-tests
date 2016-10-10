@@ -33,8 +33,7 @@ import javafx.util.Pair;
  */
 
 public class FileAssociationTest extends TestBase {
-    public static final String RM_FULLNAME = "testapp.RmApp";
-    public static final String RM_NAME = "RmApp";
+    public static final String RM_NAME = Utils.isMacOS() ? "MacRmApp" : "RmApp";
     public static final String ext1 = "foo", ext2 = "bar", ext3 = "baz",
             ext4 = "qux";
 
@@ -65,7 +64,7 @@ public class FileAssociationTest extends TestBase {
             association2.put(FA_EXTENSIONS, Arrays.asList(ext3, ext4));
             association2.put(FA_CONTENT_TYPE, Arrays.asList("hello/world"));
             association2.put(FA_ICON, CONFIG_INSTANCE
-                    .getResourceFilePath("icon2." + iconExtension()).toFile());
+                    .getResourceFilePath("icon." + iconExtension()).toFile());
             additionalParams.put(FILE_ASSOCIATIONS,
                     Arrays.asList(association1, association2));
             additionalParams.put(SYSTEM_WIDE, true);
@@ -93,17 +92,21 @@ public class FileAssociationTest extends TestBase {
                 RM_NAME);
         String templateName = Utils.isMacOS() ? "MacRmApp.java.template"
                 : "RmApp.java.template";
-        String mainClassfullyQualifiedName = "com.rm.testapp.RmApp";
+
+        String mainClassfullyQualifiedName = Utils.isMacOS()
+                ? "com.rm.testapp.MacRmApp" : "com.rm.testapp.RmApp";
         switch (extension) {
         default:
             return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
-                    mainClassfullyQualifiedName, new Source(mainClassfullyQualifiedName, templateName, "rmApp",
-                            replacementsInSrcCodeInternal));
+                    mainClassfullyQualifiedName,
+                    new Source(mainClassfullyQualifiedName, templateName,
+                            "rmApp", replacementsInSrcCodeInternal));
         case ExplodedModules:
         case Jmods:
         case ModularJar:
             Map<String, String> classNameToTemplateMap = new HashMap<String, String>();
-            classNameToTemplateMap.put(mainClassfullyQualifiedName, templateName);
+            classNameToTemplateMap.put(mainClassfullyQualifiedName,
+                    templateName);
             return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                     mainClassfullyQualifiedName,
                     new Source("com.rm", "com.rm.module.info.template",
@@ -126,10 +129,24 @@ public class FileAssociationTest extends TestBase {
     @Override
     protected void prepareApp(AppWrapper app, ExtensionType extension)
             throws IOException, ExecutionException {
+
+        String[] javacOptions = null;
         final String makeJavacReadClassesFromRtJar = "-XDignore.symbol.file=true";
+        switch (extension) {
+            case NormalJar: javacOptions = new String[] { makeJavacReadClassesFromRtJar,
+                    DOUBLE_HYPHEN + ADD_EXPORTS
+                    , "java.desktop/com.apple.eawt=ALL-UNNAMED" };
+            break;
+            case ExplodedModules:
+            case Jmods:
+            case ModularJar: javacOptions = new String[] { makeJavacReadClassesFromRtJar,
+                    DOUBLE_HYPHEN + ADD_EXPORTS, "java.desktop/com.apple.eawt=com.rm" };
+                break;
+        }
+
         app.preinstallApp(extension);
         app.writeSourcesToAppDirectory();
-        app.compileApp(new String[] { makeJavacReadClassesFromRtJar });
+        app.compileApp(javacOptions, extension);
         app.jarApp(extension);
     }
 

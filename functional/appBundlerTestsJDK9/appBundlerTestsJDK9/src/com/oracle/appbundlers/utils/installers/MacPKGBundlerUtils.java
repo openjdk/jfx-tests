@@ -42,7 +42,7 @@ public class MacPKGBundlerUtils extends MacAbstractBundlerUtils {
         try {
             LOG.log(Level.INFO, "Installing {0}.", pkg);
             String[] cmd = new String[] { "sudo", "installer", "-pkg",
-                    pkg.toString(), "-target", "/", "-allowUntrusted" };
+                    pkg.toString(), "-target", "/", "-allowUntrusted","-dumplog","-verbose" };
             Utils.runCommand(cmd, true, CONFIG_INSTANCE.getInstallTimeout());
             LOG.info("Installation done.");
         } catch (ExecutionException e) {
@@ -55,6 +55,7 @@ public class MacPKGBundlerUtils extends MacAbstractBundlerUtils {
     public void uninstall(AppWrapper app, String applicationTitle)
             throws IOException {
         try {
+            LOG.log(Level.INFO, "Package Application Identifier is {0}", applicationTitle);
             String subDirName = runCommand(
                     Arrays.asList("pkgutil", "--files", applicationTitle),
                     false, CONFIG_INSTANCE.getRunTimeout()).getOutputStream()
@@ -66,10 +67,13 @@ public class MacPKGBundlerUtils extends MacAbstractBundlerUtils {
                             applicationTitle },
                     true, CONFIG_INSTANCE.getRunTimeout());
         } catch (ExecutionException e) {
+            LOG.log(Level.INFO, "IOException occured in MacPKGBundlerUtils.java::uninstall() {0} ",e);
             throw new IOException(e);
         } catch (IndexOutOfBoundsException e) {
             // if installation is failed, then package cannot be removed:
             // just ignore it
+        } catch(Exception e) {
+            LOG.log(Level.INFO, "Exception occured in MacPKGBundlerUtils.java::uninstall() {0} ",e);
         }
     }
 

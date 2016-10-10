@@ -233,6 +233,14 @@ public enum Config {
         return this.javaExtensionType;
     }
 
+    public boolean isNoCleanSet() {
+        String nocleanProperty = System.getProperty("noclean");
+        if(nocleanProperty == null) {
+            return false;
+        }
+        return nocleanProperty.equalsIgnoreCase("true");
+    }
+
     public boolean manualOnly() {
         return manualOnly;
     }

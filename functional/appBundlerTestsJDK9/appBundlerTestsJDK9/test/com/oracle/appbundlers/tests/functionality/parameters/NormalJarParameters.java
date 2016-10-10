@@ -9,9 +9,7 @@ import static java.util.stream.Collectors.toSet;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -59,10 +57,7 @@ public class NormalJarParameters extends Parameters {
                         app.getJarFilesList().stream().map(Path::toFile)
                                 .collect(toSet())));
         basicParams.put(MAIN_JAR,
-                new RelativeFileSet(this.app.getJarDir()
-                        .toFile(),
-                new HashSet<>(
-                        Arrays.asList(this.app.getMainJarFile().toFile()))));
+                this.app.getMainJarFile().toFile().getName());
         basicParams.put(CLASSPATH,
                 this.app.getJarFilesList().stream().map(Path::getFileName)
                         .map(Path::toString)

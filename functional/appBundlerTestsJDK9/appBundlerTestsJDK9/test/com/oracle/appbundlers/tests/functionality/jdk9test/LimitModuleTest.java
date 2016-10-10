@@ -40,10 +40,10 @@ public class LimitModuleTest extends ModuleTestBase {
     public AppWrapper getApp() throws IOException {
         return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                 COM_SHAPE_TEST_LIMITMODSMAINCLASS,
-                SourceFactory.get_com_shape_serviceinterface_module(),
+                SourceFactory.get_com_shape_serviceinterface_module(false),
                 SourceFactory.get_com_shape_serviceprovider_circle_module(),
                 SourceFactory.get_com_shape_serviceprovider_rectangle_module(),
-                SourceFactory.get_com_shape_test_module());
+                SourceFactory.get_com_shape_test_module(true));
     }
 
     public VerifiedOptions getVerifiedOptions() {

@@ -103,7 +103,12 @@ public class ConsoleBundlingManager extends BundlingManager {
     @Override
     public File execute(Map<String, Object> params, File file)
             throws IOException {
+       return execute(params, file, false);
+    }
 
+    @Override
+    public File execute(Map<String, Object> params, File file,
+            boolean isSrcDirRequired) throws IOException {
         try {
             List<String> command = command(file, toConsole(params));
             System.out.println("execution command is " + command);
@@ -130,7 +135,7 @@ public class ConsoleBundlingManager extends BundlingManager {
         command.addAll(Arrays.asList(
                 CONFIG_INSTANCE
                         .javafxpackager()  ,
-                "-deploy", "-verbose", "-outdir", file.getParent(),
+                "-deploy", "-verbose", "-outdir", file.toString(),
                 // mandatory option
                 "-outfile", "test", "-native",
                 "image".equalsIgnoreCase(bundlerType) ? "image"
@@ -144,6 +149,7 @@ public class ConsoleBundlingManager extends BundlingManager {
                 value.stream().forEach(option -> command.add(option));
             } else if ((DOUBLE_HYPHEN + STRIP_NATIVE_COMMANDS).equals(key)) {
                 command.add(key);
+                command.add(value.iterator().next());
             } else {
                 command.add(key);
                 command.add(
@@ -163,11 +169,13 @@ public class ConsoleBundlingManager extends BundlingManager {
             RelativeFileSet fileSet;
             switch (key) {
             case "appResources":
-                fileSet = (RelativeFileSet) value;
-                String path = fileSet.getBaseDirectory().getPath();
-                key2Value.add(new Pair<>("-srcdir", Arrays.asList(path)));
-                key2Value.add(
-                        new Pair<>("-srcfiles", fileSet.getIncludedFiles()));
+                if(ExtensionType.NormalJar == extensionType) {
+                    fileSet = (RelativeFileSet) value;
+                    String path = fileSet.getBaseDirectory().getPath();
+                    key2Value.add(new Pair<>("-srcdir", Arrays.asList(path)));
+                    key2Value.add(
+                            new Pair<>("-srcfiles", fileSet.getIncludedFiles()));
+                }
                 break;
             case "jvmOptions":
                 Collection<String> col = (Collection<String>) value;
@@ -198,8 +206,8 @@ public class ConsoleBundlingManager extends BundlingManager {
                 break;
             case "mainJar":
                 // Use relative references
-                fileSet = (RelativeFileSet) value;
-                String jar = new ArrayList<>(fileSet.getIncludedFiles()).get(0);
+//                fileSet = (RelativeFileSet) value;
+                String jar = (String) value;
                 key2Value.add(new Pair<>(getMappedKeyAndCheck(key),
                         Arrays.asList(jar)));
                 break;

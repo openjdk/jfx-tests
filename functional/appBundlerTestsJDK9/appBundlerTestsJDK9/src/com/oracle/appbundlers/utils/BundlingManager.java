@@ -23,7 +23,7 @@ import com.oracle.tools.packager.UnsupportedPlatformException;
  */
 public abstract class BundlingManager implements Constants {
 
-    private static final Logger LOG = Logger
+    protected static final Logger LOG = Logger
             .getLogger(BundlingManager.class.getName());
 
     private boolean installed = false;
@@ -42,12 +42,23 @@ public abstract class BundlingManager implements Constants {
     public abstract File execute(Map<String, Object> params, File file)
             throws IOException;
 
+    public abstract File execute(Map<String, Object> params, File file,
+            boolean isSrcDirRequired) throws IOException;
+
     public Path execute(Map<String, Object> params, AppWrapper app)
             throws IOException {
         this.app = app;
         LOG.log(Level.INFO, "Bundling with params: {0}.", params);
         Path bundlesDir = app.getBundlesDir();
         return execute(params, bundlesDir.toFile()).toPath();
+    }
+
+    public Path execute(Map<String, Object> params, AppWrapper app,
+            boolean isSrcDirRequired) throws IOException {
+        this.app = app;
+        LOG.log(Level.INFO, "Bundling with params: {0}.", params);
+        Path bundlesDir = app.getBundlesDir();
+        return execute(params, bundlesDir.toFile(), isSrcDirRequired).toPath();
     }
 
     public Bundler getBundler() {
@@ -129,7 +140,7 @@ public abstract class BundlingManager implements Constants {
     }
 
     public Path getAppCDSCacheFile(AppWrapper app, String appName) {
-        return bundlerUtils.getAppCDSCacheFile(app, appName);
+        return bundlerUtils.getAppCDSCacheFile(app, appName, extensionType);
     }
 
     public AbstractBundlerUtils getBundlerUtils() {

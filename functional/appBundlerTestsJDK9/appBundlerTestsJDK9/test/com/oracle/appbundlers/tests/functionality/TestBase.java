@@ -58,6 +58,7 @@ import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.BundlingManagers;
+import com.oracle.appbundlers.utils.Config;
 import com.oracle.appbundlers.utils.Constants;
 import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.JavaExtensionTypeFilter;
@@ -204,6 +205,7 @@ public abstract class TestBase implements Constants {
         }
 
         try {
+            LOG.log(Level.INFO,"Parameters before passing to execute method {0}", allParams);
             executeJavaPackager(bundlingManager, allParams);
             String path = bundlingManager.install(
                     this.currentParameter.getApp(), getResultingAppName(),
@@ -247,14 +249,19 @@ public abstract class TestBase implements Constants {
 
     @AfterClass
     protected void cleanUp() throws IOException {
-        try {
-            LOG.log(Level.INFO, "Removing temporary files: ");
-        } finally {
-            for (Parameters parameters : intermediateToParametersMap.values()) {
-                if(parameters.getApp() != null && parameters.getApp().getWorkDir() != null) {
-                    Utils.tryRemoveRecursive(parameters.getApp().getWorkDir());
+        if (!Config.CONFIG_INSTANCE.isNoCleanSet()) {
+            try {
+                LOG.log(Level.INFO, "Removing temporary files: ");
+            } finally {
+                for (Parameters parameters : intermediateToParametersMap.values()) {
+                    if(parameters.getApp() != null && parameters.getApp().getWorkDir() != null) {
+                        LOG.log(Level.INFO, "Removing Directory {0} ",parameters.getApp().getWorkDir());
+                        Utils.tryRemoveRecursive(parameters.getApp().getWorkDir());
+                    }
                 }
             }
+        } else {
+            LOG.log(Level.INFO, "SKIPPED cleaning temporary files and bundles directory");
         }
     }
 
@@ -304,10 +311,13 @@ public abstract class TestBase implements Constants {
     protected Map<String, Object> getAllParams() throws Exception {
         Map<String, Object> basicParams = this.currentParameter
                 .getBasicParams();
+        LOG.log(Level.INFO, "Basic Parameters are {0}", basicParams);
         Map<String, Object> allParams = new HashMap<String, Object>();
         allParams.put(APP_NAME, getResultingAppName());
         allParams.putAll(basicParams);
-        allParams.putAll(this.currentParameter.getAdditionalParams());
+        Map<String, Object> additionalParams = this.currentParameter.getAdditionalParams();
+        LOG.log(Level.INFO, "Additional Parameters are {0}", additionalParams);
+        allParams.putAll(additionalParams);
         return allParams;
     }
 

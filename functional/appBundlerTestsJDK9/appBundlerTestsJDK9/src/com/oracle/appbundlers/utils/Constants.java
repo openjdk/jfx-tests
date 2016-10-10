@@ -135,6 +135,7 @@ public interface Constants {
     String MAIN_MODULE = "module";
     String APP1_NAME = "App1";
     String APP_RESOURCES = "appResources";
+    String APP_RESOURCES_LIST ="appResourcesList";
     String COPYRIGHT_VALUE = "Copyright (c) 2011, 2016 Oracle and/or its affiliates. All rights reserved.";
     String LICENSE_TYPE_VALUE = "SQE GPL v.100.500";
     String PASS_2 = "PASS_2";
@@ -142,9 +143,6 @@ public interface Constants {
     String APP2_NAME = "App2";
     String APP3_NAME = "App3";
     String packageName = "testapp";
-    /*
-     * MODULE RELATED PARAMETERS in AppWrapper
-     */
     String BUNDLES = "bundles";
     String SOURCE = "src";
     String BIN = "bin";
@@ -157,5 +155,6 @@ public interface Constants {
     String DOUBLE_HYPHEN ="--";
     String RUNTIME = "runtime";
     String MODULE_INFO_DOT_JAVA = "module-info.java";
+    String ADD_EXPORTS = "add-exports";
 
 }

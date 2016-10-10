@@ -10,13 +10,16 @@ import static java.nio.file.Files.readAllBytes;
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +32,7 @@ import org.testng.Assert;
 
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
+import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.ProcessOutput;
 import com.oracle.appbundlers.utils.Utils;
 
@@ -275,8 +279,34 @@ public abstract class MacAbstractBundlerUtils extends AbstractBundlerUtils {
     }
 
     @Override
-    public Path getAppCDSCacheFile(AppWrapper app, String appName) {
+    public Path getAppCDSCacheFile(AppWrapper app, String appName,
+            ExtensionType extensionType) {
         return Paths.get(System.getenv("HOME"), "Library/Application Support",
-                app.getIdentifier(), "cache", appName + ".jpa");
+                app.getIdentifier(extensionType), "cache", appName + ".jpa");
     };
+
+    @Override
+    public Path getJavaExecutableBinPathInInstalledApp(AppWrapper appWrapper,
+            String appTitle) {
+        Path installedAppRootLocation = getInstalledAppRootLocation(appWrapper,
+                appTitle);
+        return installedAppRootLocation
+                .resolve("Contents/PlugIns/Java.runtime/Contents/Home/bin");
+    }
+
+    @Override
+    public void checkIfExecutablesAvailableInBinDir(Path binDirPath) throws IOException {
+        Optional<Path> result = Files.find(binDirPath, 1, (file, attr) -> file
+                .toFile().getName().equals("java")).findFirst();
+        if (!result.isPresent()) {
+            throw new FileNotFoundException("java"
+                    + " not found under " + binDirPath );
+        }
+        LOG.log(Level.INFO, "java executable found in {0}", binDirPath);
+    }
+
+    @Override
+    public String getJavaExecutable() {
+        return "java";
+    }
 }

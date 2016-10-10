@@ -10,9 +10,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.testng.annotations.Test;
+
 import com.oracle.appbundlers.tests.functionality.CommandLineArgumentsTest;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
+import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.BundlingManagers;
 import com.oracle.appbundlers.utils.Source;
 import com.oracle.appbundlers.utils.Utils;
@@ -66,5 +69,14 @@ public class UnicodeCommandLineArgumentsTest extends CommandLineArgumentsTest {
                                     put(DEPENDENT_MODULE, "");
                                 }
                             }));
+    }
+
+    /*
+     * SKIPPING UNICODE TEST CASES UNTIL https://bugs.openjdk.java.net/browse/JDK-8089899 is fixed.
+     */
+    @Override
+    @Test(dataProvider = "getBundlers", enabled=false)
+    public void runTest(BundlingManager bundlingManager) throws Exception {
+        super.runTest(bundlingManager);
     }
 }

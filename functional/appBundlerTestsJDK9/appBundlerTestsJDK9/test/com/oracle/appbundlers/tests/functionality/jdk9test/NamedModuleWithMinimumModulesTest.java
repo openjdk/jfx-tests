@@ -50,9 +50,9 @@ public class NamedModuleWithMinimumModulesTest extends ModuleTestBase {
     }
 
     @Override
-    public void overrideParameters(ExtensionType intermediate)
+    public void overrideParameters(ExtensionType javaExtensionType)
             throws IOException {
-        if (ExtensionType.NormalJar != intermediate) {
+        if (ExtensionType.NormalJar != javaExtensionType) {
             this.currentParameter.setApp(getApp());
             this.currentParameter.setAdditionalParams(getAdditionalParams());
             this.currentParameter.setVerifiedOptions(getVerifiedOptions());

@@ -64,7 +64,8 @@ public class ListServiceProvidersTest extends ModuleTestBase {
     private AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<String, Object>();
-            additionalParams.put(ADD_MODS, this.currentParameter.getApp().getAllModuleNamesSeparatedByComma());
+            additionalParams.put(ADD_MODS, this.currentParameter.getApp()
+                    .getAllModuleNamesSeperatedByCommaExceptMainmodule());
             return additionalParams;
         };
     }

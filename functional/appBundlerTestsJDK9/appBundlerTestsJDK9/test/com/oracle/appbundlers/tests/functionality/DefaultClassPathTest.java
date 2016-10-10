@@ -49,7 +49,7 @@ public class DefaultClassPathTest extends TestBase {
             throws IOException, ExecutionException {
         app.preinstallApp(extension);
         app.writeSourcesToAppDirectory();
-        app.compileApp();
+        app.compileApp(ExtensionType.NormalJar);
         app.jarApp(Collections.emptyList(), true);
     }
 

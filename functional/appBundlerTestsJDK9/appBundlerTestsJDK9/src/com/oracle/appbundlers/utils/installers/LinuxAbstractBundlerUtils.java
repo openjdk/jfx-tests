@@ -17,6 +17,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,12 +25,15 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
+import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.ProcessOutput;
 import com.oracle.appbundlers.utils.Utils;
 
@@ -217,8 +221,30 @@ public abstract class LinuxAbstractBundlerUtils extends AbstractBundlerUtils {
     }
 
     @Override
-    public Path getAppCDSCacheFile(AppWrapper app, String appName) {
-        return Paths.get(System.getenv("HOME"), ".local", app.getIdentifier(),
-                "cache", appName + ".jpa");
+    public Path getAppCDSCacheFile(AppWrapper app, String appName,
+            ExtensionType extension) {
+        return Paths.get(System.getenv("HOME"), ".local",
+                app.getIdentifier(extension), "cache", appName + ".jpa");
     };
+
+    public Path getJavaExecutableBinPathInInstalledApp(AppWrapper appWrapper,
+            String appTitle) {
+        return getInstalledAppRootLocation(appWrapper, appTitle).resolve("runtime/bin");
+    }
+
+    @Override
+    public void checkIfExecutablesAvailableInBinDir(Path binDirPath) throws IOException {
+        Optional<Path> result = Files.find(binDirPath, 1, (file, attr) -> file
+                .toFile().getName().equals("java")).findFirst();
+        if (!result.isPresent()) {
+            throw new FileNotFoundException("java"
+                    + " not found under " + binDirPath );
+        }
+        LOG.log(Level.INFO, "java executable found in {0}", binDirPath);
+    }
+
+    @Override
+    public String getJavaExecutable() {
+        return "java";
+    }
 }

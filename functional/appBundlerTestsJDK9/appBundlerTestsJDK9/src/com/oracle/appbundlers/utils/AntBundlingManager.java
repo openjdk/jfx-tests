@@ -158,15 +158,19 @@ public class AntBundlingManager extends BundlingManager {
                 Element parentEl = ant.get(location.element);
                 switch (key) {
                 case "appResources": {
-                    RelativeFileSet relFileSet = (RelativeFileSet) value;
-                    Element e = document.createElement("fx:fileset");
-                    e.setAttribute("dir",
-                            relFileSet.getBaseDirectory().getAbsolutePath());
-                    e.setAttribute("includes", relFileSet.getIncludedFiles()
-                            .stream().collect(joining(",")));
-                    parentEl.appendChild(e);
+                    if(ExtensionType.NormalJar == extensionType) {
+                        RelativeFileSet relFileSet = (RelativeFileSet) value;
+                        Element e = document.createElement("fx:fileset");
+                        e.setAttribute("dir",
+                                relFileSet.getBaseDirectory().getAbsolutePath());
+                        e.setAttribute("includes", relFileSet.getIncludedFiles()
+                                .stream().collect(joining(",")));
+                        parentEl.appendChild(e);
+                    }
                     break;
                 }
+                case "appResourcesList":
+                    break;
                 case "licenseFile": {
                     String file = (String) value;
                     Element e = document.createElement("fx:fileset");
@@ -238,10 +242,13 @@ public class AntBundlingManager extends BundlingManager {
                             break;
 
                             default:
-                                launcherEl.appendChild(
-                                        createBundleArgumentEntry(document,
-                                                keyVal.getKey(),
-                                                keyVal.getValue()));
+                                Element bundlerArgumentEntry = createBundleArgumentEntry(document,
+                                        keyVal.getKey(),
+                                        keyVal.getValue());
+                                if(bundlerArgumentEntry != null) {
+                                    launcherEl.appendChild(
+                                            bundlerArgumentEntry);
+                                }
                             }
                         }
 
@@ -319,8 +326,11 @@ public class AntBundlingManager extends BundlingManager {
                     break;
                 }
             } else {
-                fxDeploy.appendChild(
-                        createBundleArgumentEntry(document, key, value));
+                Element bundleArgumentEntry = createBundleArgumentEntry(document, key, value);
+                if(bundleArgumentEntry != null) {
+                    fxDeploy.appendChild(
+                            bundleArgumentEntry);
+                }
             }
         }
     }
@@ -342,18 +352,21 @@ public class AntBundlingManager extends BundlingManager {
 
     private Element createBundleArgumentEntry(Document document, String argName,
             Object value) throws IOException {
+        if ("appResourcesList".equals(argName)) {
+            return null;
+        }
         Element bundleArgument = document.createElement("fx:bundleArgument");
-        String argValue;
+        String argValue = null;
         if ("mainJar".equals(argName)) {
-            RelativeFileSet fileSet = (RelativeFileSet) value;
-            argValue = fileSet.getIncludedFiles().iterator().next();
+//            RelativeFileSet fileSet = (RelativeFileSet) value;
+//            argValue = fileSet.getIncludedFiles().iterator().next();
+            argValue = (String) value;
         } else {
             checkValue(value);
             argValue = value.toString();
         }
         bundleArgument.setAttribute("arg", argName);
         bundleArgument.setAttribute("value", argValue);
-
         return bundleArgument;
     }
 
@@ -422,7 +435,7 @@ public class AntBundlingManager extends BundlingManager {
             throw new IllegalArgumentException(
                     "Invalid bundle directory : " + file);
         }
-        fxDeploy.setAttribute("outdir", file.getParentFile().getAbsolutePath());
+        fxDeploy.setAttribute("outdir", file.getAbsolutePath());
         fxDeploy.setAttribute("outfile", "test");
         fxDeploy.setAttribute("verbose", "true");
         appendToFXDeploy(document, fxDeploy, params);
@@ -439,6 +452,12 @@ public class AntBundlingManager extends BundlingManager {
     @Override
     public File execute(Map<String, Object> params, File file)
             throws IOException {
+       return execute(params, file, false);
+    }
+
+    @Override
+    public File execute(Map<String, Object> params, File file,
+            boolean isSrcDirRequired) throws IOException {
         try {
             Data data = createDocument();
             Element fxDeploy = fxDeploy(data.document, params, file);

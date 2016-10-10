@@ -8,9 +8,12 @@ package com.oracle.appbundlers.tests.functionality.unicode;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import org.testng.annotations.Test;
+
 import com.oracle.appbundlers.tests.functionality.AppInfoParametersTest;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
+import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.BundlingManagers;
 
 /**
@@ -58,5 +61,14 @@ public class UnicodeAppInfoParametersTest extends AppInfoParametersTest {
     @Override
     protected BundlingManagers[] getBundlingManagers() {
         return new BundlingManagers[] {BundlingManagers.CLI};
+    }
+
+    /*
+     * SKIPPING UNICODE TEST CASES UNTIL https://bugs.openjdk.java.net/browse/JDK-8089899 is fixed.
+     */
+    @Override
+    @Test(dataProvider = "getBundlers", enabled=false)
+    public void runTest(BundlingManager bundlingManager) throws Exception {
+        super.runTest(bundlingManager);
     }
 }

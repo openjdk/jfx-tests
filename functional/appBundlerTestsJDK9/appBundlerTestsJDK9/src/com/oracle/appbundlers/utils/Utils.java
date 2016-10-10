@@ -97,7 +97,7 @@ public class Utils {
             po.waitFor(timeout, TimeUnit.MILLISECONDS);
             LOG.log(Level.INFO,
                     "Command \"{0}\"... finished with exit code \"{1}\"",
-                    new Object[] { cmd.get(0), po.exitCode() });
+                    new Object[] { cmd, po.exitCode() });
             return po;
         } catch (InterruptedException e) {
             throw new IOException(e);

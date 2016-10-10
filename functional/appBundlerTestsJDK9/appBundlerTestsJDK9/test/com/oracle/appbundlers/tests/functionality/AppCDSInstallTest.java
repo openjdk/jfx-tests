@@ -42,14 +42,14 @@ public class AppCDSInstallTest extends TestBase {
         return new BundlerUtils[] { PKG, DMG, EXE, MSI, DEB, RPM };
     }
 
-    public AdditionalParams getAdditionalParams() {
+    public AdditionalParams getAdditionalParams(ExtensionType extension) {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
             additionalParams.put(UNLOCK_COMMERCIAL_FEATURES, true);
             additionalParams.put(ENABLE_APP_CDS, true);
             additionalParams.put(APP_CDS_CACHE_MODE, "install");
             additionalParams.put(IDENTIFIER,
-                    this.currentParameter.getApp().getIdentifier());
+                    this.currentParameter.getApp().getIdentifier(extension));
             return additionalParams;
         };
     }
@@ -75,9 +75,9 @@ public class AppCDSInstallTest extends TestBase {
     }
 
     @Override
-    public void overrideParameters(ExtensionType intermediate)
+    public void overrideParameters(ExtensionType extension)
             throws IOException {
-        this.currentParameter.setAdditionalParams(getAdditionalParams());
+        this.currentParameter.setAdditionalParams(getAdditionalParams(extension));
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 }

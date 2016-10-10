@@ -21,8 +21,10 @@ import java.util.Map;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.BundlerUtils;
+import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.tools.packager.RelativeFileSet;
+import com.sun.javafx.tools.packager.bundlers.BundleParams;
 
 /**
  * @author Dmitry Ginzburg &lt;dmitry.x.ginzburg@oracle.com&gt;
@@ -33,29 +35,35 @@ import com.oracle.tools.packager.RelativeFileSet;
  * Tests {@code licenseFile} option
  */
 public class LicenseFileTest extends TestBase {
-    private String licenseFileContent = null;
+    private String licenseFileContent;
     private Path licenseFileSrc;
-    private Path licenseFile;
 
     public void initializeVars() throws IOException {
         licenseFileSrc = CONFIG_INSTANCE.getResourceFilePath(LICENSE_FILE_NAME);
-        licenseFile = currentParameter.getApp().getJarDir()
-                .resolve(LICENSE_FILE_NAME);
     }
 
     @Override
     protected BundlerUtils[] getBundlerUtils() {
-        return new BundlerUtils[] { DEB,
-                 WIN_APP,
-                EXE, MSI };
+        return new BundlerUtils[] { DEB, WIN_APP, EXE, MSI };
     }
 
-    protected AdditionalParams getAdditionalParams() {
+    protected AdditionalParams getAdditionalParams(ExtensionType extension)
+            throws IOException {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
-            RelativeFileSet appResources = (RelativeFileSet) additionalParams
-                    .get(APP_RESOURCES);
-            appResources.getIncludedFiles().add(LICENSE_FILE_NAME);
+
+            RelativeFileSet existingRelativeFileSet = (RelativeFileSet) this.currentParameter
+                    .getBasicParams().get(APP_RESOURCES);
+            if (existingRelativeFileSet == null) {
+                existingRelativeFileSet = this.currentParameter
+                        .getApp().getRelativeFileSetBasedOnExtension(extension);
+                existingRelativeFileSet.getIncludedFiles().add(LICENSE_FILE_NAME);
+                additionalParams.put(APP_RESOURCES, existingRelativeFileSet);
+            } else {
+                existingRelativeFileSet.getIncludedFiles()
+                        .add(LICENSE_FILE_NAME);
+            }
+            additionalParams.put(BundleParams.PARAM_APP_RESOURCES, existingRelativeFileSet);
             additionalParams.put(LICENSE_FILE, LICENSE_FILE_NAME);
             return additionalParams;
         };
@@ -71,18 +79,35 @@ public class LicenseFileTest extends TestBase {
 
     @Override
     protected void prepareTestEnvironment() throws Exception {
-        super.prepareTestEnvironment();
-        initializeVars();
-        Files.deleteIfExists(licenseFile);
-        Files.copy(licenseFileSrc, licenseFile);
-        licenseFileContent = new String(Files.readAllBytes(licenseFile),
-                "UTF-8");
+        Path licenseFile = null;
+        for (ExtensionType extension : getExtensionArray()) {
+            if (!isTestCaseApplicableForExtensionType(extension)) {
+                continue;
+            }
+            this.currentParameter = this.intermediateToParametersMap
+                    .get(extension);
+            overrideParameters(extension);
+            initializeAndPrepareApp();
+            licenseFile = this.currentParameter.getApp()
+                    .getJavaExtensionPathBasedonExtension(extension)
+                    .resolve(LICENSE_FILE_NAME);
+            initializeVars();
+            Files.copy(licenseFileSrc, licenseFile);
+            licenseFileContent = new String(Files.readAllBytes(licenseFile),
+                    "UTF-8");
+        }
     }
 
     @Override
-    public void overrideParameters(ExtensionType intermediate)
-            throws IOException {
-        this.currentParameter.setAdditionalParams(getAdditionalParams());
+    public void overrideParameters(ExtensionType extension) throws IOException {
+        this.currentParameter
+                .setAdditionalParams(getAdditionalParams(extension));
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
+    }
+
+    @Override
+    protected void executeJavaPackager(BundlingManager bundlingManager,
+            Map<String, Object> allParams) throws IOException {
+        bundlingManager.execute(allParams, this.currentParameter.getApp(), true);
     }
 }
