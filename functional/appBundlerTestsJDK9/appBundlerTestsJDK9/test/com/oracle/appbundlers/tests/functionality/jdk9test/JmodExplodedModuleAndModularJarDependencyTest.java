@@ -4,7 +4,11 @@
  */
 package com.oracle.appbundlers.tests.functionality.jdk9test;
 
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
+
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,23 +19,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.oracle.appbundlers.tests.BundlerProvider;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.appbundlers.tests.functionality.parameters.Parameters;
 import com.oracle.appbundlers.utils.AppWrapper;
+import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.BundlingManager;
+import com.oracle.appbundlers.utils.BundlingManagers;
 import com.oracle.appbundlers.utils.ExtensionType;
+import com.oracle.appbundlers.utils.PackageTypeFilter;
+import com.oracle.appbundlers.utils.PackagerApiFilter;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;
 import com.oracle.tools.packager.ConfigException;
+import com.oracle.tools.packager.RelativeFileSet;
+import com.sun.javafx.tools.packager.bundlers.BundleParams;
 
 import javafx.util.Pair;
 
@@ -70,10 +84,14 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
     private static String CIRCLE = COM_SHAPE_SERVICEPROVIDER_CIRCLE_MODULENAME;
     private static String RECTANGLE = COM_SHAPE_SERVICEPROVIDER_RECTANGLE_MODULE_NAME;
 
-    private static String[][] array = new String[][] { { SI, CIRCLE, RECTANGLE },
-            { CIRCLE, SI, RECTANGLE }, { RECTANGLE, CIRCLE, SI },
-            { RECTANGLE, SI, CIRCLE }, { CIRCLE, RECTANGLE, SI },
-            { SI, RECTANGLE, CIRCLE } };
+    private static String[][] array = new String[][] {
+            { SI, CIRCLE, RECTANGLE },
+            { CIRCLE, SI, RECTANGLE },
+            { RECTANGLE, CIRCLE, SI },
+            { RECTANGLE, SI, CIRCLE },
+            { CIRCLE, RECTANGLE, SI },
+            { SI, RECTANGLE, CIRCLE }
+    };
 
     private List<Path> modulePathList = new ArrayList<Path>();
 
@@ -93,23 +111,19 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
 
     @Override
     public void overrideParameters(ExtensionType extension) throws IOException {
-        if (ExtensionType.NormalJar != extension) {
-            this.currentParameter.setApp(getApp());
-        }
+        this.currentParameter.setApp(getApp());
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 
     @Override
     protected void prepareTestEnvironment() throws Exception {
-        for (ExtensionType intermediate : ExtensionType.values()) {
+        for (ExtensionType javaExtensionFormat : ExtensionType.values()) {
             this.currentParameter = this.intermediateToParametersMap
-                    .get(intermediate);
-            overrideParameters(intermediate);
+                    .get(javaExtensionFormat);
+            overrideParameters(javaExtensionFormat);
             initializeAndPrepareApp();
         }
 
-        Parameters normalJarParameter = intermediateToParametersMap
-                .get(ExtensionType.NormalJar);
         /*
          * create directories mixmods1 ... mixmods6
          * copy different ExtensionType format into mixmods* directory
@@ -117,7 +131,7 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
          *
          */
         for (int i = 0; i < array.length; i++) {
-            Path mixmodsPath = normalJarParameter.getApp().getWorkDir()
+            Path mixmodsPath = Utils.getTempSubDir(WORK_DIRECTORY)
                     .resolve("mixmods" + i);
             modulePathList.add(mixmodsPath);
             Path mixmodsdir = Files.createDirectories(mixmodsPath);
@@ -160,13 +174,31 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
     protected Map<String, Object> getAllParams(Path modulepath)
             throws Exception {
         Map<String, Object> allParams = new HashMap<String, Object>();
-        allParams.put(APP_NAME, getResultingAppName());
+        allParams.put(APP_NAME,
+                getResultingAppName(modulepath.getFileName().toString()));
         AppWrapper app = this.intermediateToParametersMap
                 .get(ExtensionType.ModularJar).getApp();
         allParams.put(MAIN_MODULE,
                 String.join("/", app.getMainModuleName(), app.getMainClass()));
         allParams.put(MODULEPATH, modulepath.toString());
+        allParams.put(BundleParams.PARAM_APP_RESOURCES,
+                new RelativeFileSet(modulepath.toFile(),
+                        getModuleList(modulepath).stream().map(Path::toFile)
+                                .collect(toSet())));
+        allParams.put(STRIP_NATIVE_COMMANDS, false);
+        allParams.put(ADD_MODS,
+                app.getAllModuleNamesSeperatedByCommaExceptMainmodule());
         return allParams;
+    }
+
+    /**
+     * return App Name
+     * @param modulePathFileName
+     */
+    public String getResultingAppName(String modulePathFileName) {
+        return String.join("_", this.getClass().getSimpleName(),
+                this.bundlingManager.toString().replace('-', '_'),
+                modulePathFileName);
     }
 
     public VerifiedOptions getVerifiedOptions() {
@@ -180,53 +212,49 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
 
     @Test(dataProvider = "getBundlers")
     public void runTest(BundlingManager bundlingManager) throws Exception {
+        this.bundlingManager = bundlingManager;
+        Path modulePath = this.bundlingManager.getModulePath();
+        Map<String, Object> allParams = getAllParams(modulePath);
+        String testName = this.getClass().getName() + "::"
+                + testMethod.getName() + "$" + bundlingManager.toString() + "::"
+                + bundlingManager.getModulePath().getFileName().toString();
 
-        for (int i = 0; i < array.length; i++) {
-            Map<String, Object> allParams = getAllParams(modulePathList.get(i));
-            String testName = this.getClass().getName() + "::"
-                    + testMethod.getName() + "$" + bundlingManager.toString();
-            this.bundlingManager = bundlingManager;
-            LOG.log(Level.INFO, "Starting test \"{0}\".", testName);
+        LOG.log(Level.INFO, "Starting test \"{0}\".", testName);
 
-            try {
-                validate();
-                if (isConfigExceptionExpected(bundlingManager.getBundler())) {
-                    Assert.fail(
-                            "ConfigException is expected, but isn't thrown");
-                }
-            } catch (ConfigException ex) {
-                if (isConfigExceptionExpected(bundlingManager.getBundler())) {
-                    return;
-                } else {
-                    LOG.log(Level.SEVERE, "Configuration error: {0}.",
-                            new Object[] { ex });
-                    throw ex;
-                }
+        try {
+            validate();
+            if (isConfigExceptionExpected(bundlingManager.getBundler())) {
+                Assert.fail("ConfigException is expected, but isn't thrown");
             }
-
-            try {
-                AppWrapper app = intermediateToParametersMap
-                .get(ExtensionType.NormalJar).getApp();
-                bundlingManager.execute(allParams,
-                        app);
-                String path = bundlingManager.install(
-                        app, getResultingAppName(),
-                        false);
-                LOG.log(Level.INFO, "Installed at: {0}", path);
-
-                Pair<TimeUnit, Integer> tuple = getDelayAfterInstall();
-                tuple.getKey().sleep(tuple.getValue());
-                AppWrapper app2 = this.currentParameter.getApp();
-                this.intermediateToParametersMap
-                .get(ExtensionType.NormalJar).getVerifiedOptions().forEach(
-                        (name, value) -> bundlingManager.verifyOption(name,
-                                value, app2, getResultingAppName()));
+        } catch (ConfigException ex) {
+            if (isConfigExceptionExpected(bundlingManager.getBundler())) {
+                return;
+            } else {
+                LOG.log(Level.SEVERE, "Configuration error: {0}.",
+                        new Object[] { ex });
+                throw ex;
             }
+        }
 
-            finally {
-                uninstallApp(modulePathList.get(i));
-                LOG.log(Level.INFO, "Finished test: {0}", testName);
-            }
+        try {
+            AppWrapper app = intermediateToParametersMap
+                    .get(ExtensionType.NormalJar).getApp();
+            bundlingManager.execute(allParams, app);
+            String path = bundlingManager.install(app,
+                    getResultingAppName(modulePath.getFileName().toString()),
+                    false);
+            LOG.log(Level.INFO, "Installed at: {0}", path);
+
+            Pair<TimeUnit, Integer> tuple = getDelayAfterInstall();
+            tuple.getKey().sleep(tuple.getValue());
+            this.intermediateToParametersMap.get(ExtensionType.NormalJar)
+                    .getVerifiedOptions()
+                    .forEach((name, value) -> bundlingManager.verifyOption(name,
+                            value, app, getResultingAppName(
+                                    modulePath.getFileName().toString())));
+        } finally {
+            uninstallApp(modulePath);
+            LOG.log(Level.INFO, "Finished test: {0}", testName);
         }
     }
 
@@ -236,6 +264,30 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
             this.bundlingManager.uninstall(this.intermediateToParametersMap
                     .get(ExtensionType.NormalJar).getApp(), appName);
         }
+    }
+
+    public List<Path> getModuleList(Path dir) throws IOException {
+        try (DirectoryStream<Path> jarsStream = Files
+                .newDirectoryStream(dir, "*")) {
+            List<Path> modFiles = new ArrayList<>();
+            jarsStream.forEach(modFiles::add);
+            return modFiles;
+        }
+    }
+
+    @DataProvider(name = "getBundlers")
+    public Iterator<Object[]> getBundlers() {
+        List<BundlingManagers> packagerInterfaces = Stream
+                .of(getBundlingManagers()).filter(PackagerApiFilter::accept)
+                .collect(Collectors.toList());
+
+        List<AbstractBundlerUtils> installationPackageTypes = Stream
+                .of(getBundlerUtils()).filter(BundlerUtils::isSupported)
+                .filter(PackageTypeFilter::accept)
+                .map(BundlerUtils::getBundlerUtils).collect(toList());
+
+        return BundlerProvider.createBundlingManagers(installationPackageTypes,
+                packagerInterfaces, modulePathList, true);
     }
 }
 

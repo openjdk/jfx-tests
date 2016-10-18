@@ -122,7 +122,7 @@ public class WinMsiBundlerUtils extends WinAbstractBundlerUtils {
             String[] cmd = new String[] { "msiexec.exe", "/x", msiPath1,
                     "/quiet" };
             runCommand(cmd, true, CONFIG_INSTANCE.getInstallTimeout());
-            LOG.info("Uninstallation done.");
+            LOG.info("Uninstallation done from "+msiPath1);
         } catch (ExecutionException e) {
             throw new IOException(e);
         }

@@ -1,4 +1,0 @@
-module com.shape.serviceinterface {
-	exports com.shape.serviceinterface;
-	uses com.shape.serviceinterface.Shape;
-}

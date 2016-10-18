@@ -22,6 +22,7 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParam
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
+import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
@@ -38,21 +39,13 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
         extends TestBase {
 
     protected AppWrapper getApp() throws IOException {
+        Map<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put(PRINTLN_STATEMENT, CUSTOM_UTIL_PRINTLN_STATEMENT);
         return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                 COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
-                DOUBLE_HYPHEN + ADD_EXPORTS + SPACE
-                        +
-                "custom.util/testapp.util=ALL-UNNAMED",
                 SourceFactory.get_custom_util_module(),
                 SourceFactory.get_com_greetings_app_unnamed_module(
-                        new HashMap<String, String>() {
-                            private static final long serialVersionUID = 2076100253408663958L;
-
-                            {
-                                put(PRINTLN_STATEMENT,
-                                        CUSTOM_UTIL_PRINTLN_STATEMENT);
-                            }
-                        }));
+                        hashMap));
     }
 
     public VerifiedOptions getVerifiedOptions() {
@@ -70,6 +63,7 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
             Map<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put(ADD_MODS,
                     this.currentParameter.getApp().getAllModuleNamesSeparatedByComma());
+            hashMap.put(STRIP_NATIVE_COMMANDS, false);
             return hashMap;
         };
     }
@@ -99,7 +93,10 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
         app.preinstallApp(
                 new ExtensionType[] { extension, ExtensionType.NormalJar });
         app.writeSourcesToAppDirectory();
-        app.compileAndCreateJavaExtensionProduct(extension);
+        app.compileAndCreateJavaExtensionType(
+                new String[] { DOUBLE_HYPHEN + ADD_EXPORTS,
+                        "custom.util/testapp.util=ALL-UNNAMED" },
+                extension);
     }
 
     @Override
@@ -126,6 +123,8 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
                     this.currentParameter.getApp().getJarFilesList().stream()
                             .map(Path::getFileName).map(Path::toString)
                             .collect(Collectors.joining(File.pathSeparator)));
+            basicParams.put(MAIN_JAR,
+                    this.currentParameter.getApp().getMainJarFile().toFile().getName());
             basicParams.put(MODULEPATH, String.join(File.pathSeparator,
                     JMODS_PATH_IN_JDK, ((GenericModuleParameters) this.currentParameter).getModulePath()));
             return basicParams;
@@ -135,6 +134,12 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
     @Override
     public ExtensionType[] getExtensionArray() {
         return ExtensionType.getModuleTypes();
+    }
+
+    @Override
+    protected void executeJavaPackager(BundlingManager bundlingManager,
+            Map<String, Object> allParams) throws IOException {
+        bundlingManager.execute(allParams, this.currentParameter.getApp(), true);
     }
 }
 

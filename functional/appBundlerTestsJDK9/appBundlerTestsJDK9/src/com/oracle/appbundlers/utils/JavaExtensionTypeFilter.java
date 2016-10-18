@@ -9,8 +9,8 @@ public class JavaExtensionTypeFilter {
     }
 
     public static boolean accept(ExtensionType javaExtensionType) {
-        return CONFIG_INSTANCE.getAcceptedJavaExtensionType() == null
-                || CONFIG_INSTANCE
-                        .getAcceptedJavaExtensionType() == javaExtensionType;
+        return CONFIG_INSTANCE.getAcceptedJavaExtensionType().isEmpty()
+                || CONFIG_INSTANCE.getAcceptedJavaExtensionType()
+                        .contains(javaExtensionType);
     }
 }

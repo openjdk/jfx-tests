@@ -148,7 +148,6 @@ public class Utils {
     }
 
     public static void removeRecursive(Path path) throws IOException {
-        // removeRecursive(path, false);
         deleteDir(path.toFile());
     }
 
@@ -180,8 +179,6 @@ public class Utils {
                                 + " is deleted successfully" + "time is "
                                 + System.currentTimeMillis());
                     }
-                    System.out.println("Deleting File, Thread Name is "
-                            + Thread.currentThread().getName());
                 }
                 return FileVisitResult.CONTINUE;
             }
@@ -201,8 +198,6 @@ public class Utils {
                                 + dir.getFileName() + "deletion failed"
                                 + " time is " + System.currentTimeMillis());
                     }
-                    System.out.println("Deleting Directory, Thread Name is "
-                            + Thread.currentThread().getName());
                 }
                 return FileVisitResult.CONTINUE;
             }

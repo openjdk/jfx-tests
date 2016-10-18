@@ -11,8 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,9 +34,9 @@ public enum Config {
 
     private final Properties properties = new Properties();
     private boolean manualOnly = false;
-    private BundlerUtils acceptedInstallationPackagerType;
-    private BundlingManagers acceptedPackagerInterface;
-    private ExtensionType javaExtensionType;
+    private Set<BundlerUtils> acceptedInstallationPackagerType = new HashSet<>();
+    private Set<BundlingManagers> acceptedPackagerInterface = new HashSet<>();
+    private Set<ExtensionType> javaExtensionType = new HashSet<>();
 
     private Config() {
         tryLoadTestSuiteProperties();
@@ -103,8 +106,13 @@ public enum Config {
         try {
             String value = System.getProperty("installation-package-type");
             value = value.toUpperCase();
-            acceptedInstallationPackagerType = getEnumInstance(
-                    BundlerUtils.class, value);
+            StringTokenizer stringTokenizer = new StringTokenizer(value, ",");
+            while (stringTokenizer.hasMoreElements()) {
+                String eachInstallationType = ((String) stringTokenizer.nextElement()).trim();
+                BundlerUtils bundlerUtil = getEnumInstance(
+                        BundlerUtils.class, eachInstallationType);
+                acceptedInstallationPackagerType.add(bundlerUtil);
+            }
             System.out.println("[Installation package type filter: "
                     + acceptedInstallationPackagerType + "]");
         } catch (Throwable t) {
@@ -117,10 +125,16 @@ public enum Config {
         try {
             String value = System.getProperty("packager-interface");
             value = value.toUpperCase();
-            acceptedPackagerInterface = getEnumInstance(BundlingManagers.class,
-                    value);
-            System.out.println("[Packager interface filter: "
-                    + acceptedPackagerInterface + "]");
+            StringTokenizer stringTokenizer = new StringTokenizer(value, ",");
+            while (stringTokenizer.hasMoreElements()) {
+                String eachBundlingMgr = ((String) stringTokenizer
+                        .nextElement()).trim();
+                BundlingManagers bundlingMgr = getEnumInstance(
+                        BundlingManagers.class, eachBundlingMgr);
+                acceptedPackagerInterface.add(bundlingMgr);
+                System.out.println("[Packager interface filter: "
+                        + acceptedPackagerInterface + "]");
+            }
         } catch (Throwable t) {
             System.out.println("[Packager interfaces won't be filtered]");
         }
@@ -130,11 +144,18 @@ public enum Config {
         try {
             String javaExtensionString = System
                     .getProperty("java-extension-type");
-            if(!javaExtensionString.trim().equals("")) {
-                javaExtensionType = getEnumInstance(ExtensionType.class,
-                        javaExtensionString);
-                System.out.println(
-                        "[Filtered java extension type: " + javaExtensionString+"]");
+            if (!javaExtensionString.trim().equals("")) {
+                StringTokenizer stringTokenizer = new StringTokenizer(
+                        javaExtensionString, ",");
+                while (stringTokenizer.hasMoreElements()) {
+                    String eachJavaExtension = ((String) stringTokenizer
+                            .nextElement()).trim();
+                    ExtensionType extensionType = getEnumInstance(
+                            ExtensionType.class, eachJavaExtension);
+                    javaExtensionType.add(extensionType);
+                    System.out.println("[Filtered java extension type: "
+                            + javaExtensionString + "]");
+                }
             } else {
                 System.out.println("[Java Extension Type won't be Filtered]");
             }
@@ -221,15 +242,15 @@ public enum Config {
                 .valueOf(properties.getProperty("after.install.pause.ms"));
     }
 
-    public BundlerUtils getAcceptedInstallationPackageType() {
-        return acceptedInstallationPackagerType;
+    public Set<BundlerUtils> getAcceptedInstallationPackageType() {
+        return this.acceptedInstallationPackagerType;
     }
 
-    public BundlingManagers getAcceptedPackagerApi() {
-        return acceptedPackagerInterface;
+    public Set<BundlingManagers> getAcceptedPackagerApi() {
+        return this.acceptedPackagerInterface;
     }
 
-    public ExtensionType getAcceptedJavaExtensionType() {
+    public Set<ExtensionType> getAcceptedJavaExtensionType() {
         return this.javaExtensionType;
     }
 

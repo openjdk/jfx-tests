@@ -4,7 +4,6 @@
  */
 package com.oracle.appbundlers.tests.functionality.jdk9test;
 
-import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.CHECK_MODULE_IN_JAVA_EXECUTABLE;
 import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.OUTPUT_CONTAINS;
 
 import java.io.IOException;
@@ -18,9 +17,9 @@ import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 
 /**
- *  Named Module App + JRE
- * -m hello.world/HelloWorld -addmods hello.world, ALL_JRE
- * (implicit so not required)
+ * Named Module App + JRE
+ * -m hello.world/HelloWorld
+ * Simple Test Which Displays Hello World using Module.
  * @author Ramesh BG
  */
 public class NamedModuleWithEntireJreTest extends ModuleTestBase {
@@ -29,8 +28,6 @@ public class NamedModuleWithEntireJreTest extends ModuleTestBase {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put(OUTPUT_CONTAINS, HELLO_WORLD_OUTPUT);
-            hashMap.put(CHECK_MODULE_IN_JAVA_EXECUTABLE,
-                    COM_GREETINGS_MODULE_CUM_PACKAGE_NAME);
             return hashMap;
         };
     }

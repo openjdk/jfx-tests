@@ -14,10 +14,10 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOp
 import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
- *  aim of this testcase is to check for executables available
- *  in bin directory when "-strip-native-commands false" is passed to
- *  javapackager.
- *  @author Ramesh BG
+ * aim of this testcase is to check for executables available in bin directory
+ * when "javapackager -strip-native-commands false" is executed.
+ *
+ * @author Ramesh BG
  */
 public class CheckExecutablesAvailableTest extends ModuleTestBase {
 

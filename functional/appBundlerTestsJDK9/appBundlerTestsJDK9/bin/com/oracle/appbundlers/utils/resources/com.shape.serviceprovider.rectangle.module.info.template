@@ -1,5 +1,0 @@
-module com.shape.serviceprovider.rectangle {
-	requires com.shape.serviceinterface;
-	exports com.shape.serviceprovider.rectangle;
-	provides com.shape.serviceinterface.Shape with com.shape.serviceprovider.rectangle.Rectangle;
-}

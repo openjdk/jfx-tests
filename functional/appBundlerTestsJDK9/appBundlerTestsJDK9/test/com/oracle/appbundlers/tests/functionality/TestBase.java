@@ -124,7 +124,7 @@ public abstract class TestBase implements Constants {
      * return App Name
      */
     public String getResultingAppName() {
-        return this.getClass().getSimpleName();
+        return String.join("_", this.getClass().getSimpleName(), this.bundlingManager.toString().replace('-', '_'));
     }
 
     protected boolean isConfigExceptionExpected(Bundler bundler) {
@@ -177,6 +177,7 @@ public abstract class TestBase implements Constants {
 
     @Test(dataProvider = "getBundlers")
     public void runTest(BundlingManager bundlingManager) throws Exception {
+        this.bundlingManager = bundlingManager;
         this.currentParameter = intermediateToParametersMap
                 .get(bundlingManager.getExtensionType());
         if (!isTestCaseApplicableForExtensionType(
@@ -187,7 +188,7 @@ public abstract class TestBase implements Constants {
         Map<String, Object> allParams = getAllParams();
         String testName = this.getClass().getName() + "::"
                 + testMethod.getName() + "$" + bundlingManager.toString();
-        this.bundlingManager = bundlingManager;
+
         LOG.log(Level.INFO, "Starting test \"{0}\".", testName);
         try {
             validate();

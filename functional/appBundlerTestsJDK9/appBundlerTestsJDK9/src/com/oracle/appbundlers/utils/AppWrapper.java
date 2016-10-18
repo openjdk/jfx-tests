@@ -217,12 +217,12 @@ public class AppWrapper implements Constants {
         return compileApp(javacOptions, null, classpath);
     }
 
-    public int compileAndCreateJavaExtensionProduct(ExtensionType extension,
+    public int compileAndCreateJavaExtensionType(String[] javacOptions, ExtensionType extension,
             Path... classpath) throws IOException, ExecutionException {
         int resultForModule = compileAppForModules(new String[0], extension,
                 classpath);
         jarApp(extension);
-        compileAppForJars(new String[0], extension, classpath);
+        compileAppForJars(javacOptions, extension, classpath);
         jarApp(ExtensionType.NormalJar);
         return resultForModule;
     }
@@ -554,10 +554,10 @@ public class AppWrapper implements Constants {
             command.add(getJmodsDir() + File.separator + source.getModuleName()
                     + ".jmod");
             System.out.println(
-                    "=========================JMOD CREATION STARTS For Module "+source.getModuleName()+" =========================");
+                    "=========================JMOD CREATION STARTS for module "+source.getModuleName()+" =========================");
             Utils.runCommand(command, CONFIG_INSTANCE.getInstallTimeout());
             System.out.println(
-                    "=========================JMOD CREATION ENDS For Module "+source.getModuleName()+" ===========================");
+                    "=========================JMOD CREATION ENDS for module "+source.getModuleName()+" ===========================");
             System.out.println();
         }
     }
@@ -589,13 +589,13 @@ public class AppWrapper implements Constants {
             command.add(moduleAbsouleDirectoryPath);
             command.add(".");
             System.out.println(
-                    "====================MODULAR JAR CREATION STARTS For "+ source.getJarName() +"==================");
+                    "====================MODULAR JAR CREATION STARTS for "+ source.getJarName() +"==================");
             ProcessOutput output = Utils.runCommand(command, CONFIG_INSTANCE.getInstallTimeout());
             if( output.exitCode() != 0) {
                 throw new RuntimeException("Modular Jar Creation failed for module "+source.getJarName());
             }
             System.out.println(
-                    "====================MODULAR JAR CREATION ENDS For "+ source.getJarName() +"==================");
+                    "====================MODULAR JAR CREATION ENDS for "+ source.getJarName() +"==================");
             System.out.println();
         }
     }
@@ -659,7 +659,7 @@ public class AppWrapper implements Constants {
         }
     }
 
-    public Path getJavaExtensionPathBasedonExtension(ExtensionType extension) {
+    public Path getJavaExtensionDirPathBasedonExtension(ExtensionType extension) {
         if (extension == null) {
             throw new NullPointerException("Extension cannot be null");
         }
@@ -675,11 +675,11 @@ public class AppWrapper implements Constants {
         }
     }
 
-    public RelativeFileSet getRelativeFileSetBasedOnExtension(
+    public RelativeFileSet getNewRelativeFileSetBasedOnExtension(
             ExtensionType extension) throws IOException {
         RelativeFileSet relativeFileSet = null;
         Path javaExtensionDirPath = this
-                .getJavaExtensionPathBasedonExtension(extension);
+                .getJavaExtensionDirPathBasedonExtension(extension);
         switch (extension) {
         case NormalJar:
             relativeFileSet = new RelativeFileSet(javaExtensionDirPath.toFile(),

@@ -5,6 +5,7 @@
 
 package com.oracle.appbundlers.tests;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +33,25 @@ public class BundlerProvider {
                     BundlingManager bundlingMgr = eachBundlingMgr.getFactory()
                             .createInstance(eachSystemExtension);
                     bundlingMgr.setExtensionType(eachJavaExtension);
+                    Object[] object = new Object[] { bundlingMgr };
+                    list.add(object);
+                }
+            }
+        }
+        return list.iterator();
+    }
+
+    public static Iterator<Object[]> createBundlingManagers(
+            List<AbstractBundlerUtils> systemExtFormatList,
+            List<BundlingManagers> bundlingMgrList, List<Path> modulePathList,
+            boolean dummy) {
+        List<Object[]> list = new ArrayList<Object[]>();
+        for (BundlingManagers eachBundlingMgr : bundlingMgrList) {
+            for (AbstractBundlerUtils eachSystemExtension : systemExtFormatList) {
+                for (Path modulePath : modulePathList) {
+                    BundlingManager bundlingMgr = eachBundlingMgr.getFactory()
+                            .createInstance(eachSystemExtension);
+                    bundlingMgr.setModulePath(modulePath);
                     Object[] object = new Object[] { bundlingMgr };
                     list.add(object);
                 }

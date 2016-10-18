@@ -19,9 +19,9 @@ import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 
 /**
- * Named Module + Minimum modules + 3rd party modules
- * -m hello.world/HelloWorld -addmods hello.world,3rd.party
- * -modulepath <path to 3rd party JARs>
+ * Named Module  + 3rd party modules
+ * -m hello.world/HelloWorld -addmods 3rd.party
+ * -modulepath <path to 3rd party modular JARs>
  * @author Ramesh BG
  */
 public class NamedModuleBundledWithMinimumModulesAnd3rdPartyModulesTest
@@ -40,7 +40,8 @@ public class NamedModuleBundledWithMinimumModulesAnd3rdPartyModulesTest
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put(ADD_MODS, this.currentParameter.getApp().getAllModuleNamesSeparatedByComma());
+            hashMap.put(ADD_MODS, this.currentParameter.getApp()
+                    .getAllModuleNamesSeperatedByCommaExceptMainmodule());
             return hashMap;
         };
     }

@@ -11,7 +11,7 @@ public class PackagerApiFilter {
     }
 
     public static boolean accept(BundlingManagers obj) {
-        return CONFIG_INSTANCE.getAcceptedPackagerApi() == null
-                || CONFIG_INSTANCE.getAcceptedPackagerApi() == obj;
+        return CONFIG_INSTANCE.getAcceptedPackagerApi().isEmpty()
+                || CONFIG_INSTANCE.getAcceptedPackagerApi().contains(obj);
     }
 }

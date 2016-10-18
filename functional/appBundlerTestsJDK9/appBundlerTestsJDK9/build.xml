@@ -153,13 +153,13 @@
 	<target name="run-single-test-method">
 		<fail unless="class-name" message="Please, specify the class containing tests methods.${line.separator}
 For example -Dclass-name=com.oracle.appbundlers.tests.functionality.SimpleExecutablesTest" />
-		<echo unless:set="installation-package-type">You may want to specify the type of the package:${line.separator}
+		<echo>You may want to specify the type of the package:${line.separator}
 -Dinstallation-package-type=${line.separator}
 [win_app     | exe | msi |${line.separator}
  linux_app   | deb | rpm |${line.separator}
  mac_app     | dmg | pkg ]${line.separator}</echo>
 
-		<echo unless:set="packager-interface">You may want to specify the way of creating the package:${line.separator}
+		<echo>You may want to specify the way of creating the package:${line.separator}
 -Dpackager-interface=[ant | cli | java_api] </echo>
 
 		<echo>You may want to filter out java-extension-type using -Djava-extension-type=[ NormalJar | ModularJar | ExplodedModules | Jmods ]</echo>

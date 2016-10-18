@@ -49,7 +49,7 @@ public class InstallDirTest extends TestBase {
                     .getBasicParams().get(APP_RESOURCES);
             if (existingRelativeFileSet == null) {
                 RelativeFileSet newRelativeFileSet = this.currentParameter
-                        .getApp().getRelativeFileSetBasedOnExtension(extension);
+                        .getApp().getNewRelativeFileSetBasedOnExtension(extension);
                 newRelativeFileSet.getIncludedFiles().add(LICENSE_FILE_NAME);
                 additionalParams.put(APP_RESOURCES, newRelativeFileSet);
             } else {
@@ -82,7 +82,7 @@ public class InstallDirTest extends TestBase {
             overrideParameters(extension);
             initializeAndPrepareApp();
             licenseFile = this.currentParameter.getApp()
-                    .getJavaExtensionPathBasedonExtension(extension)
+                    .getJavaExtensionDirPathBasedonExtension(extension)
                     .resolve(LICENSE_FILE_NAME);
             initializeVars();
             Files.copy(licenseFileSrc, licenseFile);

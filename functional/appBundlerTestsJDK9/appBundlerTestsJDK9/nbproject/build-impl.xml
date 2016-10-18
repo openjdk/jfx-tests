@@ -468,6 +468,15 @@ is divided into following sections:
                         <mapper from="test-sys-prop.*" to="*" type="glob"/>
                     </propertyset>
                     <customize/>
+                	 <jvmarg value="--add-exports"/> <jvmarg value="jdk.packager/com.oracle.tools.packager=ALL-UNNAMED"/>
+                	 <jvmarg value="--add-exports"/> <jvmarg value="jdk.packager/com.sun.javafx.tools.packager=ALL-UNNAMED"/>
+                	 <jvmarg value="--add-exports"/> <jvmarg value="jdk.packager/com.sun.javafx.tools.packager.bundlers=ALL-UNNAMED"/>
+                	 <jvmarg value="--add-exports"/> <jvmarg value="jdk.packager/com.sun.javafx.tools.resource=ALL-UNNAMED"/>
+                	 <jvmarg value="--add-exports"/> <jvmarg value="jdk.packager.services/jdk.packager.services=ALL-UNNAMED"/>
+                	 <jvmarg value="--add-exports"/> <jvmarg value="jdk.packager/com.oracle.tools.packager.linux=ALL-UNNAMED"/>
+                	 <jvmarg value="--add-exports"/> <jvmarg value="jdk.packager/com.oracle.tools.packager.windows=ALL-UNNAMED"/>
+                	 <jvmarg value="--add-exports"/> <jvmarg value="jdk.packager/com.oracle.tools.packager.mac=ALL-UNNAMED"/>
+                	 <jvmarg value="--add-exports"/> <jvmarg value="jdk.packager/com.oracle.tools.packager.jnlp=ALL-UNNAMED"/>
                 </testng>
             </sequential>
         </macrodef>

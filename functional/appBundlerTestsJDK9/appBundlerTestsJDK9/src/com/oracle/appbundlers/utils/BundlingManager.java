@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,12 @@ public abstract class BundlingManager implements Constants {
     private final AbstractBundlerUtils bundlerUtils;
     protected AppWrapper app;
     protected ExtensionType extensionType;
+
+    /*
+     * modulePath is used only by JmodExplodedModuleAndModularJarDependencyTest,
+     * couldn't find any other alternative.
+     */
+    protected Path modulePath;
 
     public BundlingManager(AbstractBundlerUtils bundlerUtils) {
         this.bundlerUtils = bundlerUtils;
@@ -135,8 +142,21 @@ public abstract class BundlingManager implements Constants {
 
     @Override
     public String toString() {
-        return getShortName() + "-" + getExtensionType() + "-"
-                + getBundler().getID();
+        StringBuilder stringBuilder = new StringBuilder();
+        if (Objects.nonNull(getShortName())) {
+            stringBuilder.append(getShortName());
+        }
+
+        if (Objects.nonNull(getExtensionType())) {
+            stringBuilder.append("-");
+            stringBuilder.append(getExtensionType());
+        }
+
+        if (Objects.nonNull(getBundler().getID())) {
+            stringBuilder.append("-");
+            stringBuilder.append(getBundler().getID());
+        }
+        return stringBuilder.toString();
     }
 
     public Path getAppCDSCacheFile(AppWrapper app, String appName) {
@@ -153,5 +173,13 @@ public abstract class BundlingManager implements Constants {
 
     public void setExtensionType(ExtensionType extensionType) {
         this.extensionType = extensionType;
+    }
+
+    public Path getModulePath() {
+        return this.modulePath;
+    }
+
+    public void setModulePath(Path modulePath) {
+        this.modulePath = modulePath;
     }
 }

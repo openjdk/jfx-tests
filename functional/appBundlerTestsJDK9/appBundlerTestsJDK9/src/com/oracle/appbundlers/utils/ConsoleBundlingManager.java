@@ -110,7 +110,7 @@ public class ConsoleBundlingManager extends BundlingManager {
     public File execute(Map<String, Object> params, File file,
             boolean isSrcDirRequired) throws IOException {
         try {
-            List<String> command = command(file, toConsole(params));
+            List<String> command = command(file, toConsole(params, isSrcDirRequired));
             System.out.println("execution command is " + command);
             ProcessOutput process = Utils.runCommand(command,
                     CONFIG_INSTANCE.getInstallTimeout());
@@ -161,7 +161,7 @@ public class ConsoleBundlingManager extends BundlingManager {
 
     @SuppressWarnings("unchecked")
     private List<Pair<String, Collection<String>>> toConsole(
-            Map<String, Object> params) {
+            Map<String, Object> params, boolean isSrcDirRequired) {
         List<Pair<String, Collection<String>>> key2Value = new ArrayList<>();
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             String key = entry.getKey();
@@ -169,7 +169,7 @@ public class ConsoleBundlingManager extends BundlingManager {
             RelativeFileSet fileSet;
             switch (key) {
             case "appResources":
-                if(ExtensionType.NormalJar == extensionType) {
+                if(ExtensionType.NormalJar == extensionType || isSrcDirRequired) {
                     fileSet = (RelativeFileSet) value;
                     String path = fileSet.getBaseDirectory().getPath();
                     key2Value.add(new Pair<>("-srcdir", Arrays.asList(path)));

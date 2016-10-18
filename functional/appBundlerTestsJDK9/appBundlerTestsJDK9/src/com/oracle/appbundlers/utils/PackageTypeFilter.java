@@ -11,7 +11,8 @@ public class PackageTypeFilter {
     }
 
     public static boolean accept(BundlerUtils obj) {
-        return CONFIG_INSTANCE.getAcceptedInstallationPackageType() == null
-                || CONFIG_INSTANCE.getAcceptedInstallationPackageType() == obj;
+        return CONFIG_INSTANCE.getAcceptedInstallationPackageType().isEmpty()
+                || CONFIG_INSTANCE.getAcceptedInstallationPackageType()
+                        .contains(obj);
     }
 }

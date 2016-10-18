@@ -12,9 +12,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParams;
+import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
-import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParameters;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.Source;
@@ -27,13 +26,12 @@ import com.oracle.appbundlers.utils.Utils;
  */
 public class OtherClassInMainModuleTest extends ModuleTestBase {
 
-    protected BasicParams getBasicParams() {
-        return (AppWrapper app) -> {
+    protected AdditionalParams getAdditionalParams() {
+        return () -> {
             Map<String, Object> params = new HashMap<>();
-            params.put(MODULEPATH, ((GenericModuleParameters) this.currentParameter).getModulePath());
-            params.put(APP_NAME, getResultingAppName());
             params.put(MAIN_MODULE,
-                    app.getMainModuleName() + "/" + COM_GREETINGS_APP2_QUALIFIED_CLASS_NAME);
+                    this.currentParameter.getApp().getMainModuleName() + "/"
+                            + COM_GREETINGS_APP2_QUALIFIED_CLASS_NAME);
             return params;
         };
     }
@@ -42,7 +40,7 @@ public class OtherClassInMainModuleTest extends ModuleTestBase {
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
         this.currentParameter.setApp(getApp());
-        this.currentParameter.setBasicParams(getBasicParams());
+        this.currentParameter.setAdditionalParams(getAdditionalParams());
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 

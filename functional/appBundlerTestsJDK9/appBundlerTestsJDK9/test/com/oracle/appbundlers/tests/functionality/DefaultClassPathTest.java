@@ -19,6 +19,8 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.BasicParam
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.ExtensionType;
+import com.oracle.appbundlers.utils.SourceFactory;
+import com.oracle.appbundlers.utils.Utils;
 import com.oracle.tools.packager.RelativeFileSet;
 
 /**
@@ -56,6 +58,7 @@ public class DefaultClassPathTest extends TestBase {
     @Override
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
+        this.currentParameter.setApp(getNewApp());
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
         this.currentParameter.setBasicParams(getBasicParams());
     }
@@ -78,5 +81,14 @@ public class DefaultClassPathTest extends TestBase {
     public boolean isTestCaseApplicableForExtensionType(
             ExtensionType extension) {
         return ExtensionType.NormalJar == extension;
+    }
+
+    protected AppWrapper getNewApp() throws IOException {
+        Map<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put(PRINTLN_STATEMENT, CUSTOM_UTIL_PRINTLN_STATEMENT);
+        return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
+                COM_GREETINGS_APP1_QUALIFIED_CLASS_NAME,
+                SourceFactory.get_test_app_util_unnamed_module(), SourceFactory
+                        .get_com_greetings_unnamed_module_depends_on_test_app_util_unnamed_module());
     }
 }

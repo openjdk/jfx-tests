@@ -1,3 +1,0 @@
-module com.shape.test {
-	requires com.shape.serviceprovider.circle;
-}

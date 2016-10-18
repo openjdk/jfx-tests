@@ -56,7 +56,7 @@ public class LicenseFileTest extends TestBase {
                     .getBasicParams().get(APP_RESOURCES);
             if (existingRelativeFileSet == null) {
                 existingRelativeFileSet = this.currentParameter
-                        .getApp().getRelativeFileSetBasedOnExtension(extension);
+                        .getApp().getNewRelativeFileSetBasedOnExtension(extension);
                 existingRelativeFileSet.getIncludedFiles().add(LICENSE_FILE_NAME);
                 additionalParams.put(APP_RESOURCES, existingRelativeFileSet);
             } else {
@@ -89,7 +89,7 @@ public class LicenseFileTest extends TestBase {
             overrideParameters(extension);
             initializeAndPrepareApp();
             licenseFile = this.currentParameter.getApp()
-                    .getJavaExtensionPathBasedonExtension(extension)
+                    .getJavaExtensionDirPathBasedonExtension(extension)
                     .resolve(LICENSE_FILE_NAME);
             initializeVars();
             Files.copy(licenseFileSrc, licenseFile);

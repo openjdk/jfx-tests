@@ -33,6 +33,7 @@ import javafx.util.Pair;
  */
 
 public class FileAssociationTest extends TestBase {
+    private static final String COM_RM_MODULE_NAME = "com.rm";
     public static final String RM_NAME = Utils.isMacOS() ? "MacRmApp" : "RmApp";
     public static final String ext1 = "foo", ext2 = "bar", ext3 = "baz",
             ext4 = "qux";
@@ -68,6 +69,10 @@ public class FileAssociationTest extends TestBase {
             additionalParams.put(FILE_ASSOCIATIONS,
                     Arrays.asList(association1, association2));
             additionalParams.put(SYSTEM_WIDE, true);
+            additionalParams.put(JVM_OPTIONS,
+                    DOUBLE_HYPHEN + ADD_EXPORTS + SPACE
+                            + "java.desktop/com.apple.eawt=ALL-UNNAMED" + ","
+                            + FileAssociationTest.COM_RM_MODULE_NAME);
             return additionalParams;
         };
     }
@@ -109,7 +114,7 @@ public class FileAssociationTest extends TestBase {
                     templateName);
             return new AppWrapper(Utils.getTempSubDir(WORK_DIRECTORY),
                     mainClassfullyQualifiedName,
-                    new Source("com.rm", "com.rm.module.info.template",
+                    new Source(FileAssociationTest.COM_RM_MODULE_NAME, "com.rm.module.info.template",
                             classNameToTemplateMap, mainClassfullyQualifiedName,
                             "rmApp", replacementsInSrcCodeInternal, true));
         }

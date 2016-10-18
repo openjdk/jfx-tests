@@ -1,5 +1,0 @@
-<job id="Test">
-  <script language="VBScript">
-    'WScript.echo "test"
-  </script>
- </job>
