@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.ExtensionType;
@@ -19,7 +20,7 @@ import com.oracle.appbundlers.utils.Utils;
 
 /**
  *  Named Module + Minimum modules
- *  -m hello.world/HelloWorld -mp hello.world.jar -addmods hello.world
+ *  -m hello.world/HelloWorld -mp hello.world.jar
  *  checks for existence of module by executing java --list-modules
  *  @author Ramesh BG
  */
@@ -41,11 +42,20 @@ public class NamedModuleWithMinimumModulesTest extends ModuleTestBase {
                 SourceFactory.get_com_greetings_module());
     }
 
+    public AdditionalParams getAdditionalParams() {
+        return () -> {
+            Map<String, Object> hashMap = new HashMap<String, Object>();
+            hashMap.put(STRIP_NATIVE_COMMANDS, false);
+            return hashMap;
+        };
+    }
+
     @Override
     public void overrideParameters(ExtensionType javaExtensionType)
             throws IOException {
         if (ExtensionType.NormalJar != javaExtensionType) {
             this.currentParameter.setApp(getApp());
+            this.currentParameter.setAdditionalParams(getAdditionalParams());
             this.currentParameter.setVerifiedOptions(getVerifiedOptions());
         }
     }

@@ -38,11 +38,9 @@ public class CheckExecutablesAvailableTest extends ModuleTestBase {
     }
 
     @Override
-    public void overrideParameters(ExtensionType intermediate) {
-        if (intermediate != ExtensionType.NormalJar) {
-            this.currentParameter.setAdditionalParams(getAdditionalParams());
-            this.currentParameter.setVerifiedOptions(getVerifiedOptions());
-        }
+    public void overrideParameters(ExtensionType javaExtensionFormat) {
+        this.currentParameter.setAdditionalParams(getAdditionalParams());
+        this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 }
 

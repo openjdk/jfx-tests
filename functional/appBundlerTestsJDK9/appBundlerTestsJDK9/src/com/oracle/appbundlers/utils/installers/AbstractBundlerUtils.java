@@ -223,61 +223,44 @@ public abstract class AbstractBundlerUtils implements Constants {
                     @SuppressWarnings("unchecked")
 
                     Pair<String, String> params = (Pair<String, String>) value;
-                    String appName = params.getKey();
                     String secondAppName = params.getValue();
 
-                    // Unless we use -Xbootclasspath the following code will
-                    // check that both applications use the same rt.jar
-                    // which implies that they both use the same JRE.
                     try {
-                        ProcessOutput process = runInstalledExecutable(app,
+                        ProcessOutput processOutput = runInstalledExecutable(app,
                                 applicationTitle);
-                        final String sunBootClasspath = "sun.boot.class.path";
-                        Optional<String> maybePath = process.getOutputStream()
+                        final String openedText = "[info][class,load] opened:";
+                        Optional<String> maybePath = processOutput.getOutputStream()
                                 .stream()
-                                .filter(s -> s.contains(sunBootClasspath))
+                                .filter(s -> s.contains(openedText))
                                 .findFirst();
-                        String path = maybePath.orElseThrow(Exception::new)
-                                .split("=")[1];
-                        String[] pathElements = path.split(File.pathSeparator);
+                        String[] firstAppVerboseOutput = maybePath.orElseThrow(Exception::new)
+                                .split("opened:");
 
-                        Optional<String> maybeRtJar = Stream.of(pathElements)
-                                .filter(s -> s
-                                        .contains(File.separator + "rt.jar"))
-                                .findFirst();
-                        Path rtJar = Paths
-                                .get(maybeRtJar.orElseThrow(Exception::new))
-                                .toAbsolutePath();
                         Path root = getInstalledAppRootLocation(app,
                                 applicationTitle).toAbsolutePath();
 
-                        assertTrue(rtJar.startsWith(root), String.format(
-                                "[%s does not start with %s]", rtJar, rtJar));
+                        String firstAppJdk9ModulesPath = firstAppVerboseOutput[1].trim();
+                        assertTrue(firstAppJdk9ModulesPath.startsWith(root.toString()), String.format(
+                                "[%s does not start with %s]", firstAppJdk9ModulesPath, firstAppJdk9ModulesPath));
 
-                        process = Utils.runCommand(
+                        ProcessOutput secondAppProcessOutput = Utils.runCommand(
                                 new String[] {
                                         getInstalledExecutableLocation(app,
                                                 applicationTitle, secondAppName)
                                                         .toString() },
-                                /* verbose = */ true,
+                                true,
                                 CONFIG_INSTANCE.getRunTimeout());
 
-                        maybePath = process.getOutputStream().stream()
-                                .filter(s -> s.contains(sunBootClasspath))
+                        Optional<String> secondMaybePath = secondAppProcessOutput.getOutputStream()
+                                .stream()
+                                .filter(s -> s.contains(openedText))
                                 .findFirst();
-                        path = maybePath.orElseThrow(Exception::new)
-                                .split("=")[1];
-                        pathElements = path.split(File.pathSeparator);
+                        String[] secondAppVerboseOutput = secondMaybePath.orElseThrow(Exception::new)
+                                .split("opened:");
 
-                        maybeRtJar = Stream.of(pathElements)
-                                .filter(s -> s
-                                        .contains(File.separator + "rt.jar"))
-                                .findFirst();
-                        Path rtJarSecond = Paths
-                                .get(maybeRtJar.orElseThrow(Exception::new))
-                                .toAbsolutePath();
+                        String secondAppJdk9ModulesPath = secondAppVerboseOutput[1].trim();
 
-                        assertEquals(rtJar, rtJarSecond,
+                        assertEquals(firstAppJdk9ModulesPath, secondAppJdk9ModulesPath,
                                 "[Second app uses different java location]");
 
                     } catch (Exception e) {
@@ -565,6 +548,27 @@ public abstract class AbstractBundlerUtils implements Constants {
         return result.get();
     }
 
+    protected Path findByExtension(Path dir, String extension, int maxDepth,
+            String applicationTitle) throws IOException {
+        Optional<Path> result = Files
+                .find(dir, maxDepth,
+                        (file, attr) -> file.toFile().getName().startsWith(
+                                applicationTitle)
+                        && file.toFile().getName().endsWith("." + extension))
+                .findFirst();
+
+        if (!result.isPresent()) {
+            result = Files.find(dir, maxDepth, (file, attr) -> file.toFile()
+                    .getName().endsWith("." + extension)).findFirst();
+        }
+
+        if (!result.isPresent()) {
+            throw new FileNotFoundException("*." + extension
+                    + " not found under " + dir + " with maxDepth=" + maxDepth);
+        }
+        return result.get();
+    }
+
     protected List<String> getLinesFromOptions(Map<String, String> opts) {
         return opts.keySet().stream().map(key -> key + opts.get(key))
                 .collect(toList());
@@ -583,4 +587,5 @@ public abstract class AbstractBundlerUtils implements Constants {
     public abstract Path getJavaExecutableBinPathInInstalledApp(AppWrapper appWrapper, String appTitle);
 
     public abstract String getJavaExecutable();
+
 }

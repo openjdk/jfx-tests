@@ -15,8 +15,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;
@@ -111,7 +113,6 @@ public class ConsoleBundlingManager extends BundlingManager {
             boolean isSrcDirRequired) throws IOException {
         try {
             List<String> command = command(file, toConsole(params, isSrcDirRequired));
-            System.out.println("execution command is " + command);
             ProcessOutput process = Utils.runCommand(command,
                     CONFIG_INSTANCE.getInstallTimeout());
             if (process.exitCode() != 0) {
@@ -168,45 +169,54 @@ public class ConsoleBundlingManager extends BundlingManager {
             Object value = entry.getValue();
             RelativeFileSet fileSet;
             switch (key) {
-            case "appResources":
-                if(ExtensionType.NormalJar == extensionType || isSrcDirRequired) {
-                    fileSet = (RelativeFileSet) value;
-                    String path = fileSet.getBaseDirectory().getPath();
-                    key2Value.add(new Pair<>("-srcdir", Arrays.asList(path)));
-                    key2Value.add(
-                            new Pair<>("-srcfiles", fileSet.getIncludedFiles()));
+            case APP_RESOURCES:
+                if (ExtensionType.NormalJar == extensionType) {
+                    prepareSrcDirAndSrcFiles(key2Value, value);
+                } else if (params.containsKey(DUMMY_RELATIVE_FILESET)
+                        && isSrcDirRequired) {
+                    prepareSrcDirAndSrcFilesForLicenseFileTest(params,
+                            key2Value, value);
+                } else if (isSrcDirRequired) {
+                    prepareSrcDirAndSrcFiles(key2Value, value);
                 }
                 break;
-            case "jvmOptions":
+
+            case DUMMY_RELATIVE_FILESET:
+                /*
+                 * do nothing here
+                 * handled in prepareSrcDirAndSrcFiles(params, key2Value, value) method.
+                 */
+                break;
+
+            case JVM_OPTIONS:
                 Collection<String> col = (Collection<String>) value;
                 key2Value.add(new Pair<>(getMappedKeyAndCheck(key),
                         Arrays.asList(col.stream().collect(joining(" ")))));
                 break;
-            case "userJvmOptions":
+            case USER_JVM_OPTIONS:
                 key2Value.addAll(separateOptions(getMappedKeyAndCheck(key),
                         (Map<String, String>) value));
                 break;
-            case "jvmProperties":
+            case JVM_PROPERTIES:
                 key2Value.add(new Pair<>(getMappedKeyAndCheck(key),
                         collectOptions((Map<String, String>) value)));
                 break;
-            case "runtime":
+            case RUNTIME:
                 fileSet = (RelativeFileSet) value;
                 key2Value.add(new Pair<>(getMappedKeyAndCheck(key), Arrays
                         .asList(fileSet.getBaseDirectory().getAbsolutePath())));
                 break;
-            case "licenseFile":
+            case LICENSE_FILE:
                 String file = (String) value;
                 key2Value.add(new Pair<>(getMappedKeyAndCheck(key),
                         Arrays.asList(file)));
                 break;
-            case "installdirChooser":
+
+            case INSTALLDIR_CHOOSER:
                 key2Value.add(new Pair<>(getMappedKeyAndCheck(key),
                         new ArrayList<>(0)));
                 break;
-            case "mainJar":
-                // Use relative references
-//                fileSet = (RelativeFileSet) value;
+            case MAIN_JAR:
                 String jar = (String) value;
                 key2Value.add(new Pair<>(getMappedKeyAndCheck(key),
                         Arrays.asList(jar)));
@@ -224,14 +234,42 @@ public class ConsoleBundlingManager extends BundlingManager {
                 key2Value.add(new Pair<>(getMappedKeyAndCheck(key),
                         new ArrayList<>(0)));
                 break;
-            case "appResourcesList":
+            case APP_RESOURCES_LIST:
                 break;
+
             default:
                 key2Value.add(new Pair<>(getMappedKeyAndCheck(key),
                         Arrays.asList(value.toString())));
             }
         }
         return key2Value;
+    }
+
+    private void prepareSrcDirAndSrcFiles(
+            List<Pair<String, Collection<String>>> key2Value, Object value) {
+        RelativeFileSet fileSet = (RelativeFileSet) value;
+        String path = fileSet.getBaseDirectory().getPath();
+        key2Value.add(new Pair<>("-srcdir", Arrays.asList(path)));
+        key2Value.add(new Pair<>("-srcfiles", fileSet.getIncludedFiles()));
+    }
+
+    private void prepareSrcDirAndSrcFilesForLicenseFileTest(
+            Map<String, Object> params,
+            List<Pair<String, Collection<String>>> key2Value, Object value) {
+
+        List<String> actualSrcDirList = new ArrayList<String>();
+        Set<String> actualSrcFiles = new HashSet<>();
+
+        if (params.containsKey(DUMMY_RELATIVE_FILESET)) {
+            RelativeFileSet dummyRelativeFileSet = (RelativeFileSet) params
+                    .get(DUMMY_RELATIVE_FILESET);
+            actualSrcDirList
+                    .add(dummyRelativeFileSet.getBaseDirectory().getPath());
+            actualSrcFiles.addAll(dummyRelativeFileSet.getIncludedFiles());
+        }
+
+        key2Value.add(new Pair<>("-srcdir", actualSrcDirList));
+        key2Value.add(new Pair<>("-srcfiles", actualSrcFiles));
     }
 
     private List<Pair<String, Collection<String>>> separateOptions(String key,

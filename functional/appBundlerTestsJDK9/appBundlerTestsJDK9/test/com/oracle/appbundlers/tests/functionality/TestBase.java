@@ -206,8 +206,7 @@ public abstract class TestBase implements Constants {
         }
 
         try {
-            LOG.log(Level.INFO,"Parameters before passing to execute method {0}", allParams);
-            executeJavaPackager(bundlingManager, allParams);
+            executeJavaPackager(bundlingManager, allParams, bundlingManager.getExtensionType());
             String path = bundlingManager.install(
                     this.currentParameter.getApp(), getResultingAppName(),
                     false);
@@ -216,7 +215,7 @@ public abstract class TestBase implements Constants {
             Pair<TimeUnit, Integer> tuple = getDelayAfterInstall();
             tuple.getKey().sleep(tuple.getValue());
             AppWrapper app2 = this.currentParameter.getApp();
-            this.currentParameter.getVerifiedOptions()
+            this.currentParameter.createNewVerifiedOptions()
                     .forEach((name, value) -> bundlingManager.verifyOption(name,
                             value, app2, getResultingAppName()));
         } finally {
@@ -226,7 +225,7 @@ public abstract class TestBase implements Constants {
     }
 
     protected void executeJavaPackager(BundlingManager bundlingManager,
-            Map<String, Object> allParams) throws IOException {
+            Map<String, Object> allParams, ExtensionType extension) throws IOException {
         bundlingManager.execute(allParams, this.currentParameter.getApp());
     }
 
@@ -244,6 +243,7 @@ public abstract class TestBase implements Constants {
     protected void uninstallApp() throws Exception {
         if (this.bundlingManager != null) {
             String appName = this.bundlingManager.getAppName(getAllParams());
+            LOG.log(Level.INFO, "App Name in uninstallApp is {0}", appName);
             this.bundlingManager.uninstall(this.currentParameter.getApp(), appName);
         }
     }
@@ -262,7 +262,11 @@ public abstract class TestBase implements Constants {
                 }
             }
         } else {
-            LOG.log(Level.INFO, "SKIPPED cleaning temporary files and bundles directory");
+            for (Parameters parameters : intermediateToParametersMap.values()) {
+                if(parameters.getApp() != null && parameters.getApp().getWorkDir() != null) {
+                    LOG.log(Level.INFO, "Skipped Removing Directory {0} ",parameters.getApp().getWorkDir());
+                }
+            }
         }
     }
 
@@ -311,19 +315,19 @@ public abstract class TestBase implements Constants {
 
     protected Map<String, Object> getAllParams() throws Exception {
         Map<String, Object> basicParams = this.currentParameter
-                .getBasicParams();
+                .createNewBasicParams();
         LOG.log(Level.INFO, "Basic Parameters are {0}", basicParams);
         Map<String, Object> allParams = new HashMap<String, Object>();
         allParams.put(APP_NAME, getResultingAppName());
         allParams.putAll(basicParams);
-        Map<String, Object> additionalParams = this.currentParameter.getAdditionalParams();
+        Map<String, Object> additionalParams = this.currentParameter.createNewAdditionalParams();
         LOG.log(Level.INFO, "Additional Parameters are {0}", additionalParams);
         allParams.putAll(additionalParams);
         return allParams;
     }
 
     public void validate() throws Exception {
-        this.bundlingManager.validate(this.currentParameter.getBasicParams());
+        this.bundlingManager.validate(this.currentParameter.createNewBasicParams());
     }
 
     public Parameters getParameters() {

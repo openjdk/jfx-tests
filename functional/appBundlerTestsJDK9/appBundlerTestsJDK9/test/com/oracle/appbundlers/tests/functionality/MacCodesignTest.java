@@ -38,7 +38,7 @@ public class MacCodesignTest extends TestBase {
         // creating fake certificates
         if (Utils.isMacOS()) {
             Map<String, Object> basicParams = this.currentParameter
-                    .getBasicParams();
+                    .createNewBasicParams();
             File certsDir = new File(
                     CONFIG_INSTANCE.getResourceDir() + "/certs");
             certsDir.mkdir();

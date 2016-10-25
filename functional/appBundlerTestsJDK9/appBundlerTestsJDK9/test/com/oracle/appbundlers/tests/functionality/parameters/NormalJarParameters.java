@@ -50,22 +50,22 @@ public class NormalJarParameters extends Parameters {
 
     }
 
-    public Map<String, Object> getBasicParams() throws Exception {
-        Map<String, Object> basicParams = new HashMap<String, Object>();
-        basicParams.put(BundleParams.PARAM_APP_RESOURCES,
+    public Map<String, Object> createNewBasicParams() throws Exception {
+        basicParamsMap = new HashMap<String, Object>();
+        basicParamsMap.put(BundleParams.PARAM_APP_RESOURCES,
                 new RelativeFileSet(this.app.getJarDir().toFile(),
                         app.getJarFilesList().stream().map(Path::toFile)
                                 .collect(toSet())));
-        basicParams.put(MAIN_JAR,
+        basicParamsMap.put(MAIN_JAR,
                 this.app.getMainJarFile().toFile().getName());
-        basicParams.put(CLASSPATH,
+        basicParamsMap.put(CLASSPATH,
                 this.app.getJarFilesList().stream().map(Path::getFileName)
                         .map(Path::toString)
                         .collect(Collectors.joining(File.pathSeparator)));
         String mainClass = StandardBundlerParam.MAIN_CLASS
-                .fetchFrom(basicParams);
-        basicParams.put(APPLICATION_CLASS, mainClass);
-        return requireNonNull(getBasicParamsFunctionalInterface(), basicParams);
+                .fetchFrom(basicParamsMap);
+        basicParamsMap.put(APPLICATION_CLASS, mainClass);
+        return requireNonNull(getBasicParamsFunctionalInterface(), basicParamsMap);
     }
 
     @Override

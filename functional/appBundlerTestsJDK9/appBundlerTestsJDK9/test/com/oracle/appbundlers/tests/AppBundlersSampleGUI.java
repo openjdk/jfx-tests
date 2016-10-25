@@ -134,8 +134,8 @@ public class AppBundlersSampleGUI extends Application implements Constants {
         Map<String, Object> basicParams = null;
         Map<String, Object> additionalParams = null;
         try {
-            basicParams = parameters.getBasicParams();
-            additionalParams = parameters.getAdditionalParams();
+            basicParams = parameters.createNewBasicParams();
+            additionalParams = parameters.createNewAdditionalParams();
         } catch (Exception exp) {
             exp.printStackTrace();
         }

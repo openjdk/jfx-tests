@@ -42,6 +42,7 @@ public class NamedModuleBundledWithMinimumModulesAnd3rdPartyModulesTest
             Map<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put(ADD_MODS, this.currentParameter.getApp()
                     .getAllModuleNamesSeperatedByCommaExceptMainmodule());
+            hashMap.put(STRIP_NATIVE_COMMANDS, false);
             return hashMap;
         };
     }

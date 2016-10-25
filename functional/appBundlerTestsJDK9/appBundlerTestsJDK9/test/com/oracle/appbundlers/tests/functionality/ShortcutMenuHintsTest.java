@@ -16,6 +16,7 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.Additional
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.ExtensionType;
+import com.oracle.tools.packager.StandardBundlerParam;
 
 /**
  * @author Dmitry Ginzburg &lt;dmitry.x.ginzburg@oracle.com&gt;
@@ -33,7 +34,7 @@ import com.oracle.appbundlers.utils.ExtensionType;
  * </ul>
  */
 public class ShortcutMenuHintsTest extends TestBase {
-    private static final String VENDOR_NAME = "SQE_TEST";
+    private static final String VENDOR_NAME = "SHORTCUT_MENU_HINT_TEST";
 
     @Override
     protected BundlerUtils[] getBundlerUtils() {
@@ -46,9 +47,9 @@ public class ShortcutMenuHintsTest extends TestBase {
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
-            additionalParams.put(VENDOR, VENDOR_NAME);
-            additionalParams.put(SHORTCUT_HINT, true);
-            additionalParams.put(MENU_HINT, true);
+            additionalParams.put(StandardBundlerParam.VENDOR.getID(), VENDOR_NAME);
+            additionalParams.put(StandardBundlerParam.SHORTCUT_HINT.getID(), true);
+            additionalParams.put(StandardBundlerParam.MENU_HINT.getID(), true);
             return additionalParams;
         };
     }
@@ -56,8 +57,8 @@ public class ShortcutMenuHintsTest extends TestBase {
     public VerifiedOptions getVerifiedOptions() {
         return () -> {
             Map<String, Object> verifiedOptions = new HashMap<>();
-            verifiedOptions.put(MENU_HINT, VENDOR_NAME);
-            verifiedOptions.put(SHORTCUT_HINT, null);
+            verifiedOptions.put(StandardBundlerParam.MENU_HINT.getID(), VENDOR_NAME);
+            verifiedOptions.put(StandardBundlerParam.SHORTCUT_HINT.getID(), null);
             return verifiedOptions;
         };
     }

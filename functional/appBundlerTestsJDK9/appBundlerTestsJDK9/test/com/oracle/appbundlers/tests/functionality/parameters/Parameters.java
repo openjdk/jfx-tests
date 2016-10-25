@@ -6,6 +6,7 @@ package com.oracle.appbundlers.tests.functionality.parameters;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
@@ -35,8 +36,15 @@ public abstract class Parameters implements Constants {
 
     private VerifiedOptions verifiedOptions;
 
-    public Parameters() {
 
+    protected Map<String, Object> basicParamsMap;
+
+    protected Map<String, Object> additionalParamsMap;
+
+
+    public Parameters() {
+        basicParamsMap = new HashMap<>();
+        additionalParamsMap = new HashMap<>();
     }
 
     public Parameters(BasicParams basicParams,
@@ -73,16 +81,16 @@ public abstract class Parameters implements Constants {
         this.verifiedOptions = verifiedOptions;
     }
 
-    public Map<String, Object> getBasicParams() throws Exception {
+    public Map<String, Object> createNewBasicParams() throws Exception {
         return requireNonNull(this.basicParams, Collections.emptyMap());
     }
 
-    public Map<String, Object> getAdditionalParams() throws Exception {
+    public Map<String, Object> createNewAdditionalParams() throws Exception {
         return requireNonNull(this.additionalParams, Collections.emptyMap());
     }
 
-    public Map<String, Object> getVerifiedOptions() throws Exception {
-        return requireNonNull(this.verifiedOptions, getAdditionalParams());
+    public Map<String, Object> createNewVerifiedOptions() throws Exception {
+        return requireNonNull(this.verifiedOptions, createNewAdditionalParams());
     }
 
     protected <T> Map<String, Object> requireNonNull(T obj, Map<String, Object> defaultValue) throws Exception {
@@ -97,5 +105,13 @@ public abstract class Parameters implements Constants {
     }
 
     public abstract ExtensionType getExtension();
+
+    public Map<String, Object> getAdditionalParamsMap() {
+        return this.additionalParamsMap;
+    }
+
+    public Map<String, Object> getBasicParamsMap() {
+        return this.basicParamsMap;
+    }
 }
 

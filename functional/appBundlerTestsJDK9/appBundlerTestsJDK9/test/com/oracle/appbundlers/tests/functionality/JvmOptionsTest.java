@@ -6,7 +6,6 @@
 package com.oracle.appbundlers.tests.functionality;
 
 import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.MULTI_OUTPUT_CONTAINS;
-import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,7 +20,6 @@ import com.oracle.appbundlers.utils.ExtensionType;
 /**
  * @author Dmitry Ginzburg &lt;dmitry.x.ginzburg@oracle.com&gt;
  * @author Dmitry Zinkevich &lt;dmitry.zinkevich@oracle.com&gt;
- * @TODO: test needs to be modified.
  */
 
 /**

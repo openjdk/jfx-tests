@@ -12,7 +12,6 @@ import java.util.logging.Level;
 
 import com.oracle.appbundlers.utils.installers.AbstractBundlerUtils;
 import com.oracle.tools.packager.ConfigException;
-import com.oracle.tools.packager.RelativeFileSet;
 import com.oracle.tools.packager.UnsupportedPlatformException;
 
 /**
@@ -45,14 +44,7 @@ public class JavaApiBundlingManager extends BundlingManager {
     @Override
     public File execute(Map<String, Object> params, File file,
             boolean isSrcDirRequired) throws IOException {
-
-        if(ExtensionType.NormalJar == extensionType || isSrcDirRequired) {
-            Object object = params.get("appResources");
-            RelativeFileSet fileSet = (RelativeFileSet) object;
-            String srcDirPath = fileSet.getBaseDirectory().getPath();
-            params.put("srcdir", srcDirPath);
-            LOG.log(Level.INFO, "Bundling with params after adding srcdir to params: {0}.", params);
-        }
+        LOG.log(Level.INFO, "Params before passing are {0}", params);
         return getBundler().execute(params, file);
     }
 }

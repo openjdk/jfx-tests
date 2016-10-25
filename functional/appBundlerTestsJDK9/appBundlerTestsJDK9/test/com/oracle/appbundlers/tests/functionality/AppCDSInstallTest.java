@@ -24,10 +24,12 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.BundlerUtils;
+import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.Utils;
 
@@ -79,5 +81,14 @@ public class AppCDSInstallTest extends TestBase {
             throws IOException {
         this.currentParameter.setAdditionalParams(getAdditionalParams(extension));
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
+    }
+
+    /*
+     * SKIPPING APPCDS TEST CASES UNTIL https://bugs.openjdk.java.net/browse/JDK-8167657 is fixed.
+     */
+    @Override
+    @Test(dataProvider = "getBundlers", enabled=false)
+    public void runTest(BundlingManager bundlingManager) throws Exception {
+        super.runTest(bundlingManager);
     }
 }

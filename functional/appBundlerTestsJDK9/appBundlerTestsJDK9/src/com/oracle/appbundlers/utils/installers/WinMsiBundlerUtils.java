@@ -98,7 +98,7 @@ public class WinMsiBundlerUtils extends WinAbstractBundlerUtils {
     public String install(AppWrapper app, String applicationTitle)
             throws IOException {
         String msiPath = findByExtension(app.getBundlesDir(), "msi",
-                ROOT_DIRECTORY_DEPTH).toString();
+                ROOT_DIRECTORY_DEPTH, applicationTitle).toString();
         try {
             LOG.log(Level.INFO, "Installing {0}.", msiPath);
             String[] cmd = new String[] { "msiexec.exe", "/i", msiPath,
@@ -115,7 +115,7 @@ public class WinMsiBundlerUtils extends WinAbstractBundlerUtils {
     public void uninstall(AppWrapper app, String applicationTitle)
             throws IOException {
         Path msiPath = findByExtension(app.getBundlesDir(), "msi",
-                ROOT_DIRECTORY_DEPTH);
+                ROOT_DIRECTORY_DEPTH, applicationTitle);
         String msiPath1 = msiPath.toString();
         try {
             LOG.log(Level.INFO, "Uninstalling {0}.", msiPath);

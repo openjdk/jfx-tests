@@ -84,9 +84,9 @@ public enum Config {
         if ("single-method".equals(System.getProperty("test-run-mode"))) {
             tryDefineInstallationPackageType();
             tryDefinePackagerInterface();
+            isJavaExtensionTypeDefined();
         }
         tryFilterManual();
-        isJavaExtensionTypeDefined();
     }
 
     private void tryFilterManual() {
@@ -113,7 +113,7 @@ public enum Config {
                         BundlerUtils.class, eachInstallationType);
                 acceptedInstallationPackagerType.add(bundlerUtil);
             }
-            System.out.println("[Installation package type filter: "
+            System.out.println("[Filtered Installation-package-types: "
                     + acceptedInstallationPackagerType + "]");
         } catch (Throwable t) {
             System.out
@@ -132,9 +132,9 @@ public enum Config {
                 BundlingManagers bundlingMgr = getEnumInstance(
                         BundlingManagers.class, eachBundlingMgr);
                 acceptedPackagerInterface.add(bundlingMgr);
-                System.out.println("[Packager interface filter: "
-                        + acceptedPackagerInterface + "]");
             }
+            System.out.println("[Filtered Packager-interfaces: "
+                    + acceptedPackagerInterface + "]");
         } catch (Throwable t) {
             System.out.println("[Packager interfaces won't be filtered]");
         }
@@ -153,9 +153,9 @@ public enum Config {
                     ExtensionType extensionType = getEnumInstance(
                             ExtensionType.class, eachJavaExtension);
                     javaExtensionType.add(extensionType);
-                    System.out.println("[Filtered java extension type: "
-                            + javaExtensionString + "]");
                 }
+                System.out.println("[Filtered java-extension-types: "
+                        + javaExtensionType + "]");
             } else {
                 System.out.println("[Java Extension Type won't be Filtered]");
             }

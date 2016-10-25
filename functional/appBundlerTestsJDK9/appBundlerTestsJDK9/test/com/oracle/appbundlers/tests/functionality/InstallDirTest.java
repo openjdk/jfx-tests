@@ -46,7 +46,7 @@ public class InstallDirTest extends TestBase {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
             RelativeFileSet existingRelativeFileSet = (RelativeFileSet) this.currentParameter
-                    .getBasicParams().get(APP_RESOURCES);
+                    .getBasicParamsMap().get(APP_RESOURCES);
             if (existingRelativeFileSet == null) {
                 RelativeFileSet newRelativeFileSet = this.currentParameter
                         .getApp().getNewRelativeFileSetBasedOnExtension(extension);

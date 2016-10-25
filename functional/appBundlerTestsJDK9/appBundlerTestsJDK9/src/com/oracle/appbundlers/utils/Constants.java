@@ -156,5 +156,6 @@ public interface Constants {
     String RUNTIME = "runtime";
     String MODULE_INFO_DOT_JAVA = "module-info.java";
     String ADD_EXPORTS = "add-exports";
+    String DUMMY_RELATIVE_FILESET="dummy_relative_fileset";
 
 }

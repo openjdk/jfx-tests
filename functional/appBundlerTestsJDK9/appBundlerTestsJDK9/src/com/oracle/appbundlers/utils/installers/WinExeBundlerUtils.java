@@ -139,7 +139,7 @@ public class WinExeBundlerUtils extends WinAbstractBundlerUtils {
     public String install(AppWrapper app, String applicationTitle)
             throws IOException {
         String exePath = findByExtension(app.getBundlesDir(), "exe",
-                ROOT_DIRECTORY_DEPTH).toString();
+                ROOT_DIRECTORY_DEPTH, applicationTitle).toString();
         try {
             LOG.log(Level.INFO, "Installing {0}.", exePath);
             String[] cmd = new String[] { exePath, "/VERYSILENT" };

@@ -37,16 +37,16 @@ public class ModularJarParameters extends GenericModuleParameters {
     public ModularJarParameters() {
     }
 
-    public Map<String, Object> getBasicParams() throws Exception {
-        Map<String, Object> basicParams = new HashMap<String, Object>();
-        basicParams.putAll(super.getBasicParams());
-        basicParams.put(BundleParams.PARAM_APP_RESOURCES,
+    public Map<String, Object> createNewBasicParams() throws Exception {
+        basicParamsMap = new HashMap<String, Object>();
+        basicParamsMap.putAll(super.createNewBasicParams());
+        basicParamsMap.put(BundleParams.PARAM_APP_RESOURCES,
                 new RelativeFileSet(this.app.getModularJarsDir().toFile(),
                         app.getModularJarFileList().stream().map(Path::toFile)
                                 .collect(toSet())));
-        basicParams.put(MODULEPATH, String.join(File.pathSeparator,
+        basicParamsMap.put(MODULEPATH, String.join(File.pathSeparator,
                 JMODS_PATH_IN_JDK, app.getModularJarsDir().toString()));
-        return requireNonNull(getBasicParamsFunctionalInterface(), basicParams);
+        return requireNonNull(getBasicParamsFunctionalInterface(), basicParamsMap);
     }
 
     @Override

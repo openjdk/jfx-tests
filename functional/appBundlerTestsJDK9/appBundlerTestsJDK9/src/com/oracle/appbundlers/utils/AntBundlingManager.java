@@ -90,6 +90,7 @@ public class AntBundlingManager extends BundlingManager {
             put(LIMIT_MODS, new Location("fx:runtime",""));
             put(MODULEPATH, new Location("fx:runtime",""));
             put(MAIN_MODULE, new Location("fx:application", MAIN_MODULE));
+            put(DUMMY_RELATIVE_FILESET, new Location("fx:resources", ""));
         }
     };
 
@@ -142,7 +143,7 @@ public class AntBundlingManager extends BundlingManager {
 
     @SuppressWarnings("unchecked")
     private void appendToFXDeploy(Document document, Element fxDeploy,
-            Map<String, Object> params) throws IOException {
+            Map<String, Object> params, boolean isSrcDirRequired) throws IOException {
         final Map<String, Element> ant = toAntEntry.values().stream()
                 .filter(location -> location != Location.DUMMY)
                 .map(location -> location.element).distinct().collect(Collectors
@@ -157,25 +158,28 @@ public class AntBundlingManager extends BundlingManager {
             if (location != null) {
                 Element parentEl = ant.get(location.element);
                 switch (key) {
-                case "appResources": {
-                    if(ExtensionType.NormalJar == extensionType) {
-                        RelativeFileSet relFileSet = (RelativeFileSet) value;
-                        Element e = document.createElement("fx:fileset");
-                        e.setAttribute("dir",
-                                relFileSet.getBaseDirectory().getAbsolutePath());
-                        e.setAttribute("includes", relFileSet.getIncludedFiles()
-                                .stream().collect(joining(",")));
-                        parentEl.appendChild(e);
+                case APP_RESOURCES: {
+                    if (ExtensionType.NormalJar == extensionType) {
+                        prepareSrcDirAndSrcFiles(document, value, parentEl);
+                    } else if (params.containsKey(DUMMY_RELATIVE_FILESET)
+                            && isSrcDirRequired) {
+                        prepareSrcDirAndSrcFilesForLicenseFileTest(document, value, parentEl);
+                    } else if(isSrcDirRequired) {
+                        prepareSrcDirAndSrcFiles(document, value, parentEl);
                     }
                     break;
                 }
-                case "appResourcesList":
+                case APP_RESOURCES_LIST:
                     break;
-                case "licenseFile": {
+                case LICENSE_FILE: {
                     String file = (String) value;
                     Element e = document.createElement("fx:fileset");
                     RelativeFileSet relFileSet = null;
-                    relFileSet = com.oracle.tools.packager.StandardBundlerParam.APP_RESOURCES.fetchFrom(params);
+                    if(ExtensionType.NormalJar == extensionType) {
+                        relFileSet = (RelativeFileSet) params.get(APP_RESOURCES);
+                    } else {
+                        relFileSet = (RelativeFileSet) params.get(DUMMY_RELATIVE_FILESET);
+                    }
                     e.setAttribute("dir",
                             relFileSet.getBaseDirectory().getAbsolutePath());
                     e.setAttribute("includes", file);
@@ -183,6 +187,12 @@ public class AntBundlingManager extends BundlingManager {
                     parentEl.appendChild(e);
                     break;
                 }
+
+                case DUMMY_RELATIVE_FILESET: {
+                    //do nothing it is handled in License
+                    break;
+                }
+
                 case "icon": {
                     File icon = (File) value;
                     Element e = document.createElement("fx:icon");
@@ -190,19 +200,19 @@ public class AntBundlingManager extends BundlingManager {
                     parentEl.appendChild(e);
                     break;
                 }
-                case "jvmOptions": {
+                case JVM_OPTIONS: {
                     createJvmOptionsEntries(document, parentEl, value);
                     break;
                 }
-                case "jvmProperties": {
+                case JVM_PROPERTIES: {
                     createJvmPropertiesEntries(document, parentEl, value);
                     break;
                 }
-                case "userJvmOptions": {
+                case USER_JVM_OPTIONS: {
                     createUserJvmOptionsEntries(document, parentEl, value);
                     break;
                 }
-                case "secondaryLaunchers": {
+                case SECONDARY_LAUNCHERS: {
                     List<Map<String, Object>> launchers = (List<Map<String, Object>>) value;
                     for (Map<String, Object> eachLauncher : launchers) {
                         Element launcherEl = document
@@ -212,22 +222,22 @@ public class AntBundlingManager extends BundlingManager {
                                 .entrySet()) {
 
                             switch (keyVal.getKey()) {
-                            case "jvmOptions": {
+                            case JVM_OPTIONS: {
                                 createJvmOptionsEntries(document, launcherEl,
                                         keyVal.getValue());
                                 break;
                             }
-                            case "jvmProperties": {
+                            case JVM_PROPERTIES: {
                                 createJvmPropertiesEntries(document, launcherEl,
                                         keyVal.getValue());
                                 break;
                             }
-                            case "userJvmOptions": {
+                            case USER_JVM_OPTIONS: {
                                 createUserJvmOptionsEntries(document,
                                         launcherEl, keyVal.getValue());
                                 break;
                             }
-                            case "arguments": {
+                            case ARGUMENTS: {
                                 createArgumentEntries(document, launcherEl,
                                         keyVal.getValue());
                                 break;
@@ -256,13 +266,13 @@ public class AntBundlingManager extends BundlingManager {
                     }
                     break;
                 }
-                case "runtime": {
+                case RUNTIME: {
                     RelativeFileSet relFileSet = (RelativeFileSet) value;
                     parentEl.setAttribute(location.attribute,
                             relFileSet.getBaseDirectory().getAbsolutePath());
                     break;
                 }
-                case "arguments": {
+                case ARGUMENTS: {
                     createArgumentEntries(document, parentEl, value);
                     break;
                 }
@@ -335,6 +345,28 @@ public class AntBundlingManager extends BundlingManager {
         }
     }
 
+    private void prepareSrcDirAndSrcFiles(Document document, Object value,
+            Element parentEl) {
+        RelativeFileSet relFileSet = (RelativeFileSet) value;
+        Element e = document.createElement("fx:fileset");
+        e.setAttribute("dir", relFileSet.getBaseDirectory()
+                .getAbsolutePath());
+        e.setAttribute("includes", relFileSet.getIncludedFiles()
+                .stream().collect(joining(",")));
+        parentEl.appendChild(e);
+    }
+
+    private void prepareSrcDirAndSrcFilesForLicenseFileTest(Document document, Object value,
+            Element parentEl) {
+        RelativeFileSet relFileSet = (RelativeFileSet) value;
+        Element e = document.createElement("fx:fileset");
+        e.setAttribute("dir",
+                relFileSet.getBaseDirectory().getAbsolutePath());
+        e.setAttribute("includes", relFileSet.getIncludedFiles()
+                .stream().collect(joining(",")));
+        parentEl.appendChild(e);
+    }
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private String getValueAsString(Object value) {
         String actualValue = null;
@@ -358,8 +390,6 @@ public class AntBundlingManager extends BundlingManager {
         Element bundleArgument = document.createElement("fx:bundleArgument");
         String argValue = null;
         if ("mainJar".equals(argName)) {
-//            RelativeFileSet fileSet = (RelativeFileSet) value;
-//            argValue = fileSet.getIncludedFiles().iterator().next();
             argValue = (String) value;
         } else {
             checkValue(value);
@@ -425,7 +455,7 @@ public class AntBundlingManager extends BundlingManager {
     }
 
     private Element fxDeploy(Document document, Map<String, Object> params,
-            File file) throws IOException {
+            File file, boolean isSrcDirRequired) throws IOException {
         Element fxDeploy = document.createElement("fx:deploy");
         String bundleType = getBundler().getBundleType();
         fxDeploy.setAttribute("nativeBundles",
@@ -438,7 +468,7 @@ public class AntBundlingManager extends BundlingManager {
         fxDeploy.setAttribute("outdir", file.getAbsolutePath());
         fxDeploy.setAttribute("outfile", "test");
         fxDeploy.setAttribute("verbose", "true");
-        appendToFXDeploy(document, fxDeploy, params);
+        appendToFXDeploy(document, fxDeploy, params, isSrcDirRequired);
         return fxDeploy;
     }
 
@@ -460,7 +490,7 @@ public class AntBundlingManager extends BundlingManager {
             boolean isSrcDirRequired) throws IOException {
         try {
             Data data = createDocument();
-            Element fxDeploy = fxDeploy(data.document, params, file);
+            Element fxDeploy = fxDeploy(data.document, params, file, isSrcDirRequired);
             data.fxDeployTarget.appendChild(fxDeploy);
             Path buildXmlFile = Utils.getTempDir().resolve("build.xml");
             String buildXml = documentToXml(data.document);

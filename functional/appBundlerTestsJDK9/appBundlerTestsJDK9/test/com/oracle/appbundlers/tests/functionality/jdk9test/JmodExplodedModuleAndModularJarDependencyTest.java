@@ -248,7 +248,7 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
             Pair<TimeUnit, Integer> tuple = getDelayAfterInstall();
             tuple.getKey().sleep(tuple.getValue());
             this.intermediateToParametersMap.get(ExtensionType.NormalJar)
-                    .getVerifiedOptions()
+                    .createNewVerifiedOptions()
                     .forEach((name, value) -> bundlingManager.verifyOption(name,
                             value, app, getResultingAppName(
                                     modulePath.getFileName().toString())));

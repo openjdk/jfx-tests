@@ -70,16 +70,16 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
 
     @Override
     protected void prepareTestEnvironment() throws Exception {
-        for (ExtensionType intermediate : ExtensionType.getModuleTypes()) {
+        for (ExtensionType javaExtensionFormat : getExtensionArray()) {
             this.currentParameter = this.intermediateToParametersMap
-                    .get(intermediate);
-            overrideParameters(intermediate);
+                    .get(javaExtensionFormat);
+            overrideParameters(javaExtensionFormat);
             initializeAndPrepareApp();
         }
     }
 
     @Override
-    public void overrideParameters(ExtensionType intermediate)
+    public void overrideParameters(ExtensionType javaExtensionFormat)
             throws IOException {
         this.currentParameter.setApp(getApp());
         this.currentParameter.setBasicParams(getBasicParams());
@@ -108,7 +108,7 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
     public BasicParams getBasicParams() throws IOException {
         /*
          * there is no main module in this test since unnamed module depending
-         * on named module via --add-exports
+         * on named module
          */
         return (AppWrapper app) -> {
             Map<String, Object> basicParams = new HashMap<String, Object>();
@@ -138,8 +138,8 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
 
     @Override
     protected void executeJavaPackager(BundlingManager bundlingManager,
-            Map<String, Object> allParams) throws IOException {
-        bundlingManager.execute(allParams, this.currentParameter.getApp(), true);
+            Map<String, Object> allParams, ExtensionType extension) throws IOException {
+        bundlingManager.execute(allParams, this.currentParameter.getApp() ,true);
     }
 }
 
