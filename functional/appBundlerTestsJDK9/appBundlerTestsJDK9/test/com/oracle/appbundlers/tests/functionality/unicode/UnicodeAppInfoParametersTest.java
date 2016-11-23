@@ -38,7 +38,6 @@ public class UnicodeAppInfoParametersTest extends AppInfoParametersTest {
         return "ÐžÑ€Ð°ÐºÐ» Ð´ÐµÐ²ÐµÐ»Ð¾Ð¿Ð¼ÐµÐ½Ñ‚";
     }
 
-    @Override
     protected String appName() {
         return "Ñ…ÐµÐ»Ð»Ð¾Ð²Ð¾Ñ€Ð»Ð´";
     }

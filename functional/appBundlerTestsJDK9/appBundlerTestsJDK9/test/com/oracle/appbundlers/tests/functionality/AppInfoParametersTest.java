@@ -38,7 +38,6 @@ public class AppInfoParametersTest extends TestBase {
 
     private static final String title = "Sqe Application Title";
     private static final String vendor = "FXSQE";
-    private static final String appName = "SQEDEMOAPP";
     private static final String version = "1.0.42";
     private static final String description = "Full application description!";
     private static final String email = "example@oracle.com";
@@ -50,10 +49,6 @@ public class AppInfoParametersTest extends TestBase {
 
     protected String vendor() {
         return vendor;
-    }
-
-    protected String appName() {
-        return appName;
     }
 
     protected String version() {
@@ -72,15 +67,10 @@ public class AppInfoParametersTest extends TestBase {
         return category;
     }
 
-    @Override
-    public String getResultingAppName() {
-        return appName();
-    }
-
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
-            additionalParams.put(APP_NAME, appName());
+            additionalParams.put(APP_NAME, getResultingAppName());
 
             // Important to enable this option
             // because it's the only way to check title propagation to registry

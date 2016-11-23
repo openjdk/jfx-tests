@@ -19,14 +19,13 @@ import com.oracle.appbundlers.utils.ExtensionType;
  */
 public class DefaultArgumentsTest extends TestBase {
 
-    private static final String appName = "SQE-DEFAULT-PARAMS-TEST-APP";
     private static final List<String> arguments = Arrays
             .asList("this.is.a.test=tru", "one.more.arg=affirmative");
 
     protected AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
-            additionalParams.put(APP_NAME, appName);
+            additionalParams.put(APP_NAME, getResultingAppName());
             additionalParams.put(ARGUMENTS, arguments);
             return additionalParams;
         };
@@ -39,11 +38,6 @@ public class DefaultArgumentsTest extends TestBase {
             verifiedOptions.put(MULTI_OUTPUT_CONTAINS, arguments);
             return verifiedOptions;
         };
-    }
-
-    @Override
-    public String getResultingAppName() {
-        return appName;
     }
 
     @Override

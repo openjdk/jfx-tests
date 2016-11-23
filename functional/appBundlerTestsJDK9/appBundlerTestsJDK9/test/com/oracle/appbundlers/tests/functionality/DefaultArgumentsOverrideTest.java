@@ -22,14 +22,13 @@ import javafx.util.Pair;
  */
 public class DefaultArgumentsOverrideTest extends TestBase {
 
-    private static final String appName = "SQE-DEFAULT-PARAMS-OVERRIDE-TEST-APP";
     private static final List<String> arguments = Arrays
             .asList("this.is.a.test=tru", "one.more.arg=affirmative");
 
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
-            additionalParams.put(APP_NAME, appName);
+            additionalParams.put(APP_NAME, getResultingAppName());
             additionalParams.put(ARGUMENTS, arguments);
             return additionalParams;
         };
@@ -43,11 +42,6 @@ public class DefaultArgumentsOverrideTest extends TestBase {
                     new Pair<>(asList("aba", "caba", "aba caba"), arguments));
             return verifiedOptions;
         };
-    }
-
-    @Override
-    public String getResultingAppName() {
-        return appName;
     }
 
     @Override
