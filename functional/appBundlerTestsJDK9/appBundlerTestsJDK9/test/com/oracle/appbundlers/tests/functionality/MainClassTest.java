@@ -41,11 +41,6 @@ public class MainClassTest extends TestBase {
         return COM_GREETINGS_APP2_QUALIFIED_CLASS_NAME;
     }
 
-    @Override
-    public String getResultingAppName() {
-        return mainClassName();
-    }
-
     public AdditionalParams getAdditionalParams() {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();

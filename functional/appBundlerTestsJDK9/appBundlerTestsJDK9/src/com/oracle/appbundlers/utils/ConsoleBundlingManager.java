@@ -61,7 +61,6 @@ public class ConsoleBundlingManager extends BundlingManager {
             put("App Name", "-name");
             put("Title", "-title");
             put(VENDOR, "-vendor");
-            put(SERVICE_HINT, "-" + SERVICE_HINT);
 
             /*
              * JDK 9 CLI GNU style parameters
@@ -77,7 +76,7 @@ public class ConsoleBundlingManager extends BundlingManager {
                     ICON, EMAIL, COPYRIGHT, LICENSE_TYPE, CATEGORY,
                     SHORTCUT_HINT, MENU_HINT, SYSTEM_WIDE, JVM_OPTIONS,
                     JVM_PROPERTIES, USER_JVM_OPTIONS,
-                    // SERVICE_HINT,
+                    SERVICE_HINT,
                     PREFERENCES_ID, MAIN_JAR, CLASSPATH,
                     BundleParams.PARAM_RUNTIME, MAC_APP_STORE_APP_SIGNING_KEY,
                     MAC_APP_STORE_ENTITLEMENTS, MAC_APP_STORE_PKG_SIGNING_KEY,
@@ -229,10 +228,6 @@ public class ConsoleBundlingManager extends BundlingManager {
                 key2Value.add(new Pair<>(RAW_OPTIONS, (List<String>) value));
                 break;
             case "fxPackaging": // do nothing
-                break;
-            case SERVICE_HINT:
-                key2Value.add(new Pair<>(getMappedKeyAndCheck(key),
-                        new ArrayList<>(0)));
                 break;
             case APP_RESOURCES_LIST:
                 break;

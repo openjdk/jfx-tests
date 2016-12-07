@@ -38,7 +38,7 @@ public class MacPKGBundlerUtils extends MacAbstractBundlerUtils {
     public String install(AppWrapper app, String applicationTitle)
             throws IOException {
         Path pkg = findByExtension(app.getBundlesDir(), "pkg",
-                ROOT_DIRECTORY_DEPTH);
+                ROOT_DIRECTORY_DEPTH, applicationTitle);
         try {
             LOG.log(Level.INFO, "Installing {0}.", pkg);
             String[] cmd = new String[] { "sudo", "installer", "-pkg",

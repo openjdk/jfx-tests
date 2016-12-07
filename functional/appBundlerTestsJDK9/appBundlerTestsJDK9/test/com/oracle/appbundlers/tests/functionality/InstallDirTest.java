@@ -10,16 +10,25 @@ import static com.oracle.appbundlers.utils.BundlerUtils.MSI;
 import static com.oracle.appbundlers.utils.Config.CONFIG_INSTANCE;
 import static com.oracle.appbundlers.utils.Config.LICENSE_FILE_NAME;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.BundlerUtils;
+import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.ExtensionType;
+import com.oracle.appbundlers.utils.JavaApiBundlingManager;
+import com.oracle.appbundlers.utils.Utils;
 import com.oracle.tools.packager.RelativeFileSet;
 
 /**
@@ -30,34 +39,43 @@ import com.oracle.tools.packager.RelativeFileSet;
  * Tests {@code installdirChooser} option.
  */
 public class InstallDirTest extends TestBase {
-    private Path licenseFileSrc;
     private String licenseFileContent;
-
-    public void initializeVars() throws IOException {
-        licenseFileSrc = CONFIG_INSTANCE.getResourceFilePath(LICENSE_FILE_NAME);
-    }
+    private Path licenseFileSrcInSuite;
+    private Path licenseFolder;
 
     @Override
     protected BundlerUtils[] getBundlerUtils() {
         return new BundlerUtils[] { EXE, MSI };
     }
 
-    public AdditionalParams getAdditionalParams(ExtensionType extension) {
+    protected AdditionalParams getAdditionalParams(ExtensionType extension)
+            throws IOException {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
-            RelativeFileSet existingRelativeFileSet = (RelativeFileSet) this.currentParameter
+            RelativeFileSet appResources = (RelativeFileSet) this.currentParameter
                     .getBasicParamsMap().get(APP_RESOURCES);
-            if (existingRelativeFileSet == null) {
-                RelativeFileSet newRelativeFileSet = this.currentParameter
-                        .getApp().getNewRelativeFileSetBasedOnExtension(extension);
-                newRelativeFileSet.getIncludedFiles().add(LICENSE_FILE_NAME);
-                additionalParams.put(APP_RESOURCES, newRelativeFileSet);
+            if (extension == ExtensionType.NormalJar) {
+                appResources.getIncludedFiles().add(LICENSE_FILE_NAME);
             } else {
-                existingRelativeFileSet.getIncludedFiles()
-                        .add(LICENSE_FILE_NAME);
+                List<RelativeFileSet> appResourcesList = new ArrayList<RelativeFileSet>();
+                appResourcesList.add(appResources);
+                List<Path> licenses = new ArrayList<>();
+                try (DirectoryStream<Path> licenseFileStream = Files
+                        .newDirectoryStream(Paths.get(licenseFolder.toString()),
+                                "*")) {
+                    licenseFileStream.forEach(licenses::add);
+                }
+
+                RelativeFileSet licenseAppResource = new RelativeFileSet(
+                        new File(licenseFolder.toString()), licenses.stream()
+                                .map(Path::toFile).collect(Collectors.toSet()));
+                appResourcesList.add(licenseAppResource);
+                additionalParams.put(APP_RESOURCES_LIST, appResourcesList);
+                additionalParams.put(DUMMY_RELATIVE_FILESET,
+                        licenseAppResource);
             }
-            additionalParams.put(INSTALLDIR_CHOOSER, "true");
             additionalParams.put(LICENSE_FILE, LICENSE_FILE_NAME);
+            additionalParams.put(INSTALLDIR_CHOOSER, true);
             return additionalParams;
         };
     }
@@ -72,7 +90,7 @@ public class InstallDirTest extends TestBase {
 
     @Override
     protected void prepareTestEnvironment() throws Exception {
-        Path licenseFile = null;
+        Path licenseFileInTestAppFolder = null;
         for (ExtensionType extension : getExtensionArray()) {
             if (!isTestCaseApplicableForExtensionType(extension)) {
                 continue;
@@ -81,13 +99,20 @@ public class InstallDirTest extends TestBase {
                     .get(extension);
             overrideParameters(extension);
             initializeAndPrepareApp();
-            licenseFile = this.currentParameter.getApp()
-                    .getJavaExtensionDirPathBasedonExtension(extension)
-                    .resolve(LICENSE_FILE_NAME);
-            initializeVars();
-            Files.copy(licenseFileSrc, licenseFile);
-            licenseFileContent = new String(Files.readAllBytes(licenseFile),
+            licenseFileSrcInSuite = CONFIG_INSTANCE.getResourceFilePath(LICENSE_FILE_NAME);
+            licenseFileContent = new String(Files.readAllBytes(licenseFileSrcInSuite),
                     "UTF-8");
+
+            if(extension == ExtensionType.NormalJar) {
+                licenseFolder = this.currentParameter.getApp().getJarDir();
+            } else {
+                licenseFolder = this.currentParameter.getApp().getWorkDir()
+                        .resolve("license");
+                Utils.createDir(licenseFolder);
+            }
+
+            licenseFileInTestAppFolder = licenseFolder.resolve(LICENSE_FILE_NAME);
+            Files.copy(licenseFileSrcInSuite, licenseFileInTestAppFolder);
         }
     }
 
@@ -96,5 +121,24 @@ public class InstallDirTest extends TestBase {
         this.currentParameter
                 .setAdditionalParams(getAdditionalParams(extension));
         this.currentParameter.setVerifiedOptions(getVerifiedOptions());
+    }
+
+    @Override
+    protected void executeJavaPackager(BundlingManager bundlingManager,
+            Map<String, Object> allParams, ExtensionType extension) throws IOException {
+
+        if (bundlingManager instanceof JavaApiBundlingManager) {
+            if (allParams.containsKey(DUMMY_RELATIVE_FILESET)
+                    && (extension != ExtensionType.NormalJar)) {
+                RelativeFileSet dummyRelativeFileSet = (RelativeFileSet) allParams
+                        .get(DUMMY_RELATIVE_FILESET);
+                allParams.put("srcdir",
+                        dummyRelativeFileSet.getBaseDirectory().getPath());
+                allParams.put("srcfiles",
+                        dummyRelativeFileSet.getIncludedFiles());
+                allParams.remove(DUMMY_RELATIVE_FILESET);
+            }
+        }
+        bundlingManager.execute(allParams, this.currentParameter.getApp(), true);
     }
 }

@@ -11,6 +11,7 @@ import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.WIN_S
 import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.WIN_USER_FILE_ASSOCIATIONS;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,9 +71,10 @@ public class FileAssociationTest extends TestBase {
                     Arrays.asList(association1, association2));
             additionalParams.put(SYSTEM_WIDE, true);
             additionalParams.put(JVM_OPTIONS,
-                    DOUBLE_HYPHEN + ADD_EXPORTS + SPACE
+                    new ArrayList<String>(Arrays.asList(DOUBLE_HYPHEN
+                            + ADD_EXPORTS + SPACE
                             + "java.desktop/com.apple.eawt=ALL-UNNAMED" + ","
-                            + FileAssociationTest.COM_RM_MODULE_NAME);
+                            + FileAssociationTest.COM_RM_MODULE_NAME)));
             return additionalParams;
         };
     }

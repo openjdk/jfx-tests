@@ -95,7 +95,7 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
         app.writeSourcesToAppDirectory();
         app.compileAndCreateJavaExtensionType(
                 new String[] { DOUBLE_HYPHEN + ADD_EXPORTS,
-                        "custom.util/testapp.util=ALL-UNNAMED" },
+                        "custom.util/testapp.util=ALL-UNNAMED", DOUBLE_HYPHEN + ADD_MODS, CUSTOM_UTIL_MODULE_NAME},
                 extension);
     }
 

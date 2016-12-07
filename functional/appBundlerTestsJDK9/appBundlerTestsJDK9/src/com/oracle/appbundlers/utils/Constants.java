@@ -12,16 +12,16 @@ import java.io.File;
  */
 public interface Constants {
     String MENU_HINT = "menuHint";
-    String SERVICE_HINT = "daemon";
+    String SERVICE_HINT = "serviceHint";
     String START_ON_INSTALL = "startOnInstall";
     String RUN_AT_STARTUP = "runAtStartup";
     String USER_JVM_OPTIONS = "userJvmOptions";
     String SHORTCUT_HINT = "shortcutHint";
-    String VENDOR = "Vendor";
+    String VENDOR = "vendor";
     String VERSION = "appVersion";
     String SYSTEM_WIDE = "systemWide";
     String EXE_SYSTEM_WIDE = "win.exe.systemWide";
-    String TITLE = "Title";
+    String TITLE = "title";
     String MENU_GROUP = "win.menuGroup";
     String DESCRIPTION = "description";
     String MAIN_JAR = "mainJar";

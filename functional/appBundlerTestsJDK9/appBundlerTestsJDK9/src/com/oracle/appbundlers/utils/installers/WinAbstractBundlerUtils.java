@@ -162,7 +162,7 @@ public abstract class WinAbstractBundlerUtils extends AbstractBundlerUtils {
         return (value, app, applicationTitle) -> {
             try {
                 ProcessOutput out = Utils.runCommand(
-                        new String[] { "sc", "qc", applicationTitle }, true,
+                        new String[] { "sc", "qc",  applicationTitle, Integer.toString(2000) }, true,
                         CONFIG_INSTANCE.getRunTimeout());
                 assertTrue(
                         out.getOutputStream().parallelStream().map(String::trim)

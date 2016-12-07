@@ -247,4 +247,28 @@ public abstract class LinuxAbstractBundlerUtils extends AbstractBundlerUtils {
     public String getJavaExecutable() {
         return "java";
     }
+
+    protected Path findByExtension(Path dir, String extension, int maxDepth,
+            String applicationTitle) throws IOException {
+        Optional<Path> result = Files
+                .find(dir, maxDepth,
+                        (file, attr) -> {
+                            String name = file.toFile().getName();
+                            return name.toLowerCase().contains(
+                                    applicationTitle.toLowerCase())
+                            && name.endsWith("." + extension);
+                        })
+                .findFirst();
+
+        if (!result.isPresent()) {
+            result = Files.find(dir, maxDepth, (file, attr) -> file.toFile()
+                    .getName().endsWith("." + extension)).findFirst();
+        }
+
+        if (!result.isPresent()) {
+            throw new FileNotFoundException("*." + extension
+                    + " not found under " + dir + " with maxDepth=" + maxDepth);
+        }
+        return result.get();
+    }
 }

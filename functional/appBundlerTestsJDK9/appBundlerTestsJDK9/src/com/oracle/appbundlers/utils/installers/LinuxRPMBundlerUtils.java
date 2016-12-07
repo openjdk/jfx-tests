@@ -103,7 +103,7 @@ public class LinuxRPMBundlerUtils extends LinuxAbstractBundlerUtils {
     public String install(AppWrapper app, String applicationTitle)
             throws IOException {
         String rpmPath = findByExtension(app.getBundlesDir(), "rpm",
-                ROOT_DIRECTORY_DEPTH).toString();
+                ROOT_DIRECTORY_DEPTH, applicationTitle).toString();
         try {
             LOG.log(Level.INFO, "Installing {0}.", rpmPath);
             String[] cmd = new String[] { "sudo", "rpm", "--install",

@@ -9,6 +9,7 @@ import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.CHECK
 import java.util.HashMap;
 import java.util.Map;
 
+import com.oracle.appbundlers.tests.functionality.TestBase;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.ExtensionType;
@@ -19,7 +20,7 @@ import com.oracle.appbundlers.utils.ExtensionType;
  *
  * @author Ramesh BG
  */
-public class CheckExecutablesAvailableTest extends ModuleTestBase {
+public class CheckExecutablesAvailableTest extends TestBase {
 
     public AdditionalParams getAdditionalParams() {
         return () -> {

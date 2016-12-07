@@ -34,7 +34,7 @@ public class MacDMGBundlerUtils extends MacAbstractBundlerUtils {
     public String install(AppWrapper app, String applicationTitle)
             throws IOException {
         Path dmg = findByExtension(app.getBundlesDir(), "dmg",
-                ROOT_DIRECTORY_DEPTH);
+                ROOT_DIRECTORY_DEPTH, applicationTitle);
         try {
             LOG.log(Level.INFO, "Installing {0}.", dmg);
             String[] cmd = new String[] { "hdiutil", "attach", dmg.toString() };

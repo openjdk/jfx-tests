@@ -125,7 +125,7 @@ public class LinuxDebBundlerUtils extends LinuxAbstractBundlerUtils {
     public String install(AppWrapper app, String applicationTitle)
             throws IOException {
         String debPath = this.findByExtension(app.getBundlesDir(), "deb",
-                ROOT_DIRECTORY_DEPTH).toString();
+                ROOT_DIRECTORY_DEPTH, applicationTitle).toString();
         try {
             LOG.log(Level.INFO, "Installing {0}.", new Object[] { debPath });
             String[] cmd = new String[] { "sudo", "dpkg", "--install",
