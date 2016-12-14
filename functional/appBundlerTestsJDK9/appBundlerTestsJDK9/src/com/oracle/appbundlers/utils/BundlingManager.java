@@ -152,7 +152,7 @@ public abstract class BundlingManager implements Constants {
 
         if (Objects.nonNull(getBundler().getID())) {
             stringBuilder.append("-");
-            stringBuilder.append(getBundler().getID());
+            stringBuilder.append(getBundler().getID().replace('.', '_'));
         }
         return stringBuilder.toString();
     }

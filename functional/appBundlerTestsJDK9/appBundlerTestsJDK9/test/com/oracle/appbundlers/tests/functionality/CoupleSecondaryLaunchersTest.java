@@ -75,11 +75,13 @@ public class CoupleSecondaryLaunchersTest extends TestBase {
     private Map<String, Object> getSecondLauncher() throws IOException {
         Map<String, Object> secondLauncher = new HashMap<>();
         secondLauncher.put(APP_NAME, secondAppName);
-        secondLauncher.put(APPLICATION_CLASS,
-                COM_GREETINGS_APP2_QUALIFIED_CLASS_NAME);
         if (this.currentParameter.getApp().isAppContainsModules()) {
             secondLauncher.put(MAIN_MODULE,
-                    COM_GREETINGS_MODULE_CUM_PACKAGE_NAME);
+                    String.join("/", COM_GREETINGS_MODULE_CUM_PACKAGE_NAME,
+                            COM_GREETINGS_APP2_QUALIFIED_CLASS_NAME));
+        } else {
+            secondLauncher.put(APPLICATION_CLASS,
+                    COM_GREETINGS_APP2_QUALIFIED_CLASS_NAME);
         }
         secondLauncher.put(ARGUMENTS, asList(secondAppName));
         return secondLauncher;
@@ -88,11 +90,13 @@ public class CoupleSecondaryLaunchersTest extends TestBase {
     private Map<String, Object> getThirdLauncher() throws IOException {
         Map<String, Object> thirdLauncher = new HashMap<>();
         thirdLauncher.put(APP_NAME, thirdAppName);
-        thirdLauncher.put(APPLICATION_CLASS,
-                COM_GREETINGS_APP3_QUALIFIED_CLASS_NAME);
         if (this.currentParameter.getApp().isAppContainsModules()) {
             thirdLauncher.put(MAIN_MODULE,
-                    COM_GREETINGS_MODULE_CUM_PACKAGE_NAME);
+                    String.join("/", COM_GREETINGS_MODULE_CUM_PACKAGE_NAME,
+                            COM_GREETINGS_APP3_QUALIFIED_CLASS_NAME));
+        } else {
+            thirdLauncher.put(APPLICATION_CLASS,
+                    COM_GREETINGS_APP3_QUALIFIED_CLASS_NAME);
         }
         thirdLauncher.put(ARGUMENTS, asList(thirdAppName));
         return thirdLauncher;
@@ -103,10 +107,12 @@ public class CoupleSecondaryLaunchersTest extends TestBase {
             Map<String, Object> verifiedOptions = getAdditionalParams()
                     .getAdditionalParams();
             verifiedOptions.put(OUTPUT_CONTAINS, PASS_1);
+
+            List<Pair<String, List<String>>> multipleExpectedOutputPair = new ArrayList<>();
+            multipleExpectedOutputPair.add(new Pair<>(secondAppName, asList(PASS_2, secondAppName)));
+            multipleExpectedOutputPair.add(new Pair<>(thirdAppName, asList(PASS_3, thirdAppName)));
             verifiedOptions.put(SECOND_LAUNCHER_MULTI_OUTPUT_CONTAINS,
-                    new Pair<>(secondAppName, asList(PASS_2, secondAppName)));
-            verifiedOptions.put(SECOND_LAUNCHER_MULTI_OUTPUT_CONTAINS,
-                    new Pair<>(thirdAppName, asList(PASS_3, thirdAppName)));
+                    multipleExpectedOutputPair);
             return verifiedOptions;
         };
     }

@@ -16,21 +16,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
-
-import javax.management.RuntimeErrorException;
+import java.util.stream.Collectors;
 
 import org.testng.Assert;
 
@@ -86,6 +85,7 @@ public abstract class AbstractBundlerUtils implements Constants {
     public static final String APPCDS_CACHE_FILE_EXISTS_INSTALL = "APPCDS_CACHE_FILE_EXISTS_INSTALL";
     public static final String CHECK_MODULE_IN_JAVA_EXECUTABLE = "CHECK_MODULE_IN_JAVA_EXECUTABLE";
     public static final String CHECK_EXECUTABLES_AVAILABLE_IN_BIN = "EXECUTABLES_AVAILABLE";
+    public static final String SAME_JAVA_EXECUTABLE_OUTPUT = "SAME_JAVA_EXECUTABLE_OUTPUT";
 
     private final Bundler bundler;
 
@@ -187,22 +187,26 @@ public abstract class AbstractBundlerUtils implements Constants {
 
         verificators.put(SECOND_LAUNCHER_MULTI_OUTPUT_CONTAINS,
                 (value, app, applicationTitle) -> {
-                    @SuppressWarnings("unchecked")
-                    Pair<String, List<String>> args = (Pair<String, List<String>>) value;
-                    final String execName = args.getKey();
-                    final List<String> expectedOutput = args.getValue();
+                    if (value instanceof List) {
+                        Iterator<Pair<String, List<String>>> iterator = ((List<Pair<String, List<String>>>) value)
+                                .iterator();
+                        while (iterator.hasNext()) {
+                            Pair<String, List<String>> args = iterator.next();
+                            final String execName = args.getKey();
+                            final List<String> expectedOutput = args.getValue();
 
-                    try {
-                        ProcessOutput process = Utils.runCommand(
-                                new String[] {
-                                        getInstalledExecutableLocation(app,
-                                                applicationTitle, execName)
-                                                        .toString() },
-                                /* verbose = */ true,
-                                CONFIG_INSTANCE.getRunTimeout());
-                        checkOutputContains(process, expectedOutput);
-                    } catch (IOException | ExecutionException e) {
-                        Assert.fail(e.getMessage(), e);
+                            try {
+                                ProcessOutput process = Utils.runCommand(
+                                        new String[] {
+                                                getInstalledExecutableLocation(
+                                                        app, applicationTitle,
+                                                        execName).toString() },
+                                        true, CONFIG_INSTANCE.getRunTimeout());
+                                checkOutputContains(process, expectedOutput);
+                            } catch (IOException | ExecutionException e) {
+                                Assert.fail(e.getMessage(), e);
+                            }
+                        }
                     }
                 });
 
@@ -222,45 +226,77 @@ public abstract class AbstractBundlerUtils implements Constants {
                 (value, app, applicationTitle) -> {
                     @SuppressWarnings("unchecked")
 
-                    Pair<String, String> params = (Pair<String, String>) value;
-                    String secondAppName = params.getValue();
-
+                    Map<String, Map<String, String>> params = (Map<String, Map<String, String>>) value;
+                    Map<String, String> appNamesToOutput = params
+                            .get(SAME_JAVA_EXECUTABLE_OUTPUT);
+                    Set<String> appNames = appNamesToOutput.keySet();
+                    Set<String> secondAppNameSet = appNames.stream()
+                            .filter((String appName) -> !appName
+                                    .equals(applicationTitle))
+                            .collect(Collectors.toSet());
+                    String secondAppName = secondAppNameSet.iterator().next();
+                    LOG.log(Level.INFO, "first app name is {0}",
+                            applicationTitle);
+                    LOG.log(Level.INFO, "second app name is {0}",
+                            secondAppName);
                     try {
-                        ProcessOutput processOutput = runInstalledExecutable(app,
-                                applicationTitle);
+                        ProcessOutput firstAppProcessOutput = runInstalledExecutable(
+                                app, applicationTitle);
                         final String openedText = "[info][class,load] opened:";
-                        Optional<String> maybePath = processOutput.getOutputStream()
-                                .stream()
+
+                        List<String> outputStream = firstAppProcessOutput
+                                .getOutputStream();
+
+                        checkOutputContains(firstAppProcessOutput,
+                                Arrays.asList(appNamesToOutput
+                                        .get(applicationTitle)));
+                        Optional<String> maybePath = outputStream.stream()
                                 .filter(s -> s.contains(openedText))
                                 .findFirst();
-                        String[] firstAppVerboseOutput = maybePath.orElseThrow(Exception::new)
-                                .split("opened:");
+                        String[] firstAppVerboseOutput = maybePath
+                                .orElseThrow(Exception::new).split("opened:");
 
                         Path root = getInstalledAppRootLocation(app,
                                 applicationTitle).toAbsolutePath();
 
-                        String firstAppJdk9ModulesPath = firstAppVerboseOutput[1].trim();
-                        assertTrue(firstAppJdk9ModulesPath.startsWith(root.toString()), String.format(
-                                "[%s does not start with %s]", firstAppJdk9ModulesPath, firstAppJdk9ModulesPath));
+                        String firstAppJdk9ModulesPath = firstAppVerboseOutput[1]
+                                .trim();
+                        assertTrue(
+                                firstAppJdk9ModulesPath
+                                        .startsWith(root.toString()),
+                                String.format("[%s does not start with %s]",
+                                        firstAppJdk9ModulesPath,
+                                        firstAppJdk9ModulesPath));
 
                         ProcessOutput secondAppProcessOutput = Utils.runCommand(
                                 new String[] {
                                         getInstalledExecutableLocation(app,
                                                 applicationTitle, secondAppName)
                                                         .toString() },
-                                true,
-                                CONFIG_INSTANCE.getRunTimeout());
+                                true, CONFIG_INSTANCE.getRunTimeout());
 
-                        Optional<String> secondMaybePath = secondAppProcessOutput.getOutputStream()
-                                .stream()
-                                .filter(s -> s.contains(openedText))
+                        checkOutputContains(secondAppProcessOutput, Arrays
+                                .asList(appNamesToOutput.get(secondAppName)));
+
+                        List<String> outputStream2 = secondAppProcessOutput
+                                .getOutputStream();
+                        Optional<String> secondMaybePath = outputStream2
+                                .stream().filter(s -> s.contains(openedText))
                                 .findFirst();
-                        String[] secondAppVerboseOutput = secondMaybePath.orElseThrow(Exception::new)
-                                .split("opened:");
+                        String[] secondAppVerboseOutput = secondMaybePath
+                                .orElseThrow(Exception::new).split("opened:");
+                        LOG.log(Level.INFO,
+                                "Root Location of Installed Application is {0}",
+                                root.toString());
+                        LOG.log(Level.INFO, "FirstAppVerboseOutput is {0}",
+                                Arrays.toString(firstAppVerboseOutput));
+                        LOG.log(Level.INFO, "Second App Verbose Output is {0}",
+                                Arrays.toString(secondAppVerboseOutput));
+                        String secondAppJdk9ModulesPath = secondAppVerboseOutput[1]
+                                .trim();
 
-                        String secondAppJdk9ModulesPath = secondAppVerboseOutput[1].trim();
-
-                        assertEquals(firstAppJdk9ModulesPath, secondAppJdk9ModulesPath,
+                        assertEquals(firstAppJdk9ModulesPath,
+                                secondAppJdk9ModulesPath,
                                 "[Second app uses different java location]");
 
                     } catch (Exception e) {

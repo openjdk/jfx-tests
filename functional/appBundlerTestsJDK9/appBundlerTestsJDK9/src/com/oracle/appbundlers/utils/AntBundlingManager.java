@@ -244,12 +244,16 @@ public class AntBundlingManager extends BundlingManager {
                             }
 
                             case MAIN_MODULE:
-                                launcherEl.setAttribute(MAIN_MODULE, (String) keyVal.getValue());
-                            break;
+                                launcherEl.setAttribute(MAIN_MODULE,
+                                        ((String) keyVal.getValue()).split("/")[0]);
+                                launcherEl.setAttribute("mainClass",
+                                        ((String) keyVal.getValue()).split("/")[1]);
+                                break;
 
                             case APPLICATION_CLASS:
-                                launcherEl.setAttribute("mainClass", (String) keyVal.getValue());
-                            break;
+                                launcherEl.setAttribute("mainClass",
+                                        (String) keyVal.getValue());
+                                break;
 
                             default:
                                 Element bundlerArgumentEntry = createBundleArgumentEntry(document,
