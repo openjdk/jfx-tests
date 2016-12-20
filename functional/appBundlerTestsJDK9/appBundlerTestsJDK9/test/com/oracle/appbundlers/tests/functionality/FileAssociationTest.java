@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -36,8 +37,8 @@ import javafx.util.Pair;
 public class FileAssociationTest extends TestBase {
     private static final String COM_RM_MODULE_NAME = "com.rm";
     public static final String RM_NAME = Utils.isMacOS() ? "MacRmApp" : "RmApp";
-    public static final String ext1 = "foo", ext2 = "bar", ext3 = "baz",
-            ext4 = "qux";
+    public static final String ext1 = "abcd", ext2 = "efgh", ext3 = "ijkl",
+            ext4 = "pqrs";
 
     @Override
     protected BundlerUtils[] getBundlerUtils() {
@@ -70,11 +71,14 @@ public class FileAssociationTest extends TestBase {
             additionalParams.put(FILE_ASSOCIATIONS,
                     Arrays.asList(association1, association2));
             additionalParams.put(SYSTEM_WIDE, true);
-            additionalParams.put(JVM_OPTIONS,
-                    new ArrayList<String>(Arrays.asList(DOUBLE_HYPHEN
-                            + ADD_EXPORTS + SPACE
-                            + "java.desktop/com.apple.eawt=ALL-UNNAMED" + ","
-                            + FileAssociationTest.COM_RM_MODULE_NAME)));
+
+            List<String> jvmOptionsArgs = new ArrayList<String>();
+            jvmOptionsArgs.add(DOUBLE_HYPHEN + ADD_EXPORTS);
+            jvmOptionsArgs.add("java.desktop/com.apple.eawt=ALL-UNNAMED" + ","
+                    + FileAssociationTest.COM_RM_MODULE_NAME);
+            if (Utils.isMacOS()) {
+                additionalParams.put(JVM_OPTIONS, jvmOptionsArgs);
+            }
             return additionalParams;
         };
     }
@@ -124,6 +128,14 @@ public class FileAssociationTest extends TestBase {
 
     @Override
     public String getResultingAppName() {
+        /*
+         * No underscores for getResultingAppName() in FileAssociationTest In
+         * windows Assume in order to check what is associated for "abcd"
+         * extension, command "cmd /c assoc .abcd" will be executed command
+         * "cmd /c assoc .abcd" will return AppName without Underscores even if
+         * AppName contains Underscores.
+         *
+         */
         return RM_NAME;
     }
 

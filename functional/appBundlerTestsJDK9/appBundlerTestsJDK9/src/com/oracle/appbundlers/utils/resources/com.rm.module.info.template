@@ -1,4 +1,5 @@
 module com.rm {
 	requires java.desktop;
 	requires java.logging;
+	exports com.rm.testapp;
 }

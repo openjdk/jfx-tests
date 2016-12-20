@@ -17,6 +17,7 @@ import java.util.Map;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.ExtensionType;
+import com.oracle.appbundlers.utils.Utils;
 
 /**
  * @author Dmitry Ginzburg &lt;dmitry.x.ginzburg@oracle.com&gt;
@@ -56,5 +57,16 @@ public class ServiceHintTest extends TestBase {
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
         this.currentParameter.setAdditionalParams(getAdditionalParams());
+    }
+
+    @Override
+    public String getResultingAppName() {
+        /*
+         * Number of characters limited to 16 to set for "linux.bundleName"
+         */
+        if(Utils.isDpkgPresent()) {
+            return this.getClass().getSimpleName();
+        }
+        return super.getResultingAppName();
     }
 }

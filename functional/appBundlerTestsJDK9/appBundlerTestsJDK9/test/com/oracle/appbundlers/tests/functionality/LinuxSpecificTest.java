@@ -25,7 +25,7 @@ import com.oracle.appbundlers.utils.ExtensionType;
  * Tests linux-specific options: {@code bundleName}, {@code maintainer}
  */
 public class LinuxSpecificTest extends TestBase {
-    private static final String bundleName = "fooBar";
+    private static final String bundleName = "foobar";
     private static final String maintainer = "Oracle Inc.";
 
     protected AdditionalParams getAdditionalParams() {
@@ -48,5 +48,10 @@ public class LinuxSpecificTest extends TestBase {
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
         this.currentParameter.setAdditionalParams(getAdditionalParams());
+    }
+
+    @Override
+    public String getResultingAppName() {
+        return bundleName;
     }
 }

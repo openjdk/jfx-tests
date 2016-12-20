@@ -110,7 +110,7 @@ public class LinuxDebBundlerUtils extends LinuxAbstractBundlerUtils {
                 String output = Utils
                         .runCommand(
                                 new String[] { "apt-cache", "show",
-                                        applicationTitle.toLowerCase() },
+                                        applicationTitle.toLowerCase().replaceAll("_","-") },
                                 CONFIG_INSTANCE.getRunTimeout())
                         .getOutputStream().stream()
                         .collect(Collectors.joining(System.lineSeparator()));
@@ -176,5 +176,11 @@ public class LinuxDebBundlerUtils extends LinuxAbstractBundlerUtils {
                                                                        // Tools
                                                                        // |
                                                                        // Templates.
+    }
+
+    protected Path findByExtension(Path dir, String extension, int maxDepth,
+            String applicationTitle) throws IOException {
+       applicationTitle = applicationTitle.replaceAll("_", "-");
+       return super.findByExtension(dir, extension, maxDepth, applicationTitle);
     }
 }
