@@ -24,7 +24,7 @@ import com.oracle.appbundlers.utils.Utils;
  * -modulepath <path to 3rd party modular JARs>
  * @author Ramesh BG
  */
-public class NamedModuleBundledWithMinimumModulesAnd3rdPartyModulesTest
+public class NamedModuleDependsOn3rdPartyModulesTest
         extends ModuleTestBase {
 
     public VerifiedOptions getVerifiedOptions() {
@@ -57,10 +57,8 @@ public class NamedModuleBundledWithMinimumModulesAnd3rdPartyModulesTest
     @Override
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
-        if (ExtensionType.NormalJar != intermediate) {
-            this.currentParameter.setAdditionalParams(getAdditionalParams());
-            this.currentParameter.setVerifiedOptions(getVerifiedOptions());
-        }
+        this.currentParameter.setAdditionalParams(getAdditionalParams());
+        this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 }
 

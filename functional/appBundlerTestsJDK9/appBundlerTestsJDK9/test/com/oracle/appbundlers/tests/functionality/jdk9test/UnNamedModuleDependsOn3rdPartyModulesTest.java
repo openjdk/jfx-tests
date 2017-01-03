@@ -6,6 +6,7 @@ package com.oracle.appbundlers.tests.functionality.jdk9test;
 
 import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.CHECK_MODULE_IN_JAVA_EXECUTABLE;
 import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.OUTPUT_CONTAINS;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.oracle.appbundlers.tests.functionality.TestBase;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
@@ -24,6 +26,7 @@ import com.oracle.appbundlers.tests.functionality.parameters.GenericModuleParame
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.ExtensionType;
+import com.oracle.appbundlers.utils.JavaExtensionTypeFilter;
 import com.oracle.appbundlers.utils.SourceFactory;
 import com.oracle.appbundlers.utils.Utils;
 import com.oracle.tools.packager.RelativeFileSet;
@@ -35,7 +38,7 @@ import com.sun.javafx.tools.packager.bundlers.BundleParams;
  *  <path to 3rd party JARs>
  *  @author Ramesh BG
  */
-public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
+public class UnNamedModuleDependsOn3rdPartyModulesTest
         extends TestBase {
 
     protected AppWrapper getApp() throws IOException {
@@ -133,7 +136,9 @@ public class UnnamedModuleDependsOn3rdPartyModulesBundledWithEntireJreTest
 
     @Override
     public ExtensionType[] getExtensionArray() {
-        return ExtensionType.getModuleTypes();
+        return Stream.of(ExtensionType.getModuleTypes())
+                .filter(JavaExtensionTypeFilter::accept).collect(toList())
+                .toArray(new ExtensionType[0]);
     }
 
     @Override

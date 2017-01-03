@@ -148,6 +148,9 @@ public abstract class BundlingManager implements Constants {
         if (Objects.nonNull(getExtensionType())) {
             stringBuilder.append("-");
             stringBuilder.append(getExtensionType());
+        } else if (Objects.nonNull(modulePath)) {
+            stringBuilder.append("-");
+            stringBuilder.append(modulePath.getFileName());
         }
 
         if (Objects.nonNull(getBundler().getID())) {

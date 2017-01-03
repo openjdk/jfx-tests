@@ -252,11 +252,13 @@ public class AppWrapper implements Constants {
 
             newArgs.add("-classpath");
             if (classpath.length != 0) {
-                newArgs.add(
-                        Stream.of(classpath)
-                                .map(eachPath -> eachPath.toAbsolutePath()
-                                        .toString())
-                        .collect(joining(File.pathSeparator)));
+                try(Stream<String> map = Stream.of(classpath)
+                        .map(eachPath -> eachPath.toAbsolutePath()
+                                .toString())) {
+                    newArgs.add(
+                            map
+                            .collect(joining(File.pathSeparator)));
+                }
             } else {
                 newArgs.add(getBinDir().toString());
             }
@@ -266,7 +268,7 @@ public class AppWrapper implements Constants {
             }
 
             if (extension != null) {
-                newArgs.add(DOUBLE_HYPHEN+MODULEPATH);
+                newArgs.add(DOUBLE_HYPHEN + MODULEPATH);
                 newArgs.add(String.join(File.pathSeparator,
                         getModulePathBasedOnExtension(extension),
                         JMODS_PATH_IN_JDK));
@@ -335,9 +337,11 @@ public class AppWrapper implements Constants {
                     });
             if (classpath.length != 0) {
                 argsList.add("-classpath");
-                argsList.add(Stream.of(classpath)
-                        .map(path -> path.toAbsolutePath().toString())
-                        .collect(joining(File.pathSeparator)));
+                try(Stream<String> map = Stream.of(classpath)
+                        .map(path -> path.toAbsolutePath().toString())) {
+                    argsList.add(map
+                            .collect(joining(File.pathSeparator)));
+                }
             }
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             if (extension != null) {
@@ -413,14 +417,16 @@ public class AppWrapper implements Constants {
                     Files.newOutputStream(jarFile), manifest)) {
                 add(jarOutputStream, new HashSet<>(entry.getValue()));
                 for (Pair<String, String> service : services) {
-                    if (!entry.getValue().stream().anyMatch(source -> source
-                            .getFullName().equals(service.getValue()))) {
-                        continue;
+                    try(Stream<Source> stream = entry.getValue().stream()) {
+                        if (!stream.anyMatch(source -> source
+                                .getFullName().equals(service.getValue()))) {
+                            continue;
+                        }
+                        jarOutputStream.putNextEntry(new JarEntry(
+                                "META-INF/services/" + service.getKey()));
+                        jarOutputStream.write(service.getValue().getBytes());
+                        jarOutputStream.closeEntry();
                     }
-                    jarOutputStream.putNextEntry(new JarEntry(
-                            "META-INF/services/" + service.getKey()));
-                    jarOutputStream.write(service.getValue().getBytes());
-                    jarOutputStream.closeEntry();
                 }
             }
         }
@@ -433,15 +439,16 @@ public class AppWrapper implements Constants {
             Path packageDir = classesDir
                     .resolve(src.getPackageName().replace('.', '/'));
             // we need to process inner classes like App1$1
-            DirectoryStream<Path> classFiles = newDirectoryStream(packageDir,
-                    src.getSimpleName() + "*.class");
-            for (Path classFile : classFiles) {
-                ZipEntry entry = new JarEntry(
-                        src.getPackageName().replace('.', '/') + "/"
-                                + classFile.getFileName().toString());
-                jarStream.putNextEntry(entry);
-                jarStream.write(Files.readAllBytes(classFile));
-                jarStream.closeEntry();
+            try(DirectoryStream<Path> classFiles = newDirectoryStream(packageDir,
+                    src.getSimpleName() + "*.class")) {
+                for (Path classFile : classFiles) {
+                    ZipEntry entry = new JarEntry(
+                            src.getPackageName().replace('.', '/') + "/"
+                                    + classFile.getFileName().toString());
+                    jarStream.putNextEntry(entry);
+                    jarStream.write(Files.readAllBytes(classFile));
+                    jarStream.closeEntry();
+                }
             }
         }
     }
@@ -643,7 +650,7 @@ public class AppWrapper implements Constants {
         return !getModuleTempSources().isEmpty();
     }
 
-    private String getModulePathBasedOnExtension(ExtensionType extension) {
+    public String getModulePathBasedOnExtension(ExtensionType extension) {
         if (extension == null) {
             throw new NullPointerException("Extension cannot be null");
         }

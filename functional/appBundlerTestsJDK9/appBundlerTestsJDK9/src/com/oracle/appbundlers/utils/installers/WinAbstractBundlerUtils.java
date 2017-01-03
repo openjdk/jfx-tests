@@ -31,6 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.testng.Assert;
 
@@ -504,13 +505,15 @@ public abstract class WinAbstractBundlerUtils extends AbstractBundlerUtils {
 
     @Override
     public void checkIfExecutablesAvailableInBinDir(Path binDirPath) throws IOException {
-        Optional<Path> result = Files.find(binDirPath, 1, (file, attr) -> file
-                .toFile().getName().equals("java.exe")).findFirst();
-        if (!result.isPresent()) {
-            throw new FileNotFoundException("java"
-                    + " not found under " + binDirPath );
+        try (Stream<Path> find = Files.find(binDirPath, 1, (file, attr) -> file
+                .toFile().getName().equals("java.exe"))) {
+            Optional<Path> result = find.findFirst();
+            if (!result.isPresent()) {
+                throw new FileNotFoundException("java"
+                        + " not found under " + binDirPath );
+            }
+            LOG.log(Level.INFO, "java.exe found in {0}", binDirPath);
         }
-        LOG.log(Level.INFO, "java.exe found in {0}", binDirPath);
     }
 
     @Override

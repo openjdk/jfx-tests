@@ -296,13 +296,15 @@ public abstract class MacAbstractBundlerUtils extends AbstractBundlerUtils {
 
     @Override
     public void checkIfExecutablesAvailableInBinDir(Path binDirPath) throws IOException {
-        Optional<Path> result = Files.find(binDirPath, 1, (file, attr) -> file
-                .toFile().getName().equals("java")).findFirst();
-        if (!result.isPresent()) {
-            throw new FileNotFoundException("java"
-                    + " not found under " + binDirPath );
+        try (Stream<Path> find = Files.find(binDirPath, 1, (file, attr) -> file
+                .toFile().getName().equals("java"))) {
+            Optional<Path> result = find.findFirst();
+            if (!result.isPresent()) {
+                throw new FileNotFoundException("java"
+                        + " not found under " + binDirPath );
+            }
+            LOG.log(Level.INFO, "java executable found in {0}", binDirPath);
         }
-        LOG.log(Level.INFO, "java executable found in {0}", binDirPath);
     }
 
     @Override

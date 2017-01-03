@@ -5,7 +5,6 @@
 
 package com.oracle.appbundlers.tests.functionality;
 
-import static com.oracle.appbundlers.utils.Config.OPTION_PREFIX;
 import static com.oracle.appbundlers.utils.installers.AbstractBundlerUtils.USER_FRIENDLY_API;
 import static java.util.stream.Collectors.toList;
 
@@ -14,7 +13,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import com.oracle.appbundlers.tests.functionality.functionalinterface.AdditionalParams;
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
@@ -95,10 +93,6 @@ public class UserFriendlyJvmOptionsTest extends TestBase {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
             additionalParams.put(USER_JVM_OPTIONS, defultUserJvmOptions);
-
-            Long uuid = UUID.randomUUID().getMostSignificantBits();
-            additionalParams.put(IDENTIFIER, uuid.toString());
-
             return additionalParams;
         };
     }

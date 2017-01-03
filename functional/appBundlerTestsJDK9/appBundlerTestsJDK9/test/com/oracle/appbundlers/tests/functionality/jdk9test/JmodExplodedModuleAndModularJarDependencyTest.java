@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -37,6 +38,7 @@ import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.BundlingManager;
 import com.oracle.appbundlers.utils.BundlingManagers;
+import com.oracle.appbundlers.utils.Config;
 import com.oracle.appbundlers.utils.ExtensionType;
 import com.oracle.appbundlers.utils.PackageTypeFilter;
 import com.oracle.appbundlers.utils.PackagerApiFilter;
@@ -175,7 +177,7 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
             throws Exception {
         Map<String, Object> allParams = new HashMap<String, Object>();
         allParams.put(APP_NAME,
-                getResultingAppName(modulepath.getFileName().toString()));
+                getResultingAppName());
         AppWrapper app = this.intermediateToParametersMap
                 .get(ExtensionType.ModularJar).getApp();
         allParams.put(MAIN_MODULE,
@@ -189,16 +191,6 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
         allParams.put(ADD_MODS,
                 app.getAllModuleNamesSeperatedByCommaExceptMainmodule());
         return allParams;
-    }
-
-    /**
-     * return App Name
-     * @param modulePathFileName
-     */
-    public String getResultingAppName(String modulePathFileName) {
-        return String.join("_", this.getClass().getSimpleName(),
-                this.bundlingManager.toString().replace('-', '_'),
-                modulePathFileName);
     }
 
     public VerifiedOptions getVerifiedOptions() {
@@ -241,7 +233,7 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
                     .get(ExtensionType.NormalJar).getApp();
             bundlingManager.execute(allParams, app);
             String path = bundlingManager.install(app,
-                    getResultingAppName(modulePath.getFileName().toString()),
+                    getResultingAppName(),
                     false);
             LOG.log(Level.INFO, "Installed at: {0}", path);
 
@@ -251,7 +243,7 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
                     .createNewVerifiedOptions()
                     .forEach((name, value) -> bundlingManager.verifyOption(name,
                             value, app, getResultingAppName(
-                                    modulePath.getFileName().toString())));
+                                   )));
         } finally {
             uninstallApp(modulePath);
             LOG.log(Level.INFO, "Finished test: {0}", testName);
@@ -288,6 +280,24 @@ public class JmodExplodedModuleAndModularJarDependencyTest extends ModuleTestBas
 
         return BundlerProvider.createBundlingManagers(installationPackageTypes,
                 packagerInterfaces, modulePathList, true);
+    }
+
+    @AfterClass
+    protected void cleanUp() throws IOException {
+        super.cleanUp();
+
+        for (Iterator<Path> iterator = modulePathList.iterator(); iterator
+                .hasNext();) {
+            Path path = iterator.next();
+            if (!Config.CONFIG_INSTANCE.isNoCleanSet()) {
+                LOG.log(Level.INFO, "Removing directory " + path);
+                Utils.tryRemoveRecursive(path);
+            } else {
+                LOG.log(Level.INFO, "Skipped removing directory " + path);
+            }
+        }
+        Utils.tryRemoveRecursive(this.intermediateToParametersMap
+                .get(ExtensionType.NormalJar).getApp().getWorkDir());
     }
 }
 

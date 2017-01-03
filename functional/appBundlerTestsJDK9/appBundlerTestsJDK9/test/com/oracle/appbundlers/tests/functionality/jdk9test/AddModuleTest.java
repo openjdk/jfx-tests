@@ -41,9 +41,7 @@ public class AddModuleTest extends ModuleTestBase {
 
     @Override
     public void overrideParameters(ExtensionType intermediate) {
-        if (intermediate != ExtensionType.NormalJar) {
-            this.currentParameter.setAdditionalParams(getAdditionalParams());
-            this.currentParameter.setVerifiedOptions(getVerifiedOptions());
-        }
+        this.currentParameter.setAdditionalParams(getAdditionalParams());
+        this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 }

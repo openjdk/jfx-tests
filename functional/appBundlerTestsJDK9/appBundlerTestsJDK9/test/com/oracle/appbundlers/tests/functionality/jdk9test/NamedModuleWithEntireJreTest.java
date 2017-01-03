@@ -41,10 +41,8 @@ public class NamedModuleWithEntireJreTest extends ModuleTestBase {
     @Override
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
-        if (ExtensionType.NormalJar != intermediate) {
-            this.currentParameter.setApp(getApp());
-            this.currentParameter.setVerifiedOptions(getVerifiedOptions());
-        }
+        this.currentParameter.setApp(getApp());
+        this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 }
 

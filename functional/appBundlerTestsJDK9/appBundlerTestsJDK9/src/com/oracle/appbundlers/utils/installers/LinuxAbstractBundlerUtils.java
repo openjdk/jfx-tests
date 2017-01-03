@@ -30,6 +30,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import com.oracle.appbundlers.utils.AppWrapper;
 import com.oracle.appbundlers.utils.BundlerUtils;
@@ -149,7 +150,6 @@ public abstract class LinuxAbstractBundlerUtils extends AbstractBundlerUtils {
     protected VerificationMethod getFileAssociationVerificator() {
         return (value, app, applicationTitle) -> {
             try {
-                File oneOfIcons = null;
 
                 @SuppressWarnings("unchecked")
                 List<Map<String, Object>> associations = (List<Map<String, Object>>) value;
@@ -190,9 +190,6 @@ public abstract class LinuxAbstractBundlerUtils extends AbstractBundlerUtils {
                     assertTrue(Utils.checkFilesEquality(desktopFile,
                             getDesktopFile(app, applicationTitle)));
 
-                    if (icon != null) {
-                        oneOfIcons = icon;
-                    }
                 }
             } catch (IOException | ExecutionException ex) {
                 throw new RuntimeException(ex);
@@ -234,13 +231,15 @@ public abstract class LinuxAbstractBundlerUtils extends AbstractBundlerUtils {
 
     @Override
     public void checkIfExecutablesAvailableInBinDir(Path binDirPath) throws IOException {
-        Optional<Path> result = Files.find(binDirPath, 1, (file, attr) -> file
-                .toFile().getName().equals("java")).findFirst();
-        if (!result.isPresent()) {
-            throw new FileNotFoundException("java"
-                    + " not found under " + binDirPath );
+        try(Stream<Path> find = Files.find(binDirPath, 1, (file, attr) -> file
+                .toFile().getName().equals("java"))) {
+            Optional<Path> result = find.findFirst();
+            if (!result.isPresent()) {
+                throw new FileNotFoundException("java"
+                        + " not found under " + binDirPath );
+            }
+            LOG.log(Level.INFO, "java executable found in {0}", binDirPath);
         }
-        LOG.log(Level.INFO, "java executable found in {0}", binDirPath);
     }
 
     @Override

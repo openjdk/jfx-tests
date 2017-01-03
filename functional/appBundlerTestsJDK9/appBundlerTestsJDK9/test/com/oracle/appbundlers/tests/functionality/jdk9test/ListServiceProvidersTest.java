@@ -54,11 +54,9 @@ public class ListServiceProvidersTest extends ModuleTestBase {
     @Override
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
-        if (intermediate != ExtensionType.NormalJar) {
-            this.currentParameter.setApp(getApp());
-            this.currentParameter.setAdditionalParams(getAdditionalParams());
-            this.currentParameter.setVerifiedOptions(getVerifiedOptions());
-        }
+        this.currentParameter.setApp(getApp());
+        this.currentParameter.setAdditionalParams(getAdditionalParams());
+        this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 
     private AdditionalParams getAdditionalParams() {

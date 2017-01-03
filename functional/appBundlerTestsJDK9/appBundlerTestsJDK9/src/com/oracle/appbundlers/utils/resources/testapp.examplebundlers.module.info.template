@@ -13,4 +13,5 @@ module testapp.examplebundlers {
     requires jdk.management;
     requires java.base;
     exports testapp;
+	provides com.oracle.tools.packager.Bundlers with testapp.ExampleBundlers;
 }

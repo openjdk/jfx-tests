@@ -26,7 +26,7 @@ import com.oracle.appbundlers.utils.Utils;
  * -BmainJar=hello.world.jar
  * @author Ramesh BG
  */
-public class UnnamedModuleDependsOnOtherJarsBundledWithEntireJre
+public class UnNamedModuleDependsOnOtherJarsTest
         extends TestBase {
 
     protected AppWrapper getApp() throws IOException {
