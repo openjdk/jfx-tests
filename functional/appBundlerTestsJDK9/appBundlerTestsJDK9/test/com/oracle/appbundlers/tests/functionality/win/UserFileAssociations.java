@@ -14,6 +14,7 @@ import com.oracle.appbundlers.tests.functionality.functionalinterface.Additional
 import com.oracle.appbundlers.tests.functionality.functionalinterface.VerifiedOptions;
 import com.oracle.appbundlers.utils.BundlerUtils;
 import com.oracle.appbundlers.utils.BundlingManagers;
+import com.oracle.appbundlers.utils.ExtensionType;
 
 /**
  *
@@ -36,19 +37,19 @@ public class UserFileAssociations extends FileAssociationTest  {
         };
     }
 
-    protected AdditionalParams getAdditionalParams() {
+    protected AdditionalParams getAdditionalParams(ExtensionType extension) {
         return () -> {
-            Map<String, Object> additionalParams = super.getAdditionalParams().getAdditionalParams();
+            Map<String, Object> additionalParams = super.getAdditionalParams(extension).getAdditionalParams();
             additionalParams.put(SYSTEM_WIDE, false);
             return additionalParams;
         };
     }
 
-    public VerifiedOptions getVerifiedOptions() {
+    public VerifiedOptions getVerifiedOptions(ExtensionType extension) {
         return () -> {
-            Map<String, Object> verifiedOptions = super.getVerifiedOptions().getVerifiedOptions();
+            Map<String, Object> verifiedOptions = super.getVerifiedOptions(extension).getVerifiedOptions();
             verifiedOptions.remove(WIN_SYSTEM_WIDE_FILE_ASSOCIATIONS);
-            verifiedOptions.put(WIN_USER_FILE_ASSOCIATIONS, getAdditionalParams().getAdditionalParams().get(FILE_ASSOCIATIONS));
+            verifiedOptions.put(WIN_USER_FILE_ASSOCIATIONS, getAdditionalParams(extension).getAdditionalParams().get(FILE_ASSOCIATIONS));
             return verifiedOptions;
         };
 

@@ -48,8 +48,6 @@ public enum Config {
         if (javahome != null) {
             properties.setProperty("java.home",
                     Paths.get(javahome).toAbsolutePath().toString());
-            properties.setProperty("other.jre",
-                    Paths.get(javahome, "jre").toAbsolutePath().toString());
             properties.setProperty("ant.javafx",
                     Paths.get(javahome, "lib", "ant-javafx.jar")
                             .toAbsolutePath().toString());
@@ -207,10 +205,6 @@ public enum Config {
     public String javafxpackager() {
         return getJavaHome() + File.separator + "bin" + File.separator
                 + "javapackager";
-    }
-
-    public String getOtherJre() {
-        return properties.getProperty("other.jre");
     }
 
     public String getAntJavaFx() {

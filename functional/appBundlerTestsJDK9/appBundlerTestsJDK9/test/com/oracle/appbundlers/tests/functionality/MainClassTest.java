@@ -78,11 +78,9 @@ public class MainClassTest extends TestBase {
     @Override
     public void overrideParameters(ExtensionType intermediate)
             throws IOException {
-        if (ExtensionType.NormalJar == intermediate) {
-            this.currentParameter.setApp(getApp(intermediate));
-            this.currentParameter.setAdditionalParams(getAdditionalParams());
-            this.currentParameter.setVerifiedOptions(getVerifiedOptions());
-        }
+        this.currentParameter.setApp(getApp(intermediate));
+        this.currentParameter.setAdditionalParams(getAdditionalParams());
+        this.currentParameter.setVerifiedOptions(getVerifiedOptions());
     }
 
     @Override

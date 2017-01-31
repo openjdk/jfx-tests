@@ -55,7 +55,7 @@ public class FileAssociationTest extends TestBase {
                 BundlingManagers.ANT };
     }
 
-    protected AdditionalParams getAdditionalParams() {
+    protected AdditionalParams getAdditionalParams(ExtensionType extension) {
         return () -> {
             Map<String, Object> additionalParams = new HashMap<>();
             Map<String, Object> association1 = new HashMap<>();
@@ -71,26 +71,30 @@ public class FileAssociationTest extends TestBase {
             additionalParams.put(FILE_ASSOCIATIONS,
                     Arrays.asList(association1, association2));
             additionalParams.put(SYSTEM_WIDE, true);
-
-            List<String> jvmOptionsArgs = new ArrayList<String>();
-            jvmOptionsArgs.add(DOUBLE_HYPHEN + ADD_EXPORTS);
-            jvmOptionsArgs.add("java.desktop/com.apple.eawt=ALL-UNNAMED" + ","
-                    + FileAssociationTest.COM_RM_MODULE_NAME);
             if (Utils.isMacOS()) {
+                List<String> jvmOptionsArgs = new ArrayList<String>();
+                jvmOptionsArgs.add(DOUBLE_HYPHEN + ADD_EXPORTS);
+                if (extension == ExtensionType.NormalJar) {
+                    jvmOptionsArgs
+                            .add("java.desktop/com.apple.eawt=ALL-UNNAMED");
+                } else {
+                    jvmOptionsArgs.add("java.desktop/com.apple.eawt="
+                            + FileAssociationTest.COM_RM_MODULE_NAME);
+                }
                 additionalParams.put(JVM_OPTIONS, jvmOptionsArgs);
             }
             return additionalParams;
         };
     }
 
-    protected VerifiedOptions getVerifiedOptions() {
+    protected VerifiedOptions getVerifiedOptions(ExtensionType extension) {
         return () -> {
             Map<String, Object> verifiedOptions = new HashMap<>(
-                    getAdditionalParams().getAdditionalParams());
+                    getAdditionalParams(extension).getAdditionalParams());
             verifiedOptions.put(ASSOCIATED_EXTENSIONS,
                     Arrays.asList(ext1, ext2, ext3, ext4));
             verifiedOptions.put(WIN_SYSTEM_WIDE_FILE_ASSOCIATIONS,
-                    getAdditionalParams().getAdditionalParams()
+                    getAdditionalParams(extension).getAdditionalParams()
                             .get(FILE_ASSOCIATIONS));
             verifiedOptions.remove(WIN_USER_FILE_ASSOCIATIONS);
             return verifiedOptions;
@@ -136,6 +140,9 @@ public class FileAssociationTest extends TestBase {
          * AppName contains Underscores.
          *
          */
+        if(Utils.isMacOS()) {
+            return super.getResultingAppName();
+        }
         return RM_NAME;
     }
 
@@ -151,16 +158,21 @@ public class FileAssociationTest extends TestBase {
 
         String[] javacOptions = null;
         final String makeJavacReadClassesFromRtJar = "-XDignore.symbol.file=true";
-        switch (extension) {
-            case NormalJar: javacOptions = new String[] { makeJavacReadClassesFromRtJar,
-                    DOUBLE_HYPHEN + ADD_EXPORTS
-                    , "java.desktop/com.apple.eawt=ALL-UNNAMED" };
-            break;
+        if (Utils.isMacOS()) {
+            switch (extension) {
+            case NormalJar:
+                javacOptions = new String[] { makeJavacReadClassesFromRtJar,
+                        DOUBLE_HYPHEN + ADD_EXPORTS,
+                        "java.desktop/com.apple.eawt=ALL-UNNAMED" };
+                break;
             case ExplodedModules:
             case Jmods:
-            case ModularJar: javacOptions = new String[] { makeJavacReadClassesFromRtJar,
-                    DOUBLE_HYPHEN + ADD_EXPORTS, "java.desktop/com.apple.eawt=com.rm" };
+            case ModularJar:
+                javacOptions = new String[] { makeJavacReadClassesFromRtJar,
+                        DOUBLE_HYPHEN + ADD_EXPORTS,
+                        "java.desktop/com.apple.eawt=com.rm" };
                 break;
+            }
         }
 
         app.preinstallApp(extension);
@@ -171,8 +183,13 @@ public class FileAssociationTest extends TestBase {
 
     @Override
     public void overrideParameters(ExtensionType extension) throws IOException {
-        this.currentParameter.setAdditionalParams(getAdditionalParams());
-        this.currentParameter.setVerifiedOptions(getVerifiedOptions());
+        this.currentParameter.setAdditionalParams(getAdditionalParams(extension));
+        this.currentParameter.setVerifiedOptions(getVerifiedOptions(extension));
         this.currentParameter.setApp(getNewApp(extension));
+    }
+
+    protected void uninstallApp() throws Exception {
+        Thread.sleep(5000);
+        super.uninstallApp();
     }
 }
