@@ -30,9 +30,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextAreaBuilder;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFieldBuilder;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -55,11 +53,15 @@ public class ColorHelper extends Application {
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final TextField xField = TextFieldBuilder.create().promptText("x").build();
-        final TextField yField = TextFieldBuilder.create().promptText("y").build();
+        final TextField xField = new TextField();
+        xField.setPromptText("x");
+        final TextField yField = new TextField();
+        yField.setPromptText("y");
 
-        final TextArea awtField = TextAreaBuilder.create().promptText("awt").build();
-        final TextArea glassField = TextAreaBuilder.create().promptText("glass").build();
+        final TextArea awtField = new TextArea();
+        awtField.setPromptText("awt");
+        final TextArea glassField = new TextArea();
+        glassField.setPromptText("glass");
 
         Button act = new Button("Get colors");
         act.setOnAction(new EventHandler<ActionEvent>() {

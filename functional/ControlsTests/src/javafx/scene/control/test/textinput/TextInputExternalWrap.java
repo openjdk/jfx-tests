@@ -25,7 +25,6 @@
 
 package javafx.scene.control.test.textinput;
 
-import com.sun.javafx.scene.text.HitInfo;
 import javafx.scene.Node;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.test.textinput.TextInputChanger.TextInputControlWrapInterface;

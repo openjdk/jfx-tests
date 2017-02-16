@@ -73,7 +73,8 @@ public class NewTooltipApp extends InteroperabilityApp {
         @Override
         final protected void prepareScene() {
             pane = new Pane();
-            testedTooltip = TooltipBuilder.create().id(TESTED_TOOLTIP_ID).build();
+            testedTooltip = new Tooltip();
+            testedTooltip.setId(TESTED_TOOLTIP_ID);
 
             tb = new PropertiesTable(testedTooltip);
             PropertyTablesFactory.explorePropertiesList(testedTooltip, tb);
@@ -93,7 +94,8 @@ public class NewTooltipApp extends InteroperabilityApp {
             hb.setPadding(new Insets(5, 5, 5, 5));
             hb.setStyle("-fx-border-color : green;");
 
-            Button resetButton = ButtonBuilder.create().id(RESET_BUTTON_ID).text("Reset").build();
+            Button resetButton = new Button("Reset");
+            resetButton.setId(RESET_BUTTON_ID);
             resetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();

@@ -24,8 +24,8 @@
  */
 package org.jemmy.fx.control.caspian;
 
-import com.sun.javafx.scene.control.skin.ScrollBarSkin;
-import com.sun.javafx.scene.control.skin.SliderSkin;
+import javafx.scene.control.skin.ScrollBarSkin;
+import javafx.scene.control.skin.SliderSkin;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import org.jemmy.action.FutureAction;

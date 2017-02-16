@@ -24,8 +24,8 @@
  */
 package javafx.scene.control.test.tableview;
 
-import com.sun.javafx.scene.control.skin.NestedTableColumnHeader;
-import com.sun.javafx.scene.control.skin.TableColumnHeader;
+import javafx.scene.control.skin.NestedTableColumnHeader;
+import javafx.scene.control.skin.TableColumnHeader;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.concurrent.TimeUnit;

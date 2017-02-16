@@ -27,6 +27,7 @@ package test.embedded.helpers;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.CheckBox;
 
 /**
  *
@@ -34,27 +35,23 @@ import javafx.event.EventHandler;
  */
 class ControlsCheckBoxBuilder implements CheckBoxBuilder {
 
-    private javafx.scene.control.CheckBoxBuilder builder;
-
-    public ControlsCheckBoxBuilder() {
-        builder = javafx.scene.control.CheckBoxBuilder.create();
-    }
+    private javafx.scene.control.CheckBox cb = new CheckBox();
 
     @Override
     public CheckBoxBuilder text(String text) {
-        builder.text(text);
+        cb.setText(text);
         return this;
     }
 
     @Override
     public CheckBoxBuilder id(String id) {
-        builder.id(id);
+        cb.setId(id);
         return this;
     }
 
     @Override
     public CheckBoxBuilder setOnClickHandler(OnClickHandler handler) {
-        builder.onAction(new EventHandler<ActionEvent>() {
+        cb.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent t) {
@@ -67,13 +64,13 @@ class ControlsCheckBoxBuilder implements CheckBoxBuilder {
 
     @Override
     public CheckBoxBuilder setChecked(boolean checked) {
-        builder.selected(checked);
+        cb.setSelected(checked);
         return this;
     }
 
     @Override
     public AbstractCheckBox build() {
-        return new ControlsCheckbox(builder.build());
+        return new ControlsCheckbox(cb);
     }
 
 }

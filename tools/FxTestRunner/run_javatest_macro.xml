@@ -28,9 +28,14 @@
     <dirname property="jclient.root.dir" file="${ant.file.fxprobe}"/>
     <import file="nbproject/build-impl.xml"/>
 
+    <condition property="java.executable" value="java.exe" else="java">
+        <os family="windows" />
+    </condition>
+    
     <macrodef name="run-javatest">
         <attribute name="testmode"/>
         <sequential>
+            <echo message="Executing tools/FxTestRunner/run_javatest_macro.xml" />
             <echo message="testmode = @{testmode}" />
             <echo message="Javatest Basedir = ${fxtest.basedir}" />
             <echo message="external.output = ${external.output}" />
@@ -67,6 +72,11 @@
             <filter token="vmOptions" value="${javatest.vmOptions}"/>
             <filter token="dryrun" value="${javatest.dryrun}"/>
 
+            <condition property="__addExportsEnabled" value="No" else="Yes">
+                <isset property="noAddExports" />      
+            </condition>            
+            <filter token="addExportsEnabled" value="${__addExportsEnabled}"/>
+
             <!-- step 4: set the rest of filters-->
 
             <condition property="javafx.home" value="${javafx.rt}">
@@ -77,17 +87,20 @@
             <pathconvert targetos="unix" property="javafx.home.converted">
                 <path location="${javafx.home}"/>
             </pathconvert>
-	    <echo message="debug: javafx.home = ${javafx.home}"/>
-	    <echo message="debug: javafx.home.converted = ${javafx.home.converted}"/>
+            <pathconvert targetos="unix" property="javafx.home.remote.converted">
+                <path location="${javafx.home.remote}"/>
+            </pathconvert>
+            <pathconvert targetos="unix" property="javaPath.converted">
+                <path location="${javafx.home}/bin/${java.executable}"/>
+            </pathconvert>
 
-
-            <condition property="fvalue.javafx.home" value="${javafx.home.remote}" else="${javafx.home.converted}">
+            <condition property="fvalue.javafx.home" value="${javafx.home.remote.converted}" else="${javafx.home.converted}">
                 <isset property="javafx.home.remote"/>
             </condition>
             <condition property="fvalue.remote" value="Yes" else="No">
                 <isset property="javafx.home.remote"/>
             </condition>
-            <condition property="fvalue.javaPath" value="javaPath=java" else="">
+            <condition property="fvalue.javaPath" value="javaPath=java" else="javaPath=${javaPath.converted}">
                 <isset property="javafx.home.remote"/>
             </condition>
 
@@ -95,9 +108,20 @@
             <filter token="remote" value="${fvalue.remote}"/>
             <filter token="javaPath=" value="${fvalue.javaPath}"/>
 
-            <filter token="TESTSUITE" value="${basedir}/${test.sources}"/>
-            <filter token="WORKDIR" value="${workdir}"/>
-            <filter token="external.output" value="${fxtest.basedir}"/>
+            <pathconvert targetos="unix" property="TESTSUITE.converted">
+                <path location="${basedir}/${test.sources}"/>
+            </pathconvert>
+            <filter token="TESTSUITE" value="${TESTSUITE.converted}"/>
+            
+            <pathconvert targetos="unix" property="workdir.converted">
+                <path location="${workdir}"/>
+            </pathconvert>
+            <filter token="WORKDIR" value="${workdir.converted}"/>
+            
+            <pathconvert targetos="unix" property="fxtest.basedir.converted">
+                <path location="${fxtest.basedir}"/>
+            </pathconvert>           
+            <filter token="external.output" value="${fxtest.basedir.converted}"/>
 
             <!-- step 5: copy template with applied filters -->
             <copy overwrite="true" filtering="true" file="${jclient.root.dir}/../../tools/FxTestRunner/javatest_base/@{testmode}.jti.template" tofile="${jti}"/>
@@ -134,6 +158,9 @@
             <java classpath="${javatest.classpath}"
                   classname="com.sun.javatest.tool.Main" fork="true" failonerror="false" jvm="${javatest.java}">
                 <jvmarg line="${javatest.debug.jvmargs}"/>
+                <jvmarg line="-XX:+IgnoreUnrecognizedVMOptions"/>
+                <jvmarg line="--add-exports javafx.graphics/com.sun.javafx.util=ALL-UNNAMED"/>
+                <jvmarg line="-Dsun.reflect.debugModuleAccessChecks=true -XX:+TraceAccessControlErrors"/>
                 <sysproperty key="client.test.root" value="${client.test.root}"/>
                 <sysproperty key="javatest.security.noSecurityManager" value="true"/>
                 <sysproperty key="client.exclude.nodesc" value="${exclude.nodesc}"/>
@@ -156,6 +183,9 @@
             <echo message="Writing TXT report"/>
             <java classpath="${javatest.classpath}"
                   classname="com.sun.javatest.tool.Main" fork="true" failonerror="false" jvm="${javatest.java}">
+                <jvmarg line="-XX:+IgnoreUnrecognizedVMOptions"/>
+                <jvmarg line="--add-exports javafx.graphics/com.sun.javafx.util=ALL-UNNAMED"/>
+                <jvmarg line="-Dsun.reflect.debugModuleAccessChecks=true -XX:+TraceAccessControlErrors"/>
                 <sysproperty key="client.test.root" value="${client.test.root}"/>
                 <sysproperty key="javatest.security.noSecurityManager" value="true"/>
                 <sysproperty key="client.exclude.nodesc" value="${exclude.nodesc}"/>
@@ -172,6 +202,9 @@
             <echo message="Writing HTML report"/>
             <java classpath="${javatest.classpath}"
                   classname="com.sun.javatest.tool.Main" fork="true" failonerror="false" jvm="${javatest.java}">
+                <jvmarg line="-XX:+IgnoreUnrecognizedVMOptions"/>
+                <jvmarg line="--add-exports javafx.graphics/com.sun.javafx.util=ALL-UNNAMED"/>
+                <jvmarg line="-Dsun.reflect.debugModuleAccessChecks=true -XX:+TraceAccessControlErrors"/>
                 <sysproperty key="client.test.root" value="${client.test.root}"/>
                 <sysproperty key="javatest.security.noSecurityManager" value="true"/>
                 <sysproperty key="client.exclude.nodesc" value="${exclude.nodesc}"/>

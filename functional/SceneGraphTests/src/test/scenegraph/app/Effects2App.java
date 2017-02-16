@@ -23,14 +23,24 @@
  */
 package test.scenegraph.app;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.RotateTransition;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.effect.*;
 import javafx.scene.effect.Light.Distant;
 import javafx.scene.effect.Light.Point;
 import javafx.scene.effect.Light.Spot;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -41,6 +51,7 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import test.javaclient.shared.BasicButtonChooserApp;
 import test.javaclient.shared.PageWithSlots;
 import test.javaclient.shared.TestNode;
@@ -89,6 +100,36 @@ public class Effects2App extends BasicButtonChooserApp {
     private Factory textFactory;
 
     // Blend page -------------------------------------------------------------
+    private class slotTexturedBlendRectangle extends TestNode {
+        private Image image = new Image(
+                getClass().getResourceAsStream(ImagesApp.IMAGE_BASE + "blend_texture.png"));
+
+        @Override
+        public Node drawNode() {
+            Blend blend = new Blend();
+            blend.setTopInput(new ImageInput(image));
+            blend.setMode(BlendMode.SRC_ATOP);
+
+            Polygon p = new Polygon(0, 200, 100, 0, 200, 200);
+            p.setLayoutX(100);
+            p.setLayoutY(100);
+            p.setFill(Color.RED);
+            p.setStroke(Color.ORANGE);
+            p.setStrokeWidth(4.0);
+            p.setStrokeType(StrokeType.OUTSIDE);
+
+
+            //Just need to add effect somewhere in the future, when the polygon is already drawn
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                  p.setEffect(blend);
+                }
+            }, 500);
+            return p;
+        }
+    }
+
     private class slotBlendRectangleCircle extends TestNode {
 
         Group group;
@@ -162,8 +203,9 @@ public class Effects2App extends BasicButtonChooserApp {
         public Node drawNode() {
             Group group = new Group();
             group.setEffect(new Bloom(threshold));
-            group.getChildren().add(RectangleBuilder.create().x(0).y(0).width(160).height(80).
-                    fill(Color.DARKBLUE).build());
+            Rectangle temp = new Rectangle(0, 0, 160, 80);
+            temp.setFill(Color.DARKBLUE);
+            group.getChildren().add(temp);
             Text text = new Text("Bloom!");
             group.getChildren().add(text);
             text.setX(10);
@@ -246,8 +288,11 @@ public class Effects2App extends BasicButtonChooserApp {
             nes.add(new NamedEffect("defaults", new DisplacementMap(mapWaves)));
             nes.add(new NamedEffect("scale",  new DisplacementMap(mapWaves, 0, 0, 1.2f, 2.0f)));
             nes.add(new NamedEffect("offset",  new DisplacementMap(mapWaves, 0.2f, 0.1f, 1.0, 1.0)));
-            nes.add(new NamedEffect("wrap",  DisplacementMapBuilder.create().mapData(mapWaves).
-                    wrap(true).offsetX(0.5f).offsetY(0.3f).build()));
+            DisplacementMap temp = new DisplacementMap(mapWaves);
+            temp.setWrap(true);
+            temp.setOffsetX(0.5f);
+            temp.setOffsetY(0.3f);
+            nes.add(new NamedEffect("wrap",  temp));
             return nes;
         }
         @Override
@@ -255,8 +300,9 @@ public class Effects2App extends BasicButtonChooserApp {
             group = new Group();
             group.setEffect(namedeffect.effect);
             group.getChildren().add(new Rectangle(10,10, 100, 50));
-            group.getChildren().add(RectangleBuilder.create().x(0).y(0).width(120).height(120).
-                    fill(Color.TRANSPARENT).build()); // widener
+            Rectangle temp = new Rectangle(0, 0, 120, 120);
+            temp.setFill(Color.TRANSPARENT);
+            group.getChildren().add(temp); // widener
             Text text = new Text("Waves");
             text.setX(11);
             text.setY(50);
@@ -280,8 +326,9 @@ public class Effects2App extends BasicButtonChooserApp {
             VBox vb = new VBox();
             group = new Group();
             group.setEffect(e);
-            group.getChildren().add(RectangleBuilder.create().x(10).y(10).width(100).height(50).
-                    fill(Color.YELLOW).build());
+            Rectangle temp = new Rectangle(10, 10, 100, 50);
+            temp.setFill(Color.YELLOW);
+            group.getChildren().add(temp);
             Text text = new Text("Text");
             text.setFill(Color.RED);
 //            text.setFont(Font.font("Verdana", 28));
@@ -307,7 +354,9 @@ public class Effects2App extends BasicButtonChooserApp {
             nes.add(new NamedEffect("width: 40", new DropShadow(10., 0., 0., Color.BLACK) {{ setWidth(40);}}));
             nes.add(new NamedEffect("spread: 0.7", new DropShadow(BlurType.THREE_PASS_BOX, Color.BLACK, 10., 0.7, 0., 0.)));
             for (final BlurType bt : BlurType.values()) {
-                nes.add(new NamedEffect("bt:" + bt.name(), DropShadowBuilder.create().blurType(bt).build()));
+                DropShadow temp = new DropShadow();
+                temp.setBlurType(bt);
+                nes.add(new NamedEffect("bt:" + bt.name(), temp));
             }
             nes.add(new NamedEffect("offset: 10, 20", new DropShadow(10., 10, 20, Color.BLACK)));
             return nes;
@@ -353,8 +402,9 @@ public class Effects2App extends BasicButtonChooserApp {
             Text tmpTxt = new Text("Background");
             tmpTxt.setFill(Color.RED);
             st.getChildren().add(tmpTxt);
-            st.getChildren().add(RectangleBuilder.create().x(0).y(0).width(40).height(40).
-                    effect(new ColorInput(5, 5, 70, 70, Color.rgb(0, 255, 0, 0.5f))).build());
+            Rectangle temp = new Rectangle(0, 0, 40, 40);
+            temp.setEffect(new ColorInput(5, 5, 70, 70, Color.rgb(0, 255, 0, 0.5f)));
+            st.getChildren().add(temp);
             return st;
         }
 
@@ -403,8 +453,9 @@ public class Effects2App extends BasicButtonChooserApp {
 
             text.setFill(Color.YELLOW);
             group.getChildren().add(text);
-            group.getChildren().add(RectangleBuilder.create().x(10).y(10).width(100).height(40).
-                    fill(Color.LIGHTBLUE).build());
+            Rectangle temp = new Rectangle(10, 10, 100, 40);
+            temp.setFill(Color.LIGHTBLUE);
+            group.getChildren().add(temp);
 
             vb.getChildren().add(group);
             return vb;
@@ -420,15 +471,31 @@ public class Effects2App extends BasicButtonChooserApp {
         }
         List<NamedEffect> getNamedEffectList() {
             List<NamedEffect> nes = new ArrayList<NamedEffect>();
-            nes.add(new NamedEffect("colored", InnerShadowBuilder.create().color(Color.GREEN).build()));
-            nes.add(new NamedEffect("height: 40", InnerShadowBuilder.create().height(40).build()));
-            nes.add(new NamedEffect("width: 40", InnerShadowBuilder.create().width(40).build()));
-            nes.add(new NamedEffect("radius: 40", InnerShadowBuilder.create().radius(40).build()));
+            InnerShadow temp;
+            temp = new InnerShadow();
+            temp.setColor(Color.GREEN);
+            nes.add(new NamedEffect("colored", temp));
+            temp = new InnerShadow();
+            temp.setHeight(40);
+            nes.add(new NamedEffect("height: 40", temp));
+            temp = new InnerShadow();
+            temp.setWidth(40);
+            nes.add(new NamedEffect("width: 40", temp));
+            temp = new InnerShadow();
+            temp.setRadius(40);
+            nes.add(new NamedEffect("radius: 40", temp));
             for (final BlurType bt : BlurType.values()) {
-                nes.add(new NamedEffect("bt:" + bt.name(), InnerShadowBuilder.create().blurType(bt).build()));
+                temp = new InnerShadow();
+                temp.setBlurType(bt);
+                nes.add(new NamedEffect("bt:" + bt.name(), temp));
             }
-            nes.add(new NamedEffect("choke: 0.7", InnerShadowBuilder.create().choke(0.7f).build()));
-            nes.add(new NamedEffect("offset: 10, 20", InnerShadowBuilder.create().offsetX(10).offsetY(20).build()));
+            temp = new InnerShadow();
+            temp.setChoke(0.7f);
+            nes.add(new NamedEffect("choke: 0.7", temp));
+            temp = new InnerShadow();
+            temp.setOffsetX(10);
+            temp.setOffsetY(20);
+            nes.add(new NamedEffect("offset: 10, 20", temp));
             return nes;
         }
 
@@ -442,22 +509,47 @@ public class Effects2App extends BasicButtonChooserApp {
         }
         List<NamedEffect> getNamedEffectList() {
             List<NamedEffect> nes = new ArrayList<NamedEffect>();
-            nes.add(new NamedEffect("default", new Lighting()));
-            nes.add(new NamedEffect("distant light", LightingBuilder.create().light(new Distant()
-            {{ setAzimuth(90f); setElevation(50);}}).build()));
-            nes.add(new NamedEffect("point light", LightingBuilder.create().light(new Point(
-                    70, 120, 10, Color.WHITE)).build()));
-            nes.add(new NamedEffect("spot light", LightingBuilder.create().light(new Spot() {{
-                    setX(70);setY(120);setZ(50);
-                    setPointsAtX(150);setPointsAtY(0);setPointsAtZ(0);
-                }}).build()));
+            Lighting temp = new Lighting();
+            nes.add(new NamedEffect("default", temp));
+            temp = new Lighting();
+            Light.Distant td = new Light.Distant();
+            td.setAzimuth(90f);
+            td.setElevation(50);
+            temp.setLight(td);
+            nes.add(new NamedEffect("distant light", temp));
+            temp = new Lighting();
+            Light.Point tp = new Light.Point(70, 120, 10, Color.WHITE);
+            temp.setLight(tp);
+            nes.add(new NamedEffect("point light", temp));
+            temp = new Lighting();
+            Light.Spot ts = new Light.Spot();
+            ts.setX(70);
+            ts.setY(120);
+            ts.setZ(50);
+            ts.setPointsAtX(150);
+            ts.setPointsAtY(0);
+            ts.setPointsAtZ(0);
+            temp.setLight(ts);
+            nes.add(new NamedEffect("spot light", temp));
 
-            nes.add(new NamedEffect("diffuse: 0.5", LightingBuilder.create().diffuseConstant(0.5f).build()));
-            nes.add(new NamedEffect("specularC: 1.5", LightingBuilder.create().specularConstant(1.5f).build()));
-            nes.add(new NamedEffect("specularExp: 35", LightingBuilder.create().specularExponent(35f).build()));
-            nes.add(new NamedEffect("scale: 7", LightingBuilder.create().surfaceScale(7f).build()));
-            nes.add(new NamedEffect("bump input", LightingBuilder.create().bumpInput(new DropShadow()).build()));
-            nes.add(new NamedEffect("content input", LightingBuilder.create().contentInput(new DropShadow()).build()));
+            temp = new Lighting();
+            temp.setDiffuseConstant(0.5f);
+            nes.add(new NamedEffect("diffuse: 0.5", temp));
+            temp = new Lighting();
+            temp.setSpecularConstant(1.5f);
+            nes.add(new NamedEffect("specularC: 1.5", temp));
+            temp = new Lighting();
+            temp.setSpecularExponent(35f);
+            nes.add(new NamedEffect("specularExp: 35", temp));
+            temp = new Lighting();
+            temp.setSurfaceScale(7f);
+            nes.add(new NamedEffect("scale: 7", temp));
+            temp = new Lighting();
+            temp.setBumpInput(new DropShadow());
+            nes.add(new NamedEffect("bump input", temp));
+            temp = new Lighting();
+            temp.setContentInput(new DropShadow());
+            nes.add(new NamedEffect("content input", temp));
 
             return nes;
         }
@@ -497,11 +589,20 @@ public class Effects2App extends BasicButtonChooserApp {
         }
         List<NamedEffect> getNamedEffectList() {
             List<NamedEffect> nes = new ArrayList<NamedEffect>();
-            nes.add(new NamedEffect("default", new Reflection() ));
-            nes.add(new NamedEffect("bottom opacity 0.7", ReflectionBuilder.create().bottomOpacity(.7f).build()));
-            nes.add(new NamedEffect("fraction: 0.5", ReflectionBuilder.create().fraction(0.5f).build()));
-            nes.add(new NamedEffect("top offset: 15", ReflectionBuilder.create().topOffset(15).build()));
-            nes.add(new NamedEffect("top opacity: 0.9", ReflectionBuilder.create().topOpacity(.9f).build()));
+            Reflection temp = new Reflection();
+            nes.add(new NamedEffect("default", temp));
+            temp = new Reflection();
+            temp.setBottomOpacity(.7f);
+            nes.add(new NamedEffect("bottom opacity 0.7", temp));
+            temp = new Reflection();
+            temp.setFraction(0.5f);
+            nes.add(new NamedEffect("fraction: 0.5", temp));
+            temp = new Reflection();
+            temp.setTopOffset(15);
+            nes.add(new NamedEffect("top offset: 15", temp));
+            temp = new Reflection();
+            temp.setTopOpacity(.9f);
+            nes.add(new NamedEffect("top opacity: 0.9", temp));
 
             return nes;
         }
@@ -516,12 +617,22 @@ public class Effects2App extends BasicButtonChooserApp {
         }
         List<NamedEffect> getNamedEffectList() {
             List<NamedEffect> nes = new ArrayList<NamedEffect>();
-            nes.add(new NamedEffect("colored", ShadowBuilder.create().color(Color.GREEN).build()));
-            nes.add(new NamedEffect("height: 40", ShadowBuilder.create().height(40).build()));
-            nes.add(new NamedEffect("width: 40", ShadowBuilder.create().width(40).build()));
-            nes.add(new NamedEffect("radius: 40", ShadowBuilder.create().radius(40).build()));
+            Shadow temp = new Shadow();
+            temp.setColor(Color.GREEN);
+            nes.add(new NamedEffect("colored", temp));
+            temp = new Shadow();
+            temp.setHeight(40);
+            nes.add(new NamedEffect("height: 40", temp));
+            temp = new Shadow();
+            temp.setWidth(40);
+            nes.add(new NamedEffect("width: 40", temp));
+            temp = new Shadow();
+            temp.setRadius(40);
+            nes.add(new NamedEffect("radius: 40", temp));
             for (final BlurType bt : BlurType.values()) {
-                nes.add(new NamedEffect("bt:" + bt.name(), ShadowBuilder.create().blurType(bt).build()));
+                temp = new Shadow();
+                temp.setBlurType(bt);
+                nes.add(new NamedEffect("bt:" + bt.name(), temp));
             }
 
             return nes;
@@ -547,7 +658,7 @@ public class Effects2App extends BasicButtonChooserApp {
             blendPage.add(new slotBlendRectangleCircle(blendMode), blendMode.name());
         }
         blendPage.add(new slotBlend2(),"Grad_SrcOut");
-
+        blendPage.add(new slotTexturedBlendRectangle(), "Textured");
         // ======== BLOOM =================
         final PageWithSlots bloomPage = new PageWithSlots(Pages.Bloom.name(), heightPageContentPane, widthPageContentPane);
         bloomPage.setSlotSize(160, 160);
@@ -562,8 +673,7 @@ public class Effects2App extends BasicButtonChooserApp {
         for (final int iterations : new int[]{1, 3}) {
             for (final int _width : new int[]{1, 10, 20}) {
                 for (final int _height : new int[]{1, 10, 20}) {
-                    final Node node = textFactory.create(BoxBlurBuilder.create().width(_width).
-                            height(_height).iterations(iterations).build());
+                    final Node node = textFactory.create(new BoxBlur(_width, _height, iterations));
                     blurPage.add(new slotBlur(node),"W:" + _width + " H:" + _height + " I:" + iterations);
                 }
             }
@@ -608,7 +718,7 @@ public class Effects2App extends BasicButtonChooserApp {
         final PageWithSlots glowPage = new PageWithSlots(Pages.Glow.name(), heightPageContentPane, widthPageContentPane);
         glowPage.setSlotSize(160, 160);
         for (final Float level : new Float[] {0f, 0.3f, 0.7f, 1f}) {
-            Glow gl = GlowBuilder.create().level(level).build();
+            Glow gl = new Glow(level);
             glowPage.add(new slotWithTextNode(gl),"Level_" + level);
         }
 
@@ -631,8 +741,7 @@ public class Effects2App extends BasicButtonChooserApp {
         motionBlurPage.setSlotSize(120, 120);
         for (final int radius : new int[] {0, 10, 20}) {
             for (final int angle : new int[] {0, 45, 160, 315}) {
-                motionBlurPage.add(new slotWithTextNode(MotionBlurBuilder.create().angle(angle).
-                        radius(radius).build()), "Angle_" + angle + "_Radius_" + radius);
+                motionBlurPage.add(new slotWithTextNode(new MotionBlur(angle, radius)), "Angle_" + angle + "_Radius_" + radius);
             }
         }
 

@@ -68,16 +68,7 @@ public enum TestCollections {
     Lighting(EffectTestAction.generate(new Lighting(), true)),
     MotionBlur(EffectTestAction.generate(new MotionBlur(), true)),
     PerspectiveTransform(EffectTestAction.generate(
-            PerspectiveTransformBuilder.create()
-            .ulx(10.0)
-            .uly(10.0)
-            .urx(100.0)
-            .ury(40.0)
-            .lrx(100.0)
-            .lry(60.0)
-            .llx(10.0)
-            .lly(90.0)
-            .build(), false)),
+            new PerspectiveTransform(10.0, 10.0, 100.0, 40.0, 100.0, 60.0, 10.0, 90.0), false)),
     Reflection(EffectTestAction.generate(new Reflection(), true)),
     SepiaTone(EffectTestAction.generate(new SepiaTone(), true)),
     Shadow(EffectTestAction.generate(new Shadow(), true))

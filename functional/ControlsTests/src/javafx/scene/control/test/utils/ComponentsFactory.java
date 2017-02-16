@@ -65,8 +65,11 @@ public class ComponentsFactory {
         VBox vb = new VBox();
 
         HBox hb1 = new HBox();
-        Button button = ButtonBuilder.create().id(FORM_BUTTON_ID).text("Press me").build();
-        final TextField tf1 = TextFieldBuilder.create().id(FORM_CLICK_TEXT_FIELD_ID).prefWidth(50).text("0").build();
+        Button button = new Button("Press me");
+        button.setId(FORM_BUTTON_ID);
+        final TextField tf1 = new TextField("0");
+        tf1.setId(FORM_CLICK_TEXT_FIELD_ID);
+        tf1.setPrefWidth(50);
         button.setOnAction((ActionEvent t) -> {
             tf1.setText(String.valueOf(Integer.parseInt(tf1.getText()) + 1));
         });
@@ -76,13 +79,19 @@ public class ComponentsFactory {
         ScrollBar sb = new ScrollBar();
         sb.setMax(10);
         sb.setId(FORM_SCROLLBAR_ID);
-        final TextField tf2 = TextFieldBuilder.create().id(FORM_SCROLL_TEXT_FIELD_ID).prefWidth(50).text("0").build();
+        final TextField tf2 = new TextField("0");
+        tf2.setId(FORM_SCROLL_TEXT_FIELD_ID);
+        tf2.setPrefWidth(50);
         sb.addEventHandler(ScrollEvent.ANY, (ScrollEvent t) -> {
             tf2.setText(String.valueOf(Integer.parseInt(tf2.getText()) + 1));
         });
         hb2.getChildren().addAll(sb, tf2);
 
-        TextArea ta = TextAreaBuilder.create().minHeight(50).prefHeight(100).prefWidth(50).id(FORM_TEXT_AREA_ID).build();
+        TextArea ta = new TextArea();
+        ta.setMinHeight(50);
+        ta.setPrefHeight(100);
+        ta.setPrefWidth(50);
+        ta.setId(FORM_TEXT_AREA_ID);
         for (int i = 0; i < 15; i++) {
             ta.appendText("text" + i + "\n");
         }

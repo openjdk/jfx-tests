@@ -36,7 +36,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -103,7 +102,8 @@ public class TextNodeApp extends InteroperabilityApp {
             hb.setPadding(new Insets(5, 5, 5, 5));
             hb.setStyle("-fx-border-color : green;");
 
-            Button resetButton = ButtonBuilder.create().id(RESET_BUTTON_ID).text("Reset").build();
+            Button resetButton = new Button("Reset");
+            resetButton.setId(RESET_BUTTON_ID);
             resetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();

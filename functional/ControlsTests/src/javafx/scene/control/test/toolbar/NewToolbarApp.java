@@ -79,14 +79,17 @@ public class NewToolbarApp extends InteroperabilityApp {
 
         private void prepareScene() {
             pane = new Pane();
-            testedToolbar = ToolBarBuilder.create().id(TESTED_TOOLBAR_ID).build();
+            testedToolbar = new ToolBar();
+            testedToolbar.setId(TESTED_TOOLBAR_ID);
 
             PropertiesTable tb = new PropertiesTable(testedToolbar);
             PropertyTablesFactory.explorePropertiesList(testedToolbar, tb);
 
             final TabPaneWithControl tabPane = new TabPaneWithControl("ToolBar", tb);
 
-            final TextField tf = TextFieldBuilder.create().id(TOOLBAR_ADD_INDEX_TEXT_FIELD_ID).text("0").prefWidth(40).build();
+            final TextField tf = new TextField("0");
+            tf.setId(TOOLBAR_ADD_INDEX_TEXT_FIELD_ID);
+            tf.setPrefWidth(40);
 
             HBox nodeshb = new NodesChoserFactory("Add!", new NodesChoserFactory.NodeAction<Node>() {
 
@@ -109,7 +112,8 @@ public class NewToolbarApp extends InteroperabilityApp {
             hb.setPadding(new Insets(5, 5, 5, 5));
             hb.setStyle("-fx-border-color : green;");
 
-            Button resetButton = ButtonBuilder.create().id(RESET_BUTTON_ID).text("Reset").build();
+            Button resetButton = new Button("Reset");
+            resetButton.setId(RESET_BUTTON_ID);
             resetButton.setOnAction(new EventHandler<ActionEvent>() {
 
                 public void handle(ActionEvent t) {

@@ -39,6 +39,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import org.eclipse.swt.widgets.Shell;
+import com.sun.javafx.stage.WindowHelper;
 
 /**
  *
@@ -183,7 +184,8 @@ public class CombinedTestChooserPresenter implements AbstractTestPresenter, Abst
         stage.setScene(scene);
         stage.show();
         stage.toFront();
-        stage.setFocused(true);
+        //stage.setFocused(true);
+        WindowHelper.setFocused(stage, true);
     }
 
     public void show(final Object frame, final Object panel) {

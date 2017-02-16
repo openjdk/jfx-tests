@@ -26,7 +26,7 @@ package test.css.utils;
 
 import javafx.css.StyleConverter;
 import javafx.css.CssMetaData;
-import com.sun.javafx.css.converters.*;
+import javafx.css.converter.*;
 import com.sun.javafx.scene.layout.region.*;
 import java.util.HashSet;
 import java.util.Set;

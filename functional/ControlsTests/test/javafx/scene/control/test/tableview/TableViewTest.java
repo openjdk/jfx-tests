@@ -143,7 +143,6 @@ public class TableViewTest extends TestBase {
      * Checks that sort works for the column. According to the spec there are
      * three states of sorting and all of them are checked
      *
-     * http://xdesign.us.oracle.com/projects/javaFX/fxcontrols-ue/specifications/treetable/treetable.html#sorting
      */
     @Smoke
     @Test(timeout = 300000)

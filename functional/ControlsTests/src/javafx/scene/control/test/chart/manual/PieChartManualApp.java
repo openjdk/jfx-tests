@@ -33,7 +33,6 @@ import javafx.event.EventHandler;
 import javafx.scene.chart.PieChart;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.test.utils.CommonPropertiesScene;
 import javafx.geometry.Side;
 import javafx.scene.layout.HBox;
@@ -104,7 +103,7 @@ public class PieChartManualApp extends InteroperabilityApp {
                 }
             });
 
-            Button hardResetButton = ButtonBuilder.create().text("Reset").build();
+            Button hardResetButton = new Button("Reset");
             hardResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();

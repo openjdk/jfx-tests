@@ -239,8 +239,6 @@ public class NewListViewTest extends TestBase {
 
         requestFocusOnControl(testedControl);
 
-        testedControl.keyboard().pushKey(KeyboardButtons.DOWN);
-
         testedControl.keyboard().pressKey(KeyboardButtons.SHIFT);
         try {
             for (int i = 1; i < 5; i++) {
@@ -314,10 +312,10 @@ public class NewListViewTest extends TestBase {
     }
 
     private void checkScrollingState(final double scrollValue, boolean beginVisible, boolean endVisible, int size, final Orientation orientation) {
-        //assertEquals(findScrollBar(testedControl.as(Parent.class, Node.class), orientation, true).getControl().getValue(), scrollValue, 0.01);
+        //assertEquals(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), orientation, true).getControl().getValue(), scrollValue, 0.01);
         testedControl.waitState(new State() {
             public Object reached() {
-                Wrap<? extends ScrollBar> sb = findScrollBar(testedControl.as(Parent.class, Node.class), orientation, true);
+                Wrap<? extends ScrollBar> sb = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), orientation, true);
                 if (Math.abs(sb.getControl().getValue() - scrollValue) < 0.01) {
                     return true;
                 } else {
@@ -370,16 +368,16 @@ public class NewListViewTest extends TestBase {
     @Test(timeout = 300000)
     public void verticalScrollBarBehaviorOnAddingDeletingTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 50);
-        assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);
+        assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);
         addElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-        assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) == null);
+        assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) == null);
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 500);
-        assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);
+        assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 50);
         for (int i = 0; i < 10; i++) {
             removeFromPos(0);
         }
-        assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);
+        assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);
     }
 
     //Test//RT-17538//Test removed, as non actual (bug - is not a bug).
@@ -390,11 +388,11 @@ public class NewListViewTest extends TestBase {
         addTextFieldAtPos(1);
         addRectangleAtPos(2);
 
-        Wrap<? extends ScrollBar> sb = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
+        Wrap<? extends ScrollBar> sb = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
         ScrollingChecker sc = new ScrollingChecker(sb.getControl().valueProperty());
         testedControl.mouse().move();
         for (int i = 0; i < 8; i++) {
-            findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+1);
+            findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+1);
             sc.checkChanging(+1);
         }
     }
@@ -460,8 +458,8 @@ public class NewListViewTest extends TestBase {
 
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, Orientation.HORIZONTAL, Properties.orientation);
 
-        checkScreenshot("ListView_scrollBarSize1Test_HorizontalScroll_1", findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true));
-        checkScreenshot("ListView_scrollBarSize1Test_VerticalScroll_1", findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true));
+        checkScreenshot("ListView_scrollBarSize1Test_HorizontalScroll_1", findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true));
+        checkScreenshot("ListView_scrollBarSize1Test_VerticalScroll_1", findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true));
         throwScreenshotError();
     }
 
@@ -473,7 +471,7 @@ public class NewListViewTest extends TestBase {
 
         addRectangleAtPos(0);
         addRectangleAtPos(0);
-        checkScreenshot("ListView_HorizontalScroll_2", findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true));
+        checkScreenshot("ListView_HorizontalScroll_2", findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true));
         throwScreenshotError();
     }
 
@@ -487,10 +485,10 @@ public class NewListViewTest extends TestBase {
         addRectangleAtPos(0);
 
         for (int i = 0; i < 100; i++) {
-            findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+1);
+            findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+1);
         }
 
-        assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) == null);
+        assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) == null);
     }
 
     @ScreenshotCheck
@@ -517,9 +515,10 @@ public class NewListViewTest extends TestBase {
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, Orientation.HORIZONTAL, Properties.orientation);
         setSize(150, 150);
         addRectangleAtPos(0);
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+20);
+        int scroll_value = Utils.isMacOS() ? -20 : +20;
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(scroll_value);
 
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+20);
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(scroll_value);
 
         checkScreenshot("ListView_ScrollingIssue_1", testedControl);
         throwScreenshotError();
@@ -534,15 +533,15 @@ public class NewListViewTest extends TestBase {
         Thread.sleep(500);
 
         for (int i = 0; i < 20; i++) {
-            findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+1);
+            findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+1);
         }
 
         for (int i = 0; i < 20; i++) {
-            findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+1);
+            findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+1);
         }
 
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, Orientation.HORIZONTAL, Properties.orientation);
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+20);
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+20);
         checkScreenshot("ListView_ScrollingIssue_2", testedControl);
         throwScreenshotError();
     }
@@ -554,8 +553,8 @@ public class NewListViewTest extends TestBase {
         setSize(150, 150);
         addRectangleAtPos(0);
 
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+20);
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+20);
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+20);
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+20);
         checkScreenshot("ListView_ScrollingIssue_3", testedControl);
         throwScreenshotError();
     }
@@ -569,13 +568,13 @@ public class NewListViewTest extends TestBase {
         testedControl.keyboard().pushKey(KeyboardButtons.DOWN);
         testedControl.keyboard().pushKey(KeyboardButtons.DOWN);
 
-        checkListener(Listeners.focusedIndex, 1);
-        addElement("0", 0);
         checkListener(Listeners.focusedIndex, 2);
+        addElement("0", 0);
+        checkListener(Listeners.focusedIndex, 3);
         addElement("0", 2);
-        checkListener(Listeners.focusedIndex, 3);
+        checkListener(Listeners.focusedIndex, 4);
         addElement("0", 4);
-        checkListener(Listeners.focusedIndex, 3);
+        checkListener(Listeners.focusedIndex, 5);
     }
 
     //Test//RT-17539//Test removed because developers don't count size of content.
@@ -589,12 +588,12 @@ public class NewListViewTest extends TestBase {
         checkScreenshot("ListView_ScrollBarKnobSizeIssue_1", testedControl);
 
         for (int i = 0; i < 20; i++) {
-            findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+1);
+            findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+1);
         }
 
         checkScreenshot("ListView_ScrollBarKnobSizeIssue_2", testedControl);
 
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+10);
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+10);
 
         checkScreenshot("ListView_ScrollBarKnobSizeIssue_3", testedControl);
         throwScreenshotError();
@@ -613,12 +612,6 @@ public class NewListViewTest extends TestBase {
         selectionHelper.setMultiple(false);
 
         requestFocusOnControl(testedControl);
-
-        Thread.sleep(SLEEP);
-
-        testedControl.keyboard().pushKey(KeyboardButtons.DOWN);
-
-        Thread.sleep(SLEEP);
 
         //Testing section
         try {
@@ -652,17 +645,11 @@ public class NewListViewTest extends TestBase {
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, SelectionMode.MULTIPLE, Properties.selectionMode);
         setSize(130, 130);
 
-        selectionHelper = new MultipleSelectionHelper(1, DATA_ITEMS_NUM);
+        selectionHelper = new MultipleSelectionHelper(1, 10);
         selectionHelper.setSingleCell(false);
         selectionHelper.setMultiple(true);
 
         requestFocusOnControl(testedControl);
-
-        Thread.sleep(SLEEP);
-
-        testedControl.keyboard().pushKey(KeyboardButtons.DOWN);
-
-        Thread.sleep(SLEEP);
 
         //Testing section
         try {
@@ -733,12 +720,6 @@ public class NewListViewTest extends TestBase {
 
         requestFocusOnControl(testedControl);
 
-        Thread.sleep(SLEEP);
-
-        testedControl.keyboard().pushKey(KeyboardButtons.DOWN);
-
-        Thread.sleep(SLEEP);
-
         //Testing section
         try {
             for (int i = 0; i < 2; i++) {
@@ -785,12 +766,6 @@ public class NewListViewTest extends TestBase {
         selectionHelper.setMultiple(true);
 
         requestFocusOnControl(testedControl);
-
-        Thread.sleep(SLEEP);
-
-        testedControl.keyboard().pushKey(KeyboardButtons.DOWN);
-
-        Thread.sleep(SLEEP);
 
         //Testing section
         try {
@@ -899,6 +874,7 @@ public class NewListViewTest extends TestBase {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 200);
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 200);
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, SelectionMode.MULTIPLE, Properties.selectionMode);
+        selectionHelper.setMultiple(true);
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, Orientation.HORIZONTAL, Properties.orientation);
 
         final int elementsCount = 50;
@@ -910,6 +886,8 @@ public class NewListViewTest extends TestBase {
             Wrap<Text> cellWrap = getCellWrap((Integer) (0)); //mouse will be over the second item.
             cellWrap.as(Showable.class).shower().show();
             cellWrap.mouse().click(1, cellWrap.getClickPoint(), Mouse.MouseButtons.BUTTON1, CTRL_DOWN_MASK_OS);
+            selectionHelper.click(0, 0, KeyboardButtons.CONTROL);
+            checkSelection();
 
             KeyboardButtons lessKey = (orientation == Orientation.HORIZONTAL ? KeyboardButtons.LEFT : KeyboardButtons.UP);
             KeyboardButtons moreKey = (orientation == Orientation.HORIZONTAL ? KeyboardButtons.RIGHT : KeyboardButtons.DOWN);

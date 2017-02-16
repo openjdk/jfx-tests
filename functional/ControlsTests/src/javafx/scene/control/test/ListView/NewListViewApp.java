@@ -118,7 +118,9 @@ public class NewListViewApp extends InteroperabilityApp {
             PropertyTablesFactory.explorePropertiesList(testedListView, tb);
             SpecialTablePropertiesProvider.provideForControl(testedControl, tb);
 
-            final TextField tf = TextFieldBuilder.create().id(LIST_VIEW_CONTROL_ADD_INDEX_TEXT_FIELD_ID).text("0").prefWidth(40).build();
+            final TextField tf = new TextField("0");
+            tf.setId(LIST_VIEW_CONTROL_ADD_INDEX_TEXT_FIELD_ID);
+            tf.setPrefWidth(40);
 
             HBox nodeshb = new NodesChoserFactory("Add!", new NodesChoserFactory.NodeAction<Node>() {
                 @Override
@@ -128,7 +130,8 @@ public class NewListViewApp extends InteroperabilityApp {
             }, tf);
 
             HBox resetButtons = new HBox();
-            Button hardResetButton = ButtonBuilder.create().id(HARD_RESET_BUTTON_ID).text("Hard reset").build();
+            Button hardResetButton = new Button("Hard reset");
+            hardResetButton.setId(HARD_RESET_BUTTON_ID);
             hardResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -138,7 +141,8 @@ public class NewListViewApp extends InteroperabilityApp {
                 }
             });
 
-            Button softResetButton = ButtonBuilder.create().id(SOFT_RESET_BUTTON_ID).text("Soft reset").build();
+            Button softResetButton = new Button("Soft reset");
+            softResetButton.setId(SOFT_RESET_BUTTON_ID);
             softResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     softReset();
@@ -154,7 +158,8 @@ public class NewListViewApp extends InteroperabilityApp {
                 }
             });
 
-            Button changeSelectionModel = ButtonBuilder.create().text("Change selection model to custom").id(CHANGE_SELECTION_MODEL_BUTTON_ID).build();
+            Button changeSelectionModel = new Button("Change selection model to custom");
+            changeSelectionModel.setId(CHANGE_SELECTION_MODEL_BUTTON_ID);
             changeSelectionModel.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedListView.setSelectionModel(cmsm);
@@ -180,7 +185,6 @@ public class NewListViewApp extends InteroperabilityApp {
             ListView lv = new ListView();
             lv.setId(TESTED_LIST_VIEW_ID);
             return lv;
-            //return ListViewBuilder.create().id(TESTED_LIST_VIEW_ID).build();
         }
 
         private void softReset() {
@@ -225,12 +229,17 @@ public class NewListViewApp extends InteroperabilityApp {
         private HBox getAddItemHBox() {
             HBox hb = new HBox();
             Label lb = new Label("Add item");
-            final TextField tf = TextFieldBuilder.create().prefWidth(50).id(ADD_ITEM_TEXT_FIELD_ID).build();
+            final TextField tf = new TextField();
+            tf.setPrefWidth(50);
+            tf.setId(ADD_ITEM_TEXT_FIELD_ID);
 
             Label atLb = new Label("at pos");
-            final TextField tfPos = TextFieldBuilder.create().prefWidth(50).id(ADD_ITEM_POSITION_TEXT_FIELD_ID).build();
+            final TextField tfPos = new TextField();
+            tfPos.setPrefWidth(50);
+            tfPos.setId(ADD_ITEM_POSITION_TEXT_FIELD_ID);
 
-            Button bt = ButtonBuilder.create().text("Add!").id(ADD_ITEM_BUTTON_ID).build();
+            Button bt = new Button("Add!");
+            bt.setId(ADD_ITEM_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     ((ListView) testedControl).getItems().add(Integer.parseInt(tfPos.getText()), tf.getText());
@@ -243,8 +252,11 @@ public class NewListViewApp extends InteroperabilityApp {
         private HBox getRemoveItemHBox() {
             HBox hb = new HBox();
             Label lb = new Label("From position");
-            final TextField tf = TextFieldBuilder.create().text("0").prefWidth(50).id(REMOVE_ITEM_POS_TEXT_FIELD_ID).build();
-            Button bt = ButtonBuilder.create().text("Remove!").id(REMOVE_BUTTON_ID).build();
+            final TextField tf = new TextField("0");
+            tf.setPrefWidth(50);
+            tf.setId(REMOVE_ITEM_POS_TEXT_FIELD_ID);
+            Button bt = new Button("Remove!");
+            bt.setId(REMOVE_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int index = Integer.parseInt(tf.getText());
@@ -257,8 +269,10 @@ public class NewListViewApp extends InteroperabilityApp {
 
         private HBox getScrollToHBox() {
             HBox hb = new HBox();
-            Button button = ButtonBuilder.create().text("ScrollTo").id(SCROLL_TO_BUTTON_ID).build();
-            final TextField tf = TextFieldBuilder.create().text("0").id(SCROLL_TO_TEXT_FIELD_ID).build();
+            Button button = new Button("ScrollTo");
+            button.setId(SCROLL_TO_BUTTON_ID);
+            final TextField tf = new TextField("0");
+            tf.setId(SCROLL_TO_TEXT_FIELD_ID);
 
             button.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
@@ -273,8 +287,11 @@ public class NewListViewApp extends InteroperabilityApp {
         private HBox getAddRectangleHbox() {
             HBox hb = new HBox();
             Label lb = new Label("Add rectangle at pos");
-            final TextField tfPos = TextFieldBuilder.create().prefWidth(50).id(ADD_RECTANGLE_TEXT_FIELD_ID).build();
-            Button bt = ButtonBuilder.create().text("Add!").id(ADD_RECTANGLE_BUTTON_ID).build();
+            final TextField tfPos = new TextField();
+            tfPos.setPrefWidth(50);
+            tfPos.setId(ADD_RECTANGLE_TEXT_FIELD_ID);
+            Button bt = new Button("Add!");
+            bt.setId(ADD_RECTANGLE_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int index = Integer.parseInt(tfPos.getText());
@@ -288,8 +305,11 @@ public class NewListViewApp extends InteroperabilityApp {
         private HBox getAddFormHbox() {
             HBox hb = new HBox();
             Label lb = new Label("Add form at pos");
-            final TextField tfPos = TextFieldBuilder.create().prefWidth(50).id(ADD_FORM_TEXT_FIELD_ID).build();
-            Button bt = ButtonBuilder.create().text("Add!").id(ADD_FORM_BUTTON_ID).build();
+            final TextField tfPos = new TextField();
+            tfPos.setPrefWidth(50);
+            tfPos.setId(ADD_FORM_TEXT_FIELD_ID);
+            Button bt = new Button("Add!");
+            bt.setId(ADD_FORM_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int index = Integer.parseInt(tfPos.getText());
@@ -303,8 +323,11 @@ public class NewListViewApp extends InteroperabilityApp {
         private HBox getAddTextFieldHbox() {
             HBox hb = new HBox();
             Label lb = new Label("Add textField at pos");
-            final TextField tfPos = TextFieldBuilder.create().prefWidth(50).id(ADD_TEXT_FIELD_TEXT_FIELD_ID).build();
-            Button bt = ButtonBuilder.create().text("Add!").id(ADD_TEXT_FIELD_BUTTON_ID).build();
+            final TextField tfPos = new TextField();
+            tfPos.setPrefWidth(50);
+            tfPos.setId(ADD_TEXT_FIELD_TEXT_FIELD_ID);
+            Button bt = new Button("Add!");
+            bt.setId(ADD_TEXT_FIELD_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int index = Integer.parseInt(tfPos.getText());
@@ -317,9 +340,11 @@ public class NewListViewApp extends InteroperabilityApp {
 
         private HBox getStartMotionHBox() {
             HBox hb = new HBox();
-            Button startMotion = ButtonBuilder.create().text("start motion").id(START_MOTION_BUTTON_ID).build();
+            Button startMotion = new Button("start motion");
+            startMotion.setId(START_MOTION_BUTTON_ID);
             Label label = new Label(" of element at position ");
-            final TextField tf = TextFieldBuilder.create().text("0").id(START_MOTION_TEXT_FIELD_ID).build();
+            final TextField tf = new TextField("0");
+            tf.setId(START_MOTION_TEXT_FIELD_ID);
             startMotion.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     cm.applyTransition((Node) ((ListView) testedControl).getItems().get(Integer.parseInt(tf.getText())));
@@ -332,9 +357,11 @@ public class NewListViewApp extends InteroperabilityApp {
 
         private HBox getIncreaseScaleHBox() {
             HBox hb = new HBox();
-            final TextField tf = TextFieldBuilder.create().text("0").id(INCREASE_SCALE_TEXT_FIELD_ID).build();
+            final TextField tf = new TextField("0");
+            tf.setId(INCREASE_SCALE_TEXT_FIELD_ID);
             Label label = new Label(" of node on position ");
-            Button increaseScaleButton = ButtonBuilder.create().id(INCREASE_SCALE_BUTTON_ID).text("Increase scale").build();
+            Button increaseScaleButton = new Button("Increase scale");
+            increaseScaleButton.setId(INCREASE_SCALE_BUTTON_ID);
             increaseScaleButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     Node content = (Node) ((ListView) testedControl).getItems().get(Integer.parseInt(tf.getText()));
@@ -348,9 +375,11 @@ public class NewListViewApp extends InteroperabilityApp {
 
         private HBox getDecreaseScaleHBox() {
             HBox hb = new HBox();
-            final TextField tf = TextFieldBuilder.create().text("0").id(DECREASE_SCALE_TEXT_FIELD_ID).build();
+            final TextField tf = new TextField("0");
+            tf.setId(DECREASE_SCALE_TEXT_FIELD_ID);
             Label label = new Label(" of node on position ");
-            Button increaseScaleButton = ButtonBuilder.create().id(DECREASE_SCALE_BUTTON_ID).text("Decrease scale").build();
+            Button increaseScaleButton = new Button("Decrease scale");
+            increaseScaleButton.setId(DECREASE_SCALE_BUTTON_ID);
             increaseScaleButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     Node content = (Node) ((ListView) testedControl).getItems().get(Integer.parseInt(tf.getText()));
@@ -371,7 +400,9 @@ public class NewListViewApp extends InteroperabilityApp {
         }
 
         private TextField getNewTextField() {
-            return TextFieldBuilder.create().id("CONTENT_TEXT_FIELD_" + (textFieldsCounter++) + "_ID").build();
+            TextField tf = new TextField();
+            tf.setId("CONTENT_TEXT_FIELD_" + (textFieldsCounter++) + "_ID");
+            return tf;
         }
     }
 }

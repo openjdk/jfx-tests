@@ -56,7 +56,6 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.PaneBuilder;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -842,7 +841,9 @@ public class ControlsCssStylesFactory {
                                 VBox box = (VBox) control;
                                 box.getChildren().clear();
                                 box.setStyle(box.getStyle() + "-fx-border-color:blue;");
-                                box.getChildren().add(PaneBuilder.create().children(new Rectangle(20, 20, Color.TRANSPARENT)).style("-fx-border-color:red;").build());
+                                Pane temp = new Pane(new Rectangle(20, 20, Color.TRANSPARENT));
+                                temp.setStyle("-fx-border-color:red;");
+                                box.getChildren().add(temp);
                             }
                         }
                     }});
@@ -1025,7 +1026,9 @@ public class ControlsCssStylesFactory {
                                 HBox box = (HBox) control;
                                 box.getChildren().clear();
                                 box.setStyle(box.getStyle() + "-fx-border-color:blue;");
-                                box.getChildren().add(PaneBuilder.create().children(new Rectangle(20, 20, Color.TRANSPARENT)).style("-fx-border-color:red;").build());
+                                Pane temp = new Pane(new Rectangle(20, 20, Color.TRANSPARENT));
+                                temp.setStyle("-fx-border-color:red;");
+                                box.getChildren().add(temp);
                             }
                         }
                     }

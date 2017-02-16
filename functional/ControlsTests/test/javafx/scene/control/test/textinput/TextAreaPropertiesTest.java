@@ -77,18 +77,18 @@ public class TextAreaPropertiesTest extends TextControlCommonTests {
         addText();
         //There are both scrollBars must exist
 
-        assertEquals(getScrollBarValue(findScrollBar(testedControl.as(Parent.class, Node.class), orientation, true)), 0, 0);
+        assertEquals(getScrollBarValue(findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), orientation, true)), 0, 0);
 
         double[] values = {10, 0, 50, 0, 100};
 
         setPropertyBySlider(SettingType.BIDIRECTIONAL, property, 10);
-        double item = getScrollBarValue(findScrollBar(testedControl.as(Parent.class, Node.class), orientation, true)) / 10;
+        double item = getScrollBarValue(findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), orientation, true)) / 10;
 
         for (SettingType type : EnumSet.of(SettingType.BIDIRECTIONAL, SettingType.SETTER, SettingType.UNIDIRECTIONAL)) {
             for (double value : values) {
                 setPropertyBySlider(type, property, value);
                 checkTextFieldValue(property, value);
-                assertEquals(getScrollBarValue(findScrollBar(testedControl.as(Parent.class, Node.class), orientation, true)), value * item, 0.1 * item);
+                assertEquals(getScrollBarValue(findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), orientation, true)), value * item, 0.1 * item);
             }
         }
 
@@ -133,13 +133,13 @@ public class TextAreaPropertiesTest extends TextControlCommonTests {
         for (SettingType type : EnumSet.of(SettingType.BIDIRECTIONAL, SettingType.SETTER, SettingType.UNIDIRECTIONAL)) {
             setPropertyByToggleClick(type, Properties.wraptext);//true//bind
             checkTextFieldText(Properties.wraptext, "true");//getter
-            Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, false) == null);//behavior
-            Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) == null);//behavior
+            Assert.assertFalse(findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, false) == null);//behavior
+            Assert.assertFalse(findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) == null);//behavior
 
             setPropertyByToggleClick(type, Properties.wraptext);//false//bind
             checkTextFieldText(Properties.wraptext, "false");//getter
-            Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) == null);//behavior
-            Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);//behavior
+            Assert.assertFalse(findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) == null);//behavior
+            Assert.assertFalse(findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);//behavior
         }
     }
 

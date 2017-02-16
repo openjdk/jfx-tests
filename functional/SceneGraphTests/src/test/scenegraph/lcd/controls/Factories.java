@@ -54,11 +54,10 @@ public enum Factories implements Factory{
 
         @Override
         public Parent createControl() {
-            return TextFieldBuilder.create()
-                    .text("Test")
-                    .maxHeight(25)
-                    .maxWidth(50)
-                    .build();
+            TextField temp = new TextField("Test");
+            temp.setMaxHeight(25);
+            temp.setMaxWidth(50);
+            return temp;
         }
     }),
     Radio(new DefaultFactory() {
@@ -91,36 +90,27 @@ public enum Factories implements Factory{
 
         @Override
         public Parent createControl() {
-            return TitledPaneBuilder.create()
-                    .text("Test")
-                    .maxWidth(200)
-                    .maxHeight(200)
-                    .build();
+            TitledPane temp = new TitledPane();
+            temp.setText("Test");
+            temp.setMaxWidth(200);
+            temp.setMaxHeight(200);
+            return temp;
         }
     }),
     ToolBar(new DefaultFactory() {
 
         @Override
         public Parent createControl() {
-            return new ToolBar(ButtonBuilder.create().text("Test").build());
+            return new ToolBar(new Button("Test"));
         }
     }),
     Menu(new DefaultFactory() {
 
         @Override
         public Parent createControl() {
-
-            return MenuBarBuilder.create()
-                    .menus(
-                        MenuBuilder.create()
-                        .text("Text1")
-                        .items(
-                            MenuItemBuilder
-                            .create()
-                            .text("Text2")
-                            .build())
-                        .build())
-                    .build();
+            Menu m = new Menu("Text1");
+            m.getItems().addAll(new MenuItem("Text2"));
+            return new MenuBar(m);
         }
     }), ListView(new DefaultFactory() {
 
@@ -159,31 +149,25 @@ public enum Factories implements Factory{
 
         @Override
         public Parent createControl() {
-            TitledPane expandedPane = TitledPaneBuilder.create()
-                    .text("Test1")
-                    .content(new Button("Test3"))
-                    .build();
-            return AccordionBuilder.create()
-                    .maxHeight(200)
-                    .maxWidth(200)
-                    .panes(expandedPane,
-                    TitledPaneBuilder.create()
-                            .text("Test2")
-                            .build())
-                    .expandedPane(expandedPane)
-                    .build();
+            TitledPane expandedPane = new TitledPane("Test1", new Button("Test3"));
+            TitledPane otherPane = new TitledPane();
+            otherPane.setText("Test2");
+            Accordion temp = new Accordion(expandedPane, otherPane);
+            temp.setMaxHeight(200);
+            temp.setMaxWidth(200);
+            temp.setExpandedPane(expandedPane);
+            return temp;
         }
     }),
     Slider(new DefaultFactory() {
 
         @Override
         public Parent createControl() {
-            Parent value = SliderBuilder.create()
-                    .showTickLabels(true)
-                    .showTickMarks(true)
-                    .maxWidth(150)
-                    .id("TestSlider")
-                    .build();
+            Parent value = new Slider();
+            ((Slider)value).setShowTickLabels(true);
+            ((Slider)value).setShowTickMarks(true);
+            ((Slider)value).setMaxWidth(150);
+            value.setId("TestSlider");
             return value;
         }
     }),
@@ -191,11 +175,10 @@ public enum Factories implements Factory{
 
         @Override
         public Parent createControl() {
-            return ProgressIndicatorBuilder.create()
-                    .maxHeight(50)
-                    .maxWidth(50)
-                    .progress(0.02)
-                    .build();
+            ProgressIndicator temp = new ProgressIndicator(0.02);
+            temp.setMaxHeight(50);
+            temp.setMaxWidth(50);
+            return temp;
         }
     })
     ;

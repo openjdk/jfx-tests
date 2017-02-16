@@ -321,7 +321,7 @@ public class TestBase extends UtilTestFunctions {
     protected void checkScrollingState(final double scrollValue, boolean beginVisible, boolean endVisible, int size) {
         testedControl.waitState(new State() {
             public Object reached() {
-                Wrap<? extends ScrollBar> sb = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
+                Wrap<? extends ScrollBar> sb = findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
                 if (Math.abs(sb.getControl().getValue() - scrollValue) < 0.01) {
                     return true;
                 } else {

@@ -34,7 +34,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.CircleBuilder;
 import javafx.stage.Stage;
 import test.javaclient.shared.InteroperabilityApp;
 import test.javaclient.shared.Utils;
@@ -69,10 +68,15 @@ public class LocalTo_TransformsApp extends InteroperabilityApp {
             StackPane doubleNestedPane = new StackPane();
             StackPane forthPane = new StackPane();
 
-            Circle circle1 = CircleBuilder.create().radius(20).id("circle_one").build();
-            Circle circle2 = CircleBuilder.create().radius(20).id("circle_two").build();
-            Circle circle3 = CircleBuilder.create().radius(20).id("circle_three").build();
-            Circle circle4 = CircleBuilder.create().radius(20).id("circle_four").translateZ(-50).build();
+            Circle circle1 = new Circle(20);
+            circle1.setId("circle_one");
+            Circle circle2 = new Circle(20);
+            circle2.setId("circle_two");
+            Circle circle3 = new Circle(20);
+            circle3.setId("circle_three");
+            Circle circle4 = new Circle(20);
+            circle4.setId("circle_four");
+            circle4.setTranslateZ(-50);
 
             forthPane.getChildren().add(circle4);
             doubleNestedPane.getChildren().add(circle3);

@@ -1,3 +1,4 @@
+// https://bugs.openjdk.java.net/browse/INTJDK-7624138
 /*
  * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -24,7 +25,7 @@
  */
 package test.fxmltests.app;
 
-import com.sun.javafx.fxml.LoadListener;
+import javafx.fxml.LoadListener;
 import com.sun.javafx.runtime.VersionInfo;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -127,7 +127,9 @@ public class LineNumberApp extends BasicButtonChooserApp {
             LineNumberApp.reset();
             final FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
             loader.impl_setStaticLoad(true);
-            loader.impl_setLoadListener(new LoadListener() {
+
+            // The following line requires --add-exports javafx.fxml/com.sun.javafx.fxml=ALL-UNNAMED
+            loader.setLoadListener(new LoadListener() {
 
                 @Override
                 public void readImportProcessingInstruction(String string) {
@@ -220,7 +222,9 @@ public class LineNumberApp extends BasicButtonChooserApp {
                 }
             });
             try {
-                loader.setRoot(VBoxBuilder.create().prefHeight(200).prefWidth(200).build());
+                VBox vb = new VBox();
+                vb.setPrefSize(200, 200);
+                loader.setRoot(vb);
                 return (Node) loader.load();
             } catch (Exception exc) {
                 exc.printStackTrace();

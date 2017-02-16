@@ -198,11 +198,11 @@ public class TestBaseCommon extends UtilTestFunctions {
      * @return wrap of parent container that contains Cells
      */
     static Wrap<? extends javafx.scene.Parent> getContainerWrap(Wrap<? extends Control> parent) {
-        return getParentWrap(parent.as(Parent.class, Node.class), VIRTIAL_FLOW_CLASS_NAME);
+        return getParentWrap((Parent<Node>)parent.as(Parent.class, Node.class), VIRTIAL_FLOW_CLASS_NAME);
     }
 
     static Wrap<? extends javafx.scene.Parent> getClippedContainerWrap(Wrap<? extends Control> parent) {
-        return getParentWrap(parent.as(Parent.class, Node.class), CLIPPED_CONTAINER_CLASS_NAME);
+        return getParentWrap((Parent<Node>)parent.as(Parent.class, Node.class), CLIPPED_CONTAINER_CLASS_NAME);
     }
 
     static private Wrap<? extends javafx.scene.Parent> getParentWrap(Parent<Node> parent, final String className) {

@@ -91,13 +91,15 @@ public class NewTabPaneApp extends InteroperabilityApp {
             pane.setPrefSize(220, 220);
             pane.setStyle("-fx-border-color : red;");
 
-            testedTabPane = TabPaneBuilder.create().id(TESTED_TABPANE_ID).build();
+            testedTabPane = new TabPane();
+            testedTabPane.setId(TESTED_TABPANE_ID);
             pane.getChildren().add(testedTabPane);
 
             tb = new PropertiesTable(testedTabPane);
             PropertyTablesFactory.explorePropertiesList(testedTabPane, tb);
 
-            Button btnResetHardly = ButtonBuilder.create().id(RESET_BUTTON_ID).text("Reset").build();
+            Button btnResetHardly = new Button("Reset");
+            btnResetHardly.setId(RESET_BUTTON_ID);
             btnResetHardly.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -107,7 +109,8 @@ public class NewTabPaneApp extends InteroperabilityApp {
                 }
             });
 
-            Button btnResetSoftly = ButtonBuilder.create().id(RESET_SOFTLY_BUTTON_ID).text("Reset softly").build();
+            Button btnResetSoftly = new Button("Reset softly");
+            btnResetSoftly.setId(RESET_SOFTLY_BUTTON_ID);
             btnResetSoftly.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
 
@@ -176,20 +179,16 @@ public class NewTabPaneApp extends InteroperabilityApp {
             grid.getColumnConstraints().addAll(column1, column2);
             //row #1
             grid.add(new Label("Tab ID"), 0, 0);
-            final TextField newTabId = TextFieldBuilder.create()
-                    .id(NEW_TAB_ID_TEXT_FIELD_ID)
-                    .text("ID")
-                    .prefWidth(40d)
-                    .build();
+            final TextField newTabId = new TextField("ID");
+            newTabId.setPrefWidth(40d);
+            newTabId.setId(NEW_TAB_ID_TEXT_FIELD_ID);
             grid.add(newTabId, 1, 0);
 
             //row #2
             grid.add(new Label("Index"), 0, 1);
-            final TextField newTabIndex = TextFieldBuilder.create()
-                    .id(TABPANE_ADD_INDEX_TEXT_FIELD_ID)
-                    .text("0")
-                    .prefWidth(40)
-                    .build();
+            final TextField newTabIndex = new TextField("0");
+            newTabIndex.setId(TABPANE_ADD_INDEX_TEXT_FIELD_ID);
+            newTabIndex.setPrefWidth(40);
             grid.add(newTabIndex, 1, 1);
 
             //row #3
@@ -206,10 +205,7 @@ public class NewTabPaneApp extends InteroperabilityApp {
              * If true then there will be created a properties pane
              * for tab content each time a tab is added
              */
-            final CheckBox createPropsTab = CheckBoxBuilder
-                    .create()
-                    .text("Create additional panes\n with content properties")
-                    .build();
+            final CheckBox createPropsTab = new CheckBox("Create additional panes\n with content properties");
             grid.add(createPropsTab, 0, 3, 2, 1);
 
             //row #5
@@ -217,11 +213,8 @@ public class NewTabPaneApp extends InteroperabilityApp {
              * If true then there will be created a properties pane
              * for tab content each time a tab is added
              */
-            final CheckBox vetoOnClose = CheckBoxBuilder
-                    .create()
-                    .text("Veto tab request on close.")
-                    .id(VETO_CHECKBOX_ID)
-                    .build();
+            final CheckBox vetoOnClose = new CheckBox("Veto tab request on close.");
+            vetoOnClose.setId(VETO_CHECKBOX_ID);
             grid.add(vetoOnClose, 0, 4, 2, 1);
 
             //row #6

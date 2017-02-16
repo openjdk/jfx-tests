@@ -63,7 +63,6 @@ import test.javaclient.shared.FilteredTestRunner;
 /**
  * @author Alexander Kirov, Dmitry Zinkevich
  *
- * @see <a href="http://xdesign.us.oracle.com/projects/javaFX/fxcontrols-ue/specifications/DatePicker/datepicker-UEspec.html">specification</a>
  */
 @RunWith(FilteredTestRunner.class)
 public class DatePickerTest extends TestBase {
@@ -285,7 +284,6 @@ public class DatePickerTest extends TestBase {
     /**
      * Checks that when navigating in horizontal or vertical direction
      * the switching between days and months occurs correctly.
-     * @see <a href=http://xdesign.us.oracle.com/projects/javaFX/fxcontrols-ue/specifications/DatePicker/datepicker-UEspec.html#navigation>navigation</a>
      *
      * Also, tests for month/year navigation, respectively Control+PgUp/Control+PgDn and PgUp/PgDn
      * @see <a href="https://javafx-jira.kenai.com/browse/RT-32493">RT-32493</a> and <a href="https://javafx-jira.kenai.com/browse/RT-32492">RT-32492</a>

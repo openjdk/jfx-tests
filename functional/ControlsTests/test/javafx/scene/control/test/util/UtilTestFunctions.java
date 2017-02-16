@@ -88,6 +88,8 @@ import static org.junit.Assert.*;
 import test.javaclient.shared.TestUtil;
 import test.javaclient.shared.Utils;
 
+import com.sun.javafx.scene.NodeHelper;
+
 /**
  * @author Alexander Kirov
  *
@@ -815,10 +817,16 @@ public class UtilTestFunctions extends ControlsTestBase {
                         setResult(((Node) os[0]).localToScene((Double) os[1], (Double) os[2]));
                     }
                 }.dispatch(Root.ROOT.getEnvironment(), wrap.getControl(), Double.valueOf(wrap.getScreenBounds().width / 4), Double.valueOf(wrap.getScreenBounds().height / 4));
+
+                // The following line requires --add-exports javafx.graphics/com.sun.javafx.scene.input=ALL-UNNAMED
                 final PickResultChooser result = new PickResultChooser();
 
+                // The following line requires --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED
                 //public PickRay(Vec3d origin, Vec3d direction, double nearClip, double farClip) {
-                (((Wrap<? extends Scene>) os[0]).getControl()).getRoot().impl_pickNode(new PickRay(new Vec3d(pointOnScene.getX(), pointOnScene.getY(), -10), new Vec3d(0, 0, 1), 1.0, 100), result);
+                NodeHelper.pickNode(
+                    (((Wrap<? extends Scene>) os[0]).getControl()).getRoot(),
+                    new PickRay(new Vec3d(pointOnScene.getX(), pointOnScene.getY(), -10), new Vec3d(0, 0, 1), 1.0, 100),
+                    result);
                 Node node = result.getIntersectedNode();
                 node.fireEvent(scrollEvent);
             }

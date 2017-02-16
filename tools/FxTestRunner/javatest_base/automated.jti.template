@@ -1,8 +1,8 @@
 #JT Harness Configuration Interview
 #Tagged (@) values here will be set in 3 steps to support inheritance:
-# 1. from SUITE/javatest_files/automated.jti.base file
-# 2. from ClientTestRunner/javatest_base/automated.jti.base
-# 3. by values setup in ClientTestRunner/javatest_utils.xml
+# 1. from SUITE/javatest_files/automated.jti file
+# 2. from tools/FxTestRunner/javatest_base/automated.jti.base
+# 3. by values setup in tools/FxTestRunner/javatest_utils.xml
 INTERVIEW=@INTERVIEW@
 LOCALE=en_US
 NAME=default
@@ -32,5 +32,7 @@ external.output=@external.output@
 browserPath=@browserPath@
 javawsPath=@javawsPath@
 vmOptions=@vmOptions@
+addExports=@addExports@
+addExportsEnabled=@addExportsEnabled@
 remote=@remote@
 @javaPath=@

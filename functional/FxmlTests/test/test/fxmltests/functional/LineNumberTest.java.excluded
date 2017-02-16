@@ -1,3 +1,4 @@
+// https://bugs.openjdk.java.net/browse/INTJDK-7624138
 /*
  * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -24,6 +25,7 @@
  */
 package test.fxmltests.functional;
 
+import client.test.AddExports;
 import junit.framework.Assert;
 import org.jemmy.env.Timeout;
 import org.jemmy.timing.State;
@@ -34,6 +36,7 @@ import test.fxmltests.app.LineNumberApp;
 import test.javaclient.shared.TestBase;
 import test.javaclient.shared.Utils;
 
+@AddExports(value = "javafx.fxml/com.sun.javafx.fxml=ALL-UNNAMED")
 public class LineNumberTest extends TestBase {
 
     private static final long WAITER_TIMEOUT = 5000;

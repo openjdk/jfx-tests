@@ -79,7 +79,8 @@ public class NewMenuApp extends InteroperabilityApp {
 
         private void prepareScene() {
             pane = new Pane();
-            testedMenuBar = MenuBarBuilder.create().id(TESTED_MENUBAR_ID).build();
+            testedMenuBar = new MenuBar();
+            testedMenuBar.setId(TESTED_MENUBAR_ID);
 
             PropertiesTable tb = new PropertiesTable(testedMenuBar);
             PropertyTablesFactory.explorePropertiesList(testedMenuBar, tb);
@@ -97,7 +98,8 @@ public class NewMenuApp extends InteroperabilityApp {
             hb.setPadding(new Insets(5, 5, 5, 5));
             hb.setStyle("-fx-border-color : green;");
 
-            Button resetButton = ButtonBuilder.create().id(RESET_BUTTON_ID).text("Reset").build();
+            Button resetButton = new Button("Reset");
+            resetButton.setId(RESET_BUTTON_ID);
             resetButton.setOnAction(new EventHandler<ActionEvent>() {
 
                 public void handle(ActionEvent t) {
@@ -136,10 +138,15 @@ public class NewMenuApp extends InteroperabilityApp {
         private HBox getAddTextFieldHbox() {
             HBox hb = new HBox();
             Label lb = new Label("Add Menu at pos");
-            final TextField tf = TextFieldBuilder.create().id(MENUBAR_ADD_INDEX_TEXT_FIELD_ID).text("0").prefWidth(40).build();
-            final TextField nameTF = TextFieldBuilder.create().id(MENUBAR_ADD_NAME_TEXT_FIELD_ID).text("Menu").prefWidth(40).build();
+            final TextField tf = new TextField("0");
+            tf.setId(MENUBAR_ADD_INDEX_TEXT_FIELD_ID);
+            tf.setPrefWidth(40);
+            final TextField nameTF = new TextField("Menu");
+            nameTF.setId(MENUBAR_ADD_NAME_TEXT_FIELD_ID);
+            nameTF.setPrefWidth(40);
 
-            Button bt = ButtonBuilder.create().text("Add!").id(ADD_MENU_BUTTON_ID).build();
+            Button bt = new Button("Add!");
+            bt.setId(ADD_MENU_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
 
                 public void handle(Event t) {

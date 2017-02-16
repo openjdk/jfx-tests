@@ -132,8 +132,6 @@ public class FXCanvasBrowserApp {
     }
 
     public static void main(String[] args) {
-        System.setProperty("proxyHost", "www-proxy.ru.oracle.com");
-        System.setProperty("proxyPort", "80");
         try {
             startAndWaitShell();
         } catch (InterruptedException ex) {

@@ -27,7 +27,6 @@ package javafx.scene.control.test.utils.ptables;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleButtonBuilder;
 import static javafx.scene.control.test.utils.ptables.StaticLogger.*;
 
 /**
@@ -37,7 +36,7 @@ import static javafx.scene.control.test.utils.ptables.StaticLogger.*;
  */
 public class BooleanPropertyValueSetter extends AbstractPropertyValueSetter<Boolean> {
 
-    private ToggleButton tb = ToggleButtonBuilder.create().text("false").build();
+    private ToggleButton tb = new ToggleButton("false");
 
     public BooleanPropertyValueSetter(Property listeningProperty, BindingType btype, Object testedControl) {
         try {

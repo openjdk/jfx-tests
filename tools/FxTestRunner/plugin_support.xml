@@ -35,9 +35,9 @@
         
 
 
-        <echo message="debug: ant-javafx.jar = ${javafx.home}/../lib/ant-javafx.jar"/>
+        <echo message="debug: ant-javafx.jar = ${javafx.home}/lib/ant-javafx.jar"/>
 
-        <condition property="file.reference.ant-javafx.jar" value="${javafx.home}/../lib/ant-javafx.jar" else="${javafx.rt}/../lib/ant-javafx.jar">
+        <condition property="file.reference.ant-javafx.jar" value="${javafx.home}/lib/ant-javafx.jar" else="${javafx.rt}/lib/ant-javafx.jar">
     	    <isset property="javafx.home"/>
         </condition>
         <echo message="debug: file.reference.ant-javafx.jar = ${file.reference.ant-javafx.jar}"/>

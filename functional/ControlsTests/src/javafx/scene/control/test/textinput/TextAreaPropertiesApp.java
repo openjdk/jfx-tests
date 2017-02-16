@@ -28,9 +28,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import test.javaclient.shared.Utils;
 
@@ -72,7 +70,8 @@ public class TextAreaPropertiesApp extends TextControlApp {
 
         @Override
         public void addControlSpecificButtons(Pane pane) {
-            Button button = ButtonBuilder.create().id(ADD_TEXT_BUTTON_ID).text("Add much text").build();
+            Button button = new Button("Add much text");
+            button.setId(ADD_TEXT_BUTTON_ID);
             button.setOnAction(new EventHandler() {
 
                 public void handle(Event t) {

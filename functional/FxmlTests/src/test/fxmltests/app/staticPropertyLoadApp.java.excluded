@@ -1,3 +1,4 @@
+// https://bugs.openjdk.java.net/browse/INTJDK-7624138
 /*
  * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -24,7 +25,7 @@
  */
 package test.fxmltests.app;
 
-import com.sun.javafx.fxml.LoadListener;
+import javafx.fxml.LoadListener;
 import com.sun.javafx.fxml.ParseTraceElement;
 import java.io.File;
 import java.io.IOException;
@@ -42,8 +43,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.CssMetaData;
-import javafx.css.ParsedValue;
-import javafx.css.StyleConverter;
 import javafx.css.Styleable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -70,16 +69,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javafx.util.Pair;
-import org.jemmy.control.Wrap;
 
 import test.javaclient.shared.BasicButtonChooserApp;
-import test.javaclient.shared.JemmyUtils;
 import test.javaclient.shared.PageWithSlots;
 import test.javaclient.shared.TestNode;
 import test.javaclient.shared.Utils;
@@ -1034,15 +1030,15 @@ public class staticPropertyLoadApp extends BasicButtonChooserApp {
  *
 Class javafx/fxml/FXMLLoader
  *
-+ getBuilderFactory()Ljavafx/util/BuilderFactory;   -   -   -   -   -   -   -   -   -   -   -   -
-+ getCharset()Ljava/nio/charset/Charset;    -   -   -   -   -   -   -   -   -   -   -   -
-+ getController()Ljava/lang/Object;     -   -   -   -   -   -   -   -   -   -   -   -
-+ getIncludes()Ljava/util/List;     -   -   -   -   -   -   -   -   -   -   -   -
-getLoadListener()Lcom/sun/javafx/fxml/LoadListener;     -   -   -   -   -   -   -   -   -   -   -   -
-+ getLocation()Ljava/net/URL;   -   -   -   -   -   -   -   -   -   -   -   -
-+ getNamespace()Ljavafx/collections/ObservableMap;  -   -   -   -   -   -   -   -   -   -   -   -
-+ getResources()Ljava/util/ResourceBundle;  -   -   -   -   -   -   -   -   -   -   -   -
-+ getRoot()Ljava/lang/Object;   -   -   -   -   -   -   -   -   -   -   -   -
++ getBuilderFactory()Ljavafx/util/BuilderFactory;     -     -     -     -     -     -     -     -     -     -     -     -
++ getCharset()Ljava/nio/charset/Charset;     -     -     -     -     -     -     -     -     -     -     -     -
++ getController()Ljava/lang/Object;     -     -     -     -     -     -     -     -     -     -     -     -
++ getIncludes()Ljava/util/List;     -     -     -     -     -     -     -     -     -     -     -     -
+getLoadListener()Lcom/sun/javafx/fxml/LoadListener;     -     -     -     -     -     -     -     -     -     -     -     -
++ getLocation()Ljava/net/URL;     -     -     -     -     -     -     -     -     -     -     -     -
++ getNamespace()Ljavafx/collections/ObservableMap;     -     -     -     -     -     -     -     -     -     -     -     -
++ getResources()Ljava/util/ResourceBundle;     -     -     -     -     -     -     -     -     -     -     -     -
++ getRoot()Ljava/lang/Object;     -     -     -     -     -     -     -     -     -     -     -     -
 isStaticLoad()Z
  */
  //   Button b;
@@ -1959,7 +1955,9 @@ isStaticLoad()Z
                 System.out.println("message: " + e.getMessage());
                 reportGetterFailure("message: " + e.getMessage());
             }
-            return VBoxBuilder.create().children(list).build();
+            VBox vb = new VBox();
+            vb.getChildren().addAll(list);
+            return vb;
 
         }
 
@@ -2208,7 +2206,7 @@ isStaticLoad()Z
                 FXMLLoader fxmlLoader = new FXMLLoader(resource);
 
                 fxmlLoader.impl_setStaticLoad(true);
-                fxmlLoader.impl_setLoadListener(new LoadListener() {
+                fxmlLoader.setLoadListener(new LoadListener() {
 
                     @Override
                     public void readImportProcessingInstruction(String target) {
@@ -2576,10 +2574,10 @@ isStaticLoad()Z
             } finally {
                 is.close();
             }
-//      if(node.getId() == null || !node.getId().equals("default_root"))
-//      {
-//      reportGetterFailure("Root id: " + node.getId());
-//      }
+//        if(node.getId() == null || !node.getId().equals("default_root"))
+//        {
+//        reportGetterFailure("Root id: " + node.getId());
+//        }
         return redRectangle;
         }
     }

@@ -60,6 +60,14 @@ public class MultipleSelectionHelper {
         this.columns = columns;
     }
 
+    public void setColumnsNum(int columns) {
+        this.columns = columns;
+    }
+
+    public void setRowsNum(int rows) {
+        this.rows = rows;
+    }
+
     /**
      * ALARM: must be called before pushing key combination, from code, which
      * knows, how to understand, which area is visible now. And this visible

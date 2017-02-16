@@ -26,7 +26,7 @@ package javafx.scene.control.test.choicebox;
 
 import client.test.ScreenshotCheck;
 import client.test.Smoke;
-import com.sun.javafx.scene.control.skin.LabeledText;
+import com.sun.javafx.scene.control.LabeledText;
 import javafx.collections.ObservableList;
 import javafx.commons.SortValidator;
 import javafx.scene.Node;

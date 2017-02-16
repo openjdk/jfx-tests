@@ -85,7 +85,8 @@ public class NewChoiceBoxApp extends InteroperabilityApp {
             pane.setStyle("-fx-border-color : red;");
             pane.getChildren().add(testedChoiceBox);
 
-            Button resetButton = ButtonBuilder.create().id(RESET_BUTTON_ID).text("Reset").build();
+            Button resetButton = new Button("Reset");
+            resetButton.setId(RESET_BUTTON_ID);
             resetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();

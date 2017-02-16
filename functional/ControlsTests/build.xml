@@ -68,7 +68,7 @@
     <target name="manual-jars" depends="init">
         <echo message="FX-ANT=${file.reference.ant-javafx.jar}" />
 
-        <condition property="file.reference.ant-javafx.jar" value="${javafx.home}/../lib/ant-javafx.jar" else="${javafx.rt}/../lib/ant-javafx.jar">
+        <condition property="file.reference.ant-javafx.jar" value="${javafx.home}/lib/ant-javafx.jar" else="${javafx.rt}/lib/ant-javafx.jar">
     	    <isset property="javafx.home"/>
         </condition>
         <echo message="debug: file.reference.ant-javafx.jar = ${file.reference.ant-javafx.jar}"/>

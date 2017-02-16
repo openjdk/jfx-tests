@@ -79,8 +79,7 @@ public class DepthTestScene extends Scene
 
         VBox switchesAndRadios = new VBox(1);
         switchesAndRadios.getChildren().addAll(tuneGrid, backFrontRadio,
-                HBoxBuilder.create().children(indicator, referenceGreen, referenceRed).spacing(10).
-                build(), details);
+                new HBox(10, indicator, referenceGreen, referenceRed), details);
 
         root.setLeft(depthTestGroup);
         root.setRight(switchesAndRadios);

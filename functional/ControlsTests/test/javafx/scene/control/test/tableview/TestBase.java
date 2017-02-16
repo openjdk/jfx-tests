@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.tableview;
 
-import com.sun.javafx.scene.control.skin.TableColumnHeader;
+import javafx.scene.control.skin.TableColumnHeader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

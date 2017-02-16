@@ -306,7 +306,8 @@ public class TestBase extends TestBaseBase {
                         res2Name, diffName);
             } else {
                 Wrap<? extends Node> imViewWrap =
-                        (new NodeDock(getScene().as(Parent.class, Node.class), "ViewOfNodeSnapshot")).wrap();
+                        //(new NodeDock(getScene().as(Parent.class, Node.class), "ViewOfNodeSnapshot")).wrap();
+                        (new NodeDock((Parent<Node>)getScene().as(Parent.class, Node.class), "ViewOfNodeSnapshot")).wrap();
                 //Lookups.byID(scene, "ViewOfNodeSnapshot", ImageView.class);
 
                 imViewWrap.waitImage(getScene().getEnvironment().getImageLoader().load(resName),

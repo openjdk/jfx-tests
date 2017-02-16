@@ -95,7 +95,7 @@ public class TestBaseBase {
          * new ControlDock because there is no ButtonDock Yet.
          */
         final ControlWrap<? extends Control> label =
-                new ControlDock(scene.as(Parent.class, Node.class), name).wrap();
+                new ControlDock((Parent <Node>)scene.as(Parent.class, Node.class), name).wrap();
         label.mouse().move();
         Utils.deferAction(new Runnable() {
             public void run() {

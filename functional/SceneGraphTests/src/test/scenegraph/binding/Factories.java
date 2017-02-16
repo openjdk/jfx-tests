@@ -91,7 +91,7 @@ public enum Factories implements Factory {
     ArcTo(shapes, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            MoveTo moveTo = MoveToBuilder.create().x(50).y(50).build();
+            MoveTo moveTo = new MoveTo(50, 50);
 
             ArcTo node = new ArcTo();
             node.setX(100.0f);
@@ -99,7 +99,7 @@ public enum Factories implements Factory {
             node.setRadiusX(50.0f);
             node.setRadiusY(50.0f);
 
-            Path path = PathBuilder.create().elements(moveTo, node).build();
+            Path path = new Path(moveTo, node);
             addStroke(path);
             return new BindingApp.NodeAndBindee(path, node);
         }
@@ -137,7 +137,7 @@ public enum Factories implements Factory {
     CubicCurveTo(shapes, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            MoveTo moveTo = MoveToBuilder.create().x(50).y(50).build();
+            MoveTo moveTo = new MoveTo(50, 50);
 
             CubicCurveTo node = new CubicCurveTo();
             node.setControlX1(80.0f);
@@ -146,7 +146,7 @@ public enum Factories implements Factory {
             node.setControlX2(60.0f);
             node.setControlY2(-50.0f);
 
-            Path path = PathBuilder.create().elements(moveTo, node).build();
+            Path path = new Path(moveTo, node);
             addStroke(path);
             return new BindingApp.NodeAndBindee(path, node);
         }
@@ -166,9 +166,9 @@ public enum Factories implements Factory {
     HLineTo(shapes, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            MoveTo moveTo = MoveToBuilder.create().x(50).y(50).build();
+            MoveTo moveTo = new MoveTo(50, 50);
             HLineTo node = new HLineTo(100);
-            Path path = PathBuilder.create().elements(moveTo, node).build();
+            Path path = new Path(moveTo, node);
             addStroke(path);
             return new BindingApp.NodeAndBindee(path, node);
         }
@@ -176,7 +176,7 @@ public enum Factories implements Factory {
     Line(shapes, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            Line node = LineBuilder.create().startX(20).startY(20).endX(100).endY(50).build();
+            Line node = new Line(20, 20, 100, 50);
             addStroke(node);
             return new BindingApp.NodeAndBindee(node, node);
         }
@@ -184,11 +184,11 @@ public enum Factories implements Factory {
     LineTo(shapes, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            MoveTo moveTo = MoveToBuilder.create().x(50).y(50).build();
+            MoveTo moveTo = new MoveTo(50, 50);
 
             LineTo node = new LineTo(100, 80);
 
-            Path path = PathBuilder.create().elements(moveTo, node).build();
+            Path path = new Path(moveTo, node);
             addStroke(path);
             return new BindingApp.NodeAndBindee(path, node);
         }
@@ -196,11 +196,11 @@ public enum Factories implements Factory {
     MoveTo(shapes, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            MoveTo moveTo = MoveToBuilder.create().x(50).y(50).build();
+            MoveTo moveTo = new MoveTo(50, 50);
 
             LineTo node = new LineTo(100, 80);
 
-            Path path = PathBuilder.create().elements(moveTo, node).build();
+            Path path = new Path(moveTo, node);
             addStroke(path);
             return new BindingApp.NodeAndBindee(path, moveTo);
         }
@@ -208,12 +208,12 @@ public enum Factories implements Factory {
     Path(shapes, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            MoveTo moveTo = MoveToBuilder.create().x(50).y(50).build();
+            MoveTo moveTo = new MoveTo(50, 50);
 
             LineTo node = new LineTo(100, 80);
             LineTo node2 = new LineTo(200, 180);
 
-            Path path = PathBuilder.create().elements(moveTo, node, node2).build();
+            Path path = new Path(moveTo, node, node2);
             addStroke(path);
             return new BindingApp.NodeAndBindee(path, path);
         }
@@ -264,16 +264,19 @@ public enum Factories implements Factory {
     QuadCurveTo(shapes, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            MoveTo moveTo = MoveToBuilder.create().x(50).y(50).build();
-            QuadCurveTo node = QuadCurveToBuilder.create().controlX(125).controlY(0).build();
-            Path path = PathBuilder.create().elements(moveTo, node).build();
+            MoveTo moveTo = new MoveTo(50, 50);
+            QuadCurveTo node = new QuadCurveTo();
+            node.setControlX(125);
+            node.setControlY(0);
+            Path path = new Path(moveTo, node);
             addStroke(path);
             return new BindingApp.NodeAndBindee(path, path);        }
     }),
     SVGPath(shapes, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            SVGPath node = SVGPathBuilder.create().content("M40,60 C42,148 144,30 25,32").build();
+            SVGPath node = new SVGPath();
+            node.setContent("M40,60 C42,148 144,30 25,32");
             addStroke(node);
             return new BindingApp.NodeAndBindee(node, node);
         }
@@ -281,9 +284,9 @@ public enum Factories implements Factory {
     VLineTo(shapes, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            MoveTo moveTo = MoveToBuilder.create().x(50).y(50).build();
+            MoveTo moveTo = new MoveTo(50, 50);
             VLineTo node = new VLineTo(100);
-            Path path = PathBuilder.create().elements(moveTo, node).build();
+            Path path = new Path(moveTo, node);
             addStroke(path);
             return new BindingApp.NodeAndBindee(path, node);
         }
@@ -320,7 +323,7 @@ public enum Factories implements Factory {
             Blend b = new Blend();
             b.setOpacity(0.7);
             b.setMode(BlendMode.ADD);
-            b.setTopInput(ColorInputBuilder.create().paint(Color.BLUE).x(30).y(30).width(100).height(80).build());
+            b.setTopInput(new ColorInput(30, 30, 100, 80, Color.BLUE));
             rect.setEffect(b);
             Group group = new Group(rect0,rect);
                 return new NodeAndBindee(group, b);
@@ -332,8 +335,12 @@ public enum Factories implements Factory {
             Group group = new Group();
             Bloom bloom = new Bloom();
             group.setEffect(bloom);
-            group.getChildren().add(RectangleBuilder.create().x(10).y(10).width(160).height(80).fill(Color.DARKBLUE).build());
-            group.getChildren().add(RectangleBuilder.create().x(50).y(50).width(50).height(50).fill(Color.YELLOW).build());
+            Rectangle r1 = new Rectangle (10, 10, 160, 80);
+            r1.setFill(Color.DARKBLUE);
+            Rectangle r2 = new Rectangle (50, 50, 50, 50);
+            r1.setFill(Color.YELLOW);
+            group.getChildren().add(r1);
+            group.getChildren().add(r2);
             return new NodeAndBindee(group, bloom);
         }
         })
@@ -365,10 +372,14 @@ public enum Factories implements Factory {
 
         public NodeAndBindee create() {
             Group group = new Group();
-            DisplacementMap dm = DisplacementMapBuilder.create().mapData(Consts.MAP_WAVES).build();
+            DisplacementMap dm = new DisplacementMap(Consts.MAP_WAVES);
             group.setEffect(dm);
-            group.getChildren().add(RectangleBuilder.create().x(50).y(50).width(200).height(80).fill(Color.DARKBLUE).build());
-            group.getChildren().add(RectangleBuilder.create().x(0).y(0).width(250).height(200).fill(Color.TRANSPARENT).build());
+            Rectangle r1 = new Rectangle (50, 50, 200, 80);
+            r1.setFill(Color.DARKBLUE);
+            Rectangle r2 = new Rectangle (0, 0, 250, 200);
+            r1.setFill(Color.TRANSPARENT);
+            group.getChildren().add(r1);
+            group.getChildren().add(r2);
             return new NodeAndBindee(group, dm);
         }
         })
@@ -376,7 +387,12 @@ public enum Factories implements Factory {
     ,Flood(effects, new EffectFactory() {
             @Override
             public Effect getEffect() {
-                return ColorInputBuilder.create().x(0).y(0).width(50).height(50).build();
+                ColorInput temp = new ColorInput();
+                temp.setX(0);
+                temp.setY(0);
+                temp.setWidth(50);
+                temp.setHeight(50);
+                return temp;
             }
         })
 
@@ -396,9 +412,7 @@ public enum Factories implements Factory {
     ,Identity(effects, new EffectFactory() {
             @Override
             public Effect getEffect() {
-                return ImageInputBuilder.create().
-                        source(new Image(Factories.class.getResourceAsStream("/test/scenegraph/resources/car.png"))).
-                        build();
+                return new ImageInput(new Image(Factories.class.getResourceAsStream("/test/scenegraph/resources/car.png")));
             }
         })
 
@@ -578,7 +592,10 @@ public enum Factories implements Factory {
     ScrollBar(controls, new DefaultFactory() {
 
         public NodeAndBindee create() {
-            ScrollBar node = ScrollBarBuilder.create().min(0).max(100).value(50).build();
+            ScrollBar node = new ScrollBar();
+            node.setMin(0);
+            node.setMax(100);
+            node.setValue(50);
             prepareControl(node);
             return new BindingApp.NodeAndBindee(node, node);
         }
@@ -739,8 +756,12 @@ public enum Factories implements Factory {
 
         public NodeAndBindee create() {
                 Effect effect = getEffect();
-                Rectangle rect = RectangleBuilder.create().x(100).y(100).width(100).height(100).fill(Color.LIGHTGREEN).
-                        stroke(Color.DARKGREEN).arcHeight(20).arcWidth(30).effect(effect).build();
+                Rectangle rect = new Rectangle(100, 100, 100, 100);
+                rect.setFill(Color.LIGHTGREEN);
+                rect.setStroke(Color.DARKGREEN);
+                rect.setArcHeight(20);
+                rect.setArcWidth(30);
+                rect.setEffect(effect);
                 return new NodeAndBindee(rect, effect);
         }
 

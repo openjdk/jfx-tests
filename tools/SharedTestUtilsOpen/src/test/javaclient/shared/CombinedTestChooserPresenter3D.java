@@ -28,6 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.Group;
 import javafx.stage.Stage;
+import com.sun.javafx.stage.WindowHelper;
 
 /**
  *
@@ -67,7 +68,8 @@ public class CombinedTestChooserPresenter3D extends CombinedTestChooserPresenter
         stage.show();
         stage.toFront();
         setNodeForScreenshot(null);
-        stage.setFocused(true);
+        //stage.setFocused(true);
+        WindowHelper.setFocused(stage, true);
     }
 
 }

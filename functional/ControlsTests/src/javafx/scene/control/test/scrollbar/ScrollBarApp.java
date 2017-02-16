@@ -66,13 +66,16 @@ public class ScrollBarApp extends InteroperabilityApp {
 
         @Override
         final protected void prepareScene() {
-            testedScrollBar = ScrollBarBuilder.create().id(TESTED_SCROLLBAR_ID).build();
+            testedScrollBar = new ScrollBar();
+            testedScrollBar.setFocusTraversable(true);
+            testedScrollBar.setId(TESTED_SCROLLBAR_ID);
 
             tb = new PropertiesTable(testedScrollBar);
             PropertyTablesFactory.explorePropertiesList(testedScrollBar, tb);
             SpecialTablePropertiesProvider.provideForControl(testedScrollBar, tb);
 
-            Button resetButton = ButtonBuilder.create().id(RESET_BUTTON_ID).text("Reset").build();
+            Button resetButton = new Button("Reset");
+            resetButton.setId(RESET_BUTTON_ID);
             resetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();

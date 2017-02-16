@@ -9,23 +9,20 @@
         <property file="build.properties"/>
     </target>
     <target name="check-javafx-in-jdk" unless="javafx.rt">
-		<fail unless="fx-jar-exists" message="${java.home}/lib/ext/ javafx do not exist"/>
+        <!--fail unless="fx-jar-exists" message="${java.home}/lib/ javafx do not exist"/-->
         <property name="javafx.rt" value="${java.home}"/>
         <antcall target="write-javafx-rt" inheritall="true"/>
-    </target>
-    <target name="check-javafx-rt" if="javafx.rt">
-        <fail unless="fx-jar-exists" message="${javafx.rt}/lib/ext/ javafx jars do not exist"/>
     </target>
     <target name="validate-fx-jars">
         <condition property="fx-jar-exists">
 			<or>
-				<available file="${javafx.rt}/lib/ext/jfxrt.jar"/>
-				<available file="${java.home}/lib/ext/jfxrt.jar"/>
-				<available file="${javafx.rt}/lib/ext/jfxrt-graphics.jar"/>
+                <available file="${javafx.rt}/lib/jfxrt.jar"/>
+                <available file="${java.home}/lib/jfxrt.jar"/>
+                <available file="${javafx.rt}/lib/jfxrt-graphics.jar"/>
 			</or>
         </condition>
     </target>
-    <target name="find-javafx" depends="write-javafx-rt, read-javafx-rt, validate-fx-jars, check-javafx-in-jdk, check-javafx-rt">
+    <target name="find-javafx" depends="write-javafx-rt, read-javafx-rt, validate-fx-jars, check-javafx-in-jdk">
         <property file="build.properties"/>
         <echo message="Building with JavaFX from ${javafx.rt}"/>
     </target>

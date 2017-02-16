@@ -26,7 +26,7 @@ package javafx.scene.control.test.labeled;
 
 import client.test.ScreenshotCheck;
 import client.test.Smoke;
-import com.sun.javafx.scene.control.skin.LabeledText;
+import com.sun.javafx.scene.control.LabeledText;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;

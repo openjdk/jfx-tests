@@ -31,14 +31,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.CheckBoxBuilder;
 import javafx.scene.control.Label;
-import javafx.scene.control.LabelBuilder;
-import javafx.scene.control.RadioButtonBuilder;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleButtonBuilder;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -80,20 +76,44 @@ public class ToggleButtonNewApp extends InteroperabilityApp {
 
         ToggleButton toggleButton1;
         ToggleButton toggleButton2;
-        CheckBox checkBox1 = CheckBoxBuilder.create().wrapText(true).text("Unidirectionally binded to\ntoggle button 1 selection property").id(CHECK_BOX_LISTENING_1_ID).build();
-        CheckBox checkBox2 = CheckBoxBuilder.create().wrapText(true).text("Unidirectionally binded to\ntoggle button 2 selection property").id(CHECK_BOX_LISTENING_2_ID).build();
-        CheckBox checkBox3 = CheckBoxBuilder.create().wrapText(true).text("This check box is bidirectionally binded\nto Toggle Button 1 selection property").id(CHECK_BOX_SETTING_1_BIDIR_ID).build();
-        CheckBox checkBox4 = CheckBoxBuilder.create().wrapText(true).text("This check box unidirectionally sets\ntoggle button 2 selection property").id(CHECK_BOX_SETTING_2_UNIDIR_ID).build();
+        CheckBox checkBox1;
+        CheckBox checkBox2;
+        CheckBox checkBox3;
+        CheckBox checkBox4;
         ToggleGroup toggleGroup = new ToggleGroup();
-        ToggleButton bindingsSettingButton = ToggleButtonBuilder.create().text("State: Unbinded").id(BINDING_SET_TOGGLE_BUTTON_ID).build();
-        ToggleButton groupingButton = ToggleButtonBuilder.create().text("State: Ungrouped").id(GROUPING_TOGGLE_BUTTON_ID).build();
-        ToggleButton testedControlChangeButton = ToggleButtonBuilder.create().text("Control: radio button").id(SETTING_CONTROL_TOGGLE_BUTTON_ID).build();
-        Button resetButton = ButtonBuilder.create().text("Reset state").id(RESET_BUTTON_ID).build();
-        Label mouseEventsLogger = LabelBuilder.create().text("0").id(MOUSE_EVENTS_LOGGER_LABEL_ID).build();
+        ToggleButton bindingsSettingButton;
+        ToggleButton groupingButton;
+        ToggleButton testedControlChangeButton;
+        Button resetButton;
+        Label mouseEventsLogger;
         VBox vb1 = new VBox();
 
         public ToggleButtonNewAppScene() {
             super(new HBox(), 800, 320);
+
+            checkBox1 = new CheckBox("Unidirectionally binded to\ntoggle button 1 selection property");
+            checkBox1.setWrapText(true);
+            checkBox1.setId(CHECK_BOX_LISTENING_1_ID);
+            checkBox2 = new CheckBox("Unidirectionally binded to\ntoggle button 2 selection property");
+            checkBox2.setWrapText(true);
+            checkBox2.setId(CHECK_BOX_LISTENING_2_ID);
+            checkBox3 = new CheckBox("This check box is bidirectionally binded\nto Toggle Button 1 selection property");
+            checkBox3.setWrapText(true);
+            checkBox3.setId(CHECK_BOX_SETTING_1_BIDIR_ID);
+            checkBox4 = new CheckBox("This check box unidirectionally sets\ntoggle button 2 selection property");
+            checkBox4.setWrapText(true);
+            checkBox4.setId(CHECK_BOX_SETTING_2_UNIDIR_ID);
+
+            bindingsSettingButton = new ToggleButton("State: Unbinded");
+            bindingsSettingButton.setId(BINDING_SET_TOGGLE_BUTTON_ID);
+            groupingButton = new ToggleButton("State: Ungrouped");
+            groupingButton.setId(GROUPING_TOGGLE_BUTTON_ID);
+            testedControlChangeButton = new ToggleButton("Control: radio button");
+            testedControlChangeButton.setId(SETTING_CONTROL_TOGGLE_BUTTON_ID);
+            resetButton = new Button("Reset state");
+            resetButton.setId(RESET_BUTTON_ID);
+            mouseEventsLogger = new Label("0");
+            mouseEventsLogger.setId(MOUSE_EVENTS_LOGGER_LABEL_ID);
 
             setControl(ControlType.RADIO_BUTTON);
 
@@ -131,11 +151,15 @@ public class ToggleButtonNewApp extends InteroperabilityApp {
 
         private void setControl(ControlType type) {
             if (type == ControlType.RADIO_BUTTON) {
-                toggleButton1 = RadioButtonBuilder.create().text("Radio button 1").id(TOGGLE_BUTTON_1_ID).build();
-                toggleButton2 = RadioButtonBuilder.create().text("Radio button 2").id(TOGGLE_BUTTON_2_ID).build();
+                toggleButton1 = new RadioButton("Radio button 1");
+                toggleButton1.setId(TOGGLE_BUTTON_1_ID);
+                toggleButton2 = new RadioButton("Radio button 2");
+                toggleButton2.setId(TOGGLE_BUTTON_2_ID);
             } else {
-                toggleButton1 = ToggleButtonBuilder.create().text("Toggle button 1").id(TOGGLE_BUTTON_1_ID).build();
-                toggleButton2 = ToggleButtonBuilder.create().text("Toggle button 2").id(TOGGLE_BUTTON_2_ID).build();
+                toggleButton1 = new ToggleButton("Toggle button 1");
+                toggleButton1.setId(TOGGLE_BUTTON_1_ID);
+                toggleButton2 = new ToggleButton("Toggle button 2");
+                toggleButton2.setId(TOGGLE_BUTTON_2_ID);
             }
 
             vb1.getChildren().clear();

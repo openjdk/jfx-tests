@@ -44,7 +44,7 @@ public class GoldenImageManager {
     private static final String IMG_FOLDER = "images-svn";
 
     private static File getImagesRoot() throws IOException {
-        return new File("../", IMG_FOLDER).getCanonicalFile();
+        return new File("./", IMG_FOLDER).getCanonicalFile();
     }
 
     private static String getSuiteName() throws IOException {

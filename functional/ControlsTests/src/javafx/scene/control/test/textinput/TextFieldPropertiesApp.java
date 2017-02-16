@@ -29,8 +29,8 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.TextField;
+import static javafx.scene.control.test.textinput.TextControlApp.ADD_TEXT_BUTTON_ID;
 import javafx.scene.layout.Pane;
 import test.javaclient.shared.Utils;
 
@@ -79,7 +79,8 @@ public class TextFieldPropertiesApp extends TextControlApp {
 
         @Override
         public void addControlSpecificButtons(Pane pane) {
-            Button setOnActionListenerButton = ButtonBuilder.create().id(SET_ON_ACTION_BUTTON_ID).text("Set on action listener").build();
+            Button setOnActionListenerButton = new Button("Set on action listener");
+            setOnActionListenerButton.setId(SET_ON_ACTION_BUTTON_ID);
             setOnActionListenerButton.setOnAction(new EventHandler() {
 
                 public void handle(Event t) {
@@ -92,7 +93,8 @@ public class TextFieldPropertiesApp extends TextControlApp {
                 }
             });
 
-            Button addTextButton = ButtonBuilder.create().id(ADD_TEXT_BUTTON_ID).text("Add \"sometext\"").build();
+            Button addTextButton = new Button("Add \"sometext\"");
+            addTextButton.setId(ADD_TEXT_BUTTON_ID);
             addTextButton.setOnAction(new EventHandler() {
 
                 public void handle(Event t) {

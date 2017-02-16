@@ -167,21 +167,24 @@ public class ComboBoxApp extends InteroperabilityApp {
 //                }
 //            });
 
-            Button applyCustomSelectionModel = ButtonBuilder.create().text("Apply custom selection model").id(APPLY_CUSTOM_SELECTION_MODEL_BUTTON_ID).build();
+            Button applyCustomSelectionModel = new Button("Apply custom selection model");
+            applyCustomSelectionModel.setId(APPLY_CUSTOM_SELECTION_MODEL_BUTTON_ID);
             applyCustomSelectionModel.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedComboBox.selectionModelProperty().setValue(selectionModel);
                 }
             });
 
-            Button applyCustomStringConverter = ButtonBuilder.create().text("Apply custom string converter").id(APPLY_CUSTOM_STRING_CONVERTER_BUTTON_ID).build();
+            Button applyCustomStringConverter = new Button("Apply custom string converter");
+            applyCustomStringConverter.setId(APPLY_CUSTOM_STRING_CONVERTER_BUTTON_ID);
             applyCustomStringConverter.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedComboBox.setConverter(new CustomStringConverter());
                 }
             });
 
-            Button applyCustomCellFactory = ButtonBuilder.create().text("Apply custom cell factory").id(APPLY_CUSTOM_CELL_FACTORY_BUTTON_ID).build();
+            Button applyCustomCellFactory = new Button("Apply custom cell factory");
+            applyCustomCellFactory.setId(APPLY_CUSTOM_CELL_FACTORY_BUTTON_ID);
             applyCustomCellFactory.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedComboBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
@@ -193,7 +196,8 @@ public class ComboBoxApp extends InteroperabilityApp {
                 }
             });
 
-            Button hardResetButton = ButtonBuilder.create().id(HARD_RESET_BUTTON_ID).text("Hard reset").build();
+            Button hardResetButton = new Button("Hard reset");
+            hardResetButton.setId(HARD_RESET_BUTTON_ID);
             hardResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -203,7 +207,8 @@ public class ComboBoxApp extends InteroperabilityApp {
                 }
             });
 
-            Button softResetButton = ButtonBuilder.create().id(SOFT_RESET_BUTTON_ID).text("Soft reset").build();
+            Button softResetButton = new Button("Soft reset");
+            softResetButton.setId(SOFT_RESET_BUTTON_ID);
             softResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     tb.refresh();
@@ -228,11 +233,8 @@ public class ComboBoxApp extends InteroperabilityApp {
             HBox resetButtonsHBox = new HBox();
             resetButtonsHBox.getChildren().addAll(hardResetButton, softResetButton);
 
-            Button setAddingElementsOnShowing = ButtonBuilder.create()
-                    .id(SET_ADDING_ELEMENTS_ON_SHOWING)
-                    .text("Set adding elements on showing")
-                    .build();
-
+            Button setAddingElementsOnShowing = new Button("Set adding elements on showing");
+            setAddingElementsOnShowing.setId(SET_ADDING_ELEMENTS_ON_SHOWING);
             setAddingElementsOnShowing.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedComboBox.setOnShowing(new EventHandler<Event>() {
@@ -246,11 +248,8 @@ public class ComboBoxApp extends InteroperabilityApp {
                 }
             });
 
-            Button restoreDefaultOnShowingHandler = ButtonBuilder.create()
-                    .id(RESTORE_ON_SHOWING_EVENT_HANDLER)
-                    .text("Restore default onShowing handler")
-                    .build();
-
+            Button restoreDefaultOnShowingHandler = new Button("Restore default onShowing handler");
+            restoreDefaultOnShowingHandler.setId(RESTORE_ON_SHOWING_EVENT_HANDLER);
             restoreDefaultOnShowingHandler.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedComboBox.setOnShowing(new EventHandler<Event>() {
@@ -261,11 +260,8 @@ public class ComboBoxApp extends InteroperabilityApp {
                 }
             });
 
-            Button populateComboBoxWithFontSizes = ButtonBuilder.create()
-                    .id(POPULATE_COMBOBOX_WITH_FONT_SIZES)
-                    .text("Populate ComboBox with font sizes")
-                    .build();
-
+            Button populateComboBoxWithFontSizes = new Button("Populate ComboBox with font sizes");
+            populateComboBoxWithFontSizes.setId(POPULATE_COMBOBOX_WITH_FONT_SIZES);
             populateComboBoxWithFontSizes.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
 
@@ -317,10 +313,15 @@ public class ComboBoxApp extends InteroperabilityApp {
         private HBox getAddItemHBox() {
             HBox hb = new HBox();
             Label lb = new Label("Add item");
-            final TextField tf = TextFieldBuilder.create().prefWidth(50).id(ADD_ITEM_TEXT_FIELD_ID).build();
+            final TextField tf = new TextField();
+            tf.setPrefWidth(50);
+            tf.setId(ADD_ITEM_TEXT_FIELD_ID);
             Label atLb = new Label("at pos");
-            final TextField tfPos = TextFieldBuilder.create().prefWidth(50).id(ADD_ITEM_POSITION_TEXT_FIELD_ID).build();
-            Button bt = ButtonBuilder.create().text("Add!").id(ADD_ITEM_BUTTON_ID).build();
+            final TextField tfPos = new TextField();
+            tfPos.setPrefWidth(50);
+            tfPos.setId(ADD_ITEM_POSITION_TEXT_FIELD_ID);
+            Button bt = new Button("Add!");
+            bt.setId(ADD_ITEM_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int index = Integer.parseInt(tfPos.getText());
@@ -334,8 +335,11 @@ public class ComboBoxApp extends InteroperabilityApp {
         private HBox getRemoveItemHBox() {
             HBox hb = new HBox();
             Label lb = new Label("From position");
-            final TextField tf = TextFieldBuilder.create().text("0").prefWidth(50).id(REMOVE_ITEM_POS_TEXT_FIELD_ID).build();
-            Button bt = ButtonBuilder.create().text("Remove!").id(REMOVE_BUTTON_ID).build();
+            final TextField tf = new TextField("0");
+            tf.setPrefWidth(50);
+            tf.setId(REMOVE_ITEM_POS_TEXT_FIELD_ID);
+            Button bt = new Button("Remove!");
+            bt.setId(REMOVE_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int index = Integer.parseInt(tf.getText());
@@ -349,7 +353,8 @@ public class ComboBoxApp extends InteroperabilityApp {
         private HBox getSetItemsNullHBox() {
             HBox hb = new HBox();
 
-            Button bt = ButtonBuilder.create().text("Set items null").id(SET_ITEMS_NULL_BUTTON_ID).build();
+            Button bt = new Button("Set items null");
+            bt.setId(SET_ITEMS_NULL_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     ((ComboBox) testedComboBox).setItems(null);

@@ -47,9 +47,8 @@ class SceneList implements ControlList {
             @Override
             public void run(Object... parameters) {
                 LinkedList<Scene> res = new LinkedList<Scene>();
-                Iterator<Window> windows = Window.impl_getWindows();
-                while(windows.hasNext()) {
-                    res.add(windows.next().getScene());
+                for (Window w : Window.getWindows()) {
+                    res.add(w.getScene());
                 }
                 setResult(res);
             }

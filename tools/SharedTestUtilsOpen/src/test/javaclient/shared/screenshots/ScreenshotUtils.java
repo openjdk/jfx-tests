@@ -167,7 +167,8 @@ public class ScreenshotUtils {
     public static Wrap<? extends Node> getPageContent() {
         Node n = application.getNodeForScreenshot();
         final Wrap<? extends Scene> scene = Root.ROOT.lookup(new ByWindowType(Stage.class)).lookup(Scene.class).wrap(0);
-        return new NodeDock(scene.as(Parent.class, Node.class), n.getId()).wrap();
+        //return new NodeDock(scene.as(Parent.class, Node.class), n.getId()).wrap();
+        return new NodeDock((Parent<Node>)scene.as(Parent.class, Node.class), n.getId()).wrap();
     }
 
     /**

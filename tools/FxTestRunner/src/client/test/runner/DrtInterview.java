@@ -242,7 +242,7 @@ public class DrtInterview extends BasicInterviewParameters
 
         @Override
         public String getText() {
-            return "Proxy settings in format: host:port\nE.g. www-proxy.us.oracle.com:80";
+            return "Proxy settings in format: host:port\nE.g. someproxy.example.com:80";
         }
 
         @Override

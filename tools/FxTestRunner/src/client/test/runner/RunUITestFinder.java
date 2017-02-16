@@ -24,6 +24,7 @@
 
 package client.test.runner;
 
+import client.test.AddExports;
 import client.test.CheckUI;
 import client.test.Keywords;
 import client.test.RunUI;
@@ -36,12 +37,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author shura
  */
 public class RunUITestFinder extends AbstractTestFinder {
 
+    static final String ADD_EXPORTS = "unit.test.addExports";
     static final String TEST_NAME = "unit.test.testname";
     static final String UNIT_TEST_CLASS_NAME = "unit.test.classname";
     static final String NO_DESCRIPTION = "unit.test.nodescription";
@@ -92,6 +96,7 @@ public class RunUITestFinder extends AbstractTestFinder {
                 boolean hasCheckUI = findAnnotations(testClass, CheckUI.class).size() > 0;
                 List<String> resources = new ArrayList<String>(runUIs.size());
                 List<Keywords> keys = findAnnotations(testClass, Keywords.class);
+                List<AddExports> addExportsList = findAnnotations(testClass, AddExports.class);
                 if (!runUIs.isEmpty()) {
                     boolean nodescription = false;
                     for (RunUI runUI : runUIs) {
@@ -124,6 +129,17 @@ public class RunUITestFinder extends AbstractTestFinder {
                             }
                             tagValues.put("keywords", key_str);
                             System.out.println("The following keywords \"" + key_str + "\" were found in the test " + file.getName());
+                        }
+
+                        // --add-exports value
+                        if (!addExportsList.isEmpty()) {
+                            String[] addExportsArray = new String[addExportsList.size()];
+                            for (int i = 0; i < addExportsList.size(); i++) {
+                                addExportsArray[i] = addExportsList.get(i).value();
+                            }
+                            String addExports = Stream.of(TestScript.combineAddExports(addExportsArray)).collect(Collectors.joining(" "));
+                            tagValues.put(ADD_EXPORTS, addExports);
+                            System.out.println("The following addExports \"" + addExports + "\" were found in the test " + file.getName());
                         }
 
                         if (nodescription) {

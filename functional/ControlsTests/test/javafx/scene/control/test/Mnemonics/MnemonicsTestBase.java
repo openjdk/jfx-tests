@@ -123,9 +123,8 @@ public class MnemonicsTestBase  extends ControlsTestBase {
                 for (int x = 0; x < text_bounds.width; x++) {
                     final Text control = text_wrap.getControl();
                     final int charIndex = new GetAction<Integer>() {
-                        @Override
                         public void run(Object... os) throws Exception {
-                            setResult(control.impl_hitTestChar(new Point2D((Integer)os[0], (Integer)os[1] - control.getBaselineOffset())).getCharIndex());
+                            setResult(control.hitTest(new Point2D((Integer)os[0], (Integer)os[1] - control.getBaselineOffset())).getCharIndex());
                         }
                     }.dispatch(wrap.getEnvironment(), x, y);
                     if (bounds_array.get(charIndex) == null) {

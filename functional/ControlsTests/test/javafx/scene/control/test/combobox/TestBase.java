@@ -245,7 +245,8 @@ public class TestBase extends UtilTestFunctions {
     protected void checkScrollBarVisibility(boolean visible) throws InterruptedException {
         Wrap<? extends Scene> popup = getPopupWrap();
         if (popup != null) {
-            Assert.assertTrue(findScrollBar(((Wrap<? extends ListView>) popup.as(Parent.class, Node.class).lookup(ListView.class).wrap()).as(Parent.class, Node.class), Orientation.VERTICAL, visible) != null);
+            Assert.assertTrue(findScrollBar(((Parent<Node>) ((Wrap<? extends ListView>) ((Parent<Node>) popup.as(Parent.class, Node.class))
+                    .lookup(ListView.class).wrap()).as(Parent.class, Node.class)), Orientation.VERTICAL, visible) != null);
         }
     }
 

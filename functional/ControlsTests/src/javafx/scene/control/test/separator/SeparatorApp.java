@@ -73,7 +73,8 @@ public class SeparatorApp extends InteroperabilityApp {
         @Override
         final protected void prepareScene() {
             pane = new Pane();
-            testedSeparator = SeparatorBuilder.create().id(TESTED_SEPARATOR_ID).build();
+            testedSeparator = new Separator();
+            testedSeparator.setId(TESTED_SEPARATOR_ID);
 
             tb = new PropertiesTable(testedSeparator);
             PropertyTablesFactory.explorePropertiesList(testedSeparator, tb);
@@ -90,7 +91,8 @@ public class SeparatorApp extends InteroperabilityApp {
             hb.setPadding(new Insets(5, 5, 5, 5));
             hb.setStyle("-fx-border-color : green;");
 
-            Button resetButton = ButtonBuilder.create().id(RESET_BUTTON_ID).text("Reset").build();
+            Button resetButton = new Button("Reset");
+            resetButton.setId(RESET_BUTTON_ID);
             resetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();

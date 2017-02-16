@@ -24,8 +24,8 @@
  */
 package test.css.controls;
 
-import javafx.scene.control.ButtonBuilder;
-import javafx.scene.control.ToolBarBuilder;
+import javafx.scene.control.Button;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Pane;
 import test.javaclient.shared.BasicButtonChooserApp;
 import test.javaclient.shared.PageWithSlots;
@@ -69,17 +69,16 @@ public class ComplexButtonCssTests extends BasicButtonChooserApp {
         Pane slot = new Pane();
         slot.setPrefSize(200, 200);
         if (page == Pages.IPHONE_TOOLBAR) {
-            slot.getChildren().add(ToolBarBuilder.create()
-                    .id(page.name().toLowerCase())
-                    .items(
-                    ButtonBuilder.create().text("iPhone").id("iphone").build())
-                    .build());
+            Button b = new Button("iPhone");
+            b.setId("iphone");
+            ToolBar temp = new ToolBar(b);
+            temp.setId(page.name().toLowerCase());
+            slot.getChildren().add(temp);
         } else {
-            slot.getChildren().add(ButtonBuilder.create()
-                    .text("Button")
-                    .id(page.name().toLowerCase())
-                    .minWidth(100)
-                    .build());
+            Button temp = new Button("Button");
+            temp.setId(page.name().toLowerCase());
+            temp.setMinWidth(100);
+            slot.getChildren().add(temp);
         }
         pageWithSlot.add(new TestNodeLeaf(page.name(), slot));
         return pageWithSlot;

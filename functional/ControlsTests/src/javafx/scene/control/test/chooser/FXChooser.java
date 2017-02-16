@@ -33,7 +33,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFieldBuilder;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -59,8 +58,10 @@ public class FXChooser extends Application {
     public void start(final Stage stage) throws Exception {
         try {
             extensionFilter = new FileChooser.ExtensionFilter("File with extension (*.extension)", "*.extension");
-            initialFileNameTextField = TextFieldBuilder.create().text("").promptText("Initial file name").build();
-            titleTextField = TextFieldBuilder.create().text("").promptText("Title").build();
+            initialFileNameTextField = new TextField("");
+            initialFileNameTextField.setPromptText("Initial file name");
+            titleTextField = new TextField("");
+            titleTextField.setPromptText("Title");
             errorText = new Label("No errors");
 
             //                  OPEN FOLDER

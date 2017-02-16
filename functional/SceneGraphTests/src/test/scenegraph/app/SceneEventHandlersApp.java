@@ -41,7 +41,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBoxBuilder;
+import javafx.scene.layout.VBox;
 import test.javaclient.shared.InteroperabilityApp;
 import test.javaclient.shared.Utils;
 
@@ -116,7 +116,9 @@ public class SceneEventHandlersApp extends InteroperabilityApp
 
         for(EventTypes t: EventTypes.values())
         {
-            Label lb = LabelBuilder.create().text(t.toString()).id(t.toString()).style(NOT_HANDLED_STYLE).build();
+            Label lb = new Label(t.toString());
+            lb.setId(t.toString());
+            lb.setStyle(NOT_HANDLED_STYLE);
             controlLabels.add(lb);
         }
 
@@ -128,7 +130,10 @@ public class SceneEventHandlersApp extends InteroperabilityApp
         flow.getChildren().addAll(actionButton, dragField, dropField);
         root.setTop(eventCombo);
         root.setCenter(flow);
-        root.setLeft(VBoxBuilder.create().children(controlLabels).padding(new Insets(10, 10, 10, 10)).build());
+        VBox temp = new VBox();
+        temp.getChildren().addAll(controlLabels);
+        temp.setPadding(new Insets(10, 10, 10, 10));
+        root.setLeft(temp);
         scene = new Scene(root);
 
         scene.addEventHandler(MouseEvent.DRAG_DETECTED, new EventHandler<MouseEvent>() {

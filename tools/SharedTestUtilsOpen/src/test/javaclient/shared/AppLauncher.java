@@ -55,6 +55,7 @@ public class AppLauncher {
             case SWING:
                 instantiateOnSwingQueue(cl, args);
                 break;
+            // https://bugs.openjdk.java.net/browse/JDK-8131888
             case SWT:
                 instantiateOnSWTQueue(cl, args);
                 break;
@@ -105,6 +106,7 @@ public class AppLauncher {
         }
     }
 
+    // https://bugs.openjdk.java.net/browse/JDK-8131888
     private static void instantiateOnSWTQueue(final Class<? extends Interoperability> cl, String[] args) {
         try {
             Interoperability obj = cl.newInstance();
@@ -154,10 +156,8 @@ public class AppLauncher {
                     }
                     return Boolean.TRUE;
                 } else {
-                    Iterator<Window> it = Stage.impl_getWindows();
-                    while (it.hasNext()) {
-
-                        if (it.next().isShowing()) {
+                    for (Window w : Stage.getWindows()) {
+                        if (w.isShowing()) {
                             return Boolean.TRUE;
                         }
                     }

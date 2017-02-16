@@ -26,11 +26,9 @@ package javafx.scene.control.test.cell;
 
 import client.test.Smoke;
 import com.sun.glass.ui.Application;
-import com.sun.javafx.scene.control.skin.LabeledText;
+import com.sun.javafx.scene.control.LabeledText;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;

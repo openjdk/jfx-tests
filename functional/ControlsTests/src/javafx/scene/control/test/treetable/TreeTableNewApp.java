@@ -24,10 +24,10 @@
  */
 package javafx.scene.control.test.treetable;
 
-import com.sun.javafx.scene.control.skin.NestedTableColumnHeader;
-import com.sun.javafx.scene.control.skin.TableColumnHeader;
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
-import com.sun.javafx.scene.control.skin.TreeTableViewSkin;
+import javafx.scene.control.skin.NestedTableColumnHeader;
+import javafx.scene.control.skin.TableColumnHeader;
+import javafx.scene.control.skin.TableHeaderRow;
+import javafx.scene.control.skin.TreeTableViewSkin;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -54,6 +54,7 @@ import javafx.scene.control.cell.ChoiceBoxTreeTableCell;
 import javafx.scene.control.cell.ComboBoxTreeTableCell;
 import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.control.test.tableview.NewTableViewApp;
+import static javafx.scene.control.test.treetable.ResetButtonNames.HARD_RESET_BUTTON_ID;
 import javafx.scene.control.test.treeview.TreeViewConstants;
 import javafx.scene.control.test.utils.CommonPropertiesScene;
 import javafx.scene.control.test.utils.ComponentsFactory.MultipleIndexFormComponent;
@@ -193,7 +194,8 @@ public class TreeTableNewApp extends InteroperabilityApp implements TreeViewCons
             hb.setPadding(new Insets(5, 5, 5, 5));
             hb.setStyle("-fx-border-color : green;");
 
-            Button resetButton = ButtonBuilder.create().id(HARD_RESET_BUTTON_ID).text("Reset").build();
+            Button resetButton = new Button("Reset");
+            resetButton.setId(HARD_RESET_BUTTON_ID);
             resetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -628,7 +630,7 @@ public class TreeTableNewApp extends InteroperabilityApp implements TreeViewCons
                         public String toString() {
                             return "CUSTOM " + super.toString();
                         }
-
+/*
                         @Override
                         protected TableHeaderRow createTableHeaderRow() {
                             return new TableHeaderRow(this) {
@@ -651,6 +653,7 @@ public class TreeTableNewApp extends InteroperabilityApp implements TreeViewCons
                                 }
                             };
                         }
+*/
                     });
                 }
             });
@@ -707,8 +710,11 @@ public class TreeTableNewApp extends InteroperabilityApp implements TreeViewCons
 
         private HBox getScrollToHBox() {
             HBox hb = new HBox();
-            Button button = ButtonBuilder.create().text("ScrollTo").id(SCROLL_TO_BUTTON_ID).build();
-            final TextField tf = TextFieldBuilder.create().text("0").id(SCROLL_TO_TEXT_FIELD_ID).prefWidth(50).build();
+            Button button = new Button("ScrollTo");
+            button.setId(SCROLL_TO_BUTTON_ID);
+            final TextField tf = new TextField("0");
+            tf.setId(SCROLL_TO_TEXT_FIELD_ID);
+            tf.setPrefWidth(50);
 
             button.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
@@ -722,8 +728,12 @@ public class TreeTableNewApp extends InteroperabilityApp implements TreeViewCons
 
         private HBox getEditHBox() {
             HBox hb = new HBox();
-            Button button = ButtonBuilder.create().text("Edit").id(EDIT_BUTTON_ID).build();
-            final TextField tf = TextFieldBuilder.create().promptText("name").id(EDIT_TEXT_FIELD_ID).prefWidth(50).build();
+            Button button = new Button("Edit");
+            button.setId(EDIT_BUTTON_ID);
+            final TextField tf = new TextField();
+            tf.setPromptText("name");
+            tf.setId(EDIT_TEXT_FIELD_ID);
+            tf.setPrefWidth(50);
 
             button.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
@@ -739,11 +749,8 @@ public class TreeTableNewApp extends InteroperabilityApp implements TreeViewCons
         private VBox setEventHandlersHBox() {
             VBox vb = new VBox();
 
-            Button btn = ButtonBuilder.create()
-                    .text("Set onEdit event hadlers")
-                    .id(BTN_SET_ON_EDIT_EVENT_HANDLERS)
-                    .build();
-
+            Button btn = new Button("Set onEdit event hadlers");
+            btn.setId(BTN_SET_ON_EDIT_EVENT_HANDLERS);
             btn.setOnAction(new EventHandler<ActionEvent>() {
                 final EventHandler eventHandlerOnEditStart = new EventHandler() {
                     public void handle(Event t) {
@@ -780,11 +787,8 @@ public class TreeTableNewApp extends InteroperabilityApp implements TreeViewCons
                 }
             });
 
-            Button btnAddFactory = ButtonBuilder.create()
-                    .text("Set cell factory for editing")
-                    .id(SET_CELL_FACTORY_FOR_EDITING)
-                    .build();
-
+            Button btnAddFactory = new Button("Set cell factory for editing");
+            btnAddFactory.setId(SET_CELL_FACTORY_FOR_EDITING);
             btnAddFactory.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     for (Object obj : testedControl.getColumns()) {

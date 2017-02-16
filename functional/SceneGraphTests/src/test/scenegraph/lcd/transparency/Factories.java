@@ -26,11 +26,10 @@ package test.scenegraph.lcd.transparency;
 
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.StackPaneBuilder;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.RectangleBuilder;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontSmoothingType;
-import javafx.scene.text.TextBuilder;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -43,18 +42,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build(),
-                    RectangleBuilder.create()
-                        .opacity(0)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(t, r);
             return value;
         }
 
@@ -66,18 +59,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build(),
-                    RectangleBuilder.create()
-                        .opacity(0)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(t, r);
             return value;
         }
 
@@ -89,18 +76,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build(),
-                    RectangleBuilder.create()
-                        .opacity(0.5)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.5);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(t, r);
             return value;
         }
 
@@ -112,18 +93,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build(),
-                    RectangleBuilder.create()
-                        .opacity(0.000001d)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.000001d);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(t, r);
             return value;
         }
 
@@ -135,18 +110,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build(),
-                    RectangleBuilder.create()
-                        .opacity(0.9999999d)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.9999999d);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(t, r);
             return value;
         }
 
@@ -158,18 +127,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build(),
-                    RectangleBuilder.create()
-                        .opacity(0)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(t, r);
             return value;
         }
 
@@ -181,18 +144,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build(),
-                    RectangleBuilder.create()
-                        .opacity(0.5)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.5);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(t, r);
             return value;
         }
 
@@ -204,18 +161,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build(),
-                    RectangleBuilder.create()
-                        .opacity(0.000001d)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.000001d);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(t, r);
             return value;
         }
 
@@ -227,18 +178,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build(),
-                    RectangleBuilder.create()
-                        .opacity(0.9999999d)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.9999999d);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(t, r);
             return value;
         }
 
@@ -250,19 +195,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    RectangleBuilder.create()
-                        .opacity(0.5)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build(),
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build()
-                    );
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.5);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(r, t);
             return value;
         }
 
@@ -274,18 +212,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    RectangleBuilder.create()
-                        .opacity(0.000001d)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build(),
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.000001d);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(r, t);
             return value;
         }
 
@@ -297,18 +229,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    RectangleBuilder.create()
-                        .opacity(0.9999999d)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build(),
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.9999999d);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(r, t);
             return value;
         }
 
@@ -320,18 +246,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    RectangleBuilder.create()
-                        .opacity(0)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build(),
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(r, t);
             return value;
         }
 
@@ -343,18 +263,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    RectangleBuilder.create()
-                        .opacity(0.5)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build(),
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.5);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(r, t);
             return value;
         }
 
@@ -366,18 +280,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    RectangleBuilder.create()
-                        .opacity(0.000001d)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build(),
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.000001d);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(r, t);
             return value;
         }
 
@@ -389,18 +297,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    RectangleBuilder.create()
-                        .opacity(0.9999999d)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build(),
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.9999999d);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(r, t);
             return value;
         }
 
@@ -412,18 +314,12 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build(),
-                    RectangleBuilder.create()
-                        .opacity(0.5)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.5);
+            r.setFill(Color.BLACK);
+            value.getChildren().addAll(t, r);
             return value;
         }
 
@@ -434,13 +330,11 @@ public enum Factories implements Factory{
     TranslucentPane(new EmptyActionFactory() {
 
         public Node createNode(boolean lcd) {
-            return StackPaneBuilder.create()
-                    .opacity(0.5)
-                    .children(TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build())
-                    .build();
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            StackPane temp = new StackPane(t);
+            temp.setOpacity(0.5);
+            return temp;
         }
 
         public boolean isLCDWork() {
@@ -451,12 +345,9 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -466,12 +357,10 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(RectangleBuilder.create()
-                        .opacity(0.5)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build());
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.5);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(r);
 
         }
     }),
@@ -479,12 +368,9 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -494,24 +380,19 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(RectangleBuilder.create()
-                        .opacity(0.000001d)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build());
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.000001d);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(r);
         }
     }),
     AddTranslucent09Pixel(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -521,24 +402,19 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(RectangleBuilder.create()
-                        .opacity(0.9999999d)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build());
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.9999999d);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(r);
         }
     }),
     AddTransparentRectangle(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -548,24 +424,19 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(RectangleBuilder.create()
-                        .opacity(0)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(r);
         }
     }),
     AddTranslucentRectangle(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -575,24 +446,19 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(RectangleBuilder.create()
-                        .opacity(0.5)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.5);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(r);
         }
     }),
     AddTranslucent01Rectangle(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -602,24 +468,19 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(RectangleBuilder.create()
-                        .opacity(0.000001d)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.000001d);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(r);
         }
     }),
     AddTranslucent09Rectangle(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -631,12 +492,10 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(RectangleBuilder.create()
-                        .opacity(0.9999999d)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.9999999d);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(r);
             value = false;
         }
     }),
@@ -644,12 +503,9 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -659,12 +515,10 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(0, RectangleBuilder.create()
-                        .opacity(0.5)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build());
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.5);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(0, r);
 
         }
     }),
@@ -672,12 +526,9 @@ public enum Factories implements Factory{
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -687,24 +538,19 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(0, RectangleBuilder.create()
-                        .opacity(0.000001d)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build());
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.000001d);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(0, r);
         }
     }),
     AddTranslucent09PixelBeforeText(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -714,24 +560,19 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(0, RectangleBuilder.create()
-                        .opacity(0.9999999d)
-                        .fill(Color.BLACK)
-                        .height(1)
-                        .width(1)
-                        .build());
+            Rectangle r = new Rectangle(1, 1);
+            r.setOpacity(0.9999999d);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(0, r);
         }
     }),
     AddTransparentRectangleBeforeText(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -741,24 +582,19 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(0, RectangleBuilder.create()
-                        .opacity(0)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(0, r);
         }
     }),
     AddTranslucentRectangleBeforeText(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -768,24 +604,19 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(0, RectangleBuilder.create()
-                        .opacity(0.5)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.5);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(0, r);
         }
     }),
     AddTranslucent01RectangleBeforeText(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -795,24 +626,19 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(0, RectangleBuilder.create()
-                        .opacity(0.000001d)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.000001d);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(0, r);
         }
     }),
     AddTranslucent09RectangleBeforeText(new Factory() {
 
         public Node createNode(boolean lcd) {
             StackPane value = new StackPane();
-
-            value.getChildren().addAll(
-                    TextBuilder.create()
-                        .text("Test")
-                        .fontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY)
-                        .build());
+            Text t = new Text("Test");
+            t.setFontSmoothingType(lcd?FontSmoothingType.LCD:FontSmoothingType.GRAY);
+            value.getChildren().addAll(t);
             return value;
         }
 
@@ -824,12 +650,10 @@ public enum Factories implements Factory{
 
         public void action(Node node) {
             StackPane pane = (StackPane) node;
-            pane.getChildren().add(0, RectangleBuilder.create()
-                        .opacity(0.9999999d)
-                        .fill(Color.BLACK)
-                        .height(100)
-                        .width(100)
-                        .build());
+            Rectangle r = new Rectangle(100, 100);
+            r.setOpacity(0.9999999d);
+            r.setFill(Color.BLACK);
+            pane.getChildren().add(r);
             value = false;
         }
     });

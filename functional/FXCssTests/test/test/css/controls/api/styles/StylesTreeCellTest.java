@@ -42,7 +42,7 @@ import org.junit.Test;
 import org.jemmy.fx.Root;
 import org.jemmy.action.GetAction;
 import client.test.Keywords;
-import com.sun.javafx.scene.control.skin.*;
+import javafx.scene.control.skin.*;
 import javafx.scene.paint.Paint;
 import javafx.geometry.Insets;
 import com.sun.javafx.scene.layout.region.RepeatStruct;
@@ -98,7 +98,7 @@ public class StylesTreeCellTest extends BaseStyleNodeTest {
         Assert.assertTrue(styleNames.contains("-fx-cell-size"));
         Map<String, CssMetaData> styles = getStyles();
         CssMetaData data = styles.get("-fx-cell-size");
-        Assert.assertEquals(24.0, data.getInitialValue(getControl()));
+        Assert.assertEquals(data.getInitialValue(getControl()), "15");
     }
 
     @Test

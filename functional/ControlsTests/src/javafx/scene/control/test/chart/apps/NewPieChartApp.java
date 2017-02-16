@@ -104,7 +104,8 @@ public class NewPieChartApp extends InteroperabilityApp implements ChartIDsInter
             hb.setPadding(new Insets(5, 5, 5, 5));
             hb.setStyle("-fx-border-color : green;");
 
-            Button hardResetButton = ButtonBuilder.create().id(HARD_RESET_BUTTON_ID).text("Hard reset").build();
+            Button hardResetButton = new Button("Hard reset");
+            hardResetButton.setId(HARD_RESET_BUTTON_ID);
             hardResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -114,7 +115,8 @@ public class NewPieChartApp extends InteroperabilityApp implements ChartIDsInter
                 }
             });
 
-            Button softResetButton = ButtonBuilder.create().id(SOFT_RESET_BUTTON_ID).text("Soft reset").build();
+            Button softResetButton = new Button("Soft reset");
+            softResetButton.setId(SOFT_RESET_BUTTON_ID);
             softResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     throw new UnsupportedOperationException("Not supported yet.");
@@ -150,8 +152,11 @@ public class NewPieChartApp extends InteroperabilityApp implements ChartIDsInter
         public HBox getRemoveDataDialog() {
             HBox hb = new HBox();
             Label lb = new Label("From position");
-            final TextField tf = TextFieldBuilder.create().text("0").prefWidth(50).id(REMOVE_ITEM_POS_TEXT_FIELD_ID).build();
-            Button bt = ButtonBuilder.create().text("Remove!").id(REMOVE_BUTTON_ID).build();
+            final TextField tf = new TextField("0");
+            tf.setPrefWidth(50);
+            tf.setId(REMOVE_ITEM_POS_TEXT_FIELD_ID);
+            Button bt = new Button("Remove!");
+            bt.setId(REMOVE_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int index = Integer.parseInt(tf.getText());
@@ -165,12 +170,19 @@ public class NewPieChartApp extends InteroperabilityApp implements ChartIDsInter
         public HBox getAddItemHBox() {
             HBox hb = new HBox();
             Label lb = new Label("Add item");
-            final TextField tf = TextFieldBuilder.create().prefWidth(50).id(ADD_ITEM_VALUE_TEXT_FIELD_ID).build();
+            final TextField tf = new TextField();
+            tf.setPrefWidth(50);
+            tf.setId(ADD_ITEM_VALUE_TEXT_FIELD_ID);
             Label namedLabel = new Label(" named ");
-            final TextField name = TextFieldBuilder.create().prefWidth(50).id(ADD_ITEM_TEXT_FIELD_ID).build();
+            final TextField name = new TextField();
+            name.setPrefWidth(50);
+            name.setId(ADD_ITEM_TEXT_FIELD_ID);
             Label atLb = new Label("at pos");
-            final TextField tfPos = TextFieldBuilder.create().prefWidth(50).id(ADD_ITEM_POSITION_TEXT_FIELD_ID).build();
-            Button bt = ButtonBuilder.create().text("Add!").id(ADD_ITEM_BUTTON_ID).build();
+            final TextField tfPos = new TextField();
+            tfPos.setPrefWidth(50);
+            tfPos.setId(ADD_ITEM_POSITION_TEXT_FIELD_ID);
+            Button bt = new Button("Add!");
+            bt.setId(ADD_ITEM_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int index = Integer.parseInt(tfPos.getText());

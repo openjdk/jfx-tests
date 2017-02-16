@@ -42,7 +42,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextBuilder;
 import test.javaclient.shared.InteroperabilityApp;
 import test.javaclient.shared.Utils;
 
@@ -100,12 +99,10 @@ public class LCDTextTestApp extends InteroperabilityApp {
             public void changed(ObservableValue<? extends TestCollections> ov, TestCollections t, TestCollections newValue) {
                 actionChoice.setItems(FXCollections.observableArrayList(newValue.getActions()));
                 actionChoice.getSelectionModel().selectFirst();
-                lcdText = TextBuilder.create().text("Test text")
-                        .textAlignment(TextAlignment.CENTER)
-                        .style("-fx-font-size: 16;-fx-font-smoothing-type: lcd;")
-                        .fontSmoothingType(FontSmoothingType.LCD)
-                        .build();
-
+                lcdText = new Text("Test text");
+                lcdText.setTextAlignment(TextAlignment.CENTER);
+                lcdText.setStyle("-fx-font-size: 16;-fx-font-smoothing-type: lcd;");
+                lcdText.setFontSmoothingType(FontSmoothingType.LCD);
                 leftPane.getChildren().clear();
                 leftPane.getChildren().add(lcdText);
             }

@@ -38,10 +38,10 @@
         <runtarget targetname="compile-test"/>
         <runtarget targetname="jar"/>
         <ant antfile="functional/ControlsTests/build.xml" target="dist-plugin" inheritAll="false"/>
-        <ant antfile="functional/ControlsLeakTests/build.xml" target="compile" inheritAll="false"/>
-        <ant antfile="functional/ControlsLeakTests/build.xml" target="compile-test" inheritAll="false"/>
-        <ant antfile="functional/ControlsLeakTests/build.xml" target="jar" inheritAll="false"/>
-        <ant antfile="functional/ControlsLeakTests/build.xml" target="dist-plugin" inheritAll="false"/>
+        <!--ant antfile="functional/ControlsLeakTests/build.xml" target="compile" inheritAll="false"/-->
+        <!--ant antfile="functional/ControlsLeakTests/build.xml" target="compile-test" inheritAll="false"/-->
+        <!--ant antfile="functional/ControlsLeakTests/build.xml" target="jar" inheritAll="false"/-->
+        <!--ant antfile="functional/ControlsLeakTests/build.xml" target="dist-plugin" inheritAll="false"/-->
     </target>
 
     <target name="compile" depends="find-javafx">
@@ -63,9 +63,9 @@
             <ant antfile="functional/FxmlTests/build.xml" target="@{targetname}" inheritAll="false"/>
             <ant antfile="functional/WebNodeAutomated/build.xml" target="@{targetname}" inheritAll="false"/>
             <ant antfile="functional/WebNodeManualTests/build.xml" target="@{targetname}" inheritAll="false"/>
-            <ant antfile="functional/ControlsTests/build.xml" target="@{targetname}" inheritAll="false"/>
             <ant antfile="functional/3DTests/build.xml" target="@{targetname}" inheritAll="false"/>
             <ant antfile="functional/FXCssTests/build.xml" target="@{targetname}" inheritAll="false"/>
+            <ant antfile="functional/ControlsTests/build.xml" target="@{targetname}" inheritAll="false"/>
         </sequential>
     </macrodef>
 

@@ -25,7 +25,7 @@
 package javafx.scene.control.test.textinput;
 
 import client.test.ScreenshotCheck;
-import com.sun.javafx.scene.control.skin.TextInputControlSkin;
+import javafx.scene.control.skin.TextInputControlSkin;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -82,7 +82,7 @@ public class TextInputBase extends TestBase {
     }
     private Wrap<? extends TextInputControl> taTesting = null;
 
-    static final KeyboardModifiers CTRL = Utils.isMacOS() ? KeyboardModifiers.META_DOWN_MASK : KeyboardModifiers.CTRL_DOWN_MASK;
+    static final KeyboardModifiers CTRL = Utils.isMacOS() ? KeyboardModifiers.ALT_DOWN_MASK : KeyboardModifiers.CTRL_DOWN_MASK;
 //    /**
 //     * Test for TextInput setMaximumLength API
 //     */
@@ -523,6 +523,7 @@ public class TextInputBase extends TestBase {
         } else {
             checkState("Copy", true);
             checkState("Cut", true);
+            getScene().keyboard().pushKey(KeyboardButtons.ESCAPE);
         }
 
         initContext();
@@ -611,12 +612,17 @@ public class TextInputBase extends TestBase {
 
         String text = getTextFromControl();
         final String initialText = text;
-        while (!"".equals(text)) {
+        if (isPasswordField()) {
+            taTesting.keyboard().pushKey(Keyboard.KeyboardButtons.BACK_SPACE, CTRL);
+            if (Utils.isMacOS()) {
+                Assert.assertEquals("", getTextFromControl());
+            } else {
+                Assert.assertEquals(initialText, getTextFromControl());
+            }
+        } else {
+            while (!text.isEmpty()) {
             text = deleteLastWord(text);
             taTesting.keyboard().pushKey(Keyboard.KeyboardButtons.BACK_SPACE, CTRL);
-            if (isPasswordField()) {
-                Assert.assertEquals(initialText, getTextFromControl());
-            } else {
                 if (!text.equals(getTextFromControl())) {
                     out(initialText, text);
                 }
@@ -633,7 +639,7 @@ public class TextInputBase extends TestBase {
         String text = getTextFromControl();
         final String initialText = text;
         while (!"".equals(text)) {
-            text = deleteFirstWord(text, true);
+            text = deleteFirstWord(text, Utils.isMacOS() ? false : true);
             taTesting.keyboard().pushKey(Keyboard.KeyboardButtons.DELETE, CTRL);
             if (isPasswordField()) {
                 Assert.assertEquals(initialText, getTextFromControl());
@@ -675,13 +681,14 @@ public class TextInputBase extends TestBase {
      */
     private String deleteFirstWord(String text, boolean deleteFromBeginning) {
         final String[] punctuation = new String[]{" ", "\n", "\t", "/", ",", ";", "!", "@", "#", "$", "%", "^", "*", "(", ")", "&", "."};
+
         if (!deleteFromBeginning) {
             while (startsWithAnyOf(text, punctuation)) {
                 text = text.substring(1);
             }
             text = removeLeadingChars(text, punctuation);
         } else {
-            if (!Utils.isWindows()) {
+            if (Utils.isLinux()) {
                 if (' ' == text.charAt(0)) {
                     int pos = 0;
                     while(' ' == text.charAt(pos)) ++pos;
@@ -691,12 +698,20 @@ public class TextInputBase extends TestBase {
                 }
             }
 
+            if ('\n' == text.charAt(0)) {
+                text = text.substring(1);
+                return text;
+            }
+
             text = removeLeadingChars(text, punctuation);
 
+            if ('\n' == text.charAt(0)) {
+                return text;
+            }
+            if (Utils.isLinux()) {
+                return text;
+            }
             while (startsWithAnyOf(text, punctuation)) {
-                if (!Utils.isWindows()) {
-                    break;
-                }
                 text = text.substring(1);
             }
         }
@@ -737,7 +752,7 @@ public class TextInputBase extends TestBase {
         final Wrap<? extends TextInputControl> wrap = getScene().as(Parent.class, Node.class).lookup(TextInputControl.class).wrap();
         wrap.as(Text.class).clear();
         wrap.as(Text.class).type(SAMPLE_STRING);
-        wrap.keyboard().pushKey(KeyboardButtons.A, Utils.isMacOS() ? KeyboardModifiers.META_DOWN_MASK : CTRL);
+        wrap.keyboard().pushKey(KeyboardButtons.A, Utils.isMacOS() ? KeyboardModifiers.META_DOWN_MASK : KeyboardModifiers.CTRL_DOWN_MASK);
         new GetAction() {
             @Override
             public void run(Object... os) throws Exception {

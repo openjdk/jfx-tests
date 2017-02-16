@@ -89,7 +89,9 @@ public class NodeControllerFactory {
 
         @Override
         public Node getForNode(final ToolBar toolBar, final TabPaneWithControl tabPane) {
-            final TextField tf = TextFieldBuilder.create().id(TOOLBAR_ADD_INDEX_TEXT_FIELD_ID).text("0").prefWidth(40).build();
+            final TextField tf = new TextField("0");
+            tf.setId(TOOLBAR_ADD_INDEX_TEXT_FIELD_ID);
+            tf.setPrefWidth(40);
 
             this.getChildren().addAll(new NodesChoserFactory("Add!", new NodesChoserFactory.NodeAction<Node>() {
                 @Override
@@ -114,8 +116,12 @@ public class NodeControllerFactory {
 
         @Override
         public Node getForNode(final Menu menu, final TabPaneWithControl tabPane) {
-            final TextField tf = TextFieldBuilder.create().id(MENU_ADD_INDEX_TEXT_FIELD_ID).text("0").prefWidth(40).build();
-            final TextField nameTF = TextFieldBuilder.create().id(MENU_ADD_NAME_TEXT_FIELD_ID).text("Menu").prefWidth(40).build();
+            final TextField tf = new TextField("0");
+            tf.setId(MENU_ADD_INDEX_TEXT_FIELD_ID);
+            tf.setPrefWidth(40);
+            final TextField nameTF = new TextField("Menu");
+            nameTF.setId(MENU_ADD_NAME_TEXT_FIELD_ID);
+            nameTF.setPrefWidth(40);
             this.getChildren().addAll(new NodesChoserFactory("Add!", new NodesChoserFactory.NodeAction<MenuItem>() {
                 @Override
                 public void execute(MenuItem node) {
@@ -155,8 +161,12 @@ public class NodeControllerFactory {
 
         private HBox getPreviousSiblingHBox(final TreeItem item) {
             HBox hb = new HBox();
-            Button button = ButtonBuilder.create().text("Get previous sibling").id(GET_PREVIOUS_SIBLING_TREEITEM_BUTTON_ID).build();
-            final TextField tf = TextFieldBuilder.create().text("").promptText("Next sibling").id(GET_PREVIOUS_SIBLING_TREEITEM_TEXTFIELD_ID).prefWidth(100).build();
+            Button button = new Button("Get previous sibling");
+            button.setId(GET_PREVIOUS_SIBLING_TREEITEM_BUTTON_ID);
+            final TextField tf = new TextField("");
+            tf.setPromptText("Next sibling");
+            tf.setId(GET_PREVIOUS_SIBLING_TREEITEM_TEXTFIELD_ID);
+            tf.setPrefWidth(100);
 
             button.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
@@ -184,8 +194,12 @@ public class NodeControllerFactory {
 
         private HBox getNextSiblingHBox(final TreeItem item) {
             HBox hb = new HBox();
-            Button button = ButtonBuilder.create().text("Get next sibling").id(GET_NEXT_SIBLING_TREEITEM_BUTTON_ID).build();
-            final TextField tf = TextFieldBuilder.create().text("").promptText("Next sibling").id(GET_NEXT_SIBLING_TREEITEM_TEXTFIELD_ID).prefWidth(100).build();
+            Button button = new Button("Get next sibling");
+            button.setId(GET_NEXT_SIBLING_TREEITEM_BUTTON_ID);
+            final TextField tf = new TextField("");
+            tf.setPromptText("Next sibling");
+            tf.setId(GET_NEXT_SIBLING_TREEITEM_TEXTFIELD_ID);
+            tf.setPrefWidth(100);
 
             button.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
@@ -203,8 +217,12 @@ public class NodeControllerFactory {
         }
 
         private HBox getChangeValueHBox(final TreeItem item) {
-            Button button = ButtonBuilder.create().text("change value to").id(CHANGE_VALUE_BUTTON_ID).build();
-            final TextField tfNew = TextFieldBuilder.create().promptText("new value").id(NEW_VALUE_TEXT_FIELD_ID).prefWidth(50).build();
+            Button button = new Button("change value to");
+            button.setId(CHANGE_VALUE_BUTTON_ID);
+            final TextField tfNew = new TextField();
+            tfNew.setPromptText("new value");
+            tfNew.setId(NEW_VALUE_TEXT_FIELD_ID);
+            tfNew.setPrefWidth(50);
 
             button.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {

@@ -27,7 +27,7 @@ package javafx.scene.control.test.treeview;
 import client.test.Smoke;
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import com.oracle.jdk.sqe.cc.markup.Covers.Level;
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
+import javafx.scene.control.skin.TableHeaderRow;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;

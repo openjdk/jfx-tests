@@ -30,9 +30,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.LabelBuilder;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFieldBuilder;
 import static javafx.scene.control.test.utils.ptables.StaticLogger.*;
 import javafx.scene.control.test.utils.ptables.TextFieldEventsCounter.Count;
 import javafx.scene.layout.HBox;
@@ -54,8 +52,11 @@ public class TextFieldEventsCounter extends HBox implements AbstractEventsCounte
         }
         try {
             this.counterName = counterName;
-            Label label = LabelBuilder.create().text(counterName + " : ").prefWidth((new Text(counterName + " : ")).getBoundsInParent().getWidth() + 30).build();
-            final TextField tf = TextFieldBuilder.create().text("0").prefWidth(50).id(counterName.toUpperCase() + COUNTER_SUFFIX).build();
+            Label label = new Label(counterName + " : ");
+            label.setPrefWidth((new Text(counterName + " : ")).getBoundsInParent().getWidth() + 30);
+            final TextField tf = new TextField("0");
+            tf.setPrefWidth(50);
+            tf.setId(counterName.toUpperCase() + COUNTER_SUFFIX);
             counter.addListener(new ChangeListener<Number>() {
                 public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
                     log("Counter " + counterName + ": new value : <" + t1 + ">.");

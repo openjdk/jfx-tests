@@ -24,10 +24,10 @@
  */
 package javafx.scene.control.test.tableview;
 
-import com.sun.javafx.scene.control.skin.NestedTableColumnHeader;
-import com.sun.javafx.scene.control.skin.TableColumnHeader;
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
-import com.sun.javafx.scene.control.skin.TableViewSkin;
+import javafx.scene.control.skin.NestedTableColumnHeader;
+import javafx.scene.control.skin.TableColumnHeader;
+import javafx.scene.control.skin.TableHeaderRow;
+import javafx.scene.control.skin.TableViewSkin;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,6 +66,8 @@ import test.javaclient.shared.Utils;
 import static javafx.commons.Consts.*;
 import static javafx.commons.Consts.Cell.*;
 import javafx.scene.Node;
+import static javafx.scene.control.test.treetable.ResetButtonNames.HARD_RESET_BUTTON_ID;
+import static javafx.scene.control.test.treetable.ResetButtonNames.SOFT_RESET_BUTTON_ID;
 import javafx.scene.control.test.utils.ComponentsFactory.MultipleIndexFormComponent.MultipleIndicesAction;
 import static org.junit.Assert.assertTrue;
 
@@ -129,7 +131,8 @@ public class NewTableViewApp extends InteroperabilityApp implements ResetButtonN
             tabPane = new TabPaneWithControl("TableView", tb);
             tabPane.setMinSize(1000, 1000);
 
-            Button hardResetButton = ButtonBuilder.create().id(HARD_RESET_BUTTON_ID).text("Hard reset").build();
+            Button hardResetButton = new Button("Hard reset");
+            hardResetButton.setId(HARD_RESET_BUTTON_ID);
             hardResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -139,7 +142,8 @@ public class NewTableViewApp extends InteroperabilityApp implements ResetButtonN
                 }
             });
 
-            Button softResetButton = ButtonBuilder.create().id(SOFT_RESET_BUTTON_ID).text("Soft reset").build();
+            Button softResetButton = new Button("Soft reset");
+            softResetButton.setId(SOFT_RESET_BUTTON_ID);
             softResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     TableView newOne = new TableView();
@@ -327,7 +331,7 @@ public class NewTableViewApp extends InteroperabilityApp implements ResetButtonN
                         public String toString() {
                             return "CUSTOM " + super.toString();
                         }
-
+/*
                         @Override
                         protected TableHeaderRow createTableHeaderRow() {
                             return new TableHeaderRow(this) {
@@ -350,6 +354,7 @@ public class NewTableViewApp extends InteroperabilityApp implements ResetButtonN
                                 }
                             };
                         }
+                        */
                     });
                 }
             });
@@ -456,10 +461,8 @@ public class NewTableViewApp extends InteroperabilityApp implements ResetButtonN
 
             hb.getChildren().addAll(cmbEditors, chbCustom, btnSetEditor);
 
-            Button btn = ButtonBuilder.create()
-                    .text("Set onEdit event hadlers")
-                    .id(BTN_SET_ON_EDIT_EVENT_HANDLERS)
-                    .build();
+            Button btn = new Button("Set onEdit event hadlers");
+            btn.setId(BTN_SET_ON_EDIT_EVENT_HANDLERS);
 
             btn.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
@@ -897,3 +900,4 @@ public class NewTableViewApp extends InteroperabilityApp implements ResetButtonN
         return testData;
     }
 }
+

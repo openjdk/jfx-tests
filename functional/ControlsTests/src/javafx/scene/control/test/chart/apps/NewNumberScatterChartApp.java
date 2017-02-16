@@ -93,7 +93,8 @@ public class NewNumberScatterChartApp extends InteroperabilityApp implements Cha
             testedScatterChart = getNewChart();
             testedScatterChart.setId(TESTED_CHART_ID);
 
-            Button hardResetButton = ButtonBuilder.create().id(HARD_RESET_BUTTON_ID).text("Hard reset").build();
+            Button hardResetButton = new Button("Hard reset");
+            hardResetButton.setId(HARD_RESET_BUTTON_ID);
             hardResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -103,7 +104,8 @@ public class NewNumberScatterChartApp extends InteroperabilityApp implements Cha
                 }
             });
 
-            Button softResetButton = ButtonBuilder.create().id(SOFT_RESET_BUTTON_ID).text("Soft reset").build();
+            Button softResetButton = new Button("Soft reset");
+            softResetButton.setId(SOFT_RESET_BUTTON_ID);
             softResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     //throw new UnsupportedOperationException("Not supported yet.");
@@ -127,8 +129,11 @@ public class NewNumberScatterChartApp extends InteroperabilityApp implements Cha
         public HBox getRemoveDataDialog() {
             HBox hb = new HBox();
             Label lb = new Label("From position");
-            final TextField tf = TextFieldBuilder.create().text("0").prefWidth(50).id(REMOVE_ITEM_POS_TEXT_FIELD_ID).build();
-            Button bt = ButtonBuilder.create().text("Remove!").id(REMOVE_BUTTON_ID).build();
+            final TextField tf = new TextField("0");
+            tf.setPrefWidth(50);
+            tf.setId(REMOVE_ITEM_POS_TEXT_FIELD_ID);
+            Button bt = new Button("Remove!");
+            bt.setId(REMOVE_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int index = Integer.parseInt(tf.getText());
@@ -142,12 +147,15 @@ public class NewNumberScatterChartApp extends InteroperabilityApp implements Cha
         public HBox getRemoveDataFromSerieDialog() {
             HBox hb = new HBox();
             Label lb1 = new Label("From serie");
-            final TextField tf1 = TextFieldBuilder.create().text("0").prefWidth(50).build();
+            final TextField tf1 = new TextField("0");
+            tf1.setPrefWidth(50);
 
             Label lb2 = new Label("from index");
-            final TextField tf2 = TextFieldBuilder.create().text("0").prefWidth(50).build();
+            final TextField tf2 = new TextField("0");
+            tf2.setPrefWidth(50);
 
-            Button bt = ButtonBuilder.create().text("remove point!").id(REMOVE_BUTTON_ID).build();
+            Button bt = new Button("remove point!");
+            bt.setId(REMOVE_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int serie = Integer.parseInt(tf1.getText());
@@ -162,18 +170,23 @@ public class NewNumberScatterChartApp extends InteroperabilityApp implements Cha
         public HBox getAddPointToSerieDialog() {
             HBox hb = new HBox();
             Label lb1 = new Label("To serie");
-            final TextField tf1 = TextFieldBuilder.create().text("0").prefWidth(50).build();
+            final TextField tf1 = new TextField("0");
+            tf1.setPrefWidth(50);
 
             Label lb2 = new Label("to index");
-            final TextField tf2 = TextFieldBuilder.create().text("0").prefWidth(50).build();
+            final TextField tf2 = new TextField("0");
+            tf2.setPrefWidth(50);
 
             Label lb3 = new Label("X");
-            final TextField tf3 = TextFieldBuilder.create().text("0").prefWidth(50).build();
+            final TextField tf3 = new TextField("0");
+            tf3.setPrefWidth(50);
 
             Label lb4 = new Label("Y");
-            final TextField tf4 = TextFieldBuilder.create().text("0").prefWidth(50).build();
+            final TextField tf4 = new TextField("0");
+            tf4.setPrefWidth(50);
 
-            Button bt = ButtonBuilder.create().text("add point!").id(REMOVE_BUTTON_ID).build();
+            Button bt = new Button("add point!");
+            bt.setId(REMOVE_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int serie = Integer.parseInt(tf1.getText());
@@ -195,18 +208,27 @@ public class NewNumberScatterChartApp extends InteroperabilityApp implements Cha
         public HBox getAddItemHBox() {
             HBox hb = new HBox();
             Label lb = new Label("Add series named ");
-            final TextField tf = TextFieldBuilder.create().prefWidth(50).id(ADDED_SERIES_NAME_TEXTFIELD_ID).build();
+            final TextField tf = new TextField();
+            tf.setPrefWidth(50);
+            tf.setId(ADDED_SERIES_NAME_TEXTFIELD_ID);
 
             Label minLabel = new Label(" min ");
-            final TextField minText = TextFieldBuilder.create().prefWidth(50).id(ADDED_SERIES_MIN_VALUE_TEXTFIELD_ID).build();
+            final TextField minText = new TextField();
+            minText.setPrefWidth(50);
+            minText.setId(ADDED_SERIES_MIN_VALUE_TEXTFIELD_ID);
 
             Label maxLabel = new Label(" max ");
-            final TextField maxText = TextFieldBuilder.create().prefWidth(50).id(ADDED_SERIES_MAX_VALUE_TEXTFIELD_ID).build();
+            final TextField maxText = new TextField();
+            maxText.setPrefWidth(50);
+            maxText.setId(ADDED_SERIES_MAX_VALUE_TEXTFIELD_ID);
 
             Label amountLabel = new Label(" amount ");
-            final TextField amountText = TextFieldBuilder.create().prefWidth(50).id(ADDED_SERIES_DOTS_COUNT_TEXTFIELD_ID).build();
+            final TextField amountText = new TextField();
+            amountText.setPrefWidth(50);
+            amountText.setId(ADDED_SERIES_DOTS_COUNT_TEXTFIELD_ID);
 
-            Button bt = ButtonBuilder.create().text("Add!").id(ADD_SERIES_COMMAND_BUTTON_ID).build();
+            Button bt = new Button("Add!");
+            bt.setId(ADD_SERIES_COMMAND_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     String serieName = tf.getText();

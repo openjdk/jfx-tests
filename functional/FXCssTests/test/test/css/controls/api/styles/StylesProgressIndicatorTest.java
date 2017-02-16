@@ -42,7 +42,7 @@ import org.junit.Test;
 import org.jemmy.fx.Root;
 import org.jemmy.action.GetAction;
 import client.test.Keywords;
-import com.sun.javafx.scene.control.skin.*;
+import javafx.scene.control.skin.*;
 import javafx.scene.paint.Paint;
 import javafx.geometry.Insets;
 import com.sun.javafx.scene.layout.region.RepeatStruct;

@@ -29,7 +29,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.test.utils.*;
@@ -110,7 +109,8 @@ public class PaginationApp extends InteroperabilityApp {
             tb.addDoublePropertyLine(testedPagination.minHeightProperty(), -100, 300, 50, testedPagination);
             tb.addDoublePropertyLine(testedPagination.minWidthProperty(), -100, 300, 50, testedPagination);
 
-            Button hardResetButton = ButtonBuilder.create().id(HARD_RESET_BUTTON_ID).text("Hard reset").build();
+            Button hardResetButton = new Button("Hard reset");
+            hardResetButton.setId(HARD_RESET_BUTTON_ID);
             hardResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -120,7 +120,8 @@ public class PaginationApp extends InteroperabilityApp {
                 }
             });
 
-            Button setBulletPageIndicatorButton = ButtonBuilder.create().id(SET_BULLET_PAGE_INDICATOR_BUTTON_ID).text("Set bullet").build();
+            Button setBulletPageIndicatorButton = new Button("Set bullet");
+            setBulletPageIndicatorButton.setId(SET_BULLET_PAGE_INDICATOR_BUTTON_ID);
             setBulletPageIndicatorButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     //testedPagination.setStyle(Pagination.STYLE_CLASS_BULLET);
@@ -128,14 +129,16 @@ public class PaginationApp extends InteroperabilityApp {
                 }
             });
 
-            Button setPageCountToIndeterminateButton = ButtonBuilder.create().id(SET_PAGE_COUNT_TO_INDETERMINATE_BUTTON_ID).text("Set indeterminate\n page count").build();
+            Button setPageCountToIndeterminateButton = new Button("Set indeterminate\n page count");
+            setPageCountToIndeterminateButton.setId(SET_PAGE_COUNT_TO_INDETERMINATE_BUTTON_ID);
             setPageCountToIndeterminateButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedPagination.setPageCount(Pagination.INDETERMINATE);
                 }
             });
 
-            Button softResetButton = ButtonBuilder.create().id(SOFT_RESET_BUTTON_ID).text("Soft reset").build();
+            Button softResetButton = new Button("Soft reset");
+            softResetButton.setId(SOFT_RESET_BUTTON_ID);
             softResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
@@ -148,7 +151,8 @@ public class PaginationApp extends InteroperabilityApp {
                 }
             });
 
-            Button setNewPageFactory = ButtonBuilder.create().id(SET_NEW_PAGE_FACTORY_BUTTON_ID).text("Set new page factory").build();
+            Button setNewPageFactory = new Button("Set new page factory");
+            setNewPageFactory.setId(SET_NEW_PAGE_FACTORY_BUTTON_ID);
             setNewPageFactory.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
@@ -170,7 +174,8 @@ public class PaginationApp extends InteroperabilityApp {
                 }
             });
 
-            Button setOldPageFactory = ButtonBuilder.create().id(SET_OLD_PAGE_FACTORY_BUTTON_ID).text("Set old page factory").build();
+            Button setOldPageFactory = new Button("Set old page factory");
+            setOldPageFactory.setId(SET_OLD_PAGE_FACTORY_BUTTON_ID);
             setOldPageFactory.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {

@@ -38,14 +38,15 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Control;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFieldBuilder;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
@@ -96,13 +97,14 @@ public class ScrollEventApp extends InteroperabilityApp {
     private Node createNodeChooser() {
         VBox vb = new VBox(5);
         Label scrollEventCame = new Label("Scroll event came : ");
-        final TextField eventComeIndicator = TextFieldBuilder.create().text("None").id(EVENT_COME_INDICATOR_TEXT_FIELD_ID).build();
+        final TextField eventComeIndicator = new TextField("None");
+        eventComeIndicator.setId(EVENT_COME_INDICATOR_TEXT_FIELD_ID);
         HBox hb = new HBox();
         hb.getChildren().addAll(scrollEventCame, eventComeIndicator);
 
-        Button resetButton = ButtonBuilder.create().text("Reset").id(RESET_BUTTON_ID).build();
+        Button resetButton = new Button("Reset");
+        resetButton.setId(RESET_BUTTON_ID);
         resetButton.setOnAction(new EventHandler<ActionEvent>() {
-
             public void handle(ActionEvent t) {
                 eventComeIndicator.setText("None");
                 clearListenersState();
@@ -140,7 +142,7 @@ public class ScrollEventApp extends InteroperabilityApp {
                         }
                     });
                 } else {
-                    node.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+                    EventHandler<ContextMenuEvent> handler = new EventHandler<ContextMenuEvent>() {
                         public void handle(ContextMenuEvent t) {
                             renewListenerValue("eventType", t.getEventType());
                             renewListenerValue("consumed", t.isConsumed());
@@ -149,13 +151,30 @@ public class ScrollEventApp extends InteroperabilityApp {
                             getContextMenu().show(node, t.getScreenX(), t.getScreenY());
                             t.consume();
                         }
-                    });
+                    };
+                    node.setOnContextMenuRequested(handler);
+                    TextField editor = null;
+                    if (node instanceof DatePicker) {
+                        editor = ((DatePicker)node).getEditor();
+                    }
+                    if (node instanceof ComboBox) {
+                        editor = ((ComboBox)node).getEditor();
+                    }
+                    if (editor != null) {
+                        editor.setOnContextMenuRequested(handler);
+                    }
                 }
 
                 node.setId(ID_TARGET_NODE);
                 spaceForNode.getChildren().clear();
                 spaceForNode.getChildren().add(node);
-
+                node.setPickOnBounds(true);
+                if (node instanceof Control) {
+                    ((Control)node).setPrefWidth(200);
+                    ((Control)node).setPrefHeight(200);
+                    ((Control)node).setMinWidth(200);
+                    ((Control)node).setMinHeight(200);
+                }
                 clearListenersState();
             }
         });
@@ -196,7 +215,8 @@ public class ScrollEventApp extends InteroperabilityApp {
     private HBox getListener(String name) {
         HBox hb = new HBox();
         Label label = new Label(name + " : ");
-        TextField tf = TextFieldBuilder.create().id(getListenerTextFieldID(name)).build();
+        TextField tf = new TextField();
+        tf.setId(getListenerTextFieldID(name));
         hm.put(name, tf);
 
         hb.getChildren().addAll(label, tf);

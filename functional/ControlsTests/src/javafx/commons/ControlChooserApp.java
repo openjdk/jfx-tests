@@ -39,9 +39,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.test.utils.ptables.PropertiesTable;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.PaneBuilder;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.VBoxBuilder;
 import test.javaclient.shared.InteroperabilityApp;
 import test.javaclient.shared.Utils;
 
@@ -55,9 +53,7 @@ public class ControlChooserApp extends InteroperabilityApp {
 
     private VBox spaceForNode;
     private PropertiesTable propertiesTable;
-    private Pane propertiesPane = PaneBuilder.create()
-            .style("-fx-border-color:BLUE")
-            .build();
+    private Pane propertiesPane;
 
     public static void main(String[] args) {
         Utils.launch(javafx.commons.ControlChooserApp.class, args);
@@ -106,6 +102,9 @@ public class ControlChooserApp extends InteroperabilityApp {
     }
 
     private Parent getContent() {
+        propertiesPane = new Pane();
+        propertiesPane.setStyle("-fx-border-color:BLUE");
+
         spaceForNode = new VBox(10);
         spaceForNode.setAlignment(Pos.CENTER);
         spaceForNode.setMinWidth(300);
@@ -121,11 +120,8 @@ public class ControlChooserApp extends InteroperabilityApp {
         controls.getChildren().add(createNodeChooser());
         controls.setStyle("-fx-border-color:GREEN");
 
-        VBox vBox = VBoxBuilder.create()
-                .children(spaceForNode, controls)
-                .spacing(10d)
-                .build();
-
+        VBox vBox = new VBox(spaceForNode, controls);
+        vBox.setSpacing(10d);
         HBox hBox = new HBox(10);
         hBox.setAlignment(Pos.TOP_LEFT);
         hBox.getChildren().addAll(

@@ -255,8 +255,8 @@ public class TableUtils {
      * @return
      */
     static Rectangle getActuallyVisibleArea(final Wrap<? extends Control> wrap) {
-        final Rectangle viewArea = getContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();
-        final Rectangle clippedContainerArea = getClippedContainerWrap(wrap.as(Parent.class, Node.class)).getScreenBounds();
+        final Rectangle viewArea = getContainerWrap((Parent <Node>)wrap.as(Parent.class, Node.class)).getScreenBounds();
+        final Rectangle clippedContainerArea = getClippedContainerWrap((Parent <Node>)wrap.as(Parent.class, Node.class)).getScreenBounds();
         return new Rectangle(viewArea.x, viewArea.y, clippedContainerArea.width, clippedContainerArea.height);
     }
 

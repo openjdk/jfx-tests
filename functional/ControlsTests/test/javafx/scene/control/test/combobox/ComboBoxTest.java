@@ -33,6 +33,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.commons.SortValidator;
@@ -61,6 +62,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.FormatStringConverter;
+import org.jemmy.Point;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByStyleClass;
@@ -88,8 +90,6 @@ import test.javaclient.shared.FilteredTestRunner;
 /**
  * @author Alexander Kirov
  *
- * Specification:
- * http://xdesign.us.oracle.com/projects/javaFX/fxcontrols-ue/specifications/combobox/combobox.html
  */
 @RunWith(FilteredTestRunner.class)
 public class ComboBoxTest extends TestBase {
@@ -163,13 +163,19 @@ public class ComboBoxTest extends TestBase {
 
         testedControl.mouse().press();
 
-        checkTextFieldText(Properties.armed, "false");
+        checkTextFieldText(Properties.armed, "true");
         checkTextFieldText(Properties.showing, "false");
 
         testedControl.mouse().release();
 
         checkTextFieldText(Properties.armed, "false");
         checkTextFieldText(Properties.showing, "false");
+
+        testedControl.mouse().press();
+        org.jemmy.Rectangle bounds = testedControl.getScreenBounds();
+        testedControl.mouse().move(new Point(bounds.getWidth() + 5, testedControl.getScreenBounds().getHeight() + 5));
+
+        checkTextFieldText(Properties.armed, "false");
     }
 
     @Smoke
@@ -219,7 +225,7 @@ public class ComboBoxTest extends TestBase {
     @ScreenshotCheck
     @Test(timeout = 300000)//RT-19225
     public void promptPropertyTest() throws Throwable {
-        assertEquals((new ComboBox()).promptTextProperty().getValue(), "");
+        assertEquals((new ComboBox()).promptTextProperty().getValue(), null);
 
         //move focus from control. otherwise, we will not see prompt.
         requestFocusOnControl(testedControl);
@@ -335,7 +341,7 @@ public class ComboBoxTest extends TestBase {
         addElement(element3, 2);
         testedControl.as(Selectable.class).selector().select(element3);
         checkSimpleListenerValue(Properties.selectedItem, element3);
-        assertEquals(getTextFieldText(), TO_STRING_PREFIX + "1");
+        assertEquals(getTextFieldText(), TO_STRING_PREFIX + "3");
 
         setPropertyByToggleClick(SettingType.BIDIRECTIONAL, Properties.editable);
         testedControl.as(Selectable.class).selector().select(element2);
@@ -423,13 +429,13 @@ public class ComboBoxTest extends TestBase {
         testedControl.mouse().click();
 
         testedControl.keyboard().pushKey(KeyboardButtons.A);
-        checkCounterValue(ON_ACTION_EVENT_COUNTER_ID, 4);
+        checkCounterValue(ON_ACTION_EVENT_COUNTER_ID, 3);
         testedControl.keyboard().pushKey(KeyboardButtons.ENTER);
-        checkCounterValue(ON_ACTION_EVENT_COUNTER_ID, 5);
+        checkCounterValue(ON_ACTION_EVENT_COUNTER_ID, 4);
         setPropertyByTextField(SettingType.BIDIRECTIONAL, Properties.value, NEW_VALUE_1);
-        checkCounterValue(ON_ACTION_EVENT_COUNTER_ID, 7);
+        checkCounterValue(ON_ACTION_EVENT_COUNTER_ID, 6);
         setPropertyByTextField(SettingType.UNIDIRECTIONAL, Properties.value, NEW_VALUE_2);
-        checkCounterValue(ON_ACTION_EVENT_COUNTER_ID, 9);
+        checkCounterValue(ON_ACTION_EVENT_COUNTER_ID, 8);
     }
 
     @Smoke
@@ -641,7 +647,9 @@ public class ComboBoxTest extends TestBase {
         addElements(1, 2, 3, 4, 5, 6);
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.visibleRowCount, 5);
         clickDropDownButton();
-        Wrap<? extends ScrollBar> sb = findScrollBar(((Wrap<? extends ListView>) getPopupWrap().as(Parent.class, Node.class).lookup(ListView.class).wrap()).as(Parent.class, Node.class), Orientation.VERTICAL, true);
+        Wrap<? extends ScrollBar> sb = findScrollBar(
+                ((Parent<Node>) ((Wrap<? extends ListView>) ((Parent<Node>) getPopupWrap().as(Parent.class, Node.class))
+                .lookup(ListView.class).wrap()).as(Parent.class, Node.class)), Orientation.VERTICAL, true);
         sb.as(AbstractScroll.class).caret().to(1);
         checkTextFieldText(Properties.showing, "true");
         testedControl.as(Selectable.class).selector().select("6");
@@ -699,12 +707,12 @@ public class ComboBoxTest extends TestBase {
         checkSelectionState(5, 6);
         assertEquals(getTextFieldText(), "6");
         checkTextFieldText(Properties.value, "6");
+        checkSimpleListenerValue(Properties.selectedIndex, 5);
 
         testedControl.mouse().click();
         testedControl.as(Text.class).type("abc");
         testedControl.keyboard().pushKey(KeyboardButtons.ENTER);
 
-        checkSimpleListenerValue(Properties.selectedIndex, 5);
         checkSimpleListenerValue(Properties.selectedItem, "6abc");
         checkTextFieldText(Properties.value, "6abc");
 
@@ -1273,8 +1281,6 @@ public class ComboBoxTest extends TestBase {
                 setPropertyByToggleClick(SettingType.UNIDIRECTIONAL, Properties.editable);
             }
 
-            Wrap<? extends javafx.scene.text.Text> textFieldWrap = testedControl.as(Parent.class, Node.class)
-                    .lookup(javafx.scene.text.Text.class).wrap();
             final double initialButtonHeight = testedControl.getScreenBounds().getHeight();
             double prevCellTextHeight = 0f;
 
@@ -1287,6 +1293,8 @@ public class ComboBoxTest extends TestBase {
                 assertEquals(initialButtonHeight, testedControl.getScreenBounds().getHeight(), 0.001);
 
                 /* text node should be alwas rendered inside ComboBox button */
+                Wrap<? extends javafx.scene.text.Text> textFieldWrap = testedControl.as(Parent.class, Node.class)
+                    .lookup(javafx.scene.text.Text.class).wrap();
                 assertTrue(textFieldWrap.getScreenBounds().getY() >= testedControl.getScreenBounds().getY());
                 assertTrue(textFieldWrap.getScreenBounds().getY() + textFieldWrap.getScreenBounds().getHeight()
                         <= testedControl.getScreenBounds().getY() + testedControl.getScreenBounds().getHeight());
@@ -1422,7 +1430,7 @@ public class ComboBoxTest extends TestBase {
 
         testedControl.keyboard().pushKey(KeyboardButtons.ENTER);
 
-        checkTextFieldText(Properties.value, FROM_STRING_PREFIX + "1");
+        checkTextFieldText(Properties.value, FROM_STRING_PREFIX);
     }
 
     /**

@@ -33,7 +33,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SliderBuilder;
 import static javafx.scene.control.test.utils.ptables.StaticLogger.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -87,8 +86,22 @@ public class NumberPropertyValueSetter extends AbstractPropertyValueSetter<Numbe
 
     private void applyRangesChangers(final Slider slider) {
         final Popup popupWithControllers = new Popup();
-        Slider minValue = SliderBuilder.create().prefWidth(300).min(1).max(9).minorTickCount(4).majorTickUnit(2).showTickLabels(true).showTickMarks(true).build();
-        Slider maxValue = SliderBuilder.create().prefWidth(300).min(1).max(9).minorTickCount(4).majorTickUnit(2).showTickLabels(true).showTickMarks(true).build();
+        Slider minValue = new Slider();
+        minValue.setPrefWidth(300);
+        minValue.setMin(1);
+        minValue.setMax(9);
+        minValue.setMinorTickCount(4);
+        minValue.setMajorTickUnit(2);
+        minValue.setShowTickLabels(true);
+        minValue.setShowTickMarks(true);
+        Slider maxValue = new Slider();
+        maxValue.setPrefWidth(300);
+        maxValue.setMin(1);
+        maxValue.setMax(9);
+        maxValue.setMinorTickCount(4);
+        maxValue.setMajorTickUnit(2);
+        maxValue.setShowTickLabels(true);
+        maxValue.setShowTickMarks(true);
 
         maxValue.valueProperty().addListener(new ChangeListener() {
             public void changed(ObservableValue ov, Object t, Object t1) {
@@ -143,7 +156,17 @@ public class NumberPropertyValueSetter extends AbstractPropertyValueSetter<Numbe
 
     private Slider createSlider(double minValue, double maxValue, double defaultValue, String sliderId) {
         try {
-            return SliderBuilder.create().prefWidth(100).id(sliderId).min(minValue).max(maxValue).value(defaultValue).minorTickCount(4).majorTickUnit((maxValue - minValue) / 4).showTickLabels(true).showTickMarks(true).build();
+            Slider temp = new Slider();
+            temp.setPrefWidth(100);
+            temp.setId(sliderId);
+            temp.setMin(minValue);
+            temp.setMax(maxValue);
+            temp.setValue(defaultValue);
+            temp.setMinorTickCount(4);
+            temp.setMajorTickUnit((maxValue - minValue) / 4);
+            temp.setShowTickLabels(true);
+            temp.setShowTickMarks(true);
+            return temp;
         } catch (Throwable ex) {
             log(ex);
         }

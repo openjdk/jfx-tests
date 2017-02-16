@@ -134,7 +134,8 @@ public class ColorPickerApp extends InteroperabilityApp {
             hb.setPadding(new Insets(5, 5, 5, 5));
             hb.setStyle("-fx-border-color : green;");
 
-            Button hardResetButton = ButtonBuilder.create().id(HARD_RESET_BUTTON_ID).text("Hard reset").build();
+            Button hardResetButton = new Button("Hard reset");
+            hardResetButton.setId(HARD_RESET_BUTTON_ID);
             hardResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -144,7 +145,8 @@ public class ColorPickerApp extends InteroperabilityApp {
                 }
             });
 
-            Button softResetButton = ButtonBuilder.create().id(SOFT_RESET_BUTTON_ID).text("Soft reset").build();
+            Button softResetButton = new Button("Soft reset");
+            softResetButton.setId(SOFT_RESET_BUTTON_ID);
             softResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     tb.refresh();
@@ -168,8 +170,11 @@ public class ColorPickerApp extends InteroperabilityApp {
         private HBox setColorHbox() {
             HBox hb = new HBox();
             Label lb = new Label("Set color");
-            final TextField colorTf = TextFieldBuilder.create().prefWidth(100).id(SET_COLOR_TEXT_FIELD_ID).build();
-            Button bt = ButtonBuilder.create().text("Set!").id(SET_COLOR_BUTTON_ID).build();
+            final TextField colorTf = new TextField();
+            colorTf.setPrefWidth(100);
+            colorTf.setId(SET_COLOR_TEXT_FIELD_ID);
+            Button bt = new Button("Set!");
+            bt.setId(SET_COLOR_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     testedColorPicker.setValue(Color.web(colorTf.getText()));

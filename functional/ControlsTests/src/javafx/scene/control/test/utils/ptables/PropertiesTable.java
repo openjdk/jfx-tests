@@ -36,7 +36,6 @@ import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.FlowPaneBuilder;
 import javafx.scene.layout.VBox;
 import static javafx.scene.control.test.utils.ptables.AbstractApplicationPropertiesRegystry.DEFAULT_DOMAIN_NAME;
 
@@ -78,8 +77,8 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
 
     public final static String PROPERTIES_TABLE_SUFFIX_ID = "_PROPERTY_TABLE_ID";
     private final VBox linesVBox = new VBox(5);
-    private final FlowPane countersFlowPane = FlowPaneBuilder.create().vgap(5).hgap(5).build();
-    private final FlowPane listenersFlowPane = FlowPaneBuilder.create().vgap(5).hgap(5).build();
+    private final FlowPane countersFlowPane;
+    private final FlowPane listenersFlowPane;
     private final Object testedControl;
     private String domainName;
     /**
@@ -97,6 +96,12 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
 
     public PropertiesTable(Object testedControl) {
         super(5);
+        countersFlowPane = new FlowPane();
+        countersFlowPane.setVgap(5);
+        countersFlowPane.setHgap(5);
+        listenersFlowPane = new FlowPane();
+        listenersFlowPane.setVgap(5);
+        listenersFlowPane.setHgap(5);
         this.domainName = DEFAULT_DOMAIN_NAME;
         this.setId(DEFAULT_DOMAIN_NAME + PROPERTIES_TABLE_SUFFIX_ID);
         getChildren().add(0, countersFlowPane);
@@ -151,7 +156,10 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
     @Override
     public void addDoublePropertyLine(final DoubleProperty bindableProperty, double min, double max, double initial, Object owningObject) {
         AbstractPropertyController controller = new PropertyValueController(bindableProperty, testedControl, min, initial, max);
-        propertyControllers.put(bindableProperty.getName().toUpperCase(), controller);
+        AbstractPropertyController old_controller = propertyControllers.put(bindableProperty.getName().toUpperCase(), controller);
+        if (old_controller != null) {
+            linesVBox.getChildren().remove(old_controller.getVisualRepresentation());
+        }
         linesVBox.getChildren().add(controller.getVisualRepresentation());
     }
 

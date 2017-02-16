@@ -24,7 +24,7 @@
  */
 package org.jemmy.fx.control;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TreeCell;

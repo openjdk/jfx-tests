@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2016, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -73,4 +73,11 @@ public class ByID<T> extends ByStringLookup <T> {
 
         }.dispatch(Environment.getEnvironment());
     }
+
+    @Override
+    public String toString() {
+        return "id is " + super.toString();
+        // TODO: Get access to text and uncomment proper code:
+//        return "Id = " + text;
+}
 }

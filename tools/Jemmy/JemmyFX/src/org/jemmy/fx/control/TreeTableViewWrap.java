@@ -24,7 +24,7 @@
  */
 package org.jemmy.fx.control;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+import javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;

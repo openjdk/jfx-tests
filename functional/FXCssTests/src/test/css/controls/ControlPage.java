@@ -25,18 +25,19 @@
 package test.css.controls;
 
 import com.sun.javafx.collections.ObservableListWrapper;
-import javafx.css.CssMetaData;
-import com.sun.javafx.scene.control.skin.CellSkinBase;
-import com.sun.javafx.scene.control.skin.ColorPickerSkin;
-import com.sun.javafx.scene.control.skin.PaginationSkin;
-import com.sun.javafx.scene.control.skin.ProgressIndicatorSkin;
-import com.sun.javafx.scene.control.skin.TableColumnHeader;
-import com.sun.javafx.scene.control.skin.TextInputControlSkin;
-import com.sun.javafx.scene.control.skin.TreeCellSkin;
+import javafx.scene.control.skin.CellSkinBase;
+import javafx.scene.control.skin.ColorPickerSkin;
+import javafx.scene.control.skin.PaginationSkin;
+import javafx.scene.control.skin.ProgressIndicatorSkin;
+import javafx.scene.control.skin.TableColumnHeader;
+import javafx.scene.control.skin.TextInputControlSkin;
+import javafx.scene.control.skin.TreeCellSkin;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.*;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
@@ -44,6 +45,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.CssMetaData;
 import javafx.css.Styleable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -56,52 +58,37 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.CheckBoxBuilder;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.HyperlinkBuilder;
 import javafx.scene.control.Label;
-import javafx.scene.control.LabelBuilder;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.PasswordFieldBuilder;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressBarBuilder;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.ProgressIndicatorBuilder;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.RadioButtonBuilder;
 import javafx.scene.control.ScrollBar;
-import javafx.scene.control.ScrollBarBuilder;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
-import javafx.scene.control.SeparatorBuilder;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SliderBuilder;
 import javafx.scene.control.SplitMenuButton;
-import javafx.scene.control.SplitMenuButtonBuilder;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.SplitPaneBuilder;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFieldBuilder;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleButtonBuilder;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -109,7 +96,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPaneBuilder;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -118,8 +105,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 
 /**
  *
@@ -145,7 +130,10 @@ public enum ControlPage {
         }
     }, 200), Buttons(Button.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            return ButtonBuilder.create().text("Button the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).graphic(new Rectangle(10, 10, Color.RED)).build();
+            Button temp = new Button("Button the first line" + "\nthe sec long line" + "\nthe third line");
+            temp.setFocusTraversable(false);
+            temp.setGraphic(new Rectangle(10, 10, Color.RED));
+            return temp;
         }
     }, 200, 100), ChoiceBoxes(ChoiceBox.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
@@ -159,7 +147,10 @@ public enum ControlPage {
         }
     }), CheckBoxes(CheckBox.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            return CheckBoxBuilder.create().text("Check box the first line" + "\nthe sec long line" + "\nthe third line").graphic(new Rectangle(20, 20, Color.web("lightblue"))).focusTraversable(false).build();
+            CheckBox temp = new CheckBox("Check box the first line" + "\nthe sec long line" + "\nthe third line");
+            temp.setFocusTraversable(false);
+            temp.setGraphic(new Rectangle(20, 20, Color.web("lightblue")));
+            return temp;
         }
     }, 200, 100), ComboBoxes(ComboBox.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         @Override
@@ -174,7 +165,10 @@ public enum ControlPage {
         }
     }), Hyperlinks(Hyperlink.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            return HyperlinkBuilder.create().text("Hyperlink the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).graphic(new Circle(10, Color.BLUE)).build();
+            Hyperlink temp = new Hyperlink("Hyperlink the first line" + "\nthe sec long line" + "\nthe third line");
+            temp.setFocusTraversable(false);
+            temp.setGraphic(new Circle(10, Color.BLUE));
+            return temp;
         }
     }, 200, 100), Labels(new ArrayList<CssMetaData<? extends Styleable, ?>>(Label.getClassCssMetaData()) {
         {
@@ -182,7 +176,10 @@ public enum ControlPage {
         }
     }, new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            return LabelBuilder.create().text("Label the first line" + "\nthe sec longlong line" + "\nthe third line").focusTraversable(false).graphic(new Rectangle(20, 20, Color.web("lightblue"))).build();
+            Label temp = new Label("Label the first line" + "\nthe sec longlong line" + "\nthe third line");
+            temp.setFocusTraversable(false);
+            temp.setGraphic(new Rectangle(20, 20, Color.web("lightblue")));
+            return temp;
         }
     }, 200), ListViews(ListView.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Node createControl() {
@@ -196,11 +193,18 @@ public enum ControlPage {
         }
     }, 150), PasswordFields(PasswordField.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            return PasswordFieldBuilder.create().promptText("Password box the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).build();
+            PasswordField temp = new PasswordField();
+            temp.setPromptText("Password box the first line" + "\nthe sec long line" + "\nthe third line");
+            temp.setFocusTraversable(false);
+            return temp;
         }
     }), PressedToggleButtons(ToggleButton.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            return ToggleButtonBuilder.create().selected(true).text("Button the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).graphic(new Rectangle(10, 10, Color.RED)).build();
+            ToggleButton temp = new ToggleButton("Button the first line" + "\nthe sec long line" + "\nthe third line");
+            temp.setSelected(true);
+            temp.setFocusTraversable(false);
+            temp.setGraphic(new Rectangle(10, 10, Color.RED));
+            return temp;
         }
     }, 200, 120), ProgressIndicators(new ArrayList<CssMetaData<? extends Styleable, ?>>(ProgressIndicator.getClassCssMetaData()) {
         {
@@ -208,15 +212,23 @@ public enum ControlPage {
         }
     }, new ControlsCSSApp.ControlFactory() {
         public Node createControl() {
-            return ProgressIndicatorBuilder.create().progress(0.85).prefHeight(100).prefWidth(100).focusTraversable(false).build();
+            ProgressIndicator temp = new ProgressIndicator(0.85);
+            temp.setPrefSize(100, 100);
+            temp.setFocusTraversable(false);
+            return temp;
         }
     }), ProgressBars(ProgressBar.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Node createControl() {
-            return ProgressBarBuilder.create().progress(0.25).focusTraversable(false).build();
+            ProgressBar temp = new ProgressBar(0.25);
+            temp.setFocusTraversable(false);
+            return temp;
         }
     }, 200, 100), RadioButtons(RadioButton.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            return RadioButtonBuilder.create().text("Radio the first line" + "\nthe sec long line" + "\nthe third line").graphic(new Rectangle(20, 20, Color.web("lightblue"))).focusTraversable(false).build();
+            RadioButton temp = new RadioButton("Radio the first line" + "\nthe sec long line" + "\nthe third line");
+            temp.setFocusTraversable(false);
+            temp.setGraphic(new Rectangle(20, 20, Color.web("lightblue")));
+            return temp;
         }
     }, 200, 100), TextFields(new ArrayList<CssMetaData<? extends Styleable, ?>>(TextField.getClassCssMetaData()) {
         {
@@ -224,21 +236,34 @@ public enum ControlPage {
         }
     }, new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            return TextFieldBuilder.create().text("Text box the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).build();
+            TextField temp = new TextField("Text box the first line" + "\nthe sec long line" + "\nthe third line");
+            temp.setFocusTraversable(false);
+            return temp;
         }
     }), Sliders(Slider.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            return SliderBuilder.create().min(0).max(100).value(20).focusTraversable(false).build();
+            Slider temp = new Slider();
+            temp.setMin(0);
+            temp.setMax(100);
+            temp.setValue(20);
+            temp.setFocusTraversable(false);
+            return temp;
         }
     }, 200), Separators(Separator.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            Separator sep = SeparatorBuilder.create().halignment(HPos.CENTER).build();
+            Separator sep = new Separator();
+            sep.setHalignment(HPos.CENTER);
             sep.setPrefWidth(80);
             return sep;
         }
     }, 150), ScrollBars(ScrollBar.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            return ScrollBarBuilder.create().value(45).min(0).max(100).focusTraversable(false).build();
+            ScrollBar temp = new ScrollBar();
+            temp.setValue(45);
+            temp.setMin(0);
+            temp.setMax(100);
+            temp.setFocusTraversable(false);
+            return temp;
         }
     }, 150), ScrollPanes(ScrollPane.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Node createControl() {
@@ -255,12 +280,18 @@ public enum ControlPage {
         }
     }, 150), UnPressedToggleButtons(ToggleButton.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Control createControl() {
-            return ToggleButtonBuilder.create().selected(false).text("Button the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).graphic(new Rectangle(10, 10, Color.RED)).build();
+            ToggleButton temp = new ToggleButton("Button the first line" + "\nthe sec long line" + "\nthe third line");
+            temp.setGraphic(new Rectangle(10, 10, Color.RED));
+            temp.setSelected(false);
+            temp.setFocusTraversable(false);
+            return temp;
         }
     }, 200, 120), Toolbars(ToolBar.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Node createControl() {
             ToolBar toolbar = new ToolBar();
-            toolbar.getItems().addAll(new Button("One"), new Button("Two"), new Separator(), SplitMenuButtonBuilder.create().text("three").build());
+            SplitMenuButton temp = new SplitMenuButton();
+            temp.setText("three");
+            toolbar.getItems().addAll(new Button("One"), new Button("Two"), new Separator(), temp);
             toolbar.setFocusTraversable(false);
             return toolbar;
         }
@@ -287,7 +318,9 @@ public enum ControlPage {
         }
     }, 250, 150), SplitMenuButtons(SplitMenuButton.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Node createControl() {
-            SplitMenuButton smb = SplitMenuButtonBuilder.create().text("Split box the first line" + "\nthe sec long line" + "\nthe third line").items(new MenuItem("Split box the first line" + "\nthe sec long line" + "\nthe third line", new Rectangle(10, 10, Color.BLUE))).graphic(new Rectangle(10, 10, Color.RED)).build();
+            SplitMenuButton smb = new SplitMenuButton(new MenuItem("Split box the first line" + "\nthe sec long line" + "\nthe third line", new Rectangle(10, 10, Color.BLUE)));
+            smb.setText("Split box the first line" + "\nthe sec long line" + "\nthe third line");
+            smb.setGraphic(new Rectangle(10, 10, Color.RED));
             smb.setFocusTraversable(false);
             return smb;
         }
@@ -375,7 +408,11 @@ public enum ControlPage {
         }
     }, 200, 300), SplitPanes(SplitPane.getClassCssMetaData(), new ControlsCSSApp.ControlFactory() {
         public Node createControl() {
-            SplitPane pane = SplitPaneBuilder.create().items(StackPaneBuilder.create().children(new Rectangle(40, 40, Color.WHITESMOKE)).build(), StackPaneBuilder.create().children(new Rectangle(40, 40, Color.BLUE)).build(), StackPaneBuilder.create().children(new Rectangle(40, 40, Color.RED)).build()).prefWidth(150).prefHeight(150).build();
+            StackPane sp1 = new StackPane(new Rectangle(40, 40, Color.WHITESMOKE));
+            StackPane sp2 = new StackPane(new Rectangle(40, 40, Color.BLUE));
+            StackPane sp3 = new StackPane(new Rectangle(40, 40, Color.RED));
+            SplitPane pane = new SplitPane(sp1, sp2, sp3);
+            pane.setPrefSize(150, 150);
             pane.setDividerPositions(0.33, 0.67);
             pane.setFocusTraversable(false);
             return pane;

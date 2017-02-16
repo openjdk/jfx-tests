@@ -46,7 +46,7 @@ import test.javaclient.shared.Utils;
 
 /**
  * Class provides tests for mnemonics behavior.
- * According to the <a href=http://xdesign.us.oracle.com/projects/javaFX/fxcontrols-ue/specifications/mnemonics/mnemonics-UESpec.html>Mnemonics spec</a>
+ * According to the mnemonics spec,
  * mnemonics are platform specific. Therefore tests design is aimed to
  * consider the difference between platforms and to avoid boilerplate.
  *

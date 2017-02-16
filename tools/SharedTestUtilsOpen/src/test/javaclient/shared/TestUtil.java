@@ -37,6 +37,7 @@ import org.jemmy.fx.Root;
 import org.jemmy.timing.State;
 import test.javaclient.shared.description.TreeNode;
 import test.javaclient.shared.screenshots.GoldenImageManager;
+import com.sun.javafx.stage.WindowHelper;
 
 /**
  * Utility methods
@@ -176,7 +177,8 @@ public class TestUtil {
         scene = Root.ROOT.lookup(new ByWindowType(Stage.class)).lookup(Scene.class).wrap(0);
         Utils.deferAction(new Runnable() {
             public void run() {
-                scene.getControl().getWindow().setFocused(true);
+                //scene.getControl().getWindow().setFocused(true);
+                WindowHelper.setFocused(scene.getControl().getWindow(), true);
             }
         });
 

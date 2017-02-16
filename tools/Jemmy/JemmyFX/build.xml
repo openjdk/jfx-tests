@@ -73,12 +73,16 @@ questions.
     <target depends="init,deps-jar,-pre-pre-compile,-pre-compile, -copy-persistence-xml,-compile-depend, read-profile" if="have.sources" name="-do-compile">
         <echo message="Compiling  ${profile.includes} but not ${profile.excludes}"/>
         <mkdir dir="${src.docks.dir}"/>
+        <condition property="__addExports1" value="" else="--add-exports javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED --add-exports javafx.controls/com.sun.javafx.scene.control.skin=ALL-UNNAMED">
+            <isset property="noAddExports" />
+        </condition>
         <javac sourcepath="" srcdir="${src.dir}" destdir="${build.classes.dir}" classpath="${javac.classpath}" includes="${profile.includes}" excludes="${profile.excludes}">
             <compilerarg value="-processor"/>
             <compilerarg value="org.jemmy.support.Proccessor"/>
             <compilerarg value="-Aactions=docks,dump"/>
             <compilerarg value="-s"/>
             <compilerarg value="${basedir}/${src.docks.dir}"/>
+            <compilerarg line="${__addExports1}"/>
         </javac>
         <copy todir="${build.classes.dir}">
             <fileset dir="${src.docks.dir}" excludes="${build.classes.excludes},${excludes}" includes="${includes}"/>

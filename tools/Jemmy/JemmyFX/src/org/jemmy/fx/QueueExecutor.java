@@ -222,7 +222,7 @@ public class QueueExecutor extends AbstractExecutor {
         }
 
         public boolean failed() {
-            return action.failed();
+            return !done || action.failed();
         }
 
         public Throwable getThrowable() {
@@ -231,8 +231,9 @@ public class QueueExecutor extends AbstractExecutor {
 
         public synchronized void waitDone(Timeout timeout) {
             try {
-                while (!done) {
-                    wait(timeout.getValue());
+                long maxTime = System.currentTimeMillis() + timeout.getValue();
+                while (!done && System.currentTimeMillis() < maxTime) {
+                    wait(maxTime - System.currentTimeMillis());
                 }
             } catch (InterruptedException ex) {
             }

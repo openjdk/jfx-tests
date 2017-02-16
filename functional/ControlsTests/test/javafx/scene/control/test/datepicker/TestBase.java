@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.datepicker;
 
-import com.sun.javafx.scene.control.skin.LabeledText;
+import com.sun.javafx.scene.control.LabeledText;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;

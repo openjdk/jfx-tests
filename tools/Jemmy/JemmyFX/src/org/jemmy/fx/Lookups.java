@@ -60,7 +60,7 @@ public class Lookups {
      */
     @SuppressWarnings("unchecked")
     public static <T extends Node> Wrap<? extends T> byID(Wrap<?> parent, String id, Class<T> type) {
-        return byID(parent.as(Parent.class, Node.class), id, type);
+        return byID((Parent<Node>) parent.as(Parent.class, Node.class), id, type);
     }
     /**
      * Equivalent to <code>parent.lookup(type, new ByText<T>(text)).wrap(0)</code>
@@ -84,7 +84,7 @@ public class Lookups {
      */
     @SuppressWarnings("unchecked")
     public static <T extends Node> Wrap<? extends T> byText(Wrap<?> parent, String id, Class<T> type) {
-        return byText(parent.as(Parent.class, Node.class), id, type);
+        return byText((Parent<Node>) parent.as(Parent.class, Node.class), id, type);
     }
     /**
      * Equivalent to <code>FXRoot.ROOT.lookup(new ByTitleSceneLookup<Scene>(title)).wrap(0).as(Parent.class, Node.class)</code>

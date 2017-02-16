@@ -108,7 +108,7 @@ public class MenuBarWrap<CONTROL extends MenuBar> extends NodeWrap<CONTROL> {
     @As(MenuItem.class)
     public StringMenuOwner<MenuItem> asMenuOwner() {
         if (menuOwner == null) {
-            menuOwner = new StringMenuOwnerImpl(this, this.as(Parent.class, Menu.class));
+            menuOwner = new StringMenuOwnerImpl(this, (Parent <Menu>)this.as(Parent.class, Menu.class));
         }
         return menuOwner;
     }

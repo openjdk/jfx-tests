@@ -32,7 +32,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBoxBuilder;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import test.javaclient.shared.Utils;
@@ -71,7 +71,10 @@ public class StylesheetApp extends Application {
             }
         });
         scene.getStylesheets().add(styles[styleIndex]);
-        pane.getChildren().add(VBoxBuilder.create().alignment(Pos.CENTER).spacing(50).children(golden, button).build());
+        VBox temp = new VBox(golden, button);
+        temp.setAlignment(Pos.CENTER);
+        temp.setSpacing(50);
+        pane.getChildren().add(temp);
         stage.setScene(scene);
         stage.setTitle("Test for RT-17348." + VersionInfo.getRuntimeVersion());
         stage.show();

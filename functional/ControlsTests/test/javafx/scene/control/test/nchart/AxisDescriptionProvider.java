@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.nchart;
 
-import com.sun.javafx.scene.control.skin.LabeledText;
+import com.sun.javafx.scene.control.LabeledText;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Side;

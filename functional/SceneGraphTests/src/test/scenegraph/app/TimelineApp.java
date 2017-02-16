@@ -31,7 +31,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -143,11 +142,13 @@ public class TimelineApp extends BasicButtonChooserApp {
                     final Timeline timeline = createTimelineAndPlayButton(field, "3");
                     timeline.setAutoReverse(false);
                     timeline.setCycleCount(Timeline.INDEFINITE);
-                    field.getChildren().add(ButtonBuilder.create().text("stop").onAction(new EventHandler<ActionEvent>() {
+                    Button temp1 = new Button("stop");
+                    temp1.setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent t) {
                             timeline.stop();
                         }
-                    }).build());
+                    });
+                    field.getChildren().add(temp1);
 
                     addSlot("infinite-stop", field);
                 }
@@ -158,11 +159,13 @@ public class TimelineApp extends BasicButtonChooserApp {
                     final Timeline timeline = createTimelineAndPlayButton(field, "4");
                     timeline.setAutoReverse(false);
                     timeline.setCycleCount(Timeline.INDEFINITE);
-                    field.getChildren().add(ButtonBuilder.create().text("pause").onAction(new EventHandler<ActionEvent>() {
+                    Button temp2 = new Button("pause");
+                    temp2.setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent t) {
                             timeline.pause();
                         }
-                    }).build());
+                    });
+                    field.getChildren().add(temp2);
 
                     addSlot("infinite-pause", field);
                 }

@@ -33,6 +33,8 @@ import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.test.treetable.ResetButtonNames;
+import static javafx.scene.control.test.treetable.ResetButtonNames.HARD_RESET_BUTTON_ID;
+import static javafx.scene.control.test.treetable.ResetButtonNames.SOFT_RESET_BUTTON_ID;
 import static javafx.scene.control.test.treeview.TreeViewConstants.ROOT_NAME;
 import javafx.scene.control.test.utils.CommonPropertiesScene;
 import javafx.scene.control.test.utils.ptables.NodeControllerFactory;
@@ -131,7 +133,8 @@ public class TreeViewNewApp extends InteroperabilityApp implements TreeViewConst
             tabPane = new TabPaneWithControl("TreeView", tb);
             getControlOverItem(ROOT_NAME);
 
-            Button hardResetButton = ButtonBuilder.create().id(HARD_RESET_BUTTON_ID).text("Hard reset").build();
+            Button hardResetButton = new Button("Hard reset");
+            hardResetButton.setId(HARD_RESET_BUTTON_ID);
             hardResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -141,7 +144,8 @@ public class TreeViewNewApp extends InteroperabilityApp implements TreeViewConst
                 }
             });
 
-            Button softResetButton = ButtonBuilder.create().id(SOFT_RESET_BUTTON_ID).text("Soft reset").build();
+            Button softResetButton = new Button("Soft reset");
+            softResetButton.setId(SOFT_RESET_BUTTON_ID);
             softResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     refreshProcedure(2);
@@ -403,8 +407,11 @@ public class TreeViewNewApp extends InteroperabilityApp implements TreeViewConst
 
         private HBox getScrollToHBox() {
             HBox hb = new HBox();
-            Button button = ButtonBuilder.create().text("ScrollTo").id(SCROLL_TO_BUTTON_ID).build();
-            final TextField tf = TextFieldBuilder.create().text("0").id(SCROLL_TO_TEXT_FIELD_ID).prefWidth(50).build();
+            Button button = new Button("ScrollTo");
+            button.setId(SCROLL_TO_BUTTON_ID);
+            final TextField tf = new TextField("0");
+            tf.setId(SCROLL_TO_TEXT_FIELD_ID);
+            tf.setPrefWidth(50);
 
             button.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
@@ -418,8 +425,12 @@ public class TreeViewNewApp extends InteroperabilityApp implements TreeViewConst
 
         private HBox getEditHBox() {
             HBox hb = new HBox();
-            Button button = ButtonBuilder.create().text("Edit").id(EDIT_BUTTON_ID).build();
-            final TextField tf = TextFieldBuilder.create().promptText("name").id(EDIT_TEXT_FIELD_ID).prefWidth(50).build();
+            Button button = new Button("Edit");
+            button.setId(EDIT_BUTTON_ID);
+            final TextField tf = new TextField();
+            tf.setPromptText("name");
+            tf.setId(EDIT_TEXT_FIELD_ID);
+            tf.setPrefWidth(50);
 
             button.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
@@ -434,11 +445,8 @@ public class TreeViewNewApp extends InteroperabilityApp implements TreeViewConst
         private VBox setEventHandlersHBox() {
             VBox vb = new VBox();
 
-            Button btn = ButtonBuilder.create()
-                    .text("Set onEdit event hadlers")
-                    .id(BTN_SET_ON_EDIT_EVENT_HANDLERS)
-                    .build();
-
+            Button btn = new Button("Set onEdit event hadlers");
+            btn.setId(BTN_SET_ON_EDIT_EVENT_HANDLERS);
             btn.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedControl.setOnEditStart(new EventHandler() {
@@ -461,11 +469,8 @@ public class TreeViewNewApp extends InteroperabilityApp implements TreeViewConst
                 }
             });
 
-            Button btnAddFactory = ButtonBuilder.create()
-                    .text("Set cell factory for editing")
-                    .id(SET_CELL_FACTORY_FOR_EDITING)
-                    .build();
-
+            Button btnAddFactory = new Button("Set cell factory for editing");
+            btnAddFactory.setId(SET_CELL_FACTORY_FOR_EDITING);
             btnAddFactory.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedControl.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {

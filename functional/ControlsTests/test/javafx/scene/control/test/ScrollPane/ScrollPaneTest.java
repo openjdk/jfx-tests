@@ -77,6 +77,9 @@ public class ScrollPaneTest extends TestBase {
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ScrollPane.vmax.DEFAULT", "javafx.scene.control.ScrollPane.vmax.GET"}, level = Level.FULL)
     public void checkVMaxOptionTest() throws InterruptedException {
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 100);
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 100);
+
         Assert.assertEquals((new ScrollPane()).vmaxProperty().getValue(), 1, commonComparePrecision);
 
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.vmax, 200);
@@ -85,17 +88,17 @@ public class ScrollPaneTest extends TestBase {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.vvalue, 200);
         checkTextFieldValue(Properties.vvalue, 200);
 
-        Wrap<? extends ScrollBar> sb1 = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
+        Wrap<? extends ScrollBar> sb1 = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
         sb1.as(AbstractScroll.class).to(0);
         checkTextFieldValue(Properties.vvalue, 0);
 
-        Wrap<? extends ScrollBar> sb2 = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
+        Wrap<? extends ScrollBar> sb2 = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
         sb2.as(AbstractScroll.class).to(200);
         checkTextFieldValue(Properties.vvalue, 200);
 
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(-1 * (Utils.isMacOS() ? -1 : 1));
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(-1 * (Utils.isMacOS() ? -1 : 1));
 
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+1 * (Utils.isMacOS() ? -1 : 1));
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+1 * (Utils.isMacOS() ? -1 : 1));
         checkTextFieldValue(Properties.vvalue, 200);
 
         setPropertyBySlider(SettingType.UNIDIRECTIONAL, Properties.vmax, 150);
@@ -109,6 +112,9 @@ public class ScrollPaneTest extends TestBase {
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ScrollPane.vmin.DEFAULT", "javafx.scene.control.ScrollPane.vmin.GET"}, level = Level.FULL)
     public void checkVMinOptionTest() throws InterruptedException {
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 100);
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 100);
+
         Assert.assertEquals((new ScrollPane()).vminProperty().getValue(), 0, commonComparePrecision);
 
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.vmin, -100);
@@ -117,17 +123,17 @@ public class ScrollPaneTest extends TestBase {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.vvalue, -100);
         checkTextFieldValue(Properties.vvalue, -100);
 
-        Wrap<? extends ScrollBar> sb1 = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
+        Wrap<? extends ScrollBar> sb1 = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
         sb1.as(AbstractScroll.class).to(1);
         checkTextFieldValue(Properties.vvalue, 1);
 
-        Wrap<? extends ScrollBar> sb2 = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
+        Wrap<? extends ScrollBar> sb2 = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
         sb2.as(AbstractScroll.class).to(-100);
         checkTextFieldValue(Properties.vvalue, -100);
 
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+1 * (Utils.isMacOS() ? -1 : 1));
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(+1 * (Utils.isMacOS() ? -1 : 1));
 
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(-1 * (Utils.isMacOS() ? -1 : 1));
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).mouse().turnWheel(-1 * (Utils.isMacOS() ? -1 : 1));
         checkTextFieldValue(Properties.vvalue, -100);
 
         setPropertyBySlider(SettingType.UNIDIRECTIONAL, Properties.vmin, -50);
@@ -141,6 +147,9 @@ public class ScrollPaneTest extends TestBase {
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ScrollPane.hmax.DEFAULT", "javafx.scene.control.ScrollPane.hmax.GET"}, level = Level.FULL)
     public void checkHMaxOptionTest() throws InterruptedException {
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 100);
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 100);
+
         Assert.assertEquals((new ScrollPane()).hmaxProperty().getValue(), 1, commonComparePrecision);
 
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.hmax, 200);
@@ -149,17 +158,17 @@ public class ScrollPaneTest extends TestBase {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.hvalue, 200);
         checkTextFieldValue(Properties.hvalue, 200);
 
-        Wrap<? extends ScrollBar> sb1 = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
+        Wrap<? extends ScrollBar> sb1 = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
         sb1.as(AbstractScroll.class).to(0);
         checkTextFieldValue(Properties.hvalue, 0);
 
-        Wrap<? extends ScrollBar> sb2 = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
+        Wrap<? extends ScrollBar> sb2 = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
         sb2.as(AbstractScroll.class).to(200);
         checkTextFieldValue(Properties.hvalue, 200);
 
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(-1);
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(-1);
 
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+1);
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+1);
         checkTextFieldValue(Properties.hvalue, 200);
 
         setPropertyBySlider(SettingType.UNIDIRECTIONAL, Properties.hmax, 150);
@@ -173,6 +182,9 @@ public class ScrollPaneTest extends TestBase {
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ScrollPane.hmin.DEFAULT", "javafx.scene.control.ScrollPane.hmin.GET"}, level = Level.FULL)
     public void checkHMinOptionTest() throws InterruptedException {
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 100);
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 100);
+
         Assert.assertEquals((new ScrollPane()).vminProperty().getValue(), 0, commonComparePrecision);
 
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.hmin, -100);
@@ -181,17 +193,17 @@ public class ScrollPaneTest extends TestBase {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.hvalue, -100);
         checkTextFieldValue(Properties.hvalue, -100);
 
-        Wrap<? extends ScrollBar> sb1 = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
+        Wrap<? extends ScrollBar> sb1 = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
         sb1.as(AbstractScroll.class).to(1);
         checkTextFieldValue(Properties.hvalue, 1);
 
-        Wrap<? extends ScrollBar> sb2 = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
+        Wrap<? extends ScrollBar> sb2 = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
         sb2.as(AbstractScroll.class).to(-100);
         checkTextFieldValue(Properties.hvalue, -100);
 
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+1);
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(+1);
 
-        findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(-1);
+        findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).mouse().turnWheel(-1);
         checkTextFieldValue(Properties.hvalue, -100);
 
         setPropertyBySlider(SettingType.UNIDIRECTIONAL, Properties.hmin, -50);
@@ -206,6 +218,9 @@ public class ScrollPaneTest extends TestBase {
     public void checkH_V_ValueOptionTest() throws InterruptedException, Throwable {
         Assert.assertEquals((new ScrollPane()).hvalueProperty().getValue(), 0, commonComparePrecision);
         Assert.assertEquals((new ScrollPane()).vvalueProperty().getValue(), 0, commonComparePrecision);
+
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 100);
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 100);
 
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.hvalue, 200);
         checkTextFieldValue(Properties.hvalue, 1);
@@ -228,11 +243,11 @@ public class ScrollPaneTest extends TestBase {
 
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefViewportHeight, 150);
         checkTextFieldValue(Properties.prefViewportHeight, 150);
-        Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) == null);
+        Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) == null);
 
         setPropertyBySlider(SettingType.UNIDIRECTIONAL, Properties.prefViewportHeight, 230);
         checkTextFieldValue(Properties.prefViewportHeight, 230);
-        Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);
+        Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);
     }
 
     /**
@@ -246,11 +261,11 @@ public class ScrollPaneTest extends TestBase {
 
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefViewportWidth, 150);
         checkTextFieldValue(Properties.prefViewportWidth, 150);
-        Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) == null);
+        Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) == null);
 
         setPropertyBySlider(SettingType.UNIDIRECTIONAL, Properties.prefViewportWidth, 230);
         checkTextFieldValue(Properties.prefViewportWidth, 230);
-        Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, false) == null);
+        Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, false) == null);
     }
 
     @Test(timeout = 300000)
@@ -321,8 +336,8 @@ public class ScrollPaneTest extends TestBase {
     };
 
     private void checkScrollbarsVisibility(boolean horizontalVisible, boolean verticalVisible) {
-        Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, horizontalVisible) == null);
-        Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, verticalVisible) == null);
+        Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, horizontalVisible) == null);
+        Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, verticalVisible) == null);
     }
 
     @Smoke
@@ -372,7 +387,7 @@ public class ScrollPaneTest extends TestBase {
                             checkScrollbarsVisibility(true, true);
                             break;
                         case AS_NEEDED:
-                            checkScrollbarsVisibility(true, true);
+                            checkScrollbarsVisibility(false, false);
                             break;
                         case NEVER:
                             checkScrollbarsVisibility(false, false);
@@ -402,6 +417,9 @@ public class ScrollPaneTest extends TestBase {
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void dynamicContentChangingTest() throws Throwable {
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 100);
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 100);
+
         changeContent();
         //If content has really changed, button will be searchable.
         //If content didn't change, button won't be on scene.
@@ -443,8 +461,8 @@ public class ScrollPaneTest extends TestBase {
             setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, size * 2);
             setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, size * 2);
 
-            Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) == null);
-            Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) == null);
+            Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) == null);
+            Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) == null);
 
             Point controlSize = new GetAction<Point>() {
                 @Override
@@ -460,8 +478,8 @@ public class ScrollPaneTest extends TestBase {
                 }
             }.dispatch(Root.ROOT.getEnvironment(), testedControl.getControl());
 
-            double verticalScrollBarWidth = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).getScreenBounds().width;
-            double horizontalScrollBarHeight = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).getScreenBounds().height;
+            double verticalScrollBarWidth = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).getScreenBounds().width;
+            double horizontalScrollBarHeight = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).getScreenBounds().height;
 
             Assert.assertEquals(viewPortSize.x + verticalScrollBarWidth, controlSize.x, commonComparePrecision);
             Assert.assertEquals(viewPortSize.y + horizontalScrollBarHeight, controlSize.y, commonComparePrecision);
@@ -471,6 +489,9 @@ public class ScrollPaneTest extends TestBase {
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void whiteGapTest() throws InterruptedException, Throwable {
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 100);
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 100);
+
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.hmax, 200);
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.hmin, 50);
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.hvalue, 200);
@@ -489,6 +510,9 @@ public class ScrollPaneTest extends TestBase {
     @ScreenshotCheck
     @Test(timeout = 300000)//RT-17350
     public void immediateHVBarPoliticApplyingTest() throws Throwable {
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 100);
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 100);
+
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, ScrollPane.ScrollBarPolicy.ALWAYS, Properties.hbarPolicy);
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, ScrollPane.ScrollBarPolicy.NEVER, Properties.hbarPolicy);
 
@@ -531,6 +555,9 @@ public class ScrollPaneTest extends TestBase {
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void insideTraversalCheckTest() throws Throwable {
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 100);
+        setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 100);
+
         changeContent();
         clickContentButton();
 
@@ -562,14 +589,14 @@ public class ScrollPaneTest extends TestBase {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefViewportWidth, 201);
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefViewportHeight, 201);
 
-        Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, false) == null);
-        Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);
+        Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, false) == null);
+        Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, false) == null);
 
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefViewportWidth, 200);
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefViewportHeight, 200);
 
-        Assert.assertTrue(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) != null);
-        Assert.assertTrue(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) != null);
+        Assert.assertTrue(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) != null);
+        Assert.assertTrue(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) != null);
 
         currentSettingOption = temp;
     }
@@ -721,8 +748,8 @@ public class ScrollPaneTest extends TestBase {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefViewportHeight, 100);
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefViewportWidth, 100);
 
-        Wrap<? extends ScrollBar> vertical = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
-        Wrap<? extends ScrollBar> horizontal = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
+        Wrap<? extends ScrollBar> vertical = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true);
+        Wrap<? extends ScrollBar> horizontal = findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
 
         ScrollingChecker scV = new ScrollingChecker(vertical.getControl().valueProperty());
         ScrollingChecker scH = new ScrollingChecker(horizontal.getControl().valueProperty());
@@ -765,8 +792,8 @@ public class ScrollPaneTest extends TestBase {
             setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, size * 2);
             setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, size * 2);
 
-            Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) == null);
-            Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) == null);
+            Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true) == null);
+            Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true) == null);
 
             Bounds bounds = new GetAction<Bounds>() {
                 @Override
@@ -782,8 +809,8 @@ public class ScrollPaneTest extends TestBase {
                 }
             }.dispatch(Root.ROOT.getEnvironment(), testedControl.getControl());
 
-            Assert.assertEquals(viewPortSize.x, bounds.getWidth() + findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).getScreenBounds().getWidth(), commonComparePrecision);
-            Assert.assertEquals(viewPortSize.y, bounds.getHeight() + findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).getScreenBounds().getHeight(), commonComparePrecision);
+            Assert.assertEquals(viewPortSize.x, bounds.getWidth() + findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, true).getScreenBounds().getWidth(), commonComparePrecision);
+            Assert.assertEquals(viewPortSize.y, bounds.getHeight() + findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true).getScreenBounds().getHeight(), commonComparePrecision);
         }
     }
 

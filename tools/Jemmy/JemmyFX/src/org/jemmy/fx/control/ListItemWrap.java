@@ -117,12 +117,12 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
     public void show() {
         final List<DATA> items = listViewWrap.getItems();
 
-        AbstractScroll scroll1 = Utils.getContainerScroll(listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() == Orientation.VERTICAL);
+        AbstractScroll scroll1 = Utils.getContainerScroll((Parent <Node>)listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() == Orientation.VERTICAL);
         if (scroll1 != null) {
             TableUtils.scrollToInSingleDimension((Wrap<? extends Control>) viewWrap, ListCell.class, p -> items.indexOf(p.getItem()), listViewWrap.getItems().indexOf(getControl()),
             scroll1.caret(), listViewWrap.vertical());
         }
-        AbstractScroll scroll2 = Utils.getContainerScroll(listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() != Orientation.VERTICAL);
+        AbstractScroll scroll2 = Utils.getContainerScroll((Parent <Node>)listViewWrap.as(Parent.class, Node.class), listViewWrap.getControl().getOrientation() != Orientation.VERTICAL);
         Utils.makeCenterVisible(getClippedContainerWrap(), this, scroll2);
 
     }

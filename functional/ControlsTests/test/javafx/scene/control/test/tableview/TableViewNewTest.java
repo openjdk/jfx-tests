@@ -26,9 +26,9 @@
 package javafx.scene.control.test.tableview;
 
 import client.test.Smoke;
-import com.sun.javafx.scene.control.skin.NestedTableColumnHeader;
-import com.sun.javafx.scene.control.skin.TableColumnHeader;
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
+import javafx.scene.control.skin.NestedTableColumnHeader;
+import javafx.scene.control.skin.TableColumnHeader;
+import javafx.scene.control.skin.TableHeaderRow;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
@@ -210,14 +210,14 @@ public class TableViewNewTest extends ApplicationInteractionFunctions {
 
     private void checkSortNotScrollingFor(String name, int index) {
         scrollTo(index, 0);
-        final double initialScrollPos = getScrollBarValue(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true));
+        final double initialScrollPos = getScrollBarValue(findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true));
         getTableColumnHeaderWrap(name).mouse().click();
         getTableColumnHeaderWrap(name).mouse().click();
         getTableColumnHeaderWrap(name).mouse().click();
         getTableColumnHeaderWrap(name).mouse().click();
         new Waiter(new Timeout("", 500)).ensureState(new State() {
             public Object reached() {
-                if (Math.abs(initialScrollPos - getScrollBarValue(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true))) < 0.001) {
+                if (Math.abs(initialScrollPos - getScrollBarValue(findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true))) < 0.001) {
                     return true;
                 } else {
                     return null;

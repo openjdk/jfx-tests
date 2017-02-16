@@ -27,7 +27,6 @@ package javafx.scene.control.test.utils.ptables;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFieldBuilder;
 import static javafx.scene.control.test.utils.ptables.StaticLogger.*;
 
 /**
@@ -39,7 +38,8 @@ public class StringPropertyValueSetter extends AbstractPropertyValueSetter<Strin
 
     public StringPropertyValueSetter(Property listeningProperty, BindingType btype, Object testedControl, String initialString) {
         try {
-            final TextField tf = TextFieldBuilder.create().text(initialString).id(createId(listeningProperty, btype)).build();
+            final TextField tf = new TextField(initialString);
+            tf.setId(createId(listeningProperty, btype));
             this.leadingControl = tf;
             this.leadingProperty = (Property) tf.textProperty();
             this.listeningProperty = listeningProperty;

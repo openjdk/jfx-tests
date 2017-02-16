@@ -49,6 +49,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -334,13 +338,26 @@ public class TestScript extends htmltestrunner.TestScript {
 
         String[] jvmVmOptions = savedEnv.lookup(BasicFXInterview.VM_OPTIONS_PARAM_NAME);
 
+        String[] xPatch = savedEnv.lookup(BasicFXInterview.XPATCH_PARAM_NAME);
+        String xPatchArg = "";
+        if (xPatch != null && xPatch.length > 0) {
+            File xPatchFile = new File(xPatch[0]);
+            xPatchArg = xPatchFile.getAbsolutePath();
+        }
+
+        boolean enableAddExports = YesNoQuestion.YES.equals(lookup(
+                BasicFXInterview.ENABLE_ADD_EXPORTS_PARAM_NAME, YesNoQuestion.NO));
+
+        String noAddExportsArg = enableAddExports ? null : "-DnoAddExports=true";
+
+        String addExportsArg[] = enableAddExports
+                ? combineAddExports(
+                    savedEnv.lookup(BasicFXInterview.ADD_EXPORTS_PARAM_NAME),
+                    td.getParameter(RunUITestFinder.ADD_EXPORTS))
+                : null;
+
         String jvmArgPrismOrder = getJvmArgPrismOrder();
 
-        //TODO (SG): is this still required?
-        String jvmArgLibraryPath = "";
-        if (fxSdkHome != null) {
-            jvmArgLibraryPath = "-Djava.library.path=" + fxSdkHome + File.separator + "rt";
-        }
 
 //        String externaloutput = lookup(BasicFXInterview.EXTERNALOUTPUT, "");
 //        if (externaloutput != null) {
@@ -374,7 +391,7 @@ public class TestScript extends htmltestrunner.TestScript {
 
         String swtTestOpt = "";
         try {
-            if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
+            if (System.getProperty("os.name").toLowerCase().contains("mac")) {
                 RunWith wunWithAnnotation = Class.forName(testClassName).getAnnotation(RunWith.class);
                 if ((wunWithAnnotation != null) && (wunWithAnnotation.value().equals(CanvasRunner.class))) {
                     swtTestOpt = "-XstartOnFirstThread";
@@ -390,9 +407,17 @@ public class TestScript extends htmltestrunner.TestScript {
         String[] command = new String[]{};
         command = addToArray(command, javaExec.trim());
         command = addToArray(command, jvmVmOptions);
+        if (addExportsArg != null) {
+            command = addToArray(command, addExportsArg);
+        } else if (noAddExportsArg != null) {
+            command = addToArray(command, noAddExportsArg);
+        }
+        if (xPatchArg != null && !xPatchArg.isEmpty()) {
+            command = addToArray(command, "--patch-module " + xPatchArg);
+        }
         command = addToArray(command, lookAndFeelOptions);
         command = addToArray(command, ipV4);
-        command = addToArray(command, jvmArgPrismOrder, jvmArgLibraryPath, jvmArgImageUtils);
+        command = addToArray(command, jvmArgPrismOrder, jvmArgImageUtils);
         command = addToArray(command, additionalOptions);
         command = addToArray(command, jvmArgNoDesc, jvmProxyHost, jvmProxyPort, jvmInterop, swtTestOpt);
         command = addToArray(command, jvmArgClientTestRoot);
@@ -402,6 +427,35 @@ public class TestScript extends htmltestrunner.TestScript {
         command = addToArray(command, isJunit ? JUnit2TestRunner.class.getName() : TestRunner.class.getName(), testClassName);
         return command;
     }
+
+    static String[] combineAddExports(String[] addExportsArray, String addExportsValue) {
+        if (addExportsValue == null) {
+            return combineAddExports(addExportsArray);
+        } else {
+            String[] newArray = new String[addExportsArray.length + 1];
+            System.arraycopy(addExportsArray, 0, newArray, 1, addExportsArray.length);
+            newArray[0] = addExportsValue;
+            return combineAddExports(newArray);
+        }
+    }
+
+    static String[] combineAddExports(String[] addExportsArray) {
+        List<String> addExportsList = new ArrayList<>();
+        for (String addExports : addExportsArray) {
+            if (addExports != null) {
+                for (String value : addExports.split("\\s*,\\s*")) {
+                    if (!value.isEmpty() && !addExportsList.contains(value.trim())) {
+                        addExportsList.add("--add-exports");
+                        addExportsList.add(value.trim());
+                        addExportsList.add("--add-opens");
+                        addExportsList.add(value.trim());
+                    }
+                }
+            }
+        }
+        return addExportsList.toArray(new String[addExportsList.size()]);
+    }
+
 
     /**
      *

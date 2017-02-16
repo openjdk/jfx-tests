@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -20,43 +20,35 @@
  *
  * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
  * or visit www.oracle.com if you need additional information or have any
- * questions.
  */
-package org.jemmy.fx;
+package client.test.runner;
 
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import javafx.stage.Window;
-import org.jemmy.action.GetAction;
-import org.jemmy.lookup.ControlList;
-
+import com.sun.interview.FileFilter;
+import java.io.File;
 
 /**
- * Allows to search among windows.
- * @author shura
+ *
+ * @author akouznet
  */
-class WindowList implements ControlList {
-
-    @Override
-    public List<?> getControls() {
-        GetAction<List<?>> scenes = new GetAction<List<?>>() {
-
-            @Override
-            public void run(Object... parameters) {
-                LinkedList<Window> res = new LinkedList<Window>();
-                res.addAll(Window.getWindows());
-                setResult(res);
-            }
-        };
-        try {
-            Root.ROOT.getEnvironment().getExecutor().execute(Root.ROOT.getEnvironment(), true, scenes);
-            return scenes.getResult();
-        } catch (Throwable th) {
-            th.printStackTrace(System.err);
-            return new ArrayList();
+public class InterviewUtils {
+    public static class ExecutablesFileFilter implements FileFilter {
+        @Override
+        public boolean accept(File file) {
+            return file.exists() && file.canExecute();
         }
+
+        @Override
+        public boolean acceptsDirectories() {
+            return false;
+        }
+
+        @Override
+        public String getDescription() {
+            return "Executable files";
+        }
+    }
+
+    public static boolean isWindows() {
+        return System.getProperty("os.name").toLowerCase().contains("windows");
     }
 }

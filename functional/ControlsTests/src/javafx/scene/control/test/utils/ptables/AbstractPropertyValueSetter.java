@@ -29,7 +29,6 @@ import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import static javafx.scene.control.test.utils.ptables.StaticLogger.*;
@@ -72,7 +71,9 @@ public abstract class AbstractPropertyValueSetter<ValueType> extends HBox implem
         getChildren().addAll(new Label(labelDescription.toUpperCase().substring(0, Math.min(15, labelDescription.length()) - 1)), leadingControl, binding.getVisualRepresentation());
 
         if (btype == BindingType.UNIDIRECTIONAL) {
-            Button setButton = ButtonBuilder.create().text("set").minWidth(38).id(SET_PREFIX + listeningProperty.getName().toUpperCase()).build();
+            Button setButton = new Button("set");
+            setButton.setMinWidth(38);
+            setButton.setId(SET_PREFIX + listeningProperty.getName().toUpperCase());
             setAction = new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     //bindingTB.setSelected(false);I think, that is not obligative.

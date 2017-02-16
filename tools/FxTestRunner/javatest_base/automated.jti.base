@@ -5,4 +5,6 @@ timeout.timeout=1
 runmode=desktop
 browserPath=firefox
 javawsPath=javaws
-vmOptions=
+vmOptions=-XX:+IgnoreUnrecognizedVMOptions -Dsun.reflect.debugModuleAccessChecks=true -XX:+TraceAccessControlErrors
+addExports=javafx.graphics/com.sun.prism=ALL-UNNAMED,javafx.base/com.sun.javafx.runtime=ALL-UNNAMED,javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED,javafx.graphics/com.sun.glass.ui=ALL-UNNAMED,javafx.graphics/com.sun.javafx.stage=ALL-UNNAMED,javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED,javafx.graphics/com.sun.javafx.scene.input=ALL-UNNAMED,javafx.graphics/com.sun.javafx.scene.layout.region=ALL-UNNAMED,javafx.controls/javafx.scene.control=ALL-UNNAMED,javafx.controls/javafx.scene.control.skin=ALL-UNNAMED,javafx.controls/com.sun.javafx.scene.control.skin=ALL-UNNAMED,javafx.controls/com.sun.javafx.charts=ALL-UNNAMED,javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED,javafx.base/com.sun.javafx.collections=ALL-UNNAMED,javafx.base/javafx.event=ALL-UNNAMED
+addExportsEnabled=Yes

@@ -113,14 +113,13 @@ public class NewScrollPaneApp extends InteroperabilityApp {
 
         public ScrollPaneScene() {
             super("ScrollPane", 800, 600);
-
-            prepareScene();
         }
 
         @Override
         protected final void prepareScene() {
             Utils.addBrowser(this);
-            testedScrollPane = ScrollPaneBuilder.create().id(TESTED_SCROLLPANE_ID).build();
+            testedScrollPane = new ScrollPane();
+            testedScrollPane.setId(TESTED_SCROLLPANE_ID);
             final Node content = setCustomContent(customContentHeight, customContentWidth);
 
             final ContentMotion cm = new ContentMotion();
@@ -136,7 +135,8 @@ public class NewScrollPaneApp extends InteroperabilityApp {
                 testedScrollPane.setPrefViewportHeight(scrollPaneHeight);
             }
 
-            Button changeContentButton = ButtonBuilder.create().id(CHANGE_CONTENT_BUTTON_ID).text("ChangeContent").build();
+            Button changeContentButton = new Button("ChangeContent");
+            changeContentButton.setId(CHANGE_CONTENT_BUTTON_ID);
             changeContentButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     changeContent();
@@ -144,7 +144,8 @@ public class NewScrollPaneApp extends InteroperabilityApp {
                 }
             });
 
-            Button addPrefWidthAndHeightButton = ButtonBuilder.create().id(ADD_SIZE_BUTTON_ID).text("Add pref sizes").build();
+            Button addPrefWidthAndHeightButton = new Button("Add pref sizes");
+            addPrefWidthAndHeightButton.setId(ADD_SIZE_BUTTON_ID);
             addPrefWidthAndHeightButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     tb.addDoublePropertyLine(testedScrollPane.prefWidthProperty(), -100, 200, 100);
@@ -152,7 +153,8 @@ public class NewScrollPaneApp extends InteroperabilityApp {
                 }
             });
 
-            Button setTextAreaAsContentButton = ButtonBuilder.create().id(CHANGE_CONTENT_TO_RESIZABLE_BUTTON_ID).text("Set blue pane as content").build();
+            Button setTextAreaAsContentButton = new Button("Set blue pane as content");
+            setTextAreaAsContentButton.setId(CHANGE_CONTENT_TO_RESIZABLE_BUTTON_ID);
             setTextAreaAsContentButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     setResizableContent();
@@ -162,35 +164,40 @@ public class NewScrollPaneApp extends InteroperabilityApp {
                 }
             });
 
-            Button setCustomContentButton = ButtonBuilder.create().id(CHANGE_CONTENT_TO_CUSTOM_BUTTON_ID).text("Set custom content").build();
+            Button setCustomContentButton = new Button("Set custom content");
+            setCustomContentButton.setId(CHANGE_CONTENT_TO_CUSTOM_BUTTON_ID);
             setCustomContentButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     setCustomContent();
                 }
             });
 
-            Button buttonStart = ButtonBuilder.create().id(START_MOTION_BUTTON_ID).text("Start motion").build();
+            Button buttonStart = new Button("Start motion");
+            buttonStart.setId(START_MOTION_BUTTON_ID);
             buttonStart.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     cm.getTimeline().play();
                 }
             });
 
-            Button rotateButton = ButtonBuilder.create().id(ROTATE_BUTTON_ID).text("Rotate on 30deg").build();
+            Button rotateButton = new Button("Rotate on 30deg");
+            rotateButton.setId(ROTATE_BUTTON_ID);
             rotateButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     content.setRotate(content.getRotate() + 30);
                 }
             });
 
-            Button rotateScrollPaneButton = ButtonBuilder.create().id(ROTATE_SCROLLPANE_BUTTON_ID).text("Rotate scrollpane on 30deg").build();
+            Button rotateScrollPaneButton = new Button("Rotate scrollpane on 30deg");
+            rotateScrollPaneButton.setId(ROTATE_SCROLLPANE_BUTTON_ID);
             rotateScrollPaneButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedScrollPane.setRotate(testedScrollPane.getRotate() + 30);
                 }
             });
 
-            Button increaseScaleButton = ButtonBuilder.create().id(INCREASE_SCALE_BUTTON_ID).text("Increase scale").build();
+            Button increaseScaleButton = new Button("Increase scale");
+            increaseScaleButton.setId(INCREASE_SCALE_BUTTON_ID);
             increaseScaleButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     content.setScaleX(content.getScaleX() + 0.15);
@@ -198,7 +205,8 @@ public class NewScrollPaneApp extends InteroperabilityApp {
                 }
             });
 
-            Button decreaseScaleButton = ButtonBuilder.create().id(DECREASE_SCALE_BUTTON_ID).text("Decrease scale").build();
+            Button decreaseScaleButton = new Button("Decrease scale");
+            decreaseScaleButton.setId(DECREASE_SCALE_BUTTON_ID);
             decreaseScaleButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     content.setScaleX(content.getScaleX() - 0.15);
@@ -206,7 +214,8 @@ public class NewScrollPaneApp extends InteroperabilityApp {
                 }
             });
 
-            Button increaseScrollPaneScaleButton = ButtonBuilder.create().id(INCREASE_SCROLLPANE_SCALE_BUTTON_ID).text("Increase ScrollPane scale").build();
+            Button increaseScrollPaneScaleButton = new Button("Increase ScrollPane scale");
+            increaseScrollPaneScaleButton.setId(INCREASE_SCROLLPANE_SCALE_BUTTON_ID);
             increaseScrollPaneScaleButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedScrollPane.setScaleX(testedScrollPane.getScaleX() + 0.15);
@@ -214,7 +223,8 @@ public class NewScrollPaneApp extends InteroperabilityApp {
                 }
             });
 
-            Button decreaseScrollPaneScaleButton = ButtonBuilder.create().id(DECREASE_SCROLLPANE_SCALE_BUTTON_ID).text("Decrease ScrollPane scale").build();
+            Button decreaseScrollPaneScaleButton = new Button("Decrease ScrollPane scale");
+            decreaseScrollPaneScaleButton.setId(DECREASE_SCROLLPANE_SCALE_BUTTON_ID);
             decreaseScrollPaneScaleButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedScrollPane.setScaleX(testedScrollPane.getScaleX() - 0.15);
@@ -222,7 +232,8 @@ public class NewScrollPaneApp extends InteroperabilityApp {
                 }
             });
 
-            Button resetButton = ButtonBuilder.create().id(RESET_BUTTON_ID).text("Reset").build();
+            Button resetButton = new Button("Reset");
+            resetButton.setId(RESET_BUTTON_ID);
             resetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -246,8 +257,12 @@ public class NewScrollPaneApp extends InteroperabilityApp {
         }
 
         private Node getAddGridPaneForm() {
-            final TextField dimension = TextFieldBuilder.create().id(GRID_DIMENSION_TEXTFIELD_ID).promptText("int-dimension").maxWidth(50).build();
-            Button addButton = ButtonBuilder.create().id(ADD_GRID_BUTTON_ID).text("Add grid").build();
+            final TextField dimension = new TextField();
+            dimension.setId(GRID_DIMENSION_TEXTFIELD_ID);
+            dimension.setPromptText("int-dimension");
+            dimension.setMaxWidth(50);
+            Button addButton = new Button("Add grid");
+            addButton.setId(ADD_GRID_BUTTON_ID);
             addButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     int c = Integer.parseInt(dimension.getText());
@@ -256,7 +271,11 @@ public class NewScrollPaneApp extends InteroperabilityApp {
                     for (int i = 0; i < c; i++) {
                         for (int j = 0; j < c; j++) {
                             final String name = "B-" + String.valueOf(i) + "-" + String.valueOf(j);
-                            gridPane.add(ButtonBuilder.create().text(name).id(name).minHeight(10 * i).minWidth(10 * j).build(), i, j);
+                            Button temp = new Button(name);
+                            temp.setId(name);
+                            temp.setMinHeight(10 * i);
+                            temp.setMinWidth(10 * j);
+                            gridPane.add(temp, i, j);
                         }
                     }
                     testedScrollPane.setContent(gridPane);
@@ -291,18 +310,23 @@ public class NewScrollPaneApp extends InteroperabilityApp {
 
         private void changeContent() {
             VBox vb = new VBox();
-            Button button = ButtonBuilder.create().id(CONTENT_BUTTON).text("Press me").build();
-            final TextField tf1 = TextFieldBuilder.create().id(CONTENT_TEXT_FIELD_ID).text("0").build();
+            Button button = new Button("Press me");
+            button.setId(CONTENT_BUTTON);
+            final TextField tf1 = new TextField("0");
+            tf1.setId(CONTENT_TEXT_FIELD_ID);
             button.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     tf1.setText(String.valueOf(Integer.parseInt(tf1.getText()) + 1));
                 }
             });
-            TextArea tf2 = TextAreaBuilder.create().prefHeight(100).id(CONTENT_TEXT_AREA_ID).build();
+            TextArea tf2 = new TextArea();
+            tf2.setPrefHeight(100);
+            tf2.setId(CONTENT_TEXT_AREA_ID);
             for (int i = 0; i < 15; i++) {
                 tf2.appendText("text" + i + "\n");
             }
-            Button empty = ButtonBuilder.create().text("This is empty-action button").id(WITHOUT_ACTION_BUTTON).build();
+            Button empty = new Button("This is empty-action button");
+            empty.setId(WITHOUT_ACTION_BUTTON);
 
             vb.getChildren().addAll(button, tf1, tf2, empty);
             vb.setStyle("-fx-border-color: blue;");

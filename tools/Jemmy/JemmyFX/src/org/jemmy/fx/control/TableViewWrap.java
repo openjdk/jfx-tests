@@ -24,7 +24,7 @@
  */
 package org.jemmy.fx.control;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import org.jemmy.Point;

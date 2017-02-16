@@ -32,16 +32,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBoxBuilder;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPaneBuilder;
-import javafx.scene.layout.VBoxBuilder;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.CircleBuilder;
 import javafx.scene.text.Text;
 import test.javaclient.shared.InteroperabilityApp;
 import test.javaclient.shared.Utils;
@@ -89,22 +87,15 @@ public class TransparencyLCDTextTestApp extends InteroperabilityApp {
             }
         });
 
-        applyIndicator = CircleBuilder.create()
-                .id(APPLY_INDICATOR_ID)
-                .radius(5)
-                .fill(Color.RED)
-                .build();
+        applyIndicator = new Circle(5, Color.RED);
+        applyIndicator.setId(APPLY_INDICATOR_ID);
 
-        actionIndicator = CircleBuilder.create()
-                .id(ACTION_INDICATOR_ID)
-                .radius(5)
-                .fill(Color.RED)
-                .build();
+        actionIndicator = new Circle(5, Color.RED);
+        actionIndicator.setId(ACTION_INDICATOR_ID);
 
-        Button applyButton = ButtonBuilder.create()
-                .id(APPLY_BUTTON_ID)
-                .text("Apply")
-                .onMouseClicked(new EventHandler<MouseEvent>() {
+        Button applyButton = new Button("Apply");
+        applyButton.setId(APPLY_BUTTON_ID);
+        applyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent t) {
                         if(testingFactory == null){
                             factoryChoicer.getSelectionModel().selectNext();
@@ -113,13 +104,11 @@ public class TransparencyLCDTextTestApp extends InteroperabilityApp {
                         }
                         applyIndicator.setFill(Color.GREEN);
                     }
-                })
-                .build();
+        });
 
-        Button actionButton = ButtonBuilder.create()
-                .id(ACTION_BUTTON_ID)
-                .text("Action")
-                .onMouseClicked(new EventHandler<MouseEvent>() {
+        Button actionButton = new Button("Action");
+        actionButton.setId(ACTION_BUTTON_ID);
+        actionButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent t) {
                         Factory currentFactory = TransparencyLCDTextTestApp.this.
                                 factoryChoicer.getSelectionModel().getSelectedItem();
@@ -128,46 +117,32 @@ public class TransparencyLCDTextTestApp extends InteroperabilityApp {
 
                         actionIndicator.setFill(Color.GREEN);
                     }
-                })
-                .build();
+        });
 
         //Create panes for testing;
-
-
-        rightPane = StackPaneBuilder.create()
-                .id(RIGHT_PANE_ID)
-                .alignment(Pos.CENTER)
-                .minHeight(450)
-                .minWidth(300)
-                .build();
+        rightPane = new StackPane();
+        rightPane.setId(RIGHT_PANE_ID);
+        ((StackPane)rightPane).setAlignment(Pos.CENTER);
+        rightPane.setMinHeight(450);
+        rightPane.setMinWidth(300);
 
         //Create root pane.
-        return VBoxBuilder.create()
-                .id("root")
-                .children(
-                    HBoxBuilder.create()
-                        .padding(new Insets(10))
-                        .spacing(10)
-                        .id("toolsPane")
-                        .alignment(Pos.CENTER)
-                        .children(factoryChoicer, actionButton, applyButton)
-                        .build(),
-                    HBoxBuilder.create()
-                        .padding(new Insets(10))
-                        .spacing(10)
-                        .alignment(Pos.CENTER)
-                        .children(
-                            new Text("Apply"),
-                            applyIndicator,
-                            new Text("Action"),
-                            actionIndicator)
-                        .build(),
-                    HBoxBuilder.create()
-                        .id("testPane")
-                        .alignment(Pos.CENTER)
-                        .children(rightPane)
-                        .build())
-                .build();
+        VBox root = new VBox();
+        root.setId("root");
+        HBox tools = new HBox();
+        tools.setId("toolsPane");
+        tools.setPadding(new Insets(10));
+        tools.setSpacing(10);
+        tools.setAlignment(Pos.CENTER);
+        tools.getChildren().addAll(factoryChoicer, actionButton, applyButton);
+        HBox secondone = new HBox(new Text("Apply"), applyIndicator, new Text("Action"), actionIndicator);
+        secondone.setPadding(new Insets(10));
+        secondone.setSpacing(10);
+        HBox testPane = new HBox(rightPane);
+        testPane.setId("testPane");
+        testPane.setAlignment(Pos.CENTER);
+        root.getChildren().addAll(tools, secondone, testPane);
+        return root;
     }
 
     private void apply() {

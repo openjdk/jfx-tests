@@ -22,41 +22,23 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package org.jemmy.fx;
+package client.test;
 
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import javafx.stage.Window;
-import org.jemmy.action.GetAction;
-import org.jemmy.lookup.ControlList;
-
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
- * Allows to search among windows.
- * @author shura
+ * Allows to specify necessary values for --add-exports JVM arg
+ * @author Alexander Kouznetsov <Alexander.Kouznetsov@oracle.com>
  */
-class WindowList implements ControlList {
+@Retention(RetentionPolicy.RUNTIME)
+public @interface AddExports {
 
-    @Override
-    public List<?> getControls() {
-        GetAction<List<?>> scenes = new GetAction<List<?>>() {
-
-            @Override
-            public void run(Object... parameters) {
-                LinkedList<Window> res = new LinkedList<Window>();
-                res.addAll(Window.getWindows());
-                setResult(res);
-            }
-        };
-        try {
-            Root.ROOT.getEnvironment().getExecutor().execute(Root.ROOT.getEnvironment(), true, scenes);
-            return scenes.getResult();
-        } catch (Throwable th) {
-            th.printStackTrace(System.err);
-            return new ArrayList();
-        }
-    }
+    /**
+     * For now just comma separated values that go to
+     * --add-exports ... JVM argument combined with other values
+     * provided elsewhere
+     * @return
+     */
+    String value();
 }

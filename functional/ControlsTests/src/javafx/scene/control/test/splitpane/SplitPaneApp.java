@@ -76,14 +76,17 @@ public class SplitPaneApp extends InteroperabilityApp {
 
         private void prepareScene() {
             pane = new Pane();
-            testedSplitPane = SplitPaneBuilder.create().id(TESTED_SPLIPANE_ID).build();
+            testedSplitPane = new SplitPane();
+            testedSplitPane.setId(TESTED_SPLIPANE_ID);
 
             PropertiesTable tb = new PropertiesTable(testedSplitPane);
             PropertyTablesFactory.explorePropertiesList(testedSplitPane, tb);
 
             final TabPaneWithControl tabPane = new TabPaneWithControl("Accordion", tb);
 
-            final TextField tf = TextFieldBuilder.create().id(SPLITPANE_ADD_INDEX_TEXT_FIELD_ID).text("0").prefWidth(40).build();
+            final TextField tf = new TextField("0");
+            tf.setId(SPLITPANE_ADD_INDEX_TEXT_FIELD_ID);
+            tf.setPrefWidth(40);
 
             HBox nodeshb = new NodesChoserFactory("Add!", new NodesChoserFactory.NodeAction<Node>() {
 
@@ -106,7 +109,8 @@ public class SplitPaneApp extends InteroperabilityApp {
             hb.setPadding(new Insets(5, 5, 5, 5));
             hb.setStyle("-fx-border-color : green;");
 
-            Button resetButton = ButtonBuilder.create().id(RESET_BUTTON_ID).text("Reset").build();
+            Button resetButton = new Button("Reset");
+            resetButton.setId(RESET_BUTTON_ID);
             resetButton.setOnAction(new EventHandler<ActionEvent>() {
 
                 public void handle(ActionEvent t) {

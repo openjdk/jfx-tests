@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2016, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,6 +24,7 @@
 
 package client.test.runner;
 
+import static client.test.runner.InterviewUtils.*;
 import client.test.runner.interview.LookAndFeelQuestion;
 import client.test.runner.interview.PipelineGroupQuestion;
 import client.util.CtrUtils;
@@ -127,6 +128,21 @@ public class BasicFXInterview extends BasicInterviewParameters
     /**
      *
      */
+    public final static String ADD_EXPORTS_PARAM_NAME = "addExports";
+
+    /**
+     *
+     */
+    public final static String XPATCH_PARAM_NAME = "XPatch";
+
+    /**
+     *
+     */
+    public final static String ENABLE_ADD_EXPORTS_PARAM_NAME = "addExportsEnabled";
+
+    /**
+     *
+     */
     public final static String VM_OPTIONS_PARAM_NAME = "vmOptions";
 
     /**
@@ -207,6 +223,10 @@ public class BasicFXInterview extends BasicInterviewParameters
      */
     public File getJavaPath(){
         return qJavaPath.getValue();
+    }
+
+    public String getXPatch() {
+        return qXPatch.getValue();
     }
 
     /**
@@ -730,7 +750,7 @@ public class BasicFXInterview extends BasicInterviewParameters
 
         @Override
         public String getText() {
-            return "Proxy settings in format: host:port\nE.g. www-proxy.us.oracle.com:80";
+            return "Proxy settings in format: host:port\nE.g. proxy.example.com:80";
         }
 
         @Override
@@ -742,7 +762,7 @@ public class BasicFXInterview extends BasicInterviewParameters
         public Question getNext() {
             String val = getValue();
             if (val == null || val.trim().length() == 0 || CtrUtils.getProxyUrl(val) != null) {
-                return qVmOptions;
+                return qXPatch;
             } else {
                 return null;
             }
@@ -763,10 +783,112 @@ public class BasicFXInterview extends BasicInterviewParameters
     private LookAndFeelQuestion qLookAndFeelGroup = new LookAndFeelQuestion (this, qProxy);
     private ChoiceQuestion qPipelineGroup = new PipelineGroupQuestion (this, getLastQuestion());
 
+    private StringQuestion qXPatch = new StringQuestion(this, XPATCH_PARAM_NAME) {
 
-    private static boolean isWindows() {
-        return System.getProperty("os.name").toLowerCase().contains("windows");
+        @Override
+        public String getText() {
+            return "Set -Xpatch directory for the test run. "
+                    + "\nE.g. build/shim-modules";
     }
+
+        @Override
+        public String getSummary() {
+            return "--patch-module";
+        }
+
+        @Override
+        public void clear() {
+            setValue("");
+        }
+
+        @Override
+        public Question getNext() {
+            return qEnableAddExports;
+        }
+
+        @Override
+        public void export(Map data) {
+            data.put(XPATCH_PARAM_NAME, value);
+        }
+
+        @Override
+        public void load(Map data) {
+            String newValue = (String) data.get(XPATCH_PARAM_NAME);
+            setValue(newValue != null ? newValue : "");
+        }
+    };
+
+    private YesNoQuestion qEnableAddExports = new YesNoQuestion(this, ENABLE_ADD_EXPORTS_PARAM_NAME, YesNoQuestion.YES) {
+        @Override
+        public Question getNext() {
+            if (getValue().equals(YES)) {
+                return qAddExports;
+            }
+            return qVmOptions;
+        }
+
+        @Override
+        public String getText() {
+            return "Do you wish to add -XaddExports JVM argument when running tests? "
+                    + "\nAnswer Yes when running with JDK 9 Jigsaw."
+                    + "\nAnswer No when running with JDK 8 and prior.";
+        }
+
+        @Override
+        public String getSummary() {
+            return "Add -XaddExports?";
+        }
+
+        @Override
+        public void export(Map data) {
+            data.put(ENABLE_ADD_EXPORTS_PARAM_NAME, getValue());
+        }
+
+        @Override
+        public void load(Map data) {
+            if (data.containsKey(ENABLE_ADD_EXPORTS_PARAM_NAME)) {
+                setValue((String) data.get(ENABLE_ADD_EXPORTS_PARAM_NAME));
+            }
+        }
+    };
+
+    private StringQuestion qAddExports = new StringQuestion(this, ADD_EXPORTS_PARAM_NAME) {
+
+        @Override
+        public String getText() {
+            return "Set -XaddExports values for the test run. "
+                    + "Individual tests can use @addExports annotation "
+                    + "to add more specific entries to -XaddExports JVM argument."
+                    + "\nE.g. javafx.graphics/com.sun.prism=ALL-UNNAMED,javafx.base/com.sun.javafx.runtime=ALL-UNNAMED";
+        }
+
+        @Override
+        public String getSummary() {
+            return "--add-exports";
+        }
+
+        @Override
+        public void clear() {
+            setValue("");
+        }
+
+        @Override
+        public Question getNext() {
+            return qVmOptions;
+        }
+
+        @Override
+        public void export(Map data) {
+            data.put(ADD_EXPORTS_PARAM_NAME, value);
+        }
+
+        @Override
+        public void load(Map data) {
+            String newValue = (String) data.get(ADD_EXPORTS_PARAM_NAME);
+            setValue(newValue != null ? newValue : "");
+        }
+    };
+
     private StringQuestion qVmOptions = new StringQuestion(this, VM_OPTIONS_PARAM_NAME) {
 
         @Override
@@ -801,24 +923,6 @@ public class BasicFXInterview extends BasicInterviewParameters
         }
     };
 
-
-
-    private static class ExecutablesFileFilter implements FileFilter {
-        @Override
-        public boolean accept(File file) {
-            return file.exists() && file.canExecute();
-        }
-
-        @Override
-        public boolean acceptsDirectories() {
-            return false;
-        }
-
-        @Override
-        public String getDescription() {
-            return "Executable files";
-        }
-    }
     private static Runnable ieFix = new Runnable() {
         @Override
         public void run() {

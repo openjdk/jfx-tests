@@ -43,6 +43,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.*;
+import static javafx.scene.control.test.chart.apps.ChartIDsInterface.HARD_RESET_BUTTON_ID;
 import static javafx.scene.control.test.chart.apps.CommonFunctions.*;
 import javafx.scene.control.test.utils.CommonPropertiesScene;
 import javafx.scene.control.test.utils.ptables.PropertiesTable;
@@ -99,7 +100,8 @@ public class NewAreaChartApp extends InteroperabilityApp implements ChartIDsInte
             testedAreaChart = getNewChart();
             testedAreaChart.setId(TESTED_CHART_ID);
 
-            Button hardResetButton = ButtonBuilder.create().id(HARD_RESET_BUTTON_ID).text("Hard reset").build();
+            Button hardResetButton = new Button("Hard reset");
+            hardResetButton.setId(HARD_RESET_BUTTON_ID);
             hardResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -109,7 +111,8 @@ public class NewAreaChartApp extends InteroperabilityApp implements ChartIDsInte
                 }
             });
 
-            Button softResetButton = ButtonBuilder.create().id(SOFT_RESET_BUTTON_ID).text("Soft reset").build();
+            Button softResetButton = new Button("Soft reset");
+            softResetButton.setId(SOFT_RESET_BUTTON_ID);
             softResetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     //throw new UnsupportedOperationException("Not supported yet.");
@@ -134,15 +137,22 @@ public class NewAreaChartApp extends InteroperabilityApp implements ChartIDsInte
             HBox hb = new HBox();
 
             Label lb1 = new Label("To area");
-            final TextField tf1 = TextFieldBuilder.create().text("0").prefWidth(50).id(ADD_AREA_POS_TEXT_FIELD_ID).build();
+            final TextField tf1 = new TextField("0");
+            tf1.setPrefWidth(50);
+            tf1.setId(ADD_AREA_POS_TEXT_FIELD_ID);
 
             Label lb2 = new Label("to index");
-            final TextField tf2 = TextFieldBuilder.create().text("0").prefWidth(50).id(ADD_INDEX_TEXT_FIELD_ID).build();
+            final TextField tf2 = new TextField("0");
+            tf2.setPrefWidth(50);
+            tf2.setId(ADD_INDEX_TEXT_FIELD_ID);
 
             Label lb3 = new Label("value");
-            final TextField tf3 = TextFieldBuilder.create().text("0").prefWidth(50).id(ADD_VALUE_TEXT_FIELD_ID).build();
+            final TextField tf3 = new TextField("0");
+            tf3.setPrefWidth(50);
+            tf3.setId(ADD_VALUE_TEXT_FIELD_ID);
 
-            Button bt = ButtonBuilder.create().text("add point!").id(REMOVE_BUTTON_ID).build();
+            Button bt = new Button("add point!");
+            bt.setId(REMOVE_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int area = Integer.parseInt(tf1.getText());
@@ -164,12 +174,17 @@ public class NewAreaChartApp extends InteroperabilityApp implements ChartIDsInte
             HBox hb = new HBox();
 
             Label lb1 = new Label("From area");
-            final TextField tf1 = TextFieldBuilder.create().text("0").prefWidth(50).id(REMOVE_AREA_POS_TEXT_FIELD_ID).build();
+            final TextField tf1 = new TextField("0");
+            tf1.setPrefWidth(50);
+            tf1.setId(REMOVE_AREA_POS_TEXT_FIELD_ID);
 
             Label lb2 = new Label("From index");
-            final TextField tf2 = TextFieldBuilder.create().text("0").prefWidth(50).id(REMOVE_INDEX_TEXT_FIELD_ID).build();
+            final TextField tf2 = new TextField("0");
+            tf2.setPrefWidth(50);
+            tf2.setId(REMOVE_INDEX_TEXT_FIELD_ID);
 
-            Button bt = ButtonBuilder.create().text("remove point!").id(REMOVE_BUTTON_ID).build();
+            Button bt = new Button("remove point!");
+            bt.setId(REMOVE_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int area = Integer.parseInt(tf1.getText());
@@ -184,8 +199,11 @@ public class NewAreaChartApp extends InteroperabilityApp implements ChartIDsInte
         public HBox getRemoveDataDialog() {
             HBox hb = new HBox();
             Label lb = new Label("From index");
-            final TextField tf = TextFieldBuilder.create().text("0").prefWidth(50).id(REMOVE_AREA_INDEX_TEXTFIELD_ID).build();
-            Button bt = ButtonBuilder.create().text("remove area!").id(REMOVE_AREA_BUTTON_ID).build();
+            final TextField tf = new TextField("0");
+            tf.setPrefWidth(50);
+            tf.setId(REMOVE_AREA_INDEX_TEXTFIELD_ID);
+            Button bt = new Button("remove area!");
+            bt.setId(REMOVE_AREA_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     int index = Integer.parseInt(tf.getText());
@@ -199,18 +217,27 @@ public class NewAreaChartApp extends InteroperabilityApp implements ChartIDsInte
         public HBox getAddAreaHBox() {
             HBox hb = new HBox();
             Label lb = new Label("Add series named ");
-            final TextField tf = TextFieldBuilder.create().prefWidth(50).id(ADDED_SERIES_NAME_TEXTFIELD_ID).build();
+            final TextField tf = new TextField();
+            tf.setPrefWidth(50);
+            tf.setId(ADDED_SERIES_NAME_TEXTFIELD_ID);
 
             Label minLabel = new Label(" minX ");
-            final TextField minText = TextFieldBuilder.create().prefWidth(50).id(ADDED_SERIES_MIN_VALUE_TEXTFIELD_ID).build();
+            final TextField minText = new TextField();
+            minText.setPrefWidth(50);
+            minText.setId(ADDED_SERIES_MIN_VALUE_TEXTFIELD_ID);
 
             Label maxLabel = new Label(" maxX ");
-            final TextField maxText = TextFieldBuilder.create().prefWidth(50).id(ADDED_SERIES_MAX_VALUE_TEXTFIELD_ID).build();
+            final TextField maxText = new TextField();
+            maxText.setPrefWidth(50);
+            maxText.setId(ADDED_SERIES_MAX_VALUE_TEXTFIELD_ID);
 
             Label amountLabel = new Label(" with ");
-            final TextField amountText = TextFieldBuilder.create().prefWidth(50).id(ADDED_SERIES_DOTS_COUNT_TEXTFIELD_ID).build();
+            final TextField amountText = new TextField();
+            amountText.setPrefWidth(50);
+            amountText.setId(ADDED_SERIES_DOTS_COUNT_TEXTFIELD_ID);
 
-            Button bt = ButtonBuilder.create().text("add area!").id(ADD_SERIES_COMMAND_BUTTON_ID).build();
+            Button bt = new Button("add area!");
+            bt.setId(ADD_SERIES_COMMAND_BUTTON_ID);
             bt.setOnAction(new EventHandler() {
                 public void handle(Event t) {
                     String serieName = tf.getText();

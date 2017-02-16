@@ -36,7 +36,6 @@ import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabBuilder;
 import static javafx.scene.control.test.tabpane.NewTabPaneApp.*;
 import javafx.scene.control.test.utils.ptables.AbstractPropertyController.SettingType;
 import javafx.util.StringConverter;
@@ -333,7 +332,9 @@ public class NewTabPaneTest extends NewTabPaneBase {
             @Override public String toString(Tab t) { return t.getText(); }
 
             @Override public Tab fromString(String s) {
-                return TabBuilder.create().text(s).content(new Label("CONTENT!")).build();
+                Tab t = new Tab(s);
+                t.setContent(new Label("CONTENT!"));
+                return t;
             }
         };
 

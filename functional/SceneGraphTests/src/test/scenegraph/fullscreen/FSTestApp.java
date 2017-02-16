@@ -44,8 +44,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.CircleBuilder;
-import javafx.scene.shape.LineBuilder;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -80,107 +79,83 @@ public class FSTestApp extends Application {
         primaryStage.setTitle("FSTestApp");
         primaryStage.setResizable(resizable);
 
-        GridPane buttonsPane = GridPaneBuilder.create()
-                .padding(new Insets(10))
-                .alignment(Pos.CENTER)
-                .columnConstraints(new ColumnConstraints(200), new ColumnConstraints(200))
-                .rowConstraints(new RowConstraints(30), new RowConstraints(30),
-                        new RowConstraints(30), new RowConstraints(30),
-                        new RowConstraints(30))
-                .build();
+        GridPane buttonsPane = new GridPane();
+        buttonsPane.setPadding(new Insets(10));
+        buttonsPane.setAlignment(Pos.CENTER);
+        buttonsPane.getColumnConstraints().add(new ColumnConstraints(200));
+        buttonsPane.getColumnConstraints().add(new ColumnConstraints(200));
+        buttonsPane.getRowConstraints().add(new RowConstraints(30));
+        buttonsPane.getRowConstraints().add(new RowConstraints(30));
+        buttonsPane.getRowConstraints().add(new RowConstraints(30));
+        buttonsPane.getRowConstraints().add(new RowConstraints(30));
+        buttonsPane.getRowConstraints().add(new RowConstraints(30));
 
-        final TextArea logTextArea = TextAreaBuilder.create()
-                .editable(false)
-                .build();
+        final TextArea logTextArea = new TextArea();
+        logTextArea.setEditable(false);
 
         //Timer for update logTextArea
-        Timeline updateLogTimeline = TimelineBuilder.create()
-                .keyFrames(new KeyFrame(Duration.seconds(0.1), new EventHandler<ActionEvent>() {
-
+        Timeline updateLogTimeline = new Timeline(new KeyFrame(Duration.seconds(0.1), new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent t) {
                         logTextArea.insertText(logTextArea.getLength(), log.toString());
                         log.delete(0, log.length());
 
                     }
-                }, ( KeyValue[])null))  // cast null to suppress compiler warning
-                .cycleCount(-1)
-                .build();
+                }, ( KeyValue[])null));  // cast null to suppress compiler warning
+        updateLogTimeline.setCycleCount(-1);
 
         //<editor-fold defaultstate="collapsed" desc="Menu">
-        MenuBar menu = MenuBarBuilder.create()
-                .menus(
-                MenuBuilder.create()
-                    .text("_Menu1")
-                    .onShown(new EventHandler<Event>() {
-
+        Menu menu1 = new Menu("_Menu1");
+        menu1.setOnShown(new EventHandler<Event>() {
                         public void handle(Event t) {
                             log.append("Menu 1 Shown\n");
                         }
-                    })
-                    .onHidden(new EventHandler<Event>() {
-
+        });
+        menu1.setOnHidden(new EventHandler<Event>() {
                         public void handle(Event t) {
                             log.append("Menu 1 Hidden\n");
                         }
-                    })
-                    .mnemonicParsing(true)
-                    .items(
-                        MenuItemBuilder.create()
-                            .mnemonicParsing(true)
-                            .onAction(new EventHandler<ActionEvent>() {
-
+        });
+        menu1.setMnemonicParsing(true);
+        MenuItem mi11 = new MenuItem("Menu _Item 1");
+        mi11.setAccelerator(KeyCombination.keyCombination("ctrl+m"));
+        mi11.setMnemonicParsing(true);
+        mi11.setOnAction(new EventHandler<ActionEvent>() {
                                 public void handle(ActionEvent t) {
                                     log.append("Menu Item 1 Action\n");
                                 }
-                            })
-                            .accelerator(KeyCombination.keyCombination("ctrl+m"))
-                            .text("Menu _Item 1")
-                            .build(),
-                        MenuItemBuilder.create()
-                            .mnemonicParsing(true)
-                            .text("Menu I_tem 2")
-                            .build())
-                    .build(),
-                MenuBuilder.create()
-                    .mnemonicParsing(true)
-                    .text("M_enu2")
-                    .onShown(new EventHandler<Event>() {
+        });
+        MenuItem mi12 = new MenuItem("Menu I_tem 2");
+        mi12.setMnemonicParsing(true);
+        menu1.getItems().addAll(mi11, mi12);
 
+        Menu menu2 = new Menu("M_enu2");
+        menu2.setMnemonicParsing(true);
+        menu2.setOnShown(new EventHandler<Event>() {
                         public void handle(Event t) {
                             log.append("Menu 2 Shown\n");
                         }
-                    })
-                    .onHidden(new EventHandler<Event>() {
-
+        });
+        menu2.setOnHidden(new EventHandler<Event>() {
                         public void handle(Event t) {
                             log.append("Menu 2 Hidden\n");
                         }
-                    })
-                    .items(
-                        MenuItemBuilder.create()
-                            .mnemonicParsing(true)
-                            .text("Menu _Item 1")
-                            .build(),
-                        MenuItemBuilder.create()
-                            .mnemonicParsing(true)
-                            .text("Menu I_tem 2")
-                            .build(),
-                        MenuItemBuilder.create()
-                            .mnemonicParsing(true)
-                            .text("Menu Ite_m 3")
-                            .build())
-                    .build())
-                .useSystemMenuBar(true)
-                .build();
+        });
+        MenuItem mi21 = new MenuItem("Menu _Item 1");
+        mi21.setMnemonicParsing(true);
+        MenuItem mi22 = new MenuItem("Menu I_tem 2");
+        mi22.setMnemonicParsing(true);
+        MenuItem mi23 = new MenuItem("Menu Ite_m 3");
+        mi23.setMnemonicParsing(true);
+        menu1.getItems().addAll(mi21, mi22, mi23);
+
+        MenuBar menu = new MenuBar(menu1, menu2);
+        menu.setUseSystemMenuBar(true);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Fullscreen indicator">
-        final Circle fullscreenIndicator =
-                CircleBuilder.create()
-                .radius(6)
-                .fill(Color.RED)
-                .effect(new InnerShadow())
-                .build();
+        final Circle fullscreenIndicator = new Circle(6);
+        fullscreenIndicator.setFill(Color.RED);
+        fullscreenIndicator.setEffect(new InnerShadow());
 
         primaryStage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
 
@@ -192,97 +167,75 @@ public class FSTestApp extends Application {
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Fullscreen false Button">
-        Button setFSFalseButton =  ButtonBuilder.create()
-                .text("Set fullscreen false")
-                .alignment(Pos.CENTER)
-                .prefWidth(180)
-                .onMouseClicked(new EventHandler<MouseEvent>() {
-
+        Button setFSFalseButton = new Button("Set fullscreen false");
+        setFSFalseButton.setAlignment(Pos.CENTER);
+        setFSFalseButton.setPrefWidth(180);
+        setFSFalseButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent arg0) {
                         primaryStage.setFullScreen(false);
                     }
-                })
-                .build();
-
+        });
         buttonsPane.add(setFSFalseButton, 0, 0);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Fullscreen true Button">
-        Button setFSTrueButton =  ButtonBuilder.create()
-                .text("Set fullscreen true")
-                .alignment(Pos.CENTER)
-                .prefWidth(180)
-                .onMouseClicked(new EventHandler<MouseEvent>() {
-
+        Button setFSTrueButton = new Button("Set fullscreen true");
+        setFSTrueButton.setAlignment(Pos.CENTER);
+        setFSTrueButton.setPrefWidth(180);
+        setFSTrueButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent arg0) {
                         primaryStage.setFullScreen(true);
                     }
-                })
-                .build();
-
+        });
         buttonsPane.add(setFSTrueButton, 1, 0);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Center Button">
-        Button centerButton =  ButtonBuilder.create()
-                .text("Center")
-                .alignment(Pos.CENTER)
-                .prefWidth(180)
-                .onMouseClicked(new EventHandler<MouseEvent>() {
-
+        Button centerButton = new Button("Center");
+        centerButton.setAlignment(Pos.CENTER);
+        centerButton.setPrefWidth(180);
+        centerButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent arg0) {
                         primaryStage.centerOnScreen();
                     }
-                })
-                .build();
-
+        });
         buttonsPane.add(centerButton, 0, 1);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Close Button">
-        Button closeButton =  ButtonBuilder.create()
-                .text("Close")
-                .alignment(Pos.CENTER)
-                .prefWidth(180)
-                .onMouseClicked(new EventHandler<MouseEvent>() {
-
+        Button closeButton = new Button("Close");
+        closeButton.setAlignment(Pos.CENTER);
+        closeButton.setPrefWidth(180);
+        closeButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent arg0) {
                         primaryStage.close();
                     }
-                })
-                .build();
-
+        });
         buttonsPane.add(closeButton, 1, 1);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Size to scene Button">
-        Button sizeToSceneButton =  ButtonBuilder.create()
-                .text("Size to scene")
-                .alignment(Pos.CENTER)
-                .prefWidth(180)
-                .onMouseClicked(new EventHandler<MouseEvent>() {
-
+        Button sizeToSceneButton = new Button("Size to scene");
+        sizeToSceneButton.setAlignment(Pos.CENTER);
+        sizeToSceneButton.setPrefWidth(180);
+        sizeToSceneButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent arg0) {
                         primaryStage.sizeToScene();
                     }
-                })
-                .build();
-
+        });
         buttonsPane.add(sizeToSceneButton, 0, 2);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Show modality window Button">
-        Button showModalityWindowButton =  ButtonBuilder.create()
-                .text("Show modality window")
-                .alignment(Pos.CENTER)
-                .prefWidth(180)
-                .onMouseClicked(new EventHandler<MouseEvent>() {
-
+        Button showModalityWindowButton = new Button("Show modality window");
+        showModalityWindowButton.setAlignment(Pos.CENTER);
+        showModalityWindowButton.setPrefWidth(180);
+        showModalityWindowButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent arg0) {
                         Stage modalityStage = new Stage();
@@ -291,69 +244,45 @@ public class FSTestApp extends Application {
                         modalityStage.setResizable(resizable);
                         modalityStage.show();
                     }
-                })
-                .build();
-
+        });
         buttonsPane.add(showModalityWindowButton, 1, 2);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Resizable Button">
-        Button resizableButton = ButtonBuilder.create()
-                .text(resizable ? "Not resizable" : "Resizable")
-                .alignment(Pos.CENTER)
-                .prefWidth(180)
-                .onMouseClicked(new EventHandler<MouseEvent>() {
-
+        Button resizableButton = new Button();
+        resizableButton.setText(resizable ? "Not resizable" : "Resizable");
+        resizableButton.setAlignment(Pos.CENTER);
+        resizableButton.setPrefWidth(180);
+        resizableButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent arg0) {
                         runJVMProcess(FSTestApp.this.getClass().getName(), String.valueOf(!resizable));
                         primaryStage.close();
                     }
-                }).build();
-
+        });
         buttonsPane.add(resizableButton, 0, 3);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Opacity Slider">
-        Slider opacitySlider =  SliderBuilder.create()
-                .maxWidth(180)
-                .value(1)
-                .min(0)
-                .max(1)
-                .build();
+        Slider opacitySlider = new Slider(0, 1, 1);
+        opacitySlider.setMaxWidth(180);
         primaryStage.opacityProperty().bindBidirectional(opacitySlider.valueProperty());
-
-
         buttonsPane.add(opacitySlider, 1, 3);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="System menu ToggleButton">
-        ToggleButton useSystemMenuToggleButton =  ToggleButtonBuilder.create()
-                .text("Use system menu")
-                .alignment(Pos.CENTER)
-                .prefWidth(180)
-                .build();
-
+        ToggleButton useSystemMenuToggleButton = new ToggleButton("Use system menu");
+        useSystemMenuToggleButton.setAlignment(Pos.CENTER);
+        useSystemMenuToggleButton.setPrefWidth(180);
         menu.useSystemMenuBarProperty().bindBidirectional(useSystemMenuToggleButton.selectedProperty());
 
         buttonsPane.add(useSystemMenuToggleButton, 0, 4);
         //</editor-fold>
 
-        VBox root = VBoxBuilder.create()
-                .children(
-                    menu,
-                    HBoxBuilder.create()
-                        .alignment(Pos.CENTER)
-                        .padding(new Insets(5))
-                        .children(
-                            fullscreenIndicator,
-                            new Text("Fullscreen"))
-                        .build(),
-                    buttonsPane,
-                    logTextArea)
-                .build();
-
-
+        HBox temp = new HBox(fullscreenIndicator, new Text("Fullscreen"));
+        temp.setAlignment(Pos.CENTER);
+        temp.setPadding(new Insets(5));
+        VBox root = new VBox(menu, temp, buttonsPane, logTextArea);
         primaryStage.setScene(new Scene(root, 400, 400));
         primaryStage.setMinHeight(400);
         primaryStage.setMinWidth(400);
@@ -388,29 +317,16 @@ public class FSTestApp extends Application {
         double width = getMaxScreenWidth();
 
 
-        Pane root  = PaneBuilder.create()
-                .minHeight(height)
-                .minWidth(width)
-                .build();
+        Pane root  = new Pane();
+        root.setMinHeight(height);
+        root.setMinWidth(width);
 
         for (int x = 0; x < width; x+=10) {
-            root.getChildren().add(
-                    LineBuilder.create()
-                        .startX(x)
-                        .endX(x)
-                        .startY(0)
-                        .endY(height)
-                        .build());
+            root.getChildren().add(new Line(x, x, 0, height));
         }
 
         for (int y = 0; y < height; y+=10) {
-            root.getChildren().add(
-                    LineBuilder.create()
-                        .startX(0)
-                        .endX(width)
-                        .startY(y)
-                        .endY(y)
-                        .build());
+            root.getChildren().add(new Line(0, width, y, y));
         }
 
         return new Scene(root, 200, 200);

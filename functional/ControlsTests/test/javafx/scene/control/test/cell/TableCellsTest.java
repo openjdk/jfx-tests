@@ -25,7 +25,7 @@
 package javafx.scene.control.test.cell;
 
 import client.test.Smoke;
-import com.sun.javafx.scene.control.skin.LabeledText;
+import com.sun.javafx.scene.control.LabeledText;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

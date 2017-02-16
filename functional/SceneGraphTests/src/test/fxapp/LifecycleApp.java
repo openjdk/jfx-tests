@@ -30,7 +30,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonBuilder;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
@@ -74,13 +74,14 @@ public class LifecycleApp extends Application {
         for (String string : status.raw = getParameters().getRaw()) {
             System.out.println(string);
         }
-        stage.setScene(new Scene(new Group(ButtonBuilder.create().text("close").onAction(new EventHandler<ActionEvent>() {
-
+        Button temp = new Button();
+        temp.setText("close");
+        temp.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 stage.close();
             }
-
-        }).build())));
+        });
+        stage.setScene(new Scene(new Group(temp)));
         stage.show();
 
     }

@@ -46,54 +46,38 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.CheckBoxBuilder;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.HyperlinkBuilder;
 import javafx.scene.control.Label;
-import javafx.scene.control.LabelBuilder;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.PasswordFieldBuilder;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressBarBuilder;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.ProgressIndicatorBuilder;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.RadioButtonBuilder;
 import javafx.scene.control.ScrollBar;
-import javafx.scene.control.ScrollBarBuilder;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
-import javafx.scene.control.SeparatorBuilder;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SliderBuilder;
 import javafx.scene.control.SplitMenuButton;
-import javafx.scene.control.SplitMenuButtonBuilder;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.SplitPaneBuilder;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextAreaBuilder;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFieldBuilder;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleButtonBuilder;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -102,7 +86,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPaneBuilder;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -114,7 +98,10 @@ public enum ControlsFactory implements NodeFactory {
 
     Buttons(new ControlFactory() {
         public Control createControl() {
-            return ButtonBuilder.create().text("Button the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).graphic(new Rectangle(10, 10, Color.RED)).build();
+            Button b = new Button("Button the first line" + "\nthe sec long line" + "\nthe third line");
+            b.setFocusTraversable(false);
+            b.setGraphic(new Rectangle(10, 10, Color.RED));
+            return b;
         }
 
         public Class getControlClass() {
@@ -183,7 +170,10 @@ public enum ControlsFactory implements NodeFactory {
     }),
     CheckBoxes(new ControlFactory() {
         public Control createControl() {
-            return CheckBoxBuilder.create().text("Check box the first line" + "\nthe sec long line" + "\nthe third line").graphic(new Rectangle(20, 20, Color.web("lightblue"))).focusTraversable(false).build();
+            CheckBox cb = new CheckBox("Check box the first line" + "\nthe sec long line" + "\nthe third line");
+            cb.setFocusTraversable(false);
+            cb.setGraphic(new Rectangle(20, 20, Color.web("lightblue")));
+            return cb;
         }
 
         public Class getControlClass() {
@@ -192,7 +182,11 @@ public enum ControlsFactory implements NodeFactory {
     }),
     RadioButtons(new ControlFactory() {
         public Control createControl() {
-            return RadioButtonBuilder.create().text("Radio the first line" + "\nthe sec long line" + "\nthe third line").graphic(new Rectangle(20, 20, Color.web("lightblue"))).focusTraversable(false).textAlignment(TextAlignment.RIGHT).build();
+            RadioButton rb = new RadioButton("Radio the first line" + "\nthe sec long line" + "\nthe third line");
+            rb.setFocusTraversable(false);
+            rb.setGraphic(new Rectangle(20, 20, Color.web("lightblue")));
+            rb.setTextAlignment(TextAlignment.RIGHT);
+            return rb;
         }
 
         public Class getControlClass() {
@@ -201,7 +195,9 @@ public enum ControlsFactory implements NodeFactory {
     }),
     TextFields(new ControlFactory() {
         public Control createControl() {
-            return TextFieldBuilder.create().text("Text box the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).build();
+            TextField tf = new TextField("Text box the first line" + "\nthe sec long line" + "\nthe third line");
+            tf.setFocusTraversable(false);
+            return tf;
         }
 
         public Class getControlClass() {
@@ -210,7 +206,10 @@ public enum ControlsFactory implements NodeFactory {
     }),
     TextAreas(new ControlFactory() {
         public Control createControl() {
-            return TextAreaBuilder.create().maxWidth(100).maxHeight(50).text("Text area the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).build();
+            TextArea ta = new TextArea("Text area the first line" + "\nthe sec long line" + "\nthe third line");
+            ta.setFocusTraversable(false);
+            ta.setMaxSize(100, 50);
+            return ta;
         }
 
         public Class getControlClass() {
@@ -219,7 +218,10 @@ public enum ControlsFactory implements NodeFactory {
     }),
     PasswordFields(new ControlFactory() {
         public Control createControl() {
-            return PasswordFieldBuilder.create().promptText("Password box the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).build();
+            PasswordField pf = new PasswordField();
+            pf.setPromptText("Password box the first line" + "\nthe sec long line" + "\nthe third line");
+            pf.setFocusTraversable(false);
+            return pf;
         }
 
         public Class getControlClass() {
@@ -228,7 +230,12 @@ public enum ControlsFactory implements NodeFactory {
     }),
     Sliders(new ControlFactory() {
         public Control createControl() {
-            return SliderBuilder.create().min(0).max(100).value(20).focusTraversable(false).build();
+            Slider s = new Slider();
+            s.setMin(0);
+            s.setMax(100);
+            s.setValue(20);
+            s.setFocusTraversable(false);
+            return s;
         }
 
         public Class getControlClass() {
@@ -237,7 +244,10 @@ public enum ControlsFactory implements NodeFactory {
     }),
     Labels(new ControlFactory() {
         public Control createControl() {
-            return LabelBuilder.create().text("Label the first line" + "\nthe sec longlong line" + "\nthe third line").focusTraversable(false).graphic(new Rectangle(20, 20, Color.web("lightblue"))).build();
+            Label l = new Label("Label the first line" + "\nthe sec longlong line" + "\nthe third line");
+            l.setFocusTraversable(false);
+            l.setGraphic(new Rectangle(20, 20, Color.web("lightblue")));
+            return l;
         }
 
         public Class getControlClass() {
@@ -246,7 +256,10 @@ public enum ControlsFactory implements NodeFactory {
     }),
     Hyperlinks(new ControlFactory() {
         public Control createControl() {
-            return HyperlinkBuilder.create().text("Hyperlink the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).graphic(new Circle(10, Color.BLUE)).build();
+            Hyperlink hl = new Hyperlink("Hyperlink the first line" + "\nthe sec long line" + "\nthe third line");
+            hl.setFocusTraversable(false);
+            hl.setGraphic(new Circle(10, Color.BLUE));
+            return hl;
         }
 
         public Class getControlClass() {
@@ -299,7 +312,8 @@ public enum ControlsFactory implements NodeFactory {
     }),
     Separators(new ControlFactory() {
         public Control createControl() {
-            Separator sep = SeparatorBuilder.create().halignment(HPos.CENTER).build();
+            Separator sep = new Separator();
+            sep.setHalignment(HPos.CENTER);
             sep.setPrefWidth(80);
             return sep;
         }
@@ -310,7 +324,12 @@ public enum ControlsFactory implements NodeFactory {
     }),
     ScrollBars(new ControlFactory() {
         public Control createControl() {
-            return ScrollBarBuilder.create().value(45).min(0).max(100).focusTraversable(false).build();
+            ScrollBar sb = new ScrollBar();
+            sb.setValue(45);
+            sb.setMin(0);
+            sb.setMax(100);
+            sb.setFocusTraversable(false);
+            return sb;
         }
 
         public Class getControlClass() {
@@ -337,7 +356,9 @@ public enum ControlsFactory implements NodeFactory {
     }),
     ProgressIndicators(new ControlFactory() {
         public Node createControl() {
-            return ProgressIndicatorBuilder.create().progress(0.85).focusTraversable(false).build();
+            ProgressIndicator pi = new ProgressIndicator(0.85);
+            pi.setFocusTraversable(false);
+            return pi;
         }
 
         public Class getControlClass() {
@@ -346,7 +367,9 @@ public enum ControlsFactory implements NodeFactory {
     }),
     ProgressBars(new ControlFactory() {
         public Node createControl() {
-            return ProgressBarBuilder.create().progress(0.25).focusTraversable(false).build();
+            ProgressBar pb = new ProgressBar(0.25);
+            pb.setFocusTraversable(false);
+            return pb;
         }
 
         public Class getControlClass() {
@@ -356,6 +379,8 @@ public enum ControlsFactory implements NodeFactory {
     ListViews(new ControlFactory() {
         public Node createControl() {
             ListView list = new ListView();
+
+            // The following requires --add-exports javafx.base/com.sun.javafx.collections=ALL-UNNAMED
             ObservableListWrapper<String> items = new ObservableListWrapper<String>(Arrays.asList("One", "Two", "Three", "Four", "Five", "Six", "long line long line long line long line"));
             list.setItems(items);
             list.setPrefWidth(100);
@@ -370,7 +395,11 @@ public enum ControlsFactory implements NodeFactory {
     }),
     PressedToggleButtons(new ControlFactory() {
         public Control createControl() {
-            return ToggleButtonBuilder.create().selected(true).text("Button the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).graphic(new Rectangle(10, 10, Color.RED)).build();
+            ToggleButton tb = new ToggleButton("Button the first line" + "\nthe sec long line" + "\nthe third line");
+            tb.setFocusTraversable(false);
+            tb.setGraphic(new Rectangle(10, 10, Color.RED));
+            tb.setSelected(true);
+            return tb;
         }
 
         public Class getControlClass() {
@@ -379,7 +408,11 @@ public enum ControlsFactory implements NodeFactory {
     }),
     UnPressedToggleButtons(new ControlFactory() {
         public Control createControl() {
-            return ToggleButtonBuilder.create().selected(false).text("Button the first line" + "\nthe sec long line" + "\nthe third line").focusTraversable(false).graphic(new Rectangle(10, 10, Color.RED)).build();
+            ToggleButton tb = new ToggleButton("Button the first line" + "\nthe sec long line" + "\nthe third line");
+            tb.setFocusTraversable(false);
+            tb.setGraphic(new Rectangle(10, 10, Color.RED));
+            tb.setSelected(false);
+            return tb;
         }
 
         public Class getControlClass() {
@@ -389,7 +422,9 @@ public enum ControlsFactory implements NodeFactory {
     Toolbars(new ControlFactory() {
         public Node createControl() {
             ToolBar toolbar = new ToolBar();
-            toolbar.getItems().addAll(new Button("One"), new Button("Two"), new Separator(), SplitMenuButtonBuilder.create().text("three").build());
+            SplitMenuButton smb = new SplitMenuButton();
+            smb.setText("three");
+            toolbar.getItems().addAll(new Button("One"), new Button("Two"), new Separator(), smb);
             toolbar.setFocusTraversable(false);
             return toolbar;
         }
@@ -412,12 +447,10 @@ public enum ControlsFactory implements NodeFactory {
     }),
     SplitMenuButtons(new ControlFactory() {
         public Node createControl() {
-            SplitMenuButton smb = SplitMenuButtonBuilder.create()
-                    .text("Split box the first line" + "\nthe sec long line" + "\nthe third line")
-                    .items(new MenuItem("Split box the first line" + "\nthe sec long line" + "\nthe third line",
-                    new Rectangle(10, 10, Color.BLUE)))
-                    .graphic(new Rectangle(10, 10, Color.RED))
-                    .build();
+            SplitMenuButton smb = new SplitMenuButton(new MenuItem("Split box the first line" + "\nthe sec long line" + "\nthe third line",
+                    new Rectangle(10, 10, Color.BLUE)));
+            smb.setText("Split box the first line" + "\nthe sec long line" + "\nthe third line");
+            smb.setGraphic(new Rectangle(10, 10, Color.RED));
             smb.setMinWidth(100);
             smb.setFocusTraversable(false);
             return smb;
@@ -491,7 +524,6 @@ public enum ControlsFactory implements NodeFactory {
             table.getColumns().setAll(column1, column2);
             table.setPrefHeight(100);
             table.setPrefWidth(100);
-            table.setMinHeight(Control.USE_PREF_SIZE);
             table.setFocusTraversable(false);
             return table;
         }
@@ -531,7 +563,6 @@ public enum ControlsFactory implements NodeFactory {
             treeTable.getColumns().setAll(column1, column2);
             treeTable.setPrefHeight(100);
             treeTable.setPrefWidth(100);
-            treeTable.setMinHeight(Control.USE_PREF_SIZE);
             treeTable.setFocusTraversable(false);
             return treeTable;
         }
@@ -584,10 +615,11 @@ public enum ControlsFactory implements NodeFactory {
     }),
     SplitPanes(new ControlFactory() {
         public Node createControl() {
-            SplitPane pane = SplitPaneBuilder.create().items(
-                    StackPaneBuilder.create().children(new Rectangle(40, 40, Color.WHITESMOKE)).build(),
-                    StackPaneBuilder.create().children(new Rectangle(40, 40, Color.BLUE)).build(),
-                    StackPaneBuilder.create().children(new Rectangle(40, 40, Color.RED)).build()).prefWidth(150).prefHeight(150).build();
+            StackPane sp1 = new StackPane(new Rectangle(40, 40, Color.WHITESMOKE));
+            StackPane sp2 = new StackPane(new Rectangle(40, 40, Color.BLUE));
+            StackPane sp3 = new StackPane(new Rectangle(40, 40, Color.RED));
+            SplitPane pane = new SplitPane(sp1, sp2, sp3);
+            pane.setPrefSize(150, 150);
             pane.setMinWidth(100);
             pane.setDividerPositions(0.33, 0.67);
             pane.setFocusTraversable(false);

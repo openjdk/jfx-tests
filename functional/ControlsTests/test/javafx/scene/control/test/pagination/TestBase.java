@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.pagination;
 
-import com.sun.javafx.scene.control.skin.LabeledText;
+import com.sun.javafx.scene.control.LabeledText;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -147,7 +147,7 @@ public class TestBase extends UtilTestFunctions {
     }
 
     protected void checkScrollingOfFormComponentScrollBar() {
-        Wrap<? extends ScrollBar> scrollBar = findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
+        Wrap<? extends ScrollBar> scrollBar = findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, true);
         scrollBar.mouse().turnWheel(-1);
         testedControl.waitState(new State<Integer>() {
             public Integer reached() {
@@ -273,7 +273,7 @@ public class TestBase extends UtilTestFunctions {
     }
 
     protected Wrap<? extends ScrollBar> getScrollbarWrap(boolean visible) {
-        return findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, visible);
+        return findScrollBar((Parent<Node>)testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, visible);
     }
 
     protected void checkNumberOfVisiblePageIndeces(int expectedIndeces) {

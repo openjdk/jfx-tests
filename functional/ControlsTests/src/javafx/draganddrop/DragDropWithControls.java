@@ -50,14 +50,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageViewBuilder;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
@@ -293,15 +292,16 @@ public class DragDropWithControls extends InteroperabilityApp {
                 createTMSelect(sourceModes));
 
         VBox rbox = new VBox(10);
-        rbox.getChildren().addAll(new Text("Data formats:"),
-                createFormatSelect(sourceFormats),
-                ButtonBuilder.create().text("Put to clipboard")
-                .id(ID_TO_CLIPBOARD_BUTTON)
-                .onAction(new EventHandler<ActionEvent>() {
+        Button b = new Button("Put to clipboard");
+        b.setId(ID_TO_CLIPBOARD_BUTTON);
+        b.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 Clipboard.getSystemClipboard().setContent(prepareClipboardContent());
             }
-        }).build());
+        });
+        rbox.getChildren().addAll(new Text("Data formats:"),
+                createFormatSelect(sourceFormats),
+                b);
 
         HBox hbox = new HBox(10);
         hbox.getChildren().addAll(lbox, new Separator(Orientation.VERTICAL), rbox);
@@ -342,10 +342,13 @@ public class DragDropWithControls extends InteroperabilityApp {
         useCustomViewCB = new CheckBox("Use custom drag view.");
 
         VBox box = new VBox(10);
+        ImageView i = new ImageView();
+        i.setImage(CONTENT_IMAGE);
+        i.setId(ID_SRC_IMAGE);
         box.getChildren().addAll(hbox, new Separator(), fileHdr,
                 fileNames, tb, btns,
                 useCustomViewCB, new Text("Image: "),
-                ImageViewBuilder.create().image(CONTENT_IMAGE).id(ID_SRC_IMAGE).build(),
+                i,
                 log);
         if (parameters.size() > 0) {
             box.setStyle("-fx-background-color: " + parameters.get(0) + ";");
@@ -370,12 +373,14 @@ public class DragDropWithControls extends InteroperabilityApp {
                 createControlCombo(targetControlPane, false), new Text("Target transfer modes:"), createTMSelect(targetModes));
 
         VBox rbox = new VBox(10);
-        rbox.getChildren().addAll(new Text("Data formats:"), createFormatSelect(targetFormats),
-                ButtonBuilder.create().text("paste from clipboard").id(ID_FROM_CLIPBOARD_BUTTON).onAction(new EventHandler<ActionEvent>() {
+        Button b = new Button("paste from clipboard");
+        b.setId(ID_FROM_CLIPBOARD_BUTTON);
+        b.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 getDataFromClipboard(Clipboard.getSystemClipboard());
             }
-        }).build());
+        });
+        rbox.getChildren().addAll(new Text("Data formats:"), createFormatSelect(targetFormats), b);
 
         VBox content = new VBox(10);
         content.getChildren().addAll(new Text("Transfered content:"), transferedContentPane);
@@ -400,6 +405,9 @@ public class DragDropWithControls extends InteroperabilityApp {
             public void changed(ObservableValue<? extends NodeFactory> ov, NodeFactory t, NodeFactory t1) {
                 Node ctrl = null;
                 ctrl = t1.createNode();
+                if (ctrl instanceof ImageView) {
+                    ctrl.setPickOnBounds(true);
+                }
                 if (source) {
                     ctrl.setId(ID_DRAG_SOURCE);
                 } else {
@@ -569,7 +577,9 @@ public class DragDropWithControls extends InteroperabilityApp {
         }
         if (targetFormats.contains(DataFormat.IMAGE) && cb.hasImage()) {
             receivedContent.put(DataFormat.IMAGE, cb.getImage());
-            transferedContentPane.getChildren().addAll(new Text("Image: "), ImageViewBuilder.create().image(cb.getImage()).id(ID_RECEIVED_IMAGE).build());
+            ImageView i = new ImageView(cb.getImage());
+            i.setId(ID_RECEIVED_IMAGE);
+            transferedContentPane.getChildren().addAll(new Text("Image: "), i);
             log("Dropped image: " + cb.getImage());
             gotData = true;
         }

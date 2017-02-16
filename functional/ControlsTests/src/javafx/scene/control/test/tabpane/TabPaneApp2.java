@@ -32,7 +32,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonBuilder;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -113,34 +113,34 @@ public class TabPaneApp2 extends InteroperabilityApp {
             error = new Label();
             error.setId(ERROR_ID);
 
-            controls.getChildren().add(
-                    ButtonBuilder.create()
-                    .text(CLEAR_BTN_ID).id(CLEAR_BTN_ID)
-                    .onAction(new EventHandler<ActionEvent>() {
+            Button temp;
+
+            temp = new Button(CLEAR_BTN_ID);
+            temp.setId(CLEAR_BTN_ID);
+            temp.setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent t) {
                             tabPane.getTabs().clear();
                         }
-                    }).build());
+            });
+            controls.getChildren().add(temp);
 
-            controls.getChildren().add(
-                    ButtonBuilder.create()
-                    .text(RESET_BTN_ID).id(RESET_BTN_ID)
-                    .onAction(new EventHandler<ActionEvent>() {
-
+            temp = new Button(RESET_BTN_ID);
+            temp.setId(RESET_BTN_ID);
+            temp.setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent t) {
                             reset();
                         }
-                    }).build());
+            });
+            controls.getChildren().add(temp);
 
-            controls.getChildren().add(
-                    ButtonBuilder.create()
-                    .text(ADD_SINGLE_BTN_ID).id(ADD_SINGLE_BTN_ID)
-                    .onAction(new EventHandler<ActionEvent>() {
-
+            temp = new Button(ADD_SINGLE_BTN_ID);
+            temp.setId(ADD_SINGLE_BTN_ID);
+            temp.setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent t) {
                             tabPane.getTabs().add(new NamedTab(TAB_ITEM + tabPane.getTabs().size()));
                         }
-                    }).build());
+            });
+            controls.getChildren().add(temp);
 
             HBox add_position_box = new HBox(5);
             controls.getChildren().add(add_position_box);
@@ -148,15 +148,14 @@ public class TabPaneApp2 extends InteroperabilityApp {
             final TextField add_position = new TextField("0");
             add_position.setId(ADD_POS_EDIT_ID);
 
-            add_position_box.getChildren().add(
-                    ButtonBuilder.create()
-                    .text(ADD_SINGLE_AT_POS_BTN_ID).id(ADD_SINGLE_AT_POS_BTN_ID)
-                    .onAction(new EventHandler<ActionEvent>() {
-
+            temp = new Button(ADD_SINGLE_AT_POS_BTN_ID);
+            temp.setId(ADD_SINGLE_AT_POS_BTN_ID);
+            temp.setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent t) {
                             tabPane.getTabs().add(new NamedTab("Tab " + tabPane.getTabs().size()));
                         }
-                    }).build());
+            });
+            add_position_box.getChildren().add(temp);
 
             final Label add_label = new Label("at");
             add_position_box.getChildren().add(add_label);
@@ -170,17 +169,16 @@ public class TabPaneApp2 extends InteroperabilityApp {
             final TextField disable_position = new TextField("0");
             disable_position.setId(DISABLE_POS_EDIT_ID);
 
-            disable_position_box.getChildren().add(
-                    ButtonBuilder.create()
-                    .text(DISABLE_SINGLE_AT_POS_BTN_ID).id(DISABLE_SINGLE_AT_POS_BTN_ID)
-                    .onAction(new EventHandler<ActionEvent>() {
-
+            temp = new Button(DISABLE_SINGLE_AT_POS_BTN_ID);
+            temp.setId(DISABLE_SINGLE_AT_POS_BTN_ID);
+            temp.setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent t) {
                             Integer pos = Integer.valueOf(disable_position.getText());
                             Tab tab = tabPane.getTabs().get(pos.intValue());
                             tab.setDisable(!tab.isDisable());
                         }
-                    }).build());
+            });
+            disable_position_box.getChildren().add(temp);
 
             final Label disable_label = new Label("at");
             disable_position_box.getChildren().add(disable_label);
@@ -194,15 +192,14 @@ public class TabPaneApp2 extends InteroperabilityApp {
             final TextField remove_position = new TextField("0");
             remove_position.setId(REMOVE_POS_EDIT_ID);
 
-            remove_position_box.getChildren().add(
-                    ButtonBuilder.create()
-                    .text(REMOVE_SINGLE_AT_POS_BTN_ID).id(REMOVE_SINGLE_AT_POS_BTN_ID)
-                    .onAction(new EventHandler<ActionEvent>() {
-
+            temp = new Button(REMOVE_SINGLE_AT_POS_BTN_ID);
+            temp.setId(REMOVE_SINGLE_AT_POS_BTN_ID);
+            temp.setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent t) {
                             tabPane.getTabs().remove(Integer.valueOf(remove_position.getText()).intValue());
                         }
-                    }).build());
+            });
+            remove_position_box.getChildren().add(temp);
 
             final Label remove_label = new Label("at");
             remove_position_box.getChildren().add(remove_label);

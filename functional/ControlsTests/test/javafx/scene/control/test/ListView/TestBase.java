@@ -49,6 +49,7 @@ import org.jemmy.fx.Root;
 import org.jemmy.fx.control.ListItemWrap.ListItemByObjectLookup;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Keyboard.KeyboardModifiers;
+import static org.jemmy.interfaces.Keyboard.KeyboardModifiers.META_DOWN_MASK;
 import org.jemmy.interfaces.Mouse;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
@@ -235,8 +236,8 @@ public class TestBase extends TableListCommonTests {
      * Checks visibility states of horizontal and vertical scrollBars.
      */
     protected void checkScrollbarsStates(boolean horizontalVisibility, boolean verticalVisibility) {
-        Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, horizontalVisibility) == null);
-        Assert.assertFalse(findScrollBar(testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, verticalVisibility) == null);
+        Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.HORIZONTAL, horizontalVisibility) == null);
+        Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, verticalVisibility) == null);
     }
 
     /**
@@ -261,9 +262,13 @@ public class TestBase extends TableListCommonTests {
             @Override
             public void run(Object... os) throws Exception {
                 ListView lv = (ListView) os[0];
+                selectionHelper.setRowsNum(elemCount);
                 for (int i = 0; i < elemCount; i++) {
                     if (Integer.valueOf((String) lv.getItems().get(i)) % 2 == 0) {
                         lv.getSelectionModel().select(i);
+                        selectionHelper.push(KeyboardButtons.SPACE, KeyboardModifiers.CTRL_DOWN_MASK);
+                        selectionHelper.push(KeyboardButtons.DOWN, KeyboardModifiers.CTRL_DOWN_MASK);
+                        selectionHelper.push(KeyboardButtons.DOWN, KeyboardModifiers.CTRL_DOWN_MASK);
                     }
                 }
             }
@@ -273,10 +278,10 @@ public class TestBase extends TableListCommonTests {
     protected void checkScreenshotsWithStep(String name, final int elementsCount, final int step) throws Throwable {
         Wrap<Text> cellWrap = getCellWrap((Integer) (0)); //mouse will be over the second item.
         cellWrap.as(Showable.class).shower().show();
-        cellWrap.mouse().click(1, cellWrap.getClickPoint(), Mouse.MouseButtons.BUTTON1, CTRL_DOWN_MASK_OS);
+        cellWrap.mouse().click(1, cellWrap.getClickPoint(), Mouse.MouseButtons.BUTTON1, Utils.isMacOS() ? META_DOWN_MASK : CTRL_DOWN_MASK_OS);
         for (int i = 0; i < elementsCount / step; i++) {
             for (int j = 0; j < step; j++) {
-                testedControl.keyboard().pushKey(KeyboardButtons.RIGHT, CTRL_DOWN_MASK_OS);
+                testedControl.keyboard().pushKey(KeyboardButtons.RIGHT, Utils.isMacOS() ? META_DOWN_MASK : CTRL_DOWN_MASK_OS);
             }
             checkScreenshot("ListView_" + name + "_" + i, testedControl);
         }
@@ -296,6 +301,7 @@ public class TestBase extends TableListCommonTests {
                 System.out.println(SelectionFormatter.format("Helper selection: ", helper_selected, "Selection: ", selected));
                 System.out.println("Helper focus : " + helper_selection);
                 System.out.println("Focus        : " + selection);
+                System.out.println("Helper anchor : " + selectionHelper.anchor + "\n\n");
                 System.out.println("Anchor : " + selectionHelper.anchor + "\n\n");
 
                 if (((helper_selected.size() == selected.size())

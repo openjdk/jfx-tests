@@ -44,11 +44,11 @@ import javafx.scene.control.test.utils.ComponentsFactory;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.PolygonBuilder;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.time.chrono.Chronology;
+import javafx.scene.shape.Polygon;
 
 /**
  * @author Alexander Kirov
@@ -192,12 +192,14 @@ public class PropertyTablesFactory {
         possibleNodes.add(new Rectangle(0, 0, 10, 10));
         possibleNodes.add(ComponentsFactory.createCustomContent(25, 25));
         possibleNodes.add(new Circle(6.75, Color.RED));
-        possibleNodes.add(PolygonBuilder.create().fill(Color.GREEN).points(new Double[]{
+        Polygon temp = new Polygon(new double[]{
                     0.0, 7.0,
                     5.0, 20.0,
                     15.0, 20.0,
                     20.0, 7.0,
-                    10.0, 0.0,}).build());
+            10.0, 0.0,});
+        temp.setFill(Color.GREEN);
+        possibleNodes.add(temp);
         tb.addObjectEnumPropertyLine(property, possibleNodes, owningObject);
     }
 

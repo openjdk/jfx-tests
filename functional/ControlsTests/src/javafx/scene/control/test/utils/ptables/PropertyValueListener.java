@@ -28,13 +28,11 @@ import java.lang.reflect.Method;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.LabelBuilder;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFieldBuilder;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.layout.HBox;
 import static javafx.scene.control.test.utils.ptables.StaticLogger.*;
+import javafx.scene.layout.HBox;
 
 /**
  * @author Alexander Kirov
@@ -57,7 +55,7 @@ public class PropertyValueListener<ValueType> extends HBox implements AbstractPr
     public final static String LISTENER_SUFFIX = "_LISTENER_ID";
     private ReadOnlyProperty listenedProperty;
     private Object owningObject;
-    private TextField receivedValueTF = TextFieldBuilder.create().minWidth(50).maxWidth(110).build();
+    private TextField receivedValueTF = new TextField();
     private boolean someStateWasRemembered = false;
     private ValueType rememberedState = null;
     private int rememberedChangeCountValue = -1;
@@ -77,6 +75,8 @@ public class PropertyValueListener<ValueType> extends HBox implements AbstractPr
 
     public <ValueType> PropertyValueListener(String labelDescription, ReadOnlyProperty listenedProperty, String textFieldId, Object owningObject, Boolean showCounters) {
         this.owningObject = owningObject;
+        receivedValueTF.setMinWidth(50);
+        receivedValueTF.setMaxWidth(110);
         receivedValueTF.setId(textFieldId);
         receivedValueTF.setTooltip(new Tooltip());
         if (listenedProperty.getName().contains("BOUNDS")) {
@@ -85,7 +85,9 @@ public class PropertyValueListener<ValueType> extends HBox implements AbstractPr
         }
         this.listenedProperty = listenedProperty;
         counter = new PropertyValueCounter(listenedProperty);
-        getChildren().add(LabelBuilder.create().text(labelDescription).prefWidth(100).build());
+        Label temp = new Label(labelDescription);
+        temp.setPrefWidth(100);
+        getChildren().add(temp);
         if (showCounters) {
             getChildren().add(counter.getVisualRepresentation());
         }

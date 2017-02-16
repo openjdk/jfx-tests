@@ -28,9 +28,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SliderBuilder;
 import javafx.scene.control.test.utils.CommonPropertiesScene;
 import javafx.scene.control.test.utils.ptables.PropertiesTable;
 import javafx.scene.control.test.utils.ptables.PropertyTablesFactory;
@@ -76,13 +74,15 @@ public class SliderNewApp extends InteroperabilityApp {
 
         @Override
         final protected void prepareScene() {
-            testedSlider = SliderBuilder.create().id(TESTED_SLIDER_ID).build();
+            testedSlider = new Slider();
+            testedSlider.setId(TESTED_SLIDER_ID);
 
             tb = new PropertiesTable(testedSlider);
             PropertyTablesFactory.explorePropertiesList(testedSlider, tb);
             SpecialTablePropertiesProvider.provideForControl(testedSlider, tb);
 
-            Button resetButton = ButtonBuilder.create().id(RESET_BUTTON_ID).text("Reset").build();
+            Button resetButton = new Button("Reset");
+            resetButton.setId(RESET_BUTTON_ID);
             resetButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     HBox hb = (HBox) getRoot();
@@ -92,7 +92,8 @@ public class SliderNewApp extends InteroperabilityApp {
                 }
             });
 
-            Button setCustomConverter = ButtonBuilder.create().id(APPLY_CUSTOM_LABEL_FORMATTER).text("ApplyCsustomConverter").build();
+            Button setCustomConverter = new Button("ApplyCsustomConverter");
+            setCustomConverter.setId(APPLY_CUSTOM_LABEL_FORMATTER);
             setCustomConverter.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent t) {
                     testedSlider.setLabelFormatter(new CustomConverter());
