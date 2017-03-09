@@ -160,7 +160,7 @@ public class PropertyTablesFactory {
         List possibleFonts = new ArrayList();
         possibleFonts.add(null);
         possibleFonts.add(new Font(20));
-        possibleFonts.add(new Font("ArialW7", 15));
+        possibleFonts.add(new Font("Lucida Sans Regular", 15));
         possibleFonts.add(new Font("Verdana", 10));
         tb.addObjectEnumPropertyLine(property, possibleFonts, owningObject);
     }

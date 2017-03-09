@@ -1,7 +1,7 @@
 .root , .table-header { /*TODO class table-header is workaround for RT-16854*/
-    -fx-font: 12 ArialW7;
+    -fx-font: 12 'Lucida Sans';
 }
 .chart-title {
-    -fx-font: 1.4em ArialW7;
+    -fx-font: 1.4em 'Lucida Sans';
 }
 /*RT-26326 this issue made us to write in a short way: with -fx-font; instead of -fx-font-size and -fx-font-family*/

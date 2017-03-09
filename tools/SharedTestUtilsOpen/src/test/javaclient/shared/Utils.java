@@ -135,7 +135,7 @@ public class Utils {
         }
         boolean success = true;
         try {
-            final InputStream is = Utils.class.getResourceAsStream("font/arialw7.ttf");
+            final InputStream is = Utils.class.getResourceAsStream("font/LucidaSansRegular.ttf");
             final URL url = ImageDuplicateExtractor.class.getResource("custom_font.css");
 
             if ((null != is) && (null != url)){

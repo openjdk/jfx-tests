@@ -85,7 +85,7 @@ public class RichTextEditorTest extends ControlsTestBase {
     Wrap<? extends HTMLEditor> htmlEditor = null;
     Parent htmlEditorAsParent;
     protected static KeyboardModifiers CTRL_DOWN_MASK_OS;
-    public static String DEFAULT_TEXT_STYLE = "ArialW7";
+    public static String DEFAULT_TEXT_STYLE = "Lucida Sans";
     public static String PLATFORM_TAG;
 
     static {
