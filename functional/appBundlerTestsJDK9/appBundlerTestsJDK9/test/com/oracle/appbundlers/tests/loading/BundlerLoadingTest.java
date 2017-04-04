@@ -313,7 +313,7 @@ public class BundlerLoadingTest implements Constants {
                 .of(app.getJavaExtensionDirPathBasedonExtension(extension));
         Layer parentLayer = Layer.boot();
         Configuration configuration = parentLayer.configuration()
-                .resolveRequires(moduleFinder, ModuleFinder.of(),
+                .resolve(moduleFinder, ModuleFinder.of(),
                         Set.of(moduleName));
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         Layer layer = parentLayer.defineModulesWithOneLoader(configuration,

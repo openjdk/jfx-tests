@@ -155,7 +155,7 @@ public class SourceFactory implements Constants {
 
         return new Source(CUSTOM_UTIL_MODULE_NAME,
                 CUSTOM_UTIL_MODULE_TEMPLATE_FILE_NAME, classNameToTemplateMap,
-                CUSTOM_UTIL_CLASS_FULLY_QUALIFIED_NAME, CUSTOM_UTIL_MODULE_NAME,
+                CUSTOM_UTIL_CLASS_NAME, CUSTOM_UTIL_MODULE_NAME,
                 replacementsInSourceCode);
     }
 
