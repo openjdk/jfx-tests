@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2017 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -136,5 +136,13 @@ public class DragAndDrop {
     @RunUI(value="dropzoneMove.html")
     public static void dropzoneMove(){
         WebNodeLauncher.run(DragAndDrop.class.getResource("resources/dropzone.html").toExternalForm());
+    }
+
+    /**
+     * Test Clipboard Contents on drag and drop of text and image
+     */
+    @RunUI(value="dragWebContents.html")
+    public static void verifyClipboardOnCopyImage(){
+        ClipboardContentLauncher.run(DragAndDrop.class.getResource("resources/dragWebContents.html").toExternalForm());
     }
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h3>Testing system clipboard contents after selecting "Copy Image to Clipboard" item in context menu</h3>
+        <ol>
+            <li>Wait for page to load.</li>
+            <li> Bold text "Copy PNG Image Type" and below that an image should appear. Right-click on the image. Context menu should appear. Click on "Copy Image to Clipboard" menu item.
+            <li> <b>After step 2</b> click on "Verify Clipboard" button. The button text should display <b>Success</b> in <b>green</b> after the click. If the button text displays <b>Failure</b>, it signifies failure of test.</li>
+            <li> Click on "Next Image" button to proceed to next test.</li>
+            <li> Repeat steps 2 and 3 for jpg and gif image formats.</li>
+            <li> After all the images are loaded, "Test Concluded. Click to start over again!" button will be displayed. Click on this button if you want to retest.</li>
+        </ol>
+        The test passes if all the steps pass.
+    </body>
+</html>
