@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <input type="file" id="file" onchange="onInputFileChange()">
+        <p id="status">To test manually, drag a file to the file input above or click on Input button and select any file</p>
+        <script>
+             function onInputFileChange()
+             {
+                 var reader = new FileReader();
+                 var statusElement = document.getElementById("status");
+                 statusElement.textContent = "Starting test...";
+                 reader.onloadend = function() {
+                     statusElement.textContent = "PASS, no crash";
+                 }
+                 reader.readAsText(document.getElementById("file").files[0]);
+             }
+        </script>
+    </body>
+</html>
