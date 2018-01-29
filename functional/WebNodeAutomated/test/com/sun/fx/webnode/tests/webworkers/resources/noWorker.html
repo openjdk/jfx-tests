@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script>
+            var worker = new Worker('filenotpresent.js');
+            worker.addEventListener('error', function(event) {
+                document.getElementById("result").innerHTML = "error";
+            }, false);
+        </script>
+    </head>
+    <body>
+        <div id="result"></div>
+    </body>
+</html>

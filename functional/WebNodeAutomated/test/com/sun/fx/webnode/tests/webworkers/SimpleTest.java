@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2018, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -76,7 +76,7 @@ public class SimpleTest extends WorkerTestClass {
 
     /**
      * Test for the situation when worker file is not present.
-     * http://javafx-jira.kenai.com/browse/RT-27149
+     * https://bugs.openjdk.java.net/browse/JDK-8089375
      */
     @Test(timeout=5000)
     public void noWorkerFile() {
@@ -84,10 +84,10 @@ public class SimpleTest extends WorkerTestClass {
         result = null;
         Platform.runLater(new Runnable() {
             public void run() {
-                result = (JSObject) engine.executeScript("new Worker('ololo.js');");
-                result = Boolean.TRUE;
+                engine.load(getAbsolutePathToResource("resources/noWorker.html"));
             }
         });
-        doWait(resultReady);
+        doWaitPageLoading();
+        waitForResult("error");
     }
 }
