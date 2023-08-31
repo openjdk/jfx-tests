@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,32 +24,29 @@
  */
 package javafx.scene.control.test.ListView;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import static javafx.scene.control.test.ListView.NewListViewApp.*;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 import javafx.scene.control.test.util.MultipleSelectionHelper;
 import javafx.scene.control.test.util.MultipleSelectionHelper.Range;
 import javafx.scene.control.test.util.TableListCommonTests;
-import static javafx.scene.control.test.utils.ComponentsFactory.*;
 import javafx.scene.control.test.utils.SelectionFormatter;
 import javafx.scene.control.test.utils.ptables.AbstractPropertyController.SettingType;
-import static javafx.scene.control.test.utils.ptables.NodesChoserFactory.*;
 import javafx.scene.text.Text;
 import org.jemmy.Point;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
-import org.jemmy.env.Environment;
 import org.jemmy.fx.ByID;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.control.ListItemWrap.ListItemByObjectLookup;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Keyboard.KeyboardModifiers;
-import static org.jemmy.interfaces.Keyboard.KeyboardModifiers.META_DOWN_MASK;
 import org.jemmy.interfaces.Mouse;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
@@ -62,6 +59,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import test.javaclient.shared.Utils;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+
+import static javafx.scene.control.test.ListView.NewListViewApp.*;
+import static javafx.scene.control.test.utils.ComponentsFactory.*;
+import static javafx.scene.control.test.utils.ptables.NodesChoserFactory.NODE_CHOOSER_ACTION_BUTTON_ID;
+import static org.jemmy.interfaces.Keyboard.KeyboardModifiers.META_DOWN_MASK;
 import static test.javaclient.shared.TestUtil.isEmbedded;
 
 /**

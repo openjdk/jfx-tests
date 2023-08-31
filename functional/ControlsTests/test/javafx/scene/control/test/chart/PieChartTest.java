@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.chart;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.scene.control.test.chart.PieChartApp.Pages;
 import javafx.scene.control.test.chart.PieChartApp.PieChartCSS;
 import org.junit.BeforeClass;
@@ -55,7 +55,7 @@ public class PieChartTest extends ChartBase {
      * Test for PieChart setLabelsVisible API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void labelsVisibleTest() throws InterruptedException {
         testCommon(Pages.LabelsVisible.name(), null, true, true, PieChartApp.BOOL.length);
@@ -128,7 +128,7 @@ public class PieChartTest extends ChartBase {
      * Test for -fx-start-angle CSS
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void cssStartAngle() throws InterruptedException {
         testCommon(PieChartCSS.CSSStartAngle.name(), null, true, true, PieChartApp.START_ANGLE_S.length);

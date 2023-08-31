@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.colorpicker;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,7 +67,7 @@ import test.javaclient.shared.JemmyUtils;
 public class ColorPickerTest extends TestBase {
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void initialControlAppearanceTest() throws Throwable {
         checkScreenshot("ColorPicker-InitialAppearance", testedControl);
@@ -75,7 +75,7 @@ public class ColorPickerTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void initialPopupAppearanceTest() throws Throwable {
         setPropertyBySlider(SettingType.SETTER, Properties.translatex, 10);
@@ -92,7 +92,7 @@ public class ColorPickerTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void initialCustomColorPopupWindowAppearanceTest() throws Throwable {
         setJemmyComparatorByDistance(0.005f);
@@ -104,7 +104,7 @@ public class ColorPickerTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     /*
      * This test checks visual appearance of RGB tab in custom color popup (with
@@ -124,7 +124,7 @@ public class ColorPickerTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     /*
      * This test appears like previous one, to check visual appearance of tab,
@@ -155,19 +155,19 @@ public class ColorPickerTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void choseColorFromPopupTest() throws InterruptedException {
         checkAllColorsOnChosability(initialColorsAmountInPopup);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void checkColorAmountTest() throws InterruptedException {
         checkColorAmountInPopup(initialColorsAmountInPopup);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void popupAppearancePoliticsTest() throws InterruptedException {
         assertFalse(isPopupVisible());
@@ -212,7 +212,7 @@ public class ColorPickerTest extends TestBase {
         assertFalse(isPopupVisible());
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void customColorAddingTest() throws InterruptedException {
         int colorNumberToAdd = 26;
@@ -223,7 +223,7 @@ public class ColorPickerTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void popupAppearanceAfterCustomColorsAddingTest() throws InterruptedException, Throwable {
         setJemmyComparatorByDistance(0.001f);
@@ -235,7 +235,7 @@ public class ColorPickerTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void currentColorInCustomColorPopupTest() throws InterruptedException {
         clickControl();
@@ -254,7 +254,7 @@ public class ColorPickerTest extends TestBase {
         assertTrue(getFill(rect).equals(getCurrentColorValue()));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void newColorInCustomColorPopupTest() throws InterruptedException {
         selectColorFromRainbowPallete(0.5);
@@ -277,7 +277,7 @@ public class ColorPickerTest extends TestBase {
         closeCustomColorPopupModalWindow();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void initialStateOfCurrentAndNewColor() throws InterruptedException {
         selectColorFromRainbowPallete(0.5);
@@ -289,7 +289,7 @@ public class ColorPickerTest extends TestBase {
         closeCustomColorPopupModalWindow();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void correctCirclePositionOnSettingCustomColor() throws InterruptedException {
         clickControl();
@@ -305,7 +305,7 @@ public class ColorPickerTest extends TestBase {
         assertTrue(colorDistance(getColorUnderCircle(), javafx.scene.paint.Color.web("#eeaaee", 1.0)) < 10);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void gradientsCorrectnessTest() throws InterruptedException {
         clickControl();
@@ -318,7 +318,7 @@ public class ColorPickerTest extends TestBase {
         closeCustomColorPopupModalWindow();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void correctColorPropagatingFromInitialTest() throws InterruptedException {
         clickControl();
@@ -337,7 +337,7 @@ public class ColorPickerTest extends TestBase {
         closeCustomColorPopupModalWindow();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void correctColorPropagatingFromRainbowTest() throws InterruptedException {
         Color initialColor = getCurrentColorValue();
@@ -359,7 +359,7 @@ public class ColorPickerTest extends TestBase {
         closeCustomColorPopupModalWindow();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void correctColorPropagatingFromSquareTest() throws InterruptedException {
         Color initialColor = getCurrentColorValue();
@@ -382,7 +382,7 @@ public class ColorPickerTest extends TestBase {
         closeCustomColorPopupModalWindow();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void correctColorPropagatingFromRGBTest() throws InterruptedException {
         Color initialColor = getCurrentColorValue();
@@ -406,7 +406,7 @@ public class ColorPickerTest extends TestBase {
         closeCustomColorPopupModalWindow();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void correctColorPropagatingFromHSBTest() throws InterruptedException {
         Color initialColor = getCurrentColorValue();
@@ -430,7 +430,7 @@ public class ColorPickerTest extends TestBase {
         closeCustomColorPopupModalWindow();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void correctColorPropagatingFromWebTest() throws InterruptedException {
         Color initialColor = getCurrentColorValue();
@@ -452,7 +452,7 @@ public class ColorPickerTest extends TestBase {
         closeCustomColorPopupModalWindow();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void colorSavingTest() throws InterruptedException {
         Color oldColor = getCurrentColorValue();
@@ -476,7 +476,7 @@ public class ColorPickerTest extends TestBase {
         assertTrue(colorDistance(newColor, oldColor) > 1);//Not equals
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void colorUsingTest() throws InterruptedException {
         Color oldColor = getCurrentColorValue();
@@ -500,13 +500,13 @@ public class ColorPickerTest extends TestBase {
         assertTrue(colorDistance(newColor, oldColor) > 1);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void cancelCustomColorChosingTest() throws InterruptedException {
         standartCustomColorChosingPopupDismissTest();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 900000)
     public void keyboardArrowHorizontalNavigationInPopupTest() throws InterruptedException {
         addCustomColors(10, 0.21);
@@ -532,7 +532,7 @@ public class ColorPickerTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 900000)
     public void keyboardArrowVerticalNavigationInPopupTest() throws InterruptedException {
         addCustomColors(10, 0.21);
@@ -584,7 +584,7 @@ public class ColorPickerTest extends TestBase {
     }
 
     @Test(timeout = 300000)
-    @Smoke
+    //TODO@Smoke
     /*
      * When custom color is added into pallete popup, it can be removed, by
      * clicking on it with right mouse button, and chosing remove action from
@@ -635,7 +635,7 @@ public class ColorPickerTest extends TestBase {
     }
 
     @Test(timeout = 300000)
-    @Smoke
+    //TODO@Smoke
     /*
      * Space in pallete popup can be used, for clicking on link to custom color
      * dialog. But this link should be focused. But in cannot be focused (now,
@@ -656,7 +656,7 @@ public class ColorPickerTest extends TestBase {
     }
 
     @Test(timeout = 600000)
-    @Smoke
+    //TODO@Smoke
     /*
      * You can select color from palete popup, using enter key press, over the
      * focused color. So, add some amount of custom color, and select each of
@@ -684,7 +684,7 @@ public class ColorPickerTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardEscInPopupTest() throws InterruptedException {
         showPopup();
@@ -699,7 +699,7 @@ public class ColorPickerTest extends TestBase {
     }
 
     @Test(timeout = 300000)
-    @Smoke
+    //TODO@Smoke
     /*
      * [A button is focused] Fire the action associated with the button. So,
      * open three times, custom color dialog, select some color, and request
@@ -961,7 +961,7 @@ public class ColorPickerTest extends TestBase {
     }
 
     @Test(timeout = 300000)//RT-24842
-    @Smoke
+    //TODO@Smoke
     /*
      * Dismiss the dialog. Save the new color to the Custom Colors area in the
      * Color Palette. Close the Color Palette. Update the Color Chooser. Apply
@@ -982,7 +982,7 @@ public class ColorPickerTest extends TestBase {
         checkCurrentColorValue(Color.rgb(50, 50, 50));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardEscInCustomColorDialogTest() throws InterruptedException {
         showPopup();
@@ -996,7 +996,7 @@ public class ColorPickerTest extends TestBase {
         standartCustomColorChosingPopupDismissTest();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ColorPicker.value.BEHAVIOR", "javafx.scene.control.ColorPicker.value.GET",
         "javafx.scene.control.ColorPicker.value.BIND", "javafx.scene.control.ColorPicker.value.DEFAULT",
@@ -1014,7 +1014,7 @@ public class ColorPickerTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void listOfCustomColorsPropertyTest() throws InterruptedException {
         addCustomColors(50, 0.936);
@@ -1034,7 +1034,7 @@ public class ColorPickerTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 60000)
     public void renderingAfterSortingTest() throws InterruptedException {
         //colors in the hue ascending order

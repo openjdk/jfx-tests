@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -37,6 +37,8 @@ import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.control.Scrollable2DImpl.ScrollsLookupCriteria;
+import org.jemmy.fx.interfaces.EditableCellOwner;
+import org.jemmy.fx.interfaces.Scrollable2D;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.ByStringLookup;
 import org.jemmy.resources.StringComparePolicy;
@@ -300,7 +302,6 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
         return scroll.maximum();
     }
 
-    @Override
     @Deprecated
     public double value() {
         checkScroll();
@@ -308,9 +309,9 @@ public class TreeViewWrap<CONTROL extends TreeView> extends ControlWrap<CONTROL>
     }
 
     @Deprecated
-    public Scroller scroller() {
+    public Caret scroller() {
         checkScroll();
-        return scroll.scroller();
+        return scroll.caret();
     }
 
     public Caret caret() {

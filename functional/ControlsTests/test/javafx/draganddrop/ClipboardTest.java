@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -43,7 +43,7 @@ public class ClipboardTest extends CommonContentNotReceivingTests {
     /**
      * test passing plain text through clipboard
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void plainTextTest() throws Exception {
         setTransferData(DataFormat.PLAIN_TEXT);
@@ -54,7 +54,7 @@ public class ClipboardTest extends CommonContentNotReceivingTests {
     /**
      * test passing url through clipboard
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void urlTest() throws Exception {
         setTransferData(DataFormat.URL);
@@ -65,7 +65,7 @@ public class ClipboardTest extends CommonContentNotReceivingTests {
     /**
      * test passing html through clipboard
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void htmlTest() throws Exception {
         setTransferData(DataFormat.HTML);
@@ -86,7 +86,7 @@ public class ClipboardTest extends CommonContentNotReceivingTests {
     /**
      * test passing rtf through clipboard
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void rtfTest() throws Exception {
         setTransferData(DataFormat.RTF);
@@ -97,7 +97,7 @@ public class ClipboardTest extends CommonContentNotReceivingTests {
     /**
      * test passing files through clipboard
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void filesTest() throws Exception {
         setTransferData(DataFormat.FILES);
@@ -108,7 +108,7 @@ public class ClipboardTest extends CommonContentNotReceivingTests {
     /**
      * test passing custom bytes through clipboard
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void customBytesTest() throws Exception {
         setTransferData(DF_CUSTOM_BYTES);
@@ -119,7 +119,7 @@ public class ClipboardTest extends CommonContentNotReceivingTests {
     /**
      * test passing custom string through clipboard
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void customStringTest() throws Exception {
         setTransferData(DF_CUSTOM_STRING);
@@ -130,7 +130,7 @@ public class ClipboardTest extends CommonContentNotReceivingTests {
     /**
      * test passing custom class through clipboard
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void customClassTest() throws Exception {
         setTransferData(DF_CUSTOM_CLASS);
@@ -141,7 +141,7 @@ public class ClipboardTest extends CommonContentNotReceivingTests {
     /**
      * test passing all data formats through clipboard
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void allFormatsTest() throws Exception {
         setTransferData(allFormat);
@@ -152,7 +152,7 @@ public class ClipboardTest extends CommonContentNotReceivingTests {
     /**
      * test passing plain text, html, rtf through clipboard
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void partFormatsTest() throws Exception {
         DataFormat[] dfs = new DataFormat[]{DataFormat.PLAIN_TEXT, DataFormat.HTML, DataFormat.RTF};
@@ -164,7 +164,7 @@ public class ClipboardTest extends CommonContentNotReceivingTests {
     /**
      * test passing url, html, rtf through clipboard
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void partFormats2Test() throws Exception {
         DataFormat[] dfs = new DataFormat[]{DataFormat.URL, DataFormat.HTML, DataFormat.RTF};

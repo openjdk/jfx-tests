@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,7 +26,7 @@ package javafx.scene.control.test.toggleradiobutton;
 
 import test.javaclient.shared.FilteredTestRunner;
 import org.junit.runner.RunWith;
-import client.test.Smoke;
+
 import org.junit.Test;
 import org.junit.Before;
 import static javafx.scene.control.test.ToggleButtonNewApp.*;
@@ -48,7 +48,7 @@ public class ToggleButtonGroupedTest extends ToggleButtonTestBase {
      * This simple test checks logic of working in ToggleGroup: not more than
      * one toggle can be selected at the same time.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void groupedSimpleTest() {
         for (int i = 0; i < ITERATIONS; i++) {
@@ -71,7 +71,7 @@ public class ToggleButtonGroupedTest extends ToggleButtonTestBase {
      * bidirectional binding, other is set by unidirectional binding and we don't
      * use ToggleButtons to set state directly.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void groupedUnidirectionalBidirectionalBundingWithoutDirectControlTest() {
         clickToggleButton(BINDING_SET_TOGGLE_BUTTON_ID);
@@ -100,7 +100,7 @@ public class ToggleButtonGroupedTest extends ToggleButtonTestBase {
      *
      * Failes due to RT-17205
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void groupUnidirectionalBidirectinalBindingWithDirectControlTest() {
         clickToggleButton(BINDING_SET_TOGGLE_BUTTON_ID);

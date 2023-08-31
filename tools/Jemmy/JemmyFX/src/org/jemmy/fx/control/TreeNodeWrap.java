@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -28,7 +28,6 @@ import javafx.scene.Node;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.util.Callback;
 import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.FutureAction;
@@ -38,10 +37,9 @@ import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.NodeWrap;
 import org.jemmy.interfaces.*;
-import org.jemmy.interfaces.EditableCellOwner.CellEditor;
-import org.jemmy.interfaces.EditableCellOwner.EditableCell;
+import org.jemmy.fx.interfaces.EditableCellOwner.CellEditor;
+import org.jemmy.fx.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.lookup.LookupCriteria;
-import static org.jemmy.fx.control.TableUtils.*;
 
 /**
  * This wraps a node that renders the tree's data item
@@ -76,11 +74,18 @@ public class TreeNodeWrap<T extends TreeItem> extends Wrap<T>
     @Override
     public Rectangle getScreenBounds() {
         return new FutureAction<>(getEnvironment(), () -> {
-            TreeCell treeCell = treeViewWrap.getTreeCell(getControl());
-            if (treeCell != null) {
-                return NodeWrap.getScreenBounds(getEnvironment(), treeCell);
+            try {
+                TreeCell treeCell = treeViewWrap.getTreeCell(getControl());
+                if (treeCell != null) {
+                    return NodeWrap.getScreenBounds(getEnvironment(), treeCell);
+                }
+                return null;
+            } catch (Throwable e) {
+                //TODO
+                System.err.println("getScreenBounds");
+                e.printStackTrace();
+                throw e;
             }
-            return null;
         }).get();
     }
 

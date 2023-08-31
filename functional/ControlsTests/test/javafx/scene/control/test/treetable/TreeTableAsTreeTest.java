@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.treetable;
 
-import client.test.Smoke;
+
 import java.util.Comparator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -64,7 +64,7 @@ public class TreeTableAsTreeTest extends TreeViewTest {
      * Checks that when the sorting is applied to the underlying data collection
      * the cells are rendered in the right order.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 30000)
     @Override
     public void renderingAfterSortingTest() throws Throwable {

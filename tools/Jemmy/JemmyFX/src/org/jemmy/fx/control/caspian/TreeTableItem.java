@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,15 +24,13 @@
  */
 package org.jemmy.fx.control.caspian;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.Node;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.StackPane;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.control.TreeTableItemWrap;
 import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Scrollable2D;
+import org.jemmy.fx.interfaces.Scrollable2D;
 import org.jemmy.timing.DescriptiveState;
 import org.jemmy.timing.State;
 

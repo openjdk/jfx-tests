@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,6 @@
  */
 package javafx.scene.control.test.utils.ptables;
 
-import java.util.Arrays;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -33,6 +32,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TreeItem;
+
+import java.util.Arrays;
 
 /**
  * @author Alexander Kirov
@@ -94,12 +95,12 @@ public class SpecialTablePropertiesProvider {
 
     public static class ForListView extends PropertiesProvider<ListView> {
 
-        public final String GET_ON_EDIT_CANCEL = "GET_ON_EDIT_CANCEL";
-        public final String GET_ON_EDIT_COMMIT = "GET_ON_EDIT_COMMIT";
-        public final String GET_ON_EDIT_START = "GET_ON_EDIT_START";
-        public final String SET_ON_EDIT_CANCEL = "SET_ON_EDIT_CANCEL";
-        public final String SET_ON_EDIT_COMMIT = "SET_ON_EDIT_COMMIT";
-        public final String SET_ON_EDIT_START = "SET_ON_EDIT_START";
+//        public final String GET_ON_EDIT_CANCEL = "GET_ON_EDIT_CANCEL";
+//        public final String GET_ON_EDIT_COMMIT = "GET_ON_EDIT_COMMIT";
+//        public final String GET_ON_EDIT_START = "GET_ON_EDIT_START";
+//        public final String SET_ON_EDIT_CANCEL = "SET_ON_EDIT_CANCEL";
+//        public final String SET_ON_EDIT_COMMIT = "SET_ON_EDIT_COMMIT";
+//        public final String SET_ON_EDIT_START = "SET_ON_EDIT_START";
 
         @Override
         public void provide(ListView node, final PropertiesTable tb) {
@@ -111,6 +112,8 @@ public class SpecialTablePropertiesProvider {
             tb.addSimpleListener(node.getFocusModel().focusedIndexProperty(), node.getFocusModel());
             tb.addSimpleListener(node.getFocusModel().focusedItemProperty(), node.getFocusModel());
 
+            //this is duplication of some other tests
+            /*
             tb.addCounter(SET_ON_EDIT_CANCEL);
             tb.addCounter(SET_ON_EDIT_COMMIT);
             tb.addCounter(SET_ON_EDIT_START);
@@ -148,7 +151,9 @@ public class SpecialTablePropertiesProvider {
             if (node.getOnEditCommit() instanceof EventHandler) {
                 tb.incrementCounter(GET_ON_EDIT_COMMIT);
             }
+             */
         }
+
     }
 
     public static class ForTreeItem extends PropertiesProvider<TreeItem> {

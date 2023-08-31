@@ -6,6 +6,7 @@ package org.jemmy.samples.explorer;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -58,7 +59,7 @@ public class Explorer extends Application {
         parents.setConverter(new StringConverter<File>() {
             @Override
             public String toString(File t) {
-                return t.getName();
+                return (t != null) ? t.getName() : "null";
             }
 
             @Override
@@ -67,6 +68,12 @@ public class Explorer extends Application {
             }
         });
         location = new TextField();
+        location.setOnKeyPressed(t -> {
+            System.out.println("pressed " + t.getCode());
+        });
+        location.setOnKeyReleased(t -> {
+            System.out.println("released " + t.getCode());
+        });
         location.setOnKeyPressed(t -> {
             if (t.getCode() == KeyCode.ENTER) {
                 File entered = new File(location.getText());
@@ -97,6 +104,7 @@ public class Explorer extends Application {
                 }
             }
         });
+        fileView.setId("file-view");
         content.setCenter(fileView);
         updateCombo(new File(System.getProperty("user.dir")));
         Scene res = new Scene(content);
@@ -104,6 +112,7 @@ public class Explorer extends Application {
         stage.setTitle("Demo file browser");
         stage.setWidth(600);
         stage.setHeight(500);
+        stage.setAlwaysOnTop(true);
         stage.show();
     }
 
@@ -127,7 +136,7 @@ public class Explorer extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
     private void showError(String name) {

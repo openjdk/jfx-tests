@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.tabpane;
 
-import client.test.Smoke;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +58,7 @@ public class NewTabPaneTest extends NewTabPaneBase {
     /**
      * Disables the tab and then tries to switch to it by mouse clicking
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void disablePropertyBindingTest() {
         final int NUM_TABS = SettingType.values().length + 1; //Number of tabs
@@ -117,7 +117,7 @@ public class NewTabPaneTest extends NewTabPaneBase {
     /**
      * Sets tab prop closable to 'true' and then tries to close it
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void closablePropertyBindingTest() {
         final int NUM_TABS = SettingType.values().length + 1;
@@ -163,7 +163,7 @@ public class NewTabPaneTest extends NewTabPaneBase {
     /**
      * Checks API setUserData/getUserData
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void userDataAPITest() {
         final java.util.List<String> userData = new java.util.ArrayList<String>();
@@ -188,7 +188,7 @@ public class NewTabPaneTest extends NewTabPaneBase {
     /**
      * Checks API getProperties/hasProperties
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void propertiesAPITest() {
         Map<Object, Object> testedData = new HashMap<Object, Object>();
@@ -218,7 +218,7 @@ public class NewTabPaneTest extends NewTabPaneBase {
     /**
      * Checks API hasProperties
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void hasPropertiesMethodTest() {
         populateTabPane(1);
@@ -241,7 +241,7 @@ public class NewTabPaneTest extends NewTabPaneBase {
      * Bug on test creation RT-27869.
      */
     @Test(timeout = 300000)
-    @Smoke
+    //TODO@Smoke
     public void visualFocusScreenshotTest() throws Throwable {
         final String NOT_FOCUSED_TAB_SCREENSHOT_NAME = "TabPane-not_focused_tab";
         final String FOCUSED_TAB_SCREENSHOT_NAME = "TabPane-focused_tab";
@@ -283,7 +283,7 @@ public class NewTabPaneTest extends NewTabPaneBase {
      * Bug on test creation RT-27823.
      */
     @Test(timeout = 300000)
-    @Smoke
+    //TODO@Smoke
     public void contentVetoTest() {
         final String vetoTabName = "vetoTab";
         final String nonVetoTabName = "nonVetoTab";
@@ -323,7 +323,7 @@ public class NewTabPaneTest extends NewTabPaneBase {
      * to the underlying data collection
      * the tabs are rendered in the right order.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=30000)
     public void renderingAfterSortingTest() {
         final int ITEMS_COUNT = 3;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.tabpane;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.geometry.Side;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.test.tabpane.TabPaneApp.Pages;
@@ -66,7 +66,7 @@ public class TabPaneTest extends TestBase {
      * Test for TabPane setSide API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void sideTest() throws InterruptedException {
         testCommon(Pages.Side.name(), null, true, false, Side.values().length);
@@ -112,7 +112,7 @@ public class TabPaneTest extends TestBase {
      * Test for TabPane setTabClosingPolicy API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void tabClosingPolicyTest() throws InterruptedException {
         testCommon(Pages.TabClosingPolicy.name(), null, true, false, TabPane.TabClosingPolicy.values().length);

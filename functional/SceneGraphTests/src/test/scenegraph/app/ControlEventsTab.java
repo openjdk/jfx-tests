@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,6 +24,11 @@
 package test.scenegraph.app;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -56,6 +61,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import test.scenegraph.app.ControlEventsApp.EventTypes;
 
+import static java.util.stream.Collectors.joining;
+
 /**
  *
  * @author Aleksandr Sakharuk
@@ -72,8 +79,7 @@ public class ControlEventsTab extends Tab
         init();
     }
 
-    private void init()
-    {
+    private void init() {
         ScrollPane sp = new ScrollPane();
         final GridPane gp = new GridPane();
 
@@ -99,28 +105,40 @@ public class ControlEventsTab extends Tab
 
         //List<String> fieldNames = new LinkedList<String>();
         List<Object> events = new LinkedList<Object>();
-            for(Class<?> eventClass: eventsDeclaringClasses)
-            {
-                for(Field field: eventClass.getDeclaredFields())
-                {
-                    //fieldNames.add(field.getName());
-                    try
-                    {
-                        if(!field.isAccessible())
-                        {
-                            field.setAccessible(true);
-                        }
-                        if(field.getType().equals(EventType.class))
-                        {
+        for (Class<?> eventClass : eventsDeclaringClasses) {
+            for (Field field : eventClass.getDeclaredFields()) {
+                try {
+//                        if(!field.isAccessible()) field.setAccessible(true);
+                    if (field.getType().equals(EventType.class)) {
+                        try {
                             events.add(field.get(eventClass));
+                        } catch (IllegalAccessException e) {
+                            //the field is not accessible
+                            System.out.println("Field " + eventClass.getName() + "." + field.getName() +
+                                    " is not accessible");
                         }
                     }
-                    catch(Exception ex)
-                    {
-                        ex.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            for (Method method : eventClass.getDeclaredMethods()) {
+                if((method.getModifiers() & Modifier.STATIC) > 0 &&
+                        method.getReturnType().equals(EventType.class)) {
+                    try {
+                        events.add(method.invoke(null));
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        //the method is not accessible
+                        System.out.println("Method " + eventClass.getName() + "." +
+                                method.getName() + "(" +
+                                        Arrays.stream(method.getParameterTypes())
+                                                .map(Class::getName)
+                                                .collect(joining(",")) +
+                                ") is not accessible");
                     }
                 }
             }
+        }
 
         for(EventTypes et: EventTypes.values())
         {

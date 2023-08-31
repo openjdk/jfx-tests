@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2016, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,9 +24,7 @@
 
 package test.javaclient.shared;
 
-import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.sun.javafx.stage.WindowHelper;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -37,7 +35,15 @@ import org.jemmy.fx.Root;
 import org.jemmy.timing.State;
 import test.javaclient.shared.description.TreeNode;
 import test.javaclient.shared.screenshots.GoldenImageManager;
-import com.sun.javafx.stage.WindowHelper;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Utility methods
@@ -172,16 +178,9 @@ public class TestUtil {
     }
 
     public static Wrap<? extends Scene> getScene() {
-        final Wrap<? extends Scene> scene;
-
-        scene = Root.ROOT.lookup(new ByWindowType(Stage.class)).lookup(Scene.class).wrap(0);
-        Utils.deferAction(new Runnable() {
-            public void run() {
-                //scene.getControl().getWindow().setFocused(true);
-                WindowHelper.setFocused(scene.getControl().getWindow(), true);
-            }
-        });
-
+        Wrap<? extends Scene> scene = Root.ROOT.lookup(new ByWindowType(Stage.class)).lookup(Scene.class).wrap(0);
+        var window = scene.waitState(() -> scene.getControl().getWindow());
+        Utils.deferAction(() -> WindowHelper.setFocused(window, true));
         return scene;
     }
 

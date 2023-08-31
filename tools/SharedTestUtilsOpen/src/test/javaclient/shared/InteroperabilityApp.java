@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -35,10 +35,10 @@ import javafx.application.Application;
 import javafx.embed.swt.FXCanvas;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
+//import org.eclipse.swt.SWT;
+//import org.eclipse.swt.layout.FillLayout;
+//import org.eclipse.swt.widgets.Display;
+//import org.eclipse.swt.widgets.Shell;
 import org.jemmy.action.GetAction;
 import org.jemmy.fx.Root;
 import static test.javaclient.shared.TestUtil.isEmbedded;
@@ -162,92 +162,92 @@ public abstract class InteroperabilityApp extends Application
     }
 
     public void startSWT() {
-        System.out.println("Start SWT interop mode.");
-        final CountDownLatch sync = new CountDownLatch(1 + (hasSecondaryScene() ? 1 : 0));
-
-        //Need to give getter there, as fx must be init only after fxcanvas creation.
-        OtherThreadRunner.invokeOnMainThread(new Runnable() {
-            public void run() {
-                final Display display = new Display();
-                final Shell shell = new Shell(display);
-                shell.setLocation(30, 30);
-                shell.setLayout(new FillLayout());
-
-                if (getFirstStageName() == null) {
-                    shell.setText("SWTShell : " + Utils.getRunEnvironmentInfo());
-                } else {
-                    shell.setText(getFirstStageName());
-                }
-
-                FXCanvas fxcanvas = new FXCanvas(shell, SWT.NONE);
-                //Toolkit is initialized, only when FXCanvas is created.
-                Scene scene = new GetAction<Scene>() {
-                    @Override
-                    public void run(Object... os) throws Exception {
-                        InteroperabilityApp.this.scene = getScene();
-                        setResult(InteroperabilityApp.this.scene);
-                    }
-                }.dispatch(Root.ROOT.getEnvironment());
-
-                shell.open();
-
-                Utils.setCustomFont(scene);
-
-                fxcanvas.setScene(scene);
-                fxcanvas.setSize((int) scene.getWidth(), (int) scene.getHeight());
-
-                scene.heightProperty().addListener(new SWTUtils.SWTSizeListener(scene, fxcanvas));
-                scene.widthProperty().addListener(new SWTUtils.SWTSizeListener(scene, fxcanvas));
-
-                sync.countDown();
-
-                if (hasSecondaryScene()) {
-                    final StageInfo info = getSecondaryScene();
-                    final Shell shell1 = new Shell(display);
-                    shell1.setLocation((int) Math.round(info.initialX), (int) Math.round(info.initialY));
-                    shell1.setLayout(new FillLayout());
-
-                    if (info.stageName == null) {
-                        shell1.setText("SWTShell : " + Utils.getRunEnvironmentInfo());
-                    } else {
-                        shell1.setText(info.stageName);
-                    }
-
-                    fxcanvas = new FXCanvas(shell1, SWT.NONE);
-                    //Toolkit is initialized, only when FXCanvas is created.
-                    Scene scene1 = null;
-                    try {
-                        scene1 = info.scene.call();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-
-                    shell1.open();
-
-                    Utils.setCustomFont(scene1);
-
-                    fxcanvas.setScene(scene1);
-                    fxcanvas.setSize((int) scene1.getWidth(), (int) scene1.getHeight());
-
-                    scene1.heightProperty().addListener(new SWTUtils.SWTSizeListener(scene1, fxcanvas));
-                    scene1.widthProperty().addListener(new SWTUtils.SWTSizeListener(scene1, fxcanvas));
-
-                    sync.countDown();
-                }
-
-                while (!shell.isDisposed() && OtherThreadRunner.isRunning()) {
-                    if (!display.readAndDispatch()) {
-                        display.sleep();
-                    }
-                }
-            }
-        });
-
-        try {
-            sync.await();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(InteroperabilityApp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        System.out.println("Start SWT interop mode.");
+//        final CountDownLatch sync = new CountDownLatch(1 + (hasSecondaryScene() ? 1 : 0));
+//
+//        //Need to give getter there, as fx must be init only after fxcanvas creation.
+//        OtherThreadRunner.invokeOnMainThread(new Runnable() {
+//            public void run() {
+//                final Display display = new Display();
+//                final Shell shell = new Shell(display);
+//                shell.setLocation(30, 30);
+//                shell.setLayout(new FillLayout());
+//
+//                if (getFirstStageName() == null) {
+//                    shell.setText("SWTShell : " + Utils.getRunEnvironmentInfo());
+//                } else {
+//                    shell.setText(getFirstStageName());
+//                }
+//
+//                FXCanvas fxcanvas = new FXCanvas(shell, SWT.NONE);
+//                //Toolkit is initialized, only when FXCanvas is created.
+//                Scene scene = new GetAction<Scene>() {
+//                    @Override
+//                    public void run(Object... os) throws Exception {
+//                        InteroperabilityApp.this.scene = getScene();
+//                        setResult(InteroperabilityApp.this.scene);
+//                    }
+//                }.dispatch(Root.ROOT.getEnvironment());
+//
+//                shell.open();
+//
+//                Utils.setCustomFont(scene);
+//
+//                fxcanvas.setScene(scene);
+//                fxcanvas.setSize((int) scene.getWidth(), (int) scene.getHeight());
+//
+//                scene.heightProperty().addListener(new SWTUtils.SWTSizeListener(scene, fxcanvas));
+//                scene.widthProperty().addListener(new SWTUtils.SWTSizeListener(scene, fxcanvas));
+//
+//                sync.countDown();
+//
+//                if (hasSecondaryScene()) {
+//                    final StageInfo info = getSecondaryScene();
+//                    final Shell shell1 = new Shell(display);
+//                    shell1.setLocation((int) Math.round(info.initialX), (int) Math.round(info.initialY));
+//                    shell1.setLayout(new FillLayout());
+//
+//                    if (info.stageName == null) {
+//                        shell1.setText("SWTShell : " + Utils.getRunEnvironmentInfo());
+//                    } else {
+//                        shell1.setText(info.stageName);
+//                    }
+//
+//                    fxcanvas = new FXCanvas(shell1, SWT.NONE);
+//                    //Toolkit is initialized, only when FXCanvas is created.
+//                    Scene scene1 = null;
+//                    try {
+//                        scene1 = info.scene.call();
+//                    } catch (Exception ex) {
+//                        ex.printStackTrace();
+//                    }
+//
+//                    shell1.open();
+//
+//                    Utils.setCustomFont(scene1);
+//
+//                    fxcanvas.setScene(scene1);
+//                    fxcanvas.setSize((int) scene1.getWidth(), (int) scene1.getHeight());
+//
+//                    scene1.heightProperty().addListener(new SWTUtils.SWTSizeListener(scene1, fxcanvas));
+//                    scene1.widthProperty().addListener(new SWTUtils.SWTSizeListener(scene1, fxcanvas));
+//
+//                    sync.countDown();
+//                }
+//
+//                while (!shell.isDisposed() && OtherThreadRunner.isRunning()) {
+//                    if (!display.readAndDispatch()) {
+//                        display.sleep();
+//                    }
+//                }
+//            }
+//        });
+//
+//        try {
+//            sync.await();
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(InteroperabilityApp.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     protected static class StageInfo {

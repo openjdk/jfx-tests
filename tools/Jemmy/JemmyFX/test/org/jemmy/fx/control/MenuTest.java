@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -33,10 +33,8 @@ import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.ByText;
 import org.jemmy.fx.Controls;
 import org.jemmy.fx.Root;
-import org.jemmy.fx.SceneDock;
 import org.jemmy.input.StringMenuOwner;
 import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Tree;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.resources.StringComparePolicy;
 import org.junit.After;

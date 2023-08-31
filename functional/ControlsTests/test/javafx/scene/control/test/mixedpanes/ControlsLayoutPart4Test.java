@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.mixedpanes;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import test.javaclient.shared.TestBase;
@@ -59,7 +59,7 @@ public class ControlsLayoutPart4Test extends TestBase {
     /**
      * test layout of controls: Labels,Accordions,ListViews inside of VBox
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void VBoxTest1() throws InterruptedException {
@@ -69,7 +69,7 @@ public class ControlsLayoutPart4Test extends TestBase {
     /**
      * test layout of controls: ScrollPanes,Separators,CheckBoxes inside of VBox
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void VBoxTest2() throws InterruptedException {
@@ -80,7 +80,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * test layout of controls:
      * Toolbars,ChoiceBoxes,SplitMenuButtons,ProgressIndicators inside of VBox
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void VBoxTest3() throws InterruptedException {
@@ -91,7 +91,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * test layout of controls: TabPanes,ScrollBars,TitledPanes,ProgressBars
      * inside of VBox
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void VBoxTest4() throws InterruptedException {
@@ -102,7 +102,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * test layout of controls:
      * Hyperlinks,Sliders,PasswordBoxes,TextBoxes,RadioButtons inside of VBox
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void VBoxTest5() throws InterruptedException {
@@ -112,7 +112,7 @@ public class ControlsLayoutPart4Test extends TestBase {
     /**
      * test layout of controls: Labels,Accordions,ListViews inside of HBox
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void HBoxTest1() throws InterruptedException {
@@ -122,7 +122,7 @@ public class ControlsLayoutPart4Test extends TestBase {
     /**
      * test layout of controls: ScrollPanes,Separators,CheckBoxes inside of HBox
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void HBoxTest2() throws InterruptedException {
@@ -133,7 +133,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * test layout of controls:
      * Toolbars,ChoiceBoxes,SplitMenuButtons,ProgressIndicators inside of HBox
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void HBoxTest3() throws InterruptedException {
@@ -144,7 +144,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * test layout of controls: TabPanes,ScrollBars,TitledPanes,ProgressBars
      * inside of HBox
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void HBoxTest4() throws InterruptedException {
@@ -155,7 +155,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * test layout of controls:
      * Hyperlinks,Sliders,PasswordBoxes,TextBoxes,RadioButtons inside of HBox
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void HBoxTest5() throws InterruptedException {
@@ -165,7 +165,7 @@ public class ControlsLayoutPart4Test extends TestBase {
     /**
      * test layout of controls: Labels,Accordions,ListViews inside of BorderPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void BorderPaneTest1() throws InterruptedException {
@@ -176,7 +176,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * test layout of controls: ScrollPanes,Separators,CheckBoxes inside of
      * BorderPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void BorderPaneTest2() throws InterruptedException {
@@ -188,7 +188,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * Toolbars,ChoiceBoxes,SplitMenuButtons,ProgressIndicators inside of
      * BorderPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void BorderPaneTest3() throws InterruptedException {
@@ -199,7 +199,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * test layout of controls: TabPanes,ScrollBars,TitledPanes,ProgressBars
      * inside of BorderPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void BorderPaneTest4() throws InterruptedException {
@@ -211,7 +211,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * Hyperlinks,Sliders,PasswordBoxes,TextBoxes,RadioButtons inside of
      * BorderPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void BorderPaneTest5() throws InterruptedException {
@@ -221,7 +221,7 @@ public class ControlsLayoutPart4Test extends TestBase {
     /**
      * test layout of controls: Labels,Accordions,ListViews inside of GridPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void GridPaneTest1() throws InterruptedException {
@@ -232,7 +232,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * test layout of controls: ScrollPanes,Separators,CheckBoxes inside of
      * GridPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void GridPaneTest2() throws InterruptedException {
@@ -244,7 +244,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * Toolbars,ChoiceBoxes,SplitMenuButtons,ProgressIndicators inside of
      * GridPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void GridPaneTest3() throws InterruptedException {
@@ -255,7 +255,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * test layout of controls: TabPanes,ScrollBars,TitledPanes,ProgressBars
      * inside of GridPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void GridPaneTest4() throws InterruptedException {
@@ -267,7 +267,7 @@ public class ControlsLayoutPart4Test extends TestBase {
      * Hyperlinks,Sliders,PasswordBoxes,TextBoxes,RadioButtons inside of
      * GridPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void GridPaneTest5() throws InterruptedException {

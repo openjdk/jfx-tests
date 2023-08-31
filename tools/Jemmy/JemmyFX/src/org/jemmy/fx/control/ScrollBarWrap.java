@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -34,6 +34,8 @@ import org.jemmy.control.MethodProperties;
 import org.jemmy.control.Property;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.NodeParent;
+import org.jemmy.fx.interfaces.Shiftable;
+import org.jemmy.fx.interfaces.Shifter;
 import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
@@ -80,7 +82,7 @@ public class ScrollBarWrap<T extends ScrollBar> extends ControlWrap<T> implement
 
             @Override
             public Caret caret() {
-                return scroller();
+                return ThemeDriverFactory.getThemeFactory().caret(ScrollBarWrap.this, this);
             }
 
             @Override
@@ -115,15 +117,17 @@ public class ScrollBarWrap<T extends ScrollBar> extends ControlWrap<T> implement
                 }.dispatch(getEnvironment());
             }
 
-            @Override
-            public double value() {
-                return position();
-            }
-
-            @Override
-            public Scroller scroller() {
-                return ThemeDriverFactory.getThemeFactory().caret(ScrollBarWrap.this, this);
-            }
+            //TODO
+//            @Override
+//            public double value() {
+//                return position();
+//            }
+//
+//
+//            @Override
+//            public Caret scroller() {
+//                return ThemeDriverFactory.getThemeFactory().caret(ScrollBarWrap.this, this);
+//            }
         };
     }
 
@@ -173,20 +177,13 @@ public class ScrollBarWrap<T extends ScrollBar> extends ControlWrap<T> implement
     }
 
     @Deprecated
-    @Override
-    public double value() {
-        return position();
-    }
-
-    @Override
-    @Deprecated
-    public Scroller scroller() {
-        return theScroll.scroller();
+    public double   value() {
+        return theScroll.position();
     }
 
     @Override
     public Caret caret() {
-        return scroller();
+        return theScroll.caret();
     }
 
     public Shifter shifter() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -27,7 +27,6 @@ package org.jemmy.samples.buttons;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import org.jemmy.control.Wrap;
-import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.CheckBoxDock;
 import org.jemmy.fx.control.CheckBoxWrap;
@@ -35,9 +34,10 @@ import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.fx.control.ToggleButtonDock;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
-import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * How to use buttons: buttons, check boxes, radio buttons.
@@ -52,6 +52,8 @@ public class ButtonsSample extends SampleBase {
     public static void startApp() throws InterruptedException {
         startApp(ButtonsApp.class);
         scene = new SceneDock();
+        //workaround for JDK-8257835
+        scene.mouse().click();
         status = new LabeledDock(scene.asParent(), "status");
     }
 

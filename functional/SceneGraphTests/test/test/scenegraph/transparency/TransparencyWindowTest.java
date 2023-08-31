@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -33,6 +33,8 @@ import org.jemmy.JemmyException;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.Lookups;
 import org.jemmy.image.*;
+import org.jemmy.image.awt.AWTImage;
+import org.jemmy.image.glass.GlassImage;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import test.embedded.helpers.Configuration;

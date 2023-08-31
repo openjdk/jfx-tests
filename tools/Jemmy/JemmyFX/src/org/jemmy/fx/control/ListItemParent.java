@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -36,7 +36,7 @@ import java.util.List;
  * @author Shura, KAM
  */
 public class ListItemParent<ITEM> extends ItemParent<ITEM, Integer>
-        implements org.jemmy.interfaces.List<ITEM> {
+        implements org.jemmy.fx.interfaces.List<ITEM> {
 
     ListViewWrap<? extends ListView> listViewOp;
 

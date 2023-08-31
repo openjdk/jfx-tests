@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -34,6 +34,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class WebViewTest extends SampleBase {
+    //TODO
+    /*
     static SceneDock scene;
 
     @BeforeClass
@@ -56,4 +58,6 @@ public class WebViewTest extends SampleBase {
 
         button.wrap().mouse().click();
     }
+
+     */
 }

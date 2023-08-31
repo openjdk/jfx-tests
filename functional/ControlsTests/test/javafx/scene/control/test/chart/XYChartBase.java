@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.chart;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.scene.control.test.chart.XYChartBaseApp.Pages;
 import javafx.scene.control.test.chart.XYChartBaseApp.XYChartCSS;
 import org.junit.Test;
@@ -109,7 +109,7 @@ public class XYChartBase extends ChartBase {
      * Test for XYChart adding series
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void addSeriesTest() throws InterruptedException {
         testCommon(Pages.AddSeries.name(), null, true, true, XYChartBaseApp.BOOL.length);
@@ -137,7 +137,7 @@ public class XYChartBase extends ChartBase {
      * Test for XYChart adding series
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void removeSeriesTest() throws InterruptedException {
         testCommon(Pages.RemoveSeries.name(), null, true, true, XYChartBaseApp.BOOL.length);
@@ -147,7 +147,7 @@ public class XYChartBase extends ChartBase {
      * Test for XYChart adding series data
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void removeSeriesDataTest() throws InterruptedException {
         testCommon(Pages.RemoveSeriesData.name(), null, true, true, XYChartBaseApp.BOOL.length);

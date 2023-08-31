@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -33,6 +33,8 @@ import org.jemmy.control.MethodProperties;
 import org.jemmy.control.Property;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.NodeParent;
+import org.jemmy.fx.interfaces.Shiftable;
+import org.jemmy.fx.interfaces.Shifter;
 import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
@@ -59,22 +61,6 @@ public class SliderWrap<T extends Slider> extends ControlWrap<T> implements Scro
     public SliderWrap(Environment env, T node) {
         super(env, node);
         theScroll = new AbstractScroll() {
-
-            @Override
-            public double position() {
-                return new GetAction<Double>() {
-
-                    @Override
-                    public void run(Object... parameters) {
-                        setResult((double) getControl().getValue());
-                    }
-
-                    @Override
-                    public String toString() {
-                        return "Getting position of " + getControl();
-                    }
-                }.dispatch(getEnvironment());
-            }
 
             @Override
             public double maximum() {
@@ -109,6 +95,9 @@ public class SliderWrap<T extends Slider> extends ControlWrap<T> implements Scro
             }
 
             @Override
+            public double position() {
+                return SliderWrap.this.position();
+            }
             public double value() {
                 return SliderWrap.this.value();
             }
@@ -118,8 +107,7 @@ public class SliderWrap<T extends Slider> extends ControlWrap<T> implements Scro
                 return scroller();
             }
 
-            @Override
-            public Scroller scroller() {
+            public Caret scroller() {
                 return ThemeDriverFactory.getThemeFactory().caret(SliderWrap.this, this);
             }
         };
@@ -167,7 +155,7 @@ public class SliderWrap<T extends Slider> extends ControlWrap<T> implements Scro
     @Property(VALUE_PROP_NAME)
     @Override
     public double position() {
-        return theScroll.position();
+        return getControl().getValue();
     }
 
     @Override
@@ -176,7 +164,6 @@ public class SliderWrap<T extends Slider> extends ControlWrap<T> implements Scro
     }
 
     @Deprecated
-    @Override
     public double value() {
         return position();
     }
@@ -186,9 +173,8 @@ public class SliderWrap<T extends Slider> extends ControlWrap<T> implements Scro
         return theScroll.caret();
     }
 
-    @Override
-    public Scroller scroller() {
-        return theScroll.scroller();
+    public Caret scroller() {
+        return theScroll.caret();
     }
 
     public Shifter shifter() {

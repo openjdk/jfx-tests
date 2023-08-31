@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.tabpane;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -176,7 +176,7 @@ public class TabPane2Test extends UtilTestFunctions {
         throwError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void disableAndClosing1Test() throws Throwable {
         tabPaneAsParent.lookup(Tab.class).size();
@@ -188,7 +188,7 @@ public class TabPane2Test extends UtilTestFunctions {
         assertTrue(tryToCloseTab(wrap2));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void disableAndSelectThroughtPopupTest() throws Throwable {
         disableAt(TABS_NUM - 1);
@@ -196,7 +196,7 @@ public class TabPane2Test extends UtilTestFunctions {
         assertFalse(getCurrentSelection() == TABS_NUM - 1);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void disableAndProgrammaticalSelectTest() throws Throwable {
         disableAt(1);
@@ -205,7 +205,7 @@ public class TabPane2Test extends UtilTestFunctions {
         assertTrue(tryToCloseTab(getTabWrapByPos(1)));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void disableAndTraverseTest() {
         disableAt(1);
@@ -216,7 +216,7 @@ public class TabPane2Test extends UtilTestFunctions {
         assertTrue(getCurrentSelection() == 0);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 30000)
     public void disableAtEndsAndTraverseTest() {
         disableAt(0);

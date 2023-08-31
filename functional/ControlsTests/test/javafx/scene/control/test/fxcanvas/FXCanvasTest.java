@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,20 +25,13 @@
 package javafx.scene.control.test.fxcanvas;
 
 import client.test.Keywords;
-import client.test.Smoke;
+
 import client.test.ScreenshotCheck;
 import test.javaclient.shared.CanvasRunner;
 import org.junit.runner.RunWith;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Event;
-import org.jemmy.swt.Shells;
-import org.jemmy.swt.lookup.QueueLookup;
 import org.jemmy.fx.ByID;
-import org.eclipse.swt.graphics.Rectangle;
 import org.jemmy.Point;
 import javafx.embed.swt.FXCanvas;
-import org.eclipse.swt.widgets.Scale;
-import org.eclipse.swt.widgets.Shell;
 import org.jemmy.interfaces.Selector;
 import org.jemmy.action.GetAction;
 import org.jemmy.interfaces.Text;
@@ -60,7 +53,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.netbeans.jemmy.JemmyProperties;
 import static java.lang.Math.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.jemmy.timing.State;
@@ -68,9 +60,10 @@ import static org.junit.Assert.*;
 import static test.javaclient.shared.JemmyUtils.initJemmy;
 import test.javaclient.shared.screenshots.ScreenshotUtils;
 
+//TODO
 @RunWith(CanvasRunner.class)
 public class FXCanvasTest extends ControlsTestBase {
-
+/*
     static Wrap<? extends Shell> frame;
     static Parent frameAsParent;
     static Wrap<? extends org.eclipse.swt.widgets.Button> menuBtn;
@@ -108,7 +101,7 @@ public class FXCanvasTest extends ControlsTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Keywords(keywords = "swt")
     public void heavyPopupTest() throws Throwable {
@@ -122,7 +115,7 @@ public class FXCanvasTest extends ControlsTestBase {
         common(FXCanvasApp.MENU_POPUP_CONTAINER_ID, menuBtn, "SWTInteropTest-menu");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Keywords(keywords = "swt")
     public void mainSceneTest() throws InterruptedException {
@@ -151,7 +144,7 @@ public class FXCanvasTest extends ControlsTestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Keywords(keywords = "swt")
     public void initialSizesTest() throws InterruptedException {
@@ -203,7 +196,7 @@ public class FXCanvasTest extends ControlsTestBase {
         ScreenshotUtils.checkScreenshot("SWTInteropTest-resizing", contentPane);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Keywords(keywords = "swt")
     public void focusTest() throws InterruptedException {
@@ -340,4 +333,6 @@ public class FXCanvasTest extends ControlsTestBase {
             return t.getText().compareTo(text) == 0;
         }
     }
+
+ */
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -29,8 +29,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
 import org.jemmy.control.*;
 import org.jemmy.env.Environment;
-import org.jemmy.fx.Root;
-import org.jemmy.interfaces.Editor;
+import org.jemmy.fx.interfaces.Editor;
 
 @ControlType(ColorPicker.class)
 @ControlInterfaces(value=Editor.class,

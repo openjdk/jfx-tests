@@ -1,6 +1,2 @@
-For building Jemmy see tools/Jemmy/README
-
-To build Scene Builder Test: 
- - install JavaFX Scene Builder 1.0 
- - resolve project dependencies "SceneBuilder.jar", "javafx-designtime.jar", "javafx-beans-dt.jar". This files can be found in Scene Builder installation dir. 
- - call "ant test"
+More tests needed
+Some fixes needed - see TODOs

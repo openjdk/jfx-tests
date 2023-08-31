@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -36,7 +36,6 @@ import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.Caret;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Scroll;
-import org.jemmy.interfaces.Scroller;
 import org.jemmy.lookup.Lookup;
 
 /**
@@ -45,7 +44,7 @@ import org.jemmy.lookup.Lookup;
 class TableTreeScroll implements Scroll {
 
     private AbstractScroll emptyScroll = new EmptyScroll();
-    private Scroller emptyScroller = new EmptyScroller();
+    private Scroll emptyScroller = new EmptyScroller();
     protected AbstractScroll hScroll, vScroll;
     private Wrap<? extends Control> control;
 
@@ -128,7 +127,7 @@ class TableTreeScroll implements Scroll {
     public double position() {
         checkScrolls();
         if (vScroll != null) {
-            return vScroll.value();
+            return vScroll.position();
         } else {
             return 0;
         }
@@ -139,7 +138,7 @@ class TableTreeScroll implements Scroll {
         if (vScroll != null) {
             return vScroll.caret();
         } else {
-            return emptyScroller;
+            return emptyScroller.caret();
         }
     }
 
@@ -151,10 +150,10 @@ class TableTreeScroll implements Scroll {
     }
 
     @Deprecated
-    public Scroller scroller() {
+    public Scroll scroller() {
         checkScrolls();
         if (vScroll != null) {
-            return vScroll.scroller();
+            return vScroll;
         } else {
             return emptyScroller;
         }

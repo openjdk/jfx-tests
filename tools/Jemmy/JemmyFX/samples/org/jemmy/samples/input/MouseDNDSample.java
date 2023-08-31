@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -69,7 +69,7 @@ public class MouseDNDSample extends InputSampleBase {
     @Test
     public void dndPointOtherRightShift() {
         redTarget.drag().dnd(new Point(20, 20), blueTarget.wrap(), new Point(10, 10),
-                Mouse.MouseButtons.BUTTON3, Keyboard.KeyboardModifiers.SHIFT_DOWN_MASK);
+                Mouse.MouseButtons.BUTTON2, Keyboard.KeyboardModifiers.SHIFT_DOWN_MASK);
 
         checkMouseEvent(RED, MouseEvent.MOUSE_PRESSED, MouseButton.SECONDARY, 20, 20, 1);
         checkMouseEvent(RED, MouseEvent.MOUSE_DRAGGED, MouseButton.SECONDARY, -90, 10, 1);

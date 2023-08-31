@@ -1,0 +1,1 @@
+#test/scenegraph/fx3d/lighting/SingleLightingTest.java <bug_id> generic-all

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,12 +25,25 @@
 package org.jemmy.image;
 
 import java.io.*;
+
+import com.sun.glass.ui.Application;
 import org.jemmy.Rectangle;
+import org.jemmy.action.ActionExecutor;
+import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
+import org.jemmy.env.Timeout;
+import org.jemmy.fx.QueueExecutor;
 import org.jemmy.fx.SceneDock;
+import org.jemmy.image.glass.GlassImage;
+import org.jemmy.image.glass.GlassImageCapturer;
+import org.jemmy.image.glass.GlassPixelImageComparator;
+import org.jemmy.image.glass.PNGLoader;
+import org.jemmy.image.pixel.PNGSaver;
 import org.jemmy.operators.ScreenRectangle;
 import static org.junit.Assert.assertNull;
+
+import org.jemmy.timing.Waiter;
 import org.junit.*;
 
 /**
@@ -45,6 +58,17 @@ public class SaveLoadTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestApp.main(null);
+        var env = Environment.getEnvironment();
+        env.setProperty(ActionExecutor.class, QueueExecutor.EXECUTOR);
+        env.setProperty(ImageCapturer.class, new GlassImageCapturer());
+        env.setProperty(ImageComparator.class, new GlassPixelImageComparator(env));
+        new Waiter(new Timeout("APP_START", 100000))
+                .ensureState(() -> new GetAction<>() {
+                    @Override
+                    public void run(Object... os) {
+                        setResult(Application.GetApplication());
+                    }
+                }.dispatch(env));
     }
 
     @AfterClass
@@ -65,6 +89,7 @@ public class SaveLoadTest {
         Wrap<?> wrap = new ScreenRectangle(Environment.getEnvironment(), new Rectangle(0, 0, 220, 220));
         GlassImage img = new GlassImageCapturer().capture(wrap, new Rectangle(0, 0, 200, 200));
         File imgFile = new File(System.getProperty("user.dir") + File.separator + "out.png");
+        System.out.println(imgFile);
         new PNGSaver(new FileOutputStream(imgFile), PNGSaver.COLOR_MODE).encode(img);
         GlassImage loaded = new PNGLoader(new FileInputStream(imgFile)).decode();
         new PNGSaver(new FileOutputStream(new File(System.getProperty("user.dir") + File.separator + "loaded.png")), PNGSaver.COLOR_MODE).encode(loaded);

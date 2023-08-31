@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,6 +26,7 @@ package org.jemmy.fx.control;
 
 import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
+import org.jemmy.fx.interfaces.List;
 import org.jemmy.lookup.Any;
 import org.jemmy.lookup.EqualsLookup;
 import org.junit.*;
@@ -37,6 +38,17 @@ import static org.junit.Assert.assertEquals;
  * @author shura
  */
 public class ListTest {
+
+//    public static void main(String[] args) throws Exception {
+//        setUpClass();
+//        ListTest t = new ListTest();
+//        t.setUp();
+//        t.stringLookup();
+//        t.indexLookup();
+//        t.multySelect();
+//        t.cellSelect();
+//        System.out.println("Done!");
+//    }
 
     public ListTest() {
     }
@@ -51,7 +63,7 @@ public class ListTest {
     }
 
     ListViewDock lst;
-    org.jemmy.interfaces.List list;
+    List list;
 
     @Before
     public void setUp() throws InterruptedException {

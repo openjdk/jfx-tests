@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.toggleradiobutton;
 
-import client.test.Smoke;
+
 import javafx.scene.control.ToggleButton;
 import static javafx.scene.control.test.ToggleButtonNewApp.*;
 import org.jemmy.control.Wrap;
@@ -44,7 +44,7 @@ import test.javaclient.shared.Utils;
 @RunWith(FilteredTestRunner.class)
 public class RadioButtonEventsTest extends ToggleButtonTestBase {
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void simpleEventTest() throws InterruptedException, Exception {
         checkTwoStatesComplex(false, 0);
@@ -56,7 +56,7 @@ public class RadioButtonEventsTest extends ToggleButtonTestBase {
         checkTwoStatesComplex(false, 2);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void eventWithBindingTest() throws InterruptedException, Exception {
         clickToggleButton(BINDING_SET_TOGGLE_BUTTON_ID);
@@ -70,7 +70,7 @@ public class RadioButtonEventsTest extends ToggleButtonTestBase {
         checkTwoStatesComplex(false, 2);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void eventWithGroupingAndBindingTest() throws InterruptedException, Exception {
         clickToggleButton(BINDING_SET_TOGGLE_BUTTON_ID);
@@ -85,7 +85,7 @@ public class RadioButtonEventsTest extends ToggleButtonTestBase {
         checkTwoStatesComplex(true, 1);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void eventWithGroupingTest() throws InterruptedException, Exception {
         clickToggleButton(GROUPING_TOGGLE_BUTTON_ID);
@@ -102,7 +102,7 @@ public class RadioButtonEventsTest extends ToggleButtonTestBase {
         checkThreeStatesComplex(false, true, 2);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyBoardEventsTest() throws InterruptedException, Exception {
         Wrap<? extends ToggleButton> toggle1 = parent.lookup(ToggleButton.class, new ByID<ToggleButton>(TOGGLE_BUTTON_1_ID)).wrap();

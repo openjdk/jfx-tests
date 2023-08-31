@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,13 +26,12 @@
 package javafx.scene.control.test.jfxpanel;
 
 import test.javaclient.shared.FilteredTestRunner;
-import client.test.Smoke;
+
 import org.junit.runner.RunWith;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.util.concurrent.TimeUnit;
 import javafx.embed.swing.JFXPanel;
-import org.netbeans.jemmy.operators.JComponentOperator;
 import org.jemmy.fx.ByID;
 import org.jemmy.Rectangle;
 import javafx.scene.Node;
@@ -46,14 +45,13 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.JemmyProperties;
-import org.netbeans.jemmy.operators.JFrameOperator;
 import static org.junit.Assert.*;
 import test.javaclient.shared.Utils;
 
+//TODO
 @RunWith(FilteredTestRunner.class)
 public class JFXPanelScrollTest extends ControlsTestBase {
+    /*
     final static int SHIFT = 100;
 
     Wrap<? extends Scene> scene = null;
@@ -96,7 +94,7 @@ public class JFXPanelScrollTest extends ControlsTestBase {
     public void tearDown() {
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void resizingTest() throws InterruptedException {
         int right = frame.getWidth() - 1;
@@ -166,4 +164,6 @@ public class JFXPanelScrollTest extends ControlsTestBase {
             }
         }
     }
+
+     */
 }

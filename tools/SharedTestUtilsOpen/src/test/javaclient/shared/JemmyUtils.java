@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -36,12 +36,17 @@ import org.jemmy.env.Environment;
 import org.jemmy.env.TestOut;
 import org.jemmy.fx.Root;
 import org.jemmy.image.*;
+import org.jemmy.image.awt.AWTImage;
+import org.jemmy.image.awt.PNGDecoder;
+import org.jemmy.image.glass.GlassImage;
+import org.jemmy.image.glass.GlassImageCapturer;
+import org.jemmy.image.glass.GlassPixelImageComparator;
 import org.jemmy.image.pixel.AverageDistanceComparator;
 import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import org.jemmy.image.pixel.Raster;
 import org.jemmy.image.pixel.RasterComparator;
-import org.jemmy.input.AWTRobotInputFactory;
-import org.jemmy.input.RobotDriver;
+import org.jemmy.input.awt.AWTRobotInputFactory;
+import org.jemmy.input.awt.RobotDriver;
 import org.jemmy.input.glass.GlassInputFactory;
 import org.junit.Assert;
 
@@ -118,7 +123,7 @@ public abstract class JemmyUtils {
             GlassImage img = ((GlassImage) image);
             double[] colors = new double[img.getSupported().length];
 
-            img.getColors(img.getImage().getWidth() / 2, img.getImage().getWidth() / 2, colors);
+            img.getColors((int)img.getImage().getWidth() / 2, (int)img.getImage().getWidth() / 2, colors);
 
             return new double[]{
                 colors[GlassPixelImageComparator.arrayIndexOf(img.getSupported(), Raster.Component.RED)],
@@ -162,10 +167,11 @@ public abstract class JemmyUtils {
     }
 
     public static void robotExit(){
-        if(usingGlassRobot())
-            GlassInputFactory.getRobot().destroy();
-        else
-            RobotDriver.exit();
+        //TODO
+//        if(usingGlassRobot())
+//            GlassInputFactory.getRobot().destroy();
+//        else
+//            RobotDriver.exit();
     }
 
     public static void verifyColor(Image image, int x, int y){
@@ -186,13 +192,16 @@ public abstract class JemmyUtils {
     }
 
     public static Image getScreenCapture(org.jemmy.Rectangle rect){
-        if(usingGlassRobot()){
-            Pixels screenCapture = GlassImageCapturer.getRobot().getScreenCapture(rect.x, rect.y, rect.width, rect.height);
-            return (Image) screenCapture;
-        }else{
+        //TODO
+//        if(usingGlassRobot()){
+//            Pixels screenCapture = GlassImageCapturer.getRobot()
+//                    .getScreenCapture(rect.x, rect.y, rect.width, rect.height);
+//            return (Image) screenCapture;
+//            return null;
+//        }else{
             Image screenshot = RobotDriver.createScreenCapture(rect);
             return screenshot;
-        }
+//        }
     }
 
     public static boolean isDuplicateImages(File file1, File file2) {

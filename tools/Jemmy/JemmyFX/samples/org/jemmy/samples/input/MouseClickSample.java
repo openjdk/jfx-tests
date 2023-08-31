@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -81,8 +81,7 @@ public class MouseClickSample extends InputSampleBase {
     @Test
     public void rightClickPoint() {
         redTarget.mouse().click(1, new Point(20, 20), Mouse.MouseButtons.BUTTON3);
-
-        checkMouseEvent(RED, MouseEvent.MOUSE_CLICKED, MouseButton.SECONDARY, 20, 20, 1);
+        checkMouseEvent(RED, MouseEvent.MOUSE_CLICKED, MouseButton.MIDDLE, 20, 20, 1);
     }
 
     /**

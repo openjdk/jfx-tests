@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2016, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,13 +25,6 @@
 package javafx.scene.control.test.fxcanvas;
 
 import java.util.concurrent.Semaphore;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Monitor;
-import org.eclipse.swt.widgets.Shell;
 import javafx.scene.control.Button;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -43,8 +36,10 @@ import javafx.scene.layout.HBox;
 import test.javaclient.shared.OtherThreadRunner;
 import test.javaclient.shared.Utils;
 
-public class FXCanvasScrollApp {
+//TODO
 
+public class FXCanvasScrollApp {
+/*
     public static String TEXT_INPUT_ID = "text.input.id";
     public static String BUTTON_ID = "button.id";
     public static String SCROLL_CONTAINER_ID = "scroll.container.id";
@@ -136,4 +131,6 @@ public class FXCanvasScrollApp {
             System.err.printf("Failed to start SWT application: %s.\n", ex);
         }
     }
+
+ */
 }

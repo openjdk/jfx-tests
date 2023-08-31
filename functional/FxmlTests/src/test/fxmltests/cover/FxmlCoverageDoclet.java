@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,27 +24,14 @@
  */
 package test.fxmltests.cover;
 
-import com.sun.javadoc.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Aleksand Sakharuk
  */
+//TODO
 public class FxmlCoverageDoclet
 {
-
+/*
     public static boolean start(RootDoc root)
     {
         ClassDoc[] classes = root.classes();
@@ -166,5 +153,5 @@ public class FxmlCoverageDoclet
 
     public static final String TESTABLE_ASSERT_TAG = "testableAssertId";
     public static final String ALL_ASSERTS = "allasserts";
-
+*/
 }

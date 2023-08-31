@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,6 +25,9 @@
 
 package org.jemmy.fx.control;
 
+import org.jemmy.Point;
+import org.jemmy.env.Timeout;
+import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
@@ -33,6 +36,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class AccordionTest extends SampleBase {
+
+    private static final Timeout TEST_STAB = new Timeout("test.stabilization", 100);
+
     final static int STRESS_COUNT = 20;
 
     static SceneDock scene;
@@ -61,13 +67,17 @@ public class AccordionTest extends SampleBase {
         CheckBoxDock second_check = new CheckBoxDock(second_pane.asParent());
         for (int i = 0; i < STRESS_COUNT; i++) {
             reset();
+            Root.ROOT.getEnvironment().getExecutor().waitQuiet(TEST_STAB);
             second_pane.asExpandable().expand();
+            Root.ROOT.getEnvironment().getExecutor().waitQuiet(TEST_STAB);
         }
         for (int i = 0; i < STRESS_COUNT / 2; i++) {
             first_pane.asExpandable().expand();
+            Root.ROOT.getEnvironment().getExecutor().waitQuiet(TEST_STAB);
             CheckBoxWrap.State state = i % 2 == 0 ? CheckBoxWrap.State.CHECKED : CheckBoxWrap.State.UNCHECKED;
             first_check.asSelectable().selector().select(state);
             second_pane.asExpandable().expand();
+            Root.ROOT.getEnvironment().getExecutor().waitQuiet(TEST_STAB);
             second_check.asSelectable().selector().select(state);
         }
     }

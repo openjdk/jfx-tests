@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,8 +23,8 @@
  */
 package test.scenegraph.app;
 
-import com.oracle.jdk.sqe.cc.markup.Covers;
-import com.oracle.jdk.sqe.cc.markup.Covers.Level;
+//import com.oracle.jdk.sqe.cc.markup.Covers;
+//import com.oracle.jdk.sqe.cc.markup.Covers.Level;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -63,10 +63,12 @@ public class ColorApp  extends BasicButtonChooserApp {
 
     private  HBox hbUpLevel = null;
 
-@Covers(value="javafx.scene.shape.Circle.fill", level=Level.FULL)
+    //TODO
+//@Covers(value="javafx.scene.shape.Circle.fill", level=Level.FULL)
  private class ColorsPage extends TestNode {
         @Override
-@Covers(value="javafx.scene.shape.Rectangle.fill", level=Level.MEDIUM)
+//TODO
+//@Covers(value="javafx.scene.shape.Rectangle.fill", level=Level.MEDIUM)
         public Node drawNode() {
                 VBox vb = new VBox();
                 VBox vb2 = new VBox();

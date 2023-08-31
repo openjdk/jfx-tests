@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.treeview;
 
-import client.test.Smoke;
+
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import com.oracle.jdk.sqe.cc.markup.Covers.Level;
 import javafx.scene.control.skin.TableHeaderRow;
@@ -90,7 +90,7 @@ public class TreeViewTest extends TestBase {
 
     @Test(timeout = 600000)
 
-    @Smoke
+    //TODO@Smoke
     /*
      * This test checks behavior of TreeItem.nextSibling(),
      * TreeiTem.nextSibling(TreeItem), TreeiTem.previousSibling(),
@@ -163,7 +163,7 @@ public class TreeViewTest extends TestBase {
     }
 
     @Test(timeout = 600000)
-    @Smoke
+    //TODO@Smoke
     /*
      * this test checks behavior of isLeaf property. Removes, adds content and
      * see, how this property is modified.
@@ -204,7 +204,7 @@ public class TreeViewTest extends TestBase {
     }
 
     @Test(timeout = 600000)
-    @Smoke
+    //TODO@Smoke
     /*
      * This test checks behavior of parent property. It is readonly property.
      * This test make some actions over tree and checks state of this property
@@ -233,7 +233,7 @@ public class TreeViewTest extends TestBase {
     }
 
     @Test(timeout = 600000)
-    @Smoke
+    //TODO@Smoke
     /*
      * This test create a tree : Root -> item1 -> item2 and apply
      * collapsing/expanding operations over it. And observe, how
@@ -320,7 +320,7 @@ public class TreeViewTest extends TestBase {
     }
 
     @Test(timeout = 600000)
-    @Smoke
+    //TODO@Smoke
     /*
      * This test checks ChildrenModificationEvent. This event is about changing
      * of size of visible subtree. This event is about adding and removing
@@ -375,7 +375,7 @@ public class TreeViewTest extends TestBase {
         intermediateStateCheck();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 600000)
     /*
      * Graphic modification - an event, which is propagated, when graphic
@@ -421,7 +421,7 @@ public class TreeViewTest extends TestBase {
     }
 
     @Test(timeout = 600000)
-    @Smoke
+    //TODO@Smoke
     @Covers(value = {"TreeView.onEditStartProperty.SET", "TreeView.onEditCancelProperty.SET"}, level = Level.FULL)
     public void testOnEditStartCancel() throws Throwable {
         switchToPropertiesTab(isTreeTests ? "TreeView" : "TreeTableView");
@@ -454,7 +454,7 @@ public class TreeViewTest extends TestBase {
     }
 
     @Test(timeout = 600000)
-    @Smoke
+    //TODO@Smoke
     @Covers(value = "TreeView.onEditCommitProperty.SET", level = Level.FULL)
     public void testOnEditCommit() throws Throwable {
         switchToPropertiesTab(isTreeTests ? "TreeView" : "TreeTableView");
@@ -503,7 +503,7 @@ public class TreeViewTest extends TestBase {
     }
 
     @Test(timeout = 600000)
-    @Smoke
+    //TODO@Smoke
     @Covers(value = {"TreeView.onEditStartProperty.GET", "TreeView.onEditCancelProperty.GET", "TreeView.onEditCommitProperty.GET"}, level = Level.FULL)
     public void testOnEditOnCancelEventSequence() throws Throwable {
         clickButtonForTestPurpose(BTN_SET_ON_EDIT_EVENT_HANDLERS);
@@ -575,7 +575,7 @@ public class TreeViewTest extends TestBase {
     }
 
     @Test(timeout = 600000)
-    @Smoke
+    //TODO@Smoke
     public void testOnEditOnCommitEventSequence() throws Throwable {
         clickButtonForTestPurpose(BTN_SET_ON_EDIT_EVENT_HANDLERS);
 
@@ -650,7 +650,7 @@ public class TreeViewTest extends TestBase {
         assertTrue(timestampsOfEvents.get(onEditStart) <= timestampsOfEvents.get(onEditCommit));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 600000)
     /*
      * This test checks working of scrollTo method of TreeView. Checks behavior,
@@ -698,7 +698,7 @@ public class TreeViewTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 600000)
     /**
      * This test checks the valueChangedEvent() of a tree item. When the value
@@ -1195,7 +1195,7 @@ public class TreeViewTest extends TestBase {
      * Checks that when the sorting is applied to the underlying data collection
      * the cells are rendered in the right order.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 120000)
     public void renderingAfterSortingTest() throws Throwable {
         adjustControl();

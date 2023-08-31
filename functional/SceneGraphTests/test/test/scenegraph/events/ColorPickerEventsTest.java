@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,12 @@
 package test.scenegraph.events;
 
 import javafx.geometry.Bounds;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.paint.Color;
 import org.jemmy.Point;
+import org.jemmy.fx.Root;
+import org.jemmy.fx.control.ColorPickerDock;
+import org.jemmy.fx.control.ColorPickerWrap;
 import org.jemmy.fx.control.ControlDock;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -56,7 +61,7 @@ public class ColorPickerEventsTest extends EventTestHidingPopup<ControlDock>
     @Override
     protected ControlDock findPrimeDock()
     {
-        return new ControlDock(getActiveTabDock().asParent(),
+        return new ColorPickerDock(getActiveTabDock().asParent(),
                 ControlEventsApp.CONTROL_ID);
     }
 
@@ -67,13 +72,7 @@ public class ColorPickerEventsTest extends EventTestHidingPopup<ControlDock>
         test(ControlEventsApp.EventTypes.ACTION, new Command() {
 
             public void invoke() {
-                getPrimeNodeDock().mouse().click();
-                //
-                try { Thread.sleep(300);} catch(Exception e) {}
-                Bounds bounds = getPrimeNodeDock().getBoundsInLocal();
-                double x = bounds.getWidth() / 2;
-                double y = bounds.getHeight() * 2;
-                getPrimeNodeDock().mouse().click(1,new Point(x, y));
+                ((ColorPickerDock)getPrimeNodeDock()).asColorEditor().enter(Color.BLACK);
             }
         });
     }

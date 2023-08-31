@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.slider;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.geometry.Orientation;
 import javafx.scene.control.Slider;
 import static javafx.scene.control.test.slider.SliderNewApp.TESTED_SLIDER_ID;
@@ -44,7 +44,7 @@ import org.jemmy.fx.SceneDock;
 import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Keyboard.KeyboardModifiers;
-import org.jemmy.interfaces.Shiftable;
+import org.jemmy.fx.interfaces.Shiftable;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,7 +65,7 @@ public class SliderTest extends TestBase {
         scene.mouse().move(new Point(0, 0));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void simpleValueSettingTest() throws InterruptedException {
         assertEquals((new Slider()).valueProperty().getValue(), 0, ASSERT_CMP_PRECISION);//initial value
@@ -87,7 +87,7 @@ public class SliderTest extends TestBase {
         checkTextFieldValue(Properties.value, 30);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void maxPropertyTest() throws InterruptedException {
         assertEquals((new Slider()).maxProperty().getValue(), 100, ASSERT_CMP_PRECISION);//initial value
@@ -110,7 +110,7 @@ public class SliderTest extends TestBase {
         checkTextFieldValue(Properties.value, 30);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void minPropertyTest() throws InterruptedException {
         assertEquals((new Slider()).minProperty().getValue(), 0, ASSERT_CMP_PRECISION);//initial value
@@ -135,7 +135,7 @@ public class SliderTest extends TestBase {
         checkTextFieldValue(Properties.max, 150);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//should fail.
     public void snapToTicksTest() throws InterruptedException {
         assertEquals((new Slider()).snapToTicksProperty().getValue(), false);//initial value
@@ -194,7 +194,7 @@ public class SliderTest extends TestBase {
         checkTextFieldValue(Properties.value, -80);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void snapToTicksMouseTest() throws InterruptedException {
         setPropertyByToggleClick(SettingType.UNIDIRECTIONAL, Properties.snapToTicks);
@@ -222,7 +222,7 @@ public class SliderTest extends TestBase {
         checkTextFieldValue(Properties.value, 75);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//Should fail.
     public void valueChangingOnBidirectionalTest() throws InterruptedException {
         assertEquals((new Slider()).valueChangingProperty().getValue(), false);
@@ -236,7 +236,7 @@ public class SliderTest extends TestBase {
         checkCounterValue(VALUE_CHANGING_COUNTER, 3);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//Should fail.
     public void majorTickUnitTest() throws InterruptedException {
         assertEquals((new Slider()).majorTickUnitProperty().getValue(), 25, ASSERT_CMP_PRECISION);//initial value test
@@ -276,7 +276,7 @@ public class SliderTest extends TestBase {
         checkTextFieldValue(Properties.value, 90);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//Should fail.
     public void minorTickCountTest() throws InterruptedException {
         assertEquals((new Slider()).minorTickCountProperty().getValue(), 3, ASSERT_CMP_PRECISION);//initial value test
@@ -301,7 +301,7 @@ public class SliderTest extends TestBase {
         checkTextFieldValue(Properties.value, 19);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void blockIncrementTest() throws InterruptedException {
         assertEquals((new Slider()).blockIncrementProperty().getValue(), 10, ASSERT_CMP_PRECISION);//initial value
@@ -362,7 +362,7 @@ public class SliderTest extends TestBase {
         checkScreenshot("Slider_customLabelFomatter_2", testedControl);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyEventsArrowsTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 200);
@@ -403,7 +403,7 @@ public class SliderTest extends TestBase {
         checkTextFieldValue(Properties.value, 50);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyEventsDifferentButtonsTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 200);
@@ -435,7 +435,7 @@ public class SliderTest extends TestBase {
         checkTextFieldValue(Properties.value, 0);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//Should fail.
     public void bigBidirectionalComposedTest() throws InterruptedException {
         for (SettingType type : SettingType.values()) {
@@ -472,7 +472,7 @@ public class SliderTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void mouseClickingTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 220);
@@ -492,7 +492,7 @@ public class SliderTest extends TestBase {
         testClick(-25, track);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void mouseDragingTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 200);
@@ -525,7 +525,7 @@ public class SliderTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)// should fail
     public void screenShotCheckingInComplexConditionsTest() throws Throwable {
         for (SettingType type : SettingType.values()) {
@@ -553,7 +553,7 @@ public class SliderTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void adjustValueTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.blockIncrement, 50);
@@ -583,7 +583,7 @@ public class SliderTest extends TestBase {
         checkTextFieldValue(Properties.value, 0);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void ScrollingTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 200);
@@ -605,7 +605,7 @@ public class SliderTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void iterativeWorkingTest() throws InterruptedException {
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, Orientation.VERTICAL, Properties.orientation);
@@ -678,7 +678,7 @@ public class SliderTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void focusTraversalTest() throws InterruptedException {
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, Orientation.VERTICAL, Properties.orientation);
@@ -735,7 +735,7 @@ public class SliderTest extends TestBase {
      * Tests, that value can be changed with dragging.
      */
     @Test(timeout = 30000)//RT-29414
-    @Smoke
+    //TODO@Smoke
     public void knobDragTest() throws InterruptedException {
         final int width = 200, height = 200;
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, width);

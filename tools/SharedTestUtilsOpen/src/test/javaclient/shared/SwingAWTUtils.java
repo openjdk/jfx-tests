@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,25 +25,27 @@
 package test.javaclient.shared;
 
 import com.sun.javafx.application.PlatformImpl;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.embed.swt.FXCanvas;
 import javafx.scene.Scene;
+import junit.framework.Assert;
+import org.jemmy.control.Wrap;
+import org.jemmy.image.Image;
+import org.jemmy.image.awt.AWTImage;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import junit.framework.Assert;
-import org.jemmy.awt.AWT;
-import org.jemmy.awt.Showing;
-import org.jemmy.control.Wrap;
-import org.jemmy.fx.Root;
-import org.jemmy.fx.SceneWrap;
-import org.jemmy.image.AWTImage;
-import org.jemmy.image.Image;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -137,19 +139,20 @@ public class SwingAWTUtils {
     }
 
     public static Wrap<? extends Scene> lookupScene() {
-        final Wrap<? extends Scene> scene;
-        JFXPanel fx_panel = AWT.getAWT().lookup(JFXPanel.class, new Showing<JFXPanel>()).wrap(0).getControl();
-        scene = new SceneWrap<Scene>(Root.ROOT.getEnvironment(), fx_panel.getScene());
-        try {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    AWT.getAWT().lookup(JFrame.class, new Showing<JFrame>()).wrap(0).getControl().toFront();
-                }
-            });
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return scene;
+//        final Wrap<? extends Scene> scene;
+//        JFXPanel fx_panel = AWT.getAWT().lookup(JFXPanel.class, new Showing<JFXPanel>()).wrap(0).getControl();
+//        scene = new SceneWrap<Scene>(Root.ROOT.getEnvironment(), fx_panel.getScene());
+//        try {
+//            SwingUtilities.invokeLater(new Runnable() {
+//                public void run() {
+//                    AWT.getAWT().lookup(JFrame.class, new Showing<JFrame>()).wrap(0).getControl().toFront();
+//                }
+//            });
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//        return scene;
+        return null;
     }
 
     public void startSwing(final Object oFrame, final Object panel,
@@ -162,7 +165,9 @@ public class SwingAWTUtils {
             public void run() {
                 SwingAWTUtils.this.frame = frame;
                 if (stageName != null) {
-                    frame.setTitle(stageName);
+                    frame.setTitle(stageName + " in a JFrame");
+                } else {
+                    frame.setTitle("JFrame");
                 }
                 frame.setName(this.getClass().getSimpleName());
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -216,7 +221,7 @@ public class SwingAWTUtils {
         }
 
         public void run() {
-            scene = new SceneWrap<Scene>(Root.ROOT.getEnvironment(), swtPanel.getScene());
+//            scene = new SceneWrap<Scene>(Root.ROOT.getEnvironment(), swtPanel.getScene());
         }
 
         public Wrap<? extends Scene> getScene() {

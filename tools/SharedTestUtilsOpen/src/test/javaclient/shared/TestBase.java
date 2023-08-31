@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2016, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,8 @@
 package test.javaclient.shared;
 
 import com.sun.glass.ui.Application;
-import com.sun.glass.ui.Robot;
+import javafx.scene.input.MouseButton;
+import javafx.scene.robot.Robot;
 import java.io.File;
 import java.util.concurrent.Semaphore;
 import javafx.application.Platform;
@@ -400,10 +401,10 @@ public class TestBase extends TestBaseBase {
         Semaphore s = new Semaphore(0);
         Platform.runLater(() -> {
             if (robot == null) {
-                robot = Application.GetApplication().createRobot();
+                robot = new Robot();
             }
             robot.mouseMove(absFromPoint.x, absFromPoint.y);
-            robot.mousePress(Robot.MOUSE_LEFT_BTN);
+            robot.mousePress(MouseButton.PRIMARY);
             final int STEPS = 50;
             int dx = absToPoint.x - absFromPoint.x;
             int dy = absToPoint.y - absFromPoint.y;
@@ -416,7 +417,7 @@ public class TestBase extends TestBaseBase {
                     ex.printStackTrace();
                 }
             }
-            robot.mouseRelease(Robot.MOUSE_LEFT_BTN);
+            robot.mouseRelease(MouseButton.PRIMARY);
             s.release();
         });
         s.acquire();

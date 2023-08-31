@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.treetable;
 
-import client.test.Smoke;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -76,7 +76,7 @@ public class TreeTableMultipleSelectionTest extends TableViewMultipleCellSelecti
      * parent is collapsed. Test checks that only the parent is selected after
      * collapsing. see RT-27180 for details.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testCollapse() {
         multipleSelectionWrap.mouse().click();
@@ -120,7 +120,7 @@ public class TreeTableMultipleSelectionTest extends TableViewMultipleCellSelecti
      * expanded. N.B. Point class hold cell position in a following manner: x
      * stands for column index and y stands for row index respectively.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testSingleLineExpantion() {
         multipleSelectionWrap.mouse().click();
@@ -173,7 +173,7 @@ public class TreeTableMultipleSelectionTest extends TableViewMultipleCellSelecti
      * Tests behavior of selected cells when they belong to several collapsed
      * tree items and each is expanded.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testMultipleExpantion() {
         multipleSelectionWrap.mouse().click();
@@ -244,7 +244,7 @@ public class TreeTableMultipleSelectionTest extends TableViewMultipleCellSelecti
      * Tests selection behavior when the row which contains selected cells is
      * removed.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testSingleRowRemoving() {
         enableMultipleCellSelection();
@@ -292,7 +292,7 @@ public class TreeTableMultipleSelectionTest extends TableViewMultipleCellSelecti
      * Tests selection behavior when the column which contains selected cells is
      * removed.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testSingleColumnRemoving() {
         enableMultipleCellSelection();

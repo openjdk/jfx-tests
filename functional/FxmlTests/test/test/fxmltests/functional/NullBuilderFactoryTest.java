@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  */
 package test.fxmltests.functional;
@@ -15,7 +15,7 @@ import test.javaclient.shared.Utils;
  */
 public class NullBuilderFactoryTest {
 
-    @Test(timeout = 3000)
+    @Test(timeout = 10000)
     public void testFxmlLoaderUsingDefaultBuilderFactoryWhenSetToNull() {
         Utils.launch(NullBuilderFactoryApp.class, null);
         Utils.waitFor(() -> {

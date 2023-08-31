@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.chart;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.scene.control.test.chart.ChartBaseApp.ChartCSS;
 import javafx.scene.control.test.chart.ChartBaseApp.Pages;
 import org.junit.Before;
@@ -80,7 +80,7 @@ public class ChartBase extends TestBase {
      * Test for Chart setTitle API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void titleTest() throws InterruptedException {
         testCommon(Pages.Title.name(), null, true, true, ChartBaseApp.BOOL.length);
@@ -117,7 +117,7 @@ public class ChartBase extends TestBase {
      * Test for -fx-legend-side CSS
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void cssLegendSide() throws InterruptedException {
         testCommon(ChartCSS.CSSLegendSide.name(), null, true, true, ChartBaseApp.SIDE.length);

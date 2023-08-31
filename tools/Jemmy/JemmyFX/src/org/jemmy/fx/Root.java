@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -29,9 +29,15 @@ import org.jemmy.action.ActionExecutor;
 import org.jemmy.control.Wrapper;
 import org.jemmy.env.Environment;
 import org.jemmy.image.*;
+import org.jemmy.image.awt.AWTRobotCapturer;
+import org.jemmy.image.awt.BufferedImageComparator;
+import org.jemmy.image.awt.FilesystemImageLoader;
+import org.jemmy.image.glass.FileGlassImageLoader;
+import org.jemmy.image.glass.GlassImageCapturer;
+import org.jemmy.image.glass.GlassPixelImageComparator;
 import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import org.jemmy.image.pixel.RasterComparator;
-import org.jemmy.input.AWTRobotInputFactory;
+import org.jemmy.input.awt.AWTRobotInputFactory;
 import org.jemmy.input.glass.GlassInputFactory;
 import org.jemmy.interfaces.ControlInterfaceFactory;
 import org.jemmy.lookup.AbstractParent;
@@ -94,8 +100,6 @@ public class Root extends AbstractParent<Scene> {
         if ( "glass".equals(robotType) ) {
             useGlassRobot(this.env);
         } else if ( "awt".equals(robotType) ) {
-            useAWTRobot(env);
-        } else if( ( osName.contains("nux") || osName.contains("nix") || osName.contains("sunos") ||  osName.contains("mac os") ) && !isEmbedded) {
             useAWTRobot(env);
         } else {
             useGlassRobot(this.env);

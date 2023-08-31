@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.labeled;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.test.labeleds.HyperlinkApp;
@@ -59,7 +59,7 @@ public class HyperliksTest extends LabeledsBase {
      * Test for specific API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void hyperlinkGettersTest() throws InterruptedException {
         testCommon(Pages.isVisited.name(), null, true, true);

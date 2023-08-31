@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import com.oracle.jdk.sqe.cc.markup.Covers.Level;
 import javafx.scene.Node;
@@ -113,7 +113,7 @@ public class MenuTest extends MenuTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.MenuItem.onHidden.GET", "javafx.scene.control.MenuItem.onHidden.SET", "javafx.scene.control.MenuItem.onHidden.BIND", "javafx.scene.control.MenuItem.onHiding.GET", "javafx.scene.control.MenuItem.onHiding.SET", "javafx.scene.control.MenuItem.onHiding.BIND"}, level = Level.FULL)
     public void apiTest() throws InterruptedException {
@@ -140,7 +140,7 @@ public class MenuTest extends MenuTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void insertTest() throws InterruptedException {
         addPosBtn.mouse().click();
@@ -177,13 +177,13 @@ public class MenuTest extends MenuTestBase {
         ScreenshotUtils.checkScreenshot("MenuTest-drop-outside", contentPane);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void mouseSelectionTest() throws InterruptedException {
         selectionCheck();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardSelectionTest() throws InterruptedException {
         focus();
@@ -207,7 +207,7 @@ public class MenuTest extends MenuTestBase {
         keyboardHoverCycle(KeyboardButtons.DOWN, true);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void handlersSettersTest() throws Throwable {
         Wrap error = sceneAsParent.lookup(Label.class, new ByID<Label>(MenuApp.ERROR_ID)).wrap();

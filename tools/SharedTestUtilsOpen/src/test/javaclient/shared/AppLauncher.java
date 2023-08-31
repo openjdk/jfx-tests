@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,12 +24,9 @@
 
 package test.javaclient.shared;
 
-import com.sun.javafx.application.ParametersImpl;
 import com.sun.javafx.tk.Toolkit;
-import java.util.Iterator;
-import javafx.stage.Stage;
 import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.jemmy.env.Timeout;
 import org.jemmy.timing.State;
@@ -56,28 +53,32 @@ public class AppLauncher {
                 instantiateOnSwingQueue(cl, args);
                 break;
             // https://bugs.openjdk.java.net/browse/JDK-8131888
-            case SWT:
-                instantiateOnSWTQueue(cl, args);
-                break;
-            case REMOTE:
-                launchOnRemoteStage(cl, args);
-                break;
+//            case SWT:
+//                instantiateOnSWTQueue(cl, args);
+//                break;
+//            case REMOTE:
+//                launchOnRemoteStage(cl, args);
+//                break;
             default:
                 throw new IllegalStateException("Unknown launch mode: " + mode);
 
         }
     }
 
+    //TODO
+    //only default and swing embedding are enabled because these are the only ones which are tested
+    //figure out the rest
     public enum Mode {
 
-        DEFAULT, SWING, SWT, REMOTE
+        DEFAULT, SWING/*, SWT, REMOTE*/
     };
     private Mode mode = Mode.DEFAULT;
     private long testDelay = Long.getLong("test.javafx.testdelay", 1000);
     private long testDelayRemote = Long.getLong("test.javafx.testdelayremote", 4000);
 
     public long getTestDelay() {
-        return mode == Mode.REMOTE ? testDelayRemote : testDelay;
+        return testDelay;
+        //return mode == Mode.REMOTE ? testDelayRemote : testDelay;
     }
 
     public Mode getMode() {
@@ -88,9 +89,9 @@ public class AppLauncher {
         if (Boolean.getBoolean("javafx.swinginteroperability")) {
             mode = Mode.SWING;
         }
-        if (Boolean.getBoolean("javafx.swtinteroperability")) {
-            mode = Mode.SWT;
-        }
+//        if (Boolean.getBoolean("javafx.swtinteroperability")) {
+//            mode = Mode.SWT;
+//        }
     }
     private final static AppLauncher INSTANCE = new AppLauncher();
 
@@ -117,18 +118,15 @@ public class AppLauncher {
     }
 
     private void launchOnRemoteStage(final Class<? extends Application> cl, final String[] args) {
-        Platform.runLater(new Runnable() {
-
-            public void run() {
-                try {
-                    Application obj = (Application) cl.newInstance();
-                    ParametersImpl.registerParameters(obj, new ParametersImpl(args));
-                    obj.start(remoteStage);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+//        Platform.runLater(() -> {
+//            try {
+//                Application obj = cl.newInstance();
+//                ParametersImpl.registerParameters(obj, new ParametersImpl(args));
+//                obj.start(remoteStage);
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
+//        });
     }
 
     private static void defaultLaunch(final Class<? extends Application> cl, final String[] args) {
@@ -182,14 +180,14 @@ public class AppLauncher {
      * @param remoteStage
      */
     public void setRemoteStage(Stage remoteStage) {
-        if (remoteStage == null) {
-            throw new IllegalArgumentException("Stage can't null");
-        }
-        if (this.remoteStage != null) {
-            throw new IllegalStateException("Current implementation allows only one remote stage per VM");
-        }
-        mode = Mode.REMOTE;
-        this.remoteStage = remoteStage;
+//        if (remoteStage == null) {
+//            throw new IllegalArgumentException("Stage can't null");
+//        }
+//        if (this.remoteStage != null) {
+//            throw new IllegalStateException("Current implementation allows only one remote stage per VM");
+//        }
+//        mode = Mode.REMOTE;
+//        this.remoteStage = remoteStage;
     }
-    private Stage remoteStage = null;
+//    private Stage remoteStage = null;
 }

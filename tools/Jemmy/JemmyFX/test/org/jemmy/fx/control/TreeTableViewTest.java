@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -88,9 +88,12 @@ public class TreeTableViewTest {
     public void tableImplementationTest() {
         expandAll();//https://javafx-jira.kenai.com/browse/RT-31123
         //Supposing, after expansion, we have 40 lines with data.
-        List<Point> points = java.util.Arrays.asList(new Point[]{new Point(1, 3), new Point(0, 39), new Point(0, 2), new Point(1, 38)});
-        treeTableView.asTable().select(new Point(1, 3), new Point(0, 39), new Point(0, 2), new Point(1, 38));
-        assertTrue(treeTableView.getSelectedCells().equals(points));
+        List<Point> points = java.util.Arrays.asList(new Point[]{new Point(0, 39), new Point(1, 3), new Point(0, 2), new Point(1, 38)});
+        treeTableView.asTable().select(new Point(0, 39), new Point(1, 3), new Point(0, 2), new Point(1, 38));
+        var selected = treeTableView.getSelectedCells();
+        assertEquals(selected.size(), points.size());
+        for(Point p : points)
+            assertTrue(selected.contains(p));
 
         assertTrue(treeTableView.asTable(String.class).select(new Point(1, 1)).get(0) instanceof TreeTableCellWrap);
         assertTrue(treeTableView.asTable(String.class).select(new Point(0, 0)).get(0).getControl().equals("Root"));

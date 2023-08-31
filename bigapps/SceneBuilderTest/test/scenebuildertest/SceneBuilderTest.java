@@ -1,6 +1,6 @@
 
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,32 +25,28 @@
  */
 package scenebuildertest;
 
-import com.oracle.javafx.authoring.Main;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.oracle.javafx.scenebuilder.app.SceneBuilderApp;
 import javafx.application.Application;
+import javafx.geometry.Orientation;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import org.jemmy.fx.ByID;
+import org.jemmy.fx.ByText;
 import org.jemmy.fx.ByTitleSceneLookup;
 import org.jemmy.fx.NodeDock;
+import org.jemmy.fx.NodeParentImpl;
 import org.jemmy.fx.SceneDock;
-import org.jemmy.fx.control.ByIdMenuItem;
-import org.jemmy.fx.control.ListItemDock;
+import org.jemmy.fx.control.AccordionDock;
+import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.fx.control.ListViewDock;
-import org.jemmy.fx.control.MenuBarDock;
+import org.jemmy.fx.control.ScrollBarDock;
 import org.jemmy.fx.control.TextInputControlDock;
-import org.jemmy.fx.control.TitledPaneDock;
 import org.jemmy.interfaces.Keyboard;
+import org.jemmy.interfaces.Parent;
+import org.jemmy.lookup.BySubControl;
 import org.jemmy.resources.StringComparePolicy;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static com.oracle.javafx.authoring.internal.QEConstants.*;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.stage.PopupWindow;
-import org.jemmy.fx.ByText;
-import org.jemmy.fx.control.LabeledDock;
-import org.jemmy.lookup.LookupCriteria;
 
 /**
  * This sample demonstrates different approaches for testing real application.
@@ -61,89 +57,55 @@ public class SceneBuilderTest {
 
     @BeforeClass
     public static void RunUI() {
-        //Use Application.launch(...) to run JavaFX application.
-        new Thread(new Runnable() {
-            public void run() {
-                Application.launch(Main.class);
-            }
-        }).start();
+        new Thread(() -> Application.launch(SceneBuilderApp.class)).start();
     }
 
     @Test
-    public void testPrototype() {
-        //find Scene Builder scene
-        final SceneDock sceneBuilder = new SceneDock(new ByTitleSceneLookup<>("Scene Builder", StringComparePolicy.SUBSTRING));
-        //find library panel  by node ID using Scene Builder's scene as Parent
-        ListViewDock library = new ListViewDock(sceneBuilder.asParent(), ID_LIBRARY_PANEL_LIST_VIEW);
+    public void testPrototype() throws InterruptedException {
+        var templateSelector = new SceneDock(new ByTitleSceneLookup<>("Scene Builder", StringComparePolicy.SUBSTRING));
+        new NodeDock(templateSelector.asParent(), new ByText<>("Basic Application")).mouse().click();
 
-        //find button in library
-        ListItemDock button = new ListItemDock(library.asList(), new ByID("Button"));
+        //TODO
+        //may be identify the scene by the content
+        var sceneBuilder = new SceneDock(new ByTitleSceneLookup<>("Untitled", StringComparePolicy.SUBSTRING));
+        var library = new AccordionDock(sceneBuilder.asParent(), "libAccordion");
+        library.selector().select("Controls");
+        var controls = new ListViewDock(library.asParent(), "ControlsList");
+        var buttonInPalette = new LabeledDock(controls.asParent(), "Button", StringComparePolicy.EXACT);
+        buttonInPalette.mouse().click();
 
-        //show list item with button by scrolling listview
-        button.shower().show();
+        var designSurface = new NodeDock(sceneBuilder.asParent(), "contentSubScene");
 
-        //find design surface by node ID "Anchor Pane".
-        NodeDock designSurface = new NodeDock(sceneBuilder.asParent(), "AnchorPane");
+        buttonInPalette.drag().dnd(buttonInPalette.wrap().getClickPoint(),
+                designSurface.wrap(),
+                designSurface.wrap().getClickPoint());
 
-        //drag list item with button and drop in center of design surface
-        button.drag().dnd(designSurface.wrap(), designSurface.wrap().getClickPoint());
+        var inspector = new AccordionDock(sceneBuilder.asParent(), "accordion");
+        inspector.selector().select("Properties");
+        var id = new TextInputControlDock(inspector.asParent(), "Id Value");
+        //TODO
+        //why is awuto scroll not working?
+        var propertyScroll = new ScrollBarDock(
+                new NodeDock(sceneBuilder.asParent(), "propertiesTitledPane")
+                .asParent(), sb -> sb.getOrientation() == Orientation.VERTICAL && sb.isVisible()).asScroll();
+        //TODO
+        //scroll till visible
+        propertyScroll.to(propertyScroll.maximum());
+        id.clear();
+        id.type("Awesome!");
+        id.keyboard().pushKey(Keyboard.KeyboardButtons.ENTER);
 
-        //find properties panel by node ID
-        TitledPaneDock titledPaneDock = new TitledPaneDock(sceneBuilder.asParent(), "Properties");
+        sceneBuilder.keyboard().pushKey(Keyboard.KeyboardButtons.P, Keyboard.KeyboardModifiers.META_DOWN_MASK);
 
-        //find text field for property "Text"
-        TextInputControlDock textField = new TextInputControlDock(new NodeDock(titledPaneDock.asParent(), "TextValue").asParent());
-        //clear and type text
-        textField.clear();
-        textField.type("Submit");
-        //push enter to complete
-        textField.keyboard().pushKey(Keyboard.KeyboardButtons.ENTER);
-
-        //Add text field/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //find text field in library
-        ListItemDock textFieldControl = new ListItemDock(library.asList(), new ByID("Text Field"));
-
-        //show list item with text field by scrolling listview
-        textFieldControl.shower().show();
-
-        //drag list item with text field and drop on design surface near button
-        textFieldControl.drag().dnd(designSurface.wrap(), designSurface.wrap().getClickPoint().translate(70, 50));
-
-        //find text field on design surface and double click to invoke inline editing
-        new TextInputControlDock(designSurface.asParent()).mouse().click(2);
-
-        //find inline text field and type text "Name".
-        TextInputControlDock inline = new TextInputControlDock(sceneBuilder.asParent(), ID_TEXT_INLINE_EDITING);
-        inline.clear();
-        inline.type("Name");
-        inline.keyboard().pushKey(Keyboard.KeyboardButtons.ENTER);
-
-
-        //show preview
-        //find menu bar by ID then push "Preview" menu. Finally push "Show preview" menu item. All menu item have id's that help to find them.
-        new MenuBarDock(sceneBuilder.asParent(), ID_MENU_BAR).menu().push(new ByIdMenuItem(ID_PREVIEW_MENU), new ByIdMenuItem(ID_PREVIEW_MENU_ITEM));
-
-        //find preview scene. Criteria: scene is not existing scene builder scene and scene.getWindow is not PopupWindow
-        SceneDock previewScene = new SceneDock(new LookupCriteria<Scene>() {
+        //TODO
+        //how to better find it?
+        var preview = new SceneDock(new BySubControl<Scene, Node>(new ByID<>("Awesome!")) {
             @Override
-            public boolean check(Scene cntrl) {
-                return (cntrl != sceneBuilder.wrap().getControl() && !(cntrl.getWindow() instanceof PopupWindow));
+            protected Parent<Node> asParent(Scene scene) {
+                return new NodeParentImpl(scene.getRoot(), sceneBuilder.environment());
             }
         });
 
-        //find Button with text "Submit" on preview scene
-        new LabeledDock(previewScene.asParent(), Button.class, new ByText<Button>("Submit"));
-        //find TextField with text "Name" on preview scene
-        new TextInputControlDock(previewScene.asParent(), TextField.class, new ByText<TextField>("Name"));
-
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(SceneBuilderTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
+        new NodeDock(preview.asParent(), "Awesome!").mouse().click();
     }
 }

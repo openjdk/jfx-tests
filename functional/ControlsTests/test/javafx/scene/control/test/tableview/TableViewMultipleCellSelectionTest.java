@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.tableview;
 
-import client.test.Smoke;
+
 import java.util.HashSet;
 import java.util.Set;
 import javafx.scene.control.IndexedCell;
@@ -43,21 +43,21 @@ import org.junit.Test;
  */
 public class TableViewMultipleCellSelectionTest extends TestBase {
 
-    @Smoke
+    //TODO@Smoke
     //@Test(timeout = 30000)
     //Commented out due to https://javafx-jira.kenai.com/browse/RT-33174
     public void keyboardMultipleCellSelectionTest() throws Throwable {
         keyboardMultipleCellSelectionCycle(false);
     }
 
-    @Smoke
+    //TODO@Smoke
     //@Test(timeout = 30000)
     //Commented out due to https://javafx-jira.kenai.com/browse/RT-33174
     public void keyboardMultipleCellSelectionDiscontinuousTest() throws Throwable {
         keyboardMultipleCellSelectionCycle(true);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void singleCellSelectionTest() throws Throwable {
         singleCellSelectionWrap.mouse().click();
@@ -67,7 +67,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
         selectionCycle(KeyboardButtons.CONTROL);
     }
 
-    @Smoke
+    //TODO@Smoke
     //@Test(timeout = 30000)
     //Commented out due to https://javafx-jira.kenai.com/browse/RT-33174
     public void multipleCellSelectionTest() throws Throwable {
@@ -78,7 +78,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
         selectionCycle(KeyboardButtons.CONTROL);
     }
 
-    @Smoke
+    //TODO@Smoke
     //@Test(timeout = 60000)
     //Commented out due to https://javafx-jira.kenai.com/browse/RT-33174
     public void keyboardMultipleCellScrollTest() throws Throwable {
@@ -101,7 +101,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
      * selected when one applies deselection using SHIFT + UP. Fails due to:
      * RT-21373
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testDeselectionNearTopBoundary() throws Throwable {
         enableMultipleCellSelection();
@@ -135,7 +135,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
      * Selects cells with SHIFT + DOWN and pushes this key combination one more
      * time to check that selection remains.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testDeselectionNearBottomBoundary() throws Throwable {
         enableMultipleCellSelection();
@@ -157,7 +157,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
      * Deselects selected cell with SHIFT + LEFT and then pushes this
      * combination once more to check that selection remains.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testDeselectionNearLeftBoundary() {
         enableMultipleCellSelection();
@@ -198,7 +198,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
      * in each direction clockwise. It is assumed that there will be 12 cells
      * selected which form a rectangle with 4 unselected cells in the middle.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testAreaSelection() {
         multipleSelectionWrap.mouse().click();
@@ -271,7 +271,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
      * Deselects selected cell with SHIFT + RIGHT and then pushes this
      * combination once more to check that selection remains.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testDeselectionNearRightBoundary() {
         enableMultipleCellSelection();
@@ -310,7 +310,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
     /**
      * Test Shift + Home/End combinations.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testShiftHomeEnd() throws Throwable {
         KeyboardModifiers mods[] = {
@@ -323,7 +323,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
     /**
      * Test Ctrl + Shift + Home/End combinations.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testCtrlShiftHomeEnd() throws Throwable {
         KeyboardModifiers mods[] = {
@@ -337,7 +337,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
     /**
      * Test Shift + PgUp/PgDown combinations.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testShiftPgUpDown() throws Throwable {
         KeyboardModifiers mods[] = {
@@ -350,7 +350,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
     /**
      * Test Ctrl + Shift + PgUp/PgDown combinations.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testCtrlShiftPgUpDown() throws Throwable {
         KeyboardModifiers mods[] = {
@@ -364,7 +364,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
     /**
      * Test different sequences of Ctrl/Shift + Space combinations.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testSpaceWithModifiers() throws Throwable {
         enableMultipleCellSelection();
@@ -419,7 +419,7 @@ public class TableViewMultipleCellSelectionTest extends TestBase {
      * specification and to verify that focused cell is visible all the time.
      *
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testKeyboardFocusModification() throws Throwable {
         if (!isTableTests) {

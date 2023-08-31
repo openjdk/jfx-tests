@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -40,7 +40,7 @@ import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByID;
 import org.jemmy.interfaces.Parent;
-import org.jemmy.interfaces.Table;
+import org.jemmy.fx.interfaces.Table;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
 import static org.junit.Assert.*;

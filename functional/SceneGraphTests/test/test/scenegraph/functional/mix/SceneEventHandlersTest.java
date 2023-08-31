@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  */
 package test.scenegraph.functional.mix;
 
-import com.sun.glass.ui.Robot;
+import javafx.scene.input.MouseButton;
+import javafx.scene.robot.Robot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -313,10 +314,10 @@ public class SceneEventHandlersTest extends TestBase
     public void testMousePressed()
     {
         if (robot == null) {
-            robot = new GetAction<com.sun.glass.ui.Robot>() {
+            robot = new GetAction<javafx.scene.robot.Robot>() {
                         @Override
                         public void run(Object... os) throws Exception {
-                            setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
+                            setResult(new Robot());
                         }
                     }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
         }
@@ -329,14 +330,14 @@ public class SceneEventHandlersTest extends TestBase
         new GetAction<Object>() {
             @Override
             public void run(Object... os) throws Exception {
-                robot.mousePress(1);
+                robot.mousePress(MouseButton.PRIMARY);
             }
         }.dispatch(Root.ROOT.getEnvironment());
         try {Thread.sleep(500);}catch(Exception e){}
         new GetAction<Object>() {
             @Override
             public void run(Object... os) throws Exception {
-                robot.mouseRelease(1);
+                robot.mouseRelease(MouseButton.PRIMARY);
             }
         }.dispatch(Root.ROOT.getEnvironment());
         try {Thread.sleep(500);}catch(Exception e){}
@@ -349,10 +350,10 @@ public class SceneEventHandlersTest extends TestBase
     public void testMouseReleased()
     {
         if (robot == null) {
-            robot = new GetAction<com.sun.glass.ui.Robot>() {
+            robot = new GetAction<javafx.scene.robot.Robot>() {
                         @Override
                         public void run(Object... os) throws Exception {
-                            setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
+                            setResult(new Robot());
                         }
                     }.dispatch(Root.ROOT.getEnvironment()); // can not beDrag sourceDrag source done in static block due to initialization problems on Mac
         }
@@ -363,14 +364,14 @@ public class SceneEventHandlersTest extends TestBase
         new GetAction<Object>() {
             @Override
             public void run(Object... os) throws Exception {
-                robot.mousePress(1);
+                robot.mousePress(MouseButton.PRIMARY);
             }
         }.dispatch(Root.ROOT.getEnvironment());
         try {Thread.sleep(500);}catch(Exception e){}
         new GetAction<Object>() {
             @Override
             public void run(Object... os) throws Exception {
-                robot.mouseRelease(1);
+                robot.mouseRelease(MouseButton.PRIMARY);
             }
         }.dispatch(Root.ROOT.getEnvironment());
         try {Thread.sleep(500);}catch(Exception e){}

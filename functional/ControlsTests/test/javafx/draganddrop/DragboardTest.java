@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -40,7 +40,7 @@ public class DragboardTest extends ClipboardTest {
         dnd();
     }
 
-    //@Smoke
+    ////TODO@Smoke
     @Test
     public void contentNotReceivingDifferentTransferModes1Test() throws InterruptedException {
         setTransferMode(TransferMode.COPY, TransferMode.LINK);
@@ -49,7 +49,7 @@ public class DragboardTest extends ClipboardTest {
         verifyContentNotComing();
     }
 
-    //@Smoke
+    ////TODO@Smoke
     @Test
     public void contentNotReceivingDifferentTransferModes2Test() throws InterruptedException {
         setTransferMode(TransferMode.COPY, TransferMode.MOVE);
@@ -58,7 +58,7 @@ public class DragboardTest extends ClipboardTest {
         verifyContentNotComing();
     }
 
-    //@Smoke
+    ////TODO@Smoke
     @Test
     public void contentNotReceivingDifferentTransferModes3Test() throws InterruptedException {
         setTransferMode(TransferMode.MOVE, TransferMode.COPY);
@@ -67,7 +67,7 @@ public class DragboardTest extends ClipboardTest {
         verifyContentNotComing();
     }
 
-    //@Smoke
+    ////TODO@Smoke
     @Test
     public void contentNotReceivingDifferentTransferModes4Test() throws InterruptedException {
         setTransferMode(TransferMode.MOVE, TransferMode.LINK);
@@ -76,7 +76,7 @@ public class DragboardTest extends ClipboardTest {
         verifyContentNotComing();
     }
 
-    //@Smoke
+    ////TODO@Smoke
     @Test
     public void contentNotReceivingDifferentTransferModes5Test() throws InterruptedException {
         setTransferMode(TransferMode.LINK, TransferMode.MOVE);
@@ -85,7 +85,7 @@ public class DragboardTest extends ClipboardTest {
         verifyContentNotComing();
     }
 
-    //@Smoke
+    ////TODO@Smoke
     @Test
     public void contentNotReceivingDifferentTransferModes6Test() throws InterruptedException {
         setTransferMode(TransferMode.LINK, TransferMode.COPY);

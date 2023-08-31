@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,8 +23,6 @@
  */
 package test.scenegraph.app;
 
-import java.util.Arrays;
-import java.util.List;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -54,7 +52,6 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.input.ContextMenuEvent;
@@ -68,6 +65,10 @@ import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import test.javaclient.shared.InteroperabilityApp;
+import test.javaclient.shared.Utils;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -88,7 +89,9 @@ public class ControlEventsApp extends InteroperabilityApp {
             tab.setId(c.toString());
             tabPane.getTabs().add(tab);
         }
-        return new Scene(tabPane, 800, 600);
+        var result = new Scene(tabPane, 800, 600);
+        Utils.addBrowser(result);
+        return result;
     }
 
     public abstract static class AbstractControlFactory<T extends Control> {
@@ -114,10 +117,11 @@ public class ControlEventsApp extends InteroperabilityApp {
         DRAG_EXITED_TARGET(DragEvent.DRAG_EXITED_TARGET),
         DRAG_OVER(DragEvent.DRAG_OVER),
 
+        //TODO
 //         temporary removed while test method
 //         for automated test suite is not provided
 //         https://javafx-jira.kenai.com/browse/RT-31875
-       // INPUT_METHOD_TEXT_CHANGED(InputMethodEvent.INPUT_METHOD_TEXT_CHANGED),
+//        INPUT_METHOD_TEXT_CHANGED(InputMethodEvent.INPUT_METHOD_TEXT_CHANGED),
 
         KEY_PRESSED(KeyEvent.KEY_PRESSED),
         KEY_RELEASED(KeyEvent.KEY_RELEASED),
@@ -126,16 +130,18 @@ public class ControlEventsApp extends InteroperabilityApp {
         MOUSE_CLICKED(MouseEvent.MOUSE_CLICKED),
         MOUSE_DRAGGED(MouseEvent.MOUSE_DRAGGED),
         MOUSE_ENTERED(MouseEvent.MOUSE_ENTERED),
-//        MOUSE_ENTERED_TARGET(MouseEvent.MOUSE_ENTERED_TARGET),
         MOUSE_EXITED(MouseEvent.MOUSE_EXITED),
+        //TODO
+        //what controls can this be used on?
 //        MOUSE_EXITED_TARGET(MouseEvent.MOUSE_EXITED_TARGET),
+//        MOUSE_DRAG_ENTERED_TARGET(MouseDragEvent.MOUSE_DRAG_ENTERED_TARGET),
+//        MOUSE_ENTERED_TARGET(MouseEvent.MOUSE_ENTERED_TARGET),
+//        MOUSE_DRAG_EXITED_TARGET(MouseDragEvent.MOUSE_DRAG_EXITED_TARGET),
         MOUSE_MOVED(MouseEvent.MOUSE_MOVED),
         MOUSE_PRESSED(MouseEvent.MOUSE_PRESSED),
         MOUSE_RELEASED(MouseEvent.MOUSE_RELEASED),
         MOUSE_DRAG_ENTERED(MouseDragEvent.MOUSE_DRAG_ENTERED),
-//        MOUSE_DRAG_ENTERED_TARGET(MouseDragEvent.MOUSE_DRAG_ENTERED_TARGET),
         MOUSE_DRAG_EXITED(MouseDragEvent.MOUSE_DRAG_EXITED),
-//        MOUSE_DRAG_EXITED_TARGET(MouseDragEvent.MOUSE_DRAG_EXITED_TARGET),
         MOUSE_DRAG_OVER(MouseDragEvent.MOUSE_DRAG_OVER),
         MOUSE_DRAG_RELEASED(MouseDragEvent.MOUSE_DRAG_RELEASED),
         SCROLL(ScrollEvent.SCROLL),

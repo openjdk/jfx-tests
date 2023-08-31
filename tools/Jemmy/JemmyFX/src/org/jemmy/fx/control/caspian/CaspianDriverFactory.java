@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -40,8 +40,9 @@ import org.jemmy.fx.control.SplitMenuButtonWrap;
 import org.jemmy.fx.control.ThemeDriverFactory;
 import org.jemmy.fx.control.TreeNodeWrap;
 import org.jemmy.fx.control.TreeTableItemWrap;
+import org.jemmy.fx.interfaces.Shifter;
 import org.jemmy.interfaces.*;
-import org.jemmy.interfaces.Editor;
+import org.jemmy.fx.interfaces.Editor;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 
 /**
@@ -88,7 +89,7 @@ public class CaspianDriverFactory extends ThemeDriverFactory {
      * {@inheritDoc}
      */
     @Override
-    public Scroller caret(Wrap<? extends Control> wrap, Scroll scroll) {
+    public Caret caret(Wrap<? extends Control> wrap, Scroll scroll) {
         KnobTrackScrollerImpl res = createScrollerImpl(wrap, scroll);
         res.setDragDelta(dragDelta);
         return res;

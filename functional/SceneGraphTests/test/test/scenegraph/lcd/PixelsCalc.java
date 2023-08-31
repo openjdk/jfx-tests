@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,8 +24,8 @@
 package test.scenegraph.lcd;
 
 import java.awt.image.BufferedImage;
-import org.jemmy.image.AWTImage;
-import org.jemmy.image.GlassImage;
+import org.jemmy.image.awt.AWTImage;
+import org.jemmy.image.glass.GlassImage;
 import org.jemmy.image.Image;
 import org.jemmy.image.pixel.Raster;
 import org.jemmy.image.pixel.Raster.Component;

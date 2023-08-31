@@ -1,94 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-/*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation. Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- * questions.
- */
--->
-<project name="3DTests" default="default" basedir=".">
-    <description>Builds, tests, and runs the project 3DTests.</description>
-
-    <import file="../../tools/SharedTestUtilsOpen/image-utils.xml"/>
-    <import file="../../tools/FxTestRunner/javatest_fx.xml"/>
-    <import file="../../tools/FxTestRunner/run_javatest_macro.xml"/>
-    <import file="../../tools/FxTestRunner/plugin_support.xml"/>
-
-    <condition property="external.output" value="${external.output}" else="${basedir}/..">
-    	<isset property="external.output"/>
-    </condition>
-
-    <property name="image.properties" location="${basedir}/image.properties"/>
-    <property name="test.sources" value="test"/>
-
-    <target name="-pre-init" unless="no.need.to.find.java.fx">
-        <ant antfile="../../detect_javafx-nb.xml" inheritall="true">
-            <property name="basedir" location="${basedir}/../.."/>
-            <property name="property.file" value="${basedir}/nbproject/private/private.properties"/>
-        </ant>
+<project name="3d.tests" default="compile">
+    <basename file="${basedir}" property="."/>
+    <property name="rootdir" location="${basedir}/../.."/>
+    <property name="project.name" value="3DTests"/>
+    <!--property name="test.problem.list" location="test/ProblemList.txt"/-->
+    <import file="${basedir}/../../tools/make/build-template.xml"/> 
+    <property name="dependencies.classpath" value="${jemmyfx-src}/build/classes${path.separator}${glass-robot-src}/build/classes${path.separator}${glass-image-src}/build/classes${path.separator}${jemmyfx-browser-src}/build/classes${path.separator}${jtreg.home}/lib/junit.jar${path.separator}${javafx.home}/lib/javafx-swt.jar${path.separator}${javafx.home}/lib/javafx.swing.jar${path.separator}${shared-test-utils-src}/build/classes"/>
+    <target name="build-dependencies">
+        <antcall target="build-other-project">
+            <param name="project" value="${shared-test-utils-src}"/>
+        </antcall>
     </target>
-
-    <import file="nbproject/build-impl.xml"/>    
-
-    <target name="-post-clean" depends="delete-jcov">
-        <delete dir="dist-plugin"/>
-    </target>
-	<!-- javatest support -->
-    <target name="javatest" depends="compile, compile-test, run-manual"/>
-    <target name="run-manual" depends="init,dojavatest"/>
-    <target name="run-automated" depends="-post-jar, javatest-automated"/>
-    <target name="run-automated-nobuild" depends="init, dist-plugin, javatest-automated"/>
-    <target name="-post-jar" depends="compile-test, dist-plugin"/>
-	
-	<target name="check-template" unless="template">
-        <fail message="template variable must be set to merge"/>
-    </target>
-    <target name="feature-coverage-merge" depends="-post-jar, check-template">
-        <java classname="com.oracle.jdk.sqe.cc.markup.Merger">
-            <classpath>
-                <pathelement location="../lib/TestMarkup.jar"/>
-            </classpath>
-            <arg line="-o"/>
-            <arg line="${basedir}/result.fcov"/>
-            <arg line="${template}"/>
-            <arg line="${basedir}/coverage.fcov"/>
-        </java>
-        <java classname="com.oracle.jdk.sqe.cc.markup.Report">
-            <classpath>
-                <pathelement location="${basedir}/../lib/TestMarkup.jar"/>
-            </classpath>
-            <arg line="-o"/>
-            <arg line="${basedir}/report.html"/>
-            <arg line="${basedir}/result.fcov"/>
-        </java>
-    </target>
-    
-    <target name="-skipper">
-        <property name="fxsqe.nosvn" value="true"/>
-    </target>
-    <target name="delete-jcov"  unless="testbase.readonly">
-        <echo message="Delete jcoverage data"/>
-        <delete file="${ant.project.name}.jcov" failonerror="false"/>
-        <delete dir="${ant.project.name}.report" failonerror="false"/>
-        <delete dir="jcov-results" failonerror="false"/>
-    </target> 
+    <target name="compile" depends="compile-src"/>
+    <target name="build-test-dependencies"/>
 </project>

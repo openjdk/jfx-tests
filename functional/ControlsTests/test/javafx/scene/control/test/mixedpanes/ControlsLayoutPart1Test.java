@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.mixedpanes;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.factory.ControlsFactory;
 import javafx.scene.control.test.mixedpanes.ControlsLayoutPart1App.Pages;
 import javafx.scene.layout.Pane;
@@ -58,34 +58,34 @@ public class ControlsLayoutPart1Test extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void VBoxTest() throws InterruptedException {
         pagesLoop(Pages.VBox.name());
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 600000)
     public void HBoxTest() throws InterruptedException {
         pagesLoop(Pages.HBox.name());
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void BorderTest() throws InterruptedException {
         pagesLoop(Pages.BorderPane.name());
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void GridTestPart1() throws InterruptedException {
         pagesLoop(Pages.GridPanePart1.name());
     }
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void GridTestPart2() throws InterruptedException {
         pagesLoop(Pages.GridPanePart2.name());

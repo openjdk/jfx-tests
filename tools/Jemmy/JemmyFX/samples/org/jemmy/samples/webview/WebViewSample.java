@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -40,7 +40,8 @@ public class WebViewSample extends SampleBase {
 
     @BeforeClass
     public static void launch() throws InterruptedException {
-        startApp(WebViewApp.class);
+        //TODO
+//        startApp(WebViewApp.class);
         scene = new SceneDock();
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -27,7 +27,6 @@ package org.jemmy.fx;
 import com.sun.javafx.tk.Toolkit;
 import javafx.application.Platform;
 import org.jemmy.JemmyException;
-import org.jemmy.TimeoutExpiredException;
 import org.jemmy.action.AbstractExecutor;
 import org.jemmy.action.Action;
 import org.jemmy.env.Environment;
@@ -62,31 +61,20 @@ public class QueueExecutor extends AbstractExecutor {
      * Gets what thread is the queue thread.
      * @return
      */
-    public Thread getQueueThread() {
-        if (queueThread == null) {
-            try {
-                Platform.runLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        queueThread = Thread.currentThread();
-                    }
-                });
-                Root.ROOT.getEnvironment().getWaiter(QUEUE_IDENTIFYING_TIMEOUT.getName()).ensureState(new State<Object>() {
-
-                    @Override
-                    public Object reached() {
-                        return queueThread;
-                    }
-                });
-            } catch (TimeoutExpiredException e) {
-                //this is bad. THere got to be a way to check if we're on the queue
-                //or not. right now - no other way - sorry
-                queueThread = Thread.currentThread();
-            }
-        }
-        return queueThread;
-    }
+    //this is bad. THere got to be a way to check if we're on the queue
+    //or not. right now - no other way - sorry
+//    public Thread getQueueThread() {
+//        if (queueThread == null) {
+//            try {
+//                Platform.runLater(() -> queueThread = Thread.currentThread());
+//                Root.ROOT.getEnvironment().getWaiter(QUEUE_IDENTIFYING_TIMEOUT.getName())
+//                        .ensureState((State<Object>) () -> queueThread);
+//            } catch (TimeoutExpiredException e) {
+//                queueThread = Thread.currentThread();
+//            }
+//        }
+//        return queueThread;
+//    }
 
     /**
      * {@inheritDoc}
@@ -105,7 +93,8 @@ public class QueueExecutor extends AbstractExecutor {
             Platform.runLater(wrapper);
             wrapper.waitDone(env.getTimeout(MAX_ACTION_TIME));
             if (wrapper.failed()) {
-                throw new JemmyException("Failed to execute action '" + action + "' through Platform.runLater", action.getThrowable());
+                throw new JemmyException("Failed to execute action '" + action +
+                        "' through Platform.runLater", action.getThrowable());
             }
         }
     }
@@ -130,6 +119,8 @@ public class QueueExecutor extends AbstractExecutor {
      */
     @Override
     public boolean isOnQueue() {
+        //this is bad. THere got to be a way to check if we're on the queue
+        //or not. right now - no other way - sorry
         //return Thread.currentThread().equals(getQueueThread());
         try {
             Toolkit.getToolkit().checkFxUserThread();
@@ -149,13 +140,8 @@ public class QueueExecutor extends AbstractExecutor {
     protected boolean isQuiet() {
         emptyFunction.prepare();
         Platform.runLater(emptyFunction);
-        Environment.getEnvironment().getWaiter(MAX_ACTION_TIME).ensureState(new State<Object>() {
-
-            @Override
-            public Object reached() {
-                return emptyFunction.isExecuted() ? "" : null;
-            }
-        });
+        Environment.getEnvironment().getWaiter(MAX_ACTION_TIME)
+                .ensureState((State<Object>) () -> emptyFunction.isExecuted() ? "" : null);
         return emptyFunction.getTime() <= QUEUE_THROUGH_TIME.getValue();
     }
 
@@ -190,6 +176,7 @@ public class QueueExecutor extends AbstractExecutor {
         private Action action = null;
         private Object[] parameters = null;
         private boolean done = false;
+        private RuntimeException exception;
 
         public void setAction(Action action) {
             this.action = action;
@@ -204,6 +191,7 @@ public class QueueExecutor extends AbstractExecutor {
             try {
                 action.execute(parameters);
             } catch (RuntimeException e) {
+                exception = e;
             }
             synchronized (this) {
                 done = true;
@@ -226,7 +214,7 @@ public class QueueExecutor extends AbstractExecutor {
         }
 
         public Throwable getThrowable() {
-            return action.getThrowable();
+            return (action.getThrowable() != null) ? action.getThrowable() : exception;
         }
 
         public synchronized void waitDone(Timeout timeout) {

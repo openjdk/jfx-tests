@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,8 +25,8 @@ package test.scenegraph.manual;
 
 import client.test.Keywords;
 import client.test.RunUI;
-import com.oracle.jdk.sqe.cc.markup.Covers;
-import com.oracle.jdk.sqe.cc.markup.Covers.Level;
+
+
 import org.jemmy.action.AbstractExecutor;
 import org.jemmy.env.TestOut;
 import org.jemmy.fx.Root;
@@ -38,7 +38,7 @@ import test.scenegraph.app.TestTextApp;
  *
  * @author Sergey Grinev
  */
-@Covers(level=Level.FULL, value="javafx.scene.Text.alignment")
+//@Covers(level=Level.FULL, value="javafx.scene.Text.alignment")
 public class TestText extends TestBase {
 
     @RunUI

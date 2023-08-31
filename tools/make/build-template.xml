@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jemmy.fx" default="compile">
+    <property name="src.dir" location="${basedir}/src"/>
+    <property name="test.dir" location="${basedir}/test"/>
+    <property name="build.dir" location="${basedir}/build"/>
+    <property name="build.classes.dir" location="${build.dir}/classes"/>
+    <property name="build.test.dir" location="${build.dir}/test"/>
+    <property name="test.output.dir" location="${build.dir}/test-output"/>
+    <property name="dist.jar" location="${build.dir}/${project.name}.jar"/>
+    <property name="glass-image-src" location="${rootdir}/tools/Jemmy/GlassImage"/>
+    <property name="glass-robot-src" location="${rootdir}/tools/Jemmy/GlassRobot"/>
+    <property name="jemmyfx-src" location="${rootdir}/tools/Jemmy/JemmyFX"/>
+    <property name="jemmyfx-browser-src" location="${rootdir}/tools/Jemmy/JemmyFXBrowser"/>
+    <property name="shared-test-utils-src" location="${rootdir}/tools/SharedTestUtilsOpen"/>
+    <property name="test-markup-src" location="${rootdir}/tools/TestMarkup"/>
+    <property name="imageutils.goldenpath" location="${build.dir}/golden"/>
+    <property name="imageutils.outputpath" location="${build.dir}/images"/>
+    <property name="imageutils.suite" value="${project.name}"/>
+    <property environment="env"/>
+    <target name="init">
+        <fail message="Please specify jemmy-v3.jars" unless="jemmy-v3.jars"/>
+        <fail message="Please specify javafx.home" unless="javafx.home"/>
+        <path id="jemmyfx.classpath">
+            <pathelement location="${javafx.home}/lib/javafx.base.jar"/>
+            <pathelement location="${javafx.home}/lib/javafx.controls.jar"/>
+            <pathelement location="${javafx.home}/lib/javafx.graphics.jar"/>
+            <pathelement location="${javafx.home}/lib/javafx.media.jar"/>
+            <pathelement location="${javafx.home}/lib/javafx.web.jar"/>
+            <pathelement location="${jemmy-v3.jars}/JemmyCore.jar"/>
+            <pathelement location="${jemmy-v3.jars}/JemmyAWTInput.jar"/>
+            <pathelement location="${jemmy-v3.jars}/JemmyBrowser.jar"/>
+            <pathelement location="${jemmy-v3.jars}/JemmySupport.jar"/>
+        </path>
+    </target>
+    <target name="compile-src" depends="init,build-dependencies">
+        <mkdir dir="${build.classes.dir}"/>
+        <javac destdir="${build.classes.dir}" debug="on" includeantruntime="false">
+            <classpath>
+                <path refid="jemmyfx.classpath"/>
+                <pathelement path="${dependencies.classpath}"/>
+            </classpath>
+            <src>
+                <pathelement path="${src.dir}"/>
+            </src>
+        </javac>
+    </target>
+    <target name="build-other-project">
+        <ant dir="${project}" inheritAll="false">
+            <property name="javafx.home" value="${javafx.home}"/>
+            <property name="jemmy-v2.jars" value="${jemmy-v2.jars}"/>
+            <property name="junit.jar" value="${junit.jar}"/>
+        </ant>
+    </target>
+    <target name="jar" depends="compile">
+        <jar jarfile="${dist.jar}" basedir="${build.classes.dir}"/>
+    </target>
+    <target name="compile-test" depends="compile,build-test-dependencies">
+        <fail message="Please specify jtreg.home" unless="jtreg.home"/>
+        <mkdir dir="${build.test.dir}"/>
+        <javac srcdir="${test.dir}" destdir="${build.test.dir}" debug="on" includeantruntime="false">
+            <classpath>
+                <path refid="jemmyfx.classpath"/>
+                <pathelement path="${dependencies.classpath}"/>
+                <pathelement path="${test.dependencies.classpath}"/>
+                <pathelement location="${build.classes.dir}"/>
+                <pathelement location="${jtreg.home}/lib/junit.jar"/>
+            </classpath>
+        </javac>
+    </target>
+    <target name="find-tests" unless="tests">
+        <fileset id="testset" dir="${test.dir}">
+            <include name="**/*Test.java" />
+        </fileset>
+        <pathconvert pathsep="${line.separator}" property="testlist" refid="testset">
+            <globmapper from="${test.dir}/*" to="*"/>
+        </pathconvert>
+        <echo file="${test.list}">${testlist}</echo>
+        <property name="tests" value="@${test.list}"/>
+    </target>
+    <property name="test.list" value="${build.dir}/test.list"/>
+    <property name="test.workdir" value="${build.dir}/test.workdir"/>
+    <property name="test.report" value="${build.dir}/test.report"/>
+    <target name="define-excludes" if="test.problem.list">
+        <property name="text.exclude.option" value="-exclude:${test.problem.list}"/>
+    </target>
+    <target name="define-no-excludes" unless="test.problem.list">
+        <property name="text.exclude.option" value=""/>
+    </target>
+    <target name="test" depends="build-test-dependencies,compile-test,find-tests,define-excludes,define-no-excludes">
+        <mkdir dir="${imageutils.goldenpath}"/>
+        <mkdir dir="${imageutils.outputpath}"/>
+        <property name="jemmyfx.classpath.prop" refid="jemmyfx.classpath"/>
+        <exec executable="${env.SHELL}">
+            <arg value="${jtreg.home}/bin/jtreg"/>
+            <arg value="-vmoption:-Dimageutils.goldenpath=${imageutils.goldenpath}"/>
+            <arg value="-vmoption:-Dimageutils.outputpath=${imageutils.outputpath}"/>
+            <arg value="-vmoption:-Dimageutils.suite=${imageutils.suite}"/>
+            <arg value="-timeout:10"/>
+            <arg value="-cpa:${build.classes.dir}:${dependencies.classpath}:${test.dependencies.classpath}:${jemmyfx.classpath.prop}:${jtreg.home}/lib/junit.jar"/>
+            <arg value="-w:${test.workdir}"/>
+            <arg value="-r:${test.report}"/>
+            <arg value="${text.exclude.option}"/>
+            <arg value="-conc:1"/>
+            <arg value="-ovm"/>
+            <arg value="-v:default"/>
+            <arg value="-dir:test"/>
+            <arg value="${tests}"/>
+        </exec>
+    </target>
+    <target name="clean">
+        <deltree dir="${build.dir}"/>
+    </target>
+</project>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -34,11 +34,11 @@ import javafx.scene.control.SplitMenuButton;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.control.caspian.CaspianDriverFactory;
-import org.jemmy.interfaces.Editor;
+import org.jemmy.interfaces.Caret;
+import org.jemmy.fx.interfaces.Editor;
 import org.jemmy.interfaces.Focus;
 import org.jemmy.interfaces.Scroll;
-import org.jemmy.interfaces.Scroller;
-import org.jemmy.interfaces.Shifter;
+import org.jemmy.fx.interfaces.Shifter;
 import org.jemmy.interfaces.TreeItem;
 
 /**
@@ -95,7 +95,7 @@ public abstract class ThemeDriverFactory {
      * caret() method.
      * @return
      */
-    public abstract Scroller caret(final Wrap<? extends Control> wrap, final Scroll scroll);
+    public abstract Caret caret(final Wrap<? extends Control> wrap, final Scroll scroll);
 
     public abstract Shifter track(final Wrap<? extends Control> wrap, final Scroll scroll);
 

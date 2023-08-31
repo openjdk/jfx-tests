@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -29,8 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jemmy.control.Wrap;
 import org.jemmy.interfaces.ControlInterface;
-import org.jemmy.interfaces.EditableCellOwner;
-import org.jemmy.interfaces.EditableCellOwner.CellEditor;
+import org.jemmy.fx.interfaces.EditableCellOwner;
 import org.jemmy.interfaces.Keyboard.KeyboardModifier;
 import org.jemmy.interfaces.Keyboard.KeyboardModifiers;
 import org.jemmy.interfaces.Mouse.MouseButtons;
@@ -114,7 +113,8 @@ abstract class ItemParent<ITEM, AUX> implements EditableCellOwner<ITEM> {
                 w.as(Showable.class).shower().show();
                 w.mouse().click(1, w.getClickPoint(), MouseButtons.BUTTON1,
                         mods);
-                mods = new KeyboardModifier[]{KeyboardModifiers.CTRL_DOWN_MASK};
+//                mods = new KeyboardModifier[]{KeyboardModifiers.CTRL_DOWN_MASK};
+                mods = new KeyboardModifier[]{KeyboardModifiers.META_DOWN_MASK};
                 res.add(w);
             }
         }

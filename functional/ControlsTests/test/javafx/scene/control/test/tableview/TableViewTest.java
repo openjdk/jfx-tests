@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.tableview;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -62,13 +62,13 @@ public class TableViewTest extends TestBase {
 
     /*
      * removed
-     * @Smoke
+     * //TODO@Smoke
      @Test(timeout=300000) public void keyboardCtrlShiftPageUpPageDownTest() throws
      * Throwable { keyboardPageUpPageDownCycle(CTRL_DOWN_MASK_OS,
      * KeyboardModifiers.SHIFT_DOWN_MASK); }
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void insertSingleItemTest() throws Throwable {
         insertAt(0);
@@ -77,7 +77,7 @@ public class TableViewTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void removeSingleItemTest() throws Throwable {
         removeAt(0);
@@ -86,7 +86,7 @@ public class TableViewTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void insertSingleColumnTest() throws Throwable {
         insertColumnAt(0);
@@ -95,7 +95,7 @@ public class TableViewTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void removeSingleColumnTest() throws Throwable {
         removeColumnAt(0);
@@ -103,7 +103,7 @@ public class TableViewTest extends TestBase {
         ScreenshotUtils.checkScreenshot(getControlName() + "Test-remove-column", contentPane);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void scrollBarsTest() throws Throwable {
         final Lookup vScrollBar = getScrollLookup(Orientation.VERTICAL);
@@ -144,7 +144,7 @@ public class TableViewTest extends TestBase {
      * three states of sorting and all of them are checked
      *
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void columnSortTest() throws Throwable {
         Wrap<? extends Node> columHeader = headerWrap.as(Parent.class, Node.class).lookup(Label.class, new ByText("field 0")).wrap();
@@ -229,7 +229,7 @@ public class TableViewTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void columnAutoSize() throws Throwable {
         final double AUTO_WIDTH = isTableTests ? 85 : 215;
@@ -274,7 +274,7 @@ public class TableViewTest extends TestBase {
         });
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void userDataColumnTest() {
         ObservableList<TableColumnBase> columns;
@@ -311,7 +311,7 @@ public class TableViewTest extends TestBase {
      * to the underlying data collection
      * the cells are rendered in the right order.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void renderingAfterSortingTest() throws Throwable {
 
@@ -368,7 +368,7 @@ public class TableViewTest extends TestBase {
         assertTrue(msg, result);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void scrollToColumnIndex() {
         DATA_FIELDS_NUM = 64;
@@ -406,7 +406,7 @@ public class TableViewTest extends TestBase {
      * Checks that column resizing is correct
      * according to desired values
      */
-    @Smoke
+    //TODO@Smoke
     @Test
     public void columnResizeTest() {
         final int columnIndex = 0;

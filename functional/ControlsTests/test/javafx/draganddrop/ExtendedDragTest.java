@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.draganddrop;
 
-import client.test.Smoke;
+
 import static javafx.draganddrop.ExtendedDragApplication.*;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -93,7 +93,7 @@ public class ExtendedDragTest extends TestBase {
     /**
      * basic test drag'n'drop gesture
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void testScreenXY1() throws InterruptedException {
         clearEvents();
@@ -105,7 +105,7 @@ public class ExtendedDragTest extends TestBase {
     /**
      * test drag'n'drop gesture to some parent node container
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void testScreenXY2() throws InterruptedException {
         clearEvents();
@@ -117,7 +117,7 @@ public class ExtendedDragTest extends TestBase {
     /**
      * test drag'n'drop gesture to some overlapped node
      */
-    //@Smoke
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void testScreenXY3() throws InterruptedException {
         clearEvents();

@@ -4,9 +4,6 @@
  */
 package org.jemmy.fx;
 
-import java.awt.AWTException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -14,8 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.metal.MetalLookAndFeel;
 import org.jemmy.action.GetAction;
 import org.jemmy.browser.BrowserDescriptor;
 import org.jemmy.browser.HierarchyDescriptor;
@@ -28,6 +23,12 @@ import org.jemmy.env.Timeout;
 import org.jemmy.lookup.ControlList;
 import org.jemmy.timing.State;
 import org.jemmy.timing.Waiter;
+
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import java.awt.AWTException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -57,15 +58,8 @@ public class Browser {
             public void handle(KeyEvent ke) {
                 if (!browserStarted && kb.check(ke)) {
                     browserStarted = true;
-                    Platform.runLater(new Runnable() {
-
-                        public void run() {
-                            try {
-                                runBrowser();
-                            } catch (AWTException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
+                    Platform.runLater(() -> {
+                        runBrowser();
                     });
                 }
             }
@@ -95,13 +89,18 @@ public class Browser {
         }
     };
 
-    public static void runBrowser() throws AWTException {
+    public static void runBrowser() {
         try {
             javax.swing.UIManager.setLookAndFeel(new MetalLookAndFeel());
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(HierarchyView.class.getName()).log(Level.SEVERE, null, ex);
         }
         BrowserDescriptor descr = new BrowserDescriptor() {
+
+            @Override
+            public boolean isActiveHighlightingProvided() {
+                return true;
+            }
 
             ControlList hierarchy = new SceneList();
             Wrapper wrapper = new SceneWrapper(Environment.getEnvironment());
@@ -156,7 +155,13 @@ public class Browser {
                 return wrapper;
             }
         };
-        new HierarchyView(descr).setVisible(true);
+        new Thread(() -> {
+            try {
+                new HierarchyView(descr).setVisible(true);
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     public static void startApp(final String[] argv) {

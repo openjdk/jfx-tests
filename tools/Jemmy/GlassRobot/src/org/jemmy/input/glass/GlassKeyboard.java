@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -31,6 +31,9 @@ import org.jemmy.interfaces.Focusable;
 import org.jemmy.interfaces.Keyboard;
 import org.jemmy.interfaces.Modifier;
 
+import static org.jemmy.input.glass.GlassInputFactory.invokeAndWait;
+import static org.jemmy.input.glass.GlassInputFactory.getRobot;
+
 /**
  *
  * @author shura
@@ -59,11 +62,12 @@ class GlassKeyboard implements Keyboard {
         factory.runAction(control, new Action() {
 
             @Override
-            public void run(Object... parameters) {
+            public void run(Object... parameters) throws InterruptedException {
                 for (Modifier m : modifiers) {
-                    factory.pressModifier(m);
+                    factory.pressModifier(m, control.getEnvironment());
                 }
-                GlassInputFactory.getRobot().keyPress(factory.map.key(key));
+                invokeAndWait(control.getEnvironment(),
+                        () -> getRobot().keyPress(factory.map.key(key)));
             }
 
             @Override
@@ -87,10 +91,11 @@ class GlassKeyboard implements Keyboard {
         factory.runAction(control, new Action() {
 
             @Override
-            public void run(Object... parameters) {
-                GlassInputFactory.getRobot().keyRelease(factory.map.key(key));
+            public void run(Object... parameters) throws InterruptedException {
+                invokeAndWait(control.getEnvironment(),
+                        () -> getRobot().keyRelease(factory.map.key(key)));
                 for (Modifier m : modifiers) {
-                    factory.releaseModifier(m);
+                    factory.releaseModifier(m, control.getEnvironment());
                 }
             }
 
@@ -108,15 +113,17 @@ class GlassKeyboard implements Keyboard {
         factory.runAction(control, new Action() {
 
             @Override
-            public void run(Object... parameters) {
+            public void run(Object... parameters) throws InterruptedException {
                 for (Modifier m : modifiers) {
-                    factory.pressModifier(m);
+                    factory.pressModifier(m, control.getEnvironment());
                 }
-                GlassInputFactory.getRobot().keyPress(factory.map.key(key));
+                invokeAndWait(control.getEnvironment(),
+                        () -> getRobot().keyPress(factory.map.key(key)));
                 pushTime.sleep();
-                GlassInputFactory.getRobot().keyRelease(factory.map.key(key));
+                invokeAndWait(control.getEnvironment(),
+                        () -> getRobot().keyRelease(factory.map.key(key)));
                 for (Modifier m : modifiers) {
-                    factory.releaseModifier(m);
+                    factory.releaseModifier(m, control.getEnvironment());
                 }
             }
 

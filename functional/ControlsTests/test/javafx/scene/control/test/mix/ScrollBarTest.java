@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.scene.control.test.ScrollBarApp.Pages;
 import javafx.scene.control.test.scrollbar.ScrollBarApp;
 import org.junit.BeforeClass;
@@ -92,7 +92,7 @@ public class ScrollBarTest extends TestBase {
      * Test for ScrollBar setValue, setMin, setMax API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void positionVerticalTest() throws InterruptedException {
         testCommon(Pages.PositionsHorizontal.name());
@@ -102,7 +102,7 @@ public class ScrollBarTest extends TestBase {
      * Test for ScrollBar setValue, setMin, setMax API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void positionHorizontalTest() throws InterruptedException {
         testCommon(Pages.PositionsVertical.name());

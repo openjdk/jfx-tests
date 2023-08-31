@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,7 +26,7 @@ package javafx.scene.control.test.toggleradiobutton;
 
 import test.javaclient.shared.FilteredTestRunner;
 import org.junit.runner.RunWith;
-import client.test.Smoke;
+
 import org.junit.Before;
 import org.junit.Test;
 import static javafx.scene.control.test.ToggleButtonNewApp.*;
@@ -47,7 +47,7 @@ public class ToggleButtonFreeTest extends ToggleButtonTestBase {
      * Simple test, checking pressing and holding pressed state
      * and checking state of listening by  binded checkboxes.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void simpleTogglingTest() {
         for (int i = 0; i < ITERATIONS; i++) {
@@ -68,7 +68,7 @@ public class ToggleButtonFreeTest extends ToggleButtonTestBase {
     /**
      * Test, verifying working with one bidirectional binding.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void freeWithidirectionalBindingTest() {
         clickToggleButton(BINDING_SET_TOGGLE_BUTTON_ID);
@@ -85,7 +85,7 @@ public class ToggleButtonFreeTest extends ToggleButtonTestBase {
     /**
      * Test, checking unidirectional setting binding.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void freeUnidirectionalBindingTest() {
         clickToggleButton(BINDING_SET_TOGGLE_BUTTON_ID);

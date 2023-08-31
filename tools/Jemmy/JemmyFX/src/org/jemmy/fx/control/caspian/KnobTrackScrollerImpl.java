@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -33,10 +33,10 @@ import org.jemmy.Vector;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.input.KnobDragScrollerImpl;
-import org.jemmy.input.ScrollTrack;
+import org.jemmy.fx.input.ScrollTrack;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Scroll;
-import org.jemmy.interfaces.Shifter;
+import org.jemmy.fx.interfaces.Shifter;
 
 /**
  * Base class for deriving classes like SliderScroller and ScrollBarScroller.
@@ -94,15 +94,13 @@ public class KnobTrackScrollerImpl extends KnobDragScrollerImpl {
         return new Vector(wrap.toAbsolute(new Point(0, 0)), wrap.toAbsolute(end));
     }
 
-    @Override
     public void scrollTo(double value) {
         to(value);
     }
 
-    @Override
-    public void scrollTo(ScrollCondition condition) {
-        throw new UnsupportedOperationException("Use to(Direction).");
-    }
+//    public void scrollTo(ScrollCondition condition) {
+//        throw new UnsupportedOperationException("Use to(Direction).");
+//    }
 
     /**
      * Scrolling will be done, if scrollBar is visible, otherwise, we think,

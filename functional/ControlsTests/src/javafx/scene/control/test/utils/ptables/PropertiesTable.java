@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,19 +24,26 @@
  */
 package javafx.scene.control.test.utils.ptables;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+
 import static javafx.scene.control.test.utils.ptables.AbstractApplicationPropertiesRegystry.DEFAULT_DOMAIN_NAME;
 
 /**
@@ -73,9 +80,10 @@ import static javafx.scene.control.test.utils.ptables.AbstractApplicationPropert
  * functionality of this PropertiesTable can be accessed from tests side (it
  * contains different checkers, value setters, etc).
  */
-public class PropertiesTable extends VBox implements AbstractPropertiesTable, Refreshable {
+public class PropertiesTable extends BorderPane implements AbstractPropertiesTable, Refreshable {
 
     public final static String PROPERTIES_TABLE_SUFFIX_ID = "_PROPERTY_TABLE_ID";
+    private final TableView<PropertyValue> propTable;
     private final VBox linesVBox = new VBox(5);
     private final FlowPane countersFlowPane;
     private final FlowPane listenersFlowPane;
@@ -95,7 +103,17 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
     private HashMap<String, AbstractPropertyValueListener> readonlyPropertyListeners = new HashMap<String, AbstractPropertyValueListener>();
 
     public PropertiesTable(Object testedControl) {
-        super(5);
+        super();
+        var scroll = new ScrollPane();
+        var vbox = new VBox();
+        scroll.setContent(vbox);
+        propTable = new TableView<>();
+        TableColumn<PropertyValue, String> propColumn = new TableColumn<>("Name");
+        propColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<PropertyValue, Object> valueColumn = new TableColumn<>("Value");
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        propTable.getColumns().addAll(propColumn, valueColumn);
+        vbox.getChildren().add(0, propTable);
         countersFlowPane = new FlowPane();
         countersFlowPane.setVgap(5);
         countersFlowPane.setHgap(5);
@@ -104,10 +122,11 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
         listenersFlowPane.setHgap(5);
         this.domainName = DEFAULT_DOMAIN_NAME;
         this.setId(DEFAULT_DOMAIN_NAME + PROPERTIES_TABLE_SUFFIX_ID);
-        getChildren().add(0, countersFlowPane);
-        getChildren().add(1, listenersFlowPane);
-        getChildren().add(2, linesVBox);
+        vbox.getChildren().add(1, countersFlowPane);
+        vbox.getChildren().add(2, listenersFlowPane);
+        vbox.getChildren().add(3, linesVBox);
         this.testedControl = testedControl;
+        setCenter(scroll);
     }
 
     public void refresh() {
@@ -184,6 +203,7 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
 
     @Override
     public void addSimpleListener(ReadOnlyProperty<? extends Object> bindableProperty, Object owningObject) {
+        propTable.getItems().add(new PropertyValue(bindableProperty));
         AbstractPropertyValueListener listener = new PropertyValueListener(bindableProperty, owningObject);
         readonlyPropertyListeners.put(bindableProperty.getName().toUpperCase(), listener);
         listenersFlowPane.getChildren().add(listener.getVisualRepresentation());
@@ -223,5 +243,24 @@ public class PropertiesTable extends VBox implements AbstractPropertiesTable, Re
 
     public void setDomainName(String domainName) {
         this.domainName = domainName;
+    }
+
+    //this is a workaround for JDK-8285296
+    private class PropertyValue {
+        private final String name;
+        private final Object value;
+
+        public PropertyValue(ReadOnlyProperty property) {
+            this.name = property.getName();
+            this.value = property.getValue();
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Object getValue() {
+            return value;
+        }
     }
 }

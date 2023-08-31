@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2016, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -44,11 +44,15 @@ public class GoldenImageManager {
     private static final String IMG_FOLDER = "images-svn";
 
     private static File getImagesRoot() throws IOException {
-        return new File("./", IMG_FOLDER).getCanonicalFile();
+        String root = System.getProperty("imageutils.goldenpath");
+        if(root != null)
+            return new File(root);
+        else
+            return new File("./", IMG_FOLDER).getCanonicalFile();
     }
 
     private static String getSuiteName() throws IOException {
-        return new File(".").getCanonicalFile().getName();
+        return System.getProperty("imageutils.suite", new File(".").getCanonicalFile().getName());
     }
 
     //Requires -XaddExports:javafx.graphics/com.sun.prism=ALL-UNNAMED to work in JDK9

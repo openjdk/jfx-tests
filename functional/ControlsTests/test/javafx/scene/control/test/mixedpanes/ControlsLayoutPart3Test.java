@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.mixedpanes;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import test.javaclient.shared.TestBase;
@@ -59,7 +59,7 @@ public class ControlsLayoutPart3Test extends TestBase {
     /**
      * test layout of controls: Labels,Accordions,ListViews inside of FlowPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void FlowPaneTest1() throws InterruptedException {
@@ -70,7 +70,7 @@ public class ControlsLayoutPart3Test extends TestBase {
      * test layout of controls: ScrollPanes,Separators,CheckBoxes inside of
      * FlowPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void FlowPaneTest2() throws InterruptedException {
@@ -82,7 +82,7 @@ public class ControlsLayoutPart3Test extends TestBase {
      * Toolbars,ChoiceBoxes,SplitMenuButtons,ProgressIndicators inside of
      * FlowPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void FlowPaneTest3() throws InterruptedException {
@@ -93,7 +93,7 @@ public class ControlsLayoutPart3Test extends TestBase {
      * test layout of controls: TabPanes,ScrollBars,TitledPanes,ProgressBars
      * inside of FlowPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void FlowPaneTest4() throws InterruptedException {
@@ -105,7 +105,7 @@ public class ControlsLayoutPart3Test extends TestBase {
      * Hyperlinks,Sliders,PasswordBoxes,TextBoxes,RadioButtons inside of
      * FlowPane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void FlowPaneTest5() throws InterruptedException {
@@ -115,7 +115,7 @@ public class ControlsLayoutPart3Test extends TestBase {
     /**
      * test layout of controls: Labels,Accordions,ListViews inside of TilePane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void TilePaneTest1() throws InterruptedException {
@@ -126,7 +126,7 @@ public class ControlsLayoutPart3Test extends TestBase {
      * test layout of controls: ScrollPanes,Separators,CheckBoxes inside of
      * TilePane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void TilePaneTest2() throws InterruptedException {
@@ -138,7 +138,7 @@ public class ControlsLayoutPart3Test extends TestBase {
      * Toolbars,ChoiceBoxes,SplitMenuButtons,ProgressIndicators inside of
      * TilePane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void TilePaneTest3() throws InterruptedException {
@@ -149,7 +149,7 @@ public class ControlsLayoutPart3Test extends TestBase {
      * test layout of controls: TabPanes,ScrollBars,TitledPanes,ProgressBars
      * inside of TilePane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void TilePaneTest4() throws InterruptedException {
@@ -161,7 +161,7 @@ public class ControlsLayoutPart3Test extends TestBase {
      * Hyperlinks,Sliders,PasswordBoxes,TextBoxes,RadioButtons inside of
      * TilePane
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void TilePaneTest5() throws InterruptedException {

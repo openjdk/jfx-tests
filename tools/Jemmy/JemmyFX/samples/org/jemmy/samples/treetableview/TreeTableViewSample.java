@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -32,7 +32,7 @@ import org.jemmy.fx.control.TextFieldCellEditor;
 import org.jemmy.fx.control.TreeTableCellDock;
 import org.jemmy.fx.control.TreeTableViewDock;
 import org.jemmy.fx.control.TreeTableItemDock;
-import org.jemmy.interfaces.EditableCellOwner.EditableCell;
+import org.jemmy.fx.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.lookup.LookupCriteria;
 import static org.jemmy.resources.StringComparePolicy.*;
 import org.jemmy.samples.SampleBase;

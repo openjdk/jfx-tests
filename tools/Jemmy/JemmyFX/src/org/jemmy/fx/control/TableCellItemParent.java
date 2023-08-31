@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -29,6 +29,7 @@ import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 import org.jemmy.Point;
 import org.jemmy.control.Wrap;
+import org.jemmy.fx.interfaces.Table;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
@@ -36,7 +37,7 @@ import org.jemmy.lookup.LookupCriteria;
  * @param DATA
  * @author Shura, KAM
  */
-class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA> implements org.jemmy.interfaces.Table<DATA> {
+class TableCellItemParent<DATA> extends ItemDataParent<Point, DATA> implements Table<DATA> {
 
     TableViewWrap<? extends TableView> tableViewOp;
 

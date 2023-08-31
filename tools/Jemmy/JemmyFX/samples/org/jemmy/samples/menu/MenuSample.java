@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,16 +26,17 @@ package org.jemmy.samples.menu;
 
 
 import javafx.scene.control.ScrollPane;
+import org.jemmy.Point;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.*;
-import org.jemmy.input.AWTRobotInputFactory;
 import org.jemmy.input.glass.GlassInputFactory;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Mouse.MouseButtons;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -64,6 +65,9 @@ public class MenuSample extends SampleBase {
 
         // Obtaining a Dock for scene
         scene = new SceneDock();
+
+        //workaround for JDK-8257835
+        scene.mouse().click(1);
 
         //Looking up for MenuBar. There is just one MenuBar in the scene so
         //no criteria is specified.
@@ -156,13 +160,16 @@ public class MenuSample extends SampleBase {
 
         //right click to call the popup
         // http://javafx-jira.kenai.com/browse/JMY-179
-        scrollPane.mouse().click(1, scrollPane.wrap().getClickPoint(), MouseButtons.BUTTON3);
+        scrollPane.mouse().click(1, scrollPane.wrap().getClickPoint(), MouseButtons.BUTTON2);
 
         //pushing a context menu is just like pushing main menu
-        new ContextMenuDock().asMenuOwner().push("item _2");
+        var popup = new ContextMenuDock();
+        popup.asMenuOwner().push("item _2");
 
+        //TODO how to do this in the code?
+        popup.wrap().waitState(() -> popup.wrap().getControl().isShowing() ? null : popup);
 
-        scrollPane.mouse().click(1, scrollPane.wrap().getClickPoint(), MouseButtons.BUTTON3);
+        scrollPane.mouse().click(1, scrollPane.wrap().getClickPoint(), MouseButtons.BUTTON2);
 
         //or
         new MenuItemDock(new ContextMenuDock().asMenuParent(), "sub-", StringComparePolicy.SUBSTRING).mouse().click();

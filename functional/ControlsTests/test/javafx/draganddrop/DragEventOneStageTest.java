@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,6 @@
  */
 package javafx.draganddrop;
 
-import client.test.Smoke;
 import static javafx.draganddrop.ExtendedDragApplication.TITLE1;
 import static javafx.draganddrop.SimpleDragApplication.*;
 import javafx.scene.Node;
@@ -71,7 +70,8 @@ public class DragEventOneStageTest extends TestBase {
     /**
      * tests drag event getScreenX getScreenY
      */
-    @Smoke
+    //TODO
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void testScreenXY() throws InterruptedException {
         dnd(from, fromPoint, to, toPoint);
@@ -82,7 +82,8 @@ public class DragEventOneStageTest extends TestBase {
     /**
      * tests drag event getSceneX getSceneY
      */
-    @Smoke
+    //TODO
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void testSceneXY() throws InterruptedException {
         dnd(from, fromPoint, to, toPoint);
@@ -93,7 +94,8 @@ public class DragEventOneStageTest extends TestBase {
     /**
      * tests drag event getX getY
      */
-    @Smoke
+    //TODO
+    ////TODO@Smoke
     @Test(timeout = 300000)
     public void testXY() throws InterruptedException {
         dnd(from, fromPoint, to, toPoint);

@@ -11,12 +11,17 @@ import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.input.CaretText;
 import org.jemmy.input.SelectionText;
+import org.jemmy.input.awt.AWTRobotInputFactory;
 import org.jemmy.interfaces.ControlInterface;
 import org.jemmy.interfaces.InterfaceException;
+import org.jemmy.interfaces.Keyboard;
 import org.jemmy.interfaces.Text;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.text.TextApp;
+import org.jemmy.timing.State;
 import org.junit.*;
+
+import static org.jemmy.interfaces.Keyboard.KeyboardButtons.END;
 import static org.junit.Assert.*;
 
 /**
@@ -25,11 +30,19 @@ import static org.junit.Assert.*;
  */
 public class TextTest {
 
+//    public static void main(String[] args) throws Exception {
+//        setUpClass();
+//        TextTest t = new TextTest();
+//        t.asTest();
+//        System.out.println("Done!");
+//    }
+
     public TextTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        AWTRobotInputFactory.runInOtherJVM(true);
         AppExecutor.executeNoBlock(TextApp.class);
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,10 +23,6 @@
  */
 package test.scenegraph.events;
 
-import com.sun.glass.ui.Robot;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
 import javafx.scene.control.RadioButton;
@@ -34,7 +30,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import org.jemmy.Point;
-import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.NodeDock;
@@ -47,15 +42,17 @@ import org.jemmy.interfaces.Keyboard;
 import org.jemmy.interfaces.Mouse;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import test.javaclient.shared.TestBase;
-import test.javaclient.shared.Utils;
 import test.scenegraph.app.ControlEventsApp;
 import test.scenegraph.app.ControlEventsApp.Controls;
 import test.scenegraph.app.ControlEventsApp.EventTypes;
 import test.scenegraph.app.ControlEventsTab;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -65,6 +62,12 @@ import test.scenegraph.app.ControlEventsTab;
  */
 public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 {
+    private SceneDock sceneDock;
+    private TabDock tabDock;
+    public T primeDock;
+    private LabeledDock eventRadio;
+    private Controls control;
+//    private EventTypes eventType;
 
     @Override
     @Before
@@ -134,6 +137,22 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
         });
     }
 
+    //TODO
+//    @Test(timeout = 60000)
+//    public void onMouseEnteredTarget() {
+//        test(EventTypes.MOUSE_ENTERED_TARGET, new Command() {
+//
+//            public void invoke() {
+//                Bounds bounds = primeDock.getBoundsInLocal();
+//                double x = - ControlEventsApp.INSETS / 2;
+//                double y = bounds.getHeight() / 2;
+//                for(; (x <= bounds.getWidth() / 2) && (!gotEvent()); x++)
+//                {
+//                    primeDock.mouse().move(new Point(x, y));
+//                }
+//            }
+//        });
+//    }
 
     // * Moves mouse inside of tested node.
     @Test(timeout = 60000)
@@ -472,13 +491,13 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 
 
 
-    protected void setEventType(EventTypes eventType)
-    {
-        this.eventType = eventType;
-    }
+//    protected void setEventType(EventTypes eventType)
+//    {
+//        this.eventType = eventType;
+//    }
 
     // don't make it static
-    final private List<EventTypes> bannedEvents = new ArrayList<>(Arrays.asList(
+    private final List<EventTypes> bannedEvents = new ArrayList<>(Arrays.asList(
         EventTypes.DRAG_DONE,
         EventTypes.DRAG_ENTERED_TARGET,
         EventTypes.DRAG_ENTERED,
@@ -492,8 +511,8 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     protected final void test(final EventTypes eventType, Command command) {
 
         selectTab();
-        setEventType(eventType);
-        if (selectEventType()) {
+//        setEventType(eventType);
+        if (selectEventType(eventType)) {
             command.invoke();
             waitHandler();
         }
@@ -523,7 +542,7 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
 
     protected abstract T findPrimeDock();
 
-    boolean selectEventType() {
+    boolean selectEventType(EventTypes eventType) {
         eventRadio = new LabeledDock(tabDock.asParent(), RadioButton.class,
                 eventType.toString());
         if (null != eventRadio) {
@@ -591,12 +610,4 @@ public abstract class EventTestCommon<T extends NodeDock> extends TestBase
     {
         return tabDock;
     }
-
-    private SceneDock sceneDock;
-    private TabDock tabDock;
-    public T primeDock;
-    private LabeledDock eventRadio;
-    private Controls control;
-    private EventTypes eventType;
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.ToolBar;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import org.jemmy.env.Timeout;
 import org.jemmy.timing.State;
 import org.jemmy.interfaces.Keyboard.KeyboardButton;
@@ -117,7 +117,7 @@ public class ToolBarBase extends ControlsTestBase {
         ScreenshotUtils.checkScreenshot(getFullName("Selection"), contentPane);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardSelectionTest() throws InterruptedException {
         keyboardSelectionCycle(KeyboardButtons.SPACE);
@@ -132,7 +132,7 @@ public class ToolBarBase extends ControlsTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void addItemsTest() throws InterruptedException {
         ScreenshotUtils.checkScreenshot(getFullName("Add"), contentPane);
@@ -148,7 +148,7 @@ public class ToolBarBase extends ControlsTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void vmodeSwitchTest() throws InterruptedException {
         shrinkBtn.mouse().click();

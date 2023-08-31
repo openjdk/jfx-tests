@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,15 +24,17 @@
  */
 package javafx.scene.control.test.utils.ptables;
 
-import java.lang.reflect.Method;
 import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
-import static javafx.scene.control.test.utils.ptables.StaticLogger.*;
 import javafx.scene.layout.HBox;
+
+import java.lang.reflect.Method;
+
+import static javafx.scene.control.test.utils.ptables.StaticLogger.log;
 
 /**
  * @author Alexander Kirov

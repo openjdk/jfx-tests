@@ -2,7 +2,7 @@ package org.jemmy.samples;
 
 import javafx.application.Application;
 import org.jemmy.fx.AppExecutor;
-import org.jemmy.input.AWTRobotInputFactory;
+import org.jemmy.input.awt.AWTRobotInputFactory;
 
 
 /**

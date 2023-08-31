@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,14 +24,6 @@
 
 package test.javaclient.shared;
 
-import javafx.application.Application;
-import com.sun.javafx.runtime.VersionInfo;
-import com.sun.prism.GraphicsPipeline;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.function.Supplier;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.beans.binding.DoubleBinding;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -45,12 +37,15 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.jemmy.fx.Browser;
+
+import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static test.javaclient.shared.JemmyUtils.usingGlassRobot;
-import test.javaclient.shared.imagescomparator.ImageDuplicateExtractor;
 
 /**
  *
@@ -59,19 +54,18 @@ import test.javaclient.shared.imagescomparator.ImageDuplicateExtractor;
 public class Utils {
 
     public static void addBrowser(Scene scene) {
+        //TODO
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             boolean browserStarted = false;
 
             public void handle(KeyEvent ke) {
                 if (!browserStarted && ke.isControlDown() && ke.isShiftDown() && ke.getCode() == KeyCode.B) {
                     browserStarted = true;
-                    deferAction(new Runnable() {
-                        public void run() {
-                            try {
-                                Browser.runBrowser();
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
+                    deferAction(() -> {
+                        try {
+                            Browser.runBrowser();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
                     });
                 }
@@ -130,29 +124,30 @@ public class Utils {
     }
 
     public static void setCustomFont(final Scene scene) {
-        if (null == scene) {
-            throw new NullPointerException("Null scene appears to be");
-        }
-        boolean success = true;
-        try {
-            final InputStream is = Utils.class.getResourceAsStream("font/LucidaSansRegular.ttf");
-            final URL url = ImageDuplicateExtractor.class.getResource("custom_font.css");
-
-            if ((null != is) && (null != url)){
-                Font.loadFont(is, 12);
-                scene.getStylesheets().add(url.toExternalForm());
-            } else {
-                System.out.println("epic fail: is="+is+" url="+url);
-                throw new NullPointerException("setCustomFont failed");
-            }
-        }catch(Throwable t){
-            success = false;
-        }
-        finally {
-            if (!success) {
-                throw new RuntimeException("Font is not loaded");
-            }
-        }
+        //TODO
+//        if (null == scene) {
+//            throw new NullPointerException("Null scene appears to be");
+//        }
+//        boolean success = true;
+//        try {
+//            final InputStream is = Utils.class.getResourceAsStream("font/LucidaSansRegular.ttf");
+//            final URL url = ImageDuplicateExtractor.class.getResource("custom_font.css");
+//
+//            if ((null != is) && (null != url)){
+//                Font.loadFont(is, 12);
+//                scene.getStylesheets().add(url.toExternalForm());
+//            } else {
+//                System.out.println("epic fail: is="+is+" url="+url);
+//                throw new NullPointerException("setCustomFont failed");
+//            }
+//        }catch(Throwable t){
+//            success = false;
+//        }
+//        finally {
+//            if (!success) {
+//                throw new RuntimeException("Font is not loaded");
+//            }
+//        }
     }
 
     public static class TextButton extends StackPane {
@@ -264,16 +259,18 @@ public class Utils {
     }
 
     public static String getRunEnvironmentInfo() {
-        GraphicsPipeline pipeline = com.sun.prism.GraphicsPipeline.getPipeline();
-        String prim_order = System.getProperty("prism.order");
-        return " FX: " + (pipeline != null ? pipeline.getClass().getSimpleName() : "No Pipeline info")
-                + " (prism.order:" + (prim_order != null ? prim_order : "No Prism Order info") + ")"
-                + " " + VersionInfo.getRuntimeVersion()
-                + " (build " + VersionInfo.getHudsonBuildNumber() + ")"
-                + " Java: " + System.getProperty("java.runtime.version")
-                + " Jvm: " + System.getProperty("java.vm.name")
-                + " LFeel env/get: " + System.getProperty("javafx.userAgentStylesheetUrl"
-                             + " / " + Application.getUserAgentStylesheet());
+        return "";
+        //TODO
+//        GraphicsPipeline pipeline = com.sun.prism.GraphicsPipeline.getPipeline();
+//        String prim_order = System.getProperty("prism.order");
+//        return " FX: " + (pipeline != null ? pipeline.getClass().getSimpleName() : "No Pipeline info")
+//                + " (prism.order:" + (prim_order != null ? prim_order : "No Prism Order info") + ")"
+//                + " " + VersionInfo.getRuntimeVersion()
+//                + " (build " + VersionInfo.getHudsonBuildNumber() + ")"
+//                + " Java: " + System.getProperty("java.runtime.version")
+//                + " Jvm: " + System.getProperty("java.vm.name")
+//                + " LFeel env/get: " + System.getProperty("javafx.userAgentStylesheetUrl"
+//                             + " / " + Application.getUserAgentStylesheet());
     }
 
     public static boolean isJ2D() {
