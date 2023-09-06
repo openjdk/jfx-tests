@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2016, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,9 +23,6 @@
  */
 package test.javaclient.shared.screenshots;
 
-import java.nio.file.Paths;
-import java.util.LinkedList;
-import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -33,6 +30,8 @@ import javafx.stage.Stage;
 import org.jemmy.Rectangle;
 import org.jemmy.TimeoutExpiredException;
 import org.jemmy.control.Wrap;
+import org.jemmy.env.Environment;
+import org.jemmy.env.Timeout;
 import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.Root;
@@ -43,6 +42,10 @@ import org.junit.Assert;
 import test.javaclient.shared.AbstractTestableApplication;
 import test.javaclient.shared.JemmyUtils;
 
+import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author Andrey Glushchenko, andrey.rusakov@oracle.com
  */
@@ -50,6 +53,12 @@ public class ScreenshotUtils {
 
     private static final List<Throwable> SCREENSHOT_ERRORS = new LinkedList<>();
     private static AbstractTestableApplication application;
+
+    private static final Timeout BEFORE_SAVING_GOLDEN = new Timeout("before.saving.golden", 3000);
+
+    static {
+        Environment.getEnvironment().setTimeout(BEFORE_SAVING_GOLDEN);
+    }
 
     /**
      * Verify or generate golden screenshot for a test.
@@ -81,6 +90,7 @@ public class ScreenshotUtils {
         List<String> goldenImages = GoldenImageManager.getTestImages(testName, ".png");
         String resultPath = GoldenImageManager.getScreenshotPath(testName);
         if (goldenImages.isEmpty()) {
+            node.getEnvironment().getTimeout(BEFORE_SAVING_GOLDEN).sleep();
             Image sceneImage = (rect == null) ? node.getScreenImage() : node.getScreenImage(rect);
             sceneImage.save(resultPath);
             throw new RuntimeException("No golden images found for " + testName

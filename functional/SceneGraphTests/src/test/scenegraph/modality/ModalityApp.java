@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,7 +23,6 @@
  */
 package test.scenegraph.modality;
 
-import java.awt.AWTException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -34,10 +33,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.jemmy.fx.Browser;
 import test.javaclient.shared.AppLauncher;
 import test.javaclient.shared.Utils;
@@ -104,8 +103,8 @@ public class ModalityApp extends Application{
             primaryStage = primaryStageMain;
 
             //Modality stages setup: applet mode or not.
-            if (AppLauncher.getInstance().getMode() == AppLauncher.Mode.REMOTE)
-                ModalityWindow.isApplet = true;
+//            if (AppLauncher.getInstance().getMode() == AppLauncher.Mode.REMOTE)
+//                ModalityWindow.isApplet = true;
         }
 
         public void initApp(){
@@ -116,6 +115,7 @@ public class ModalityApp extends Application{
     }
 
     public static void addBrowser(Scene scene) {
+        //TODO
                 scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             boolean browserStarted = false;
 
@@ -124,11 +124,7 @@ public class ModalityApp extends Application{
                     browserStarted = true;
                     Utils.deferAction(new Runnable() {
                         public void run() {
-                            try {
-                                Browser.runBrowser();
-                            } catch (AWTException ex) {
-                                ex.printStackTrace();
-                            }
+                            Browser.runBrowser();
                         }
                     });
                 }

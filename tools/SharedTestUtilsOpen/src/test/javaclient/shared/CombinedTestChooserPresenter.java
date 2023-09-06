@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -38,7 +38,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import org.eclipse.swt.widgets.Shell;
+//import org.eclipse.swt.widgets.Shell;
 import com.sun.javafx.stage.WindowHelper;
 
 /**
@@ -210,22 +210,23 @@ public class CombinedTestChooserPresenter implements AbstractTestPresenter, Abst
         SwingAWTUtils.finishShow(frame);
     }
 
-    public void show(final Shell shell, final Object panel) {
-        shell.setText(title);
-        SwingAWTUtils.setJFXPanelSize(panel, width + 50, height + TABS_SPACE + 30);
-
-        Platform.runLater(new Runnable() {
-
-            public void run() {
-                fillScene();
-                synchronized (CombinedTestChooserPresenter.this) {
-                    CombinedTestChooserPresenter.this.notify();
-                }
-                SwingAWTUtils.setJFXPanelScene(panel, scene);
-            }
-        });
-        shell.setLocation(30, 30);
-    }
+    //TODO
+//    public void show(final Shell shell, final Object panel) {
+//        shell.setText(title);
+//        SwingAWTUtils.setJFXPanelSize(panel, width + 50, height + TABS_SPACE + 30);
+//
+//        Platform.runLater(new Runnable() {
+//
+//            public void run() {
+//                fillScene();
+//                synchronized (CombinedTestChooserPresenter.this) {
+//                    CombinedTestChooserPresenter.this.notify();
+//                }
+//                SwingAWTUtils.setJFXPanelScene(panel, scene);
+//            }
+//        });
+//        shell.setLocation(30, 30);
+//    }
 
     public Scene getScene() {
         return scene;

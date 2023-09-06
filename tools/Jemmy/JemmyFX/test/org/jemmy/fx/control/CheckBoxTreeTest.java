@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -46,6 +46,12 @@ import static org.junit.Assert.assertEquals;
  * @author Alexander Kirov
  */
 public class CheckBoxTreeTest extends SampleBase {
+
+//    public static void main(String[] args) throws Exception {
+//        setUpClass();
+//        new CheckBoxTreeTest().setUp();
+//        System.out.println("Done!");
+//    }
 
     static Wrap<? extends TreeView> tree;
     static Parent<TreeItem> treeAsParent;

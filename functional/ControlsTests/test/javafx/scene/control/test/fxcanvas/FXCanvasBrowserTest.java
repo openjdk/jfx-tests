@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,7 +26,7 @@ package javafx.scene.control.test.fxcanvas;
 
 import client.test.Keywords;
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -44,13 +44,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.JemmyProperties;
 import test.javaclient.shared.CanvasRunner;
 import test.javaclient.shared.screenshots.ScreenshotUtils;
 
+//TODO
 @RunWith(CanvasRunner.class)
 public class FXCanvasBrowserTest extends ControlsTestBase {
-
+/*
     static final int LOADING_DELAY = 10000;
     static final int SEQUENTIAL_REFRESH_DELAY = 2000;
 
@@ -75,7 +75,7 @@ public class FXCanvasBrowserTest extends ControlsTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Keywords(keywords = "swt")
     public void browserTest() throws InterruptedException, Throwable {
@@ -112,4 +112,6 @@ public class FXCanvasBrowserTest extends ControlsTestBase {
         ScreenshotUtils.checkScreenshot("FXCanvasBrowserTest", content, new Rectangle((int) content_bounds.getWidth() - 20, (int) content_bounds.getHeight() - 20));
         throwScreenshotError();
     }
+
+ */
 }

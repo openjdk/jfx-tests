@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,20 +26,21 @@ package test.fxmltests.functional;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import org.jemmy.Point;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.Root;
+import org.jemmy.fx.SceneDock;
 import org.jemmy.input.StringMenuOwner;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Assert;
 import test.fxmltests.app.MenuDefaultValue;
 import test.fxmltests.app.MenuDefaultValue.Pages;
 import test.javaclient.shared.TestBase;
@@ -52,7 +53,7 @@ import test.javaclient.shared.Utils;
 public class MenuDefaultValueTest extends TestBase {
 
     @BeforeClass
-    public static void runUI() {
+    public static void runUI() throws InterruptedException {
         Utils.launch(MenuDefaultValue.class, null);
     }
 
@@ -61,6 +62,8 @@ public class MenuDefaultValueTest extends TestBase {
      */
     @Test
     public void testMenu() throws InterruptedException {
+        //woraround for the scene activation bug
+        new SceneDock().mouse().click();
         testCommon(Pages.menuPage.name(), null, false, true);
         checkMenu();
     }
@@ -70,6 +73,8 @@ public class MenuDefaultValueTest extends TestBase {
      */
     @Test
     public void testMenuBar() throws InterruptedException {
+        //woraround for the scene activation bug
+        new SceneDock().mouse().click();
         testCommon(Pages.menuBarPage.name(), null, false, true);
         checkMenu();
     }
@@ -80,6 +85,8 @@ public class MenuDefaultValueTest extends TestBase {
      */
     @Test
     public void testMenuItemCustom() throws InterruptedException {
+        //woraround for the scene activation bug
+        new SceneDock().mouse().click();
         testCommon(Pages.menuItemCustomPage.name(), null, false, true);
         checkMenu();
     }
@@ -88,7 +95,7 @@ public class MenuDefaultValueTest extends TestBase {
         Wrap<? extends Scene> sceneWrap = Root.ROOT.lookup(Scene.class).wrap();
         Wrap<? extends Menu> menuWrap = getMenu(sceneWrap, MenuDefaultValue.MENU_FILE_ID);
         expand(menuWrap);
-        Wrap<? extends Scene> scenePopup = Root.ROOT.lookup(Scene.class).wrap(0);//todo
+        Wrap<? extends Scene> scenePopup = Root.ROOT.lookup(Scene.class).wrap(1);
         Parent<MenuItem> menuParent = menuWrap.as(Parent.class, MenuItem.class);
         Assert.assertEquals(MenuDefaultValue.COUNT_MENUITEMS, menuParent.lookup().size());
         for (int i=0; i < menuParent.lookup().size(); i++) {
@@ -113,14 +120,12 @@ public class MenuDefaultValueTest extends TestBase {
     }
 
     protected Wrap lookupByMenuItem(Wrap<? extends Scene> scene, final MenuItem menu) {
-        final Wrap<Node> item = scene.as(Parent.class, Node.class).lookup(Node.class, new LookupCriteria<Node>() {
-                public boolean check(Node node) {
-                    if (node.getProperties().get(MenuItem.class) == menu) {
-                        return true;
-                    }
-                    return false;
-                }
-            }).wrap();
+        final Wrap<Node> item = scene.as(Parent.class, Node.class).lookup(Node.class, (LookupCriteria<Node>) node -> {
+            if (node.getProperties().get(MenuItem.class) == menu) {
+                return true;
+            }
+            return false;
+        }).wrap();
         return item;
     }
 

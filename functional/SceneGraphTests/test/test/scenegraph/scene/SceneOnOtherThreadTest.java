@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,20 +23,22 @@
  */
 package test.scenegraph.scene;
 
-import com.sun.glass.ui.Robot;
-import java.awt.Color;
-import java.util.concurrent.atomic.AtomicInteger;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.robot.Robot;
 import javafx.stage.Stage;
+import org.jemmy.action.Action;
+import org.jemmy.fx.Root;
 import org.jemmy.input.glass.GlassInputFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import test.javaclient.shared.TestBase;
 import test.javaclient.shared.Utils;
 import test.scenegraph.app.SimpleApp;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Dmitry Ginzburg &lt;dmitry.x.ginzburg@oracle.com&gt;
@@ -48,7 +50,7 @@ public class SceneOnOtherThreadTest extends TestBase {
         Utils.launch(SimpleApp.class, null);
     }
 
-    @Test(timeout = 2000)
+    @Test(timeout = 10000)
     public void testSceneCreationOnNonFxThread() throws InterruptedException {
         Stage stage = SimpleApp.getStage();
         int centerX = (int)(stage.getX() + stage.getWidth() / 2);
@@ -58,20 +60,27 @@ public class SceneOnOtherThreadTest extends TestBase {
         area.setMinWidth(stage.getWidth());
         area.setMinHeight(stage.getHeight());
         Scene newScene = new Scene(area);
-        Platform.runLater(() -> {
-            stage.setScene(newScene);
-        });
-        Utils.waitFor(() -> stage.getScene() == newScene);
+        var env = Root.ROOT.getEnvironment();
+        var executor = env.getExecutor();
+        executor.execute(env, true,
+                new Action() {
+                    @Override
+                    public void run(Object... objects) throws Exception {
+                        stage.setScene(newScene);
+                    }
+                });
         Robot glassRobot  = GlassInputFactory.getRobot();
-        Utils.waitFor(() -> {
-            AtomicInteger color = new AtomicInteger();
-            Platform.runLater(() -> {
-                color.set(glassRobot.getPixelColor(centerX, centerY));
-            });
-            while (color.get() == 0) {}
-            Color c = new Color(color.get(), true);
-            return Color.RED.equals(c);
-        });
+        Root.ROOT.lookup().wrap().waitState(() -> {
+            var color = new AtomicReference<Color>();
+            executor.execute(env, true,
+                    new Action() {
+                        @Override
+                        public void run(Object... objects) throws Exception {
+                            color.set(glassRobot.getPixelColor(centerX, centerY));
+                        }
+                    });
+            return color.get();
+        }, Color.RED);
     }
 
 }

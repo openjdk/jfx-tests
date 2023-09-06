@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.combobox;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import java.text.Format;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -112,7 +112,7 @@ public class ComboBoxTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void showingPropertyTest() throws InterruptedException {
         assertEquals((new ComboBox()).showingProperty().getValue(), false);
@@ -146,7 +146,7 @@ public class ComboBoxTest extends TestBase {
         checkPopupShowing(true);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void armedTest() {
         assertEquals((new ComboBox()).armedProperty().getValue(), false);
@@ -178,7 +178,7 @@ public class ComboBoxTest extends TestBase {
         checkTextFieldText(Properties.armed, "false");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-18945
     public void valuePropertyTest() throws InterruptedException {
         assertEquals((new ComboBox()).getValue(), null);
@@ -292,7 +292,7 @@ public class ComboBoxTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void converterPropertyTest() throws InterruptedException {
         assertNotSame((new ComboBox()).getConverter(), null);
@@ -348,7 +348,7 @@ public class ComboBoxTest extends TestBase {
         checkSimpleListenerValue(Properties.selectedItem, element2);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void itemsPropertyTest() throws InterruptedException {
         assertNotSame((new ComboBox()).getItems(), null);
@@ -403,7 +403,7 @@ public class ComboBoxTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void onActionPropertyTest() {
         assertTrue((new ComboBox()).getOnAction() == null);
@@ -438,7 +438,7 @@ public class ComboBoxTest extends TestBase {
         checkCounterValue(ON_ACTION_EVENT_COUNTER_ID, 8);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-19227
     public void selectionTest() throws InterruptedException, Exception {
         final int number = 10;
@@ -458,7 +458,7 @@ public class ComboBoxTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void selection2Test() throws InterruptedException, Exception {
         clickDropDownButton();
@@ -483,19 +483,19 @@ public class ComboBoxTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardF4Tests() throws Exception {
         popupShowingOnKeyPressCommonTest(KeyboardButtons.F4);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-18176
     public void keyboardAltUpTest() throws Exception {
         popupShowingOnKeyPressCommonTest(KeyboardButtons.UP, KeyboardModifiers.ALT_DOWN_MASK);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-18176
     public void keyboardAltDownTest() throws Exception {
         popupShowingOnKeyPressCommonTest(KeyboardButtons.DOWN, KeyboardModifiers.ALT_DOWN_MASK);
@@ -522,7 +522,7 @@ public class ComboBoxTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardUpDownTest() throws InterruptedException {
         final int number = 10;
@@ -554,7 +554,7 @@ public class ComboBoxTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardPopupCloseTest() throws InterruptedException {
         //According to spec: [Active list is open] close the active list.
@@ -580,19 +580,19 @@ public class ComboBoxTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void onEscapeNotSelectingTest() throws InterruptedException {
         selectOnKeyboardCommonTest(KeyboardButtons.ESCAPE);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void onEnterSelectTest() throws InterruptedException {
         selectOnKeyboardCommonTest(KeyboardButtons.ENTER);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void onSpaceSelectTest() throws InterruptedException {
         selectOnKeyboardCommonTest(KeyboardButtons.SPACE);
@@ -622,7 +622,7 @@ public class ComboBoxTest extends TestBase {
         checkSimpleListenerValue(Properties.selectedItem, "bbb");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void mouseTest() throws InterruptedException {
 
@@ -668,7 +668,7 @@ public class ComboBoxTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-19227
     public void commonNonEditableTest() throws InterruptedException, Throwable {
         addElements(1, 2, 3, 4, 5, 6);
@@ -696,7 +696,7 @@ public class ComboBoxTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void commonEditableTest() throws InterruptedException, Throwable {
         setPropertyByToggleClick(SettingType.BIDIRECTIONAL, Properties.editable);
@@ -745,7 +745,7 @@ public class ComboBoxTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void consistentAndEmptySelectionTest() {
         //seems, the only way to do empty selection is using keyboard.UP.
@@ -775,7 +775,7 @@ public class ComboBoxTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void addElementsInDropDownTest() {
         addElements(0, 1, 2, 3, 4, 5, 6);
@@ -790,7 +790,7 @@ public class ComboBoxTest extends TestBase {
         checkSelectionState(5, 3);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-18944, RT-19227
     public void removeElementsFromDropDownTest() {
         addElements(0, 1, 2, 3, 4, 5, 6);
@@ -808,7 +808,7 @@ public class ComboBoxTest extends TestBase {
         checkTextFieldText(Properties.value, "null");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-18972
     public void editingChangeModeText() {
         currentSettingOption = SettingOption.MANUAL;//That is needed because otherwise test fails
@@ -869,35 +869,35 @@ public class ComboBoxTest extends TestBase {
     static private final String NEW_VALUE_1 = "new value 1";
     static private final String NEW_VALUE_2 = "new value 2";
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testOnShowingEvent() throws Throwable {
         testEvents(new CheckFunctor.IdCounter("SET_ON_SHOWING_COUNTER"),
                 new CheckFunctor.NullCounter());
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testOnShownEvent() throws Throwable {
         testEvents(new CheckFunctor.IdCounter("SET_ON_SHOWN_COUNTER"),
                 new CheckFunctor.NullCounter());
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testOnHiding() throws Throwable {
         testEvents(new CheckFunctor.NullCounter(),
                 new CheckFunctor.IdCounter("SET_ON_HIDING_COUNTER"));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testOnHidden() throws Throwable {
         testEvents(new CheckFunctor.NullCounter(),
                 new CheckFunctor.IdCounter("SET_ON_HIDEN_COUNTER"));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testEventsSequence() throws Throwable {
 
@@ -1137,7 +1137,7 @@ public class ComboBoxTest extends TestBase {
      *
      * @throws Throwable
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testOnShowingByModifyingContent() throws Throwable {
 
@@ -1182,7 +1182,7 @@ public class ComboBoxTest extends TestBase {
     /**
      * Test that not editable ComboBox's getEditor() method must return null
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testNotEditableGetEditorMethod() {
         setPropertyByToggleClick(SettingType.UNIDIRECTIONAL, Properties.editable, false);
@@ -1192,7 +1192,7 @@ public class ComboBoxTest extends TestBase {
     /**
      * Test that text entered in TextField doesn't change ComboBox's value
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testInputByEditorProperty() throws Throwable {
         addElements("1", "2", "3", "4");
@@ -1220,7 +1220,7 @@ public class ComboBoxTest extends TestBase {
      * Test that TextField returned by getEditor() method remains the same after
      * changing editable property
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testEditorProperty() throws Throwable {
         new PropertyTest.EditorPropertyTest(testedControl).test();
@@ -1231,7 +1231,7 @@ public class ComboBoxTest extends TestBase {
      * property
      *
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testEditorPropertyParent() throws Throwable {
         new PropertyTest.EditorParentPropertyTest(testedControl).test();
@@ -1241,7 +1241,7 @@ public class ComboBoxTest extends TestBase {
      * Test that text entered via TextField becomes ComboBox's value when
      * ComboBox looses focus
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void textEditorPropertyCommitOnFocusLost() throws Throwable {
         setPropertyByToggleClick(SettingType.UNIDIRECTIONAL, Properties.editable);
@@ -1267,7 +1267,7 @@ public class ComboBoxTest extends TestBase {
      *
      * http://javafx-jira.kenai.com/browse/RT-24528
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testCellRenderingHeight() throws Throwable {
 
@@ -1416,7 +1416,7 @@ public class ComboBoxTest extends TestBase {
      * This test checks that a custom string converter fromString() method is
      * called only once when some value is entered in the editable ComboBox
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testStringConvertersFromStringMethod() throws InterruptedException {
         setPropertyBySlider(SettingType.SETTER, Properties.prefWidth, 150);
@@ -1437,7 +1437,7 @@ public class ComboBoxTest extends TestBase {
      * Tests format string converter and checks that transformation is performed
      * properly
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void testFormatStringConverter() throws InterruptedException {
         setPropertyBySlider(SettingType.SETTER, Properties.prefWidth, 150);
@@ -1490,7 +1490,7 @@ public class ComboBoxTest extends TestBase {
      * Checks that when the sorting is applied to the underlying data collection
      * the cells are rendered in the right order.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 30000)
     public void renderingAfterSortingTest() {
         addElements("1", "2", "3", "4", "1", "2", "3", "4", "1", "42");
@@ -1555,7 +1555,7 @@ public class ComboBoxTest extends TestBase {
      * emptyness is shown in the popup. This test changes placeholder and
      * checks, that it is shown when popup is shown.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 30000)
     public void emptyListDropDownPlaceholderTest() throws Throwable {
         placeholderTestLoop(true);

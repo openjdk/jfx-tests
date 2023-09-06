@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -37,7 +37,11 @@ import javafx.stage.Stage;
 import org.jemmy.Rectangle;
 import org.jemmy.control.Wrap;
 import org.jemmy.env.Environment;
+import org.jemmy.image.glass.GlassImage;
+import org.jemmy.image.glass.GlassImageCapturer;
 import org.jemmy.image.pixel.PNGFileImageStore;
+import org.jemmy.image.pixel.PNGSaver;
+import org.jemmy.operators.Screen;
 import org.jemmy.operators.ScreenRectangle;
 
 /**
@@ -66,19 +70,6 @@ public class Test1 extends Application {
         GlassImage img1 = new GlassImageCapturer().capture(wrap, new Rectangle(20, 20, 200, 200));
         img1.save("actual.png");
         img1.compareTo(img).save("diff.png");
-//        Pixels img = GlassImageCapturer.getRobot().getScreenCapture(45, 45, 10, 10);
-//        System.out.println(img.getWidth() + "," + img.getHeight());
-//        ByteBuffer bb = img.asByteBuffer();
-//        System.out.println(img.getBytesPerComponent());
-//        System.out.println(bb.capacity());
-//        for (int i = 0; i < 10; i++) {
-//            for (int j = 0; j < 10; j++) {
-//                for (int k = 0; k < img.getBytesPerComponent(); k++) {
-//                    System.out.print(" " + Integer.toHexString(bb.get()));
-//                }
-//                System.out.println();
-//            }
-//        }
     }
 
     @Override

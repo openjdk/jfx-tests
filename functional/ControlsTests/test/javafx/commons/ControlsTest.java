@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2016 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,26 +26,26 @@ package javafx.commons;
 
 import client.test.ScreenshotCheck;
 import javafx.scene.Node;
-import org.jemmy.fx.ByID;
-import org.jemmy.image.Image;
-import org.jemmy.interfaces.Selectable;
-import org.junit.Test;
-import static javafx.commons.ControlChooserApp.*;
-import org.junit.runner.RunWith;
-import test.javaclient.shared.FilteredTestRunner;
 import javafx.scene.control.test.utils.ptables.AbstractPropertyController.SettingType;
 import org.jemmy.env.Environment;
 import org.jemmy.env.Timeout;
-import org.jemmy.image.AWTImage;
-import org.jemmy.image.GlassImage;
+import org.jemmy.fx.ByID;
+import org.jemmy.image.Image;
 import org.jemmy.image.ImageComparator;
+import org.jemmy.image.awt.AWTImage;
+import org.jemmy.image.glass.GlassImage;
 import org.jemmy.image.pixel.MaxDistanceComparator;
 import org.jemmy.image.pixel.Raster;
 import org.jemmy.image.pixel.RasterComparator;
+import org.jemmy.interfaces.Selectable;
 import org.jemmy.timing.State;
 import org.jemmy.timing.Waiter;
 import org.junit.Assert;
+import org.junit.runner.RunWith;
+import test.javaclient.shared.FilteredTestRunner;
 import test.javaclient.shared.screenshots.GoldenImageManager;
+
+import static javafx.commons.ControlChooserApp.TESTED_CONTROL_ID;
 /**
  *
  * @author Dmitry Zinkevich <dmitry.zinkevich@oracle.com>

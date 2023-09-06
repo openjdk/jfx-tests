@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -27,9 +27,9 @@ package javafx.scene.control.test.util;
 
 import org.jemmy.JemmyException;
 import org.jemmy.Point;
-import org.jemmy.input.ScrollTrack;
-import org.jemmy.interfaces.Shiftable;
-import org.jemmy.interfaces.Shifter;
+import org.jemmy.fx.input.ScrollTrack;
+import org.jemmy.fx.interfaces.Shiftable;
+import org.jemmy.fx.interfaces.Shifter;
 
 /**
  * The class to encapsulate calculations for performing mouse click actions over Slider, ScrollBar

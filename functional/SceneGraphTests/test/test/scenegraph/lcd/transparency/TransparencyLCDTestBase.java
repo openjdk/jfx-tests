@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -27,7 +27,7 @@ import org.jemmy.Dimension;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.ControlDock;
-import org.jemmy.image.GlassImage;
+import org.jemmy.image.glass.GlassImage;
 import org.jemmy.image.Image;
 import org.jemmy.image.pixel.Raster;
 import org.jemmy.image.pixel.Raster.Component;
@@ -149,10 +149,10 @@ public class TransparencyLCDTestBase {
 
             greenComponentValue = (int)(colors[idxGreen] * 0xFF);
 
-        } else if (image instanceof org.jemmy.image.AWTImage) {
+        } else if (image instanceof org.jemmy.image.awt.AWTImage) {
 
-            int rgb = ((org.jemmy.image.AWTImage)image).getTheImage().getRGB(
-                    ((org.jemmy.image.AWTImage)image).getTheImage().getWidth() / 2, ((org.jemmy.image.AWTImage)image).getTheImage().getHeight() / 2);
+            int rgb = ((org.jemmy.image.awt.AWTImage)image).getTheImage().getRGB(
+                    ((org.jemmy.image.awt.AWTImage)image).getTheImage().getWidth() / 2, ((org.jemmy.image.awt.AWTImage)image).getTheImage().getHeight() / 2);
 
             greenComponentValue = (rgb >> 8) & 0xFF;
 

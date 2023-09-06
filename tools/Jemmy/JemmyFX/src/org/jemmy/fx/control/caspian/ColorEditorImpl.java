@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -40,7 +40,7 @@ import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.ByText;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.control.ColorPickerWrap;
-import org.jemmy.interfaces.Editor;
+import org.jemmy.fx.interfaces.Editor;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Text;
 import org.jemmy.lookup.Lookup;
@@ -103,7 +103,7 @@ class ColorEditorImpl implements Editor<Color> {
         }).wrap();
         dlg.as(Parent.class, Node.class).lookup(ToggleButton.class, new ByStyleClass(TOGGLE_BUTTON_STYLE_CLASS)).wrap().mouse().click();
         Wrap<? extends TextField> color = dlg.as(Parent.class, Node.class).lookup(TextField.class, new ByStyleClass(WEB_COLOR_STYLE_CLASS)).wrap();
-        final String hex = "#" + Integer.toHexString(((int) (state.getRed() * 255) << 16) + ((int) (state.getGreen() * 255) << 8) + (int) (state.getBlue() * 255)).toUpperCase();
+        final String hex = "#" + Integer.toHexString(((int) (state.getRed() * 255) << 16) + ((int) (state.getGreen() * 255) << 8) + (int) (state.getBlue() * 255)).toLowerCase();
         if (!color.as(Text.class).text().equals(hex)) {
             color.as(Text.class).clear();
             color.as(Text.class).type(hex);

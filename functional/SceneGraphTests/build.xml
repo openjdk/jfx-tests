@@ -1,67 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-/*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation. Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- */
--->
-<project name="SceneGraphTests" default="default" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
-    <description>Builds, tests, and runs the project SceneGraphTests.</description>
-    <import file="nbproject/build-impl.xml"/>
-    <import file="../../tools/SharedTestUtilsOpen/image-utils.xml"/>
-    <import file="../../tools/FxTestRunner/javatest_fx.xml"/>
-    <import file="../../tools/FxTestRunner/run_javatest_macro.xml"/>
-    <import file="../../tools/FxTestRunner/plugin_support.xml"/>
-    
-    <condition property="external.output" value="${external.output}" else="${basedir}/..">
-    	<isset property="external.output"/>
-    </condition>
-    <condition property="javafx.home" value="${javafx.home}" else="${java.home}">
-    	<isset property="javafx.home"/>
-    </condition>
-
-    <target name="-post-clean">
-        <delete dir="dist-plugin"/>
+<project name="scenegraph.tests" default="compile">
+    <basename file="${basedir}" property="."/>
+    <property name="rootdir" location="${basedir}/../.."/>
+    <property name="project.name" value="SceneGraphTests"/>
+    <import file="${basedir}/../../tools/make/build-template.xml"/> 
+    <property name="dependencies.classpath" value="${jemmyfx-src}/build/classes${path.separator}${glass-robot-src}/build/classes${path.separator}${glass-image-src}/build/classes${path.separator}${jemmyfx-browser-src}/build/classes${path.separator}${jtreg.home}/lib/junit.jar${path.separator}${javafx.home}/lib/javafx-swt.jar${path.separator}${javafx.home}/lib/javafx.swing.jar${path.separator}${shared-test-utils-src}/build/classes"/>
+    <target name="build-dependencies">
+        <antcall target="build-other-project">
+            <param name="project" value="${shared-test-utils-src}"/>
+        </antcall>
     </target>
-    <target name="-pre-init" unless="no.need.to.find.java.fx">
-        <ant antfile="../../detect_javafx-nb.xml" inheritall="true">
-            <property name="basedir" location="${basedir}/../.."/>
-            <property name="property.file" value="${basedir}/nbproject/private/private.properties"/>
-        </ant>
-    </target>
-    <property name="images.module" value="SceneGraphTests"/>
-    <property name="image.properties" location="${basedir}/image.properties"/>
-    <target name="-post-compile-test" depends="download-images" unless="fxsqe.nosvn">
-        <copy todir="${build.test.classes.dir}">
-            <fileset dir="${basedir}/images-svn/SceneGraphTests/resources"/>
-        </copy>
-    </target>
-    <target name="run-automated" depends="-post-jar, -init-project, javatest-automated"/>
-    <target name="run-manual"    depends="-post-jar, -init-project, dojavatest"/>
-
-    <target name="-init-project" depends="-pre-init,-init-private,-init-user">
-        <property file="nbproject/configs/${config}.properties"/>
-        <property file="nbproject/project.properties"/>
-        <property name="test.sources" value="test"/>
-    </target>
-
+    <target name="compile" depends="compile-src"/>
+    <target name="build-test-dependencies"/>
 </project>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -27,7 +27,10 @@ package org.jemmy.fx.control;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import org.jemmy.Point;
+import org.jemmy.env.Timeout;
 import org.jemmy.fx.NodeDock;
+import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.samples.SampleBase;
 import org.jemmy.timing.State;
@@ -44,6 +47,9 @@ public class ColorPickerTest extends SampleBase {
     public static void launch() throws InterruptedException {
         startApp(ColorPickerApp.class);
         scene = new SceneDock();
+        //workaround for JDK-8257835
+        scene.mouse().click(1);
+        Root.ROOT.getEnvironment().getExecutor().waitQuiet(new Timeout("", 100));
         picker = new ColorPickerDock(scene.asParent(), "picker id");
         rect = new NodeDock(scene.asParent(), "rect id");
     }

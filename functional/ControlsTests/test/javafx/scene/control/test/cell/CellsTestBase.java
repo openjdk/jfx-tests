@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.cell;
 
-import client.test.Smoke;
+
 import com.sun.glass.ui.Application;
 import com.sun.javafx.scene.control.LabeledText;
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public abstract class CellsTestBase extends ControlsTestBase {
         }.dispatch(Root.ROOT.getEnvironment(), parent.lookup(Button.class, new ByID(RESET_SCENE_BTN_ID)).wrap().getControl());
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void enterTextTest() throws InterruptedException {
         doFactoryChange(CellType.CustomCell);
@@ -103,7 +103,7 @@ public abstract class CellsTestBase extends ControlsTestBase {
         select(newData);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void escapeEditingTest() throws Exception {
         doFactoryChange(CellType.CustomCell);
@@ -126,7 +126,7 @@ public abstract class CellsTestBase extends ControlsTestBase {
         throw new Exception("Test fails, because we've found item, which should be, because editing was escaped");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void editInnerSelectionTest() throws InterruptedException {
         doFactoryChange(CellType.CustomCell);
@@ -135,7 +135,7 @@ public abstract class CellsTestBase extends ControlsTestBase {
         testedControl.as(Parent.class, Node.class).lookup(TextField.class, new ByID<TextField>(cellID)).wait(1);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void editFocusTest() throws InterruptedException {
         doFactoryChange(CellType.CustomCell);
@@ -144,7 +144,7 @@ public abstract class CellsTestBase extends ControlsTestBase {
         testedControl.as(Parent.class, Node.class).lookup(TextField.class, new ByID<TextField>(cellID)).wait(1);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void clickOtherItemTest() throws InterruptedException {
         doFactoryChange(CellType.CustomCell);
@@ -157,7 +157,7 @@ public abstract class CellsTestBase extends ControlsTestBase {
         }, 0);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void editOtherItemTest() throws InterruptedException {
         doFactoryChange(CellType.CustomCell);
@@ -167,64 +167,64 @@ public abstract class CellsTestBase extends ControlsTestBase {
         parent.lookup(TextField.class, new ByID<TextField>(cellID)).wait(1);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void commonCheckBoxFactoryWithMouseTest() {
         doCommonCheckOfChanger(CellType.CheckBox, Boolean.FALSE, Boolean.TRUE, Boolean.TRUE, null, WayOfEditing.ByMouse);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void commonCheckBoxFactoryWithKeyboardTest() {
         doCommonCheckOfChanger(CellType.CheckBox, Boolean.FALSE, Boolean.TRUE, Boolean.TRUE, null, WayOfEditing.ByKeyboard);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void commonChoiceBoxFacoryWithMouseTest() {
         doCommonCheckOfChanger(CellType.ChoiceBox, data.get(5), someValues.get(1), someValues.get(1), new CellCustomStringConverter().toString(someValues.get(1).toString()), WayOfEditing.ByMouse);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void commonChoiceBoxFacoryWithKeyboardTest() {
         doCommonCheckOfChanger(CellType.ChoiceBox, data.get(3), someValues.get(2), someValues.get(2), new CellCustomStringConverter().toString(someValues.get(2).toString()), WayOfEditing.ByKeyboard);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void commonComboBoxFacoryWithMouseTest() {
         doCommonCheckOfChanger(CellType.ComboBox, data.get(8), someValues.get(2), someValues.get(2), new CellCustomStringConverter().toString(someValues.get(2).toString()), WayOfEditing.ByMouse);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void commonComboBoxFacoryWithKeyboardTest() {
         doCommonCheckOfChanger(CellType.ComboBox, data.get(4), someValues.get(0), someValues.get(0), new CellCustomStringConverter().toString(someValues.get(0).toString()), WayOfEditing.ByKeyboard);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void commonTextFieldFacoryWithMouseTest() {
         doCommonCheckOfChanger(CellType.TextField, data.get(7), someValues.get(0), new CellCustomStringConverter().fromString(someValues.get(0).toString()),
                 new CellCustomStringConverter().toString(new CellCustomStringConverter().fromString(someValues.get(0).toString())), WayOfEditing.ByMouse);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void commonTextFieldFacoryWithKeyboardTest() {
         doCommonCheckOfChanger(CellType.TextField, data.get(2), someValues.get(1), new CellCustomStringConverter().fromString(someValues.get(1).toString()),
                 new CellCustomStringConverter().toString(new CellCustomStringConverter().fromString(someValues.get(1).toString())), WayOfEditing.ByKeyboard);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void commonCustomTextFieldFacoryWithMouseTest() {
         doCommonCheckOfChanger(CellType.CustomCell, data.get(7), someValues.get(0), new CellCustomStringConverter().fromString(someValues.get(0).toString()),
                 new CellCustomStringConverter().toString(new CellCustomStringConverter().fromString(someValues.get(0).toString())), WayOfEditing.ByMouse);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void commonCustomTextFieldFacoryWithKeyboardTest() {
         doCommonCheckOfChanger(CellType.CustomCell, data.get(2), someValues.get(1), new CellCustomStringConverter().fromString(someValues.get(1).toString()),

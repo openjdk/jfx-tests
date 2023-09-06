@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -28,7 +28,7 @@ import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.ListItemDock;
 import org.jemmy.fx.control.ListViewDock;
 import org.jemmy.fx.control.TextFieldCellEditor;
-import org.jemmy.interfaces.List;
+import org.jemmy.fx.interfaces.List;
 import org.jemmy.lookup.Any;
 import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
@@ -45,6 +45,22 @@ import java.util.Date;
  * @author kam, shura
  */
 public class ListViewSample extends SampleBase {
+
+//    public static void main(String[] args) throws InterruptedException {
+//        launch();
+//        ListViewSample t = new ListViewSample();
+//        t.lookup();
+//        t.selectItemByItemObject();
+//        t.selectItemByItemIndex();
+//        t.editListItem();
+//        t.lookupForItem();
+//        t.getSelectedItem();
+//        t.scrollToItem();
+//        t.selectItemOfSpecificType();
+//        t.selectMultipleItemsByIndexes();
+//        t.selectMultipleItemsByItemsLookupCriteria();
+//        System.out.println("Done");
+//    }
     private static SceneDock scene;
     private static ListViewDock listView1;
     private static ListViewDock listView2;
@@ -166,7 +182,7 @@ public class ListViewSample extends SampleBase {
     /**
      * Editing a value of a cell in editable ListView
      */
-    //@Test//https://javafx-jira.kenai.com/browse/RT-31165
+    @Test//https://javafx-jira.kenai.com/browse/RT-31165
     public void editListItem() {
         String value = "Lithuania";
 

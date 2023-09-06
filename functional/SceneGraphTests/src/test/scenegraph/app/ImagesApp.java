@@ -1,29 +1,29 @@
 /*
- * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  */
 package test.scenegraph.app;
 
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.Group;
-import java.io.InputStream;
-import javafx.scene.Node;
 import javafx.scene.effect.ImageInput;
+import javafx.scene.effect.Light.Distant;
 import javafx.scene.effect.Lighting;
 import javafx.scene.effect.SepiaTone;
-import javafx.scene.effect.Light.Distant;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.geometry.Rectangle2D;
-import test.javaclient.shared.TestNodeLeaf;
-import test.javaclient.shared.BasicButtonChooserApp;
-import test.javaclient.shared.TestNode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import test.javaclient.shared.BasicButtonChooserApp;
 import test.javaclient.shared.PageWithSlots;
-import static test.javaclient.shared.Utils.*;
+import test.javaclient.shared.TestNode;
+import test.javaclient.shared.TestNodeLeaf;
+
+import java.io.InputStream;
 
 /**
  *
@@ -34,7 +34,7 @@ public class ImagesApp extends BasicButtonChooserApp {
         super(600, 400, "Images", false);
     }
     public static final String IMAGE_BASE = "/test/scenegraph/resources/";
-    public static final String defaultImagePath = IMAGE_BASE + "car.png";
+    public static final String defaultImagePath = IMAGE_BASE + "square.png";
 
     @Override
     protected TestNode setup() {

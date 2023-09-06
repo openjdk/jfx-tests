@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -48,15 +48,14 @@ import org.jemmy.dock.Shortcut;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.control.Scrollable2DImpl.ScrollsLookupCriteria;
 import org.jemmy.interfaces.Caret;
-import org.jemmy.interfaces.EditableCellOwner;
+import org.jemmy.fx.interfaces.EditableCellOwner;
 import org.jemmy.interfaces.Focusable;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Scroll;
-import org.jemmy.interfaces.Scrollable2D;
-import org.jemmy.interfaces.Scroller;
+import org.jemmy.fx.interfaces.Scrollable2D;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.interfaces.Selector;
-import org.jemmy.interfaces.Table;
+import org.jemmy.fx.interfaces.Table;
 import org.jemmy.interfaces.Tree;
 
 /**
@@ -351,7 +350,6 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
         return scroll.maximum();
     }
 
-    @Override
     @Deprecated
     public double value() {
         checkScroll();
@@ -359,10 +357,9 @@ public class TreeTableViewWrap<CONTROL extends TreeTableView> extends ControlWra
     }
 
     @Deprecated
-    @Override
-    public Scroller scroller() {
+    public Caret scroller() {
         checkScroll();
-        return scroll.scroller();
+        return scroll.caret();
     }
 
     @Override

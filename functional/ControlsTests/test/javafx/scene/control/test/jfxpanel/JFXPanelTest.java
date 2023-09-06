@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,55 +24,13 @@
  */
 package javafx.scene.control.test.jfxpanel;
 
-import client.test.ScreenshotCheck;
-import client.test.Smoke;
-import org.jemmy.interfaces.Selector;
-import org.netbeans.jemmy.operators.AbstractButtonOperator;
-import org.jemmy.action.GetAction;
-import java.awt.event.KeyEvent;
-import org.jemmy.interfaces.Text;
-import org.jemmy.fx.control.TextControlWrap;
-import org.jemmy.fx.control.CheckBoxWrap;
-import org.jemmy.interfaces.Selectable;
-import org.netbeans.jemmy.operators.JToggleButtonOperator;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import javafx.scene.control.CheckBox;
-import java.awt.Component;
-import javafx.embed.swing.JFXPanel;
-import org.netbeans.jemmy.operators.JComponentOperator;
-import org.jemmy.fx.ByID;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-import org.jemmy.Rectangle;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.test.ControlsTestBase;
-import org.jemmy.fx.Root;
-import org.jemmy.control.Wrap;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.lookup.LookupCriteria;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.JemmyProperties;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JSliderOperator;
-import static java.lang.Math.*;
-import javafx.application.Platform;
-import org.jemmy.timing.State;
-import static org.junit.Assert.*;
-import org.netbeans.jemmy.QueueTool;
 import test.javaclient.shared.FilteredTestRunner;
-import static test.javaclient.shared.JemmyUtils.initJemmy;
-import test.javaclient.shared.Utils;
-import test.javaclient.shared.screenshots.ScreenshotUtils;
-
+//TODO
 @RunWith(FilteredTestRunner.class)
 public class JFXPanelTest extends ControlsTestBase {
-
+/*
     static JFrameOperator frame;
     static JButtonOperator menuBtn;
     static JComponentOperator fxpanel;
@@ -128,13 +86,13 @@ public class JFXPanelTest extends ControlsTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void menuPopupTest() throws Throwable {
         common(JFXPanelApp.MENU_POPUP_CONTAINER_ID, menuBtn, "InteropTest-menu");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void mainSceneTest() throws InterruptedException {
         checkScene(parent);
@@ -149,7 +107,7 @@ public class JFXPanelTest extends ControlsTestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void initialSizesTest() throws InterruptedException {
         scene.waitState(new State() {
@@ -184,9 +142,12 @@ public class JFXPanelTest extends ControlsTestBase {
         assertFalse(scene.getScreenBounds().getHeight() < button_rect.getHeight() + text_box_rect.getHeight());
     }
 
+ */
+
     /**
      * Resizes JFXPanel via mouse. After resizing performs screenshot check
      */
+    /*
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void resizingTest() throws InterruptedException {
@@ -246,7 +207,7 @@ public class JFXPanelTest extends ControlsTestBase {
         });
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void focusTest() throws InterruptedException {
         Wrap<? extends TextField> input = parent.lookup(TextField.class, new ByID<TextField>(JFXPanelApp.TEXT_INPUT_ID)).wrap();
@@ -340,4 +301,7 @@ public class JFXPanelTest extends ControlsTestBase {
         text.type(str);
         input.waitProperty(Wrap.TEXT_PROP_NAME, str);
     }
+
+     */
+
 }

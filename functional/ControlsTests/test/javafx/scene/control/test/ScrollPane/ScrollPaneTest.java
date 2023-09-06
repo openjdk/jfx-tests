@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.ScrollPane;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import com.oracle.jdk.sqe.cc.markup.Covers.Level;
 import java.util.EnumSet;
@@ -73,7 +73,7 @@ public class ScrollPaneTest extends TestBase {
         scene.mouse().move(new Point(0, 0));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ScrollPane.vmax.DEFAULT", "javafx.scene.control.ScrollPane.vmax.GET"}, level = Level.FULL)
     public void checkVMaxOptionTest() throws InterruptedException {
@@ -108,7 +108,7 @@ public class ScrollPaneTest extends TestBase {
         checkTextFieldValue(Properties.vmax, -100);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ScrollPane.vmin.DEFAULT", "javafx.scene.control.ScrollPane.vmin.GET"}, level = Level.FULL)
     public void checkVMinOptionTest() throws InterruptedException {
@@ -143,7 +143,7 @@ public class ScrollPaneTest extends TestBase {
         checkTextFieldValue(Properties.vmin, +150);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ScrollPane.hmax.DEFAULT", "javafx.scene.control.ScrollPane.hmax.GET"}, level = Level.FULL)
     public void checkHMaxOptionTest() throws InterruptedException {
@@ -178,7 +178,7 @@ public class ScrollPaneTest extends TestBase {
         checkTextFieldValue(Properties.hmax, -100);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ScrollPane.hmin.DEFAULT", "javafx.scene.control.ScrollPane.hmin.GET"}, level = Level.FULL)
     public void checkHMinOptionTest() throws InterruptedException {
@@ -235,7 +235,7 @@ public class ScrollPaneTest extends TestBase {
     /**
      * Assume, that scrollPane contain rectangle 200X200 pixels
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ScrollPane.prefViewportHeight.GET", "javafx.scene.control.ScrollPane.prefViewportHeight.DEFAULT"}, level = Level.FULL)
     public void checkPrefViewPortHeightOptionTest() throws InterruptedException {
@@ -253,7 +253,7 @@ public class ScrollPaneTest extends TestBase {
     /**
      * Assume, that scrollPane contain rectangle 200X200 pixels
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ScrollPane.prefViewportWidth.GET", "javafx.scene.control.ScrollPane.prefViewportWidth.DEFAULT"}, level = Level.FULL)
     public void checkPrefViewPortWidthOptionTest() throws InterruptedException {
@@ -276,7 +276,7 @@ public class ScrollPaneTest extends TestBase {
         checkTextFieldValue(Properties.width, 600, 20);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//Property affecting is verified in other test.
     @Covers(value = {"javafx.scene.control.ScrollPane.pannable.GET", "javafx.scene.control.ScrollPane.pannable.DEFAULT"}, level = Level.FULL)
     public void checkPannableOptionTest() throws InterruptedException {
@@ -295,7 +295,7 @@ public class ScrollPaneTest extends TestBase {
         checkTextFieldText(Properties.pannable, "false");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.ScrollPane.fitToHeight.GET", "javafx.scene.control.ScrollPane.fitToHeight.DEFAULT",
         "javafx.scene.control.ScrollPane.fitToWidth.GET", "javafx.scene.control.ScrollPane.fitToWidth.DEFAULT"}, level = Level.FULL)
@@ -340,7 +340,7 @@ public class ScrollPaneTest extends TestBase {
         Assert.assertFalse(findScrollBar((Parent<Node>) testedControl.as(Parent.class, Node.class), Orientation.VERTICAL, verticalVisible) == null);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-17395
     @Covers(value = {"javafx.scene.control.ScrollPane.vbarPolicy.GET", "javafx.scene.control.ScrollPane.vbarPolicy.DEFAULT",
         "javafx.scene.control.ScrollPane.hbarPolicy.GET", "javafx.scene.control.ScrollPane.hbarPolicy.DEFAULT"}, level = Level.FULL)
@@ -447,7 +447,7 @@ public class ScrollPaneTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-17368
     public void viewPortPrefSizeTest() throws InterruptedException {
         changeContentToResizable();
@@ -500,7 +500,7 @@ public class ScrollPaneTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//(expected=java.lang.RuntimeException.class) //RT-17334
     public void unidirectionalBindingForVHValueTest() throws InterruptedException {
         setPropertyBySlider(SettingType.UNIDIRECTIONAL, Properties.vvalue, 200);
@@ -535,7 +535,7 @@ public class ScrollPaneTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void contentReceiveMouseEventsTest() {
         changeContent();
@@ -544,7 +544,7 @@ public class ScrollPaneTest extends TestBase {
         checkContentTextFieldValue(1);
     }
 
-    @Smoke
+    //TODO@Smoke
     private void checkFocusStates(boolean buttonFocus, boolean textFieldFocus, boolean textAreaFocus, boolean emptyButtonFocus) {
         checkFocus(CONTENT_BUTTON, buttonFocus);
         checkFocus(CONTENT_TEXT_FIELD_ID, textFieldFocus);
@@ -581,7 +581,7 @@ public class ScrollPaneTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-17378
     public void contentSizeDetectionAndScrolls() throws InterruptedException, Throwable {
         SettingOption temp = currentSettingOption;
@@ -601,7 +601,7 @@ public class ScrollPaneTest extends TestBase {
         currentSettingOption = temp;
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-17380
     public void focusFromOutsideTest() {
         changeContent();
@@ -624,7 +624,7 @@ public class ScrollPaneTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void panningTest() throws Throwable {
         setPropertyByToggleClick(SettingType.BIDIRECTIONAL, Properties.pannable);
@@ -656,7 +656,7 @@ public class ScrollPaneTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void longRotativeDND() throws InterruptedException {
         setPropertyByToggleClick(SettingType.BIDIRECTIONAL, Properties.pannable);
@@ -730,7 +730,7 @@ public class ScrollPaneTest extends TestBase {
         Assert.assertTrue("[Expected point is too far from actual]", distance_squared <= 2);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void panningAndMouseMovementCompare() throws InterruptedException {
         setPropertyByToggleClick(SettingType.BIDIRECTIONAL, Properties.pannable);
@@ -777,7 +777,7 @@ public class ScrollPaneTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-17368
     @Covers(value = "javafx.scene.control.ScrollPane.viewportBounds.GET", level = Level.FULL)
     public void boundsTest() throws InterruptedException {
@@ -815,7 +815,7 @@ public class ScrollPaneTest extends TestBase {
     }
 
     @Ignore //due to http://javafx-jira.kenai.com/browse/RT-27467
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 30000)
     /**
      * Test checks method scrollTo of the control.

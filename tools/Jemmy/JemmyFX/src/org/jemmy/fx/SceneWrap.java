@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -205,21 +205,23 @@ public class SceneWrap<T extends Scene> extends Wrap<Scene> {
                 @Override
                 public void run(Object... os) throws Exception {
                     Window stage = scene.getWindow();
-                    if (!((Stage) stage).isFocused()) {
+                    if (!stage.isFocused()) {
                         ((Stage) stage).toFront();
+                        stage.requestFocus();
                     }
                 }
             });
-            env.getWaiter(WAIT_STATE_TIMEOUT).ensureValue(true, new State<Boolean>() {
-                public Boolean reached() {
-                    return isFocused(scene, env);
-                }
-            });
+            //TODO
+            //bug in FX???
+//            env.getWaiter(WAIT_STATE_TIMEOUT).ensureValue(true, () -> isFocused(scene, env));
         }
     }
 
     private static boolean isFocused(final Scene scene, Environment env) {
-        return new FutureAction<>(env, () -> scene.getWindow().isFocused()).get();
+        return new FutureAction<>(env, () -> {
+//            System.out.println("scene.getWindow().isFocused() = " + scene.getWindow().isFocused());
+            return scene.getWindow().isFocused();
+        }).get();
     }
 
     private static boolean isStageInstance(final Scene scene, Environment env) {

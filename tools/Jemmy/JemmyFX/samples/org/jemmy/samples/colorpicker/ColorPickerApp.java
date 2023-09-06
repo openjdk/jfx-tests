@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -66,6 +66,8 @@ public class ColorPickerApp extends Application {
 
         stage.setWidth(300);
         stage.setHeight(300);
+
+        stage.setAlwaysOnTop(true);
 
         stage.show();
     }

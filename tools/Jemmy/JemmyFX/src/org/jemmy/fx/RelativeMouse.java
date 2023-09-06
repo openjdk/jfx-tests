@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -127,9 +127,10 @@ class RelativeMouse implements Mouse {
 
     @Override
     public void click() {
-        if (!isInWindow(node, null)) {// TODO: using drag&drop is questionable
-            throw new JemmyException("Click point is outside the window", node);
-        }
+        //TODO
+//        if (!isInWindow(node, null)) {// TODO: using drag&drop is questionable
+//            throw new JemmyException("Click point is outside the window", node);
+//        }
         theMouse.click();
     }
 

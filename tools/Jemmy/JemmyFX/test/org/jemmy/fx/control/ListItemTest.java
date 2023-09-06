@@ -6,6 +6,7 @@ package org.jemmy.fx.control;
 
 import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
+import org.jemmy.fx.interfaces.List;
 import org.jemmy.lookup.Any;
 import org.jemmy.resources.StringComparePolicy;
 import org.junit.*;
@@ -30,7 +31,7 @@ public class ListItemTest {
     public static void tearDownClass() throws Exception {
     }
     ListViewDock lst;
-    org.jemmy.interfaces.List list;
+    List list;
 
     @Before
     public void setUp() throws InterruptedException {

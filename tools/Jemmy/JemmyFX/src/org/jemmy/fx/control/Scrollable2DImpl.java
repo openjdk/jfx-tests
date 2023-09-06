@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 ,2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -36,6 +36,7 @@ import org.jemmy.control.Property;
 import org.jemmy.control.Wrap;
 import org.jemmy.dock.Shortcut;
 import org.jemmy.fx.Root;
+import org.jemmy.fx.interfaces.Scrollable2D;
 import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.*;
 import org.jemmy.interfaces.Caret.Direction;
@@ -51,7 +52,7 @@ import org.jemmy.lookup.LookupCriteria;
 public class Scrollable2DImpl<SCROLL_CONTROL extends ScrollBar> implements Scrollable2D {
 
     private AbstractScroll emptyScroll = new EmptyScroll();
-    private static Scroller emptyScroller = new EmptyScroller();
+    private static Scroll emptyScroller = new EmptyScroller();
     private AbstractScroll hScroll, vScroll;
     private ScrollsLookupCriteria<SCROLL_CONTROL> scrollsLookupCriteria;
     private Wrap<? extends Control> scrolledControl;
@@ -159,7 +160,7 @@ public class Scrollable2DImpl<SCROLL_CONTROL extends ScrollBar> implements Scrol
         if (vScroll != null) {
             return vScroll.caret();
         } else {
-            return emptyScroller;
+            return emptyScroller.caret();
         }
     }
 
@@ -169,7 +170,7 @@ public class Scrollable2DImpl<SCROLL_CONTROL extends ScrollBar> implements Scrol
         if (vScroll != null) {
             return vScroll.caret();
         } else {
-            return emptyScroller;
+            return emptyScroller.caret();
         }
     }
 
@@ -187,7 +188,7 @@ public class Scrollable2DImpl<SCROLL_CONTROL extends ScrollBar> implements Scrol
     public void hto(Direction condition) {
         checkScrolls();
         if (hScroll != null) {
-            hScroll.scroller().to(condition);
+            hScroll.caret().to(condition);
         }
     }
 
@@ -205,7 +206,7 @@ public class Scrollable2DImpl<SCROLL_CONTROL extends ScrollBar> implements Scrol
     public void vto(Direction condition) {
         checkScrolls();
         if (vScroll != null) {
-            vScroll.scroller().to(condition);
+            vScroll.caret().to(condition);
         }
     }
 
@@ -258,7 +259,7 @@ public class Scrollable2DImpl<SCROLL_CONTROL extends ScrollBar> implements Scrol
      * scrollBar, having needed orientation, is that one, which is needed for
      * scrolling in that direction.
      *
-     * @param <CONTROL> for special cases of ScrollBar - like VirtualScrollBar.
+     * @param < CONTROL ></> for special cases of ScrollBar - like VirtualScrollBar.
      */
     public abstract static class ScrollsLookupCriteria<SCROLL_BAR extends ScrollBar> implements LookupCriteria<SCROLL_BAR> {
 
@@ -309,7 +310,7 @@ public class Scrollable2DImpl<SCROLL_CONTROL extends ScrollBar> implements Scrol
 
         @Override
         public Caret caret() {
-            return emptyScroller;
+            return emptyScroller.caret();
         }
 
         @Override
@@ -321,34 +322,140 @@ public class Scrollable2DImpl<SCROLL_CONTROL extends ScrollBar> implements Scrol
         public double minimum() {
             throw new JemmyException("");
         }
-
-        @Override
-        public double value() {
-            throw new JemmyException("");
-        }
-
-        @Override
-        public Scroller scroller() {
-            return emptyScroller;
-        }
     }
 
-    public static class EmptyScroller implements Scroller {
+    public static class EmptyScroller implements Scroll {
 
         @Override
-        public void to(double value) {
+        public double maximum() {
+            return 0;
         }
 
         @Override
-        public void to(Caret.Direction condition) {
+        public double minimum() {
+            return 0;
         }
 
         @Override
-        public void scrollTo(double value) {
+        public double position() {
+            return 0;
         }
 
         @Override
-        public void scrollTo(Scroller.ScrollCondition condition) {
+        public Caret caret() {
+            return new Caret() {
+                @Override
+                public void to(double v) {
+
+                }
+
+                @Override
+                public void to(Direction direction) {
+
+                }
+            };
+        }
+
+        @Override
+        public void to(double v) {
+
+        }
+    }
+    public static class EmptyScroller2D implements Scrollable2D {
+
+        @Override
+        public Scroll asVerticalScroll() {
+            return null;
+        }
+
+        @Override
+        public Scroll asHorisontalScroll() {
+            return null;
+        }
+
+        @Override
+        public double hmax() {
+            return 0;
+        }
+
+        @Override
+        public double hmin() {
+            return 0;
+        }
+
+        @Override
+        public double vmax() {
+            return 0;
+        }
+
+        @Override
+        public double vmin() {
+            return 0;
+        }
+
+        @Override
+        public double hpos() {
+            return 0;
+        }
+
+        @Override
+        public double vpos() {
+            return 0;
+        }
+
+        @Override
+        public boolean isVerticalScrollable() {
+            return false;
+        }
+
+        @Override
+        public boolean isHorizontalScrollable() {
+            return false;
+        }
+
+        @Override
+        public Caret hcaret() {
+            return null;
+        }
+
+        @Override
+        public Caret vcaret() {
+            return null;
+        }
+
+        @Override
+        public void hto(double position) {
+
+        }
+
+        @Override
+        public void hto(Direction condition) {
+
+        }
+
+        @Override
+        public void vto(double position) {
+
+        }
+
+        @Override
+        public void vto(Direction condition) {
+
+        }
+
+        @Override
+        public void to(double hposition, double vposition) {
+
+        }
+
+        @Override
+        public void to(Point point) {
+
+        }
+
+        @Override
+        public void to(Direction hCondition, Direction vCondition) {
+
         }
     }
 }

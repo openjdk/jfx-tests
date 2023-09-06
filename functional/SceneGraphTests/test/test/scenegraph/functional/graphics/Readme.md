@@ -1,0 +1,1 @@
+Golden images are missing.

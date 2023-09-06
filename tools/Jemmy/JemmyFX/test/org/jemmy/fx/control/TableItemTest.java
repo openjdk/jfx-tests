@@ -6,10 +6,9 @@ package org.jemmy.fx.control;
 
 import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
-import org.jemmy.interfaces.Table;
+import org.jemmy.fx.interfaces.Table;
 import org.jemmy.resources.StringComparePolicy;
 import org.junit.*;
-import static org.junit.Assert.*;
 
 /**
  *

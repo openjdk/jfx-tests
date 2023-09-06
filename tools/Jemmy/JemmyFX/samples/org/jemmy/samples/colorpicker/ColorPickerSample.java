@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,6 +26,7 @@
 package org.jemmy.samples.colorpicker;
 
 import javafx.scene.paint.Color;
+import org.jemmy.Point;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.ColorPickerDock;
 import org.jemmy.samples.SampleBase;
@@ -44,6 +45,10 @@ public class ColorPickerSample extends SampleBase {
 
         // Obtaining a Dock for scene
         scene = new SceneDock();
+
+        //workaround for JDK-8257835
+        scene.mouse().click(1,
+                new Point(scene.wrap().getScreenBounds().width - 1, scene.wrap().getScreenBounds().height - 1));
 
         // Looking up for ColorPicker. The best option is to do that by id.
         picker = new ColorPickerDock(scene.asParent(), "picker id");

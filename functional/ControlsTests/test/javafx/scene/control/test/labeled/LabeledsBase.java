@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.labeled;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import com.sun.javafx.scene.control.LabeledText;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
@@ -70,7 +70,7 @@ public abstract class LabeledsBase extends TestBase {
      * Test for setText API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void setTextTest() throws InterruptedException {
         testCommon(LabeledsPages.setText.name(), null, true, true);

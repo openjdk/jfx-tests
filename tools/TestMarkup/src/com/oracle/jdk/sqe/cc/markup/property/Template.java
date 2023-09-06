@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,10 +23,6 @@
  */
 package com.oracle.jdk.sqe.cc.markup.property;
 
-import com.sun.javadoc.ClassDoc;
-import com.sun.javadoc.DocErrorReporter;
-import com.sun.javadoc.MethodDoc;
-import com.sun.javadoc.RootDoc;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,8 +31,9 @@ import java.util.Map;
  *
  * @author shura
  */
+//TODO
 public class Template {
-
+/*
     public static boolean start(RootDoc doc) throws FileNotFoundException, IOException {
         if(out == null) out = System.out;
         for (ClassDoc cls : doc.classes()) {
@@ -120,4 +117,6 @@ public class Template {
         }
         return true;
     }
+
+ */
 }

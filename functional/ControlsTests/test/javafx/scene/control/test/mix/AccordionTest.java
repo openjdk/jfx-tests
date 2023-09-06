@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import java.util.Comparator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -66,7 +66,7 @@ public class AccordionTest extends TestBase {
      * Test for Accordion setExpandedPane API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void expandedPaneTest() throws InterruptedException {
         testCommon(Pages.ExpandedPane.name());
@@ -104,7 +104,7 @@ public class AccordionTest extends TestBase {
      * Adds titled panes to the accordion in reverse order, sorts them and
      * checks that rendering works correctly.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 30000)
     public void renderingAfterSortingTest() {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.textinput;
 
-import client.test.Smoke;
+
 import java.util.EnumSet;
 import javafx.scene.control.TextField;
 import javafx.scene.control.test.utils.ptables.AbstractPropertyController;
@@ -49,14 +49,14 @@ public class TextFieldPropertiesTest extends TextControlCommonTests {
         TextFieldPropertiesApp.main(null);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void prefColumnCountPropertyTest() throws InterruptedException {
         assertEquals(getNewControl().prefColumnCountProperty().getValue(), 12, 0);
         prefColumnCountCommonTest();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void onActionPropertyTest() {
         onActionPropertyCommonTest();
@@ -67,7 +67,7 @@ public class TextFieldPropertiesTest extends TextControlCommonTests {
         return new TextField();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-28547
     /**
      * Test checks, that size of control depends (weak check) correctly on the

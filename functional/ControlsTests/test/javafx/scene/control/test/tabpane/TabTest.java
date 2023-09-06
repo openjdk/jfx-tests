@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.tabpane;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.scene.control.test.tabpane.TabApp.Pages;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -45,7 +45,7 @@ public class TabTest extends TestBase {
     /**
      * Test for Tab setClosable API
      */
-    @Smoke
+    //TODO@Smoke
     @ScreenshotCheck
     @Test(timeout = 300000)
     public void closableTest() throws InterruptedException {
@@ -56,7 +56,7 @@ public class TabTest extends TestBase {
      * Test for Tab setContent API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void contentTest() throws InterruptedException {
         testCommon(Pages.Content.name(), null, true, false, TabApp.BOOL.length);
@@ -66,7 +66,7 @@ public class TabTest extends TestBase {
      * Test for Tab setGraphic API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void graphicTest() throws InterruptedException {
         testCommon(Pages.Graphic.name(), null, true, false, TabApp.BOOL.length);

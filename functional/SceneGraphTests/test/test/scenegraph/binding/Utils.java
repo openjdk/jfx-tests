@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -98,7 +98,7 @@ public class Utils {
             + "    */\n"
             + "    @Test\n"
             // TODO: biderectional binding
-            //+ "    @Covers(value=\"%5$s.%3$s.%1$s.BIND\", level=Level.FULL)\n"
+            //+ "    //@Covers(value=\"%5$s.%3$s.%1$s.BIND\", level=Level.FULL)\n"
             + "    public void %1$s() {\n"
             + "        commonTest(%4$s);\n"
             + "    }\n\n";
@@ -115,8 +115,8 @@ public class Utils {
             + "import org.junit.BeforeClass;\n"
             + "import org.junit.Test;\n"
             + "import test.scenegraph.binding.*;\n"
-            + "import com.oracle.jdk.sqe.cc.markup.Covers;\n"
-            + "import com.oracle.jdk.sqe.cc.markup.Covers.Level;\n"
+            + "\n"
+            + "\n"
             + "\n"
             + "public class %1$sTest extends BindingTestBase {\n"
             + "    @BeforeClass\n"

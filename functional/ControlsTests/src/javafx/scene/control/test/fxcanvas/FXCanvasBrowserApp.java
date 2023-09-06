@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2016, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -29,12 +29,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
 import javafx.scene.control.Button;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Monitor;
-import org.eclipse.swt.widgets.Shell;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.embed.swt.FXCanvas;
@@ -46,9 +40,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.web.WebView;
 import test.javaclient.shared.OtherThreadRunner;
 import test.javaclient.shared.Utils;
-
+//TODO
 public class FXCanvasBrowserApp {
-
+/*
     public static final String CONTENT_ID = "content.id";
     public static final String BUTTON_ID = "button.id";
     public static final String SUCCESS_LABEL_ID = "SUCCESS_LABEL_ID";
@@ -138,4 +132,6 @@ public class FXCanvasBrowserApp {
             System.err.printf("Failed to start SWT application: %s.\n", ex);
         }
     }
+
+ */
 }

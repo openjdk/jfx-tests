@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -28,13 +28,6 @@
 package javafx.factory;
 
 import com.sun.javafx.collections.ObservableListWrapper;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.Set;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -93,6 +86,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Set;
 
 public enum ControlsFactory implements NodeFactory {
 
@@ -670,9 +671,10 @@ public enum ControlsFactory implements NodeFactory {
      */
     public static ControlsFactory[] filteredValues() {
         Set<ControlsFactory> controlsSet = EnumSet.allOf(ControlsFactory.class);
-        if (!checkClassOnPresence("javafx.scene.media.MediaView")) {
-            controlsSet.remove(ControlsFactory.MediaView);
-        }
+        //TODO
+//        if (!checkClassOnPresence("javafx.scene.media.MediaView")) {
+//            controlsSet.remove(ControlsFactory.MediaView);
+//        }
         ControlsFactory[] controlsArray = new ControlsFactory[controlsSet.toArray().length];
         Arrays.asList(controlsSet.toArray()).toArray(controlsArray);
         return controlsArray;

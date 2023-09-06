@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.cell;
 
-import client.test.Smoke;
+
 import com.sun.javafx.scene.control.LabeledText;
 import java.util.Map;
 import javafx.collections.FXCollections;
@@ -41,6 +41,7 @@ import org.jemmy.control.Wrap;
 import org.jemmy.env.Timeout;
 import org.jemmy.fx.ByID;
 import org.jemmy.fx.Root;
+import org.jemmy.fx.interfaces.Table;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.Lookup;
 import org.jemmy.lookup.LookupCriteria;
@@ -83,7 +84,7 @@ public class TableCellsTest extends TreeTableCellsTest {
     /**
      * Content of tableView can be stored
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void MapCellFactoryTest() {
         doFactoryChange(CellType.MapValue);

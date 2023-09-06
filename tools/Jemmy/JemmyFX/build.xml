@@ -1,152 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
-DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
-
-This code is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License version 2 only, as
-published by the Free Software Foundation. Oracle designates this
-particular file as subject to the "Classpath" exception as provided
-by Oracle in the LICENSE file that accompanied this code.
-
-This code is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-version 2 for more details (a copy is included in the LICENSE file that
-accompanied this code).
-
-You should have received a copy of the GNU General Public License version
-2 along with this work; if not, write to the Free Software Foundation,
-Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-
-Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
-or visit www.oracle.com if you need additional information or have any
-questions.
--->
-<project name="JemmyFX" default="default" basedir=".">
-    <description>Builds, tests, and runs the project JemmyJC.</description>
-    <import file="nbproject/build-impl.xml"/>
-
-    <property name="jemmy.lib.dir" location="../jemmy_core"/>
-    <property name="test.includes" value="**/*Sample.java"/>
-    <property name="javac.includes" value="${test.includes}"/>
-    <property name="docks.dir" location="docks"/>
-    <target name="jar-full" depends="jar">
-        <property name="jar.name" location="${basedir}/dist/JemmyJCFull.jar"/>
-        <jar destfile="${jar.name}" filesetmanifest="merge">
-            <zipgroupfileset file="${reference.JemmyCore.jar}"/>
-            <zipgroupfileset file="${reference.JemmyAWTInput.jar}"/>
-            <zipgroupfileset file="${reference.GlassImage.jar}"/>
-            <zipgroupfileset file="${reference.GlassRobot.jar}"/>
-            <zipgroupfileset file="${dist.jar}"/>
-        </jar>
+<project name="jemmyfx" default="compile">
+    <basename file="${basedir}" property="."/>
+    <property name="rootdir" location="${basedir}/../../.."/>
+    <property name="project.name" value="GlassImage"/>
+    <import file="${rootdir}/tools/make/build-template.xml"/>
+    <property name="dependencies.classpath" value="${glass-robot-src}/build/classes${path.separator}${glass-image-src}/build/classes"/>
+    <property name="gen.src.dir" location="${build.dir}/gen"/>
+    <property name="src.samples.dir" location="${basedir}/samples"/>
+    <property name="build.samples.dir" location="${build.dir}/samples"/>
+    <property name="test.dependencies.classpath" value="${jemmyfx-browser-src}/build/classes${path.separator}${build.samples.dir}"/>
+    <property name="sample.list" location="${build.dir}/sample.list"/>
+    <property environment="env"/>
+    <target name="build-dependencies">
+        <antcall target="build-other-project">
+            <param name="project" value="${glass-image-src}"/>
+        </antcall>
+        <antcall target="build-other-project">
+            <param name="project" value="${glass-robot-src}"/>
+        </antcall>
     </target>
-    <target name="yes-profile" if="jemmy.fx.profile">
-        <property file="${jemmy.fx.profile}"/>
-    </target>
-    <target name="no-profile" unless="jemmy.fx.profile">
-        <property name="profile.includes" value="**"/>
-        <property name="profile.excludes" value=""/>
-    </target>
-    <target name="read-profile" depends="no-profile,yes-profile"/>
-    <target name="disable-libs">
-        <property name="no.need.to.find.java.fx" value="yes"/>
-        <property name="no.need.to.copy.jemmy.libs" value="yes"/>
-    </target>
-    <target name="-post-clean">
-        <delete dir="${docks.dir}" failonerror="false"/>
-        <delete dir="${basedir}/target"/>
-    </target>
-    <target name="-pre-init" unless="no.need.to.find.java.fx">
-        <ant antfile="../../../detect_javafx-nb.xml" inheritall="true">
-            <property name="basedir" location="${basedir}/../../.."/>
-            <property name="property.file" value="${basedir}/nbproject/private/private.properties"/>
-        </ant>
-    </target>
-    <target name="-post-init">
-        <ant antfile="build.xml" target="get-jemmy-core" inheritall="false" inheritrefs="false" dir=".."/>
-    </target>
-    <target name="-pre-compile">
-        <delete file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" failonerror="false"/>
-        <mkdir dir="${docks.dir}"/>
-    </target>
-    <target depends="init,deps-jar,-pre-pre-compile,-pre-compile, -copy-persistence-xml,-compile-depend, read-profile" if="have.sources" name="-do-compile">
-        <echo message="Compiling  ${profile.includes} but not ${profile.excludes}"/>
-        <mkdir dir="${src.docks.dir}"/>
-        <condition property="__addExports1" value="" else="--add-exports javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED --add-exports javafx.controls/com.sun.javafx.scene.control.skin=ALL-UNNAMED">
-            <isset property="noAddExports" />
-        </condition>
-        <javac sourcepath="" srcdir="${src.dir}" destdir="${build.classes.dir}" classpath="${javac.classpath}" includes="${profile.includes}" excludes="${profile.excludes}">
+    <target name="compile" depends="init,build-dependencies">
+        <mkdir dir="${build.classes.dir}"/>
+        <mkdir dir="${gen.src.dir}"/>
+        <javac destdir="${build.classes.dir}" debug="on" includeantruntime="false">
+            <classpath>
+                <path refid="jemmyfx.classpath"/>
+                <pathelement path="${dependencies.classpath}"/>
+            </classpath>
+            <src>
+                <pathelement path="${src.dir}"/>
+            </src>
             <compilerarg value="-processor"/>
-            <compilerarg value="org.jemmy.support.Proccessor"/>
+            <compilerarg value="org.jemmy.support.Processor"/>
             <compilerarg value="-Aactions=docks,dump"/>
             <compilerarg value="-s"/>
-            <compilerarg value="${basedir}/${src.docks.dir}"/>
-            <compilerarg line="${__addExports1}"/>
+            <compilerarg value="${gen.src.dir}"/>
         </javac>
-        <copy todir="${build.classes.dir}">
-            <fileset dir="${src.docks.dir}" excludes="${build.classes.excludes},${excludes}" includes="${includes}"/>
-            <fileset dir="${src.dir}" excludes="${build.classes.excludes},${excludes}" includes="${includes}"/>
-        </copy>
-    </target>
-    <target name="-post-compile">
-        <javac srcdir="${docks.dir}" destdir="${build.classes.dir}" classpath="${javac.classpath}"/>
-        <echo message="Copying prop file"/>
-        <copy file="src/org/jemmy/fx/jemmy.properties" tofile="${basedir}/build/classes/org/jemmy/fx/jemmy.properties"/>
-        <tstamp/>
-        <echo message="build=${DSTAMP}${TSTAMP}" file="${basedir}/build/classes/org/jemmy/fx/jemmy.properties" append="true"/>
-    </target>
-    <target depends="test-single" name="test"/>
-    <target name="warn-no-core-sources" unless="jemmy.core.source">
-        <echo>
-No Jemmy core sources! 
-Sources are available from jemmy.java.net.
-Specify the location by jemmy.core.source variable.
-        </echo>
-    </target>
-    <target name="inform-core-sources" if="jemmy.core.source">
-        <echo>
-Taking JemmyCore sources from ${jemmy.core.source}/core/JemmyCore.
-        </echo>
-    </target>
-    <target name="maven" depends="jar">
-        <ant antfile="build.xml" dir="${project.GlassRobot}" target="maven"/>
-	<property file="${project.GlassRobot}/src/org/jemmy/input/glass/jemmy.properties" prefix="robot"/>
-        <ant antfile="build.xml" dir="${project.GlassImage}" target="maven"/>
-	<property file="${project.GlassImage}/src/org/jemmy/image/jemmy.properties" prefix="image"/>
-        <property file="${basedir}/src/org/jemmy/fx/jemmy.properties" prefix="fx"/>
-        <copy file="pom-tmpl.xml" tofile="pom.xml" overwrite="true">
-            <filterchain>
-                <replacetokens>
-                    <token key="GlassRobot.version" value="${robot.javafx.version}.${robot.version.minor}.${robot.version.mini}"/>
-                    <token key="GlassImage.version" value="${image.javafx.version}.${image.version.minor}.${image.version.mini}"/>
-                    <token key="JemmyFX.version" value="${fx.javafx.version}.${fx.version.minor}.${fx.version.mini}"/>
-                </replacetokens>
-            </filterchain>
-        </copy>
-        <exec command="mvn">
-            <arg value="-e"/>
-            <arg value="install"/>
-        </exec>
-    </target>
-    <target name="javadoc" depends="init, compile, -post-compile, warn-no-core-sources, inform-core-sources">
-        <echo message="${jemmy.core.source}"/>
-        <path id="javadoc.source.path.ref">
-            <pathelement path="${src.dir}"/>
-            <pathelement path="${docks.dir}"/>
-            <pathelement path="${jemmy.core.source}/core/JemmyCore/src"/>
-        </path>
-        <property name="javadoc.src.path" refid="javadoc.source.path.ref"/>
-        <property name="javadoc.classpath" value="${javac.classpath}"/>
-        <javadoc charset="UTF-8" destdir="${dist.javadoc.dir}" access="public">
+        <javac srcdir="${gen.src.dir}" destdir="${build.classes.dir}" debug="on" includeantruntime="false">
             <classpath>
-                <path path="${javadoc.classpath}"/>
+                <path refid="jemmyfx.classpath"/>
+                <pathelement location="${build.classes.dir}"/>
+                <pathelement path="${dependencies.classpath}"/>
             </classpath>
-            <sourcepath>
-                <path path="${javadoc.src.path}"/>
-            </sourcepath>
-        </javadoc>
-        <copydir src="${test.samples.dir}" dest="${dist.javadoc.dir}"/>
-        <zip basedir="${dist.javadoc.dir}" file="${dist.dir}/JemmyFX.zip"/>
+        </javac>
+        <copy file="${gen.src.dir}/support.xml" todir="${build.classes.dir}"/>
+    </target>
+    <target name="build-test-dependencies" depends="compile">
+        <mkdir dir="${build.samples.dir}"/>
+        <javac destdir="${build.samples.dir}" debug="on" includeantruntime="false">
+            <classpath>
+                <path refid="jemmyfx.classpath"/>
+                <pathelement path="${dependencies.classpath}"/>
+                <pathelement location="${build.classes.dir}"/>
+                <pathelement location="${jtreg.home}/lib/junit.jar"/>
+            </classpath>
+            <src>
+                <pathelement path="${src.samples.dir}"/>
+            </src>
+        </javac>
+        <antcall target="build-other-project">
+            <param name="project" value="${jemmyfx-browser-src}"/>
+        </antcall>
+    </target>
+    <target name="find-samples" unless="samples">
+        <fileset id="sampleset" dir="${src.samples.dir}">
+            <include name="**/*Sample.java" />
+        </fileset>
+        <pathconvert pathsep="${line.separator}" property="samplelist" refid="sampleset">
+            <globmapper from="${src.samples.dir}/*" to="*"/>
+        </pathconvert>
+        <echo file="${sample.list}">${samplelist}</echo>
+        <property name="samples" value="@${sample.list}"/>
+    </target>
+    <target name="samples" depends="build-test-dependencies,compile-test,find-samples">
+        <property name="jemmyfx.classpath.prop" refid="jemmyfx.classpath"/>
+        <exec executable="${env.SHELL}">
+            <arg value="${jtreg.home}/bin/jtreg"/>
+            <arg value="-cpa:${build.classes.dir}${path.separator}${dependencies.classpath}${path.separator}${test.dependencies.classpath}${path.separator}${jemmyfx.classpath.prop}${path.separator}${jtreg.home}/lib/junit.jar"/>
+            <arg value="-w:${test.workdir}"/>
+            <arg value="-r:${test.report}"/>
+            <arg value="-conc:1"/>
+            <arg value="-ovm"/>
+            <arg value="-v:default"/>
+            <arg value="-dir:samples"/>
+            <arg value="${samples}"/>
+        </exec>
     </target>
 </project>

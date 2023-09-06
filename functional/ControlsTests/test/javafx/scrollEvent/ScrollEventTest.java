@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,11 +24,11 @@
  */
 package javafx.scrollEvent;
 
-import client.test.OnlyPlatformMethod;
-import client.test.Platforms;
+
+
 import test.javaclient.shared.FilteredTestRunner;
 import org.junit.runner.RunWith;
-import client.test.Smoke;
+
 import org.jemmy.fx.ByID;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -50,7 +50,7 @@ import org.jemmy.lookup.Lookup;
 @RunWith(FilteredTestRunner.class)
 public class ScrollEventTest extends TestBase {
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void commonTest() {
         for (Object nf : nodeChooser.as(Selectable.class).getStates()) {
@@ -62,7 +62,7 @@ public class ScrollEventTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void horizontalTest() throws InterruptedException {
         for (Object nf : nodeChooser.as(Selectable.class).getStates()) {
@@ -84,8 +84,8 @@ public class ScrollEventTest extends TestBase {
      * when different key combinations are pressed.
      *
      */
-    @Smoke
-    @OnlyPlatformMethod(Platforms.WINDOWS)
+    //TODO@Smoke
+    //TODO@OnlyPlatformMethod(Platforms.WINDOWS)
     @Test(timeout=300000)
     public void contextMenuKeyCombinationsTestWindows() {
         enableContextMenuTest();
@@ -126,8 +126,8 @@ public class ScrollEventTest extends TestBase {
      * when different key combinations are pressed.
      *
      */
-    @Smoke
-    @OnlyPlatformMethod(Platforms.MAC)
+    //TODO@Smoke
+    //TODO@OnlyPlatformMethod(Platforms.MAC)
     @Test(timeout=300000)
     public void contextMenuKeyCombinationsTestMac() {
         enableContextMenuTest();
@@ -156,8 +156,8 @@ public class ScrollEventTest extends TestBase {
      * when different key combinations are pressed.
      *
      */
-    @Smoke
-    @OnlyPlatformMethod(Platforms.UNIX)
+    //TODO@Smoke
+    //TODO@OnlyPlatformMethod(Platforms.UNIX)
     @Test(timeout=300000)
     public void contextMenuKeyCombinationsTestLinux() {
         enableContextMenuTest();
@@ -190,7 +190,7 @@ public class ScrollEventTest extends TestBase {
      * Expected output: only one new window appears on the stage
      *
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void contextMenuPopupTest() {
         enableContextMenuTest();

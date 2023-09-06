@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.chart;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.scene.control.test.chart.AxisBaseApp.AxisCSS;
 import org.junit.Test;
 import test.javaclient.shared.TestBase;
@@ -72,7 +72,7 @@ public abstract class AxisBase extends TestBase {
      * Test for Axis setLabel API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void labelTest() throws InterruptedException {
         testCommon(Pages.Label.name(), null, true, true, AxisBaseApp.BOOL.length);
@@ -100,7 +100,7 @@ public abstract class AxisBase extends TestBase {
      * Test for Axis setTickLabelFont API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void tickLabelFontTest() throws InterruptedException {
         testCommon(Pages.TickLabelFont.name(), null, true, true, AxisBaseApp.BOOL.length);
@@ -137,7 +137,7 @@ public abstract class AxisBase extends TestBase {
      * Test for Axis -fx-side CSS
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void cssSide() throws InterruptedException {
         testCommon(AxisCSS.CSSSide.name(), null, true, true, AxisBaseApp.SIDE.length);
@@ -183,7 +183,7 @@ public abstract class AxisBase extends TestBase {
      * Test for Axis -fx-tick-labels-visible CSS
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void cssTickLabelsVisible() throws InterruptedException {
         testCommon(AxisCSS.CSSTickLabelsVisible.name(), null, true, true, AxisBaseApp.BOOL.length);

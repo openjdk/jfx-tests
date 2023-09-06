@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,9 +25,6 @@
 package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -76,15 +73,19 @@ import org.jemmy.lookup.LookupCriteria;
 import org.jemmy.timing.State;
 import org.jemmy.timing.Waiter;
 import org.junit.After;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import test.javaclient.shared.AppLauncher.Mode;
 import test.javaclient.shared.FilteredTestRunner;
 import test.javaclient.shared.Utils;
 import test.javaclient.shared.screenshots.ScreenshotUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(FilteredTestRunner.class)
 public class TreeViewTest extends ControlsTestBase {
@@ -137,9 +138,9 @@ public class TreeViewTest extends ControlsTestBase {
 
     @Before
     public void setUp() {
-        if (test.javaclient.shared.AppLauncher.getInstance().getMode() == Mode.REMOTE) {
-            setJemmyComparatorByDistance(0.001f);
-        }
+//        if (test.javaclient.shared.AppLauncher.getInstance().getMode() == Mode.REMOTE) {
+//            setJemmyComparatorByDistance(0.001f);
+//        }
 
         new Waiter(Wrap.WAIT_STATE_TIMEOUT).ensureState(new State() {
             @Override
@@ -165,7 +166,7 @@ public class TreeViewTest extends ControlsTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void sequentialOpeningTest() throws Throwable {
         expandAll();
@@ -288,7 +289,7 @@ public class TreeViewTest extends ControlsTestBase {
         ScreenshotUtils.checkScreenshot(getTestedControlName() + "Test-add", tree);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void checkVerticalScrollBar() {
         final Lookup<TreeItem> lookup = expandAll();
@@ -333,7 +334,7 @@ public class TreeViewTest extends ControlsTestBase {
         });
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 60000)
     public void checkHorizontalScrollBar() {
         if (isTreeViewTests) {
@@ -367,7 +368,7 @@ public class TreeViewTest extends ControlsTestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void asteriskExpansionTest() throws InterruptedException {
         final TreeItem root = getRoot();
@@ -395,7 +396,7 @@ public class TreeViewTest extends ControlsTestBase {
         });
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void selectionExpansionTest() throws InterruptedException {
         TreeItem root = getRoot();
@@ -408,7 +409,7 @@ public class TreeViewTest extends ControlsTestBase {
      * This test checks that when tree item children modification causes branch
      * immediate rendering.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void childrenModificationTest() throws InterruptedException {
         Lookup<TreeItem> lookup = expandRoot();

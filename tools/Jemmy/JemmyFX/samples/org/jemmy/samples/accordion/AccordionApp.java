@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -29,7 +29,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.LabelBuilder;
+//TODO
+//import javafx.scene.control.LabelBuilder;
+import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -65,8 +67,9 @@ public class AccordionApp extends Application {
         Scene scene = new Scene(box);
 
 
-        accordion.getPanes().add(new TitledPane("First pane", LabelBuilder.create().text("First pane's content").minHeight(200).build()));
-        accordion.getPanes().add(new TitledPane("Second pane", LabelBuilder.create().text("Second pane's content").minHeight(200).build()));
+        //TODO
+        accordion.getPanes().add(new TitledPane("First pane", new Label("First pane's content")));
+        accordion.getPanes().add(new TitledPane("Second pane", new Label("Second pane's content")));
 
         box.getChildren().add(accordion);
 
@@ -78,6 +81,8 @@ public class AccordionApp extends Application {
 
         stage.setWidth(300);
         stage.setHeight(300);
+
+        stage.setAlwaysOnTop(true);
 
         stage.show();
 

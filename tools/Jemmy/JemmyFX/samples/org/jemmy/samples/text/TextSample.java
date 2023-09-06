@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -27,6 +27,7 @@ package org.jemmy.samples.text;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import org.jemmy.Point;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.TextDock;
 import org.jemmy.fx.control.LabeledDock;
@@ -35,6 +36,8 @@ import org.jemmy.resources.StringComparePolicy;
 import org.jemmy.samples.SampleBase;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -52,6 +55,9 @@ public class TextSample extends SampleBase {
     public static void launch() throws InterruptedException {
         startApp(TextApp.class);
         scene = new SceneDock();
+        //workaround for JDK-8257835
+        scene.mouse().click(1,
+                new Point(scene.wrap().getScreenBounds().width - 1, scene.wrap().getScreenBounds().height - 1));
     }
 
     @Before
@@ -158,9 +164,9 @@ public class TextSample extends SampleBase {
                 "multi", StringComparePolicy.SUBSTRING);
 
         //typing starts right where cursor it
-        multiLine.asSelectionText().to("text\n", false);
+        multiLine.asSelectionText().to("text", false);
 
-        multiLine.asSelectionText().type("and we are adding another line\n");
+        multiLine.asSelectionText().type("\nanother line");
 
         //so, if you are going to replace the whole text, clear old text first
         singleLine.clear();

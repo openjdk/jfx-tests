@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Copyright (c) 2010-2011, Oracle and/or its affiliates. All rights reserved.
-  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
--->
-<project name="SharedTestUtilsOpen" default="default" basedir=".">
-    <description>Builds, tests, and runs the project SharedTestUtilsOpen.</description>
-    <import file="nbproject/build-impl.xml"/>
-
-    <target name="-pre-init" unless="no.need.to.find.java.fx">
-        <ant antfile="../../detect_javafx-nb.xml" inheritall="true">
-            <property name="basedir" location="${basedir}/../.."/>
-            <property name="property.file" value="${basedir}/nbproject/private/private.properties"/>
-        </ant>
+<project name="shared.test.utils" default="compile">
+    <basename file="${basedir}" property="."/>
+    <property name="rootdir" location="${basedir}/../.."/>
+    <property name="project.name" value="SharedTestUtilsOpen"/>
+    <import file="${basedir}/../make/build-template.xml"/> 
+    <property name="dependencies.classpath" value="${jemmyfx-src}/build/classes${path.separator}${glass-robot-src}/build/classes${path.separator}${glass-image-src}/build/classes${path.separator}${jemmyfx-browser-src}/build/classes${path.separator}${jtreg.home}/lib/junit.jar${path.separator}${javafx.home}/lib/javafx-swt.jar${path.separator}${javafx.home}/lib/javafx.swing.jar"/>
+    <target name="compile" depends="compile-src"/>
+    <target name="build-dependencies">
+        <antcall target="build-other-project">
+            <param name="project" value="${jemmyfx-src}"/>
+        </antcall>
+        <antcall target="build-other-project">
+            <param name="project" value="${jemmyfx-browser-src}"/>
+        </antcall>
     </target>
+    <target name="build-test-dependencies"/>
 </project>

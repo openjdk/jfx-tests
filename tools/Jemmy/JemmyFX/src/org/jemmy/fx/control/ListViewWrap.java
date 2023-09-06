@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -36,7 +36,6 @@ import org.jemmy.env.Environment;
 import org.jemmy.fx.NodeParent;
 import org.jemmy.fx.NodeWrap;
 import org.jemmy.fx.control.Scrollable2DImpl.EmptyScroll;
-import org.jemmy.fx.control.Scrollable2DImpl.EmptyScroller;
 import org.jemmy.input.AbstractScroll;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.Any;
@@ -61,14 +60,14 @@ import java.util.List;
  * @see ListViewDock
  */
 @ControlType({ListView.class})
-@ControlInterfaces(value = {org.jemmy.interfaces.List.class, Selectable.class, Scroll.class},
+@ControlInterfaces(value = {org.jemmy.fx.interfaces.List.class, Selectable.class, Scroll.class},
         encapsulates = {Object.class, Object.class})
 public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
         implements Scroll, Selectable<Object> {
 
     private AbstractScroll scroll;
     private AbstractScroll emptyScroll = new EmptyScroll();
-    private static Scroller emptyScroller = new EmptyScroller();
+    private static Scroll emptyScroller = new Scrollable2DImpl.EmptyScroller();
     private Selectable<Object> objectSelectable = new ListViewSelectable<Object>(Object.class);
 
     /**
@@ -168,12 +167,11 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
      * Allows to perform lookup within the list view by criteria formulated
      * in terms of user data stored in the list.
      *
-     * @return
      * @see #asItemParent(java.lang.Class)
      * @see ListItemWrap
      */
     @As(Object.class)
-    public <T extends Object> org.jemmy.interfaces.List<T> asItemParent(Class<T> type) {
+    public <T extends Object> org.jemmy.fx.interfaces.List<T> asItemParent(Class<T> type) {
         return new ListItemParent<>(this, type);
     }
 
@@ -182,7 +180,6 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
     }
 
     /**
-     * @return
      */
     public Object getSelectedItem() {
         return new FutureAction<Object>(getEnvironment(), () -> getControl().getSelectionModel().getSelectedItem()).get();
@@ -210,7 +207,6 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
         }
     }
 
-    @Override
     @Deprecated
     public double value() {
         return position();
@@ -221,7 +217,7 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
     public double position() {
         checkScroll();
         if (scroll != null) {
-            return scroll.value();
+            return scroll.position();
         } else {
             return 0;
         }
@@ -233,7 +229,7 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
         if (scroll != null) {
             return scroll.caret();
         } else {
-            return emptyScroller;
+            return emptyScroller.caret();
         }
     }
 
@@ -246,11 +242,10 @@ public class ListViewWrap<CONTROL extends ListView> extends NodeWrap<CONTROL>
     }
 
     @Deprecated
-    @Override
-    public Scroller scroller() {
+    public Scroll scroller() {
         checkScroll();
         if (scroll != null) {
-            return scroll.scroller();
+            return scroll;
         } else {
             return emptyScroller;
         }

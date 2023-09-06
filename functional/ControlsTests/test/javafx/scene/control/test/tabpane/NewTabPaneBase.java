@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -56,7 +56,7 @@ import org.jemmy.fx.ByID;
 import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.control.TabWrap;
-import org.jemmy.interfaces.Close;
+import org.jemmy.fx.interfaces.Close;
 import org.jemmy.interfaces.Keyboard;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;

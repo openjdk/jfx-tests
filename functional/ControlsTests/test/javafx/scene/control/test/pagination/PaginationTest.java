@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.pagination;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import java.util.EnumSet;
 import javafx.scene.control.Pagination;
@@ -44,7 +44,7 @@ import test.javaclient.shared.FilteredTestRunner;
 @RunWith(FilteredTestRunner.class)
 public class PaginationTest extends TestBase {
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"com.sun.javafx.scene.control.Pagination.currentpageindex.BEHAVIOR", "com.sun.javafx.scene.control.Pagination.currentpageindex.GET", "com.sun.javafx.scene.control.Pagination.currentpageindex.BIND", "com.sun.javafx.scene.control.Pagination.currentpageindex.DEFAULT", "com.sun.javafx.scene.control.Pagination.currentpageindex.SET"}, level = Covers.Level.FULL)
     public void currentPageIndexPropertyTest() throws InterruptedException {
@@ -101,7 +101,7 @@ public class PaginationTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"com.sun.javafx.scene.control.Pagination.pagecount.BEHAVIOR", "com.sun.javafx.scene.control.Pagination.pagecount.GET", "com.sun.javafx.scene.control.Pagination.pagecount.BIND", "com.sun.javafx.scene.control.Pagination.pagecount.DEFAULT", "com.sun.javafx.scene.control.Pagination.pagecount.SET"}, level = Covers.Level.FULL)
     public void pageCountPropertyTest() throws InterruptedException {
@@ -163,7 +163,7 @@ public class PaginationTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"com.sun.javafx.scene.control.Pagination.pageindicatorcount.BEHAVIOR", "com.sun.javafx.scene.control.Pagination.pageindicatorcount.GET", "com.sun.javafx.scene.control.Pagination.pageindicatorcount.BIND", "com.sun.javafx.scene.control.Pagination.pageindicatorcount.DEFAULT", "com.sun.javafx.scene.control.Pagination.pageindicatorcounts.SET"}, level = Covers.Level.FULL)
     public void pageIndicatorCountTest() throws InterruptedException {
@@ -233,7 +233,7 @@ public class PaginationTest extends TestBase {
         checkCorrectPageContentShowing(false, 0);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void innerContentReceiveEventsTest() throws InterruptedException {
         setSize(200, 200);
@@ -244,7 +244,7 @@ public class PaginationTest extends TestBase {
         checkPrintingInInnerTextField();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"com.sun.javafx.scene.control.Pagination.pagefactory.BEHAVIOR", "com.sun.javafx.scene.control.Pagination.pagefactory.GET", "com.sun.javafx.scene.control.Pagination.pagefactory.DEFAULT", "com.sun.javafx.scene.control.Pagination.pagefactory.SET"}, level = Covers.Level.FULL)
     public void factoryChangingTest() throws InterruptedException {
@@ -295,7 +295,7 @@ public class PaginationTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void complexScreenshot1Test() throws InterruptedException, Throwable {
         setNewFactory();
@@ -313,7 +313,7 @@ public class PaginationTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void complexScreenshot2Test() throws InterruptedException, Throwable {
         setBulletStyleOfPageIndicators();
@@ -326,7 +326,7 @@ public class PaginationTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void leftRightKeyboardTest() throws InterruptedException {
         setSize(200, 200);
@@ -371,7 +371,7 @@ public class PaginationTest extends TestBase {
         checkTwoArrowsVisibility(false, true);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void complexInteractionTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.pageCount, 20);
@@ -403,7 +403,7 @@ public class PaginationTest extends TestBase {
         checkCorrectPageContentShowing(false, 0);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void indeterminateValueTest() throws InterruptedException {
         setSize(200, 200);

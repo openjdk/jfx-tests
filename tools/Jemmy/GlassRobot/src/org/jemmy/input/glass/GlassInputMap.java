@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,6 +24,8 @@
  */
 package org.jemmy.input.glass;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import org.jemmy.interfaces.Keyboard;
 import org.jemmy.interfaces.Modifier;
 import org.jemmy.interfaces.Mouse;
@@ -33,7 +35,7 @@ import org.jemmy.interfaces.Mouse;
  * @author shura
  */
 public interface GlassInputMap {
-    public int key(Keyboard.KeyboardButton button);
-    public int mouseButton(Mouse.MouseButton button);
-    public int modifier(Modifier button);
+    public KeyCode key(Keyboard.KeyboardButton button);
+    public MouseButton mouseButton(Mouse.MouseButton button);
+    public KeyCode modifier(Modifier button);
 }

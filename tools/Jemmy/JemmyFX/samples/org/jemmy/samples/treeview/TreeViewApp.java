@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,9 @@
  */
 package org.jemmy.samples.treeview;
 
+import com.sun.javafx.tk.Toolkit;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Scene;
@@ -71,7 +73,13 @@ public class TreeViewApp extends Application {
         Scene scene = new Scene(vBox, 800, 500);
 
         stage.setScene(scene);
+        stage.setAlwaysOnTop(true);
         stage.show();
+
+        Platform.runLater(() -> {
+            Toolkit.getToolkit().checkFxUserThread();
+            System.out.println("fx thread");
+        });
     }
 
     private void addContent(TreeItem parentItem, int levels, int itemsPerLevel, String prefix) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,23 +23,30 @@
  */
 package test.scenegraph.app;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.RotateTransition;
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.effect.*;
-import javafx.scene.effect.Light.Distant;
-import javafx.scene.effect.Light.Point;
-import javafx.scene.effect.Light.Spot;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.ColorInput;
+import javafx.scene.effect.DisplacementMap;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.FloatMap;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.ImageInput;
+import javafx.scene.effect.InnerShadow;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
+import javafx.scene.effect.MotionBlur;
+import javafx.scene.effect.PerspectiveTransform;
+import javafx.scene.effect.Reflection;
+import javafx.scene.effect.SepiaTone;
+import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -47,15 +54,23 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import test.javaclient.shared.BasicButtonChooserApp;
 import test.javaclient.shared.PageWithSlots;
 import test.javaclient.shared.TestNode;
 import test.javaclient.shared.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -102,7 +117,7 @@ public class Effects2App extends BasicButtonChooserApp {
     // Blend page -------------------------------------------------------------
     private class slotTexturedBlendRectangle extends TestNode {
         private Image image = new Image(
-                getClass().getResourceAsStream(ImagesApp.IMAGE_BASE + "blend_texture.png"));
+                getClass().getResourceAsStream(ImagesApp.IMAGE_BASE + "square.png"));
 
         @Override
         public Node drawNode() {

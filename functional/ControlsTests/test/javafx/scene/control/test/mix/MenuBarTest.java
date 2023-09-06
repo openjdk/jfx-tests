@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import java.util.Comparator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -97,7 +97,7 @@ public class MenuBarTest extends MenuTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void clearTest() throws InterruptedException {
         menuAsStringMenuOwner.select(MenuBarApp.MENU_STR + "0");
@@ -107,7 +107,7 @@ public class MenuBarTest extends MenuTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void addItemsTest() throws InterruptedException {
         clearBtn.mouse().click();
@@ -157,7 +157,7 @@ public class MenuBarTest extends MenuTestBase {
         keyboardHoverCycle();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void requestingFocusTest() throws Throwable {
         if (Utils.isMacOS()) {
@@ -169,7 +169,7 @@ public class MenuBarTest extends MenuTestBase {
         checkFocus(KeyboardButtons.ALT);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void rt18356Test() throws InterruptedException {
         menuAsStringMenuOwner.push(MenuBarApp.MENU_STR + "0");
@@ -187,7 +187,7 @@ public class MenuBarTest extends MenuTestBase {
      * Adds menu items to the menu bar in reverse order,
      * sorts them and checks that rendering works correctly.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 30000)
     public void renderingAfterSortingTest() {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -30,13 +30,14 @@ import javafx.scene.control.TreeTableView;
 import org.jemmy.Point;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.control.TableCellItemParent.ByPoint;
+import org.jemmy.fx.interfaces.Table;
 import org.jemmy.lookup.LookupCriteria;
 
 /**
  * @param <DATA>
  * @author Alexander Kirov
  */
-class TreeTableCellParent<DATA> extends ItemDataParent<Point, DATA> implements org.jemmy.interfaces.Table<DATA> {
+class TreeTableCellParent<DATA> extends ItemDataParent<Point, DATA> implements Table<DATA> {
 
     private TreeTableViewWrap<? extends TreeTableView> treeTableViewWrap;
 

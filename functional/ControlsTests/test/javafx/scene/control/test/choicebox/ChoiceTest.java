@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.choicebox;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import com.sun.javafx.scene.control.LabeledText;
 import javafx.collections.ObservableList;
 import javafx.commons.SortValidator;
@@ -138,7 +138,7 @@ public class ChoiceTest extends ControlsTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void initialState() throws InterruptedException {
         ScreenshotUtils.checkScreenshot("ChoiceBox-initialState", testPane);
@@ -208,7 +208,7 @@ public class ChoiceTest extends ControlsTestBase {
         ScreenshotUtils.checkScreenshot("ChoiceBox-add", testPane);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardCapture() throws InterruptedException { //RT-12597
         choice.mouse().click();
@@ -228,7 +228,7 @@ public class ChoiceTest extends ControlsTestBase {
         ScreenshotUtils.checkScreenshot("ChoiceBox-clear", testPane);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void converter() throws InterruptedException {
         choice.as(Selectable.class).selector().select("1");
@@ -258,7 +258,7 @@ public class ChoiceTest extends ControlsTestBase {
      * to the underlying data collection
      * the cells are rendered in the right order.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=30000)
     public void renderingAfterSortingTest() {
         final int ITEMS_COUNT = 10;

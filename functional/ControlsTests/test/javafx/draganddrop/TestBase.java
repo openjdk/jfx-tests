@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,20 +25,19 @@
 package javafx.draganddrop;
 
 import com.sun.glass.ui.Application;
-import com.sun.glass.ui.Robot;
 import javafx.scene.control.test.ControlsTestBase;
+import javafx.scene.input.MouseButton;
 import org.jemmy.Point;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.Root;
+import org.jemmy.input.glass.GlassInputFactory;
 import test.javaclient.shared.Utils;
 
 /**
  * @author Andrey Nazarov
  */
 public class TestBase extends ControlsTestBase {
-
-    static Robot robot = null;
 
     static {
         if (Utils.isMacOS()) {
@@ -68,25 +67,16 @@ public class TestBase extends ControlsTestBase {
             abs_from_point.translate((int) from.getScreenBounds().getX(), (int) from.getScreenBounds().getY());
             final Point abs_to_point = new Point(to_point);
             abs_to_point.translate((int) to.getScreenBounds().getX(), (int) to.getScreenBounds().getY());
-            if (robot == null) {
-                robot = new GetAction<com.sun.glass.ui.Robot>() {
-                    @Override
-                    public void run(Object... os) throws Exception {
-                        setResult(com.sun.glass.ui.Application.GetApplication().createRobot());
-                    }
-                }.dispatch(Root.ROOT.getEnvironment()); // can not be done in static block due to initialization problems on Mac
-            }
             Application.invokeAndWait(new Runnable() {
-
                 public void run() {
-                    robot.mouseMove(abs_from_point.x, abs_from_point.y);
+                    GlassInputFactory.getRobot().mouseMove(abs_from_point.x, abs_from_point.y);
                 }
             });
 
             Application.invokeAndWait(new Runnable() {
 
                 public void run() {
-                    robot.mousePress(1);
+                    GlassInputFactory.getRobot().mousePress(MouseButton.PRIMARY);
                 }
             });
 
@@ -98,7 +88,7 @@ public class TestBase extends ControlsTestBase {
                 Application.invokeAndWait(new Runnable() {
 
                     public void run() {
-                        robot.mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
+                        GlassInputFactory.getRobot().mouseMove(abs_from_point.x + differenceX * i / STEPS, abs_from_point.y + differenceY * i / STEPS);
                     }
                 });
 
@@ -107,7 +97,7 @@ public class TestBase extends ControlsTestBase {
             Application.invokeAndWait(new Runnable() {
 
                 public void run() {
-                    robot.mouseRelease(1);
+                    GlassInputFactory.getRobot().mouseRelease(MouseButton.PRIMARY);
                 }
             });
 

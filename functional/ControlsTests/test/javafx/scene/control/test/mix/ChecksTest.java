@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,14 +24,13 @@
  */
 package javafx.scene.control.test.mix;
 
-import client.test.Smoke;
+
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import com.oracle.jdk.sqe.cc.markup.Covers.Level;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import static javafx.scene.control.test.Buttons.ButtonsScene.*;
 import javafx.scene.control.test.Checks;
 import javafx.scene.control.test.ControlsTestBase;
 import javafx.scene.text.Text;
@@ -46,14 +45,16 @@ import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Parent;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import test.javaclient.shared.FilteredTestRunner;
 import test.javaclient.shared.TestUtil;
-import test.javaclient.shared.Utils;
+
+import static javafx.scene.control.test.Buttons.ButtonsScene.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  *
@@ -77,7 +78,8 @@ public class ChecksTest extends ControlsTestBase {
     @BeforeClass
     public static void setUpClass() throws Exception {
         Checks.main(null);
-        isRemote = (test.javaclient.shared.AppLauncher.getInstance().getMode() == test.javaclient.shared.AppLauncher.Mode.REMOTE);
+//        isRemote = (test.javaclient.shared.AppLauncher.getInstance().getMode() == test.javaclient.shared.AppLauncher.Mode.REMOTE);
+        isRemote = false;
     }
 
     @AfterClass
@@ -98,14 +100,14 @@ public class ChecksTest extends ControlsTestBase {
         clear.mouse().click();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void mouse() throws InterruptedException {
         final boolean changeExpected = true;
         checks(ControlType.MOUSE, changeExpected);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboard() throws InterruptedException {
         if (!isRemote) {
@@ -119,7 +121,7 @@ public class ChecksTest extends ControlsTestBase {
     /*
      * Checks that when Enter is pressed the control will not change it's state.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardNotReacting() throws InterruptedException {
         if (!isRemote) {
@@ -130,7 +132,7 @@ public class ChecksTest extends ControlsTestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void initialState() throws InterruptedException {
         final Wrap<? extends CheckBox> twsb = parent.lookup(CheckBox.class, new ByText<CheckBox>(TWO_STATE_CB)).wrap();

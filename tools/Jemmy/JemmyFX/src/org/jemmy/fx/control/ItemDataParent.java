@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,7 +26,7 @@ package org.jemmy.fx.control;
 
 import org.jemmy.control.Wrap;
 import org.jemmy.interfaces.ControlInterface;
-import org.jemmy.interfaces.EditableCellOwner;
+import org.jemmy.fx.interfaces.EditableCellOwner;
 import org.jemmy.interfaces.Keyboard.KeyboardModifier;
 import org.jemmy.interfaces.Keyboard.KeyboardModifiers;
 import org.jemmy.interfaces.Mouse.MouseButtons;
@@ -40,6 +40,7 @@ import org.jemmy.timing.DescriptiveState;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 abstract class ItemDataParent<ITEM, AUX> implements EditableCellOwner<AUX> {
 
@@ -105,6 +106,10 @@ abstract class ItemDataParent<ITEM, AUX> implements EditableCellOwner<AUX> {
     }
 
     public List<Wrap<? extends AUX>> select(LookupCriteria<AUX>... criteria) {
+        //TODO
+        //global setting?
+        var multySelectModifier = System.getProperty("os.name").toLowerCase()
+                .contains("mac os") ? KeyboardModifiers.META_DOWN_MASK : KeyboardModifiers.CTRL_DOWN_MASK;
         List<Wrap<? extends AUX>> res = new ArrayList<>();
         KeyboardModifier[] mods = new KeyboardModifier[0];
         for (LookupCriteria<AUX> cr : criteria) {
@@ -116,7 +121,7 @@ abstract class ItemDataParent<ITEM, AUX> implements EditableCellOwner<AUX> {
                 w.as(Showable.class).shower().show();
                 w.mouse().click(1, w.getClickPoint(), MouseButtons.BUTTON1,
                         mods);
-                mods = new KeyboardModifier[]{KeyboardModifiers.CTRL_DOWN_MASK};
+                mods = new KeyboardModifier[]{multySelectModifier};
                 res.add(w);
             }
         }

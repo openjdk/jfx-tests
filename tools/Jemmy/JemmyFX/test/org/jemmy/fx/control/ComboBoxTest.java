@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,6 +26,7 @@ package org.jemmy.fx.control;
 
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.stage.PopupWindow;
 import org.jemmy.control.Wrap;
 import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.Root;
@@ -61,9 +62,10 @@ public class ComboBoxTest {
 
     @Test
     public void select() throws InterruptedException {
-        Parent<Node> parent = Root.ROOT.lookup().as(Parent.class, Node.class);
+        Parent<Node> parent = Root.ROOT.lookup(s -> s.getWindow() instanceof PopupWindow)
+                .as(Parent.class, Node.class);
         Wrap<? extends ComboBox> bar = parent.lookup(ComboBox.class).wrap();
         bar.as(Selectable.class).selector().select("Item 1");
-        //bar.as(Text.class).type("Text");//Fails because of https://javafx-jira.kenai.com/browse/RT-31454
+        bar.as(Text.class).type("Text");
     }
 }

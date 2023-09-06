@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -27,6 +27,7 @@ package org.jemmy.samples.lookup;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import org.jemmy.Point;
 import org.jemmy.fx.NodeDock;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.lookup.LookupCriteria;
@@ -44,9 +45,12 @@ public class CompoundLookupSample extends LookupSampleBase {
      * Nested lookup.
      */
     @Test
-    public void nestedLookup() {
+    public void nestedLookup() throws InterruptedException {
         //find the scene
         SceneDock scene = new SceneDock();
+
+        //workaround for JDK-8257835
+        scene.mouse().click(1);
 
         //look for a VBox
         NodeDock vBox = new NodeDock(scene.asParent(), VBox.class);
@@ -76,6 +80,9 @@ public class CompoundLookupSample extends LookupSampleBase {
     public void fewCriteria() {
         //find the scene
         SceneDock scene = new SceneDock();
+
+        //workaround for JDK-8257835
+        scene.mouse().click(1);
 
         //let's find a label which has "1,1" in text by two criteria
         NodeDock label11 = new NodeDock(scene.asParent(), Label.class,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import com.oracle.jdk.sqe.cc.markup.Covers.Level;
 import javafx.scene.Node;
@@ -117,7 +117,7 @@ public class MenuItemTest extends ControlsTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void constructorsTest() throws InterruptedException {
         menuBarLookup.lookup(new MenuByText(MenuItemApp.CONSTRUCTORS_ID)).wrap().mouse().click();
@@ -171,34 +171,34 @@ public class MenuItemTest extends ControlsTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void simpleTest() throws Throwable {
         checkCycle(MenuItemApp.SIMPLE_ID);
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void radioTest() throws Throwable {
         checkCycle(MenuItemApp.RADIO_ID);
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void checkTest() throws Throwable {
         checkCycle(MenuItemApp.CHECK_ID);
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void nodeTest() throws Throwable {
         checkCycle(MenuItemApp.NODE_ID);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void shortcutsTest() throws InterruptedException {
         menuBarAsParent.lookup(new MenuByText(MenuItemApp.MIXED_ID)).wrap().mouse().click();
@@ -218,7 +218,7 @@ public class MenuItemTest extends ControlsTestBase {
         lastSelected.waitProperty(Wrap.TEXT_PROP_NAME, MenuItemApp.NODE_MENU_ITEM_BOOL_ID);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void radioGroupTest() throws InterruptedException {
         Wrap<? extends Menu> menu = menuBarAsParent.lookup(new MenuByText(MenuItemApp.RADIO_ID)).wrap();
@@ -245,7 +245,7 @@ public class MenuItemTest extends ControlsTestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void radioSizingTest() throws Throwable {
         Wrap<? extends Menu> menu = menuBarAsParent.lookup(new MenuByText(MenuItemApp.RADIO_ID)).wrap();

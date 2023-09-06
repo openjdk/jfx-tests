@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -55,6 +55,7 @@ import org.jemmy.fx.ByStyleClass;
 import org.jemmy.fx.ByText;
 import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.Root;
+import org.jemmy.input.glass.GlassInputFactory;
 import org.jemmy.interfaces.Focusable;
 import org.jemmy.interfaces.Keyboard;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
@@ -88,7 +89,6 @@ public class TestBase extends UtilTestFunctions {
     protected final int widthInColorGrid = 12;
     protected final int heightInColorGrid = 10;
     static public Object robotAwt;
-    static public com.sun.glass.ui.Robot robotGlass;
     protected final String SAVE_BUTTON_TEXT = "Save";
     protected final String CANCEL_BUTTON_TEXT = "Cancel";
     protected final String USE_BUTTON_TEXT = "Use";
@@ -1025,7 +1025,9 @@ public class TestBase extends UtilTestFunctions {
             return new GetAction<Color>() {
                 @Override
                 public void run(Object... os) throws Exception {
-                    int pixelColor = robotGlass.getPixelColor((int) Math.round(x), (int) Math.round(y));
+                    //TODO
+                    //int pixelColor = GlassInputFactory.getRobot().getPixelColor((int) Math.round(x), (int) Math.round(y)).;
+                    int pixelColor = 0;
                     int red = (pixelColor >> 16) & 0xFF;
                     int green = (pixelColor >> 8) & 0xFF;
                     int blue = pixelColor & 0xFF;
@@ -1052,6 +1054,8 @@ public class TestBase extends UtilTestFunctions {
     }
 
     public static void newRobot() {
+        //TODO
+        /*
         if (robotGlass == null) {
             robotGlass = new GetAction<com.sun.glass.ui.Robot>() {
                         @Override
@@ -1073,6 +1077,8 @@ public class TestBase extends UtilTestFunctions {
                 }
             }
         }
+
+         */
     }
 
     /**

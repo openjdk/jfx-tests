@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,6 +25,7 @@
 package org.jemmy.samples.combobox;
 
 
+import org.jemmy.Point;
 import org.jemmy.action.FutureAction;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.ChoiceBoxDock;
@@ -43,6 +44,7 @@ import java.util.Date;
  */
 //@Ignore("https://javafx-jira.kenai.com/browse/RT-29551")
 public class ComboBoxSample extends SampleBase {
+
     private static SceneDock scene;
     private static ComboBoxDock comboBox1;
     private static ComboBoxDock comboBox2;
@@ -56,6 +58,9 @@ public class ComboBoxSample extends SampleBase {
 
         // Obtaining a Dock for scene
         scene = new SceneDock();
+
+        //workaround for JDK-8257835
+        scene.mouse().click(1,  new Point(0, 0));
 
         /**
          * Looking up for Combo and Choice boxes. The best option is to do that

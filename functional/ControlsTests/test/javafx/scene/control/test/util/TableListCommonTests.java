@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.util;
 
-import client.test.Smoke;
+
 import java.awt.Toolkit;
 import java.util.HashSet;
 import javafx.geometry.Orientation;
@@ -101,7 +101,7 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//Must be Ok on list.
     public void keyboardSequentialSingleSelectionTest() throws Throwable {
         adjustControl();
@@ -119,7 +119,7 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
         assertTrue(testedControl.getScreenBounds().contains(getCellWrap(0, DATA_ITEMS_NUM - 1).getScreenBounds()));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 3000000)
     public void singleRowSelectionTest() throws Throwable {
         adjustControl();
@@ -128,7 +128,7 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
         selectionCycle(Utils.isMacOS() ? KeyboardButtons.META : KeyboardButtons.CONTROL);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 3000000)
     public void multipleRowSelectionTest() throws Throwable {
         adjustControl();
@@ -140,7 +140,7 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
     }
 
     @Test
-    @Smoke
+    //TODO@Smoke
     public void onDiscontinuousSelectionTest() {
         adjustControl();
         switchOnMultiple();
@@ -174,7 +174,7 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
         intermediateStateCheck();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//Ok for ListView
     public void keyboardShiftSequentialMultipleSelectionTest() throws Throwable {
         adjustControl();
@@ -192,19 +192,19 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
         assertTrue(testedControl.getScreenBounds().contains(getCellWrap(0, DATA_ITEMS_NUM - 1).getScreenBounds()));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardRangeMultipleSelectionTest() throws Throwable {
         keyboardRangeMultipleSelectionCycle(false);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardRangeMultipleSelectionDiscontinuousTest() throws Throwable {
         keyboardRangeMultipleSelectionCycle(true);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardShortcutsSpaceTest() throws Throwable {
         adjustControl();
@@ -241,7 +241,7 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
         intermediateStateCheck();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardCtrlATest() throws Throwable {
         adjustControl();
@@ -271,19 +271,19 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
         intermediateStateCheck();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardHomeEndTest() throws Throwable {
         keyboardHomeEndCycle();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardCtrlHomeEndTest() throws Throwable {
         keyboardHomeEndCycle(CTRL_DOWN_MASK_OS);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardShiftSpaceTest() throws Throwable {
         adjustControl();
@@ -328,61 +328,61 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-18413
     public void keyboardShiftHomeEndTest() throws Throwable {
         keyboardHomeEndCycle(KeyboardModifiers.SHIFT_DOWN_MASK);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardCtrlShiftHomeEndTest() throws Throwable {
         keyboardHomeEndCycle(KeyboardModifiers.SHIFT_DOWN_MASK, CTRL_DOWN_MASK_OS);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardPageUpPageDownTest() throws Throwable {
         keyboardPageUpPageDownCycle();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardCtrlPageUpPageDownTest() throws Throwable {
         keyboardPageUpPageDownCycle(CTRL_DOWN_MASK_OS);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardShiftPageUpPageDownTest() throws Throwable {
         keyboardPageUpPageDownCycle(KeyboardModifiers.SHIFT_DOWN_MASK);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardCtrlShiftPageUpPageDownTest() throws Throwable {
         keyboardPageUpPageDownCycle(KeyboardModifiers.SHIFT_DOWN_MASK, CTRL_DOWN_MASK_OS);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardUpDownTest() throws Throwable {
         keyboardUpDownCycle();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardCtrlUpDownTest() throws Throwable {
         keyboardUpDownCycle(CTRL_DOWN_MASK_OS);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardShiftUpDownTest() throws Throwable {
         keyboardUpDownCycle(KeyboardModifiers.SHIFT_DOWN_MASK);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardCtrlShiftUpDownTest() throws Throwable {
         keyboardUpDownCycle(KeyboardModifiers.SHIFT_DOWN_MASK, CTRL_DOWN_MASK_OS);
@@ -392,7 +392,7 @@ public abstract class TableListCommonTests extends UtilTestFunctions {
      * Tests selection by applying shift + left mouse click
      * combination on the control cells.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void shiftLeftMouseClick() throws Throwable {
         MultipleSelectionHelper tmp = null;

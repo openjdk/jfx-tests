@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -149,18 +149,6 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
     }
 
     /**
-     * @param box
-     * @return
-     */
-    public static State getState(CheckBox box) {
-        if (!box.isIndeterminate()) {
-            return box.isSelected() ? State.CHECKED : State.UNCHECKED;
-        } else {
-            return State.UNDEFINED;
-        }
-    }
-
-    /**
      * @return
      */
     @Property(SELECTED_PROP_NAME)
@@ -170,7 +158,11 @@ public class CheckBoxWrap<T extends CheckBox> extends TextControlWrap<T> impleme
 
             @Override
             public void run(Object... parameters) {
-                setResult(getState(getControl()));
+                if (!getControl().isIndeterminate()) {
+                    setResult(getControl().isSelected() ? State.CHECKED : State.UNCHECKED);
+                } else {
+                    setResult(State.UNDEFINED);
+                }
             }
 
             @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.textinput;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import java.util.EnumSet;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextArea;
@@ -62,7 +62,7 @@ public abstract class TextControlCommonTests extends TextControlTestBase {
     protected abstract TextInputControl getNewControl();
 
     @Test(timeout = 300000)
-    @Smoke
+    //TODO@Smoke
     public void textPropertyTest() throws InterruptedException {
         assertEquals(getNewControl().textProperty().getValue(), "");
         String[] values = {"text1", "text2", "text3"};
@@ -79,7 +79,7 @@ public abstract class TextControlCommonTests extends TextControlTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void promptStringPropertyTest() throws Throwable {
         assertEquals(getNewControl().promptTextProperty().getValue(), "");
@@ -162,7 +162,7 @@ public abstract class TextControlCommonTests extends TextControlTestBase {
     }
 
     @Test(timeout = 300000)
-    @Smoke
+    //TODO@Smoke
     public void editablePropertyTest() {
         final String text = "some text";
         for (SettingType type : EnumSet.of(SettingType.BIDIRECTIONAL, SettingType.SETTER, SettingType.UNIDIRECTIONAL)) {
@@ -187,7 +187,7 @@ public abstract class TextControlCommonTests extends TextControlTestBase {
     }
 
     @Test(timeout = 300000)
-    @Smoke
+    //TODO@Smoke
     /**
      * Checks font property : all bindings, different values. Checks font of
      * text node inside.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -83,7 +83,7 @@ public class SplitPaneTest extends TestBase {
      * Test of DividersPositions API
      */
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void dividersPositionsTest() throws InterruptedException {
         testCommon(Pages.DividersPositions.name(), null, true, true);
@@ -92,7 +92,7 @@ public class SplitPaneTest extends TestBase {
     /**
      * Test of ResizableWithParent API
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void resizableWithParentTest() {
         openPage(Pages.ResizableWithParent.name());

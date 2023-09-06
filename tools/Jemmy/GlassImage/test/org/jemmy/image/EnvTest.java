@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,6 +25,8 @@
 package org.jemmy.image;
 
 import org.jemmy.env.Environment;
+import org.jemmy.image.glass.GlassImageCapturer;
+import org.jemmy.image.glass.GlassPixelImageComparator;
 import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import org.jemmy.image.pixel.RasterComparator;
 import org.junit.*;
@@ -41,6 +43,7 @@ public class EnvTest {
 
     @Test
     public void testRaster() {
+System.out.println("TEST!");
         Environment.getEnvironment().setProperty(RasterComparator.class, new PixelEqualityRasterComparator(1));
         Environment.getEnvironment().setProperty(ImageCapturer.class, new GlassImageCapturer());
         ImageComparator comp = Environment.getEnvironment().getProperty(ImageComparator.class);

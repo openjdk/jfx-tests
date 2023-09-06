@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2016 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,19 +25,17 @@
 package javafx.scene.control.test.dialog;
 
 import com.sun.glass.ui.Application;
-import com.sun.glass.ui.Robot;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.test.ControlsTestBase;
-import javafx.scene.control.test.dialog.DialogApp;
-import static javafx.scene.control.test.dialog.DialogApp.DialogScene.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.robot.Robot;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import org.jemmy.action.GetAction;
@@ -48,6 +46,7 @@ import org.jemmy.fx.ByWindowType;
 import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.image.Image;
+import org.jemmy.input.glass.GlassInputFactory;
 import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.resources.StringComparePolicy;
@@ -60,6 +59,8 @@ import org.junit.runner.RunWith;
 import test.javaclient.shared.FilteredTestRunner;
 import test.javaclient.shared.TestUtil;
 import test.javaclient.shared.screenshots.GoldenImageManager;
+
+import static javafx.scene.control.test.dialog.DialogApp.DialogScene.*;
 /**
  *
  * @author Alexander Vorobyev
@@ -87,7 +88,8 @@ public class DialogTest extends ControlsTestBase {
     @BeforeClass
     public static void setUpClass() throws Exception {
         DialogApp.main(null);
-        isRemote = (test.javaclient.shared.AppLauncher.getInstance().getMode() == test.javaclient.shared.AppLauncher.Mode.REMOTE);
+//        isRemote = (test.javaclient.shared.AppLauncher.getInstance().getMode() == test.javaclient.shared.AppLauncher.Mode.REMOTE);
+        isRemote = false;
     }
 
     @AfterClass
@@ -576,11 +578,11 @@ public class DialogTest extends ControlsTestBase {
 
     protected void closeDialogWindowByClosingWindow() {
         Application.invokeAndWait(() -> {
-            final Robot robot = Application.GetApplication().createRobot();
+            final Robot robot = GlassInputFactory.getRobot();
             Wrap<? extends com.sun.glass.ui.Window> dialogWindow = Root.ROOT.lookup(new ByWindowType(Window.class)).lookup(Scene.class).wrap(0);
             robot.mouseMove(dialogWindow.getScreenBounds().x + dialogWindow.getScreenBounds().width - 2, dialogWindow.getScreenBounds().y - 20);
-            robot.mousePress(1);
-            robot.mouseRelease(1);
+            robot.mousePress(MouseButton.PRIMARY);
+            robot.mouseRelease(MouseButton.PRIMARY);
         });
     }
 

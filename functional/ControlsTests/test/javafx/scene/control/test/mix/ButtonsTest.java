@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,14 +24,13 @@
  */
 package javafx.scene.control.test.mix;
 
-import client.test.Smoke;
+
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import com.oracle.jdk.sqe.cc.markup.Covers.Level;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.test.Buttons;
-import static javafx.scene.control.test.Buttons.ButtonsScene.*;
 import javafx.scene.control.test.ControlsTestBase;
 import javafx.scene.text.Text;
 import org.jemmy.action.GetAction;
@@ -43,7 +42,6 @@ import org.jemmy.interfaces.Keyboard.KeyboardButtons;
 import org.jemmy.interfaces.Parent;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -51,6 +49,9 @@ import org.junit.runner.RunWith;
 import test.javaclient.shared.FilteredTestRunner;
 import test.javaclient.shared.TestUtil;
 import test.javaclient.shared.Utils;
+
+import static javafx.scene.control.test.Buttons.ButtonsScene.*;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -75,7 +76,8 @@ public class ButtonsTest extends ControlsTestBase {
     @BeforeClass
     public static void setUpClass() throws Exception {
         Buttons.main(null);
-        isRemote = (test.javaclient.shared.AppLauncher.getInstance().getMode() == test.javaclient.shared.AppLauncher.Mode.REMOTE);
+        //isRemote = (test.javaclient.shared.AppLauncher.getInstance().getMode() == test.javaclient.shared.AppLauncher.Mode.REMOTE);
+        isRemote = false;
     }
 
     @AfterClass
@@ -97,7 +99,7 @@ public class ButtonsTest extends ControlsTestBase {
     }
 
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.Button.cancelButton.GET", "javafx.scene.control.Button.cancelButton.SET", "javafx.scene.control.Button.cancelButton.BIND", "javafx.scene.control.Button.cancelButton.DEFAULT"}, level = Level.FULL)
     public void cancelButtonTest() throws InterruptedException {
@@ -150,7 +152,7 @@ public class ButtonsTest extends ControlsTestBase {
         }.dispatch(Root.ROOT.getEnvironment()));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Covers(value = {"javafx.scene.control.Button.defaultButton.GET", "javafx.scene.control.Button.defaultButton.SET", "javafx.scene.control.Button.defaultButton.BIND", "javafx.scene.control.Button.defaultButton.DEFAULT"}, level = Level.FULL)
     public void defaultButtonTest() throws InterruptedException {
@@ -204,13 +206,13 @@ public class ButtonsTest extends ControlsTestBase {
         }.dispatch(Root.ROOT.getEnvironment()));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void bindingTestMouse() throws InterruptedException {
         binding(InputType.MOUSE);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void bindingTestKeyboard() throws InterruptedException {
         if (!isRemote) {
@@ -225,7 +227,7 @@ public class ButtonsTest extends ControlsTestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Covers(value = {"javafx.scene.control.Button.text.GET", "javafx.scene.control.Button.text.SET", "javafx.scene.control.Button.text.BIND", "javafx.scene.control.Button.text.DEFAULT"}, level = Level.FULL)
     public void binding(InputType ctrl) throws InterruptedException {
         String template = "pressed: ";
@@ -236,13 +238,13 @@ public class ButtonsTest extends ControlsTestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void buttonsTestMouse() throws InterruptedException {
         buttons(InputType.MOUSE);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void buttonsTestKeyboard() throws InterruptedException {
         if (!isRemote) {

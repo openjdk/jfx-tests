@@ -15,6 +15,12 @@ import org.junit.*;
  */
 public class ImageTest {
 
+//    public static void main(String[] args) throws Exception {
+//        ImageTest t = new ImageTest();
+//        t.setUpClass();
+//        t.hello();
+//        t.tearDown();
+//    }
     public ImageTest() {
     }
 

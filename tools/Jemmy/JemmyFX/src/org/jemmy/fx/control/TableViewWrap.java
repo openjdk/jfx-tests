@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -35,10 +35,10 @@ import org.jemmy.control.ControlType;
 import org.jemmy.control.Property;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.control.Scrollable2DImpl.ScrollsLookupCriteria;
-import org.jemmy.interfaces.EditableCellOwner;
+import org.jemmy.fx.interfaces.EditableCellOwner;
 import org.jemmy.interfaces.Focusable;
-import org.jemmy.interfaces.Scrollable2D;
-import org.jemmy.interfaces.Table;
+import org.jemmy.fx.interfaces.Scrollable2D;
+import org.jemmy.fx.interfaces.Table;
 
 import java.util.ArrayList;
 

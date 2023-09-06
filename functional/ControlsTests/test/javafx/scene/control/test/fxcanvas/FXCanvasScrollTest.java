@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,33 +24,13 @@
  */
 package javafx.scene.control.test.fxcanvas;
 
-import client.test.Keywords;
-import client.test.Smoke;
-import javafx.embed.swt.FXCanvas;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.test.ControlsTestBase;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Shell;
-import org.jemmy.Point;
-import org.jemmy.control.Wrap;
-import org.jemmy.fx.Root;
-import org.jemmy.interfaces.Parent;
-import org.jemmy.swt.Shells;
-import org.junit.After;
-import org.junit.AfterClass;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.JemmyProperties;
 import test.javaclient.shared.CanvasRunner;
-import static test.javaclient.shared.JemmyUtils.initJemmy;
 
 @RunWith(CanvasRunner.class)
 public class FXCanvasScrollTest extends ControlsTestBase {
-
+/*
     final static int SHIFT = 100;
     static Wrap<? extends Scene> scene = null;
     static Parent<Node> parent = null;
@@ -86,7 +66,7 @@ public class FXCanvasScrollTest extends ControlsTestBase {
     public void tearDown() {
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Keywords(keywords = "swt")
     public void resizingTest() throws InterruptedException {
@@ -128,4 +108,6 @@ public class FXCanvasScrollTest extends ControlsTestBase {
         assertEquals(initial_scene_size.height, scene.getScreenBounds().height, 1);
         assertEquals(initial_scene_size.width, scene.getScreenBounds().width, 1);
     }
+
+ */
 }

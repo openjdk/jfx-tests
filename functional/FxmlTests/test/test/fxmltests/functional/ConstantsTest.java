@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -73,6 +73,7 @@ public class ConstantsTest extends TestBase{
     public void testConstantProperty () {
         testCommon(FxmlConstantApp.Pages.property.name(), null, false, true);
         Wrap<? extends Scene> sceneWrap = Root.ROOT.lookup(Scene.class).wrap();
+        System.out.println("scene = " + sceneWrap.getControl());
         Parent<Node> sceneParent = sceneWrap.as(Parent.class, Node.class);
         Wrap<? extends Rectangle> rectangle = sceneParent.lookup(Rectangle.class, new ByID<Rectangle>("rectangle")).wrap();
         Assert.assertNotNull(rectangle.getControl().getFill());

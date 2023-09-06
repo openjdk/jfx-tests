@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -43,6 +43,18 @@ import static org.junit.Assert.assertEquals;
  * @author shura
  */
 public class LookupTest {
+
+//    public static void main(String[] args) throws Exception {
+//        LookupTest t = new LookupTest();
+//        setUpClass();
+//        t.ByText();
+//        t.byId();
+//        t.byTitle();
+//        t.circle();
+//        t.scenes();
+//        t.square();
+//        System.out.println("Done!");
+//    }
 
     public LookupTest() {
     }
@@ -91,7 +103,7 @@ public class LookupTest {
         Wrap<? extends Scene> scene = Root.ROOT.
                 lookup(Scene.class, new ByTitleSceneLookup<>("title1")).wrap();
 
-        Wrap<? extends Scene> scene2 = Root.ROOT.lookup(Scene.class).wrap(0);
+        Wrap<? extends Scene> scene2 = Root.ROOT.lookup(Scene.class).wrap(1);
         assertEquals(scene.getControl(), scene2.getControl());
     }
 

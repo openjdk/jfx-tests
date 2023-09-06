@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -31,8 +31,8 @@ import org.jemmy.control.Wrap;
 import org.jemmy.env.Timeout;
 import org.jemmy.fx.AppExecutor;
 import org.jemmy.fx.SceneDock;
-import org.jemmy.interfaces.EditableCellOwner;
-import org.jemmy.interfaces.EditableCellOwner.EditableCell;
+import org.jemmy.fx.interfaces.EditableCellOwner;
+import org.jemmy.fx.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.interfaces.Parent;
 import org.jemmy.interfaces.Selectable;
 import org.jemmy.lookup.*;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.draganddrop;
 
-import client.test.Smoke;
+
 import java.util.EnumSet;
 import static javafx.draganddrop.DragDropWithControls.*;
 import javafx.factory.ControlsFactory;
@@ -58,7 +58,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
 //                    sb.append("/**\n");
 //                    sb.append("* test drag and drop with source " + src + "\n");
 //                    sb.append("*/\n");
-//                    sb.append("//@Smoke\n");
+//                    sb.append("////TODO@Smoke\n");
 //                    sb.append("@Test(timeout = 300000)\n");
 //                    sb.append("public void from" + src + "() throws InterruptedException {\n");
 //                }
@@ -102,7 +102,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source Button
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromButton() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -528,7 +528,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source ChoiceBoxe
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromChoiceBoxe() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -954,7 +954,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source ComboBoxe
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromComboBoxe() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -1380,7 +1380,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source EditableComboBoxe
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromEditableComboBoxe() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -1806,7 +1806,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source Pagination
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromPagination() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -2232,7 +2232,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source ColorPicker
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromColorPicker() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -2658,7 +2658,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source CheckBoxe
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromCheckBoxe() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -3084,7 +3084,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source RadioButton
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromRadioButton() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -3510,7 +3510,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source TextField
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromTextField() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -3936,7 +3936,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source TextArea
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromTextArea() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -4362,7 +4362,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source PasswordField
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromPasswordField() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -4788,7 +4788,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source Slider
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromSlider() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -5214,7 +5214,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source Label
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromLabel() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -5640,7 +5640,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source Hyperlink
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromHyperlink() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -6066,7 +6066,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source ImageView
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromImageView() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -6492,7 +6492,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source MediaView
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromMediaView() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -6918,7 +6918,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source Separator
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromSeparator() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -7344,7 +7344,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source ScrollBar
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromScrollBar() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -7770,7 +7770,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source ScrollPane
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromScrollPane() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -8196,7 +8196,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source ProgressIndicator
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromProgressIndicator() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -8622,7 +8622,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source ProgressBar
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromProgressBar() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -9048,7 +9048,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source ListView
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromListView() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -9474,7 +9474,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source PressedToggleButton
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromPressedToggleButton() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -9900,7 +9900,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source UnPressedToggleButton
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromUnPressedToggleButton() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -10326,7 +10326,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source Toolbar
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromToolbar() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -10752,7 +10752,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source Menubar
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromMenubar() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -11178,7 +11178,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source SplitMenuButton
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromSplitMenuButton() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -11604,7 +11604,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source TabPane
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromTabPane() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -12030,7 +12030,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source TitledPane
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromTitledPane() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -12456,7 +12456,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source TableView
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromTableView() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -12882,7 +12882,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source TreeTableView
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromTreeTableView() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -13308,7 +13308,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source TreeView
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromTreeView() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -13734,7 +13734,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source Accordion
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromAccordion() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -14160,7 +14160,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source SplitPane
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromSplitPane() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -14586,7 +14586,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source DatePicker
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromDatePicker() throws InterruptedException {
         setTransferMode(TransferMode.LINK);
@@ -15012,7 +15012,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source Line
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromLine() throws InterruptedException {
         setTransferMode(TransferMode.MOVE);
@@ -15438,7 +15438,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source Cirle
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromCirle() throws InterruptedException {
         setTransferMode(TransferMode.COPY);
@@ -15864,7 +15864,7 @@ public class DragDropWithControlsTest extends DragDropWithControlsBase {
     /**
      * test drag and drop with source VBox
      */
-//@Smoke
+////TODO@Smoke
     @Test(timeout = 300000)
     public void fromVBox() throws InterruptedException {
         setTransferMode(TransferMode.LINK);

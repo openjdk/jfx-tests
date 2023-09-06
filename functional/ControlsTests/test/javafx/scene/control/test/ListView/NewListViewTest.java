@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.ListView;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.collections.ObservableList;
 import javafx.commons.SortValidator;
 import javafx.event.EventHandler;
@@ -146,7 +146,7 @@ public class NewListViewTest extends TestBase {
     }
 
     //SECTION OF TESTS ON PROPERTIES
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void editablePropertyTest() {
         setPropertyByToggleClick(SettingType.BIDIRECTIONAL, Properties.editable);
@@ -162,7 +162,7 @@ public class NewListViewTest extends TestBase {
         checkTextFieldText(Properties.editable, "false");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void orientationPropertyTest() {
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, Orientation.VERTICAL, Properties.orientation);
@@ -178,7 +178,7 @@ public class NewListViewTest extends TestBase {
         checkTextFieldText(Properties.orientation, "HORIZONTAL");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void selectionModePropertyTest() {
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, SelectionMode.MULTIPLE, Properties.selectionMode);
@@ -194,7 +194,7 @@ public class NewListViewTest extends TestBase {
         checkTextFieldText(Properties.selectionMode, "SINGLE");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void prefHeightPropertyTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 200);
@@ -210,7 +210,7 @@ public class NewListViewTest extends TestBase {
         checkTextFieldValue(Properties.prefHeight, 50);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void prefWidthPropertyTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefWidth, 200);
@@ -227,7 +227,7 @@ public class NewListViewTest extends TestBase {
     }
 
     //                          SITUATIONAL TESTS
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void keyboardRangeMultipleSelection2Test() throws Throwable {
         addElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -284,7 +284,7 @@ public class NewListViewTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void scrollToTest() throws InterruptedException {
         int size = 10;
@@ -350,21 +350,21 @@ public class NewListViewTest extends TestBase {
         return control.contains(cellRect);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 30000)
     public void fixedCellSizePropertyTest() throws InterruptedException {
         adjustControl();
         fixedCellSizePropertyTestCommon(testedControl, Properties.fixedCellSize, Utils.isCaspian() ? 19.4 : 21);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 30000)
     public void fixedCellSizePropertyCSSTest() {
         adjustControl();
         fixedCellSizePropertyCSSTestCommon(testedControl, Properties.fixedCellSize, Utils.isCaspian() ? 19.4 : 21);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void verticalScrollBarBehaviorOnAddingDeletingTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.prefHeight, 50);
@@ -397,7 +397,7 @@ public class NewListViewTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void scrollAppearingOnResizingTest() throws InterruptedException {
         setSize(50, 50);
@@ -424,7 +424,7 @@ public class NewListViewTest extends TestBase {
         checkScrollbarsStates(false, false);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void scrollBarAppearingSensitivityTest() throws InterruptedException {
         addRectangleAtPos(0);
@@ -436,7 +436,7 @@ public class NewListViewTest extends TestBase {
         checkScrollbarsStates(false, false);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-18293
     public void eventsCommingTest() throws InterruptedException {
         addFormAtPos(0);
@@ -475,7 +475,7 @@ public class NewListViewTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000) //RT-17462
     public void scrollBarDisappearTest() throws InterruptedException {
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, Orientation.HORIZONTAL, Properties.orientation);
@@ -492,7 +492,7 @@ public class NewListViewTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-17465
     public void selectionSavingTest() throws InterruptedException, Throwable {
         setSize(100, 100);
@@ -559,7 +559,7 @@ public class NewListViewTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-17522
     public void addingElementOnFocusPositionTest() {
         addElements(1, 2, 3, 4, 5, 6, 7);
@@ -599,7 +599,7 @@ public class NewListViewTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)//RT-18234 - possible
     public void singleSelectionOnKeyBoardTest() throws InterruptedException, Throwable {
         addElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -637,7 +637,7 @@ public class NewListViewTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void multipleSelectionCommonLogicOnKeyBoardTest() throws InterruptedException, Throwable {
         addElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -706,7 +706,7 @@ public class NewListViewTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void ctrlAClickSingleTest() throws InterruptedException, Throwable {
         addElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -753,7 +753,7 @@ public class NewListViewTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void ctrlAClickMultipleTest() throws InterruptedException, Throwable {
         addElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -800,25 +800,25 @@ public class NewListViewTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void mouseClickingVerticalMultipleTest() throws InterruptedException, Throwable {
         commonClickingTest(Orientation.VERTICAL, SelectionMode.MULTIPLE);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void mouseClickingHorizontalMultipleTest() throws InterruptedException, Throwable {
         commonClickingTest(Orientation.HORIZONTAL, SelectionMode.MULTIPLE);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void mouseClickingVerticalSingleTest() throws InterruptedException, Throwable {
         commonClickingTest(Orientation.VERTICAL, SelectionMode.SINGLE);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void mouseClickingHorizontalSingleTest() throws InterruptedException, Throwable {
         commonClickingTest(Orientation.HORIZONTAL, SelectionMode.SINGLE);
@@ -1198,7 +1198,7 @@ public class NewListViewTest extends TestBase {
      * Checks that when the sorting is applied to the underlying data collection
      * the cells are rendered in the right order.
      */
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 30000)
     public void renderingAfterSortingTest() {
         try {

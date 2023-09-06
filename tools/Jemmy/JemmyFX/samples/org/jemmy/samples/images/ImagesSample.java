@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -32,23 +32,24 @@ import org.jemmy.fx.Root;
 import org.jemmy.fx.SceneDock;
 import org.jemmy.fx.control.LabeledDock;
 import org.jemmy.fx.control.ToggleButtonDock;
-import org.jemmy.image.AWTImage;
-import org.jemmy.image.BufferedImageComparator;
-import org.jemmy.image.GlassImage;
-import org.jemmy.image.GlassPixelImageComparator;
 import org.jemmy.image.Image;
+import org.jemmy.image.awt.AWTImage;
+import org.jemmy.image.awt.BufferedImageComparator;
+import org.jemmy.image.glass.GlassImage;
+import org.jemmy.image.glass.GlassPixelImageComparator;
 import org.jemmy.image.pixel.AverageDistanceComparator;
 import org.jemmy.image.pixel.MaxDistanceComparator;
 import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import org.jemmy.image.pixel.PixelImageComparator;
 import org.jemmy.image.pixel.RasterComparator;
-import static org.jemmy.resources.StringComparePolicy.*;
 import org.jemmy.samples.SampleBase;
-import org.jemmy.samples.buttons.*;
+import org.jemmy.samples.buttons.ButtonsApp;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.jemmy.resources.StringComparePolicy.EXACT;
+import static org.junit.Assert.assertNull;
 
 /**
  * How to use images to check state of a Node.
@@ -100,10 +101,9 @@ public class ImagesSample extends SampleBase {
      * Compare using default comparator.
      */
     @Test
-    public void defaultComparator() {
+    public void exactComparator() {
         //let's use comparison logic, which is
         //comparing all pixels for equality.
-        //this is, also, a default comparator
         Environment.getEnvironment().setProperty(RasterComparator.class, new PixelEqualityRasterComparator(0));
         //since the UI is in original state, images should be the same
         button.mouse().click();
@@ -193,11 +193,10 @@ public class ImagesSample extends SampleBase {
         radio.waitImage(RADIO_PNG, "distance.0." + RADIO_RES_PNG, "distance.0." + RADIO_DIFF_PNG);
 
         //now use maximum (over all pixels) distance
-        Environment.getEnvironment().setProperty(RasterComparator.class, new MaxDistanceComparator(.3));
+        Environment.getEnvironment().setProperty(RasterComparator.class, new MaxDistanceComparator(.1));
         //let's click on the radio and compare
         //should not be as some color are too far away
         radio.mouse().click();
-        button.mouse().click();
         BEFORE_DIFF_TIMEOUT.sleep();
         try {
             radio.waitImage(RADIO_PNG, "distance.1." + RADIO_RES_PNG, "distance.1." + RADIO_DIFF_PNG);

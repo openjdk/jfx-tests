@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -32,6 +32,9 @@ import org.jemmy.env.Timeout;
 import org.jemmy.interfaces.Modifier;
 import org.jemmy.interfaces.Mouse;
 import org.jemmy.interfaces.Showable;
+
+import static org.jemmy.input.glass.GlassInputFactory.invokeAndWait;
+import static org.jemmy.input.glass.GlassInputFactory.getRobot;
 
 /**
  *
@@ -74,11 +77,12 @@ class GlassMouse implements Mouse {
         factory.runAction(control, new Action() {
 
             @Override
-            public void run(Object... parameters) {
+            public void run(Object... parameters) throws InterruptedException {
                 for (Modifier m : modifiers) {
-                    factory.pressModifier(m);
+                    factory.pressModifier(m, control.getEnvironment());
                 }
-                GlassInputFactory.getRobot().mousePress(factory.map.mouseButton(button));
+                invokeAndWait(control.getEnvironment(),
+                        () -> getRobot().mousePress(factory.map.mouseButton(button)));
             }
 
             @Override
@@ -107,10 +111,11 @@ class GlassMouse implements Mouse {
         factory.runAction(control, new Action() {
 
             @Override
-            public void run(Object... parameters) {
-                GlassInputFactory.getRobot().mouseRelease(factory.map.mouseButton(button));
+            public void run(Object... parameters) throws InterruptedException {
+                invokeAndWait(control.getEnvironment(),
+                        () -> getRobot().mouseRelease(factory.map.mouseButton(button)));
                 for (Modifier m : modifiers) {
-                    factory.releaseModifier(m);
+                    factory.releaseModifier(m, control.getEnvironment());
                 }
             }
 
@@ -140,7 +145,7 @@ class GlassMouse implements Mouse {
         factory.runAction(control, new Action() {
 
             @Override
-            public void run(Object... parameters) {
+            public void run(Object... parameters) throws InterruptedException {
                 double targetX = control.getScreenBounds().x + p.x;
                 double targetY = control.getScreenBounds().y + p.y;
                 if (haveOldPos && (oldX != targetX || oldY != targetY)) {
@@ -157,13 +162,15 @@ class GlassMouse implements Mouse {
                             || Math.round(currY) != Math.round(targetY)) {
                         currX += vx;
                         currY += vy;
-                        GlassInputFactory.getRobot().mouseMove((int) currX, (int) currY);
+                        double[] coord = {currX, currY};
+                        invokeAndWait(control.getEnvironment(),
+                                () -> getRobot().mouseMove((int) coord[0], (int) coord[1]));
                         new Timeout(GlassInputFactory.ROBOT_MOUSE_STEP_DELAY_PROPERTY, delay).sleep();
                     }
                 }
 
-                GlassInputFactory.getRobot().mouseMove((int)targetX, (int)targetY);
-//                new Timeout(GlassInputFactory.ROBOT_MOUSE_STEP_DELAY_PROPERTY, delay).sleep();
+                invokeAndWait(control.getEnvironment(),
+                        () -> getRobot().mouseMove((int)targetX, (int)targetY));
                 haveOldPos = true;
                 oldX = targetX;
                 oldY = targetY;
@@ -213,18 +220,20 @@ class GlassMouse implements Mouse {
         factory.runAction(control, new Action() {
 
             @Override
-            public void run(Object... parameters) {
+            public void run(Object... parameters) throws InterruptedException {
                 for (Modifier m : modifiers) {
-                    factory.pressModifier(m);
+                    factory.pressModifier(m, control.getEnvironment());
                 }
                 move((p != null) ? p : control.getClickPoint());
                 for (int i = 1; i <= count; i++) {
-                    GlassInputFactory.getRobot().mousePress(factory.map.mouseButton(button));
+                    invokeAndWait(control.getEnvironment(), () ->
+                            getRobot().mousePress(factory.map.mouseButton(button)));
                     control.getEnvironment().getTimeout(Mouse.CLICK).sleep();
-                    GlassInputFactory.getRobot().mouseRelease(factory.map.mouseButton(button));
+                    invokeAndWait(control.getEnvironment(), () ->
+                            getRobot().mouseRelease(factory.map.mouseButton(button)));
                 }
                 for (Modifier m : modifiers) {
-                    factory.releaseModifier(m);
+                    factory.releaseModifier(m, control.getEnvironment());
                 }
             }
 
@@ -266,12 +275,13 @@ class GlassMouse implements Mouse {
                     control.as(Showable.class).shower().show();
                 }
                 for (Modifier m : modifiers) {
-                    factory.pressModifier(m);
+                    factory.pressModifier(m, control.getEnvironment());
                 }
                 move((p != null) ? p : control.getClickPoint());
-                GlassInputFactory.getRobot().mouseWheel(amount);
+                invokeAndWait(control.getEnvironment(),
+                        () ->getRobot().mouseWheel(amount));
                 for (Modifier m : modifiers) {
-                    factory.releaseModifier(m);
+                    factory.releaseModifier(m, control.getEnvironment());
                 }
             }
         }, detached);

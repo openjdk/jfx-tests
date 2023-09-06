@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -36,7 +36,9 @@ import org.jemmy.control.Wrap;
 import org.jemmy.dock.ObjectLookup;
 import org.jemmy.env.Environment;
 import org.jemmy.fx.NodeParentImpl;
-import org.jemmy.interfaces.CellOwner.Cell;
+import org.jemmy.fx.interfaces.CellOwner.Cell;
+import org.jemmy.fx.interfaces.Close;
+import org.jemmy.fx.interfaces.Closer;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.ByStringLookup;
 import org.jemmy.lookup.LookupCriteria;

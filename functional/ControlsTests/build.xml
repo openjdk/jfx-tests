@@ -1,130 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  
-/*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation. Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- * questions.
- */
--->
-<project name="ControlsTests" default="default" basedir="."
-         xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:fx="javafx:com.sun.javafx.tools.ant">
-    <description>Builds, tests, and runs the project ControlsTests.</description>
-
-    <import file="../../tools/SharedTestUtilsOpen/image-utils.xml"/>  
-    <import file="../../tools/FxTestRunner/javatest_fx.xml"/>
-    <import file="../../tools/FxTestRunner/run_javatest_macro.xml"/>
-    <import file="../../tools/FxTestRunner/plugin_support.xml"/>
-
-    <condition property="external.output" value="${external.output}" else="${basedir}/..">
-    	<isset property="external.output"/>
-    </condition>
-
-    <property name="image.properties" location="${basedir}/image.properties"/> 
-    <property name="test.sources" value="test"/>
-
-    <target name="-pre-init" unless="no.need.to.find.java.fx">
-        <ant antfile="../../detect_javafx-nb.xml" inheritall="true">
-            <property name="basedir" location="${basedir}/../.."/>
-            <property name="property.file" value="${basedir}/nbproject/private/private.properties"/>
-        </ant>
+<project name="controls.tests" default="compile">
+    <basename file="${basedir}" property="."/>
+    <property name="rootdir" location="${basedir}/../.."/>
+    <property name="project.name" value="ControlsTests"/>
+    <import file="${basedir}/../../tools/make/build-template.xml"/> 
+    <property name="dependencies.classpath" value="${jemmyfx-src}/build/classes${path.separator}${glass-robot-src}/build/classes${path.separator}${glass-image-src}/build/classes${path.separator}${jtreg.home}/lib/junit.jar${path.separator}${javafx.home}/lib/javafx-swt.jar${path.separator}${javafx.home}/lib/javafx.swing.jar${path.separator}${shared-test-utils-src}/build/classes${path.separator}${test-markup-src}/build/classes"/>
+    <target name="build-dependencies">
+        <antcall target="build-other-project">
+            <param name="project" value="${shared-test-utils-src}"/>
+        </antcall>
+        <antcall target="build-other-project">
+            <param name="project" value="${test-markup-src}"/>
+        </antcall>
     </target>
-
-    <import file="nbproject/build-impl.xml"/>    
-
-    <target name="test-dir" depends="init, compile-test,-pre-test-run" if="have.tests">
-        <fail unless="test.subdir">Must set test.subdir with short name of root dir of tests; eg ListView</fail>
-        <j2seproject3:junit testincludes="javafx/scene/control/test/${test.subdir}/**/*Test.java"/>
-    </target>
-
-    <!-- javatest support -->
-    <target name="javatest" depends="compile, compile-test, run-manual"/>
-    <target name="run-manual" depends="init,dojavatest"/>
-	<target name="run-automated" depends="-post-jar, javatest-automated"/>
-	<target name="run-automated-nobuild" depends="init, dist-plugin, javatest-automated"/>
-    <target name="-post-jar" depends="compile-test, dist-plugin"/>
-
-    <!--    Prepare jars for manual testing -->
-    <target name="-post-compile-test" depends="manual-jars" />
-    <property name="content.dir" value="${basedir}/content" />
-    <target name="manual-jars" depends="init">
-        <echo message="FX-ANT=${file.reference.ant-javafx.jar}" />
-
-        <condition property="file.reference.ant-javafx.jar" value="${javafx.home}/lib/ant-javafx.jar" else="${javafx.rt}/lib/ant-javafx.jar">
-    	    <isset property="javafx.home"/>
-        </condition>
-        <echo message="debug: file.reference.ant-javafx.jar = ${file.reference.ant-javafx.jar}"/>
-
-        <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
-                 uri="javafx:com.sun.javafx.tools.ant"
-                 classpath="${file.reference.ant-javafx.jar}"/>
-                
-        <fx:jar destfile="${content.dir}/source.jar">
-            <application mainClass="javafx.draganddrop.DragDropWithControls" name="DragAndClipboard"  />
-            <fileset dir="${build.classes.dir}">
-                <include name="javafx/**" />
-            </fileset>
-            <fileset dir="${build.test.classes.dir}"/>
-            <manifest>
-                <attribute name="Implementation-Vendor" value="Oracle"/>
-                <attribute name="Implementation-Title" value="FXSQE Manual Test"/>
-                <attribute name="Implementation-Version" value="1.0"/>
-            </manifest>
-            <fx:resources>
-		<fx:fileset dir="${content.dir}" includes="SharedTestUtilsOpen.jar"/>
-		<fx:fileset dir="${content.dir}" includes="JemmyAWTInput.jar"/>
-                <fx:fileset dir="${content.dir}" includes="JemmyCore.jar"/>
-                <fx:fileset dir="${content.dir}" includes="JemmyFX.jar"/>
-            </fx:resources>
-        </fx:jar>
-        <copy file="../../tools/SharedTestUtilsOpen/dist/SharedTestUtilsOpen.jar" tofile="${content.dir}/SharedTestUtilsOpen.jar"/>		
-	<copy file="../../tools/Jemmy/jemmy_core/JemmyAWTInput.jar"               tofile="${content.dir}/JemmyAWTInput.jar"/>
-        <copy file="../../tools/Jemmy/jemmy_core/JemmyCore.jar"                   tofile="${content.dir}/JemmyCore.jar"/>
-        <copy file="../../tools/Jemmy/JemmyFX/dist/JemmyFX.jar"                   tofile="${content.dir}/JemmyFX.jar"/>
-    </target>
-	
-    <target name="check-template" unless="template">
-        <fail message="template variable must be set to merge"/>
-    </target>
-    <target name="feature-coverage-merge" depends="-post-compile-test, check-template">
-        <java classname="com.oracle.jdk.sqe.cc.markup.Merger">
-            <classpath>
-                <pathelement location="../../tools/TestMarkup/dist/TestMarkup.jar"/>
-            </classpath>
-            <arg line="-o"/>
-            <arg line="${basedir}/result.fcov"/>
-            <arg line="${template}"/>
-            <arg line="${basedir}/coverage.fcov"/>
-        </java>
-        <java classname="com.oracle.jdk.sqe.cc.markup.Report">
-            <classpath>
-                <pathelement location="../../tools/TestMarkup/dist/TestMarkup.jar"/>
-            </classpath>
-            <arg line="-o"/>
-            <arg line="${basedir}/report.html"/>
-            <arg line="${basedir}/result.fcov"/>
-        </java>
-    </target>
-    <target name="-post-clean">  <!--  depends="delete-jcov" -->
-        <delete dir="dist-plugin"/>
-    </target>
-
+    <target name="compile" depends="compile-src"/>
+    <target name="build-test-dependencies"/>
 </project>

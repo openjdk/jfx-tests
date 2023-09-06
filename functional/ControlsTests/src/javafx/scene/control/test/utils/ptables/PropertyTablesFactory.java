@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,12 +24,13 @@
  */
 package javafx.scene.control.test.utils.ptables;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.ReadOnlyProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
@@ -44,11 +45,17 @@ import javafx.scene.control.test.utils.ComponentsFactory;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import java.lang.reflect.Method;
 import java.time.chrono.Chronology;
-import javafx.scene.shape.Polygon;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author Alexander Kirov
@@ -143,6 +150,7 @@ public class PropertyTablesFactory {
                         try {
                             Object ob = method.invoke(control);
                             if (ob.getClass().getName().contains("ReadOnly")) {
+//                            if (ob instanceof ReadOnlyProperty) {
                                 tb.addSimpleListener((ReadOnlyProperty) ob, control);
                             }
                         } catch (Exception ex) {

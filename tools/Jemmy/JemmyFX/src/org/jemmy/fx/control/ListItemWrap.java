@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -34,7 +34,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.util.Callback;
 import org.jemmy.Point;
 import org.jemmy.Rectangle;
 import org.jemmy.action.GetAction;
@@ -42,10 +41,9 @@ import org.jemmy.control.*;
 import org.jemmy.dock.DockInfo;
 import org.jemmy.fx.Utils;
 import org.jemmy.fx.WindowElement;
-import static org.jemmy.fx.control.TableUtils.getClickPoint;
 import org.jemmy.input.AbstractScroll;
-import org.jemmy.interfaces.EditableCellOwner.CellEditor;
-import org.jemmy.interfaces.EditableCellOwner.EditableCell;
+import org.jemmy.fx.interfaces.EditableCellOwner.CellEditor;
+import org.jemmy.fx.interfaces.EditableCellOwner.EditableCell;
 import org.jemmy.interfaces.*;
 import org.jemmy.lookup.LookupCriteria;
 
@@ -164,7 +162,7 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
                             Bounds controlBounds = lv.sceneToLocal(
                                     control.localToScene(control.getBoundsInLocal()));
                             if (viewArea.contains(controlBounds)) {
-                                Long index = new Long(control.getIndex());
+                                Long index = Long.valueOf(control.getIndex());
                                 res.add(index);
                                 return false;
                             }
@@ -235,6 +233,20 @@ public class ListItemWrap<DATA extends Object> extends ItemWrap<DATA> implements
         @Override
         public String toString() {
             return "Looking for a visible listCell with the value '" + item + "'";
+        }
+    }
+
+    public static class ByItemLookup implements LookupCriteria<ListView> {
+
+        public final LookupCriteria itemLookup;
+
+        public ByItemLookup(LookupCriteria itemLookup) {
+            this.itemLookup = itemLookup;
+        }
+
+        @Override
+        public boolean check(ListView view) {
+            return view.getItems().stream().anyMatch(itemLookup::check);
         }
     }
 }

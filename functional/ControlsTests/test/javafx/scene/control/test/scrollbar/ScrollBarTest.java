@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.scrollbar;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Orientation;
@@ -51,7 +51,7 @@ import test.javaclient.shared.Utils;
 @RunWith(FilteredTestRunner.class)
 public class ScrollBarTest extends TestBase {
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void simpleValueSettingTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.value, 70);
@@ -61,7 +61,7 @@ public class ScrollBarTest extends TestBase {
         checkTextFieldValue(Properties.value, 30);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void minAndMaxPropertyTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.max, -10);
@@ -77,7 +77,7 @@ public class ScrollBarTest extends TestBase {
         checkTextFieldValue(Properties.min, 50);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void visibleAmountPropertyTest() throws InterruptedException {
         setPropertyBySlider(SettingType.BIDIRECTIONAL, Properties.value, 50);
@@ -97,7 +97,7 @@ public class ScrollBarTest extends TestBase {
         checkTextFieldValue(Properties.value, 50);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000) //RT-18223
     public void blockAndUnitIncrementAndMouseAndKeyBoardTest() throws InterruptedException {
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, Orientation.VERTICAL, Properties.orientation);
@@ -200,7 +200,7 @@ public class ScrollBarTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000) //Test checks horizontal and vertical scrolling for horizontal and vertical scrollBar.
     public void scrollingTest() throws InterruptedException {
         //Unit increment value should determine scrolling value per 1 turn.
@@ -249,7 +249,7 @@ public class ScrollBarTest extends TestBase {
         checkTextFieldValue(Properties.value, 40);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void adjustValueTest() throws InterruptedException {
         Wrap<? extends ScrollBar> testedScrollBar = parent.lookup(ScrollBar.class, new ByID<ScrollBar>(TESTED_SCROLLBAR_ID)).wrap();
@@ -273,7 +273,7 @@ public class ScrollBarTest extends TestBase {
         checkTextFieldValue(Properties.value, 100);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void scrolling2Test() {
         Wrap<? extends ScrollBar> testedScrollBar = parent.lookup(ScrollBar.class, new ByID<ScrollBar>(TESTED_SCROLLBAR_ID)).wrap();
@@ -302,7 +302,7 @@ public class ScrollBarTest extends TestBase {
         assertEquals(0, c1.position(), ASSERT_CMP_PRECISION);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void iterativeWorkingTest() throws InterruptedException {
         setPropertyByChoiceBox(SettingType.BIDIRECTIONAL, Orientation.VERTICAL, Properties.orientation);
@@ -368,7 +368,7 @@ public class ScrollBarTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void focusTraversalTest() throws InterruptedException {
         Wrap<? extends ScrollBar> testedScrollBar = parent.lookup(ScrollBar.class, new ByID<ScrollBar>(TESTED_SCROLLBAR_ID)).wrap();
@@ -430,7 +430,7 @@ public class ScrollBarTest extends TestBase {
         testedScrollBar.waitProperty("isFocused", false);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void bigBidirectionalComposedTest() throws InterruptedException {
         for (SettingType type : SettingType.values()) {
@@ -468,7 +468,7 @@ public class ScrollBarTest extends TestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void screenShotCheckingInComplexConditionsTest() throws Throwable {
         for (SettingType type : SettingType.values()) {
@@ -497,7 +497,7 @@ public class ScrollBarTest extends TestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)// RT-18220 RT-18221
     public void exceptionOnNegativeValuesSettingTest() throws Exception {
         int exceptionsCounter = 0;
@@ -565,7 +565,7 @@ public class ScrollBarTest extends TestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void minGreatedThenMaxTest() {
         ScrollBar sb = new ScrollBar();

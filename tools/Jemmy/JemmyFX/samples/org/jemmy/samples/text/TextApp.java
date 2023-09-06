@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -33,9 +33,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * This is a sample app to demonstrate Jemmy functionality. It provides a few
@@ -62,6 +64,23 @@ public class TextApp extends Application {
         singleLine.setId("single");
         multiLine = new TextArea();
         multiLine.addEventHandler(KeyEvent.KEY_TYPED, textUpdate);
+        //TODO
+        //this is to demonstrate a bug with extra invizible symbol
+        Runnable call = () -> {
+            int testLength = multiLine.getText().length();
+            System.out.print("Text length " + testLength);
+            if(testLength > 0)
+                System.out.println(", last char " + multiLine.getText().charAt(testLength - 1));
+            else
+                System.out.println();
+        };
+        multiLine.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            call.run();
+        });
+        multiLine.addEventHandler(KeyEvent.KEY_RELEASED, e -> {
+            call.run();
+        });
+        //end TODO
         reset();
         Button reset = new Button("Reset");
         reset.setOnAction(t -> {
@@ -71,6 +90,7 @@ public class TextApp extends Application {
         content.getChildren().add(reset);
         content.getChildren().addAll(singleLine, multiLine, text);
         stage.setScene(new Scene(content));
+        stage.setAlwaysOnTop(true);
         stage.show();
     }
 
@@ -80,7 +100,9 @@ public class TextApp extends Application {
 
     private void reset() {
         singleLine.setText("single line text");
-        multiLine.setText("multi\nline\ntext\n");
+        //commented out because of JDK-8283592
+//        multiLine.setText("multi\nline\ntext\n");
+        multiLine.setText("multi\nline\ntext");
         updateText(multiLine);
     }
 

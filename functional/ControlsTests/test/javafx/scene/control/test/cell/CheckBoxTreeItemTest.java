@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 
 package javafx.scene.control.test.cell;
 
-import client.test.Smoke;
+
 import java.util.Arrays;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -111,21 +111,21 @@ public class CheckBoxTreeItemTest extends UtilTestFunctions {
         propertyTableHelper = new PropertyGridHelper<CheckBoxTreeItem>((Wrap<? extends CheckBoxTreeItem>) item, parent.lookup(PropertyCheckingGrid.class).wrap());
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test
     public void selectedPropertyTest() throws Throwable {
         PropertyHelper selectedHelper = propertyTableHelper.getPropertyHelper(Boolean.class, "selected");
         selectedHelper.checkProperty(true);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test
     public void indeterminatePropertyTest() throws Throwable {
         PropertyHelper indeterminateHelper = propertyTableHelper.getPropertyHelper(Boolean.class, "indeterminate");
         indeterminateHelper.checkProperty(false);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test
     public void independentPropertyTest() throws Throwable {
         PropertyHelper independentHelper = propertyTableHelper.getPropertyHelper(Boolean.class, "independent");

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
  */
 package javafx.scene.control.test.textinput;
 
-import client.test.Smoke;
+
 import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         dockTxt = new TextInputControlDock(testedControl);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test
     public void UndoTypedCharsReplacedSelection() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
@@ -76,7 +76,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         Assert.assertTrue("Test edit chain. See output", testChanges("Undo: type, select, type, undo", changes));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test
     public void UndoPasteCharsReplacedSelection() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
@@ -92,7 +92,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         Assert.assertTrue("Test edit chain. See output", testChanges("Undo: type, select, type, undo", changes));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test
     public void ZeroMoveCaretBetweenType() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
@@ -110,7 +110,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         Assert.assertTrue("Test edit chain. See output", testChanges("Move Caret at sezo offset between type", changes));
     }
 
-    @Smoke
+    //TODO@Smoke
     //@Test//Commented out, as RT-22649 is a feature.
     public void BackspaceSequence() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
@@ -127,7 +127,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         Assert.assertTrue("Test edit chain. See output", testChanges("Backspace sequence must be one transaction", changes));
     }
 
-    @Smoke
+    //TODO@Smoke
     //@Test//Commented out, as RT-22649 is a feature.
     public void DeleteSequence() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
@@ -144,7 +144,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         Assert.assertTrue("Test edit chain. See output", testChanges("Delete sequence must be one transaction", changes));
     }
 
-    @Smoke
+    //TODO@Smoke
     //@Test//Commented out, as RT-22649 is a feature.
     public void DeleteAndBackspaceSequence() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
@@ -162,7 +162,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         Assert.assertTrue("Test edit chain. See output", testChanges("Delete and backspace sequence must be one transaction", changes));
     }
 
-    @Smoke
+    //TODO@Smoke
     //@Test//Commented out, as RT-22966 is a feature.
     public void CheckCaretPositionAfterUndoDeletion() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
@@ -175,7 +175,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         Assert.assertTrue("Test edit chain. See output", testChanges("Check caret position after undo deletion", changes));
     }
 
-    @Smoke
+    //TODO@Smoke
     //@Test//Commented out, as RT-22966 is a feature.
     public void CheckCaretPositionAfterUndoPasteAtSelection() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
@@ -189,7 +189,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         Assert.assertTrue("Test edit chain. See output", testChanges("Check caret position after undo paste at selection", changes));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test
     public void RedoTest1() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
@@ -210,7 +210,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         Assert.assertTrue("Test edit chain. See output", testChanges("Redo test", changes));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test
     public void RedoTest2() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
@@ -233,7 +233,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         Assert.assertTrue("Test edit chain. See output", testChanges("Redo test", changes));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test
     public void TruncateUndoChain() throws InterruptedException {
         List<Change> changes = new ArrayList<Change>();
@@ -257,7 +257,7 @@ public abstract class UndoRedoBaseTests extends TextControlTestBase {
         Assert.assertTrue("Test edit chain. See output", testChanges("Truncate undo chain", changes));
     }
 
-//    @Smoke
+//    //TODO@Smoke
 //    Test
 //    public void HugeRandomTest() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InterruptedException {
 //        List<Change> changes = buildRandomChange(1000);

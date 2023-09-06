@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,8 +24,8 @@
  */
 package org.jemmy.input.glass;
 
-import com.sun.glass.ui.Application;
-import com.sun.glass.ui.Robot;
+import javafx.application.Platform;
+import javafx.scene.robot.Robot;
 import org.jemmy.action.Action;
 import org.jemmy.action.GetAction;
 import org.jemmy.control.Wrap;
@@ -36,28 +36,32 @@ import org.jemmy.interfaces.Keyboard.KeyboardModifier;
 import org.jemmy.interfaces.*;
 import org.jemmy.timing.State;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 public class GlassInputFactory implements ControlInterfaceFactory {
 
-    public static final Timeout MCLICK = new Timeout("mouse.click", 30);
+    public static final Timeout ROBOT_OPERATION = new Timeout("robot.operation", 1000);
     public static final Timeout WAIT_FACTORY = new Timeout("wait.glass.robot", 10000);
-    private static Robot robot = null;
+    private static volatile Robot robot = null;
     private static Environment env = null;
 
     public static final String ROBOT_MOUSE_SMOOTHNESS_PROPERTY = "glass.robot.mouse.smoothness";
     public static final String ROBOT_MOUSE_STEP_DELAY_PROPERTY = "glass.robot.mouse.step_delay";
 
     static {
-        Environment.getEnvironment().initTimeout(Keyboard.PUSH);
-        Environment.getEnvironment().initTimeout(Mouse.CLICK);
-        Environment.getEnvironment().initTimeout(MCLICK);
-        Environment.getEnvironment().initTimeout(WAIT_FACTORY);
-        Environment.getEnvironment().setBindingMap(new DefaultCharBindingMap());
-        Environment.getEnvironment().setPropertyIfNotSet(
+        Environment env = Environment.getEnvironment();
+        env.initTimeout(Keyboard.PUSH);
+        env.initTimeout(Mouse.CLICK);
+        env.initTimeout(WAIT_FACTORY);
+        env.initTimeout(ROBOT_OPERATION);
+        env.setBindingMap(new DefaultCharBindingMap());
+        env.setPropertyIfNotSet(
                 GlassInputFactory.ROBOT_MOUSE_SMOOTHNESS_PROPERTY,
-                new Integer(Integer.MAX_VALUE).toString());
-        Environment.getEnvironment().setPropertyIfNotSet(
+                Integer.toString(Integer.MAX_VALUE).toString());
+        env.setPropertyIfNotSet(
                 GlassInputFactory.ROBOT_MOUSE_STEP_DELAY_PROPERTY,
-                new Integer(10).toString());
+                Integer.toString(10));
 
     }
     GlassInputMap map;
@@ -92,7 +96,7 @@ public class GlassInputFactory implements ControlInterfaceFactory {
                         return new GetAction<Robot>() {
                             @Override
                             public void run(Object... os) throws Exception {
-                                setResult(Application.GetApplication().createRobot());
+                                setResult(new Robot());
                             }
                         }.dispatch(env);
                     } catch (Exception e) {
@@ -132,6 +136,15 @@ public class GlassInputFactory implements ControlInterfaceFactory {
         return GlassMouse.getMouseSmoothness();
     }
 
+    public static void invokeAndWait(Environment env, Runnable r) throws InterruptedException {
+        var latch = new CountDownLatch(1);
+        Platform.runLater(() -> {
+            r.run();
+            latch.countDown();
+        });
+        latch.await(env.getTimeout(ROBOT_OPERATION).getValue(), TimeUnit.MILLISECONDS);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public <INTERFACE extends ControlInterface> INTERFACE create(Wrap<?> control, Class<INTERFACE> interfaceClass) {
@@ -152,19 +165,27 @@ public class GlassInputFactory implements ControlInterfaceFactory {
         return null;
     }
 
-    void pressModifier(Button button) {
-        getRobot().keyPress(map.modifier((KeyboardModifier) button));
+    void pressModifier(Button button, Environment env) throws InterruptedException {
+        invokeAndWait(env, () -> getRobot().keyPress(map.modifier((KeyboardModifier) button)));
     }
 
-    void releaseModifier(Button button) {
-        getRobot().keyRelease(map.modifier((KeyboardModifier) button));
+    void releaseModifier(Button button, Environment env) throws InterruptedException {
+        invokeAndWait(env, () -> getRobot().keyRelease(map.modifier((KeyboardModifier) button)));
     }
 
-    void runAction(Wrap<?> control, Action action, boolean detached) {
+    void dispatchAction(Wrap<?> control, Action action, boolean detached) {
         if (detached) {
             control.getEnvironment().getExecutor().executeDetached(control.getEnvironment(), true, action);
         } else {
             control.getEnvironment().getExecutor().execute(control.getEnvironment(), true, action);
+        }
+    }
+
+    void runAction(Wrap<?> control, Action action, boolean detached) {
+        if (detached) {
+            control.getEnvironment().getExecutor().executeDetached(control.getEnvironment(), false, action);
+        } else {
+            control.getEnvironment().getExecutor().execute(control.getEnvironment(), false, action);
         }
     }
 
@@ -178,4 +199,5 @@ public class GlassInputFactory implements ControlInterfaceFactory {
         }
         return res.toString();
     }
+
 }

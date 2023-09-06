@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -132,8 +132,8 @@ public class MouseTest {
     }
     @Test
     public void wheel() throws InterruptedException {
-        txt.mouse().turnWheel(-5);
-        log.checkEvent(MouseInputApp.SCROLL, coords(0, 200));
+        txt.mouse().turnWheel(5);
+        log.checkEvent(MouseInputApp.SCROLL, coords(0, 5));
         txt.mouse().turnWheel(new Point(10, 10), 5);
         String coords = coords(10, 10);
         log.checkEvent(MouseInputApp.MOVED, coords, NONE, "0");

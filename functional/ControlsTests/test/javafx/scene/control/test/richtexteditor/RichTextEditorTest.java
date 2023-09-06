@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2016, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  */
 package javafx.scene.control.test.richtexteditor;
 
 import client.test.Keywords;
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import java.awt.Toolkit;
 import java.io.*;
 import java.net.URL;
@@ -202,7 +202,7 @@ public class RichTextEditorTest extends ControlsTestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Keywords(keywords="webkit")
     public void setHtmlTest() throws InterruptedException, IOException {
@@ -227,14 +227,14 @@ public class RichTextEditorTest extends ControlsTestBase {
     }
 
     @ScreenshotCheck
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Keywords(keywords="webkit")
     public void initialStateTest() throws InterruptedException {
         ScreenshotUtils.checkScreenshot("RichTextEditor-initialState", contentPane);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     @Keywords(keywords="webkit")
     public void deletingEmptyStringTest() throws InterruptedException, IOException, Throwable {
@@ -536,21 +536,21 @@ public class RichTextEditorTest extends ControlsTestBase {
         throwScreenshotError();
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000) //http://javafx-jira.kenai.com/browse/RT-20554
     @Keywords(keywords="webkit")
     public void copyTest() throws InterruptedException, IOException, Throwable {
         clipboard(copy, "copy");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000) //http://javafx-jira.kenai.com/browse/RT-20554
     @Keywords(keywords="webkit")
     public void cutTest() throws InterruptedException, IOException, Throwable {
         clipboard(cut, "cut");
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)  //http://javafx-jira.kenai.com/browse/RT-20554
     @Keywords(keywords="webkit")
     public void pasteTest() throws InterruptedException, IOException, Throwable {

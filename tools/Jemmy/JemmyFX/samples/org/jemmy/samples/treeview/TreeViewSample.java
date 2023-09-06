@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -68,13 +68,8 @@ public class TreeViewSample extends SampleBase {
         //or find a second node by substring
         new TreeItemDock(treeView.asItemParent(), 2, "-3-2-", SUBSTRING).mouse().click();
         //or a 5th by a custom criteria
-        new TreeItemDock(treeView.asItemParent(), Data.class, 4, new LookupCriteria<Data>() {
-
-            @Override
-            public boolean check(Data cntrl) {
-                return cntrl.getValue().length() == 5;
-            }
-        }).mouse().click();
+        new TreeItemDock(treeView.asItemParent(), Data.class, 4, cntrl-> cntrl.getValue().length() == 5)
+                .mouse().click();
     }
 
     /**

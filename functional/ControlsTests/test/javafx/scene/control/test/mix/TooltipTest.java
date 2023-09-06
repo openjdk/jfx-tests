@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,7 +26,7 @@
 package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import com.oracle.jdk.sqe.cc.markup.Covers;
 import com.oracle.jdk.sqe.cc.markup.Covers.Level;
 import javafx.scene.Node;
@@ -142,20 +142,20 @@ public class TooltipTest extends ControlsTestBase {
         assertEquals("", error.getProperty(Wrap.TEXT_PROP_NAME));
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     @Covers(value={"javafx.scene.control.Tooltip.activated.SET", "javafx.scene.control.Tooltip.activated.GET"}, level=Level.FULL)
     public void enabled() throws InterruptedException {
         check(true);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void disabled() throws InterruptedException {
         check(false);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void showAPI() throws InterruptedException {
         for (int i = 0; i < CHECK_CYCLES_NUM; i++) {
@@ -167,7 +167,7 @@ public class TooltipTest extends ControlsTestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout=300000)
     public void autohide() throws InterruptedException {
         tooltipped.mouse().move();

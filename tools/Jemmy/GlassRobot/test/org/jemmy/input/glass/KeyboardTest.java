@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -88,7 +88,7 @@ public class KeyboardTest {
 
     @Test
     public void type() {
-        txt.asSelectionText().type("New text.");
+        txt.asSelectionText().  type("New text.");
         log.checkEvent(PUSHED, KeyboardInputApp.SHIFT, "N");
         log.checkEvent(TYPED, "e");
         log.checkLines(16);

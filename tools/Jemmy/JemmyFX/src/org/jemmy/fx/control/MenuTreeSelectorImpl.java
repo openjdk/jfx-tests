@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2012, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2023, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -55,6 +55,8 @@ class MenuTreeSelectorImpl implements TreeSelector {
             throw new IllegalStateException("Length is supposed to be greater than 0 at this moment");
         }
         parent.mouse().click();
+        parent.waitState(() -> parent.getControl() instanceof Menu &&
+                ((Menu)parent.getControl()).isShowing() ? parent : null);
         Parent<MenuItem> container = parent.as(Parent.class, MenuItem.class);
         Wrap<? extends MenuItem> next = container.lookup(criteria[0]).wrap();
         if (criteria.length == 1) {

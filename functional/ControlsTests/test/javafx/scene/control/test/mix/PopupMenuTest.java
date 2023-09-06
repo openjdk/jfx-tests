@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2023 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 package javafx.scene.control.test.mix;
 
 import client.test.ScreenshotCheck;
-import client.test.Smoke;
+
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -122,7 +122,7 @@ public class PopupMenuTest extends ControlsTestBase {
         hiding.waitProperty(TextControlWrap.SELECTED_PROP_NAME, CheckBoxWrap.State.UNCHECKED);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void apiTest() throws Throwable {
         show();
@@ -177,7 +177,7 @@ public class PopupMenuTest extends ControlsTestBase {
         ScreenshotUtils.checkScreenshot("PopupMenuTest-drop", contentPane);
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void mouseSelectionTest() throws InterruptedException {
         selectionCycle();
@@ -206,7 +206,7 @@ public class PopupMenuTest extends ControlsTestBase {
         }
     }
 
-    @Smoke
+    //TODO@Smoke
     @Test(timeout = 300000)
     public void onActionTest() throws InterruptedException {
         Wrap error = parent.lookup(Label.class, new ByID<Label>(ContextMenuApp.ERROR_ID)).wrap();
