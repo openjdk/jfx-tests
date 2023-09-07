@@ -1,0 +1,5 @@
+test/scenegraph/events/EventTestCommon.java
+test/scenegraph/events/EventTestHidingPopup.java
+test/scenegraph/events/EventTestTextInput.java
+test/scenegraph/richtext/RichTextPropertiesFunctional.java
+test/scenegraph/richtext/RichTextTestBase.java
