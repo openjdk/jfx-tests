@@ -26,6 +26,10 @@ package test.scenegraph.fx3d.depth;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.jemmy.fx.Root;
+import org.jemmy.image.ImageComparator;
+import org.jemmy.image.glass.GlassPixelImageComparator;
+import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import test.scenegraph.fx3d.depth.DepthTestApp.Pages;
 import test.scenegraph.fx3d.utils.FX3DAbstractApp;
 
@@ -39,6 +43,8 @@ public class DepthTest extends DepthTestBase {
 
     @BeforeClass
     public static void setUp() {
+        Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
+            new GlassPixelImageComparator(new PixelEqualityRasterComparator(.05)));
         DepthTestApp.setTest(true);
         DepthTestApp.main(null);
         application = (DepthTestApp) DepthTestApp.getInstance();

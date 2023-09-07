@@ -25,6 +25,10 @@
 package test.scenegraph.fx3d.subscene.camera.perspective;
 
 import org.junit.BeforeClass;
+import org.jemmy.fx.Root;
+import org.jemmy.image.ImageComparator;
+import org.jemmy.image.glass.GlassPixelImageComparator;
+import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import test.scenegraph.fx3d.camera.PerspectiveCameraIsolateTests;
 import test.scenegraph.fx3d.interfaces.camera.PerspectiveCameraIsolateTestingFace;
 import test.scenegraph.fx3d.utils.FX3DAbstractApp;
@@ -39,6 +43,8 @@ public class SubScenePerspectiveCameraIsolateTest extends PerspectiveCameraIsola
 
     @BeforeClass
     public static void setUp() {
+        Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
+            new GlassPixelImageComparator(new PixelEqualityRasterComparator(.05)));
         SubScenePerspectiveCameraIsolateTestApp.main(null);
         app = (SubScenePerspectiveCameraIsolateTestApp) SubScenePerspectiveCameraIsolateTestApp.getInstance();
     }

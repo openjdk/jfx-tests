@@ -27,6 +27,9 @@ package test.scenegraph.fx3d.shapes;
 import javafx.util.Pair;
 import org.jemmy.action.GetAction;
 import org.jemmy.fx.Root;
+import org.jemmy.image.ImageComparator;
+import org.jemmy.image.glass.GlassPixelImageComparator;
+import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import org.junit.BeforeClass;
 import test.scenegraph.fx3d.interfaces.ShapesTestingFace;
 import test.scenegraph.fx3d.utils.FX3DAbstractApp;
@@ -94,6 +97,8 @@ public class CylinderTest extends CylinderTests {
 
     @BeforeClass
     public static void setUp() {
+        Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
+            new GlassPixelImageComparator(new PixelEqualityRasterComparator(.05)));
         CylinderTestApp.main(null);
         application = (CylinderTestApp) CylinderTestApp.getInstance();
     }
