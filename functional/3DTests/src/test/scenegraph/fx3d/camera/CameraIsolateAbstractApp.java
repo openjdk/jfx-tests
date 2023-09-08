@@ -38,8 +38,6 @@ import test.scenegraph.fx3d.interfaces.camera.CameraIsolateTestingFace;
  */
 public abstract class CameraIsolateAbstractApp extends CameraAbstractApp implements CameraIsolateTestingFace{
 
-    protected Camera camera;
-
     @Override
     protected void initCamera() {
         camera = addCamera(scene);
