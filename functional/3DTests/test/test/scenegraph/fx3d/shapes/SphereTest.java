@@ -88,7 +88,8 @@ public class SphereTest extends SphereTests {
     @BeforeClass
     public static void setUp() {
         Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
-            new GlassPixelImageComparator(new PixelEqualityRasterComparator(.05)));
+            new GlassPixelImageComparator(new
+                PixelEqualityRasterComparator(FX3DAbstractApp.COLOR_TOLERANCE)));
         SphereTestApp.main(null);
         application = (SphereTestApp) SphereTestApp.getInstance();
     }

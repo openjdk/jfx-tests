@@ -58,7 +58,8 @@ public class SubSceneMeshTest extends MeshTests {
     @BeforeClass
     public static void setUp() {
         Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
-            new GlassPixelImageComparator(new PixelEqualityRasterComparator(.05)));
+            new GlassPixelImageComparator(new
+                PixelEqualityRasterComparator(FX3DAbstractApp.COLOR_TOLERANCE)));
         SubSceneMeshTestApp.main(null);
         application = (SubSceneMeshTestApp) SubSceneMeshTestApp.getInstance();
     }

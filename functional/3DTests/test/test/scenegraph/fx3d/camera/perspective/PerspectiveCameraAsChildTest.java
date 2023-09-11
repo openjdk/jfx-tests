@@ -44,7 +44,8 @@ public class PerspectiveCameraAsChildTest extends PerspectiveCameraAsChildTests{
     @BeforeClass
     public static void setUp() {
         Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
-            new GlassPixelImageComparator(new PixelEqualityRasterComparator(.05)));
+            new GlassPixelImageComparator(new
+                PixelEqualityRasterComparator(FX3DAbstractApp.COLOR_TOLERANCE)));
         PerspectiveCameraAsChildTestApp.main(null);
         app = (PerspectiveCameraAsChildTestApp)PerspectiveCameraAsChildTestApp.getInstance();
     }

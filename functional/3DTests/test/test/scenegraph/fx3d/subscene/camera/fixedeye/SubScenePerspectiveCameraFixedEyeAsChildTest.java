@@ -44,7 +44,8 @@ public class SubScenePerspectiveCameraFixedEyeAsChildTest extends PerspectiveCam
     @BeforeClass
     public static void setUp() {
         Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
-            new GlassPixelImageComparator(new PixelEqualityRasterComparator(.05)));
+            new GlassPixelImageComparator(new
+                PixelEqualityRasterComparator(FX3DAbstractApp.COLOR_TOLERANCE)));
         SubScenePerspectiveCameraFixedEyeAsChildTestApp.main(null);
         app = (SubScenePerspectiveCameraFixedEyeAsChildTestApp) SubScenePerspectiveCameraFixedEyeAsChildTestApp.getInstance();
     }

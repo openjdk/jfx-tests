@@ -48,7 +48,8 @@ public class SingleLightingTest extends FX3DTestBase {
     @BeforeClass
     public static void setUp() {
         Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
-            new GlassPixelImageComparator(new PixelEqualityRasterComparator(.05)));
+            new GlassPixelImageComparator(new
+                PixelEqualityRasterComparator(FX3DAbstractApp.COLOR_TOLERANCE)));
         SingleLightingTestApp.setTest(true);
         SingleLightingTestApp.main(null);
         application = (SingleLightingTestApp) SingleLightingTestApp.getInstance();

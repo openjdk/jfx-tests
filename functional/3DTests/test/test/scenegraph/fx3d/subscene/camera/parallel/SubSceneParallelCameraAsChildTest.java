@@ -44,7 +44,8 @@ public class SubSceneParallelCameraAsChildTest extends CameraAsChildTests {
     @BeforeClass
     public static void setUp(){
         Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
-            new GlassPixelImageComparator(new PixelEqualityRasterComparator(.05)));
+            new GlassPixelImageComparator(new
+                PixelEqualityRasterComparator(FX3DAbstractApp.COLOR_TOLERANCE)));
         SubSceneParallelCameraAsChildTestApp.main(null);
         app = (SubSceneParallelCameraAsChildTestApp) SubSceneParallelCameraAsChildTestApp.getInstance();
     }
