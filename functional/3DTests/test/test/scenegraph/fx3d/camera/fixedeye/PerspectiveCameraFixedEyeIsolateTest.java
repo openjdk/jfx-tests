@@ -25,6 +25,10 @@
 package test.scenegraph.fx3d.camera.fixedeye;
 
 import org.junit.BeforeClass;
+import org.jemmy.fx.Root;
+import org.jemmy.image.ImageComparator;
+import org.jemmy.image.glass.GlassPixelImageComparator;
+import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import test.scenegraph.fx3d.camera.PerspectiveCameraFixedEyeIsolateTests;
 import test.scenegraph.fx3d.interfaces.camera.PerspectiveCameraFixedEyeIsolateTestingFace;
 import test.scenegraph.fx3d.utils.FX3DAbstractApp;
@@ -39,6 +43,9 @@ public class PerspectiveCameraFixedEyeIsolateTest extends PerspectiveCameraFixed
 
     @BeforeClass
     public static void setUp() {
+        Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
+            new GlassPixelImageComparator(new
+                PixelEqualityRasterComparator(FX3DAbstractApp.COLOR_TOLERANCE)));
         PerspectiveCameraFixedEyeIsolateTestApp.main(null);
         app = (PerspectiveCameraFixedEyeIsolateTestApp) PerspectiveCameraFixedEyeIsolateTestApp.getInstance();
     }

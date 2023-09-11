@@ -25,6 +25,10 @@
 package test.scenegraph.fx3d.camera.parallel;
 
 import org.junit.BeforeClass;
+import org.jemmy.fx.Root;
+import org.jemmy.image.ImageComparator;
+import org.jemmy.image.glass.GlassPixelImageComparator;
+import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import test.scenegraph.fx3d.camera.CameraIsolateTests;
 import test.scenegraph.fx3d.interfaces.camera.CameraIsolateTestingFace;
 import test.scenegraph.fx3d.utils.FX3DAbstractApp;
@@ -39,6 +43,9 @@ public class ParallelCameraIsolateTest extends CameraIsolateTests {
 
     @BeforeClass
     public static void setUp() {
+        Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
+            new GlassPixelImageComparator(new
+                PixelEqualityRasterComparator(FX3DAbstractApp.COLOR_TOLERANCE)));
         ParallelCameraIsolateTestApp.main(null);
         app = (ParallelCameraIsolateTestApp) ParallelCameraIsolateTestApp.getInstance();
     }

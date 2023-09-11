@@ -29,6 +29,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import org.jemmy.action.GetAction;
 import org.jemmy.fx.Root;
+import org.jemmy.image.ImageComparator;
+import org.jemmy.image.glass.GlassPixelImageComparator;
+import org.jemmy.image.pixel.PixelEqualityRasterComparator;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -50,6 +53,9 @@ public class SubSceneBasicPropsTest extends FX3DTestBase {
 
     @BeforeClass
     public static void setUp() {
+        Root.ROOT.getEnvironment().setProperty(ImageComparator.class,
+            new GlassPixelImageComparator(new
+                PixelEqualityRasterComparator(FX3DAbstractApp.COLOR_TOLERANCE)));
         SubSceneBasicPropsTestApp.setTest(true);
         SubSceneBasicPropsTestApp.main(null);
         application = (SubSceneBasicPropsTestApp) SubSceneBasicPropsTestApp.getInstance();
