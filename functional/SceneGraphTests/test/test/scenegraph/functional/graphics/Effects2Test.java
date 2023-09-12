@@ -24,6 +24,7 @@
 package test.scenegraph.functional.graphics;
 
 import org.junit.Test;
+import org.junit.Ignore;
 import org.junit.BeforeClass;
 
 import test.javaclient.shared.TestBase;
@@ -771,6 +772,7 @@ public class Effects2Test extends TestBase {
  * test javafx.scene.effect.Lighting
  * with setLight(new SpotLight() {{setX(70);setY(120);setZ(50);setPointsAtX(150);setPointsAtY(0);setPointsAtZ(0);
  */
+    @Ignore("JDK-8316117")
     @Test
     public void Lightningspotlight() throws InterruptedException {
         testCommon(Pages.Lightning.name(),"spot light");
