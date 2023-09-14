@@ -1,0 +1,4 @@
+javafx/scene/control/test/chart/AxisBase.java
+javafx/scene/control/test/chart/ChartBase.java
+javafx/scene/control/test/chart/ValueAxisBase.java
+javafx/scene/control/test/chart/XYChartBase.java
