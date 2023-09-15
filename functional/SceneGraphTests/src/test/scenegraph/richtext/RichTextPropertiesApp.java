@@ -246,14 +246,8 @@ public class RichTextPropertiesApp extends InteroperabilityApp {
     }
 
     public void requestDefaultFocus(){
-
-        PlatformImpl.runAndWait(new Runnable() {
-            @Override
-            public void run() {
-                textFlowPage.addTextFlow.requestFocus();
-            }
-        });
-   }
+       PlatformImpl.runAndWait(() -> textFlowPage.addTextFlow.requestFocus());
+    }
 
     private class TextFlowPage extends VBox {
 
