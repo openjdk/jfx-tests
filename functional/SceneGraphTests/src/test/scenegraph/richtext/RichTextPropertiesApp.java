@@ -39,6 +39,8 @@ import javafx.scene.text.TextFlow;
 import junit.framework.Assert;
 import test.javaclient.shared.InteroperabilityApp;
 import test.javaclient.shared.Utils;
+import com.sun.javafx.application.PlatformImpl;
+
 
 /**
  *
@@ -242,8 +244,9 @@ public class RichTextPropertiesApp extends InteroperabilityApp {
     public void addFlow() {
         textFlowPage.addTextFlow.fire();
     }
+
     public void requestDefaultFocus(){
-        textFlowPage.addTextFlow.requestFocus();
+       PlatformImpl.runAndWait(() -> textFlowPage.addTextFlow.requestFocus());
     }
 
     private class TextFlowPage extends VBox {
