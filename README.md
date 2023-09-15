@@ -21,6 +21,7 @@ This repository contains the tests and tools for Java FX.
    - git clone https://github.com/openjdk/jemmy-v3
    - cd jemmy-v3/core
    - ant build
+
    This builds 4 Jemmy jar files in jemmy-v3/core/build 
 
 
