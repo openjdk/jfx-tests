@@ -18,9 +18,9 @@ This repository contains the tests and tools for Java FX.
 4) ant (version 1.10 and above)
 5) Jtreg - We need a jtreg that contains lib/junit.jar file. e.g. version jtreg-6.2.1. See [Jtreg](https://openjdk.org/jtreg)
 6) Jemmy-v3 library
-   a. git clone https://github.com/openjdk/jemmy-v3
-   b. cd jemmy-v3/core
-   c. ant build
+   - git clone https://github.com/openjdk/jemmy-v3
+   - cd jemmy-v3/core
+   - ant build
    This builds 4 Jemmy jar files in jemmy-v3/core/build 
 
 
