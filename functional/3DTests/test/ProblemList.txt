@@ -1,1 +1,9 @@
 #test/scenegraph/fx3d/lighting/SingleLightingTest.java <bug_id> generic-all
+test/scenegraph/fx3d/picking/parallel/MeshCameraParallelPickingTest.java 8165941 generic-all
+test/scenegraph/fx3d/picking/parallel/MeshGroupParallelPickingTest.java 8165941 generic-all
+test/scenegraph/fx3d/picking/parallel/ShapesCameraParallelPickingTest.java 8165941 generic-all
+test/scenegraph/fx3d/picking/parallel/ShapesGroupParallelPickingTest.java 8165941 generic-all
+test/scenegraph/fx3d/subscene/picking/parallel/SubSceneMeshCameraParallelPickingTest.java 8165941 generic-all
+test/scenegraph/fx3d/subscene/picking/parallel/SubSceneMeshGroupParallelPickingTest.java 8165941 generic-all
+test/scenegraph/fx3d/subscene/picking/parallel/SubSceneShapeCameraParallelPickingTest.java 8165941 generic-all
+test/scenegraph/fx3d/subscene/picking/parallel/SubSceneShapeGroupParallelPickingTest.java 8165941 generic-all

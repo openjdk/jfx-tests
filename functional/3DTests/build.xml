@@ -3,7 +3,7 @@
     <basename file="${basedir}" property="."/>
     <property name="rootdir" location="${basedir}/../.."/>
     <property name="project.name" value="3DTests"/>
-    <!--property name="test.problem.list" location="test/ProblemList.txt"/-->
+    <property name="test.problem.list" location="test/ProblemList.txt"/>
     <import file="${basedir}/../../tools/make/build-template.xml"/> 
     <property name="dependencies.classpath" value="${jemmyfx-src}/build/classes${path.separator}${glass-robot-src}/build/classes${path.separator}${glass-image-src}/build/classes${path.separator}${jemmyfx-browser-src}/build/classes${path.separator}${jtreg.home}/lib/junit.jar${path.separator}${javafx.home}/lib/javafx-swt.jar${path.separator}${javafx.home}/lib/javafx.swing.jar${path.separator}${shared-test-utils-src}/build/classes"/>
     <target name="build-dependencies">
