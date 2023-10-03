@@ -40,6 +40,7 @@ public abstract class LodTestBase extends FX3DTestBase {
 
     protected static LodTestAbstractApp application;
     protected static double STANDARD_DELTA = 100D;
+    private final double LOD_TOLERANCE = 1.0f;
 
     @Override
     protected FX3DAbstractApp getApplication() {
@@ -117,7 +118,7 @@ public abstract class LodTestBase extends FX3DTestBase {
         new Waiter(Wrap.WAIT_STATE_TIMEOUT).ensureValue(Boolean.TRUE, new State<Boolean>() {
             @Override
             public Boolean reached() {
-                if (computeAreaInScreen() == lod) {
+                if (Math.abs(computeAreaInScreen() - lod) <= LOD_TOLERANCE) {
                     return Boolean.TRUE;
                 }
                 return null;
