@@ -39,6 +39,7 @@ public abstract class FX3DAbstractApp extends Application {
 
     private static FX3DAbstractApp inst;
     private static boolean isTest = false;
+    public static final float COLOR_TOLERANCE = 0.05f;
     protected Stage stage;
 
     public void reinitScene() {

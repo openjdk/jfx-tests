@@ -76,8 +76,10 @@ public class RichTextSpecSymbApp extends InteroperabilityApp {
             @Override
             public String toString(char[] t) {
                 String result = "";
-                for (char sim : t) {
-                    result += "<" + sim + "> ";
+                if (t != null) {
+                    for (char sim : t) {
+                        result += "<" + sim + "> ";
+                    }
                 }
                 return result;
             }
