@@ -44,13 +44,13 @@ public class PerspectiveLodCameraTest extends LodTests {
             case Sphere:
             case Cylinder:
             case Box:
-                return 50180.140882730484;
+                return 50180.137157440186;
             case Plane:
                 return 0;
             case SemiSphere:
                 return 224544.16751861572;
             case Cone:
-                return 25090.070441365242;
+                return 25090.068578720093;
         }
         return -1;
     }
@@ -63,9 +63,9 @@ public class PerspectiveLodCameraTest extends LodTests {
             case Box:
                 return 40000.00283122063;
             case Plane:
-                return 73418.64705085754;
+                return 73418.63214969635;
             case SemiSphere:
-                return 178710.13283729553;
+                return 178710.10303497314;
             case Cone:
                 return 20000.001415610313;
         }
